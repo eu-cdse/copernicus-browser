@@ -1,0 +1,11 @@
+@import '../variables.module.scss';
+
+.loader {
+  height: 100px;
+  text-align: center;
+
+  & span {
+    position: relative;
+    top: 45%;
+  }
+}

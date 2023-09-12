@@ -1,0 +1,32 @@
+@import '../../variables.module.scss';
+
+/* stylelint-disable */
+.speckleFilter-select-dropdown {
+  text-align: start;
+  width: calc(120px + 2 * 36px + 2 * 10px);
+
+  .speckleFilter-select__single-value {
+    font-size: 13px;
+    font-weight: $fontWeightNormal;
+  }
+
+  .speckleFilter-select__menu {
+    min-width: unset;
+
+    .speckleFilter-select__menu-list {
+      .speckleFilter-select__option {
+        height: 20px;
+        line-height: 20px;
+        font-size: 13px;
+        font-weight: $fontWeightNormal;
+        padding: 0 6px;
+      }
+    }
+  }
+  /* stylelint-enable */
+
+  .dropdown-indicator {
+    width: 11px;
+    margin-right: 5px;
+  }
+}

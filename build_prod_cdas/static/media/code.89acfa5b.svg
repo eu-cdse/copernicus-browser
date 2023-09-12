@@ -1,0 +1,12 @@
+<svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <filter id="code">
+        <feColorMatrix
+				color-interpolation-filters="sRGB"
+				type="matrix"
+				values="0.71 0 0 0 0
+                0 0.75 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0"/>
+    </filter>
+    <path d="M6.90969 13.8L1.22969 11.192V9.816L6.90969 7.208V8.584L2.44569 10.504L6.90969 12.424V13.8ZM7.16556 16.36L11.4536 3.8H12.9736L8.68556 16.36H7.16556ZM12.9134 13.8L18.5934 11.192V9.816L12.9134 7.208V8.584L17.3774 10.504L12.9134 12.424V13.8Z" fill="white"/>
+</svg>

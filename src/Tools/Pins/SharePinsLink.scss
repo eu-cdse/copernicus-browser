@@ -1,0 +1,18 @@
+@import '../../variables.module.scss';
+
+.share-pins-link {
+  color: $textColor;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    .actions {
+      text-align: center;
+      padding: 10px;
+
+      a {
+        margin-left: 10px;
+      }
+    }
+  }
+}

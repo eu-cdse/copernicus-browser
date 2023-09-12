@@ -1,0 +1,125 @@
+@import '../../variables.module.scss';
+
+#map {
+  .leaflet-control-container {
+    .leaflet-bottom.leaflet-left {
+      .leaflet-control-attribution {
+        background: $mainDark;
+        color: $textColor;
+
+        a {
+          color: $textColor;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-1200) {
+        .leaflet-control-attribution {
+          max-width: 340px;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-890) {
+        .leaflet-control-attribution {
+          bottom: 25px;
+        }
+      }
+
+      @media screen and (max-width: 450px) {
+        .leaflet-control-attribution {
+          bottom: 0;
+          font-size: 10px;
+          max-width: 200px;
+        }
+      }
+    }
+
+    .leaflet-bottom.leaflet-right {
+      height: 90px;
+
+      .leaflet-control-zoom {
+        border: none;
+
+        a {
+          padding-right: 2px;
+          line-height: 27px;
+        }
+
+        .leaflet-control-zoom-in {
+          border-bottom: 2px solid $mainLight;
+        }
+
+        .leaflet-control-zoom-in,
+        .leaflet-control-zoom-out {
+          background-color: $mainLight;
+          color: $primaryColor;
+          box-shadow: $boxShadow;
+          border-radius: 0;
+        }
+
+        .leaflet-control-zoom-in:hover,
+        .leaflet-control-zoom-out:hover {
+          background-color: $primaryColor;
+          color: $secondaryColor;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-700) {
+        .leaflet-control-zoom {
+          display: none;
+        }
+      }
+
+      .leaflet-control-scale {
+        margin-bottom: 0;
+
+        @media screen and (max-width: 450px) {
+          margin-right: 0;
+          bottom: 15px;
+        }
+
+        .leaflet-control-scale-line {
+          background: $mainDark;
+          color: $textColor;
+          border-color: $textColor;
+          box-shadow: 1px 1px 4px #000;
+
+          @media screen and (max-width: 450px) {
+            width: 75px !important;
+            text-align: center;
+          }
+        }
+      }
+
+      .leaflet-control-map-coordinates {
+        display: block;
+        margin-bottom: 0;
+        clear: unset;
+        font-size: 10px;
+        background: $mainDark;
+        color: $textColor;
+        padding: 1px;
+        min-width: 160px;
+        text-align: center;
+      }
+
+      .leaflet-control-map-coordinates.no-coordinates {
+        display: none;
+      }
+
+      @media screen and (max-width: 450px) {
+        .leaflet-control-map-coordinates {
+          margin-right: 0;
+          bottom: 15px;
+          min-width: 130px;
+          clear: both;
+        }
+      }
+    }
+
+    @media screen and (max-width: $breakpoint-700) {
+      .leaflet-bottom.leaflet-right {
+        height: 19px;
+      }
+    }
+  }
+}

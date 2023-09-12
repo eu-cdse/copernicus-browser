@@ -1,0 +1,28 @@
+@import '../variables.module.scss';
+
+.notification-panel-workspace {
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  z-index: 10000001;
+  font-weight: 700;
+  transform: translateX(50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  min-height: 40px;
+  padding: 10px;
+
+  .notification-panel-text {
+    margin: 10px 0;
+  }
+
+  .success {
+    color: $whiteColor;
+  }
+
+  .warning {
+    color: $textColor;
+  }
+}

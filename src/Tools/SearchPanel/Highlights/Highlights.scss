@@ -1,0 +1,47 @@
+@import '../../../variables.module.scss';
+
+.highlights-panel-container {
+  background-color: $mainMedium;
+
+  .highlights-panel {
+    position: relative;
+    overflow-y: hidden;
+    margin: 0;
+
+    .highlights-notifications {
+      // make room for notification so the border stays closed
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .highlights-container {
+      position: relative;
+      margin: 0 10px 10px 10px;
+      background-color: $mainMedium;
+    }
+  }
+
+  .highlights-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-right: 15px;
+
+    .badge {
+      right: -12px;
+    }
+
+    .highlights-panel-header-icon {
+      display: flex;
+      cursor: pointer;
+      position: relative;
+
+      &.active {
+        svg g path {
+          fill: $primaryColor;
+        }
+      }
+    }
+  }
+}

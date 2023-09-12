@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      if (window.opener && window.opener.authorizationCallback) {
+        const hash = window.location.hash.replace('#', '');
+        if (hash.includes('access_token')) {
+          const obj = {};
+          obj.domain = window.opener.location.pathname;
+          hash.split('&').forEach((hm) => {
+            const [key, value] = hm.split('=');
+            obj[key] = value;
+          });
+          window.opener.authorizationCallback.resolve(obj);
+          window.close();
+        } else {
+          window.opener.authorizationCallback.reject('No access token');
+          window.close();
+        }
+      } else {
+        document.querySelector('body').innerText =
+          'Your browser seems to be stopping this window from communicating with the main window.';
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

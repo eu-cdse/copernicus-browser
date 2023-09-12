@@ -1,0 +1,56 @@
+@import '../../variables.module.scss';
+
+.pin-tools {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+
+  > div,
+  a {
+    cursor: pointer;
+    color: $textColor;
+    text-decoration: underline;
+    text-align: center;
+    font-size: 14px;
+
+    &.rodal {
+      margin: 0;
+    }
+
+    &:hover:not(.disabled) {
+      color: $primaryColor;
+    }
+  }
+
+  .share-pins.active {
+    color: $primaryColor;
+  }
+
+  .file-upload-dialog {
+    color: $textColor;
+
+    .file-upload-panel {
+      border: 2px dashed #aaa;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .ok {
+      box-shadow: 0 0 3px #0c0;
+    }
+
+    .false {
+      box-shadow: 0 0 3px #c00;
+    }
+
+    .error {
+      color: #c14444;
+      text-align: left;
+      white-space: pre-wrap;
+      max-height: 80px;
+      max-width: 400px;
+      overflow-y: auto;
+    }
+  }
+}

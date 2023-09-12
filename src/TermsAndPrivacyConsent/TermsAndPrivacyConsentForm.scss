@@ -1,0 +1,46 @@
+@import '../variables.module.scss';
+
+.terms-and-privacy {
+  color: $textColor;
+  height: 100%;
+
+  .message {
+    .link-external {
+      color: $primaryColor;
+    }
+  }
+
+  .reject-message {
+    text-align: center;
+  }
+
+  .button-holder {
+    display: inline-block;
+    margin-top: 20px;
+
+    .eob-btn {
+      margin-right: 10px;
+      width: 60px;
+      text-align: center;
+    }
+  }
+
+  .log-in-option {
+    margin-top: 10px;
+    font-size: 12px;
+
+    .log-in-button {
+      color: $primaryColor;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .learn-more {
+    margin-top: 10px;
+  }
+
+  .back-btn {
+    margin-top: 15px;
+  }
+}

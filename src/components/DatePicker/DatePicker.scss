@@ -1,0 +1,71 @@
+@use "sass:math";
+
+@import '../../variables.module.scss';
+
+.date-picker {
+  color: $textColor;
+  display: inline-flex;
+  align-items: baseline;
+  background-color: $mainLight;
+  box-shadow: $boxShadow;
+
+  .date-picker-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .date-picker-input {
+      color: $primaryColor;
+      font-weight: bold;
+      border: none;
+      width: 120px;
+      margin-right: 2px;
+      margin-left: 2px;
+      height: 35px;
+      line-height: 35px;
+      text-align: center;
+      font-size: 14px;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      &:focus {
+        outline: none !important;
+      }
+
+      &::placeholder {
+        color: $textColor;
+      }
+
+      &.disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.5;
+      }
+    }
+
+    /***  month and year select  ***/ //
+
+    i.fas.fa-chevron-left {
+      color: $primaryColor;
+      box-shadow: 1px 0 1px rgba(0, 0, 0, 0.15);
+      line-height: 35px;
+      width: 35px;
+      cursor: pointer;
+    }
+
+    i.fas.fa-chevron-right {
+      color: $primaryColor;
+      box-shadow: -1px 0 1px rgba(0, 0, 0, 0.15);
+      line-height: 35px;
+      width: 35px;
+      cursor: pointer;
+    }
+
+    i.fas.fa-chevron-left.disabled,
+    i.fas.fa-chevron-right.disabled {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+}

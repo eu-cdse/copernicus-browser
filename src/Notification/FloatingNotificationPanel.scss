@@ -1,0 +1,85 @@
+@import '../variables.module.scss';
+
+.floating-notification-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  background: $tertiaryColor;
+  box-shadow: $boxShadow;
+  color: $textColor;
+  font-weight: $fontWeightBold;
+  z-index: 1000;
+  position: absolute;
+
+  .message {
+    margin: 10px 0;
+  }
+
+  .eob-btn {
+    font-size: 14px;
+    background-color: $whiteColor;
+    color: $textColor;
+
+    &:hover {
+      background: $mainMedium;
+      box-shadow: none;
+    }
+  }
+
+  &.tools-opened {
+    @media (min-width: $breakpoint-1300) {
+      top: 10px;
+      width: 400px;
+      min-height: 40px;
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    @media (max-width: $breakpoint-1300) {
+      top: 60px;
+      right: 60px;
+      left: 460px;
+    }
+
+    @media (max-width: $breakpoint-768) {
+      top: unset;
+      left: 15px;
+      right: 15px;
+      max-width: 400px;
+      bottom: 10px;
+    }
+
+    @media (max-width: $breakpoint-450) {
+      left: 15px;
+      right: 15px;
+      bottom: 85px;
+    }
+  }
+
+  &.tools-closed {
+    @media (min-width: $breakpoint-1024) {
+      top: 10px;
+      width: 400px;
+      min-height: 40px;
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    @media (max-width: $breakpoint-1024) {
+      top: 60px;
+      right: 60px;
+      left: 10px;
+    }
+
+    @media (max-width: $breakpoint-450) {
+      top: unset;
+      left: 60px;
+      right: 60px;
+      bottom: 40px;
+      min-width: 150px;
+    }
+  }
+}

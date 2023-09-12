@@ -1,0 +1,111 @@
+@import '../variables.module.scss';
+
+.language-selector {
+  .menu-globe {
+    color: #fbfffe;
+    background-color: #001514;
+    border-radius: 0;
+    width: 45px;
+    margin: 0;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu-flags {
+    color: $textColor;
+    background-color: $mainMedium;
+    padding: 0;
+
+    button {
+      padding: 0;
+      color: $textColor;
+      text-transform: uppercase;
+      border: none;
+
+      span {
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    button::after {
+      display: none;
+    }
+
+    ul {
+      min-height: 200px;
+      max-height: none;
+      color: $textColor;
+      background-color: $mainLight;
+      padding: 0;
+      margin-top: 1.5px;
+      border: none;
+      border-radius: 0;
+      text-transform: uppercase;
+
+      li {
+        font-size: 14px;
+      }
+
+      li:hover {
+        background-color: $primaryColor;
+        color: $whiteColor;
+      }
+
+      @media only screen and (max-height: 450px) {
+        & {
+          max-height: 200px;
+        }
+      }
+    }
+
+    /* stylelint-disable selector-class-pattern  */
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] {
+      background-color: $whiteColor;
+      border-radius: 0;
+      width: 45px;
+      margin: 0;
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+
+      span {
+        color: $textColor;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectFlag__2q5gC {
+      display: none;
+    }
+
+    .ReactFlagsSelect-module_selectOptionValue__vS99- {
+      .ReactFlagsSelect-module_selectFlag__2q5gC {
+        display: inline-flex;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] {
+      background-color: $mainLight;
+      color: $textColor;
+      border-radius: 0;
+      position: relative;
+      z-index: 2;
+      width: 45px;
+      margin: 0;
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+
+      span {
+        color: $textColor;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectOption__3pcgW {
+      margin: 2px;
+    }
+    /* stylelint-enable */
+  }
+}

@@ -1,0 +1,396 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/F1_VISUALIZED",
+        "id": "F1_VISUALIZED",
+        "title": "F1 Brightness Temperature",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst blue_red = [\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xfde191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n  [363, 0x650401],\n  [473, 0x3d0200],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction setup() {\n  return {\n    input: [\n      {\n        bands: [\"F1\", \"dataMask\"],\n      },\n    ],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = samples.F1;\n  val = viz.process(val);\n  val.push(samples.dataMask);\n  const statsVal=isFinite(samples.F1)? samples.F1-273:NaN;\n  return {\n    default: val,\n    eobrowserStats: [statsVal],\n    dataMask: [samples.dataMask],\n  };\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-06-13T05:24:08.462448Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/F2_VISUALIZED",
+        "id": "F2_VISUALIZED",
+        "title": "F2 Brightness Temperature",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst blue_red = [\n  [223, 0x003d99],\n  [253, 0x2e82ff],  \n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n  [363, 0x650401],\n  [373, 0x3d0200],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"F2\",\n        \"dataMask\"\n      ]\n    }],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  let val = samples.F2;\n  val = viz.process(val);\n  val.push(samples.dataMask);\n  const statsVal = isFinite(samples.F2) ? samples.F2 - 273 : NaN;\n\n  return {\n    default: val,\n    eobrowserStats: [statsVal],\n    dataMask: [samples.dataMask],\n  };\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-06-13T05:28:12.142276Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/FALSE_COLOR",
+        "id": "FALSE_COLOR",
+        "title": "False Color",
+        "description": "Based on bands S3, S2, S1",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.8;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.S3, samples.S2, samples.S1];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S3\",\n        \"S2\",\n        \"S1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-08-23T14:56:22.326429Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S1_VISUALIZED",
+        "id": "S1_VISUALIZED",
+        "title": "S1 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S1, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:47:29.851461Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S2_VISUALIZED",
+        "id": "S2_VISUALIZED",
+        "title": "S2 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S2, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S2\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:47:36.173308Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S3_VISUALIZED",
+        "id": "S3_VISUALIZED",
+        "title": "S3 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S3, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S3\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:47:42.989868Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S4_VISUALIZED",
+        "id": "S4_VISUALIZED",
+        "title": "S4 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S4, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S4\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:47:48.441234Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S5_VISUALIZED",
+        "id": "S5_VISUALIZED",
+        "title": "S5 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S5, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S5\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:47:56.235504Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S6_VISUALIZED",
+        "id": "S6_VISUALIZED",
+        "title": "S6 Reflectance ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n    return [samples.S6, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S6\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:48:07.064827Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S7_VISUALIZED",
+        "id": "S7_VISUALIZED",
+        "title": "S7 Brightness Temperature ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst blue_red = [\n  [223, 0x002863],\n  [253, 0x2e82ff],  \n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction evaluatePixel(samples) {\n  let val = samples.S7;\n  val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S7\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:48:26.654915Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S8_VISUALIZED",
+        "id": "S8_VISUALIZED",
+        "title": "S8 Brightness Temperature ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst blue_red = [\n  [223, 0x002863],\n  [253, 0x2e82ff],  \n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction evaluatePixel(samples) {\n  let val = samples.S8;\n  val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S8\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:48:32.888550Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S9_VISUALIZED",
+        "id": "S9_VISUALIZED",
+        "title": "S9 Brightness Temperature ",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst blue_red = [\n  [223, 0x002863],\n  [253, 0x2e82ff],  \n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction evaluatePixel(samples) {\n  let val = samples.S9;\n  val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"S9\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-05-31T07:48:44.780628Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "view": "NADIR",
+            "orbitDirection": "DESCENDING",
+            "type": "S3SLSTR"
+        }
+    }
+]

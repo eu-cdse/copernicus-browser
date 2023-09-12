@@ -1,0 +1,19 @@
+@import '../variables.module.scss';
+
+.notification-panel {
+  margin: 10px auto;
+  max-width: 400px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  color: $orangeColor;
+  font-size: 14px;
+
+  .fa {
+    margin-right: 6px;
+  }
+
+  a {
+    color: $orangeColor;
+  }
+}

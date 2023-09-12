@@ -1,0 +1,113 @@
+@import '../../../variables.module.scss';
+
+.commercial-data-transactions {
+  display: flex;
+  flex-direction: column;
+
+  .actions-container {
+    position: sticky;
+    bottom: -10px;
+    background: $mainLight;
+  }
+
+  .transactions-list {
+    display: flex;
+    flex-flow: column;
+    padding: 5px 0;
+
+    > * {
+      padding: 5px 0;
+    }
+
+    .transaction-status {
+      font-weight: 500;
+    }
+
+    .notification-panel {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+
+      p {
+        margin-top: 1em;
+        margin-left: 0.5em;
+      }
+    }
+
+    .transactions {
+      .transaction {
+        border: 1px solid grey;
+        padding: 5px;
+        margin: 2px 0;
+
+        .bold {
+          font-weight: $fontWeightBold;
+        }
+
+        .transaction-header {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0;
+          font-size: 15px;
+
+          &:hover {
+            cursor: pointer;
+            color: $primaryColor;
+          }
+
+          .transaction-title {
+            display: flex;
+            width: 100%;
+
+            div {
+              padding-right: 1em;
+            }
+          }
+
+          .toggle-details {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .transaction-details {
+          .transaction-property {
+            display: flex;
+            justify-content: flex-start;
+            font-size: 14px;
+            padding: 2px 0;
+
+            div {
+              margin-right: 5px;
+            }
+
+            i {
+              color: $primaryColor;
+            }
+          }
+
+          .transaction-property-json {
+            overflow-x: scroll;
+
+            pre {
+              margin: 0;
+            }
+          }
+
+          .buttons {
+            display: flex;
+
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              margin: 10px 10px 10px 0;
+              padding: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

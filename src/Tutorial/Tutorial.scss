@@ -1,0 +1,189 @@
+@import '../variables.module.scss';
+
+.tutorial-wrap {
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  font-size: 16px;
+  max-width: 100%;
+  padding: 15px;
+  position: relative;
+  width: 800px;
+  max-height: 80vh;
+}
+
+.tutorial-body {
+  line-height: 1.4;
+  text-align: center;
+
+  a {
+    color: $primaryColor;
+    cursor: pointer;
+  }
+}
+
+.activate-close-animation {
+  display: block !important;
+  animation-name: animateCloseInfo;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animateCloseInfo {
+  0% {
+    display: block;
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    /* stylelint-disable-next-line */
+    height: 0 !important;
+    right: 10px;
+    top: 10px;
+    opacity: 0;
+    display: none;
+  }
+}
+
+.close-cross {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 1;
+  padding: 15px;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tutorial-footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.tutorial-button {
+  background-color: rgb(182, 191, 0);
+  border: 0;
+  border-radius: 4px;
+  color: $mainMedium;
+  cursor: pointer;
+  line-height: 1;
+  padding: 8px;
+  -webkit-appearance: none;
+  font-size: 14px;
+  margin: 2px;
+}
+
+.tutorial-button:disabled {
+  background-color: rgb(145, 145, 145);
+}
+
+.content-div-style {
+  text-align: left;
+  max-height: 60vh;
+  overflow-y: auto;
+  font-size: 16px;
+
+  p:last-child {
+    color: $primaryColor;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-family: $fontFamilyHeadline;
+    color: $primaryColor;
+  }
+}
+
+.tutorial-title {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.content-wrapper {
+  padding: 0 10px;
+}
+
+.tutorial-firstpage-nextbutton {
+  margin-right: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border: 1px solid rgb(182, 191, 0);
+}
+
+.tutorial-firstpage-closebutton {
+  padding-left: 70px;
+  padding-right: 70px;
+  font-size: 16px;
+  font-weight: $fontWeightBold;
+  text-align: center;
+  color: $whiteColor;
+  background-color: $primaryColor;
+  border-radius: 0;
+
+  &:hover {
+    background-color: $hoverPrimaryColor;
+  }
+}
+
+.tutorial-firstpage-footer {
+  padding-bottom: 30px;
+}
+
+.tutorial-panel-button {
+  position: absolute !important;
+  right: 10px;
+  font-size: 12px;
+  color: #fff;
+  z-index: 400;
+  background: $mainDark;
+  height: 40px;
+  box-shadow: $boxShadow;
+  text-align: center;
+
+  &.tutorial-infopanel-button {
+    top: 10px;
+    background: $mainDark;
+  }
+
+  &#tutorial-animatedinfopanel-button {
+    top: 50vh;
+    right: 50vw;
+    width: 40px;
+    display: none;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+
+  i {
+    font-size: 21px;
+    line-height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+
+  a {
+    color: $primaryColor;
+    background: none;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+  }
+
+  a.disabled {
+    opacity: 0.5;
+  }
+}

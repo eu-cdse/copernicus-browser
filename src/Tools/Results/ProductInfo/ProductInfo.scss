@@ -1,0 +1,78 @@
+@import '../../../variables.module.scss';
+
+.product-info-modal {
+  .rodal-dialog {
+    max-height: 80vh;
+    bottom: auto;
+    max-width: 90vw;
+    top: 5vh;
+    overflow: auto;
+  }
+}
+
+.product-info-title {
+  font-weight: $fontWeightBold;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: $primaryColor;
+  margin: 0;
+}
+
+.product-info {
+  display: flex;
+  flex-flow: column;
+  color: $textColor;
+  margin-top: 10px;
+
+  .title {
+    text-align: center;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+
+    .row {
+      display: flex;
+      align-items: center;
+    }
+
+    .left {
+      font-weight: $fontWeightBold;
+      min-width: 150px;
+      width: 150px;
+      word-wrap: anywhere;
+    }
+
+    .right {
+      word-wrap: anywhere;
+    }
+
+    .attribute {
+      padding: 5px;
+    }
+
+    .odd {
+      background-color: $mainLight;
+    }
+
+    .even {
+      background-color: $mainMedium;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    a {
+      margin: 15px 0 0 0;
+    }
+
+    .eob-btn.disabled {
+      cursor: pointer;
+    }
+  }
+}

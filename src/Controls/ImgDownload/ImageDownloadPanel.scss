@@ -1,0 +1,98 @@
+/* stylelint-disable */
+@import '../../variables.module.scss';
+
+.image-download-panel {
+  overflow: auto;
+
+  .row {
+    display: flex;
+    margin-bottom: 6px;
+
+    > * {
+      flex: 1;
+    }
+
+    > label {
+      flex: 0 0 200px;
+    }
+  }
+
+  .downloadLayers {
+    label {
+      display: block;
+      font-size: 12px;
+    }
+
+    .column {
+      float: left;
+      width: 50%;
+    }
+
+    .layerTitle {
+      text-decoration: underline;
+      line-height: 20px;
+    }
+  }
+
+  .fullSize {
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+  }
+
+  .analyticalModeHandle {
+    margin: 20px 0 10px;
+
+    a i {
+      transform: rotate(180deg);
+      transition: transform 0.5s;
+    }
+
+    &.opened a i {
+      transform: rotate(0deg);
+    }
+  }
+
+  .analyticalMode {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s;
+    transition-property: max-height, padding-bottom;
+    margin-bottom: 0;
+    padding: 0 10px 0 30px;
+    padding-bottom: 0;
+
+    &.opened {
+      max-height: 650px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .fa.fa-info-circle {
+    margin-left: 10px;
+  }
+
+  .wgs84-resolution .latlng {
+    padding-left: 15px;
+  }
+
+  div.modeSelection .eob-btn {
+    margin-right: 20px;
+    background-color: $mainDark;
+    border-radius: 0;
+    border-bottom: 3px solid $mainDark;
+
+    &.selected {
+      border-bottom: 3px solid $primaryColor;
+    }
+
+    &:hover {
+      box-shadow: none;
+      color: $primaryColor;
+    }
+  }
+
+  .submit-btn {
+    padding: 10px 0 2px 0;
+  }
+}

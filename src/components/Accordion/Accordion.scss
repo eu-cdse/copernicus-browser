@@ -1,0 +1,31 @@
+@import '../../variables.module.scss';
+
+.accordion-wrap {
+  border-bottom: 2px solid $mainMedium;
+}
+
+.accordion-title {
+  align-items: center;
+  background-color: $mainLight;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  color: $textColor;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $mainMedium;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: #aaa;
+  }
+}
+
+.accordion-content {
+  background-color: $mainLight;
+  padding: 8px 12px;
+  border-top: none;
+}

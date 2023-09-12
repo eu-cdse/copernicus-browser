@@ -1,0 +1,30 @@
+{
+    "title": "CDSE Sentinel-1-SM_HH",
+    "layers": [
+        {
+            "id": "SM-SH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED",
+            "name": "HH - decibel gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "SM-SH-HH-LINEAR-GAMMA0-ORTHORECTIFIED",
+            "name": "HH - linear gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S1GRD",
+            "bands": [
+                "VV",
+                "VH",
+                "HH",
+                "HV"
+            ]
+        }
+    ]
+}

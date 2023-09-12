@@ -1,0 +1,36 @@
+@import '../../variables.module.scss';
+
+/* stylelint-disable */
+.fileUploadWindow {
+  color: $textColor;
+
+  .fileUploadPanel {
+    border: 2px dashed #aaa;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .geometryInput {
+    margin: 16px 0;
+    display: flex;
+
+    textarea {
+      width: 100%;
+      max-height: 50vh;
+      resize: vertical;
+    }
+  }
+
+  .ok {
+    box-shadow: 0 0 3px #0c0;
+  }
+
+  .false {
+    box-shadow: 0 0 3px #c00;
+  }
+
+  .error {
+    color: #c14444;
+  }
+}

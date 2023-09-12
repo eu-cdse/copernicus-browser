@@ -1,0 +1,22 @@
+@import './../../variables.module.scss';
+
+/* stylelint-disable */
+.measure-text {
+  display: inline-flex;
+  padding: 0 5px 0 5px;
+  color: $textColor;
+}
+
+.measurePanel {
+  position: absolute !important;
+  right: 10px;
+  top: 160px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+}

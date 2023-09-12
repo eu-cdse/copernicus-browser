@@ -1,0 +1,13 @@
+<svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <filter id="double-chevron-down">
+        <feColorMatrix
+				color-interpolation-filters="sRGB"
+				type="matrix"
+				values="0.71 0 0 0 0
+                0 0.75 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0"/>
+    </filter>
+    <path d="M1.5449 13.291L8.4579 6.37801L1.5449 13.291ZM15.3739 13.291L8.4579 6.37801L15.3739 13.291Z" stroke="#B6BF00" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M1.5449 7.91308L8.4579 1.00009L1.5449 7.91308ZM15.3739 7.91309L8.4579 1.00009L15.3739 7.91309Z" stroke="#B6BF00" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,91 @@
+@import './variables.module.scss';
+
+/* stylelint-disable */
+.sgDialogBox3d {
+  background-color: $mainLight !important;
+  color: $textColor !important;
+
+  .Caption {
+    background-color: $mainLight !important;
+    color: $textColor !important;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  select,
+  textarea {
+    background-color: $mainMedium !important;
+    color: $textColor !important;
+  }
+
+  // .actionClose {
+  //     background-color: $mainMedium !important;
+  // }
+
+  .sgButton3d {
+    background-color: $primaryColor !important;
+    color: $whiteColor !important;
+    border: none !important;
+  }
+
+  .sgSlider {
+    .sgSliderMainTrack {
+      background-color: $mainDark !important;
+      box-shadow: none !important;
+    }
+
+    .sgSliderLeft {
+      background-color: $primaryColor !important;
+    }
+
+    .sgSliderThumb {
+      background-color: $primaryColor !important;
+      border: 2px solid $primaryColor !important;
+    }
+  }
+
+  .sgDialogContent {
+    .helpControls {
+      h2,
+      h3 {
+        color: $textColor !important;
+      }
+    }
+  }
+}
+
+.sgDatePicker-calendarPopup {
+  .datePickerMonthSelector {
+    background-color: $mainMedium !important;
+    color: $textColor !important;
+
+    .datePickerMonth {
+      color: $textColor !important;
+    }
+
+    .datePickerNextButton,
+    .datePickerPreviousButton {
+      color: $textColor !important;
+    }
+  }
+
+  .datePickerDay:hover {
+    background-color: $mainDarkest !important;
+    color: $textColor !important;
+  }
+
+  .datePickerDayIsWeekend {
+    background-color: $mainMedium !important;
+  }
+
+  .datePickerDayIsToday {
+    background-color: $mainDarkest !important;
+  }
+
+  .datePickerWeekdayLabel,
+  .datePickerWeekendLabel,
+  .datePickerDayIsValue {
+    background-color: $primaryColor !important;
+  }
+}
+/* stylelint-enable */

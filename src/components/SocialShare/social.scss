@@ -1,0 +1,54 @@
+@import '../../variables.module.scss';
+
+.social-networks {
+  z-index: 5;
+  padding: 5px;
+  background-color: $whiteColor;
+  box-shadow: 0 2px 5px #000;
+  position: fixed;
+  color: #fff;
+  display: flex;
+  margin-top: 20px;
+
+  .copy-url {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .copy-to-clipboard {
+    margin-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    color: $primaryColor;
+    padding: 3px 8px 3px 3px;
+    cursor: pointer;
+  }
+
+  .holders {
+    .facebook-share-button,
+    .twitter-share-button,
+    .linkedin-share-button {
+      i {
+        font-size: 30px;
+        color: $primaryColor;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .social-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  input:disabled {
+    background: #ccc;
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

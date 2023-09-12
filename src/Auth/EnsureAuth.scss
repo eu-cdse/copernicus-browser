@@ -1,0 +1,23 @@
+@import '../variables.module.scss';
+
+.ensure-auth {
+  .ensure-user-logged-in-modal-text {
+    color: $textColor;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .login-button {
+    cursor: pointer;
+    color: $whiteColor;
+    padding: 10px 80px;
+    margin: 20px auto auto;
+    background-color: $primaryColor;
+    width: fit-content;
+    font-weight: $fontWeightBold;
+
+    &:hover {
+      background-color: $hoverPrimaryColor;
+    }
+  }
+}

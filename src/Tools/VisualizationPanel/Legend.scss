@@ -1,0 +1,163 @@
+@import '../../variables.module.scss';
+
+div.layer-details {
+  border-bottom: 1px solid #555;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  div.layer-legend {
+    padding: 5px 0 5px 0;
+
+    img {
+      max-width: 300px;
+      margin-left: 15px;
+    }
+
+    div.legend-item {
+      clear: both;
+    }
+
+    div.legend-item.discrete {
+      display: flex;
+      align-items: center;
+      padding: 2px 10px 2px 15px;
+
+      &.multiple-legends {
+        padding-left: 5px;
+      }
+
+      div.color {
+        min-width: 25px;
+        min-height: 25px;
+        border: 2px solid #777;
+        border-radius: 50%;
+      }
+
+      label {
+        display: block;
+        font-size: 12px;
+        margin-left: 10px;
+        color: $textColor;
+        white-space: pre-wrap;
+      }
+    }
+
+    div.legend-item.continuous {
+      display: flex;
+      padding: 0 0 5px 3px;
+
+      div.gradients {
+        display: flex;
+        flex-direction: column;
+        height: 200px;
+        width: 30px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 10px 0;
+        position: relative;
+
+        div.gradient {
+          width: 30px;
+          position: absolute;
+        }
+      }
+
+      div.ticks {
+        position: relative;
+        margin: 10px 0;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+
+        label.tick {
+          position: absolute;
+          display: block;
+          font-size: 12px;
+          line-height: 26px;
+          margin-bottom: -12px;
+          color: $textColor;
+        }
+
+        .hidden-width-placeholders {
+          display: flex;
+          flex-direction: column;
+
+          label.tick {
+            position: initial;
+            opacity: 0;
+            height: 10px;
+            display: inline-block;
+          }
+        }
+
+        label.tick::before {
+          content: '';
+          display: block;
+          float: left;
+          width: 5px;
+          height: 13px;
+          border-bottom: 1px solid #999;
+          margin-right: 5px;
+        }
+
+        label.tick.min::before,
+        label.tick.max::before {
+          content: '';
+          display: block;
+          float: left;
+          width: 10px;
+          height: 13px;
+          border-bottom: 1px solid #999;
+          margin-right: 5px;
+          margin-left: -5px;
+        }
+      }
+    }
+  }
+
+  div.layer-description {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 15px;
+    padding-right: 30px;
+    color: $textColor;
+    min-width: 50%;
+
+    h1,
+    h2,
+    h3 {
+      color: $textColor;
+    }
+
+    h1 {
+      font-size: 16px;
+    }
+
+    h2 {
+      font-size: 14px;
+    }
+
+    h3 {
+      font-size: 13px;
+    }
+
+    p {
+      text-align: justify;
+      font-size: 12px;
+    }
+
+    a {
+      color: $primaryColor;
+      cursor: pointer;
+    }
+
+    code {
+      background-color: #212a3a;
+      padding: 0 4px;
+      border-radius: 2px;
+      font-size: 11px;
+    }
+  }
+}

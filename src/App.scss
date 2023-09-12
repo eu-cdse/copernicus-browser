@@ -1,0 +1,34 @@
+@import './variables.module.scss';
+
+html,
+body,
+#root,
+#app,
+#map {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 16px;
+
+  input {
+    border-radius: 0;
+  }
+}
+
+#app {
+  display: flex;
+}
+
+.rodal {
+  z-index: 1000;
+}
+
+.rodal-dialog {
+  background: $mainLight;
+}
+
+.fa-exclamation-circle {
+  padding: 0 5px !important;
+}

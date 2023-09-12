@@ -1,0 +1,25 @@
+@import '../../variables.module.scss';
+
+.badge-wrapper {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+
+  .badge {
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    background: $primaryColor;
+    color: $mainDark;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border-radius: 50%;
+    font-size: 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+}

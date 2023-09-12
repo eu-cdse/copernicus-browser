@@ -1,0 +1,43 @@
+@import './../../variables.module.scss';
+
+.histogram-wrapper {
+  .histogram-button-wrapper {
+    z-index: 400;
+    cursor: pointer;
+    position: absolute;
+    top: 410px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+    background: $mainLight;
+    color: #fff;
+    -webkit-box-shadow: $boxShadow;
+    box-shadow: $boxShadow;
+    text-align: center;
+
+    .histogram-button {
+      display: flex;
+      flex-direction: column;
+      height: inherit;
+      width: inherit;
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      i {
+        align-self: flex-end;
+        font-size: 21px;
+        line-height: 40px;
+        width: 40px;
+        cursor: pointer;
+        color: $primaryColor;
+      }
+
+      &.active i {
+        color: $primaryColor;
+      }
+    }
+  }
+}

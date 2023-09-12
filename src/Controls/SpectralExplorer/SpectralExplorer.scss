@@ -1,0 +1,189 @@
+@import '../../variables.module.scss';
+
+.spectral-explorer {
+  color: $textColor;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .fetching {
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .error-message {
+    word-break: break-all;
+    margin-bottom: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+
+    div {
+      padding: 10px;
+    }
+  }
+
+  .content {
+    padding: 0 10px;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .tabs {
+      padding: 10px;
+
+      .eob-btn {
+        border-bottom: 3px solid $mainDark;
+        display: inline-block;
+        color: $textColor;
+        background: $whiteBackground;
+        margin-right: 5px;
+      }
+
+      .eob-btn.selected {
+        border-bottom: 3px solid $primaryColor;
+      }
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      justify-content: space-evenly;
+      flex-direction: column;
+
+      .tooltip-content {
+        background-color: $mainMedium;
+        color: $textColor;
+        padding: 10px;
+        border-radius: 5px;
+        min-width: max-content;
+        white-space: nowrap;
+
+        .header {
+          font-weight: bold;
+          padding: 5px;
+          text-align: center;
+        }
+
+        .line-item {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          text-align: left;
+          padding: 5px;
+
+          .box {
+            width: 10px;
+            height: 10px;
+          }
+
+          .name {
+            margin: 0 5px;
+          }
+
+          .value {
+            font-weight: bold;
+          }
+        }
+      }
+
+      .chart {
+        svg.background-graphics {
+          text {
+            fill: $textColor;
+          }
+
+          path,
+          line {
+            fill: none;
+          }
+
+          path.tick-line {
+            shape-rendering: crispEdges;
+            stroke: #666;
+            stroke-dasharray: 5, 5;
+          }
+
+          line.axis-baseline {
+            shape-rendering: crispEdges;
+            stroke: $textColor;
+          }
+        }
+
+        svg.visualization-layer {
+          text {
+            fill: $textColor;
+          }
+
+          path,
+          line {
+            fill: none;
+          }
+
+          path.tick-line {
+            shape-rendering: crispEdges;
+            stroke: #666;
+            stroke-dasharray: 5, 5;
+          }
+
+          line.axis-baseline {
+            shape-rendering: crispEdges;
+            stroke: $textColor;
+          }
+        }
+      }
+
+      .values-table {
+        overflow-x: auto;
+        width: 100%;
+        max-height: 400px;
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        th,
+        td {
+          padding: 5px;
+          border: 1px solid $textColor;
+          text-align: center;
+          min-width: 50px;
+        }
+
+        th {
+          font-weight: bold;
+        }
+      }
+
+      .legend {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+
+        .item {
+          padding: 5px;
+          cursor: pointer;
+
+          span {
+            padding: 0 5px;
+            color: $textColor;
+          }
+        }
+      }
+    }
+  }
+}

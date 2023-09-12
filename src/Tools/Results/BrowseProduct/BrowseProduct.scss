@@ -1,0 +1,55 @@
+@import '../../../variables.module.scss';
+
+.browse-product-modal {
+  .rodal-dialog {
+    top: 20vh;
+    bottom: auto;
+  }
+
+  .loader {
+    min-height: 100px;
+  }
+
+  .error {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    div {
+      padding: 5px;
+    }
+  }
+}
+
+.browse-product-title {
+  font-weight: $fontWeightBold;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: $primaryColor;
+  margin: 0;
+}
+
+.browse-product {
+  display: flex;
+  flex-flow: column;
+  color: $textColor;
+  margin-top: 10px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0 0 0;
+
+    .eob-btn.disabled {
+      cursor: pointer;
+    }
+  }
+}

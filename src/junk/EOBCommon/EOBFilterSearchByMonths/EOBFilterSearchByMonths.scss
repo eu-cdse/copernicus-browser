@@ -1,0 +1,19 @@
+@import '../../../variables.module.scss';
+
+.filter-search-by-months {
+  color: $textColor;
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px 10px 8px;
+
+  .months {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 6px;
+    margin: 7px 0 0 0;
+    justify-content: space-between;
+    border-top: 1px solid $mainDark;
+    padding-top: 7px;
+  }
+}

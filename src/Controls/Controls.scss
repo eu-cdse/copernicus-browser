@@ -1,0 +1,25 @@
+@keyframes slide-in {
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+.controls-wrapper {
+  .animated {
+    .panelButton { /* stylelint-disable-line */
+      transform: translateX(100%);
+      -webkit-transform: translateX(100%);
+      -webkit-animation: slide-in 2s forwards; /* Safari, Chrome and Opera > 12.1 */
+      -moz-animation: slide-in 2s forwards; /* Firefox < 16 */
+      -ms-animation: slide-in 2s forwards; /* Internet Explorer */
+      -o-animation: slide-in 2s forwards; /* Opera < 12.1 */
+      animation: slide-in 2s forwards;
+    }
+  }
+}

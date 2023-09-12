@@ -1,0 +1,50 @@
+@import '../../variables.module.scss';
+
+div.commercial-data-description {
+  padding: 5px;
+  margin-right: 0;
+  background-color: $mainMedium;
+
+  strong {
+    color: $textColor;
+  }
+
+  p {
+    font-size: 1em;
+
+    img {
+      width: 100%;
+    }
+
+    &:nth-of-type(3) {
+      margin-bottom: 0;
+    }
+
+    &:nth-of-type(4) {
+      margin-top: 0;
+      font-size: 10px;
+    }
+  }
+
+  a {
+    color: $primaryColor;
+  }
+
+  ul {
+    padding-inline-start: 1.5em;
+
+    li {
+      padding: 5px;
+    }
+  }
+
+  .commercial-video-player {
+    width: 100%;
+    height: 250px;
+  }
+}
+
+.commercial-data-button {
+  margin: 15px 0;
+  font-size: 15px;
+}

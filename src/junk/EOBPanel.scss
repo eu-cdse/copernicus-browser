@@ -1,0 +1,187 @@
+/* stylelint-disable */
+@import '../variables.module.scss';
+
+.panelButton {
+  position: absolute !important;
+  right: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+  background: $mainLight;
+  color: $whiteColor;
+  height: 40px;
+  -webkit-box-shadow: 0 2px 5px #000;
+  box-shadow: 0 2px 5px #000;
+  text-align: center;
+
+  &.aoiPanel {
+    top: 60px;
+
+    .area-text {
+      padding: 5px;
+    }
+  }
+
+  &.poiPanel {
+    top: 160px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .index-value {
+      padding: 5px;
+    }
+  }
+
+  &.measurePanel {
+    top: 210px;
+
+    .aoiCords {
+      padding-left: 5px;
+    }
+  }
+
+  &.loiPanel {
+    top: 110px;
+    z-index: 400;
+
+    .loiIcon {
+      background-color: $whiteBackground;
+      height: 40px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      svg g {
+        fill: $primaryColor;
+      }
+    }
+  }
+
+  &.screenshotPanelButton {
+    top: 260px;
+  }
+
+  &.timelapsePanelButton {
+    top: 310px;
+  }
+
+  &.timelapsePanelButton.is3d {
+    top: 260px;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+
+  .drawGeometry {
+    background-color: $mainLight;
+    height: 40px;
+  }
+
+  i {
+    font-size: 21px;
+    line-height: 40px;
+    width: 40px;
+    cursor: pointer;
+    color: $primaryColor;
+  }
+
+  a {
+    color: $whiteColor;
+    background: none;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+
+    &.active {
+      color: $primaryColor;
+
+      svg path {
+        fill: $primaryColor;
+      }
+
+      i {
+        color: $primaryColor;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .badge-wrapper {
+    margin-right: 0;
+    .badge {
+      right: 1px;
+      top: 1px;
+    }
+  }
+}
+
+.floatItem {
+  position: relative;
+  background: $mainMedium;
+  padding: 0;
+  color: $textColor;
+  margin: 0;
+  height: $controlsHeight;
+  border: none;
+  overflow: visible;
+  box-shadow: 0 2px 5px #000;
+
+  > i {
+    width: $controlsHeight;
+    height: $controlsHeight;
+    background: $mainDark;
+    color: $primaryColor;
+    text-align: center;
+    line-height: $controlsHeight - 2px;
+
+    & + span {
+      font-size: 15px;
+      padding: 0 16px;
+    }
+  }
+
+  svg path {
+    fill: $primaryColor;
+  }
+}
+
+@media screen and (max-width: $breakpoint-700) {
+  .floatItem {
+    z-index: 1;
+    box-shadow: none;
+
+    & > i {
+      cursor: pointer;
+    }
+
+    & > span.hideable {
+      width: 0;
+      height: 0;
+      display: block;
+      overflow: hidden;
+    }
+
+    &.active > span.hideable {
+      width: auto;
+      height: auto;
+      overflow: visible;
+      position: absolute;
+      right: 100%;
+      top: 0;
+      bottom: 0;
+      line-height: 28px;
+      text-align: center;
+      background: $mainMedium;
+      white-space: nowrap;
+      padding: 2px 5px;
+      box-shadow: 0 2px 10px #000;
+    }
+  }
+}

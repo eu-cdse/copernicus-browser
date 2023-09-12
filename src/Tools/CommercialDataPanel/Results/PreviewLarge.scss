@@ -1,0 +1,22 @@
+@import '../../../variables.module.scss';
+
+.preview-large {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .button {
+    margin-top: auto;
+  }
+}
