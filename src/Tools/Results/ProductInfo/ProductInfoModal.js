@@ -13,7 +13,7 @@ const ProductInfoModal = ({ selectedResult, params }) => {
       animation="slideUp"
       className="product-info-modal"
       customStyles={{
-        width: '50vw',
+        width: '200px',
         height: 'auto',
       }}
       visible={true}

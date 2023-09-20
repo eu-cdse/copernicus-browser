@@ -53,7 +53,7 @@ const initializeStatisticsLayer = async ({
     PIXEL_VALUE_MANDATORY_OUTPUTS,
   );
 
-  if (!statisticsLayer) {
+  if (!(statisticsLayer && supportStatisticalApi)) {
     return { enabled: false, statisticsLayer: null };
   }
 

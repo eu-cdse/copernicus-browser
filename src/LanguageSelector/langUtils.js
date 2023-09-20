@@ -3,23 +3,15 @@ import moment from 'moment';
 import axios from 'axios';
 import store, { languageSlice } from '../store';
 
-export const LOCAL_STORAGE_KEY = 'eobrowser_lang';
+export const LOCAL_STORAGE_KEY = 'copernicus_browser_lang';
 export const DEFAULT_LANG = 'en';
 export const SUPPORTED_LANGUAGES = [
   { langCode: 'en', text: 'English', flagCode: 'GB' },
-  { langCode: 'da', text: 'Dansk', flagCode: 'DK' },
   { langCode: 'de', text: 'Deutsch', flagCode: 'DE' },
-  { langCode: 'et', text: 'Eesti keel', flagCode: 'EE' },
-  { langCode: 'es', text: 'español', flagCode: 'ES' },
   { langCode: 'fr', text: 'Français', flagCode: 'FR' },
-  { langCode: 'el', text: 'ελληνικά', flagCode: 'GR' },
-  { langCode: 'lv', text: 'latviešu', flagCode: 'LV' },
-  { langCode: 'pl', text: 'polski', flagCode: 'PL' },
-  { langCode: 'pt', text: 'português', flagCode: 'PT' },
-  { langCode: 'sl', text: 'slovenščina', flagCode: 'SI' },
-  { langCode: 'fi', text: 'suomi', flagCode: 'FI' },
-  { langCode: 'sv', text: 'Svenska', flagCode: 'SE' },
-  { langCode: 'uk', text: 'Українська', flagCode: 'UA' },
+
+  /* TO is language that won't be translated in the near future and is used as a pseudo option link for 'More Info' */
+  { text: 'More info', flagCode: 'TO' },
 ];
 
 export const changeLanguage = async (locale) => {

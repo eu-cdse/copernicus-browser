@@ -26,12 +26,15 @@ const initializedLanguages = async () => {
   return [...new Set(files.map((fileName) => fileName.split('.')[0]))];
 };
 
+// Return a clean array of objects with the proper format
+const excludePseudoLanguage = (sLang) => sLang.filter((l) => l.langCode !== undefined);
+
 // creates .po files for each supported translation if these files were not created before
 const initializeTranslations = async () => {
   //unique list of all languages that have been initialized before running this function
   const foundInitializedLanguages = await initializedLanguages();
   // "npx ttag update  src/translations/en.po src && npx ttag po2json src/translations/en.po > src/translations/en.po.json"
-  const initAllPromises = SUPPORTED_LANGUAGES.map(async (lang) => {
+  const initAllPromises = excludePseudoLanguage(SUPPORTED_LANGUAGES).map(async (lang) => {
     //language has not been initialzed
     if (!foundInitializedLanguages.includes(lang.langCode)) {
       try {
@@ -49,7 +52,7 @@ const initializeTranslations = async () => {
 
 // goes though all supported languages and updates its po and po.json files
 const updateTranslations = async () => {
-  const updateAllPromise = SUPPORTED_LANGUAGES.map(async (lang) => {
+  const updateAllPromise = excludePseudoLanguage(SUPPORTED_LANGUAGES).map(async (lang) => {
     try {
       const filePath = path.join(translationsPath, lang.langCode);
       await exec(

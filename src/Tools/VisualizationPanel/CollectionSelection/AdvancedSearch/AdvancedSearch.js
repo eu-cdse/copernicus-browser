@@ -445,7 +445,7 @@ class AdvancedSearch extends Component {
               <div>
                 <input
                   type="text"
-                  placeholder={`Product name`}
+                  placeholder={t`Product name`}
                   value={this.state.searchCriteria}
                   onChange={(e) => this.setState({ searchCriteria: e.target.value.toUpperCase() })}
                 />

@@ -25,9 +25,13 @@ import {
   ASCENDING,
   DESCENDING,
   S1_CDAS_IW_VVVH,
+  S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
+  S1_CDAS_IW_HH,
   S1_CDAS_EW_HHHV,
+  S1_CDAS_EW_VVVH,
   S1_CDAS_EW_HH,
+  S1_CDAS_EW_VV,
   S1_CDAS_SM_VVVH,
   S1_CDAS_SM_VV,
   S1_CDAS_SM_HHHV,
@@ -93,10 +97,14 @@ export const S1_OBSERVATION_SCENARIOS = {
     IW: {
       VV: 'VV',
       VVVH: 'VV+VH',
+      HH: 'HH',
+      HHHV: 'HH+HV',
     },
     EW: {
       HH: 'HH',
       HHHV: 'HH+HV',
+      VV: 'VV',
+      VVVH: 'VV+VH',
     },
   },
   ORBIT_DIRECTIONS: {
@@ -133,14 +141,18 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       max: 18,
     },
     [S1_AWS_EW_HHHV]: {
-      min: 6,
+      min: 7,
       max: 18,
     },
     [S1_AWS_EW_HH]: {
-      min: 6,
+      min: 7,
       max: 18,
     },
     [S1_CDAS_IW_VVVH]: {
+      min: 7,
+      max: 18,
+    },
+    [S1_CDAS_IW_HHHV]: {
       min: 7,
       max: 18,
     },
@@ -148,12 +160,24 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       min: 7,
       max: 18,
     },
+    [S1_CDAS_IW_HH]: {
+      min: 7,
+      max: 18,
+    },
     [S1_CDAS_EW_HHHV]: {
-      min: 6,
+      min: 7,
+      max: 18,
+    },
+    [S1_CDAS_EW_VVVH]: {
+      min: 7,
       max: 18,
     },
     [S1_CDAS_EW_HH]: {
-      min: 6,
+      min: 7,
+      max: 18,
+    },
+    [S1_CDAS_EW_VV]: {
+      min: 7,
       max: 18,
     },
     [S1_CDAS_SM_VVVH]: {
@@ -165,20 +189,24 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       max: 18,
     },
     [S1_CDAS_SM_HHHV]: {
-      min: 6,
+      min: 7,
       max: 18,
     },
     [S1_CDAS_SM_HH]: {
-      min: 6,
+      min: 7,
       max: 18,
     },
   };
 
   getDatasetSearchLabels = () => ({
     [S1_CDAS_IW_VVVH]: 'Sentinel-1 IW VV+VH',
+    [S1_CDAS_IW_HHHV]: 'Sentinel-1 IW HH+HV',
     [S1_CDAS_IW_VV]: 'Sentinel-1 IW VV',
+    [S1_CDAS_IW_HH]: 'Sentinel-1 IW HH',
     [S1_CDAS_EW_HHHV]: 'Sentinel-1 EW HH+HV',
+    [S1_CDAS_EW_VVVH]: 'Sentinel-1 EW VV+VH',
     [S1_CDAS_EW_HH]: 'Sentinel-1 EW HH',
+    [S1_CDAS_EW_VV]: 'Sentinel-1 EW VV',
     [S1_CDAS_SM_VVVH]: 'Sentinel-1 SM VV+VH',
     [S1_CDAS_SM_VV]: 'Sentinel-1 SM VV',
     [S1_CDAS_SM_HHHV]: 'Sentinel-1 SM HH+HV',
@@ -265,12 +293,20 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
       const hasVV = IWLayers.some((l) => l.polarization === Polarization.SV);
       const hasVVVH = IWLayers.some((l) => l.polarization === Polarization.DV);
+      const hasHH = IWLayers.some((l) => l.polarization === Polarization.SH);
+      const hasHHHV = IWLayers.some((l) => l.polarization === Polarization.DH);
 
       if (hasVV) {
         this.polarizations.IW.VV = this.POLARIZATIONS.IW.VV;
       }
       if (hasVVVH) {
         this.polarizations.IW.VVVH = this.POLARIZATIONS.IW.VVVH;
+      }
+      if (hasHH) {
+        this.polarizations.IW.HH = this.POLARIZATIONS.IW.HH;
+      }
+      if (hasHHHV) {
+        this.polarizations.IW.HHHV = this.POLARIZATIONS.IW.HHHV;
       }
     }
 
@@ -279,12 +315,20 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
       const hasHH = EWLayers.some((l) => l.polarization === Polarization.SH);
       const hasHHHV = EWLayers.some((l) => l.polarization === Polarization.DH);
+      const hasVV = EWLayers.some((l) => l.polarization === Polarization.SV);
+      const hasVVVH = EWLayers.some((l) => l.polarization === Polarization.DV);
 
       if (hasHH) {
         this.polarizations.EW.HH = this.POLARIZATIONS.EW.HH;
       }
       if (hasHHHV) {
         this.polarizations.EW.HHHV = this.POLARIZATIONS.EW.HHHV;
+      }
+      if (hasVV) {
+        this.polarizations.EW.VV = this.POLARIZATIONS.EW.VV;
+      }
+      if (hasVVVH) {
+        this.polarizations.EW.VVVH = this.POLARIZATIONS.EW.VVVH;
       }
     }
 
@@ -343,9 +387,19 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       availableDatasets.push(S1_CDAS_IW_VVVH);
     }
     if (
+      CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.DH)
+    ) {
+      availableDatasets.push(S1_CDAS_IW_HHHV);
+    }
+    if (
       CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.SV)
     ) {
       availableDatasets.push(S1_CDAS_IW_VV);
+    }
+    if (
+      CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.SH)
+    ) {
+      availableDatasets.push(S1_CDAS_IW_HH);
     }
     if (
       CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.DH)
@@ -353,9 +407,19 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       availableDatasets.push(S1_CDAS_EW_HHHV);
     }
     if (
+      CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.DV)
+    ) {
+      availableDatasets.push(S1_CDAS_EW_VVVH);
+    }
+    if (
       CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.SH)
     ) {
       availableDatasets.push(S1_CDAS_EW_HH);
+    }
+    if (
+      CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.SV)
+    ) {
+      availableDatasets.push(S1_CDAS_EW_VV);
     }
     if (
       CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.SM && l.polarization === Polarization.DV)
@@ -402,9 +466,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     const isEW = this.searchFilters['acquisitionModes'].includes('EW');
     const isSM = this.searchFilters['acquisitionModes'].includes('SM');
     const isIW_VV = isIW && this.searchFilters['polarizations'].includes('VV');
+    const isIW_HH = isIW && this.searchFilters['polarizations'].includes('HH');
     const isIW_VVVH = isIW && this.searchFilters['polarizations'].includes('VVVH');
+    const isIW_HHHV = isIW && this.searchFilters['polarizations'].includes('HHHV');
     const isEW_HH = isEW && this.searchFilters['polarizations'].includes('HH');
+    const isEW_VV = isEW && this.searchFilters['polarizations'].includes('VV');
     const isEW_HHHV = isEW && this.searchFilters['polarizations'].includes('HHHV');
+    const isEW_VVVH = isEW && this.searchFilters['polarizations'].includes('VVVH');
     const isSM_VV = isSM && this.searchFilters['polarizations'].includes('VV');
     const isSM_VVVH = isSM && this.searchFilters['polarizations'].includes('VVVH');
     const isSM_HH = isSM && this.searchFilters['polarizations'].includes('HH');
@@ -452,14 +520,26 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       if (isIW_VV) {
         selectedDatasets.push(S1_CDAS_IW_VV);
       }
+      if (isIW_HH) {
+        selectedDatasets.push(S1_CDAS_IW_HH);
+      }
       if (isIW_VVVH) {
         selectedDatasets.push(S1_CDAS_IW_VVVH);
+      }
+      if (isIW_HHHV) {
+        selectedDatasets.push(S1_CDAS_IW_HHHV);
       }
       if (isEW_HH) {
         selectedDatasets.push(S1_CDAS_EW_HH);
       }
+      if (isEW_VV) {
+        selectedDatasets.push(S1_CDAS_EW_VV);
+      }
       if (isEW_HHHV) {
         selectedDatasets.push(S1_CDAS_EW_HHHV);
+      }
+      if (isEW_VVVH) {
+        selectedDatasets.push(S1_CDAS_EW_VVVH);
       }
       if (isSM_VV) {
         selectedDatasets.push(S1_CDAS_SM_VV);
@@ -527,18 +607,22 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     switch (datasetId) {
       case S1_AWS_IW_VV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VV:
         return this.KNOWN_BANDS.filter((b) => ['VV'].includes(b.name));
       case S1_AWS_EW_HHHV:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_SM_HHHV:
         return this.KNOWN_BANDS.filter((b) => ['HH', 'HV'].includes(b.name));
       case S1_AWS_EW_HH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_SM_HH:
         return this.KNOWN_BANDS.filter((b) => ['HH'].includes(b.name));
       case S1_AWS_IW_VVVH:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_SM_VVVH:
         return this.KNOWN_BANDS.filter((b) => ['VV', 'VH'].includes(b.name));
       default:
@@ -590,10 +674,22 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.IW,
           resolution: Resolution.HIGH,
         };
+      case S1_CDAS_IW_HHHV:
+        return {
+          polarization: Polarization.DH,
+          acquisitionMode: AcquisitionMode.IW,
+          resolution: Resolution.HIGH,
+        };
       case S1_AWS_IW_VV:
       case S1_CDAS_IW_VV:
         return {
           polarization: Polarization.SV,
+          acquisitionMode: AcquisitionMode.IW,
+          resolution: Resolution.HIGH,
+        };
+      case S1_CDAS_IW_HH:
+        return {
+          polarization: Polarization.SH,
           acquisitionMode: AcquisitionMode.IW,
           resolution: Resolution.HIGH,
         };
@@ -604,10 +700,22 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.EW,
           resolution: Resolution.MEDIUM,
         };
+      case S1_CDAS_EW_VVVH:
+        return {
+          polarization: Polarization.DV,
+          acquisitionMode: AcquisitionMode.EW,
+          resolution: Resolution.MEDIUM,
+        };
       case S1_AWS_EW_HH:
       case S1_CDAS_EW_HH:
         return {
           polarization: Polarization.SH,
+          acquisitionMode: AcquisitionMode.EW,
+          resolution: Resolution.MEDIUM,
+        };
+      case S1_CDAS_EW_VV:
+        return {
+          polarization: Polarization.SV,
           acquisitionMode: AcquisitionMode.EW,
           resolution: Resolution.MEDIUM,
         };
@@ -632,9 +740,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_EW_HH:
         return DATASET_AWSEU_S1GRD;
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -651,10 +763,14 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_IW_VV:
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -685,9 +801,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -707,12 +827,16 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_IW_VVVH:
       case S1_AWS_IW_VV:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
         return currentZoom >= ZoomThresholdIW;
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
         return currentZoom >= ZoomThresholdEW;
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
@@ -731,9 +855,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -751,9 +879,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -771,9 +903,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       case S1_AWS_EW_HHHV:
       case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:
@@ -830,9 +966,13 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           resolution: resolution,
         });
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:

@@ -2172,7 +2172,7 @@ msgstr ""
 "pārsniedz 0.42 tiek uzskatītas par sniegotām"
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr "Sentinel2 datu klasifikācija, izmantojot EKA ainu klasifikācijas algoritmu."
 

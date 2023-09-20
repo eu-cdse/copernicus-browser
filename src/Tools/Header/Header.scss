@@ -65,7 +65,6 @@
       color: $whiteColor;
       font-size: 14px;
       white-space: nowrap;
-      overflow-x: clip;
       text-overflow: ellipsis;
       padding: 5px 10px;
 
@@ -85,7 +84,6 @@
         color: $textColor;
 
         .user-menu-username-button {
-          font-weight: $fontWeightBold;
           text-decoration: none;
         }
       }
@@ -96,11 +94,13 @@
         background-color: $whiteColor;
         text-decoration: none;
         text-align: center;
-        top: 25px;
+        min-width: 90px;
+        top: 26px;
         left: 0;
         right: 0;
         margin-top: 1.5px;
         padding: 2px;
+        box-shadow: 0 3px 6px 6px rgba(0, 0, 0, 0.1);
 
         .user-menu-button-dropdown-item {
           background-color: $whiteColor;
@@ -120,7 +120,7 @@
 
     .login-button {
       color: $whiteColor;
-      font-size: 16px;
+      font-size: 14px;
       text-decoration: underline;
       cursor: pointer;
       padding: 5px 15px;

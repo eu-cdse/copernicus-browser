@@ -97,9 +97,13 @@ import {
   AWS_HLS_LANDSAT,
   AWS_HLS_SENTINEL,
   S1_CDAS_IW_VVVH,
+  S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
+  S1_CDAS_IW_HH,
   S1_CDAS_EW_HHHV,
+  S1_CDAS_EW_VVVH,
   S1_CDAS_EW_HH,
+  S1_CDAS_EW_VV,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
   S3OLCI_CDAS,
@@ -521,9 +525,13 @@ class SentinelHubLayer extends L.TileLayer {
         });
       }
       case S1_CDAS_IW_VVVH:
+      case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
+      case S1_CDAS_IW_HH:
       case S1_CDAS_EW_HHHV:
+      case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
+      case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VVVH:
       case S1_CDAS_SM_VV:
       case S1_CDAS_SM_HHHV:

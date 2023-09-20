@@ -259,3 +259,5 @@ export const COMPARE_OPTIONS = {
 };
 
 export const MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL = 1080;
+
+export const CDSE_GITHUB_PAGE_LINK = 'https://github.com/eu-cdse/copernicus-browser#multilanguage-support';

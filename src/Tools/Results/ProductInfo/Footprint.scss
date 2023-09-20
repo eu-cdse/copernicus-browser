@@ -1,0 +1,13 @@
+@import '../../../variables.module.scss';
+
+.footprint-container {
+  display: flex;
+  justify-content: center;
+}
+
+.footprint-map {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex: 1;
+}

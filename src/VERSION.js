@@ -1,1 +1,1 @@
-export const VERSION_INFO = { tag: 'CDSE-v1.5.2', branch: 'CDSE-v1.5.2', commit: '11cf1d25b5f8d942cc6ab4baba36b062f6f26a8a' }
+export const VERSION_INFO = { tag: 'CDSE-v1.5.3', branch: 'CDSE-v1.5.3', commit: '62f375c79f0cfcba1dcce272a8222c817b516391' }

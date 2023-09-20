@@ -1,5 +1,16 @@
 import InputWithBouncyLimit from '../../../../../components/InputWithBouncyLimit/InputWithBouncyLimit';
+import { isFunction } from '../../../../../utils';
 import CollectionTooltip from '../../CollectionTooltip/CollectionTooltip';
+
+const getValue = (input) => {
+  let value = input;
+
+  if (input && isFunction(input)) {
+    value = input();
+  }
+
+  return value;
+};
 
 export const NumericInput = ({ input, value = '', onChange }) => {
   return (
@@ -14,9 +25,9 @@ export const NumericInput = ({ input, value = '', onChange }) => {
       <div className="content">
         <InputWithBouncyLimit
           type={input.type}
-          placeholder={input.placeholder}
-          min={input.min}
-          max={input.max}
+          placeholder={getValue(input.placeholder)}
+          min={getValue(input.min)}
+          max={getValue(input.max)}
           step={1}
           timeoutDuration={1000}
           value={value}

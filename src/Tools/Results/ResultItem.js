@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { t } from 'ttag';
 
 import store, { productDownloadSlice, notificationSlice, visualizationSlice } from '../../store';
@@ -14,13 +14,18 @@ import { handleError } from '../../utils';
 import {
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
+  S1_CDAS_EW_VV,
+  S1_CDAS_EW_VVVH,
   S1_CDAS_IW_VV,
   S1_CDAS_IW_VVVH,
+  S1_CDAS_IW_HH,
+  S1_CDAS_IW_HHHV,
 } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { reqConfigMemoryCache } from '../../const';
+import ProductPreview from './ProductPreview/ProductPreview';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -109,7 +114,6 @@ const ResultItem = ({
     size,
     contentLength,
   } = tile;
-  const [previewError, setPreviewError] = useState(false);
 
   const [{ downloadError }, downloadProduct] = useODataDownload();
 
@@ -136,7 +140,18 @@ const ResultItem = ({
       return;
     }
 
-    if ([S1_CDAS_IW_VV, S1_CDAS_IW_VVVH, S1_CDAS_EW_HH, S1_CDAS_EW_HHHV].includes(datasetId)) {
+    if (
+      [
+        S1_CDAS_IW_VV,
+        S1_CDAS_IW_VVVH,
+        S1_CDAS_IW_HH,
+        S1_CDAS_IW_HHHV,
+        S1_CDAS_EW_HH,
+        S1_CDAS_EW_HHHV,
+        S1_CDAS_EW_VV,
+        S1_CDAS_EW_VVVH,
+      ].includes(datasetId)
+    ) {
       const orbitDirection = searchFormData?.collectionForm?.selectedFilters?.S1?.orbitDirection;
       if (orbitDirection) {
         store.dispatch(
@@ -157,14 +172,7 @@ const ResultItem = ({
   return (
     <div onMouseEnter={(e) => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
       <div className="container">
-        {previewUrl && !previewError ? (
-          <div className="preview-image">
-            <img src={previewUrl} alt={name} onError={() => setPreviewError(true)} />
-          </div>
-        ) : (
-          <div className="no-image">{t`No preview available`}</div>
-        )}
-
+        <ProductPreview previewUrl={previewUrl} name={name} />
         <div className="details">
           <div className="title" title={oDataHelpers.formatAttributesNames('name')}>
             {name}

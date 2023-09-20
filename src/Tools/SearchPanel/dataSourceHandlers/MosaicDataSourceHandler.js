@@ -31,7 +31,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   limitMonthsSearch = 12;
 
   KNOWN_COLLECTIONS = {
-    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: ['c032fa-YOUR-INSTANCEID-HERE'],
+    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: ['65d4af-YOUR-INSTANCEID-HERE'],
   };
 
   MIN_MAX_DATES = {

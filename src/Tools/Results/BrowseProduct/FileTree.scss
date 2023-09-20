@@ -2,7 +2,7 @@
 
 .file-tree {
   padding: 10px;
-  background-color: $mainMedium;
+  background-color: $mainDark;
   display: flex;
   flex-flow: column;
   color: $textColor;
@@ -25,7 +25,7 @@
     flex-grow: 0;
 
     .selected {
-      background-color: $mainDark;
+      background-color: $mainDarkest;
     }
 
     .expanded {
@@ -65,7 +65,7 @@
     word-break: break-word;
 
     &:hover {
-      background-color: $mainDark;
+      background-color: $mainMedium;
     }
   }
 }

@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import store, { languageSlice } from '../store';
-import { changeLanguage, /* getLanguage,*/ DEFAULT_LANG } from './langUtils';
+import { changeLanguage, getLanguage } from './langUtils';
 
 class LanguageProvider extends React.Component {
   async componentDidMount() {
-    // const language = getLanguage();
-    const language = DEFAULT_LANG;
+    const language = getLanguage();
     await changeLanguage(language);
     store.dispatch(languageSlice.actions.setLanguage(language));
   }

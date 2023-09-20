@@ -7127,7 +7127,7 @@ msgstr ""
 "επεξεργασία του κώδικα."
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr ""
 "Ταξινόμηση δεδομένων Sentinel 2 ως αποτέλεσμα του αλγορίθμου ταξινόμησης "

@@ -73,30 +73,6 @@ $headerPadding: 10px;
       grid-gap: 5px 10px;
     }
 
-    .no-image {
-      display: flex;
-      flex: 1;
-      text-align: center;
-      align-items: center;
-      font-style: italic;
-      opacity: 0.6;
-      padding: 0 0 5px 0;
-      max-width: 64px;
-    }
-
-    .preview-image {
-      display: flex;
-      text-align: center;
-      align-self: center;
-      justify-self: center;
-
-      img {
-        width: 64px;
-        height: 64px;
-        object-fit: cover;
-      }
-    }
-
     .eob-btn {
       padding: 2px 5px;
       font-size: 12px;

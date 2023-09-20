@@ -36,11 +36,13 @@
   color: $textColor;
   margin-top: 10px;
 
-  .content {
+  .browse-product-content {
     display: flex;
     flex-direction: column;
-    max-height: 50vh;
-    overflow-y: scroll;
+
+    .file-tree {
+      padding: 0;
+    }
   }
 
   .actions {

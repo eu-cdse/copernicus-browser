@@ -104,9 +104,13 @@ import {
   AWS_HLS_LANDSAT,
   AWS_HLS_SENTINEL,
   S1_CDAS_IW_VVVH,
+  S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
+  S1_CDAS_IW_HH,
   S1_CDAS_EW_HHHV,
+  S1_CDAS_EW_VVVH,
   S1_CDAS_EW_HH,
+  S1_CDAS_EW_VV,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
   S3SLSTR_CDAS,
@@ -368,9 +372,13 @@ export function datasourceForDatasetId(datasetId) {
     case S1_AWS_EW_HHHV:
     case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
+    case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
+    case S1_CDAS_IW_HH:
     case S1_CDAS_EW_HHHV:
+    case S1_CDAS_EW_VVVH:
     case S1_CDAS_EW_HH:
+    case S1_CDAS_EW_VV:
     case S1_CDAS_SM_VVVH:
     case S1_CDAS_SM_VV:
     case S1_CDAS_SM_HHHV:
@@ -507,9 +515,13 @@ export const datasetLabels = {
   [S1_AWS_EW_HHHV]: 'Sentinel-1 AWS-EW-HHHV',
   [S1_AWS_EW_HH]: 'Sentinel-1 AWS-EW-HH',
   [S1_CDAS_IW_VVVH]: 'Sentinel-1 CDAS-IW-VVVH',
+  [S1_CDAS_IW_HHHV]: 'Sentinel-1 CDAS-IW-HHHV',
   [S1_CDAS_IW_VV]: 'Sentinel-1 CDAS-IW-VV',
+  [S1_CDAS_IW_HH]: 'Sentinel-1 CDAS-IW-HH',
   [S1_CDAS_EW_HHHV]: 'Sentinel-1 CDAS-EW-HHHV',
+  [S1_CDAS_EW_VVVH]: 'Sentinel-1 CDAS-EW-VVVH',
   [S1_CDAS_EW_HH]: 'Sentinel-1 CDAS-EW-HH',
+  [S1_CDAS_EW_VV]: 'Sentinel-1 CDAS-EW-VV',
   [S1_CDAS_SM_VVVH]: 'Sentinel-1 CDAS-SM-VVVH',
   [S1_CDAS_SM_VV]: 'Sentinel-1 CDAS-SM-VV',
   [S1_CDAS_SM_HHHV]: 'Sentinel-1 CDAS-SM-HHHV',
@@ -612,9 +624,13 @@ export function getEvalsource(datasetId) {
     case S1_AWS_EW_HHHV:
     case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
+    case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
+    case S1_CDAS_IW_HH:
     case S1_CDAS_EW_HHHV:
+    case S1_CDAS_EW_VVVH:
     case S1_CDAS_EW_HH:
+    case S1_CDAS_EW_VV:
     case S1_CDAS_SM_VVVH:
     case S1_CDAS_SM_VV:
     case S1_CDAS_SM_HHHV:
@@ -687,9 +703,13 @@ export function getDataSourceHashtags(datasetId) {
     case S1_AWS_EW_HHHV:
     case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
+    case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
+    case S1_CDAS_IW_HH:
     case S1_CDAS_EW_HHHV:
+    case S1_CDAS_EW_VVVH:
     case S1_CDAS_EW_HH:
+    case S1_CDAS_EW_VV:
     case S1_CDAS_SM_VVVH:
     case S1_CDAS_SM_VV:
     case S1_CDAS_SM_HHHV:

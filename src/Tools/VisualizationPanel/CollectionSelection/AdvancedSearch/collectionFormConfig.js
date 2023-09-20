@@ -11,7 +11,11 @@ import {
   AttributeTimelinessValues,
   AttributeS2CollectionValues,
 } from '../../../../api/OData/assets/attributes';
-import { createOriginFilter, createS2Collection1Filter } from './filters/AdditionalFilters.utils';
+import {
+  createOriginFilter,
+  createS2Collection1Filter,
+  getS5MaxAbsoluteOrbit,
+} from './filters/AdditionalFilters.utils';
 import { DefaultInput } from './filters/DefaultInput';
 import { MultiSelectInput } from './filters/MultiSelectInput';
 import { NumericInput } from './filters/NumericInput';
@@ -284,8 +288,8 @@ export const collections = [
         render: NumericInput,
         type: 'integer',
         min: 1,
-        max: 30000,
-        placeholder: '1-30000',
+        max: () => getS5MaxAbsoluteOrbit(),
+        placeholder: () => `1-${getS5MaxAbsoluteOrbit()}`,
       },
     ],
   },

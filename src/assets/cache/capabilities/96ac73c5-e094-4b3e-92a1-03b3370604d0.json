@@ -1,0 +1,30 @@
+{
+    "title": "CDSE Sentinel-1-EW_VV",
+    "layers": [
+        {
+            "id": "EW-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED",
+            "name": "VV - linear gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "EW-DV-VV-DECIBEL-GAMMA0-ORTHORECTIFIED",
+            "name": "VV - decibel gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S1GRD",
+            "bands": [
+                "VV",
+                "VH",
+                "HH",
+                "HV"
+            ]
+        }
+    ]
+}

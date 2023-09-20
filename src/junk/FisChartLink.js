@@ -4,18 +4,21 @@ import { connect } from 'react-redux';
 
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
-import { isCustomPreset } from './EOBCommon/utils/utils';
 import { checkAllMandatoryOutputsExist } from '../utils/parseEvalscript';
 import { reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../const';
+import { getLayerNotSelectedMsg, getNotAvailableForErrorMsg } from './ConstMessages';
 
 const FisChartLink = (props) => {
   const [statisticalApiSupported, setStatisticalApiSupported] = useState(false);
+  const [layerName, setLayerName] = useState();
   useEffect(() => {
     const fetchEvalscript = async () => {
       let evalscript;
+      let layerName;
 
       if (props.customSelected) {
         evalscript = props.evalscript;
+        layerName = t`Custom`;
       } else {
         if (props.layerId) {
           const layer = await LayersFactory.makeLayer(
@@ -26,6 +29,7 @@ const FisChartLink = (props) => {
           );
           if (layer) {
             await layer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
+            layerName = layer.title;
             evalscript = layer.evalscript;
           }
         }
@@ -33,19 +37,13 @@ const FisChartLink = (props) => {
       if (evalscript) {
         setStatisticalApiSupported(checkAllMandatoryOutputsExist(evalscript, STATISTICS_MANDATORY_OUTPUTS));
       }
+      setLayerName(layerName);
     };
     fetchEvalscript();
   }, [props.visualizationUrl, props.layerId, props.evalscript, props.customSelected]);
-
   const isSelectedResult = !!props.selectedResult;
-  const isCustomLayer = props.selectedResult && isCustomPreset(props.selectedResult.preset);
-  const isShadowLayerAvailable = props.selectedResult && !!props.fisShadowLayer;
-
-  const isStatAvailableOnDatasource = !!(
-    (props.selectedResult && props.selectedResult.baseUrls.FIS) ||
-    statisticalApiSupported
-  );
-  if (isSelectedResult && isStatAvailableOnDatasource && (isShadowLayerAvailable || isCustomLayer)) {
+  const isStatAvailableOnDatasource = isSelectedResult && statisticalApiSupported;
+  if (isStatAvailableOnDatasource) {
     return (
       // jsx-a11y/anchor-is-valid
       // eslint-disable-next-line
@@ -60,13 +58,7 @@ const FisChartLink = (props) => {
   } else {
     const errorMessage =
       t`Statistical Info / Feature Info Service chart - ` +
-      `${
-        !isSelectedResult
-          ? t`please select a layer`
-          : !isStatAvailableOnDatasource
-          ? t`not available for ` + props.selectedResult.name
-          : t`not available for "${props.presetLayerName}" (layer with value is not set up)`
-      }`;
+      `${!isSelectedResult ? getLayerNotSelectedMsg() : getNotAvailableForErrorMsg(layerName)}`;
     return (
       // jsx-a11y/anchor-is-valid
       // eslint-disable-next-line

@@ -2197,7 +2197,7 @@ msgstr ""
 "ідентифікують сніг"
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr "Класифікація даних Sentinel2 за допомогою алгоритму ЄКА з класифікації сцен."
 

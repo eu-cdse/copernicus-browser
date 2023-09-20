@@ -105,6 +105,7 @@ const mapStoreToProps = (store) => ({
   orbitDirection: store.visualization.orbitDirection,
   mapBounds: store.mainMap.bounds,
   aoiBounds: store.aoi.bounds,
+  selectedLanguage: store.language.selectedLanguage,
 });
 
 export default connect(mapStoreToProps, null)(FindProductsButton);

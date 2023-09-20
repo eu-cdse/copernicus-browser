@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   AttributeOriginValues,
   AttributeProcessorVersionValues,
@@ -62,4 +63,11 @@ export const createS2Collection1Filter = (key, value) => {
   }
 
   return s2Collection1Filter;
+};
+
+export const getS5MaxAbsoluteOrbit = () => {
+  const days = moment.utc().endOf('day').diff(moment.utc('2017-10-13'), 'days');
+  const orbitalCycle = 16;
+  const orbitsPerCycle = 227;
+  return Math.ceil(days * (orbitsPerCycle / orbitalCycle));
 };

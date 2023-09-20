@@ -2190,7 +2190,7 @@ msgstr ""
 "0,42 são considerados nevosos"
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr ""
 "Classificação dos dados do Sentinel2 como resultado do algoritmo de "

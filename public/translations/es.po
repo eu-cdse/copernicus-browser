@@ -6813,7 +6813,7 @@ msgstr ""
 "Más información [aquí.](https://eos.com/atmospheric-penetration/)"
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr ""
 

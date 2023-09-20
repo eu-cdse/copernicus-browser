@@ -48,7 +48,7 @@ const BrowseProduct = ({ product, downloadInProgress, onDownload, onClose, userT
 
   return (
     <div className="browse-product">
-      <div className="content">
+      <div className="browse-product-content">
         <FileTree
           rootNode={rootNode}
           nodes={nodes}

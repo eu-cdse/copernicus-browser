@@ -9,7 +9,7 @@ import SpectralExplorerButton from '../../Controls/SpectralExplorer/SpectralExpl
 import FisChartLink from '../../../src/junk/FisChartLink';
 
 import '../EOBPanel.scss';
-import CopyGeometryToClipboardButton from './CopyGeometryToClipboardButton';
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
 
 export class EOBAOIPanelButton extends React.Component {
   state = {
@@ -67,7 +67,11 @@ export class EOBAOIPanelButton extends React.Component {
 
     return (
       <span className="aoiCords">
-        <CopyGeometryToClipboardButton geometry={this.props.aoiBounds.geometry ?? this.props.aoiBounds} />
+        <CopyToClipboardButton
+          className={`copy-coord`}
+          title={t`Copy geometry to clipboard`}
+          value={this.props.aoiBounds.geometry ?? this.props.aoiBounds}
+        />
         {!isNaN(area) && (
           <span className="area-text">
             {area} {t`km`}

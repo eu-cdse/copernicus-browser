@@ -5364,7 +5364,7 @@ msgid "Uncheck Load script from URL to edit the code."
 msgstr ""
 
 msgid ""
-"Classification of Sentinel2 data as result of ESA's Scene classification "
+"Classification of Sentinel-2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr ""
 
@@ -7733,10 +7733,63 @@ msgid ""
 "Please try again later"
 msgstr ""
 
+msgid "Product name"
+msgstr ""
+
 msgid "Collection"
 msgstr ""
 
 msgid ""
 "Sentinel-2 Collection 1 represents the product dataset generated starting "
 "from processing baseline 05.XX included."
+msgstr ""
+
+msgid "Based on bands B4, B3, B2"
+msgstr ""
+
+msgid "Based on bands B8, B4, B3"
+msgstr ""
+
+msgid "Based on bands B12, B11, B4"
+msgstr ""
+
+msgid "Based on bands B12, B8A, B4"
+msgstr ""
+
+msgid "Based on bands B8, B6, B4"
+msgstr ""
+
+msgid "Based on bands B17, B5, B2"
+msgstr ""
+
+msgid "Based on bands B17, B6, B3"
+msgstr ""
+
+msgid "Based on bands S3, S2, S1"
+msgstr ""
+
+msgid "Based on a combination of bands (B8 - B4)/(B8 + B4)"
+msgstr ""
+
+msgid "Based on a combination of bands (B8A - B11)/(B8A + B11)"
+msgstr ""
+
+msgid "Based on a combination of bands (B3 - B8)/(B3 + B8)"
+msgstr ""
+
+msgid ""
+"Based on a combination of bands (B3 - B11)/(B3 + B11); values above 0.42 "
+"are regarded as snowy"
+msgstr ""
+
+msgid "Footprint"
+msgstr ""
+
+msgid "Summary"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Platform"
 msgstr ""

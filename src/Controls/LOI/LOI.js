@@ -7,11 +7,11 @@ import length from '@turf/length';
 import { PrettyDistance } from '../../junk/EOBMeasurePanelButton/EOBMeasurePanelButton';
 import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
 import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
-import CopyGeometryToClipboardButton from '../../junk/EOBAOIPanelButton/CopyGeometryToClipboardButton';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { useLoi } from './useLoi';
 import { ReactComponent as LoiIcon } from './loi-icon.svg';
 import { ModalId } from '../../const';
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
 
 const LOIPanelWrapper = ({ setMenuExpanded, className, shouldClose, children }) => {
   const closeTimeout = useRef(null);
@@ -61,7 +61,13 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
     {
       key: 'copyToClipboard',
       displayed: menuExpanded && !!loiGeometry,
-      render: () => <CopyGeometryToClipboardButton geometry={loiGeometry} />,
+      render: () => (
+        <CopyToClipboardButton
+          className={`copy-coord`}
+          title={t`Copy geometry to clipboard`}
+          value={loiGeometry}
+        />
+      ),
     },
     {
       key: 'featureInfo',

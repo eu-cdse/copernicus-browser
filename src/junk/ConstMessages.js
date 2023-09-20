@@ -14,3 +14,4 @@ export const getAnalyticalExportNotSupportedMsg = () =>
   t`The current datasource doesn't support analytical exports`;
 export const zoomTooLow3DMsg = () => t`Zoom too low. Please zoom in.`;
 export const getErrorFetchingDataMsg = () => t`Error fetching data`;
+export const getNotAvailableForErrorMsg = (target) => t`not available for ` + target;

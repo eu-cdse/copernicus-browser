@@ -6,8 +6,12 @@ import { ExpressionTreeOperator } from './ExpressionTree';
 import {
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
+  S1_CDAS_EW_VV,
+  S1_CDAS_EW_VVVH,
   S1_CDAS_IW_VV,
   S1_CDAS_IW_VVVH,
+  S1_CDAS_IW_HH,
+  S1_CDAS_IW_HHHV,
   S1_CDAS_SM_HH,
   S1_CDAS_SM_HHHV,
   S1_CDAS_SM_VV,
@@ -69,17 +73,31 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       (attribute) => attribute?.Name === AttributeNames.polarisationChannels,
     );
     if (/^IW_GRDH_1S/.test(productType)) {
-      if (polarisationChannels[0]?.Value === 'VV') {
-        return S1_CDAS_IW_VV;
-      } else {
-        return S1_CDAS_IW_VVVH;
+      switch (polarisationChannels[0]?.Value) {
+        case 'VV':
+          return S1_CDAS_IW_VV;
+        case 'VV&VH':
+          return S1_CDAS_IW_VVVH;
+        case 'HH':
+          return S1_CDAS_IW_HH;
+        case 'HH&HV':
+          return S1_CDAS_IW_HHHV;
+        default:
+          return S1_CDAS_IW_VVVH;
       }
     }
     if (/^EW_GRDM_1S/.test(productType)) {
-      if (polarisationChannels[0]?.Value === 'HH') {
-        return S1_CDAS_EW_HH;
-      } else {
-        return S1_CDAS_EW_HHHV;
+      switch (polarisationChannels[0]?.Value) {
+        case 'HH':
+          return S1_CDAS_EW_HH;
+        case 'HH&HV':
+          return S1_CDAS_EW_HHHV;
+        case 'VV':
+          return S1_CDAS_EW_VV;
+        case 'VV&VH':
+          return S1_CDAS_EW_VVVH;
+        default:
+          return S1_CDAS_EW_HHHV;
       }
     }
     if (/^S[1-6]_GRDH_1S/.test(productType)) {

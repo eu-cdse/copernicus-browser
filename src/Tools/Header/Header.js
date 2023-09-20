@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import UserAuth from '../../Auth/UserAuth';
-// import LanguageSelector from '../../LanguageSelector/LanguageSelector';
+import LanguageSelector from '../../LanguageSelector/LanguageSelector';
 import { ReactComponent as ChevronCollapse } from './chevron-collapse.svg';
 import './Header.scss';
 
@@ -29,8 +29,7 @@ class HeaderWithLogin extends Component {
 
         <div className="right">
           <div className="row">
-            {/* <LanguageSelector /> */}
-            {/* <span className={isLogoutSelectClicked ? 'remove-vertical-bar' : 'vertical-bar'}></span> */}
+            <LanguageSelector />
             <UserAuth
               handleLogoutDropdownState={this.handleLogoutDropdownState}
               isLogoutSelectClicked={isLogoutSelectClicked}

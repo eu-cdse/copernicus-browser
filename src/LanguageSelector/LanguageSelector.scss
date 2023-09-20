@@ -13,8 +13,7 @@
   }
 
   .menu-flags {
-    color: $textColor;
-    background-color: $mainMedium;
+    color: $whiteColor;
     padding: 0;
 
     button {
@@ -24,7 +23,7 @@
       border: none;
 
       span {
-        font-size: 16px;
+        font-size: 14px;
         margin: 0;
         padding: 0;
       }
@@ -35,7 +34,6 @@
     }
 
     ul {
-      min-height: 200px;
       max-height: none;
       color: $textColor;
       background-color: $mainLight;
@@ -43,7 +41,8 @@
       margin-top: 1.5px;
       border: none;
       border-radius: 0;
-      text-transform: uppercase;
+      text-transform: capitalize;
+      box-shadow: 0 3px 6px 6px rgba(0, 0, 0, 0.1);
 
       li {
         font-size: 14px;
@@ -61,9 +60,7 @@
       }
     }
 
-    /* stylelint-disable selector-class-pattern  */
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] {
-      background-color: $whiteColor;
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] { /* stylelint-disable-line */
       border-radius: 0;
       width: 45px;
       margin: 0;
@@ -72,21 +69,22 @@
       justify-content: center;
 
       span {
-        color: $textColor;
+        color: $whiteColor;
+        text-decoration: underline;
       }
     }
 
-    .ReactFlagsSelect-module_selectFlag__2q5gC {
+    .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
       display: none;
     }
 
-    .ReactFlagsSelect-module_selectOptionValue__vS99- {
-      .ReactFlagsSelect-module_selectFlag__2q5gC {
+    .ReactFlagsSelect-module_selectOptionValue__vS99- { /* stylelint-disable-line */
+      .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
         display: inline-flex;
       }
     }
 
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] {
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] { /* stylelint-disable-line */
       background-color: $mainLight;
       color: $textColor;
       border-radius: 0;
@@ -103,9 +101,49 @@
       }
     }
 
-    .ReactFlagsSelect-module_selectOption__3pcgW {
+    .ReactFlagsSelect-module_selectOption__3pcgW { /* stylelint-disable-line */
       margin: 2px;
     }
-    /* stylelint-enable */
+  }
+
+  .ReactFlagsSelect-module_flagsSelect__2pfa2 { /* stylelint-disable-line */
+    ul {
+      #rfs-TO::before { /* stylelint-disable-line */
+        content: '';
+        position: absolute;
+        border-top: 1px solid #dbdfe3;
+        padding-right: 92px;
+        margin-left: -6px;
+      }
+
+      #rfs-TO { /* stylelint-disable-line */
+        span {
+          margin-top: 4px;
+
+          span::before {
+            content: url(../icons/people-group.svg);
+            margin-right: 10px;
+          }
+
+          span:nth-child(1) {
+            display: none;
+          }
+
+          span:nth-child(2) {
+            color: $primaryColor;
+            width: 100%;
+            padding: 0;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            overflow: visible;
+            text-overflow: unset;
+          }
+        }
+
+        &:hover {
+          background-color: $whiteBackground;
+        }
+      }
+    }
   }
 }

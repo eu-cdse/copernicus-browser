@@ -16,6 +16,16 @@ export const DEFAULT_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6e3529-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'Sentinel-1 EW VV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/96ac73-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Sentinel-1 EW VV+VH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b97ea7-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'Sentinel-1 IW VV',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/dea335-YOUR-INSTANCEID-HERE',
@@ -24,6 +34,16 @@ export const DEFAULT_THEMES = [
         name: 'Sentinel-1 IW VV+VH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ea8206-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Sentinel-1 IW HH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/e8ac80-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Sentinel-1 IW HH+HV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/2bdb51-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'Sentinel-1 SM HH',

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { t } from 'ttag';
 
-import oDataHelpers from '../../../api/OData/ODataHelpers';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 import { getLoggedInErrorMsg } from '../../../junk/ConstMessages';
 import { addProductToWorkspace } from '../../../api/OData/workspace';
@@ -12,27 +11,27 @@ import { ReactComponent as WorkspacePlusIcon } from '../../../icons/workspace-pl
 import './ProductInfo.scss';
 import store, { notificationSlice } from '../../../store';
 import { getDownloadProductErrorMessage, DOWNLOAD_PRODUCT_LABEL } from '../ResultItemFooter';
+import Footprint from './Footprint';
+import ProductPreview from '../ProductPreview/ProductPreview';
+import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
+import ProductLink from './ProductLink';
+import { getAllProductAttributes, productAttributesSections } from './ProductInfo.utils';
 
-const commonAttributes = [
-  'name',
-  'size',
-  'sensingTime',
-  'originDate',
-  'publicationDate',
-  'modificationDate',
-  'S3Path',
-];
+const SectionGroup = ({ className, title, children }) => (
+  <div className={`section-group ${className}`}>
+    <h3>{title}</h3>
+    {children}
+  </div>
+);
 
-const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userToken }) => {
-  const allAttributes = [
-    ...commonAttributes
-      .map((key) => ({ key: key, value: product[key] }))
-      .filter((attr) => !(attr.key === 'size' && attr.value === '0MB')),
-    ...product?.attributes.map((attr) => ({
-      key: attr.Name,
-      value: attr.Value,
-    })),
-  ].map(({ key, value }) => ({ key: oDataHelpers.formatAttributesNames(key), value: value }));
+const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userToken, lat, lng }) => {
+  const [expandedSections, setExpandedSections] = useState({
+    summary: true,
+    preview: !!product?.previewUrl,
+    footprint: !!product?.geometry,
+  });
+
+  const allAttributes = getAllProductAttributes(product);
   const downloadDisabled = downloadInProgress || !userToken || !product.online;
   const downloadProductErrorMessage = getDownloadProductErrorMessage(DOWNLOAD_PRODUCT_LABEL, {
     userToken,
@@ -41,47 +40,89 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
 
   return (
     <div className="product-info">
-      <div className="content">
-        {allAttributes.map((attr, index) => (
-          <div className={`row ${index % 2 === 0 ? 'even' : 'odd'}`} key={attr.key}>
-            <div className={`attribute left`}>{attr.key}: </div>
-            <div className={`attribute right`}>{attr.value}</div>
+      <div className="main">
+        <div className="product-info-content">
+          <div className="column attributes">
+            <SectionGroup title={`Attributes`}>
+              {productAttributesSections.map((section) => (
+                <CollapsiblePanel
+                  key={section.id}
+                  className={'section'}
+                  title={section.title()}
+                  headerComponent={section.title()}
+                  expanded={expandedSections[section.id]}
+                  toggleExpanded={() => {
+                    setExpandedSections((prevState) => ({
+                      ...prevState,
+                      [section.id]: !prevState[section.id],
+                    }));
+                  }}
+                >
+                  {(expanded) => {
+                    if (!expanded || !section.render) {
+                      return null;
+                    }
+                    return section.render({
+                      section,
+                      attributes: allAttributes,
+                      product: product,
+                      userToken,
+                      downloadInProgress,
+                      onDownload,
+                    });
+                  }}
+                </CollapsiblePanel>
+              ))}
+            </SectionGroup>
           </div>
-        ))}
-      </div>
-      <div className="actions">
-        <EOBButton
-          disabled={!userToken}
-          svgIcon={WorkspacePlusIcon}
-          text={t`Workspace`}
-          title={`${t`Add to workspace`}${!userToken ? ` (${getLoggedInErrorMsg()})` : ''}`}
-          onClick={() => {
-            addProductToWorkspace(product);
-            onClose();
-          }}
-          onDisabledClick={() => {
-            store.dispatch(
-              notificationSlice.actions.displayError(`${t`Add to workspace`} (${getLoggedInErrorMsg()})`),
-            );
-            return null;
-          }}
-        ></EOBButton>
 
-        <EOBButton
-          disabled={downloadDisabled}
-          loading={downloadInProgress}
-          icon="download"
-          className="small"
-          text={t`Download`}
-          title={downloadProductErrorMessage ? downloadProductErrorMessage : DOWNLOAD_PRODUCT_LABEL}
-          onClick={onDownload}
-          onDisabledClick={() => {
-            if (downloadProductErrorMessage) {
-              store.dispatch(notificationSlice.actions.displayError(downloadProductErrorMessage));
-              return null;
-            }
-          }}
-        ></EOBButton>
+          <div className="column previews">
+            <SectionGroup className="preview" title={t`Preview`}>
+              {product?.previewUrl ? (
+                <ProductPreview previewUrl={product.previewUrl} name={product.Name} />
+              ) : (
+                <div className="error-message">{t`No preview available`}</div>
+              )}
+            </SectionGroup>
+            <SectionGroup className="footprint" title={t`Footprint`}>
+              <Footprint product={product} lat={lat} lng={lng} />
+            </SectionGroup>
+          </div>
+        </div>
+      </div>
+
+      <div className="footer">
+        <ProductLink product={product} />
+        <div className="actions">
+          <EOBButton
+            disabled={!userToken}
+            svgIcon={WorkspacePlusIcon}
+            text={t`Workspace`}
+            title={`${t`Add to workspace`}${!userToken ? ` (${getLoggedInErrorMsg()})` : ''}`}
+            onClick={() => {
+              addProductToWorkspace(product);
+              onClose();
+            }}
+            onDisabledClick={() => {
+              store.dispatch(
+                notificationSlice.actions.displayError(`${t`Add to workspace`} (${getLoggedInErrorMsg()})`),
+              );
+            }}
+          ></EOBButton>
+          <EOBButton
+            disabled={downloadDisabled}
+            loading={downloadInProgress}
+            icon="download"
+            text={t`Download`}
+            title={downloadProductErrorMessage ? downloadProductErrorMessage : DOWNLOAD_PRODUCT_LABEL}
+            onClick={onDownload}
+            onDisabledClick={() => {
+              if (downloadProductErrorMessage) {
+                store.dispatch(notificationSlice.actions.displayError(downloadProductErrorMessage));
+              }
+            }}
+          ></EOBButton>
+        </div>
       </div>
     </div>
   );
@@ -89,6 +130,8 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
 const mapStoreToProps = (store) => ({
   selectedLanguage: store.language.selectedLanguage,
   userToken: store.auth.user.access_token,
+  lat: store.mainMap.lat,
+  lng: store.mainMap.lng,
 });
 
 export default connect(mapStoreToProps, null)(ProductInfo);
