@@ -94,27 +94,34 @@ function CollectionForm({
         [collectionId]: {},
       });
 
+      let selectedInstruments = [];
       //select instrument if there is only one child
       if (collection && collection.instruments && collection.instruments.length === 1) {
-        const instrumentId = collection.instruments[0].id;
+        selectedInstruments.push(collection.instruments[0]);
+      } else {
+        selectedInstruments = collection.instruments.filter((i) => !!i.selected);
+      }
+
+      selectedInstruments.forEach((selectedInstrument) => {
         setSelectedCollections({
           ...selectedCollections,
           [collectionId]: {
             ...selectedCollections?.[collectionId],
-            [instrumentId]: {},
+            [selectedInstrument.id]: {},
           },
         });
 
-        if (collection.instruments[0].supportsCloudCover) {
+        if (selectedInstrument.supportsCloudCover) {
           setMaxCc({
             ...maxCc,
             [collectionId]: {
               ...maxCc?.[collectionId],
-              [instrumentId]: CLOUD_COVER_PERCENT,
+              [selectedInstrument.id]: CLOUD_COVER_PERCENT,
             },
           });
         }
-      }
+      });
+
       //set default filters
       if (collection?.additionalFilters) {
         collection?.additionalFilters
@@ -267,6 +274,7 @@ function CollectionForm({
             !resultsPanelSelected &&
             additionalFiltersCollection === collection.id
           }
+          disabled={!collection.additionalFilters}
         />
       </div>
       {selectedCollections[collection.id] !== undefined && (
@@ -339,6 +347,7 @@ function CollectionForm({
 const mapStoreToProps = (store) => ({
   selectedTabIndex: store.tabs.selectedTabIndex,
   resultsPanelSelected: store.searchResults.resultsPanelSelected,
+  selectedLanguage: store.language.selectedLanguage,
 });
 
 export default connect(mapStoreToProps, null)(CollectionForm);

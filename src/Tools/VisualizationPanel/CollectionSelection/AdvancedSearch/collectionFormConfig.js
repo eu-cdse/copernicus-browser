@@ -28,12 +28,25 @@ export const collections = [
       {
         id: 'SAR',
         label: 'C-SAR',
+        selected: true,
         productTypes: [
           { id: 'RAW', name: 'RAW', label: 'Level-0 RAW' },
           { id: 'SLC', name: 'SLC', label: 'Level-1 SLC' },
           { id: 'GRD', name: 'GRD', notName: '_COG', label: 'Level-1 GRD' },
           { id: 'GRD-COG', name: ['GRD', '_COG'], label: 'Level-1 GRD COG' },
           { id: 'OCN', name: 'OCN', label: 'Level-2 OCN' },
+        ],
+      },
+      {
+        id: 'S1AuxiliaryFiles',
+        label: 'Auxiliary Data File',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'AUX_RESORB', name: 'AUX_RESORB', label: 'AUX_RESORB', supportsGeometry: false },
+          { id: 'AUX_POEORB', name: 'AUX_POEORB', label: 'AUX_POEORB', supportsGeometry: false },
+          { id: 'AUX_PREORB', name: 'AUX_PREORB', label: 'AUX_PREORB', supportsGeometry: false },
+          { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
+          { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
         ],
       },
     ],
@@ -100,11 +113,23 @@ export const collections = [
       {
         id: 'MSI',
         label: 'MSI',
+        selected: true,
         supportsCloudCover: true,
         productTypes: [
           { id: 'S2MSI1C', name: 'L1C', label: 'L1C' },
           { id: 'S2MSI2A', name: 'L2A', label: 'L2A' },
-          { id: 'S2MSI2Ap', name: 'L2AP', label: 'L2AP' },
+          // temporarily disabled upon ESA request
+          // { id: 'S2MSI2Ap', name: 'L2AP', label: 'L2AP' },
+        ],
+      },
+      {
+        id: 'S2AuxiliaryFiles',
+        label: 'Auxiliary Data File',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
+          { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
+          { id: 'AUX_POEORB', name: 'AUX_POEORB', label: 'AUX_POEORB', supportsGeometry: false },
         ],
       },
     ],
@@ -200,6 +225,21 @@ export const collections = [
           { id: 'SY_2_VGP___', name: 'SY_2_VGP___', label: 'Level-2 SY_VGP' },
         ],
       },
+      {
+        id: 'S3AuxiliaryFiles',
+        label: 'Auxiliary Data File',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'AUX_MOEORB', name: 'AUX_MOEORB', label: 'AUX_MOEORB', supportsGeometry: false },
+          { id: 'AUX_POEORB', name: 'AUX_POEORB', label: 'AUX_POEORB', supportsGeometry: false },
+          { id: 'AUX_PRCPTF', name: 'AUX_PRCPTF', label: 'AUX_PRCPTF', supportsGeometry: false },
+          { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
+          { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
+          { id: 'SR___ROE_AX', name: 'SR___ROE_AX', label: 'SR___ROE_AX', supportsGeometry: false },
+          { id: 'SR___MDO_AX', name: 'SR___MDO_AX', label: 'SR___MDO_AX', supportsGeometry: false },
+          { id: 'SR___POE_AX', name: 'SR___POE_AX', label: 'SR___POE_AX', supportsGeometry: false },
+        ],
+      },
     ],
     supportsCloudCover: false,
     additionalFilters: [
@@ -235,6 +275,7 @@ export const collections = [
       {
         id: 'TROPOMI',
         label: 'TROPOMI',
+        selected: true,
         productTypes: [
           { id: 'L1B_RA_BD1', name: 'L1B_RA_BD1', label: 'Level-1 RA_BD1' },
           { id: 'L1B_RA_BD2', name: 'L1B_RA_BD2', label: 'Level-1 RA_BD2' },
@@ -263,12 +304,12 @@ export const collections = [
         ],
       },
       {
-        id: 'AuxiliaryFiles',
-        label: 'Auxiliary Files',
+        id: 'S5PAuxiliaryFiles',
+        label: 'Auxiliary Data File',
         supportsInstrumentName: false,
         productTypes: [
-          { id: 'AUX_CTMANA', name: 'AUX_CTMANA', label: 'CTMANA', supportsGeometry: false },
-          { id: 'AUX_CTMFCT', name: 'AUX_CTMFCT', label: 'CTMFCT', supportsGeometry: false },
+          { id: 'AUX_CTMANA', name: 'AUX_CTMANA', label: 'AUX_CTMANA', supportsGeometry: false },
+          { id: 'AUX_CTMFCT', name: 'AUX_CTMFCT', label: 'AUX_CTMFCT', supportsGeometry: false },
         ],
       },
     ],
@@ -292,5 +333,24 @@ export const collections = [
         placeholder: () => `1-${getS5MaxAbsoluteOrbit()}`,
       },
     ],
+  },
+  {
+    id: 'S6',
+    label: 'SENTINEL-6',
+    instruments: [
+      {
+        id: 'S6AuxiliaryFiles',
+        label: 'Auxiliary Data File',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
+          { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
+          { id: 'AX___POE_AX', name: 'AX___POE_AX', label: 'AX___POE_AX', supportsGeometry: false },
+          { id: 'AX___ROE_AX', name: 'AX___ROE_AX', label: 'AX___ROE_AX', supportsGeometry: false },
+          { id: 'AX____MOED_AX', name: 'AX____MOED_AX', label: 'AX____MOED_AX', supportsGeometry: false },
+        ],
+      },
+    ],
+    supportsCloudCover: false,
   },
 ];

@@ -149,7 +149,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
     <div className="observation-scenarios-wrapper">
       <div className="observation-scenarios-label">
         {t`Acquisition mode:`}
-        <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.swathIdentifier]} />
+        <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.swathIdentifier]()} />
       </div>
 
       <div className="observation-scenarios-container">
@@ -183,7 +183,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
           <div className="polarization-container">
             <div className="observation-scenarios-label">
               {t`Polarization:`}
-              <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.polarisationChannels]} />
+              <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.polarisationChannels]()} />
             </div>
             {acquisitionMode &&
               Object.keys(POLARIZATIONS[acquisitionMode]).map((polarization_mode, index) => {
@@ -215,7 +215,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
             title={
               <>
                 {t`Orbit Direction:`}
-                <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.orbitDirection]} />
+                <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.orbitDirection]()} />
               </>
             }
             handleSelect={(newSelectedOption) =>

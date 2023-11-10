@@ -23,6 +23,7 @@ getMapParams (only transforming to this format, not from it):
 
 */
 
+import { isFunction } from '.';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { computeNewValuesFromPoints } from '../junk/EOBEffectsPanel/AdvancedRgbEffects/CurveEditor/CurveEditor.utils';
 
@@ -261,3 +262,5 @@ export const getDatasetDefaults = ({ datasetId, zoom }) => {
 
   return datasetDefaults;
 };
+
+export const getValueOrExecute = (value) => (isFunction(value) ? value() : value);

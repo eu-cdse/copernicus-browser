@@ -70,7 +70,7 @@ export const EXPIRED_ACCOUNT = {
 
 export const NOT_LOGGED_IN = {
   instanceId: 'not_logged_in_dummy_instance_id',
-  errorMessage: t`Login to use custom configuration instances.`,
+  errorMessage: () => t`Login to use custom configuration instances.`,
   errorLink: 'https://apps.sentinel-hub.com/dashboard/#/account/billing',
 };
 
@@ -155,9 +155,9 @@ export const DEM_3D_MAX_ZOOM = {
 };
 
 export const MOSAICKING_ORDER_OPTIONS = {
-  [MosaickingOrder.MOST_RECENT]: t`Most recent`,
-  [MosaickingOrder.LEAST_RECENT]: t`Least recent`,
-  [MosaickingOrder.LEAST_CC]: t`Least cloud coverage`,
+  [MosaickingOrder.MOST_RECENT]: () => t`Most recent`,
+  [MosaickingOrder.LEAST_RECENT]: () => t`Least recent`,
+  [MosaickingOrder.LEAST_CC]: () => t`Least cloud coverage`,
 };
 
 export const DEFAULT_DEM_SOURCE = DEMInstanceType.MAPZEN;
@@ -250,14 +250,16 @@ export const BBOX_PADDING = 0.1;
 export const COMPARE_OPTIONS = {
   COMPARE_SPLIT: {
     value: 'split',
-    label: t`Split`,
+    label: () => t`Split`,
   },
   COMPARE_OPACITY: {
     value: 'opacity',
-    label: t`Opacity`,
+    label: () => t`Opacity`,
   },
 };
 
 export const MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL = 1080;
 
 export const CDSE_GITHUB_PAGE_LINK = 'https://github.com/eu-cdse/copernicus-browser#multilanguage-support';
+
+export const HTTPS = 'https://';

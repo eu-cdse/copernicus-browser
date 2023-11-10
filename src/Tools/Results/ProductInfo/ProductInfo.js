@@ -10,12 +10,16 @@ import { ReactComponent as WorkspacePlusIcon } from '../../../icons/workspace-pl
 
 import './ProductInfo.scss';
 import store, { notificationSlice } from '../../../store';
-import { getDownloadProductErrorMessage, DOWNLOAD_PRODUCT_LABEL } from '../ResultItemFooter';
+import { ResultItemLabels } from '../ResultItemFooter';
 import Footprint from './Footprint';
 import ProductPreview from '../ProductPreview/ProductPreview';
 import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import ProductLink from './ProductLink';
-import { getAllProductAttributes, productAttributesSections } from './ProductInfo.utils';
+import {
+  getAllProductAttributes,
+  getDownloadProductErrorMessage,
+  productAttributesSections,
+} from './ProductInfo.utils';
 
 const SectionGroup = ({ className, title, children }) => (
   <div className={`section-group ${className}`}>
@@ -32,11 +36,11 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
   });
 
   const allAttributes = getAllProductAttributes(product);
-  const downloadDisabled = downloadInProgress || !userToken || !product.online;
-  const downloadProductErrorMessage = getDownloadProductErrorMessage(DOWNLOAD_PRODUCT_LABEL, {
+  const downloadProductErrorMessage = getDownloadProductErrorMessage(ResultItemLabels.dowloadProductLabel(), {
     userToken,
     product,
   });
+  const downloadDisabled = downloadInProgress || downloadProductErrorMessage;
 
   return (
     <div className="product-info">
@@ -79,7 +83,7 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
           <div className="column previews">
             <SectionGroup className="preview" title={t`Preview`}>
               {product?.previewUrl ? (
-                <ProductPreview previewUrl={product.previewUrl} name={product.Name} />
+                <ProductPreview product={product} />
               ) : (
                 <div className="error-message">{t`No preview available`}</div>
               )}
@@ -114,7 +118,11 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
             loading={downloadInProgress}
             icon="download"
             text={t`Download`}
-            title={downloadProductErrorMessage ? downloadProductErrorMessage : DOWNLOAD_PRODUCT_LABEL}
+            title={
+              downloadProductErrorMessage
+                ? downloadProductErrorMessage
+                : ResultItemLabels.dowloadProductLabel()
+            }
             onClick={onDownload}
             onDisabledClick={() => {
               if (downloadProductErrorMessage) {

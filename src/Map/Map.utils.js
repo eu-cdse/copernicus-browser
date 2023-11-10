@@ -35,6 +35,10 @@ const createBuffer = (feature, zoom) => {
 
 const getIntersectingFeatures = (point, features, { zoom }) => {
   const results = features.filter((feature) => {
+    if (!feature?.geometry) {
+      return false;
+    }
+
     let bufferedPoint = point;
     let intersectFunction = booleanPointInPolygon;
 
@@ -44,19 +48,31 @@ const getIntersectingFeatures = (point, features, { zoom }) => {
       bufferedPoint = createBuffer(point, zoom);
       intersectFunction = intersect;
     }
+    let hasIntersection;
 
-    return intersectFunction(
-      reprojectGeometry(bufferedPoint.geometry, {
+    try {
+      const reprojectedBufferedPoint = reprojectGeometry(bufferedPoint.geometry, {
         fromCrs: 'EPSG:4326',
         toCrs: 'EPSG:3857',
-      }),
-      reprojectGeometry(feature.geometry, {
+      });
+
+      const reprojectedGeometry = reprojectGeometry(feature.geometry, {
         fromCrs: 'EPSG:4326',
         toCrs: 'EPSG:3857',
-      }),
-    );
+      });
+
+      if (reprojectedBufferedPoint && reprojectedGeometry) {
+        hasIntersection = intersectFunction(reprojectedBufferedPoint, reprojectedGeometry);
+      } else {
+        hasIntersection = intersectFunction(bufferedPoint.geometry, feature.geometry);
+      }
+    } catch (e) {
+      console.error('Unable to calculate intersection', e.message);
+      hasIntersection = false;
+    }
+
+    return hasIntersection;
   });
-
   return results;
 };
 

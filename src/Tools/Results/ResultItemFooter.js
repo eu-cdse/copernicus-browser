@@ -16,9 +16,15 @@ import { addProductToWorkspace } from '../../api/OData/workspace';
 import { ReactComponent as WorkspacePlus } from '../../icons/workspace-plus.svg';
 
 import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
-import { ErrorMessage } from './ResultItem';
+import { getDownloadProductErrorMessage } from './ProductInfo/ProductInfo.utils';
+import { ODataProductFileExtension, ODataProductTypeExtension } from '../../api/OData/ODataTypes';
 
-export const DOWNLOAD_PRODUCT_LABEL = t`Download product`;
+export const ResultItemLabels = {
+  productInfo: () => t`Product info`,
+  zoomToProduct: () => t`Zoom to product`,
+  addToWorkspace: () => t`Add to workspace`,
+  dowloadProductLabel: () => t`Download product`,
+};
 
 const zoomToProduct = ({ geometry }) => {
   if (geometry) {
@@ -31,18 +37,6 @@ const zoomToProduct = ({ geometry }) => {
       }),
     );
   }
-};
-
-export const getDownloadProductErrorMessage = (title, { userToken, product }) => {
-  if (!userToken) {
-    return `${title} (${getLoggedInErrorMsg()})`;
-  }
-
-  if (!product.online) {
-    return `${title} (${ErrorMessage.downloadOfflineProduct()})`;
-  }
-
-  return null;
 };
 
 const setProgress = (productId, value) =>
@@ -59,6 +53,16 @@ const openProductDetailsModal = ({ tile, downloadInProgress, onDownload }) => {
       },
     }),
   );
+};
+
+const getFileNameWithExtensionForProductType = ({ name, productType }) => {
+  const extension = ODataProductTypeExtension[productType];
+
+  //ignore extension for EOF product types
+  if (extension === ODataProductFileExtension.EOF) {
+    return name;
+  }
+  return `${name}.${extension || ODataProductFileExtension.ZIP}`;
 };
 
 export const ResultItemFooter = ({
@@ -81,10 +85,13 @@ export const ResultItemFooter = ({
   }, [modalId]);
 
   const onDownload = useCallback(() => {
-    const downloadProductErrorMessage = getDownloadProductErrorMessage(DOWNLOAD_PRODUCT_LABEL, {
-      userToken,
-      product: tile,
-    });
+    const downloadProductErrorMessage = getDownloadProductErrorMessage(
+      ResultItemLabels.dowloadProductLabel(),
+      {
+        userToken,
+        product: tile,
+      },
+    );
 
     if (downloadProductErrorMessage) {
       store.dispatch(notificationSlice.actions.displayError(downloadProductErrorMessage));
@@ -96,7 +103,7 @@ export const ResultItemFooter = ({
     }
     downloadProduct({
       id: tile.id,
-      name: `${tile.name}.zip`,
+      name: getFileNameWithExtensionForProductType(tile),
       token: userToken,
       cancelToken: cancelToken,
       setProgress: setProgress,
@@ -113,16 +120,18 @@ export const ResultItemFooter = ({
   const handleAddToWorkspace = () =>
     !userToken
       ? store.dispatch(
-          notificationSlice.actions.displayError(`${t`Add to workspace`} (${getLoggedInErrorMsg()})`),
+          notificationSlice.actions.displayError(
+            `${ResultItemLabels.addToWorkspace()} (${getLoggedInErrorMsg()})`,
+          ),
         )
       : addProductToWorkspace(tile);
 
-  const downloadDisabled = !userToken || !tile.online;
-
-  const downloadProductErrorMessage = getDownloadProductErrorMessage(DOWNLOAD_PRODUCT_LABEL, {
+  const downloadProductErrorMessage = getDownloadProductErrorMessage(ResultItemLabels.dowloadProductLabel(), {
     userToken,
     product: tile,
   });
+
+  const downloadDisabled = downloadInProgress || !!downloadProductErrorMessage;
 
   return (
     <div className="footer">
@@ -138,25 +147,31 @@ export const ResultItemFooter = ({
       <div className="buttons">
         <i
           className={`fa fa-info-circle ${detailsOpen ? 'active' : ''}`}
-          title={t`Product info`}
+          title={ResultItemLabels.productInfo()}
           onClick={() => {
             setDetailsOpen(true);
             openProductDetailsModal({ tile, userToken, downloadInProgress, onDownload });
           }}
         ></i>
         {tile.geometry && (
-          <i className="fa fa-crosshairs" onClick={() => zoomToProduct(tile)} title={t`Zoom to product`}></i>
+          <i
+            className="fa fa-crosshairs"
+            onClick={() => zoomToProduct(tile)}
+            title={ResultItemLabels.zoomToProduct()}
+          ></i>
         )}
         <WorkspacePlus
           className={`workspace-plus ${!userToken ? 'disabled' : ''}`}
-          title={`${t`Add to workspace`}${!userToken ? ` (${getLoggedInErrorMsg()})` : ''}`}
+          title={`${ResultItemLabels.addToWorkspace()}${!userToken ? ` (${getLoggedInErrorMsg()})` : ''}`}
           onClick={handleAddToWorkspace}
         />
         <i
           className={`fa fa-download ${
             downloadInProgress ? 'active disabled' : downloadDisabled ? 'disabled' : ''
           }`}
-          title={downloadProductErrorMessage ? downloadProductErrorMessage : DOWNLOAD_PRODUCT_LABEL}
+          title={
+            downloadProductErrorMessage ? downloadProductErrorMessage : ResultItemLabels.dowloadProductLabel()
+          }
           onClick={onDownload}
         ></i>
       </div>

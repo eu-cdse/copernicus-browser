@@ -43,6 +43,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    gap: 5px;
 
     .vertical-bar {
       border: 1px solid $mainLight;
@@ -58,25 +59,40 @@
   }
 
   .user-panel {
+    margin-left: 10px;
+
     .user-menu-button {
       position: relative;
-      display: inline-block;
+      display: flex;
+      align-items: center;
       cursor: pointer;
       color: $whiteColor;
-      font-size: 14px;
+      font-size: 13px;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding: 5px 10px;
+      padding: 5px 5px;
+      gap: 10px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        right: 0;
+        background: $whiteColor;
+        height: 1px;
+        border-radius: 10px 10px 10px 10px;
+      }
 
       .user-menu-username-button {
+        font-weight: $fontWeightBold;
         padding: 0;
         white-space: nowrap;
         overflow-x: clip;
         text-overflow: ellipsis;
         text-align: center;
-        max-width: 165px;
+        max-width: 125px;
         min-width: 50px;
-        text-decoration: underline;
       }
 
       &.expanded {
@@ -84,6 +100,7 @@
         color: $textColor;
 
         .user-menu-username-button {
+          color: $textColor;
           text-decoration: none;
         }
       }
@@ -95,7 +112,7 @@
         text-decoration: none;
         text-align: center;
         min-width: 90px;
-        top: 26px;
+        top: 25px;
         left: 0;
         right: 0;
         margin-top: 1.5px;
@@ -104,26 +121,50 @@
 
         .user-menu-button-dropdown-item {
           background-color: $whiteColor;
-          display: block;
           color: $textColor;
+          display: block;
           cursor: pointer;
           text-decoration: none;
           padding: 5px 0;
 
           &:hover {
-            background-color: $hoverPrimaryColor;
+            background-color: $primaryColor;
             color: $whiteColor;
           }
         }
+      }
+
+      .chevron-down {
+        transform: scale(0.8);
+
+        #chevron-down {
+          stroke: $whiteColor;
+        }
+      }
+
+      .chevron-up {
+        transform: scale(0.8);
       }
     }
 
     .login-button {
       color: $whiteColor;
-      font-size: 14px;
-      text-decoration: underline;
+      font-size: 13px;
+      font-weight: $fontWeightBold;
       cursor: pointer;
-      padding: 5px 15px;
+      padding: 5px 5px;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        right: 0;
+        background: $whiteColor;
+        height: 1px;
+        border-radius: 10px 10px 10px 10px;
+      }
     }
 
     .fa {
@@ -136,7 +177,7 @@
   .toggle-settings {
     display: inherit;
     align-items: center;
-    margin-left: 15px;
+    margin-left: 5px;
     cursor: pointer;
     transition: all ease 0.4s;
 

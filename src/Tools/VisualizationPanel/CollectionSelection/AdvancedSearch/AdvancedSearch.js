@@ -34,9 +34,19 @@ import { cloneDeep } from 'lodash';
 import { themesSlice } from '../../../../store';
 import { ODATA_SEARCH_ERROR_MESSAGE } from '../../../../hooks/useODataSearch';
 
+const ErrorCode = {
+  noProductsFound: 'noProductsFound',
+  selectSearchCriteria: 'selectSearchCriteria',
+  invalidTimeRange: 'invalidTimeRange',
+  invalidDateRange: 'invalidDateRange',
+};
+
 const ErrorMessage = {
-  noProductsFound: t`No products were found for the selected search parameters.\n
+  [ErrorCode.noProductsFound]: () => t`No products were found for the selected search parameters.\n
   To get more results, try selecting more data sources, extending the time range and/or selecting a larger area on the map.`,
+  [ErrorCode.selectSearchCriteria]: () => t`Please select at least one search criteria!`,
+  [ErrorCode.invalidTimeRange]: () => t`Invalid time range!`,
+  [ErrorCode.invalidDateRange]: () => t`Invalid date range!`,
 };
 
 class AdvancedSearch extends Component {
@@ -131,6 +141,11 @@ class AdvancedSearch extends Component {
     );
     store.dispatch(searchResultsSlice.actions.setDisplayingSearchResults(false));
     store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
+
+    if (!this.props.showLayerPanel && this.props.setShowLayerPanel) {
+      this.props.setShowLayerPanel(true);
+    }
+
     if (tile.geometry) {
       const { lat, lng, zoom } = getBoundsAndLatLng(tile.geometry);
       const dsh = getDataSourceHandler(tile.datasetId);
@@ -262,7 +277,7 @@ class AdvancedSearch extends Component {
       newFromMoment = moment.utc(selectedDay).add(1, 'days');
     }
     if (newFromMoment < minDate || newFromMoment > toMoment) {
-      throw Error('Invalid date range');
+      throw Error(ErrorCode.invalidDateRange);
     }
     this.setState({ fromMoment: newFromMoment });
   };
@@ -275,7 +290,7 @@ class AdvancedSearch extends Component {
       newToMoment = moment.utc(selectedDay).add(1, 'days');
     }
     if (newToMoment > maxDate || newToMoment < fromMoment) {
-      throw Error('Invalid date range');
+      throw Error(ErrorCode.invalidDateRange);
     }
     this.setState({ toMoment: newToMoment });
   };
@@ -308,7 +323,7 @@ class AdvancedSearch extends Component {
     const params = {};
 
     if (!searchCriteria && !Object.keys(collectionForm.selectedCollections).length) {
-      throw new Error('Please select at least one search criteria!');
+      throw new Error(ErrorCode.selectSearchCriteria);
     }
 
     if (searchCriteria !== '') {
@@ -359,7 +374,7 @@ class AdvancedSearch extends Component {
       }));
 
       if (!intervals.length) {
-        throw new Error(t`Invalid time range!`);
+        throw new Error(ErrorCode.invalidDateRange);
       }
 
       params['timeIntervals'] = intervals;
@@ -378,6 +393,21 @@ class AdvancedSearch extends Component {
     return oDataHelpers.createAdvancedSearchQuery(params);
   };
 
+  getFormValidationError = () => {
+    const { formValidationError } = this.state;
+
+    if (!formValidationError) {
+      return;
+    }
+
+    if (formValidationError.message && ErrorMessage[formValidationError.message]) {
+      return {
+        message: ErrorMessage[formValidationError.message](),
+      };
+    }
+    return formValidationError;
+  };
+
   render() {
     const {
       minDate,
@@ -394,14 +424,8 @@ class AdvancedSearch extends Component {
     } = this.props;
     const minDateRange = moment.utc(minDate ? minDate : '2014-04-03').startOf('day');
     const maxDateRange = moment.utc(maxDate).endOf('day');
-    const {
-      fromMoment,
-      toMoment,
-      displayCalendarFrom,
-      displayCalendarTo,
-      formValidationError,
-      additionFiltersPositionTop,
-    } = this.state;
+    const { fromMoment, toMoment, displayCalendarFrom, displayCalendarTo, additionFiltersPositionTop } =
+      this.state;
 
     if (!isExpanded) {
       return null;
@@ -417,11 +441,11 @@ class AdvancedSearch extends Component {
 
     const oDataSearchError =
       searchError?.message === ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND
-        ? { message: ErrorMessage.noProductsFound }
+        ? { message: ErrorMessage.noProductsFound() }
         : null;
 
     const displayingResults = resultsAvailable && resultsPanelSelected;
-    const error = formValidationError || oDataSearchError;
+    const error = this.getFormValidationError() || oDataSearchError;
     const { selectedCollections, maxCc, selectedFilters } = this.state.collectionForm;
     return (
       <>
@@ -499,8 +523,6 @@ class AdvancedSearch extends Component {
 
             <div className="calendar-holder" ref={this.calendarHolder} />
             <EOBFilterSearchByMonths onChange={this.setFilterMonths} />
-          </div>
-          <div className="search-btn-wrapper">
             <EOBButton loading={searchInProgress} onClick={this.doSearch} fluid text={t`Search`} />
           </div>
           {error ? (

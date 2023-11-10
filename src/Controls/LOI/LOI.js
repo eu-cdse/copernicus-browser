@@ -120,7 +120,7 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
       render: () => (
         <MenuItem
           iconClassName="fa fa-area-chart"
-          title={`Elevation profile`}
+          title={t`Elevation profile`}
           onClick={() => store.dispatch(modalSlice.actions.addModal({ modal: ModalId.ELEVATION_PROFILE }))}
         />
       ),

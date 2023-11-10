@@ -143,8 +143,10 @@ class AOI extends Component {
     this.enableEdit();
   };
 
-  openFISPanel = () => {
-    store.dispatch(modalSlice.actions.addModal({ modal: ModalId.FIS, params: { poiOrAoi: 'aoi' } }));
+  openFISPanel = (params = {}) => {
+    store.dispatch(
+      modalSlice.actions.addModal({ modal: ModalId.FIS, params: { ...params, poiOrAoi: 'aoi' } }),
+    );
   };
 
   generateSelectedResult = () => {

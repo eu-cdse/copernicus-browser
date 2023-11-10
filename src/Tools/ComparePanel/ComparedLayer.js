@@ -11,6 +11,8 @@ import { constructTimespanString } from '../Pins/Pin.utils';
 import { ReactComponent as LocationCrosshairsSvg } from './LocationCrosshair.svg';
 import { COMPARE_OPTIONS } from '../../const';
 
+import './ComparedLayer.scss';
+
 class ComparedLayer extends Component {
   zoomToPin = () => {
     const { zoom, lat, lng } = this.props.layer;

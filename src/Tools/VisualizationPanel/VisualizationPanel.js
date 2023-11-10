@@ -120,12 +120,19 @@ function VisualizationPanel({
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
     : null;
   const highlightsAvailable = selectedTheme && selectedTheme.pins && selectedTheme.pins.length > 0;
+  const highlightsTab = selectedTheme && selectedTheme.highlights;
   const [shouldShowTPDI, setShouldShowTPDI] = useState(false);
   const [displaySocialShareOptions, toggleSocialShareOptions] = useState(false);
   const [displayEffects, toggleEffects] = useState(false);
   const { height: windowHeight } = useWindowSize();
 
   const visualizationActionsRef = useRef();
+
+  useEffect(() => {
+    if (highlightsTab) {
+      setShowHighlights(true);
+    }
+  }, [highlightsTab, setShowHighlights]);
 
   useEffect(() => {
     if ((displaySocialShareOptions || displayEffects) && visualizationActionsRef.current) {
@@ -180,9 +187,7 @@ function VisualizationPanel({
     setShouldShowTPDI(!shouldShowTPDI);
   };
 
-  const onHighlightSelect = () => {
-    setShowHighlights(false);
-  };
+  const onHighlightSelect = () => {};
 
   const shouldShowLayerList =
     toTime && datasetId && visualizationUrl && !showComparePanel && !showPinPanel && authToken;
@@ -224,7 +229,7 @@ function VisualizationPanel({
       <>
         {selectedThemeId !== EXPIRED_ACCOUNT.instanceId && datasetId && (
           <div className="date-selection">
-            <DateSelection />
+            <DateSelection showLayerPanel={showLayerPanel} setShowLayerPanel={setShowLayerPanel} />
           </div>
         )}
         <MessagePanel />
@@ -232,7 +237,7 @@ function VisualizationPanel({
         <ThemeSelect
           onHighlightsButtonClick={() => setShowHighlights(!showHighlights)}
           highlightsAvailable={highlightsAvailable}
-          shouldShowHighlights={showHighlights}
+          showHighlights={showHighlights}
           setShowHighlights={setShowHighlights}
         />
 
@@ -291,18 +296,18 @@ function VisualizationPanel({
                   </div>
                 </>
               )}
+              <PinPanel
+                setLastAddedPin={setLastAddedPin}
+                setSelectedPin={() => null}
+                resetSearch={() => null}
+                setShowPinPanel={setShowPinPanel}
+                saveLocalPinsOnLogin={saveLocalPinsOnLogin}
+                showPinPanel={showPinPanel}
+              />
+              {showComparePanel && <ComparePanel />}
             </>
           )
         )}
-        <PinPanel
-          setLastAddedPin={setLastAddedPin}
-          setSelectedPin={() => null}
-          resetSearch={() => null}
-          setShowPinPanel={setShowPinPanel}
-          saveLocalPinsOnLogin={saveLocalPinsOnLogin}
-          showPinPanel={showPinPanel}
-        />
-        {showComparePanel && <ComparePanel />}
       </>
     </div>
   );

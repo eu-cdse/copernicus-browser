@@ -12,6 +12,7 @@ const AdditionalFiltersToggle = ({
   scrollTop,
   selectedCollections,
   setAdditionalFiltersPositionTop,
+  disabled,
 }) => {
   const filterButtonRef = useRef(null);
 
@@ -28,8 +29,10 @@ const AdditionalFiltersToggle = ({
   return (
     <div
       ref={filterButtonRef}
-      className={`additional-filters-toggle button ${isSelected ? 'selected' : ''}`}
-      onClick={onOpen}
+      className={`additional-filters-toggle button ${isSelected ? 'selected' : ''} ${
+        disabled ? 'disabled' : ''
+      }`}
+      onClick={disabled ? null : onOpen}
     >
       <div>{t`Filters`}</div>
       <ArrowSvg />

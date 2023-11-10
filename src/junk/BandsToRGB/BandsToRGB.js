@@ -11,7 +11,7 @@ import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRe
 import ReactMarkdown from 'react-markdown';
 
 // value = { r:'B01', g:'B02', b: 'B03' }
-export const BandsToRGB = ({ bands, value, onChange, areBandsClasses }) => {
+export const BandsToRGB = ({ bands, value, onChange, areBandsClasses, datasetId }) => {
   if (!bands) {
     return null;
   }

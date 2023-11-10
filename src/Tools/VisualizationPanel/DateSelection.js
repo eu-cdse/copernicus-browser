@@ -21,6 +21,8 @@ function DateSelection({
   orbitDirection,
   datePanelExpanded,
   maxCloudCover,
+  showLayerPanel,
+  setShowLayerPanel,
 }) {
   let minDateRange = moment.utc('1972-07-01');
   let maxDateRange = moment.utc().endOf('day');
@@ -176,6 +178,8 @@ function DateSelection({
       maxCloudCover={maxCloudCover}
       setMaxCloudCover={setMaxCloudCover}
       datePanelExpanded={datePanelExpanded}
+      showLayerPanel={showLayerPanel}
+      setShowLayerPanel={setShowLayerPanel}
     />
   );
 }

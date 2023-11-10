@@ -4,6 +4,9 @@ import onClickOutside from 'react-onclickoutside';
 
 import ExternalLink from '../ExternalLink/ExternalLink';
 
+import { ReactComponent as ChevronUp } from '../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../icons/chevron-down.svg';
+
 class LogoutButton extends Component {
   state = {
     isUserDropdownOpen: false,
@@ -37,15 +40,15 @@ class LogoutButton extends Component {
           <div className="user-menu-button-dropdown">
             <ExternalLink
               className={'user-menu-button-dropdown-item'}
-              href={'https://dataspace.copernicus.eu/workspace/'}
-            >
-              {t`Workspace`}
-            </ExternalLink>
-            <ExternalLink
-              className={'user-menu-button-dropdown-item'}
               href={'https://shapps.dataspace.copernicus.eu/dashboard/'}
             >
               {t`Dashboard`}
+            </ExternalLink>
+            <ExternalLink
+              className={'user-menu-button-dropdown-item'}
+              href={'https://dataspace.copernicus.eu/workspace/'}
+            >
+              {t`Workspace`}
             </ExternalLink>
             <div
               className="user-menu-button-dropdown-item"
@@ -53,6 +56,11 @@ class LogoutButton extends Component {
               title={t`Logout`}
             >{t`Logout`}</div>
           </div>
+        )}
+        {!isUserDropdownOpen ? (
+          <ChevronDown className="chevron-down" />
+        ) : (
+          <ChevronUp className="chevron-up" />
         )}
       </div>
     );

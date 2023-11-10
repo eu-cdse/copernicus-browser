@@ -46,6 +46,11 @@
           background-color: $primaryColor;
           color: $whiteColor;
         }
+
+        &.disabled {
+          opacity: 0.35;
+          pointer-events: none;
+        }
       }
     }
   }

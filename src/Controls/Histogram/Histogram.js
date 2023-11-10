@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { t } from 'ttag';
 import { OrdinalFrame } from 'semiotic';
 
 import styleVariables from '../../variables.module.scss';
+import { connect } from 'react-redux';
 
-export default class Histogram extends Component {
+class Histogram extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.data !== nextProps.data;
+    return this.props.data !== nextProps.data || this.props.selectedLanguage !== nextProps.selectedLanguage;
   }
 
   render() {
@@ -18,7 +20,7 @@ export default class Histogram extends Component {
 
       oSort: (a, b) => a - b,
       axes: [
-        { orient: 'left', ticks: 5, label: 'Frequency', dynamicLabelPosition: true },
+        { orient: 'left', ticks: 5, label: t`Frequency`, dynamicLabelPosition: true },
         {
           orient: 'bottom',
           ticks: 10,
@@ -26,7 +28,7 @@ export default class Histogram extends Component {
             const pos = Math.round((this.props.data.length - 1) * d);
             return this.props.data[pos].value.toFixed(2);
           },
-          label: 'Value',
+          label: t`Value`,
           dynamicLabelPosition: true,
         },
       ],
@@ -42,3 +44,9 @@ export default class Histogram extends Component {
     );
   }
 }
+
+const mapStoreToProps = (store) => ({
+  selectedLanguage: store.language.selectedLanguage,
+});
+
+export default connect(mapStoreToProps)(Histogram);

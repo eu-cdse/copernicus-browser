@@ -80,3 +80,5 @@ export const spreadHandlersEvenly = (numOfHandlers, min, max) => {
 
   return values;
 };
+
+export const hasLongBandName = (band) => band?.name?.length > 3;

@@ -125,14 +125,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  const value = Math.max(0, Math.log(sample.HH) * 0.21714724095 + 1);\n  return [value, value, value, sample.dataMask];\n}\n\n// ---\n/*\n// displays HH in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HH) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HH) * 0.21714724095 + 1)];\n*/"
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.HH) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.HH)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n// displays HH in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HH) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HH) * 0.21714724095 + 1)];\n*/"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2bdb51-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-07T11:58:10.466386Z",
+        "lastUpdated": "2023-09-27T09:54:13.375482Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
         },
@@ -164,14 +164,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  return [2 * sample.HH, 2 * sample.HH, 2 * sample.HH, sample.dataMask];\n}\n\n// ---\n//return [2*HH];"
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.HH, 2 * samples.HH, 2 * samples.HH, samples.dataMask],\n    eobrowserStats: [samples.HH],\n    dataMask: [samples.dataMask],\n  };\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2bdb51-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-07T11:55:12.462402Z",
+        "lastUpdated": "2023-09-27T09:55:25.645165Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
         },
@@ -203,14 +203,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  const value = Math.max(0, Math.log(sample.HV) * 0.21714724095 + 1);\n  return [value, value, value, sample.dataMask];\n}\n\n// ---\n/*\n// displays HV in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HV) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HV) * 0.21714724095 + 1)];\n*/"
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.HV) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.HV)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n// displays HV in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HV) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HV) * 0.21714724095 + 1)];\n*/"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2bdb51-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-07T11:55:00.081462Z",
+        "lastUpdated": "2023-09-27T09:56:26.470012Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
         },
@@ -242,14 +242,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  return [2 * sample.HV, 2 * sample.HV, 2 * sample.HV, sample.dataMask];\n}\n\n// ---\n//return [2*HV];"
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.HV, 2 * samples.HV, 2 * samples.HV, samples.dataMask],\n    eobrowserStats: [samples.HV],\n    dataMask: [samples.dataMask],\n  };\n}"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2bdb51-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-07T11:37:36.094952Z",
+        "lastUpdated": "2023-09-27T09:57:35.738053Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
         },

@@ -113,6 +113,12 @@ export const S1_OBSERVATION_SCENARIOS = {
   },
 };
 
+export const S1_ADVANCED_SEARCH_OPTIONS = {
+  ACQUISITION_MODES: 'ACQUISITION_MODES',
+  POLARIZATIONS: 'POLARIZATIONS',
+  ORBIT_DIRECTIONS: 'ORBIT_DIRECTIONS',
+};
+
 export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   KNOWN_BANDS = S1_OBSERVATION_SCENARIOS.KNOWN_BANDS;
   DATA_LOCATIONS = S1_OBSERVATION_SCENARIOS.DATA_LOCATIONS;
@@ -271,6 +277,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
         acquisitionModes={this.acquisitionModes}
         polarizations={this.polarizations}
         orbitDirections={this.ORBIT_DIRECTIONS}
+        renderOptionsHelpTooltips={this.renderOptionsHelpTooltips}
       />
     );
   }

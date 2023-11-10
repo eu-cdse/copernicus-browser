@@ -22,7 +22,7 @@ export const CUSTOM_VISUALIZATION_URL_ROUTES = ['#custom-composite', '#custom-in
 
 class EOBAdvancedHolder extends React.Component {
   state = {
-    selectedTab: 0,
+    selectedTab: null,
   };
 
   initTabs = () => {
@@ -50,6 +50,7 @@ class EOBAdvancedHolder extends React.Component {
   }
 
   render() {
+    const { selectedTab } = this.state;
     const {
       channels,
       layers,
@@ -85,25 +86,23 @@ class EOBAdvancedHolder extends React.Component {
           <ul className="custom-visualisation-tabs">
             <li
               className={`tab-button ${
-                this.state.selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB ? `active` : ``
+                selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB ? `active` : ``
               }`}
               onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB)}
             >{t`Composite`}</li>
             <li
-              className={`tab-button ${
-                this.state.selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB ? `active` : ``
-              }`}
+              className={`tab-button ${selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB ? `active` : ``}`}
               onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.INDEX_TAB)}
             >{t`Index`}</li>
             <li
               className={`tab-button ${
-                this.state.selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB ? `active` : ``
+                selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB ? `active` : ``
               }`}
               onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB)}
             >{t`Custom script`}</li>
           </ul>
 
-          {this.state.selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB && (
+          {selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB && (
             <div className="custom-visualisation-wrapper">
               {groupedChannels ? (
                 <GroupedBandsToRGB
@@ -117,29 +116,31 @@ class EOBAdvancedHolder extends React.Component {
                   value={layers}
                   onChange={onCompositeChange}
                   areBandsClasses={areBandsClasses}
+                  datasetId={activeDatasource.datasetId}
                 />
               )}
             </div>
           )}
 
-          {this.state.selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB && supportsIndex && (
+          {selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB && supportsIndex && (
             <div className="custom-visualisation-wrapper">
               <IndexBands
                 bands={channels}
                 layers={indexLayers}
                 onChange={onIndexScriptChange}
                 evalscript={evalscript}
+                datasetId={activeDatasource.datasetId}
               />
             </div>
           )}
 
-          {this.state.selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
+          {selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
             <div className="custom-visualisation-wrapper">
               <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnRight">
                 <ReactMarkdown linkTarget="_blank">
                   {t`An evalscript (or "custom script") is a piece of Javascript code that defines how the satellite data
-                  shall be processed by Sentinel Hub (the underlying service used by EO Browser) and what values the
-                  service shall return. \n\n
+                  should be processed by Sentinel Hub (one of the underlying services that powers the Browser) and what values the
+                  service should return. \n\n
                   Read more about custom scripts in our [tutorials](${tuturial}) or use already prepared scripts
                   for different collections from the [custom script repository](${repo}).`}
                 </ReactMarkdown>

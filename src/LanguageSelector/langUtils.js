@@ -8,7 +8,11 @@ export const DEFAULT_LANG = 'en';
 export const SUPPORTED_LANGUAGES = [
   { langCode: 'en', text: 'English', flagCode: 'GB' },
   { langCode: 'de', text: 'Deutsch', flagCode: 'DE' },
+  { langCode: 'es', text: 'Español', flagCode: 'ES' },
   { langCode: 'fr', text: 'Français', flagCode: 'FR' },
+  { langCode: 'lv', text: 'Latviešu', flagCode: 'LV' },
+  { langCode: 'pl', text: 'Polski', flagCode: 'PL' },
+  { langCode: 'sl', text: 'Slovenščina', flagCode: 'SI' },
 
   /* TO is language that won't be translated in the near future and is used as a pseudo option link for 'More Info' */
   { text: 'More info', flagCode: 'TO' },
@@ -25,10 +29,11 @@ export const changeLanguage = async (locale) => {
 
 export const getLanguage = () => {
   const storedLang = localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (!storedLang) {
+  if (!storedLang || !SUPPORTED_LANGUAGES.find((l) => l.langCode === storedLang)) {
     saveLang(DEFAULT_LANG);
     return DEFAULT_LANG;
   }
+
   return storedLang;
 };
 

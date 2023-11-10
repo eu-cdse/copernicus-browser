@@ -13,8 +13,6 @@ import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.ut
 
 import './Highlights.scss';
 import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { ReactComponent as CompareIcon } from '../../Pins/icons/compare-icon.svg';
-import BadgeWrapper from '../../../components/BadgeWrapper/BadgeWrapper';
 
 class Highlights extends Component {
   onPinSelect = async (pin, comparingPins, sharePins) => {
@@ -134,24 +132,7 @@ class Highlights extends Component {
   };
 
   setPanelHeader = () => {
-    const { showComparePanel, setComparePanel, newCompareLayersCount } = this.props;
-
-    return (
-      <div className="highlights-panel-header">
-        {t`Highlights`}
-        <BadgeWrapper
-          count={newCompareLayersCount}
-          onClick={() => {
-            setComparePanel(!showComparePanel);
-            store.dispatch(collapsiblePanelSlice.actions.setHighlightsPanelExpanded(showComparePanel));
-          }}
-        >
-          <div className={`highlights-panel-header-icon ${showComparePanel ? 'active' : ''}`}>
-            <CompareIcon />
-          </div>
-        </BadgeWrapper>
-      </div>
-    );
+    return <div className="highlights-panel-header">{t`Highlights`}:</div>;
   };
 
   render() {

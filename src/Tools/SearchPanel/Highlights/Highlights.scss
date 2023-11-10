@@ -7,6 +7,7 @@
     position: relative;
     overflow-y: hidden;
     margin: 0;
+    background-color: $mainLight;
 
     .highlights-notifications {
       // make room for notification so the border stays closed
@@ -16,8 +17,7 @@
 
     .highlights-container {
       position: relative;
-      margin: 0 10px 10px 10px;
-      background-color: $mainMedium;
+      margin: 10px 10px 10px 10px;
     }
   }
 
@@ -27,6 +27,7 @@
     align-items: center;
     width: 100%;
     margin-right: 15px;
+    text-transform: uppercase;
 
     .badge {
       right: -12px;

@@ -1,30 +1,70 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { sendFirebaseRequest, getAppropriateHashtags } from './SocialShare.utils';
+import { getShortUrl, getAppropriateHashtags, getCustomDomainFullName } from './SocialShare.utils';
 import { S2L1C, GIBS_MODIS_TERRA } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const mockNetwork = new MockAdapter(axios);
+const urlLocation =
+  'https://dataspace.copernicus.eu/browser/?zoom=3&lat=26&lng=0&themeId=DEFAULT-THEME&visualizationUrl=https%3A%2F%2Fsh.dataspace.copernicus.eu%2Fogc%2Fwms%2Fa91f72-YOUR-INSTANCEID-HERE&datasetId=S2_L2A_CDAS&demSource3D=%22MAPZEN%22&cloudCoverage=30';
 
-test('Sending Firebase Dynamic Links request', () => {
-  const urlLocation =
-    'https://apps.sentinel-hub.com/eo-browser/?zoom=18&lat=46.02417&lng=14.53691&themeId=DEFAULT-THEME&datasetId=S2L2A&fromTime=2020-06-29T00%3A00%3A00.000Z&toTime=2020-06-29T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&visualizationUrl=https%3A%2F%2Fservices.sentinel-hub.com%2Fogc%2Fwms%2Fbd86bc-YOUR-INSTANCEID-HERE';
+const customResponseMockData = [
+  { type: 'USER', active: true, fullName: 'link.dataspace.copernicus.eu' },
+  { type: 'SYSTEM', active: true, fullName: 'rebrand.ly' },
+];
+const inActiveCustomResponseMockData = [
+  { type: 'USER', active: false, fullName: 'link.dataspace.copernicus.eu' },
+  { type: 'SYSTEM', active: true, fullName: 'rebrand.ly' },
+];
+const defaultResponseMockData = [{ type: 'SYSTEM', active: true, fullName: 'rebrand.ly' }];
 
-  const expectedRequestUrl = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
-  const expectedPayload = {
-    longDynamicLink: 'https://sentinelshare.page.link/?link=' + encodeURIComponent(urlLocation),
-    suffix: {
-      option: 'SHORT',
-    },
-  };
+describe('URL Shortening Test Cases', () => {
+  beforeEach(() => {
+    mockNetwork.reset();
 
-  const responseData = { shortLink: 'https://sentinelshare.page.link/lmao' };
+    mockNetwork.onPost('https://api.rebrandly.com/v1/links').replyOnce((config) => {
+      if (JSON.parse(config.data).domain?.fullName === 'link.dataspace.copernicus.eu') {
+        return [200, { shortUrl: 'link.dataspace.copernicus.eu/g5d' }];
+      } else {
+        return [200, { shortUrl: 'rebrand.ly/utqowfl' }];
+      }
+    });
+  });
 
-  mockNetwork.onPost(expectedRequestUrl).replyOnce(200, responseData);
+  test('Shortening URL link with custom domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, customResponseMockData);
 
-  sendFirebaseRequest(urlLocation).then(() => {
-    expect(mockNetwork.history.post.length).toBe(1);
-    expect(mockNetwork.history.post[0].data).toBe(JSON.stringify(expectedPayload));
+    expect(await getShortUrl(urlLocation)).toBe('link.dataspace.copernicus.eu/g5d');
+  });
+
+  test('Shortening URL link with default domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, defaultResponseMockData);
+
+    expect(await getShortUrl(urlLocation)).toBe('rebrand.ly/utqowfl');
+  });
+
+  test('Shortening URL link with inactive custom domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, inActiveCustomResponseMockData);
+
+    expect(await getShortUrl(urlLocation)).toBe('rebrand.ly/utqowfl');
+  });
+
+  test('Domain Full Name response with custom domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, customResponseMockData);
+
+    expect(await getCustomDomainFullName()).toBe('link.dataspace.copernicus.eu');
+  });
+
+  test('Domain Full Name response with default domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, defaultResponseMockData);
+
+    expect(await getCustomDomainFullName()).toBe(undefined);
+  });
+
+  test('Inactive Domain Full Name response with custom domain configuration', async () => {
+    mockNetwork.onGet(`https://api.rebrandly.com/v1/domains`).replyOnce(200, inActiveCustomResponseMockData);
+
+    expect(await getCustomDomainFullName()).toBe(undefined);
   });
 });
 

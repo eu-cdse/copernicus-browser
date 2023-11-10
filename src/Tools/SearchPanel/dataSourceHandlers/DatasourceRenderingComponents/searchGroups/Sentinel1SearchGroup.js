@@ -7,6 +7,7 @@ import 'react-toggle/style.css';
 import { t } from 'ttag';
 
 import './Sentinel12SearchGroup.scss';
+import { S1_ADVANCED_SEARCH_OPTIONS } from '../../Sentinel1DataSourceHandler';
 
 class Sentinel1SearchGroup extends React.Component {
   constructor(props) {
@@ -85,6 +86,8 @@ class Sentinel1SearchGroup extends React.Component {
 
   render() {
     const { advancedOpened } = this.state;
+    const { renderOptionsHelpTooltips } = this.props;
+
     return (
       <div className="sentinel1-dsg">
         <div>
@@ -96,6 +99,8 @@ class Sentinel1SearchGroup extends React.Component {
           <div className="advanced">
             <div className="breakLines">
               <label>{t`Acquisition mode`}:</label>
+              {renderOptionsHelpTooltips &&
+                renderOptionsHelpTooltips(S1_ADVANCED_SEARCH_OPTIONS.ACQUISITION_MODES)}
               <CheckboxesWithChildren
                 choices={this.props.acquisitionModes}
                 initiallyChecked={this.state.acquisitionModes}
@@ -103,7 +108,13 @@ class Sentinel1SearchGroup extends React.Component {
                 initiallyCheckedChildren={this.getInitiallyCheckedPolarization({
                   ...this.props.polarizations,
                 })}
-                childrenLabel={t`Polarization`}
+                childrenLabel={
+                  <>
+                    {t`Polarization`}:
+                    {renderOptionsHelpTooltips &&
+                      renderOptionsHelpTooltips(S1_ADVANCED_SEARCH_OPTIONS.POLARIZATIONS)}
+                  </>
+                }
                 warningEmpty={t`Please select at least one data acquisition mode!`}
                 warningEmptyChildren={t`Please select at least one polarization!`}
                 onChange={this.setAcquisitionModeAndPolarizations}
@@ -112,6 +123,8 @@ class Sentinel1SearchGroup extends React.Component {
 
             <div className="twoItemsPerLine">
               <label>{t`Orbit direction`}:</label>
+              {renderOptionsHelpTooltips &&
+                renderOptionsHelpTooltips(S1_ADVANCED_SEARCH_OPTIONS.ORBIT_DIRECTIONS)}
               <NonEmptyCheckboxes
                 choices={this.props.orbitDirections}
                 initiallyChecked={this.state.orbitDirections}

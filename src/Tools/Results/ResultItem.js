@@ -10,7 +10,6 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import { useODataDownload } from '../../hooks/useODataDownload';
 import { ResultItemFooter } from './ResultItemFooter';
 import axios from 'axios';
-import { handleError } from '../../utils';
 import {
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
@@ -26,6 +25,7 @@ import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownloa
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
+import { handleError } from './BrowseProduct/BrowseProduct.utils';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -104,24 +104,14 @@ const ResultItem = ({
   productDownloadCancelTokens,
   searchFormData,
 }) => {
-  const {
-    sensingTime,
-    previewUrl,
-    name,
-    platformShortName,
-    instrumentShortName,
-    productType,
-    size,
-    contentLength,
-  } = tile;
+  const { sensingTime, name, platformShortName, instrumentShortName, productType, size, contentLength } =
+    tile;
 
   const [{ downloadError }, downloadProduct] = useODataDownload();
 
   useEffect(() => {
     if (downloadError) {
-      handleError(downloadError, downloadError.message, (msg) =>
-        store.dispatch(notificationSlice.actions.displayError(msg)),
-      );
+      handleError(downloadError);
     }
   }, [downloadError]);
 
@@ -172,7 +162,7 @@ const ResultItem = ({
   return (
     <div onMouseEnter={(e) => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
       <div className="container">
-        <ProductPreview previewUrl={previewUrl} name={name} />
+        <ProductPreview product={tile} validate={true} />
         <div className="details">
           <div className="title" title={oDataHelpers.formatAttributesNames('name')}>
             {name}

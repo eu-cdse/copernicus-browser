@@ -34,6 +34,7 @@ t`Based on a combination of bands (B3 - B11)/(B3 + B11); values above 0.42 are r
 t`Classification of Sentinel-2 data as result of ESA's Scene classification algorithm.`;
 t`UV Aerosol Index from 380 and 340 nm`;
 t`Based on combination of bands (B3 - B11)/(B3 + B11)`;
+t`Based on a combination of bands (B3 - B11)/(B3 + B11)`;
 t`OLCI Terrestrial Chlorophyll Index, Based on combination of bands (B12 - B11)/(B11 - B10)`;
 t`UV Aerosol Index from 388 and 354 nm`;
 t`Column averaged dry air mixing ratio of methane`;

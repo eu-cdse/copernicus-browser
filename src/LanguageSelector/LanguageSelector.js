@@ -50,7 +50,6 @@ const LanguageSelector = ({ selectedLanguage }) => {
           showSecondaryOptionLabel={false}
           selected={selected?.flagCode}
           onSelect={onSelectFlag}
-          selectedSize={16}
           fullWidth={false}
         />
       ) : (

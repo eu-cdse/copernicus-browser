@@ -7,6 +7,7 @@ import {
 } from '@sentinel-hub/evalscript-code-editor';
 import './EvalScriptInput.scss';
 import { t } from 'ttag';
+import { HTTPS } from '../../const';
 
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 
@@ -89,7 +90,7 @@ export class EvalScriptInput extends React.Component {
 
   render() {
     const { error, loading, success, evalscript, evalscripturl, isEvalUrl } = this.state;
-    const hasWarning = evalscripturl.length > 0 && !evalscripturl.startsWith('https://');
+    const hasWarning = evalscripturl.length > 0 && !evalscripturl.startsWith(HTTPS);
     return (
       <div className="evalscript-input">
         <div className="code-editor-wrap">

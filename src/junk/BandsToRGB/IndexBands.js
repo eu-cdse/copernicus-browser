@@ -28,7 +28,7 @@ const DEFAULT_DOMAIN = { min: 0, max: 1 };
 const EQUATIONS = ['(A-B)/(A+B)', '(A/B)'];
 const DEFAULT_VALUES = spreadHandlersEvenly(2, DEFAULT_DOMAIN.min, DEFAULT_DOMAIN.max);
 
-export const IndexBands = ({ bands, layers, onChange, evalscript }) => {
+export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) => {
   const [equation, setEquation] = React.useState(EQUATIONS[0]);
   const [values, setValues] = React.useState(DEFAULT_VALUES); //
   const [min, setMin] = React.useState(DEFAULT_DOMAIN.min);

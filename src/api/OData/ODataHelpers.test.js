@@ -109,8 +109,13 @@ describe('checkInstrumentSupports', () => {
     expect(sg).toBeTruthy();
   });
 
-  test('AuxiliaryFiles InstrumentName', () => {
-    const sg = checkInstrumentSupports('AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName);
+  test.each([
+    ['S1AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
+    ['S2AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
+    ['S3AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
+    ['S5PAuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
+  ])('AuxiliaryFiles InstrumentName %p', (instrumentName, supportedProperty) => {
+    const sg = checkInstrumentSupports(instrumentName, supportedProperty);
     expect(sg).toBeFalsy();
   });
 });
@@ -118,7 +123,7 @@ describe('checkInstrumentSupports', () => {
 describe('checkAllInstrumentsInCollectionSupport', () => {
   test('S2 InstrumentName', () => {
     const sg = checkAllInstrumentsInCollectionSupport('S2', SUPPORTED_PROPERTIES.InstrumentName);
-    expect(sg).toBeTruthy();
+    expect(sg).toBeFalsy();
   });
 
   test('S5P InstrumentName', () => {
@@ -164,7 +169,7 @@ describe('checkAllProductsInInstrumentSupport', () => {
 describe('checkAllProductsInCollectionSupport', () => {
   test('S2 Geometry', () => {
     const sg = checkAllProductsInCollectionSupport('S2', SUPPORTED_PROPERTIES.Geometry);
-    expect(sg).toBeTruthy();
+    expect(sg).toBeFalsy();
   });
 
   test('S5P Geometry', () => {

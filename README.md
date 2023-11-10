@@ -32,10 +32,14 @@ Contact us to get help about deploying the Browser on your infrastructure.
 
 Thanks to the efforts of various people and institutions, you can use the Copernicus Browser in your native language. Since the Browser is under constant development not all parts might be already translated in all languages.
 
-Your language is missing or incomplete and you want to help with the translation? Contact us at megha.devaraju@sinergise.com for more information.
+Your language is missing or incomplete and you want to help with the translation? Contact us at translation_support@sinergise.com for more information.
 
 Copernicus Browser, the evolution of EO Browser, shares many translations with its predecessor. A big thank you to everyone listed below (including those who didn't want to be publicly named) for their help in translating parts of the respective app.
 
 #### Wall of fame:
 - German: ESERO Austria/ESERO Germany
 - French: [CNES](https://cnes.fr/en), ESERO France, ESERO Luxembourg
+- Latvian: Valters Žeižis
+- Polish [ESERO Poland](https://esero.kopernik.org.pl/)/[Copernicus Science Centre](https://esero.kopernik.org.pl/)
+- Slovenian: Krištof Oštir ([Faculty of Civil and Geodetic Engineering](https://www.en.fgg.uni-lj.si/), University of Ljubljana)
+- Spanish: ESERO Spain,  Jorge Delgado ([University of Jaén](https://www.ujaen.es/en))

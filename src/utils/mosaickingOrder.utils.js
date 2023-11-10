@@ -12,7 +12,7 @@ export const getMosaickingOrderOptions = (datasetId, hasCloudCoverage) => {
 
   return allOptions.map((option) => ({
     value: option,
-    label: MOSAICKING_ORDER_OPTIONS[option],
+    label: MOSAICKING_ORDER_OPTIONS[option](),
   }));
 };
 

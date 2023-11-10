@@ -9,20 +9,13 @@
   user-select: none;
   color: $textColor;
   background-color: $mainLight;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
-
-  &.normal-mode:hover {
-    background: rgba($mainLight, 0.7);
-    cursor: pointer;
-
-    & > div:first-child {
-      color: #fff;
-    }
-  }
+  cursor: pointer;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.25);
 
   img.preview {
-    width: 90px;
+    width: 78px;
   }
 
   i {
@@ -39,7 +32,7 @@
   .highlight-content {
     width: 100%;
     display: grid;
-    grid-template-columns: 90px auto;
+    grid-template-columns: 78px auto;
 
     > span {
       height: 22px;
@@ -112,13 +105,25 @@
   .highlight-info {
     display: flex;
     flex-direction: column;
-    padding: 10px 40px 10px 10px;
+    gap: 5px;
+    padding: 5px 40px 5px 10px;
     position: relative;
-    font-size: 13px;
+
+    .description-toggle {
+      svg {
+        path {
+          stroke: $textColor;
+        }
+      }
+    }
 
     .highlight-info-row {
       .add-to-compare {
         margin-bottom: 10px;
+
+        svg {
+          fill: $textColor;
+        }
       }
     }
   }

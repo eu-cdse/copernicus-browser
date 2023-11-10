@@ -35,4 +35,33 @@ const OrderingDirection = {
   asc: 'asc',
 };
 
-export { ODataEntity, ODataQueryOption, ODataFilterOperator, ODataValueTypeAttribute, OrderingDirection };
+const ODataProductFileExtension = {
+  ZIP: 'zip',
+  TGZ: 'tgz',
+  EOF: 'eof',
+  TAR: 'tar',
+};
+
+// by default product can be downloaded as zip
+// but some product types are not stored as zip archives
+const ODataProductTypeExtension = {
+  AUX_RESORB: ODataProductFileExtension.EOF,
+  AUX_POEORB: ODataProductFileExtension.EOF,
+  AUX_PREORB: ODataProductFileExtension.EOF,
+  AUX_GNSSRD: ODataProductFileExtension.TGZ,
+  AUX_PROQUA: ODataProductFileExtension.TGZ,
+  AUX_MOEORB: ODataProductFileExtension.EOF,
+  AUX_PRCPTF: ODataProductFileExtension.EOF,
+  SR___MDO_AX: ODataProductFileExtension.TGZ,
+  SR___POE_AX: ODataProductFileExtension.TGZ,
+};
+
+export {
+  ODataEntity,
+  ODataQueryOption,
+  ODataFilterOperator,
+  ODataValueTypeAttribute,
+  OrderingDirection,
+  ODataProductFileExtension,
+  ODataProductTypeExtension,
+};

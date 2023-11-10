@@ -1,31 +1,26 @@
-import React, { Component } from 'react';
-import onClickOutside from 'react-onclickoutside';
+import React, { useState, useRef, useEffect } from 'react';
 import { t } from 'ttag';
 
-import ExternalLink from '../../ExternalLink/ExternalLink';
-import { sendFirebaseRequest, getAppropriateHashtags } from './SocialShare.utils';
+import { getShortUrl, getAppropriateHashtags } from './SocialShare.utils';
+import useOutsideClick from '../../hooks/useOutsideClick';
+import CopyToClipboardButton from '../CopyToClipboardButton/CopyToClipboardButton';
+import { getSharedLinks } from './SocialShare.utils';
+import { FacebookShare, TwitterShare, LinkedInShare } from './SocialPlatforms';
 
 import './social.scss';
 
-const MAX_RETRIES = 5;
+const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, extraParams }) => {
+  const ref = useRef();
+  const sharedLinks = getSharedLinks();
+  const [shortUrl, setShortUrl] = useState('');
 
-class SocialShare extends Component {
-  state = {
-    shortUrl: '',
-    lastShortenedUrl: '',
-    currentRetries: 0,
-    copyToClipboardConfirmation: false,
-  };
+  let currentUrl = window.location.href;
 
-  handleClickOutside = () => {
-    if (this.props.displaySocialShareOptions) {
-      this.props.toggleSocialSharePanel();
-    }
-  };
+  useEffect(() => {
+    sharedLinks[currentUrl] ? setShortUrl(sharedLinks[currentUrl]) : setShortUrl('');
+  }, [sharedLinks, currentUrl]);
 
-  shortenUrl = async (extraParams) => {
-    let currentUrl = window.location.href;
-
+  const shortenUrl = async (extraParams) => {
     if (extraParams) {
       currentUrl +=
         '&' +
@@ -34,121 +29,51 @@ class SocialShare extends Component {
           .join('&');
     }
 
-    if (
-      this.state.lastShortenedUrl === currentUrl &&
-      (this.state.shortUrl.length || this.state.currentRetries >= MAX_RETRIES)
-    ) {
-      return;
-    }
-
-    const shortUrl = await sendFirebaseRequest(currentUrl);
-
-    if (!shortUrl.length) {
-      this.setState((prevState) => ({
-        shortUrl: '',
-        lastShortenedUrl: currentUrl,
-        currentRetries: prevState.currentRetries + 1,
-      }));
-      return;
-    }
-    this.setState({
-      shortUrl: shortUrl,
-      lastShortenedUrl: currentUrl,
-      currentRetries: 0,
-    });
+    setShortUrl(await getShortUrl(currentUrl));
   };
 
-  copyToClipboard = () => {
-    const copyText = document.getElementById('copy-url-social-share');
-    copyText.select();
-    document.execCommand('copy');
-    this.setState({ copyToClipboardConfirmation: true });
-    setTimeout(() => this.setState({ copyToClipboardConfirmation: false }), 400);
-  };
+  useOutsideClick(ref, () => toggleSocialSharePanel());
 
-  render() {
-    const { displaySocialShareOptions, datasetId, extraParams } = this.props;
-    const { shortUrl, copyToClipboardConfirmation } = this.state;
-    if (!displaySocialShareOptions) {
-      return null;
-    }
-    this.shortenUrl(extraParams);
-    const hashtags = getAppropriateHashtags(datasetId);
-    return (
-      <div className="social-networks">
+  if (!displaySocialShareOptions) {
+    return null;
+  }
+
+  const hashtags = getAppropriateHashtags(datasetId);
+
+  return (
+    <div className="social-networks" ref={ref}>
+      <div className="short-url-section">
         <div className="copy-url">
-          <input
-            readOnly
-            type="text"
-            value={shortUrl}
-            id="copy-url-social-share"
-            className="holders"
-            disabled={!shortUrl.length}
-          />
-          <div
-            className={`copy-to-clipboard ${shortUrl.length ? '' : 'disabled'}`}
-            onClick={this.copyToClipboard}
-            title={t`Copy to clipboard`}
-          >
-            <i className={`fa ${copyToClipboardConfirmation ? 'fa-check-circle' : 'fa-copy'}`} />
+          <div className="short-url-container">
+            <span className={`short-url ${shortUrl ? '' : 'disabled'}`} ref={ref}>
+              {shortUrl || 'Short URL ...'}
+            </span>
+
+            <CopyToClipboardButton
+              className={`copy-to-clipboard ${shortUrl ? '' : 'disabled'}`}
+              title={t`Copy to clipboard`}
+              value={shortUrl}
+            />
           </div>
         </div>
 
-        <div className="social-buttons">
-          <FacebookShare url={shortUrl} />
-          <TwitterShare url={shortUrl} hashtags={hashtags} />
-          <LinkedInShare url={shortUrl} />
+        <div className="create-short-url-wrapper">
+          <button
+            className={`create-short-url ${shortUrl ? 'disabled' : ''}`}
+            onClick={() => shortenUrl(extraParams)}
+          >
+            {t`Generate`}
+          </button>
         </div>
       </div>
-    );
-  }
-}
-export default onClickOutside(SocialShare);
 
-const FacebookShare = ({ url }) => (
-  <div
-    id="facebook-holder"
-    title={t`Share on Facebook`}
-    className={`holders ${url.length ? '' : 'disabled'}`}
-  >
-    <ExternalLink
-      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
-      className="facebook-share-button"
-    >
-      <i className="fab fa-facebook-square" />
-    </ExternalLink>
-  </div>
-);
+      <div className="social-buttons">
+        <FacebookShare url={shortUrl} />
+        <TwitterShare url={shortUrl} hashtags={hashtags} />
+        <LinkedInShare url={shortUrl} />
+      </div>
+    </div>
+  );
+};
 
-const TwitterShare = ({ url, tweetMessage, hashtags }) => (
-  <div id="twitter-holder" title={t`Share on Twitter`} className={`holders ${url.length ? '' : 'disabled'}`}>
-    <ExternalLink
-      className="twitter-share-button"
-      href={
-        'https://twitter.com/intent/tweet?text=' +
-        (tweetMessage || t`Check this out `) +
-        '&url=' +
-        url +
-        '&hashtags=' +
-        hashtags
-      }
-    >
-      <i className="fab fa-twitter-square" />
-    </ExternalLink>
-  </div>
-);
-
-const LinkedInShare = ({ url }) => (
-  <div
-    id="linked-in-holder"
-    title={t`Share on LinkedIn`}
-    className={`holders ${url.length ? '' : 'disabled'}`}
-  >
-    <ExternalLink
-      className="linkedin-share-button"
-      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
-    >
-      <i className="fab fa-linkedin" />
-    </ExternalLink>
-  </div>
-);
+export default SocialShare;

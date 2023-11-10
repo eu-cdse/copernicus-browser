@@ -52,8 +52,8 @@ import {
 import { ModalId } from '../../const';
 
 import { ReactComponent as ArrowSvg } from '../../icons/arrow.svg';
-import { ReactComponent as ChevronUp } from '../../icons/chevronUp.svg';
-import { ReactComponent as ChevronDown } from '../../icons/chevronDown.svg';
+import { ReactComponent as ChevronUp } from '../../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../../icons/chevron-down.svg';
 
 const PINS_LC_NAME = 'eob-pins';
 export const UNSAVED_PINS = 'unsaved-pins';
@@ -777,7 +777,7 @@ class PinPanel extends Component {
               <div className="pins-header-order-label">{t`Order by:`}</div>
               <Select
                 placeholder={t`Default order`}
-                defaultValue={this.state.orderMode}
+                value={this.state.orderMode}
                 options={orderByOptions}
                 onChange={this.handleSelectOrder}
                 styles={customSelectStyle}

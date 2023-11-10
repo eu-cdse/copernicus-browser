@@ -138,6 +138,7 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   layerId: store.visualization.layerId,
   geometryType: store?.modal?.params?.geometryType,
+  selectedLanguage: store.language.selectedLanguage,
 });
 
 export default connect(mapStoreToProps, null)(SpectralExplorer);

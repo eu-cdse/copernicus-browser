@@ -3,6 +3,7 @@
     display: flex;
     flex: 1;
     text-align: center;
+    word-break: break-word;
     align-items: center;
     font-style: italic;
     opacity: 0.6;
@@ -20,6 +21,14 @@
       width: 64px;
       height: 64px;
       object-fit: cover;
+    }
+
+    .rotate-flip-horizontal {
+      transform: rotate(180deg) scaleX(-1);
+    }
+
+    .flip-horizontal {
+      transform: scaleX(-1);
     }
   }
 }

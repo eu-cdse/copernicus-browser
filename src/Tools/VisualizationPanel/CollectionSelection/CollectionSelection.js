@@ -26,8 +26,8 @@ import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/C
 
 // import checkmarkSvg from './checkmark.svg';
 
-import { ReactComponent as ChevronUp } from '../../../icons/chevronUp.svg';
-import { ReactComponent as ChevronDown } from '../../../icons/chevronDown.svg';
+import { ReactComponent as ChevronUp } from '../../../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../../../icons/chevron-down.svg';
 
 import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
@@ -231,6 +231,9 @@ const CollectionSelection = ({
     }
 
     setSelected(selectedCollection);
+    if (!showLayerPanel && setShowLayerPanel) {
+      setShowLayerPanel(true);
+    }
     if (!selectedConfig.dataset) {
       const collectionGroupsFromDsh = createCollectionGropsFromDataSourceHandlers(filter, bounds);
       const collectionGroup = collectionGroupsFromDsh.find(

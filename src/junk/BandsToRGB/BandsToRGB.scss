@@ -1,30 +1,58 @@
 @import '../../variables.module.scss';
 
 .colors-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   min-height: 50px;
   border-radius: 6px;
   text-align: center;
   padding: 10px 0;
 
   .band-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    width: 42px;
     border-radius: 50px;
     color: $whiteColor;
-    text-shadow: 0 0 7px rgb(0 0 0 / 70%);
-    background: $mainDarkest;
-    cursor: move;
-    display: inline-block;
+    text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
     font-size: 14px;
     font-weight: bold;
-    height: 42px;
-    line-height: 42px;
     margin: 5px 8px;
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
-    transform: translate(0, 0);
     user-select: none;
     white-space: nowrap;
-    width: 42px;
+    overflow: hidden;
+    transform: translate(0, 0);
+    cursor: move;
+
+    .band-text {
+      position: relative;
+      left: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .band-item-runner {
+    justify-content: start;
+
+    .band-text-runner {
+      position: relative;
+      left: 5px;
+      animation: moveText 4s ease-in-out infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
   }
 }
 
@@ -46,8 +74,9 @@
 }
 
 .col-holder {
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50px;
   height: 50px;
   margin: 10px;
@@ -85,15 +114,46 @@
   }
 
   .selected-band {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
     border-radius: 50px;
     color: $whiteColor;
     font-size: 14px;
     font-weight: bold;
-    line-height: 50px;
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
+    user-select: none;
     white-space: nowrap;
+    overflow: hidden;
+    transform: translate(0, 0);
+
+    .band-text {
+      position: relative;
+      left: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .selected-band-runner {
+    justify-content: start;
+
+    .band-text-runner {
+      position: relative;
+      left: 3px;
+      animation: moveText 4s ease-in-out infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
   }
 }
 

@@ -36,6 +36,10 @@ const AdditionalFilters = ({
     return null;
   }
 
+  if (!allFilters) {
+    return null;
+  }
+
   return (
     <div className="additional-filters" style={style}>
       <div className="header">

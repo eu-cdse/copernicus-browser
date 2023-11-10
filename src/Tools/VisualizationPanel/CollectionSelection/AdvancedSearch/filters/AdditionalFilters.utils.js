@@ -19,12 +19,12 @@ export const getAdditionalFilterData = (collectionId, attributeId, props) => {
     ...props,
     id: attributeId,
     title: title,
-    tooltip: AttributeTooltips[collectionId][attributeId] ?? title,
+    tooltip: AttributeTooltips[collectionId][attributeId]() ?? title,
   };
 };
 
 export const getAllFiltersForCollection = (collection) =>
-  collection.additionalFilters.map((additionalFilter) =>
+  collection.additionalFilters?.map((additionalFilter) =>
     getAdditionalFilterData(collection.id, additionalFilter.id, additionalFilter),
   );
 

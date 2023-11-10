@@ -45,6 +45,7 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   geometry: store.poi.geometry,
+  selectedLanguage: store.language.selectedLanguage,
 });
 
 export default connect(mapStoreToProps)(PixelExplorer);

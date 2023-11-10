@@ -60,7 +60,7 @@ export default class CheckboxesWithChildren extends React.Component {
             </label>
             {this.state.checked.has(k) && (
               <div className="child twoItemsPerLine">
-                <label className="child-label">{this.props.childrenLabel}:</label>
+                <label className="child-label">{this.props.childrenLabel}</label>
                 <NonEmptyCheckboxes
                   choices={this.props.children[k]}
                   initiallyChecked={this.state.checkedChildren[k]}

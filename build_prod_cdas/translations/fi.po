@@ -75,6 +75,9 @@ msgstr "Näytä visualisointi"
 msgid "Add to Pins"
 msgstr "Lisää merkittyihin"
 
+msgid "Add to compare"
+msgstr "Lisää vertailuun"
+
 msgid "Zoom to tile"
 msgstr "Kohdista ruutuun"
 
@@ -149,6 +152,9 @@ msgstr "Piilota kuvaus"
 
 msgid "Show description"
 msgstr "Näytä kuvaus"
+
+msgid "This theme has no highlights."
+msgstr "Tällä teemalla ei ole poimintoja."
 
 msgid "Based on: "
 msgstr "Perustuu: "
@@ -436,6 +442,45 @@ msgstr ""
 "pelastuspalvelut, ilmastonmuutos."
 
 msgid ""
+"**Sentinel-2** provides high-resolution images in the visible and infrared "
+"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
+"and coastal areas. .\n"
+"\n"
+"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
+"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
+"info "
+"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
+"resolutions/spatial). \n"
+"\n"
+"**Revisit time:** maximum 5 days to revisit the same area, using both "
+"satellites.\n"
+"\n"
+"**Data availability:** Since June 2015. Full global coverage since March "
+"2017.\n"
+"\n"
+"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
+"monitoring, monitoring of burnt areas."
+msgstr ""
+"**Sentinel-2-satelliitti** tuottaa korkealla erotuskyvyllä näkyvän valon ja "
+"infrapunakanavan kuvia, joita voidaan käyttää kasvillisuuden, maanpeitteen "
+"ja vesipeitteen, sisävesistöjen ja rannikkoalueiden seurantaan. .\n"
+"\n"
+"**Alueellinen erotuskyky:** 10 m, 20 m ja 60 m aallonpituuden mukaan (eli "
+"kuvissa näkyvät vain kohteet, jotka ovat suurempia kuin 10 m, 20 m tai 60 "
+"m). Lisätietoja löydät englanniksi "
+"[täältä](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
+"resolutions/spatial). \n"
+"\n"
+"**Kuvausväli:** Enintään 5 päivää samalla alueella molempia satelliitteja "
+"käytettäessä.\n"
+"\n"
+"**Saatavilla olevat tiedot:** Kesäkuusta 2015 lähtien. Maailmanlaajuinen "
+"kattavuus maaliskuusta 2017 lähtien.\n"
+"\n"
+"**Yleisimmät käyttökohteet:** Maanpeitekartat, maanpinnan muutoskartat, "
+"kasvillisuuden seuranta, maastopaloissa tuhoutuneiden alueiden seuranta."
+
+msgid ""
 "Level 1C data are data of sufficient quality for most investigations, where "
 "all image corrections were done except for the atmospheric correction. Data "
 "are available globally since June 2015 onwards."
@@ -591,6 +636,12 @@ msgstr "SciHub-linkki"
 msgid "Back to search"
 msgstr "Takaisin hakuun"
 
+#, javascript-format
+msgid "Showing ${ this.state.results.length } result"
+msgid_plural "Showing ${ this.state.results.length } results"
+msgstr[0] "Näytetään ${ this.state.results.length } tulosta"
+msgstr[1] "Näytetään ${ this.state.results.length } tulokset"
+
 msgid "Load more"
 msgstr "Lataa lisää"
 
@@ -599,6 +650,15 @@ msgstr "Ladataan lisää tuloksia ..."
 
 msgid "Results"
 msgstr "Tulokset"
+
+#, javascript-format
+msgid "Showing ${ this.state.selectedTiles.length } result."
+msgid_plural "Showing ${ this.state.selectedTiles.length } results."
+msgstr[0] "Näytetään ${ this.state.selectedTiles.length } tulosta."
+msgstr[1] "Näytetään ${ this.state.selectedTiles.length } tulokset."
+
+msgid "Edit pin description"
+msgstr "Muokkaa merkinnän kuvausta"
 
 msgid "Reject changes"
 msgstr "Hylkää muutokset"
@@ -739,6 +799,12 @@ msgstr "Läpinäkyvyys"
 msgid "Split position"
 msgstr "Jakoviivan paikka"
 
+msgid "split"
+msgstr "jako"
+
+msgid "opacity"
+msgstr "läpinäkyvyys"
+
 msgid "No layers to compare."
 msgstr "Ei verrattavia tasoja."
 
@@ -872,8 +938,13 @@ msgstr "Ylinäytteistys"
 msgid "Downsampling"
 msgstr "Alinäytteistys"
 
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
 msgid "Reset all"
 msgstr "Nollaa kaikki"
+
+msgid "filter by months"
+msgstr "suodata kuukauden mukaan"
 
 msgid "Copy geometry to clipboard"
 msgstr "Kopioi geometria leikepöydälle"
@@ -907,7 +978,7 @@ msgstr "Vanhin ensin"
 msgid "Customize timespan"
 msgstr "Mukauta aikaväliä"
 
-#. eslint-disable-next-line 
+#. eslint-disable-next-line
 msgid "Back"
 msgstr "Takaisin"
 
@@ -1197,6 +1268,9 @@ msgstr "väh./enint."
 msgid "Export CSV"
 msgstr "Vie CSV-tiedostoon"
 
+msgid "Timespan:"
+msgstr "Aikaväli:"
+
 msgid "Date:"
 msgstr "Päivämäärä:"
 
@@ -1205,6 +1279,12 @@ msgstr "Yksi päivä"
 
 msgid "Timespan"
 msgstr "Aikaväli"
+
+msgid "hh"
+msgstr "tt"
+
+msgid "mm"
+msgstr "mm"
 
 msgid "From:"
 msgstr "Alkaen:"
@@ -2210,7 +2290,7 @@ msgstr ""
 "lumeksi"
 
 msgid ""
-"Classification of Sentinel-2 data as result of ESA's Scene classification "
+"Classification of Sentinel2 data as result of ESA's Scene classification "
 "algorithm."
 msgstr ""
 "Sentinel-2:n tietojen luokittelu ESAn näkymän luokittelualgoritmin (Scene "
@@ -5660,7 +5740,6 @@ msgstr ""
 "infrared/) ja "
 "[täältä.](https://gisgeography.com/landsat-8-bands-combinations/)"
 
-#. If the following translation is added again, the second link must be updated
 msgid ""
 "# True color composite\n"
 "\n"
@@ -5840,6 +5919,12 @@ msgstr "Järjestä:"
 
 msgid "Location"
 msgstr "Sijainti"
+
+msgid "DatasetId"
+msgstr "Tietojoukon tunnus"
+
+msgid "Title"
+msgstr "Nimi"
 
 msgid "Show evalscript"
 msgstr "Näytä evalscript"
@@ -6203,6 +6288,7 @@ msgstr ""
 "[täältä.](https://custom-scripts.sentinel-hub.com/landsat-7-etm/true-color//"
 ")"
 
+#. #__PURE__
 msgid "Max. cloud coverage:"
 msgstr "Pilvipeite enintään:"
 
@@ -6539,6 +6625,9 @@ msgstr "Näytä esikatselu"
 
 msgid "Please login to gain access to it"
 msgstr "Kirjaudu sisään, kun haluat käyttää toimintoa"
+
+msgid "The theme you are trying to access is private"
+msgstr "Valitsemasi teema on yksityinen"
 
 msgid "Continue without logging in"
 msgstr "Jatka kirjautumatta sisään"
@@ -7468,6 +7557,9 @@ msgstr ""
 "fa-crosshairs\" />-painikkeella.\n"
 "\n"
 "Analyyttinen-vaihtoehdossa kuvat rajataan kohdealueeseen."
+
+msgid "No layers found for date"
+msgstr "Päivämäärälle ei löytynyt tasoja"
 
 msgid ""
 "The **Global Human Settlement** (GHS) framework produces global maps of "
@@ -9286,20 +9378,6 @@ msgstr ""
 msgid "Custom script"
 msgstr ""
 
-#, javascript-format
-msgid ""
-"An evalscript (or \"custom script\") is a piece of Javascript code that "
-"defines how the satellite data\n"
-"shall be processed by Sentinel Hub (the underlying service used by EO "
-"Browser) and what values the\n"
-"service shall return. \n"
-"\n"
-"\n"
-"Read more about custom scripts in our [tutorials](${ tuturial }) or use "
-"already prepared scripts\n"
-"for different collections from the [custom script repository](${ repo })."
-msgstr ""
-
 msgid "Use custom script to create a custom visualization"
 msgstr ""
 
@@ -9330,198 +9408,6 @@ msgid ""
 "which uses the near-infrared and shortwave infrared bands.\n"
 "\n"
 "More info [here](${ link1 }) or [here](${ link2 })."
-msgstr ""
-
-msgid "Effects and advanced options"
-msgstr ""
-
-msgid "Show latest date"
-msgstr ""
-
-msgid "No results found"
-msgstr ""
-
-msgid "Unable to show latest date"
-msgstr ""
-
-msgid ""
-"In the <b>Visualize</b> tab you can select different pre-installed or "
-"custom spectral band combinations to visualise data for the selected "
-"result.\n"
-"\n"
-"Some of the common options:\n"
-"- **True Color** - Visual interpretation of land cover.\n"
-"- **False Color** - Visual interpretation of vegetation.\n"
-"- **NDVI** - Vegetation index.\n"
-"- **Moisture index** - Moisture index\n"
-"- **SWIR** - Shortwave-infrared index.\n"
-"- **NDWI** - Normalized Difference Water Index.\n"
-"- **NDSI** - Normalized Difference Snow Index.\n"
-"\n"
-"Most visualizations are given a description and a legend, which you can "
-"view by clicking on the expand\n"
-"icon <i className=\"fa fa-angle-double-down \" />.\n"
-" \n"
-"For most data sources the **Custom Script** option is available. Click on "
-"it to select custom\n"
-"band combinations, index combinations or write your own classification "
-"script for the visualisation of data. You can also\n"
-"use custom scripts, which are stored elsewhere, either on Google drive, "
-"GitHub or in our [Custom script "
-"repository](https://custom-scripts.sentinel-hub.com/). \n"
-"Paste the URL of the script into a text box in the advanced script editing "
-"panel and click Refresh."
-msgstr ""
-
-msgid "Advanced"
-msgstr ""
-
-msgid "Commercial Data"
-msgstr ""
-
-msgid "Effects and advanced options applied"
-msgstr ""
-
-msgid "Show visualizations"
-msgstr ""
-
-msgid "Add to"
-msgstr ""
-
-msgid "Add to Timelapse"
-msgstr ""
-
-msgid "Add to Compare"
-msgstr ""
-
-msgid "Please select a date or click the button below"
-msgstr ""
-
-msgid "Show latest data"
-msgstr ""
-
-msgid ""
-"There is no data on this location for any date. Please select an option "
-"below:"
-msgstr ""
-
-msgid "Go to location with latest data"
-msgstr ""
-
-msgid "Go to nearest location with data"
-msgstr ""
-
-msgid "Available collections with data on this location within the last 2 weeks:"
-msgstr ""
-
-msgid "Please zoom in or search for a location of interest"
-msgstr ""
-
-msgid "Layers Panel"
-msgstr ""
-
-msgid "Compare Panel"
-msgstr ""
-
-msgid "Pins Panel"
-msgstr ""
-
-msgid "Acquisition mode:"
-msgstr ""
-
-msgid "Polarization:"
-msgstr ""
-
-msgid "Orbit Direction:"
-msgstr ""
-
-msgid ""
-"The Copernicus Services provide important information for six main areas: "
-"Ocean, Land and Atmosphere Monitoring, Emergency Response, Security and "
-"Climate Change. Copernicus Services data are based on both satellite Earth "
-"Observation imagery and in-situ data and benefit both Europe and the "
-"international community. More information can be found "
-"[here](https://www.copernicus.eu/en/copernicus-services)."
-msgstr ""
-
-msgid ""
-"The **Global Surface Water** collection is derived from Landsat 5, 7 and 8 "
-"imagery and shows various aspects of the spatio-temporal distribution of "
-"surface water between 1984 and 2020 (with annual revisions) at a global "
-"scale in six different layers. Surface water is considered as any uncovered "
-"stretch of water (fresh and salt water areas) greater than 30m² visible "
-"from space, including natural and artificial water bodies. More information "
-"[here](https://collections.sentinel-hub.com/global-surface-water/).\n"
-"\n"
-"**Coverage**: Global coverage from longitude 170°E to 180°W and latitude "
-"80°N to 50°S.\n"
-"\n"
-"**Data Availability**: 1984 - 2019, 1984 - 2020.\n"
-"\n"
-"**Spatial resolution**: 30 meters.\n"
-"\n"
-"**Common Usage**: Monitoring of water bodies for water resource management, "
-"climate modelling, biodiversity conservation and food security."
-msgstr ""
-
-msgid ""
-"**Sentinel-2** provides high-resolution images in the visible and infrared "
-"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
-"and coastal areas.\n"
-"\n"
-"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
-"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
-"info "
-"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Revisit time:** maximum 5 days to revisit the same area, using both "
-"satellites.\n"
-"\n"
-"**Data availability:** Since June 2015. Full global coverage since March "
-"2017.\n"
-"\n"
-"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
-"monitoring, monitoring of burnt areas."
-msgstr ""
-
-#, javascript-format
-msgid "Showing ${ resultsLength } result"
-msgid_plural "Showing ${ resultsLength } results"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Title ascending"
-msgstr ""
-
-msgid "Title descending"
-msgstr ""
-
-msgid "Date ascending"
-msgstr ""
-
-msgid "Date descending"
-msgstr ""
-
-msgid "Location ascending"
-msgstr ""
-
-msgid "Location descending"
-msgstr ""
-
-msgid "Dataset ID ascending"
-msgstr ""
-
-msgid "Dataset ID descending"
-msgstr ""
-
-msgid "Default order"
-msgstr ""
-
-msgid "Effect:"
-msgstr ""
-
-msgid "Dashboard"
 msgstr ""
 
 msgid "Red"
@@ -9760,314 +9646,7 @@ msgstr ""
 msgid "Parameter ${ parameter } is not set"
 msgstr ""
 
-msgid "Band 1 - Yellow substance and detrital pigments - 412.5 nm"
-msgstr ""
-
-msgid "Band 2 - Chlorophyll absorption maximum - 442 nm"
-msgstr ""
-
-msgid "Band 3 - Chlorophyll and other pigments - 490 nm"
-msgstr ""
-
-msgid "Band 4 - Suspended sediment, red tides - 510 nm"
-msgstr ""
-
-msgid "Band 5 - Chlorophyll absorption minimum - 560 nm"
-msgstr ""
-
-msgid "Band 6 - Suspended sediment - 620 nm"
-msgstr ""
-
-msgid "Band 7 - Chlorophyll absorption & fluo. reference - 665 nm"
-msgstr ""
-
-msgid "Band 8 - Chlorophyll fluorescence peak - 681 nm"
-msgstr ""
-
-msgid "Band 9 - Fluo. reference, atmosphere corrections - 709 nm"
-msgstr ""
-
-msgid "Band 10 - Vegetation, cloud - 753 nm"
-msgstr ""
-
-msgid "Band 11 - O2 R- branch absorption band - 761 nm"
-msgstr ""
-
-msgid "Band 12 - Atmosphere corrections - 779 nm"
-msgstr ""
-
-msgid "Band 13 - Vegetation, water vapour reference - 865 nm"
-msgstr ""
-
-msgid "Band 14 - Atmosphere corrections - 885 nm"
-msgstr ""
-
-msgid "Band 15 - Water vapour, land - 900 nm"
-msgstr ""
-
-msgid "Your authentication has expired"
-msgstr ""
-
-msgid "Gisco search"
-msgstr ""
-
-msgid "Google search"
-msgstr ""
-
-msgid "Powered by Google"
-msgstr ""
-
-msgid "Filter by months"
-msgstr ""
-
-msgid "Find products for current view"
-msgstr ""
-
-msgid "Time Range"
-msgstr ""
-
-msgid "Add to compare"
-msgstr ""
-
-msgid ""
-"**Sentinel-2** provides high-resolution images in the visible and infrared "
-"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
-"and coastal areas. .\n"
-"\n"
-"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
-"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
-"info "
-"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Revisit time:** maximum 5 days to revisit the same area, using both "
-"satellites.\n"
-"\n"
-"**Data availability:** Since June 2015. Full global coverage since March "
-"2017.\n"
-"\n"
-"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
-"monitoring, monitoring of burnt areas."
-msgstr ""
-
-#, javascript-format
-msgid "Showing ${ this.state.results.length } result"
-msgstr ""
-
-msgid "Showing ${ this.state.selectedTiles.length } result."
-msgstr ""
-
-msgid "split"
-msgstr ""
-
-msgid "opacity"
-msgstr ""
-
-msgid "Timespan:"
-msgstr ""
-
-msgid "hh"
-msgstr ""
-
-msgid "mm"
-msgstr ""
-
-msgid "DatasetId"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "No layers found for date"
-msgstr ""
-
-msgid ""
-"# True color optimized\n"
-"\n"
-"This optimized True color script uses the visible light bands red, green "
-"and blue in the corresponding red, green and blue color channels, resulting "
-"in a product with natural colours that represents the Earth as humans would "
-"naturally see it. The visualisation uses highlight compression and improves "
-"the contrast and color vividness through minor contrast and saturation "
-"enhancement.\n"
-"\n"
-"\n"
-"\n"
-"More info for "
-"[L1C](https://custom-scripts.sentinel-hub.com/sentinel-2/l1c_optimized/) "
-"and for "
-"[L2A](https://custom-scripts.sentinel-hub.com/sentinel-2/l2a_optimized/)."
-msgstr ""
-
-msgid "Name"
-msgstr ""
-
-msgid "Instrument short name"
-msgstr ""
-
-msgid "Product type"
-msgstr ""
-
-msgid "Land cover"
-msgstr ""
-
-msgid "Origin date"
-msgstr ""
-
-msgid "Publication date"
-msgstr ""
-
-msgid "Modification date"
-msgstr ""
-
-msgid "S3Path"
-msgstr ""
-
-msgid "Processed by"
-msgstr ""
-
-msgid "Bright cover"
-msgstr ""
-
-msgid "Cycle number"
-msgstr ""
-
-msgid "Coastal cover"
-msgstr ""
-
-msgid "Processor name"
-msgstr ""
-
-msgid "Closed sea cover"
-msgstr ""
-
-msgid "Open ocean cover"
-msgstr ""
-
-msgid "Absolute orbit number"
-msgstr ""
-
-msgid "Last orbit direction"
-msgstr ""
-
-msgid "Last orbit number"
-msgstr ""
-
-msgid "Processing date"
-msgstr ""
-
-msgid "Snow or ice cover"
-msgstr ""
-
-msgid "Product group id"
-msgstr ""
-
-msgid "Processor version"
-msgstr ""
-
-msgid "Saline water cover"
-msgstr ""
-
-msgid "Tidal region cover"
-msgstr ""
-
-msgid "Granule identifier"
-msgstr ""
-
-msgid "Platform short name"
-msgstr ""
-
-msgid "Datastrip identifier"
-msgstr ""
-
-msgid "Relative orbit number"
-msgstr ""
-
-msgid "Fresh inland water cover"
-msgstr ""
-
-msgid "Last relative orbit"
-msgstr ""
-
-msgid "Satellite platform"
-msgstr ""
-
-msgid "Beginning date time"
-msgstr ""
-
-msgid "Ending date time"
-msgstr ""
-
-msgid "Slice number"
-msgstr ""
-
-msgid "Product class"
-msgstr ""
-
-msgid "Polarisation"
-msgstr ""
-
-msgid "Timeliness"
-msgstr ""
-
-msgid "Beam id"
-msgstr ""
-
-msgid "Baseline collection"
-msgstr ""
-
-msgid "Continental ice cover"
-msgstr ""
-
-msgid "Processing center"
-msgstr ""
-
-msgid "Instrument"
-msgstr ""
-
-msgid "Mission"
-msgstr ""
-
-msgid "Tile id"
-msgstr ""
-
-msgid "Authority"
-msgstr ""
-
-msgid "Coordinates"
-msgstr ""
-
-msgid "HV order tile id"
-msgstr ""
-
-msgid "Spatial resolution"
-msgstr ""
-
-msgid "Start time from ascending node"
-msgstr ""
-
-msgid "Completion time from ascending node"
-msgstr ""
-
-msgid ""
-"The available Sentinel-1 data includes products from the Sentinel-1 "
-"satellite constellation, including Sentinel-1A (operational since 2014) and "
-"Sentinel-1B (operational from 2016 to 2022)."
-msgstr ""
-
-msgid ""
-"Determines whether the data was recorded during a descending orbit (flight "
-"direction: north - south) or an ascending orbit (flight direction: south - "
-"north)."
-msgstr ""
-
-msgid ""
-"The Relative Orbit Number is the number of full orbits (between successive "
-"ascending node crossings through the Equator) since the relative orbit 1 to "
-"the end of a cycle. The relative orbit 1 is the orbit whose ascending node "
-"crossing is closest to the Greenwich Meridian. Sentinel-1 is in a "
-"near-polar, sun-synchronous orbit with a repeat cycle of 12 days and 175 "
-"orbits per cycle for a single satellite."
+msgid "Selected dataset does not exist!"
 msgstr ""
 
 msgid ""
@@ -10082,222 +9661,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Depending on the acquistion mode, the following swaths and identifiers are "
-"possible:\n"
-"- S1-S6 for SM mode (currently the only supported option)\n"
-"- IW1-IW3 for IW mode\n"
-"- EW1-EW5 for EW mode\n"
-"- WV1-WV2 for WV mode"
-msgstr ""
-
-msgid ""
-"The available Sentinel-2 data includes products from the Sentinel-2 "
-"satellite constellation, including Sentinel-2A (operational since 2015) and "
-"Sentinel-2B (operational since  2017)."
-msgstr ""
-
-msgid ""
-"The Relative Orbit Number is the number of full orbits (between sucessive "
-"ascending node crossings through the Equator) since the relative orbit 1 "
-"until the end of a cycle. The relative orbit 1 is the orbit whose ascending "
-"node crossing is closest to the Greenwich Meridian. Sentinel-2 is in a "
-"sun-synchronous orbit with a 10-day repeat cycle (5-days with both "
-"satellites) and 143 orbits per cycle."
-msgstr ""
-
-msgid ""
-"Sentinel-3 data is  available in the following timeliness:\n"
-"- Near Real Time (NRT):  typically available within 3 hours after data "
-"acquisition\n"
-"- Short Time Critical (STC): typically available within 48 hours after data "
-"acquisition\n"
-"- Non Time Critical (NTC): typically available within 1 months after data "
-"acquisition"
-msgstr ""
-
-msgid ""
-"The available Sentinel-3 data includes products from the Sentinel-3 "
-"satellite constellation, including Sentinel-3A (operational since 2016) and "
-"Sentinel-3B (operational since 2018)."
-msgstr ""
-
-msgid ""
-"The Relative Orbit Number is the number of full orbits (between successive "
-"ascending node crossings through the Equator) since the relative orbit 1 "
-"until the end of a cycle. The relative orbit 1 is the orbit whose ascending "
-"node crossing is closest to the Greenwich Meridian. Sentinel-3 is in a "
-"near-polar, sun-synchronous orbit with a repeat cycle of 27 days."
-msgstr ""
-
-msgid ""
-"The timeliness provides information about the delivery time of the data "
-"product. For Sentinel-5P there are 3 different timeliness available:\n"
-"- Near Real-Time (NRT): available within 3 hours of acquisition\n"
-"- Offline: depending on the product, within 12 hours for Level 1B products\n"
-"- Reprocessing: no time constraints (performed when major product upgrades "
-"are required"
-msgstr ""
-
-msgid ""
-"The absolute Orbit Number is the number of orbits that have elapsed since "
-"the first ascending node crossing after launch."
-msgstr ""
-
-#, javascript-format
-msgid ""
-"# Welcome to the Browser!\n"
-"\n"
-"Use **Visualize** to interactively browse, analyze and process satellite "
-"imagery, including the complete archive of Sentinel data with other "
-"collections alongside, and **Search** to find or download products from "
-"various satellite missions.\n"
-"\n"
-"These options will be expanded in the future, so check back regularly and "
-"keep up to date with the [Roadmap](${ ROADMAP_URL })."
-msgstr ""
-
-msgid "No configuration selected"
-msgstr ""
-
-msgid "Please select a configuration"
-msgstr ""
-
-msgid "Configurations:"
-msgstr ""
-
-msgid "Data Collections:"
-msgstr ""
-
-msgid "Search criteria"
-msgstr ""
-
-msgid "Time range"
-msgstr ""
-
-msgid "Reset filters"
-msgstr ""
-
-msgid "Filters"
-msgstr ""
-
-msgid "About"
-msgstr ""
-
-msgid "Powered by Sentinel Hub"
-msgstr ""
-
-msgid "Sentinel-2 L2A"
-msgstr ""
-
-msgid "Sentinel-2 L1C"
-msgstr ""
-
-msgid "This configuration has no highlights."
-msgstr ""
-
-msgid "Please select a configuration."
-msgstr ""
-
-msgid "Workspace"
-msgstr ""
-
-msgid "Add to workspace"
-msgstr ""
-
-msgid "Download product"
-msgstr ""
-
-msgid "Product info"
-msgstr ""
-
-msgid "Visualization for this product type is not supported yet"
-msgstr ""
-
-msgid "No preview available"
-msgstr ""
-
-msgid "Zoom to product"
-msgstr ""
-
-msgid "Go to search"
-msgstr ""
-
-msgid "Product was successfully added to the Workspace!"
-msgstr ""
-
-msgid "Something went wrong!"
-msgstr ""
-
-msgid "The configuration you are trying to access is private"
-msgstr ""
-
-msgid "Login as a different user"
-msgstr ""
-
-msgid "Login again"
-msgstr ""
-
-msgid ""
-"The designations employed and the presentation of material on this map do "
-"not imply the expression of any opinion whatsoever on the part of the "
-"European Union concerning the legal status of any country, territory, city "
-"or area or of its authorities, or concerning the delimitation of its "
-"frontiers or boundaries. Kosovo*: This designation is without prejudice to "
-"positions on status, and is in line with UNSCR 1244/1999 and the ICJ "
-"Opinion on the Kosovo declaration of independence. Palestine*: This "
-"designation shall not be construed as recognition of a State of Palestine "
-"and is without prejudice to the individual positions of the Member States "
-"on this issue."
-msgstr ""
-
-msgid "Please login to gain access to full functionalities of the browser."
-msgstr ""
-
-msgid "The available Sentinel-2 data is processed either by ESA or by CloudFerro."
-msgstr ""
-
-msgid "Download single files"
-msgstr ""
-
-msgid "Download full product"
-msgstr ""
-
-msgid "Product availability"
-msgstr ""
-
-msgid "Visualization for offline products is not supported"
-msgstr ""
-
-msgid ""
-"This product is currently unavailable and can not be downloaded. Add it to "
-"Workspace to order it."
-msgstr ""
-
-msgid ""
-"The product availability indicates whether a product can be downloaded "
-"immediately (*Immediate*) or must first be processed in the user's "
-"workspace (*To order*). The workspace offers processing options for:\n"
-"- Sentinel-1 Level-1 SLC and\n"
-"- Sentinel-2 L2A.\n"
-"\n"
-"The *To order* filter should therefore only be used when searching for one "
-"of these two product types."
-msgstr ""
-
-msgid "Selected dataset does not exist!"
-msgstr ""
-
-msgid ""
-"Determines with which polarisation the data was acquired. The first letter "
-"indicates the polarisation when sending the signal, the second letter when "
-"receiving the signal, e.g., HV = horizontal polarisation when sending the "
-"signal and vertical polarisation when receiving.\n"
-"\n"
-"Data can be acquired in single polarisation HH (SH) or VV (SV) or in dual "
-"polarisation HH&HV (DH) or VV&VH (DV), depending on the instrument mode.\n"
-"\n"
-"SM, IW and EW can be acquired in single or dual polarisation. WV can only "
-"be acquired in single polarisation."
+"Determines whether the data was recorded during a descending orbit (flight "
+"direction: north - south) or an ascending orbit (flight direction: south - "
+"north)."
 msgstr ""
 
 msgid ""
@@ -10316,59 +9682,28 @@ msgid ""
 msgstr ""
 
 msgid ""
-"No products were found for the selected search parameters.\n"
+"Determines with which polarisation the data was acquired. The first letter "
+"indicates the polarisation when sending the signal, the second letter when "
+"receiving the signal, e.g., HV = horizontal polarisation when sending the "
+"signal and vertical polarisation when receiving.\n"
 "\n"
-"To get more results, try selecting more data sources, extending the time "
-"range and/or selecting a larger area on the map."
+"Data can be acquired in single polarisation HH (SH) or VV (SV) or in dual "
+"polarisation HH&HV (DH) or VV&VH (DV), depending on the instrument mode.\n"
+"\n"
+"SM, IW and EW can be acquired in single or dual polarisation. WV can only "
+"be acquired in single polarisation."
 msgstr ""
 
+#, javascript-format
 msgid ""
-"No products were found for the selected time range and area. To search for "
-"products select a time range within an area where data is displayed on the "
-"map first."
-msgstr ""
-
-msgid "Find products within selected time range"
-msgstr ""
-
-msgid ""
-"The **WorldCover Annual Cloudless Mosaic** product offers an almost "
-"cloud-free image over the entire globe, created by stitching together the "
-"cloudless Sentinel-2 images acquired over a one-year period at a spatial "
-"resolution of 10 meters.\n"
+"An evalscript (or \"custom script\") is a piece of Javascript code that "
+"defines how the satellite data\n"
+"should be processed by Sentinel Hub (one of the underlying services that "
+"powers the Browser) and what values the\n"
+"service should return. \n"
 "\n"
-"More information can be found "
-"[here](https://documentation.dataspace.copernicus.eu/Data/Additional.html#"
-"sentinel-2-level-2a-worldcover-annual-cloudless-mosaics-rgbnir).\n"
 "\n"
-"**Coverage:** Global Coverage.\n"
-"\n"
-"**Data availability:** 2020, 2021\n"
-"\n"
-"Data for each year is available in the catalog on the 1.1. of the "
-"corresponding year.\n"
-"\n"
-"**Spatial Resolution:** 10 meters.\n"
-"\n"
-"**Common usage:** Creating Basemaps, Land cover classification, "
-"Infrastructure/Land use planning, Environmental monitoring, Water resource "
-"management and more."
-msgstr ""
-
-msgid ""
-"You have used your monthly processing units or requests quota. You may "
-"still use the browser as an anonymous user."
-msgstr ""
-
-msgid ""
-"Visualisation for this product is not possible yet due to ingestion delay. "
-"Please try again later"
-msgstr ""
-
-msgid "Collection"
-msgstr ""
-
-msgid ""
-"Sentinel-2 Collection 1 represents the product dataset generated starting "
-"from processing baseline 05.XX included."
+"Read more about custom scripts in our [tutorials](${ tuturial }) or use "
+"already prepared scripts\n"
+"for different collections from the [custom script repository](${ repo })."
 msgstr ""

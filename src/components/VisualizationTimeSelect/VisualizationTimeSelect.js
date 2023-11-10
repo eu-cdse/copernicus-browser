@@ -61,6 +61,8 @@ export function VisualizationTimeSelect({
   maxCloudCover,
   setMaxCloudCover,
   datePanelExpanded,
+  showLayerPanel,
+  setShowLayerPanel,
 }) {
   const [timespanExpanded, setTimespanExpanded] = useState(shouldExpandTimespan);
   const [loading, setLoading] = useState(false);
@@ -100,6 +102,12 @@ export function VisualizationTimeSelect({
     updateSelectedTime(fromTime, toTime);
   }
 
+  function openLayerPanel() {
+    if (!showLayerPanel && setShowLayerPanel) {
+      setShowLayerPanel(true);
+    }
+  }
+
   function getFromTime(date, minDate, isTimerange) {
     let fromTime = date.clone().startOf('day');
     if (isTimerange) {
@@ -118,6 +126,7 @@ export function VisualizationTimeSelect({
     const fromTime = getFromTime(date, minDate, isTimerange);
     const toTime = date.clone().endOf('day');
     updateSelectedTime(fromTime, toTime);
+    openLayerPanel();
   }
 
   function toggleTimespan() {
@@ -151,6 +160,7 @@ export function VisualizationTimeSelect({
     } finally {
       setLoading(false);
       setNextDateBtnDisabled(true);
+      openLayerPanel();
     }
   }
 

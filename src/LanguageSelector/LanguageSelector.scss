@@ -2,8 +2,7 @@
 
 .language-selector {
   .menu-globe {
-    color: #fbfffe;
-    background-color: #001514;
+    color: $whiteColor;
     border-radius: 0;
     width: 45px;
     margin: 0;
@@ -23,14 +22,11 @@
       border: none;
 
       span {
-        font-size: 14px;
+        font-size: 13px;
+        font-weight: $fontWeightBold;
         margin: 0;
         padding: 0;
       }
-    }
-
-    button::after {
-      display: none;
     }
 
     ul {
@@ -38,14 +34,14 @@
       color: $textColor;
       background-color: $mainLight;
       padding: 0;
-      margin-top: 1.5px;
+      margin-top: 1.4px;
       border: none;
       border-radius: 0;
       text-transform: capitalize;
       box-shadow: 0 3px 6px 6px rgba(0, 0, 0, 0.1);
 
       li {
-        font-size: 14px;
+        font-size: 13px;
       }
 
       li:hover {
@@ -68,9 +64,19 @@
       display: flex;
       justify-content: center;
 
+      &::after {
+        content: url(./icons/chevron-down.svg);
+        display: flex;
+        align-items: center;
+        border: none;
+        width: unset;
+        margin-left: 7px;
+        font-size: 0;
+        transform: scale(0.8);
+      }
+
       span {
         color: $whiteColor;
-        text-decoration: underline;
       }
     }
 
@@ -95,6 +101,17 @@
       padding: 5px 0;
       display: flex;
       justify-content: center;
+
+      &::after {
+        content: url(../icons/chevron-up.svg);
+        display: flex;
+        align-items: center;
+        border: none;
+        width: unset;
+        margin-left: 7px;
+        font-size: 0;
+        transform: scale(0.8);
+      }
 
       span {
         color: $textColor;
@@ -145,5 +162,16 @@
         }
       }
     }
+  }
+
+  .menu-flags::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    background: $whiteColor;
+    height: 1px;
+    border-radius: 10px 10px 10px 10px;
   }
 }

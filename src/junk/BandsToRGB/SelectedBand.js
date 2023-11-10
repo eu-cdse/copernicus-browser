@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
+import { hasLongBandName } from './utils';
 import { randomGrayColor } from '../../variables.module.scss';
 
 export const SelectedBand = ({ bands, bandName, value, showName }) => {
+  const [textRunner, setTextRunner] = useState(false);
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: 'band',
     drop: () => ({
@@ -24,15 +26,26 @@ export const SelectedBand = ({ bands, bandName, value, showName }) => {
         id={bandName}
         name={bandName}
         ref={drop}
+        onMouseDown={() => setTextRunner(false)}
+        onMouseUp={() => setTextRunner(true)}
+        onMouseEnter={() => setTextRunner(true)}
+        onMouseLeave={() => setTextRunner(false)}
       >
         <div
-          className="selected-band"
+          className={`selected-band ${hasLongBandName(band) ? 'selected-band-runner' : ''}`}
           style={{
             backgroundColor: (band && band.color) || randomGrayColor,
+            textShadow: (band && band.color) || '0px 0px 1px rgba(255, 255, 255, 0.5)',
           }}
-          title={(band && band.description) || 'Drag band'}
+          title={hasLongBandName(band) ? '' : (band && band.description) || 'Drag band'}
         >
-          {(value && value[bandName]) || bandName.toUpperCase()}
+          <span
+            className={`${!textRunner && hasLongBandName(band) ? 'band-text' : ''} ${
+              textRunner && hasLongBandName(band) ? 'band-text-runner' : ''
+            }`}
+          >
+            {(value && value[bandName]) || bandName.toUpperCase()}
+          </span>
         </div>
       </div>
     </React.Fragment>

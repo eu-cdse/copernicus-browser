@@ -2,7 +2,8 @@
 
 .calendar-wrapper {
   color: $textColor;
-  margin-top: 12px;
+  margin-top: 5px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 
   .year-month-form {
     padding: 0 2.5rem;

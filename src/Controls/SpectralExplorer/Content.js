@@ -16,11 +16,11 @@ const SPECTRAL_EXPLORER_TABS = {
 
 const tabs = {
   [SPECTRAL_EXPLORER_TABS.CHART]: {
-    title: t`Chart`,
+    title: () => t`Chart`,
     render: ({ series, bands, selected }) => <LineChart series={series} bands={bands} selected={selected} />,
   },
   [SPECTRAL_EXPLORER_TABS.VALUES]: {
-    title: t`Values`,
+    title: () => t`Values`,
     render: ({ series, bands, selected }) => (
       <ValuesTable series={series} bands={bands} selected={selected} />
     ),
@@ -85,12 +85,12 @@ const Content = ({ values, datasetId, geometryType, bands, loading, error, selec
       <div className="tabs">
         {Object.keys(tabs).map((tabId) => {
           return tabId === selectedTab ? (
-            <EOBButton key={tabId} text={tabs[tabId].title} className="selected secondary" />
+            <EOBButton key={tabId} text={tabs[tabId].title()} className="selected secondary" />
           ) : (
             <EOBButton
               key={tabId}
               className="secondary"
-              text={tabs[tabId].title}
+              text={tabs[tabId].title()}
               onClick={() => {
                 setSelectedTab(tabId);
               }}

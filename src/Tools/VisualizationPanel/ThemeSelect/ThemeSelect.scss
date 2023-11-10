@@ -107,5 +107,27 @@
 }
 
 .theme-select-container .title.expanded .title-content {
-  text-transform: uppercase;
+  justify-content: space-between;
+
+  .title-text {
+    text-transform: uppercase;
+    line-height: 35px;
+  }
+}
+
+.highlights-toggle {
+  font-size: 12px;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 10px;
+  margin-right: 10px;
+  text-decoration: underline;
+  box-shadow: 0 0 4px 4px #dddddd40;
+  cursor: pointer;
+
+  &.active {
+    color: $secondaryColor;
+    background-color: $primaryColor;
+    box-shadow: none;
+  }
 }

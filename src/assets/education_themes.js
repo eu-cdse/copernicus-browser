@@ -23,8 +23,42 @@ export const EDUCATION_THEMES = [
         url: 'https://services-uswest2.sentinel-hub.com/ogc/wms/fa0736-YOUR-INSTANCEID-HERE',
         preselected: true,
       },
+      {
+        name: 'EOB3 Sentinel-5 API',
+        service: 'WMS',
+        url: 'https://creodias.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
+        preselected: true,
+      },
     ],
     pins: [
+      {
+        lat: 39.67285,
+        lng: 21.96239,
+        zoom: 10,
+        title: 'Flooding in Central Greece (False Color Urban)',
+        toTime: '2023-09-10',
+        layerId: '4-FALSE-COLOR-URBAN',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S2L2A',
+        evalscripturl: '',
+        visualizationUrl: 'https://services.sentinel-hub.com/ogc/wms/4e7f01-YOUR-INSTANCEID-HERE',
+        description:
+          'After a summer of brutal heatwaves, central Greece was hit by devastating flooding in the first half of September 2023 with over a year’s worth of rainfall falling in 24 hours in some places [[1]](https://www.bbc.com/news/world-europe-66751510). So far, the death toll has reached 17 people, with hundreds awaiting to be rescued. Much of the Thessaly region, the breadbasket of Greece, remains underwater or buried under a deep layer of mud and silt [[2]](https://www.theguardian.com/world/2023/sep/09/greek-rescuers-working-through-the-night-to-locate-villagers-trapped-by-flood). The high rainfall totals are thought to have been caused by an unusual omega weather system event - in which a zone of high pressure is sandwiched between two areas of low pressure. The same weather system is also to blame for the unseasonal UK heatwave and flooding in Bulgaria and Turkey [[3]](https://www.theguardian.com/world/2023/sep/06/uk-heatwave-floods-south-east-europe-omega-weather-system). The scale of the flooding is perfectly illustrated using a False Color composite based on the SWIR and NIR bands acquired by Sentinel-2. This particular visualisation uses the [False Color Urban RGB composite](https://custom-scripts.sentinel-hub.com/sentinel-2/false-color-urban-rgb/), which is also excellent for showing flooded areas.\n\n**Timelapse:** View [here](https://sentinelshare.page.link/1Rhm) in EO Browser.',
+      },
+      {
+        lat: 13.790071437194856,
+        lng: -129.649658203125,
+        zoom: 7,
+        title: 'Hurricane Dora’s Historic Journey (Cloud Base Pressure)',
+        toTime: '2023-08-04',
+        layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S5_CLOUD',
+        evalscripturl: '',
+        visualizationUrl: 'https://creodias.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
+        description:
+          'Hurricane Dora started its journey across the Eastern Pacific near Mexico on July 31 when it developed into a tropical depression [[1]](https://www.wunderground.com/hurricane/eastern-pacific/2023/hurricane-dora). Warmer ocean temperatures over the Eastern and Central Pacific caused by El Nino led to a quick intensification of Dora, evolving into a strong, category 4 hurricane by August 4. Dora is now the longest lasting category 4 hurricane in the Pacific Ocean and one of two cyclones that crossed the Pacific from East to West [[2]](https://www.hawaiinewsnow.com/2023/08/12/hurricane-dora-makes-history-without-making-landfall/)[[3]](https://www.foxweather.com/weather-news/hurricane-dora-wildfires-high-surf-hawaii). Sentinel-5P allows us to track the path of the cyclone by measuring air pressure at the base of the cloud. Hurricanes are low-pressure tropical cyclones; thus they can be identified as rotating air masses with low pressure up to 10000 Pa. Use compare mode [here](https://sentinelshare.page.link/upxq) to track the journey of Hurricane Dora from the Eastern to the Central Pacific.\n\n**Timelapse:** View [here](https://sentinelshare.page.link/2Sp1) in EO Browser.',
+      },
       {
         lat: 46.04941,
         lng: 14.50676,
@@ -737,7 +771,7 @@ export const EDUCATION_THEMES = [
         evalscripturl: '',
         themeId: 'ATMOSPHERE',
         description:
-          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://earth.esa.int/web/sentinel/technical-guides/sentinel-5p/level-2/aerosol-index)',
+          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://sentinels.copernicus.eu/web/sentinel/data-products/-/asset_publisher/fp37fc19FN8F/content/sentinel-5-precursor-level-2-ultraviolet-aerosol-index)',
       },
       {
         title: 'High AER concentrations, Chad',
@@ -752,7 +786,7 @@ export const EDUCATION_THEMES = [
         evalscripturl: '',
         themeId: 'ATMOSPHERE',
         description:
-          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://earth.esa.int/web/sentinel/technical-guides/sentinel-5p/level-2/aerosol-index)',
+          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://sentinels.copernicus.eu/web/sentinel/data-products/-/asset_publisher/fp37fc19FN8F/content/sentinel-5-precursor-level-2-ultraviolet-aerosol-index)',
       },
       {
         title: 'High AER concentrations, Mauretania',
@@ -767,7 +801,7 @@ export const EDUCATION_THEMES = [
         evalscripturl: '',
         themeId: 'ATMOSPHERE',
         description:
-          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://earth.esa.int/web/sentinel/technical-guides/sentinel-5p/level-2/aerosol-index)',
+          'The Aerosol Index (AI) is a qualitative index indicating the presence of elevated layers of aerosols in the atmosphere. The main aerosol types that cause signals detected in the AI (because of their significant absorption) are desert dust, biomass burning and volcanic ash plumes. An advantage of the AI is that it can be derived for clear as well as (partly) cloudy ground pixels. [More...](https://sentinels.copernicus.eu/web/sentinel/data-products/-/asset_publisher/fp37fc19FN8F/content/sentinel-5-precursor-level-2-ultraviolet-aerosol-index)',
       },
       {
         title: 'Cloud Optical Thickness',

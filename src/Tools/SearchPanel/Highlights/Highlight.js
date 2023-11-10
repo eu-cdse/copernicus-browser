@@ -14,7 +14,6 @@ import './Highlight.scss';
 
 import { ReactComponent as DoubleChevronDown } from '../../../icons/double-chevron-down.svg';
 import { ReactComponent as DoubleChevronUp } from '../../../icons/double-chevron-up.svg';
-import { ReactComponent as CompareIcon } from '../../Pins/icons/compare-icon.svg';
 
 class Highlight extends Component {
   state = {
@@ -55,7 +54,7 @@ class Highlight extends Component {
   };
 
   render() {
-    const { pin, index, canAddToCompare } = this.props;
+    const { pin, index } = this.props;
     const { description, title } = pin;
     const { showDescription } = this.state;
 
@@ -77,20 +76,13 @@ class Highlight extends Component {
                 title={showDescription ? t`Hide description` : t`Show description`}
                 onClick={this.toggleDescription}
               >
-                {canAddToCompare && (
-                  <div
-                    className="add-to-compare"
-                    title={t`Add to Compare`}
-                    onClick={this.addHighlightToCompare}
-                  >
-                    <CompareIcon />
-                  </div>
-                )}
-                {showDescription ? (
-                  <DoubleChevronUp className="double-chevron-up" />
-                ) : (
-                  <DoubleChevronDown className="double-chevron-down" />
-                )}
+                <div className="description-toggle">
+                  {showDescription ? (
+                    <DoubleChevronUp className="double-chevron-up" />
+                  ) : (
+                    <DoubleChevronDown className="double-chevron-down" />
+                  )}
+                </div>
               </div>
             )}
           </div>

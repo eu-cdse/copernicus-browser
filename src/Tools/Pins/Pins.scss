@@ -334,7 +334,7 @@
 
   &.gu-mirror,
   &.gu-transit {
-    color: #fff;
+    color: $textColor;
     opacity: 0.8;
     background-color: $mainDark !important;
     box-shadow: 0 3px 5px #000;
@@ -404,8 +404,8 @@
               width: 11px;
               margin-right: 5px;
 
-              #ChevronUp,
-              #ChevronDown {
+              #chevron-up,
+              #chevron-down {
                 stroke: $grayColor;
               }
             }
@@ -479,6 +479,7 @@
   color: $textColor;
   display: flex;
   flex-flow: column;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 
   & > .eob-btn {
     display: block;

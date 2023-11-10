@@ -11,8 +11,8 @@ import { CustomDropdownIndicator } from '../../components/CustomSelectInput/Cust
 
 import './SpeckleFilter.scss';
 
-import { ReactComponent as ChevronUp } from '../../icons/chevronUp.svg';
-import { ReactComponent as ChevronDown } from '../../icons/chevronDown.svg';
+import { ReactComponent as ChevronUp } from '../../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../../icons/chevron-down.svg';
 
 const DropdownIndicator = (props) => {
   return (
@@ -64,7 +64,7 @@ const SpeckleFilter = ({
           </span>
         )}
         <Select
-          defaultValue={speckleFilter ? speckleFilterOptions[speckleFilterIndex] : speckleFilterOptions[0]}
+          value={speckleFilter ? speckleFilterOptions[speckleFilterIndex] : speckleFilterOptions[0]}
           options={speckleFilterOptions}
           onChange={updateSpeckleFilter}
           styles={customSelectStyle}

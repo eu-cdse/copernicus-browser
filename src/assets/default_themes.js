@@ -1,5 +1,16 @@
 import { t } from 'ttag';
 
+const EDUCATION_THEMES = [];
+
+const educationThemesDefaultMode = EDUCATION_THEMES.map((t) => {
+  const normalModePostfix = '-NORMAL-MODE';
+  const eduThemeNormalMode = { ...t, id: `${t.id}${normalModePostfix}` };
+  if (t.pins) {
+    eduThemeNormalMode.pins = t.pins.map((p) => ({ ...p, themeId: `${p.themeId}${normalModePostfix}` }));
+  }
+  return eduThemeNormalMode;
+});
+
 export const DEFAULT_THEMES = [
   {
     name: () => t`Default`,
@@ -110,4 +121,6 @@ export const DEFAULT_THEMES = [
       },
     ],
   },
+
+  ...educationThemesDefaultMode,
 ];

@@ -3,6 +3,7 @@ import oDataHelpers from '../../../api/OData/ODataHelpers';
 import { AttributeNames } from '../../../api/OData/assets/attributes';
 import { getLoggedInErrorMsg } from '../../../junk/ConstMessages';
 import BrowseProduct from '../BrowseProduct/BrowseProduct';
+import { ErrorMessage } from '../ResultItem';
 
 export const commonProductAttributes = [
   'name',
@@ -83,9 +84,11 @@ export const productAttributesSections = [
     id: 'singleFileDownload',
     title: () => t`Download single files`,
     render: ({ product, userToken }) => {
-      if (!userToken) {
-        return <div className="error-message">{getLoggedInErrorMsg()}</div>;
+      const errorMessage = getDownloadProductErrorMessage(null, { userToken, product });
+      if (errorMessage) {
+        return <div className="error-message">{errorMessage}</div>;
       }
+
       return <BrowseProduct product={product} userToken={userToken} onClose={() => {}} />;
     },
   },
@@ -107,3 +110,20 @@ function renderSectionAttributes({ section, attributes }) {
     </>
   );
 }
+
+export const getDownloadProductErrorMessage = (title, { userToken, product }) => {
+  let errorMessage = null;
+  if (!userToken) {
+    errorMessage = getLoggedInErrorMsg();
+  }
+
+  if (!product.online) {
+    errorMessage = ErrorMessage.downloadOfflineProduct();
+  }
+
+  if (errorMessage) {
+    return title ? `${title} (${errorMessage})` : errorMessage;
+  }
+
+  return null;
+};

@@ -90,8 +90,10 @@ class POI extends Component {
     store.dispatch(mainMapSlice.actions.setPosition(this.POILayerRef.getLatLng()));
   };
 
-  openFISPanel = () => {
-    store.dispatch(modalSlice.actions.addModal({ modal: ModalId.FIS, params: { poiOrAoi: 'poi' } }));
+  openFISPanel = (params = {}) => {
+    store.dispatch(
+      modalSlice.actions.addModal({ modal: ModalId.FIS, params: { ...params, poiOrAoi: 'poi' } }),
+    );
   };
 
   generateSelectedResult = () => {

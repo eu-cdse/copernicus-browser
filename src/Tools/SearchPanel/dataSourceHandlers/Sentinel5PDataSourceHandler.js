@@ -186,6 +186,7 @@ export default class Sentinel5PDataSourceHandler extends DataSourceHandler {
         optionsLabels={this.getDatasetSearchLabels()}
         preselectedOptions={Array.from(this.preselectedDatasets)}
         hasMaxCCFilter={false}
+        renderOptionsHelpTooltips={this.renderOptionsHelpTooltips}
       />
     );
   }

@@ -73,6 +73,7 @@
         display: inherit;
         align-items: center;
         gap: 10px;
+        text-align: center;
 
         .about {
           color: $whiteColor;
@@ -89,6 +90,7 @@
         display: inherit;
         align-items: center;
         gap: 4px;
+        text-align: center;
 
         * {
           color: $whiteColor;

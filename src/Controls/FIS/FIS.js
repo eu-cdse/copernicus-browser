@@ -621,7 +621,7 @@ class FIS extends Component {
 
   render() {
     const { fetchingInProgress, fetchingBatches, lineData, errorMsg } = this.state;
-    const { datasetId, layerId, customSelected } = this.props;
+    const { datasetId, layerName } = this.props;
 
     const drawLegend = lineData && lineData.length > 1;
     return (
@@ -630,7 +630,7 @@ class FIS extends Component {
         width={700}
         height={520 + (drawLegend ? 30 : 0)}
         onClose={this.onClose}
-        title={`${getDatasetLabel(datasetId)} - ${customSelected ? 'Custom' : layerId}`}
+        title={`${getDatasetLabel(datasetId)} - ${layerName}`}
         modal={true}
       >
         {this.renderCCSlider()}
@@ -669,6 +669,7 @@ const mapStoreToProps = (store) => ({
   aoiGeometry: store.aoi.geometry,
   poiGeometry: store.poi.geometry,
   poiOrAoi: store.modal.params ? store.modal.params.poiOrAoi : null,
+  layerName: store.modal.params?.layerName,
 });
 
 export default connect(mapStoreToProps, null)(FIS);

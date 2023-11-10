@@ -15,8 +15,8 @@ import SocialShare from '../../components/SocialShare/SocialShare';
 import './ComparePanel.scss';
 import { saveSharedPinsToServer } from '../Pins/Pin.utils';
 
-import { ReactComponent as ChevronUp } from '../../icons/chevronUp.svg';
-import { ReactComponent as ChevronDown } from '../../icons/chevronDown.svg';
+import { ReactComponent as ChevronUp } from '../../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../../icons/chevron-down.svg';
 import { COMPARE_OPTIONS } from '../../const';
 
 const DropdownIndicator = (props) => {
@@ -40,7 +40,9 @@ class ComparePanel extends Component {
   };
 
   onChangeCompareMode = (e) => {
-    store.dispatch(compareLayersSlice.actions.setCompareMode(e));
+    const compareMode =
+      Object.values(COMPARE_OPTIONS).find((cm) => cm.value === e.value) ?? COMPARE_OPTIONS.COMPARE_SPLIT;
+    store.dispatch(compareLayersSlice.actions.setCompareMode(compareMode));
     store.dispatch(compareLayersSlice.actions.resetOpacityAndClipping());
   };
 
@@ -78,7 +80,7 @@ class ComparePanel extends Component {
     store.dispatch(compareLayersSlice.actions.addComparedLayers(pins.map((p) => p.item)));
   };
 
-  getCompareOptions = () => Object.values(COMPARE_OPTIONS).map((v) => ({ value: v.value, label: v.label }));
+  getCompareOptions = () => Object.values(COMPARE_OPTIONS).map((v) => ({ value: v.value, label: v.label() }));
 
   shareCompare = () => {
     if (!SHARE_COMPARE_ENABLED) {
@@ -127,7 +129,7 @@ class ComparePanel extends Component {
             <div className="compare-panel-toggle">
               <label className="compare-panel-toggle-label">{t`Effect:`}</label>
               <Select
-                defaultValue={{ value: compareMode.value, label: compareMode.label }}
+                value={{ value: compareMode.value, label: compareMode.label() }}
                 options={this.getCompareOptions()}
                 onChange={this.onChangeCompareMode}
                 styles={customSelectStyle}

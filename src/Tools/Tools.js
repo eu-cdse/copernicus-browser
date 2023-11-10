@@ -211,7 +211,11 @@ class Tools extends Component {
             </Tab>
             <Tab id="visualization-tab" title={t`Search`} renderKey={TABS.SEARCH_TAB}>
               <div className="advanced-search-wrapper">
-                <AdvancedSearch isExpanded={true} />
+                <AdvancedSearch
+                  showLayerPanel={showLayerPanel}
+                  setShowLayerPanel={setShowLayerPanel}
+                  isExpanded={true}
+                />
               </div>
             </Tab>
           </Tabs>

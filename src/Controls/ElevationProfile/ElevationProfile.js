@@ -91,6 +91,7 @@ const mapStoreToProps = (store) => ({
   geometry: store.loi.geometry,
   bounds: store.loi.bounds,
   zoom: store.mainMap.zoom,
+  selectedLanguage: store.language.selectedLanguage,
 });
 
 export default connect(mapStoreToProps, null)(ElevationProfile);

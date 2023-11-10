@@ -11,7 +11,8 @@ import { createCollectionFormFromDatasetId } from '../../Tools/VisualizationPane
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 const ErrorMessage = {
-  noProductsFound: t`No products were found for the selected time range and area. To search for products select a time range within an area where data is displayed on the map first.`,
+  noProductsFound: () =>
+    t`No products were found for the selected time range and area. To search for products select a time range within an area where data is displayed on the map first.`,
 };
 
 const FindProductsButton = ({
@@ -24,6 +25,7 @@ const FindProductsButton = ({
   orbitDirection,
   mapBounds,
   aoiBounds,
+  selectedLanguage,
 }) => {
   const [{ searchInProgress, searchError, oDataSearchResult }, productSearch] = useODataSearch();
 
@@ -46,7 +48,9 @@ const FindProductsButton = ({
 
   useEffect(() => {
     if (searchError?.message === ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND) {
-      store.dispatch(notificationSlice.actions.displayPanelError({ message: ErrorMessage.noProductsFound }));
+      store.dispatch(
+        notificationSlice.actions.displayPanelError({ message: ErrorMessage.noProductsFound() }),
+      );
       setLoading(false);
     }
   }, [searchError, setLoading]);

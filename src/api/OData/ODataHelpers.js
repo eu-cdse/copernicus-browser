@@ -625,6 +625,17 @@ const getPreviewUrl = (result) => {
   return result?.Assets?.[0]?.DownloadLink;
 };
 
+const formatFileSize = (size) => {
+  if (size === null || size === undefined) {
+    return '';
+  }
+  const sizeMb = Math.round(size / (1024 * 1024));
+  if (sizeMb < 1) {
+    return `< 1MB`;
+  }
+  return `${sizeMb}MB`;
+};
+
 const formatSearchResults = (results) => {
   if (!results) {
     return null;
@@ -640,7 +651,7 @@ const formatSearchResults = (results) => {
       platformShortName: getAttributeValue(result, AttributeNames.platformShortName),
       instrumentShortName: getAttributeValue(result, AttributeNames.instrumentShortName),
       productType: getAttributeValue(result, AttributeNames.productType),
-      size: `${Math.round(result.ContentLength / (1024 * 1024))}MB`,
+      size: formatFileSize(result.ContentLength),
       originDate: result.OriginDate,
       publicationDate: result.PublicationDate,
       modificationDate: result.ModificationDate,

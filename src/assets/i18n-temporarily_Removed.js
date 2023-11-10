@@ -1,4 +1,4 @@
-import { t } from 'ttag';
+import { t, ngettext, msgid } from 'ttag';
 
 t`Discover`;
 t`No tile found`;
@@ -119,8 +119,17 @@ t`
 **Data availability:** Since June 2015. Full global coverage since March 2017.
 
 **Common usage:** Land-cover maps, land-change detection maps, vegetation monitoring, monitoring of burnt areas.`;
-t`Showing ${this.state.results.length} result`;
-t`Showing ${this.state.selectedTiles.length} result.`;
+// Translations have to be added with their Plural forms as we otherwise lose the Plurals when updating the terms which crashes the app.
+ngettext(
+  msgid`Showing ${this.state.results.length} result`,
+  `Showing ${this.state.results.length} results`,
+  this.state.results.length,
+);
+ngettext(
+  msgid`Showing ${this.state.selectedTiles.length} result.`,
+  `Showing ${this.state.selectedTiles.length} results.`,
+  this.state.selectedTiles.length,
+);
 t`split`;
 t`opacity`;
 t`Timespan:`;

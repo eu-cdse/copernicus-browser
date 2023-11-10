@@ -5,10 +5,11 @@ import { t } from 'ttag';
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
-import { ReactComponent as ChevronUp } from '../../icons/chevronUp.svg';
-import { ReactComponent as ChevronDown } from '../../icons/chevronDown.svg';
+import { ReactComponent as ChevronUp } from '../../icons/chevron-up.svg';
+import { ReactComponent as ChevronDown } from '../../icons/chevron-down.svg';
+import { getValueOrExecute } from '../../utils/effectsUtils';
 
-const LAYER_DEFAULT = { value: null, label: t`Layer default` };
+const LAYER_DEFAULT = { value: null, label: () => t`Layer default` };
 
 const DropdownIndicator = (props) => {
   return (
@@ -24,12 +25,12 @@ const getLabelForValue = (value, options) => {
   //find value among all provided options
   const option = options.find((o) => o.value === value);
   if (option) {
-    return option.label;
+    return getValueOrExecute(option?.label);
   }
 
   //for null/empty values display LAYER_DEFAULT label
   if (value === null || value === undefined || value === '') {
-    return LAYER_DEFAULT.label;
+    return getValueOrExecute(LAYER_DEFAULT.label);
   }
 
   //use value as label if everything else fails
@@ -45,7 +46,12 @@ const EffectDropdown = ({
   tooltip = null,
   displayLayerDefault = true,
 }) => {
-  const allOptions = [...(displayLayerDefault ? [LAYER_DEFAULT] : []), ...options];
+  const allOptions = [
+    ...(displayLayerDefault
+      ? [{ value: LAYER_DEFAULT.value, label: getValueOrExecute(LAYER_DEFAULT.label) }]
+      : []),
+    ...options,
+  ];
 
   const selectedOption = {
     value: value,

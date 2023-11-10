@@ -48,7 +48,7 @@ const FisChartLink = (props) => {
       // jsx-a11y/anchor-is-valid
       // eslint-disable-next-line
       <a
-        onClick={() => props.openFisPopup(props.aoiOrPoi)}
+        onClick={() => props.openFisPopup({ layerName: layerName })}
         title={t`Statistical Info / Feature Info Service chart`}
         className={`${props.active ? 'active' : ''}`}
       >

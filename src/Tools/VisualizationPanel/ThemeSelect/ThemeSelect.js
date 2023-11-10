@@ -29,7 +29,7 @@ import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/C
 import './ThemeSelect.scss';
 
 import { ReactComponent as MagnifierSvg } from '../../../icons/magnifier.svg';
-import { ReactComponent as ChevronDown } from '../../../icons/chevronDown.svg';
+import { ReactComponent as ChevronDown } from '../../../icons/chevron-down.svg';
 
 const DropdownIndicator = (props) => {
   return (
@@ -71,9 +71,9 @@ function ThemeSelect({
   selectedModeId,
   onHighlightsButtonClick,
   highlightsAvailable,
-  shouldShowHighlights,
   isAdvancedTabActive,
   visualizationDate,
+  showHighlights,
   setShowHighlights,
   themePanelExpanded,
 }) {
@@ -104,7 +104,7 @@ function ThemeSelect({
   }));
   if (!user) {
     userInstancesThemesList.push({
-      name: () => NOT_LOGGED_IN.errorMessage,
+      name: NOT_LOGGED_IN.errorMessage,
       id: NOT_LOGGED_IN.instanceId,
       content: [],
       list: USER_INSTANCES_THEMES_LIST,
@@ -171,7 +171,22 @@ function ThemeSelect({
     setShowHighlights(false);
   }
 
-  const setSelectDropdown = () => (
+  const themePanelContent = () => (isExpanded) => {
+    if (!isExpanded) {
+      return null;
+    }
+
+    return (
+      <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
+        {!selectedThemeId && <div className="no-theme-message">{t`Please select a configuration`}:</div>}
+        <div className="theme-select-highlights-wrapper">
+          <div className="theme-label-select-wrapper">{themeSelectionDropdown()}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const themeSelectionDropdown = () => (
     <div className="theme-search">
       <div className="theme-search-header">
         <div className="theme-selection">
@@ -189,45 +204,37 @@ function ThemeSelect({
           />
         </div>
       </div>
+      {!themePanelExpanded ? themeHighlightsToggle() : null}
     </div>
   );
 
-  const setThemeSection = () => (isExpanded) => {
-    if (isExpanded) {
-      return (
-        <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
-          {!selectedThemeId && <div className="no-theme-message">{t`Please select a configuration`}:</div>}
-          <div className="theme-select-highlights-wrapper">
-            <div className="theme-label-select-wrapper">{setSelectDropdown()}</div>
-          </div>
-        </div>
-      );
-    }
-  };
-
-  if (isAdvancedTabActive) {
-    return (
-      <div className="theme-select-advanced-wrapper">
-        <div className="theme-select-advanced-title">{t`Configurations:`}:</div>
-        <div id="theme-select" className={`top`}>
-          {!selectedThemeId && <div className="no-theme-message">{t`Please select a configuration`}:</div>}
-          <div className="theme-select-highlights-wrapper">
-            <div className="theme-label-select-wrapper">{setSelectDropdown()}</div>
-          </div>
-        </div>
+  const themeHeaderCollapsed = () => (
+    <>
+      <div className="title-text">{t`Configurations:`}</div>
+      {themeHighlightsToggle()}
+    </>
+  );
+  const themeHighlightsToggle = () =>
+    highlightsAvailable && (
+      <div
+        className={`highlights-toggle ${showHighlights ? 'active' : ''}`}
+        onClick={() => {
+          setShowHighlights(!showHighlights);
+        }}
+      >
+        Highlights
       </div>
     );
-  }
 
   return (
     <CollapsiblePanel
-      title={setSelectDropdown()}
-      headerComponent={t`Configurations:`}
+      title={themeSelectionDropdown()}
+      headerComponent={themeHeaderCollapsed()}
       expanded={themePanelExpanded}
       toggleExpanded={(v) => store.dispatch(collapsiblePanelSlice.actions.setThemePanelExpanded(v))}
       className="theme-select-container"
     >
-      {setThemeSection()}
+      {themePanelContent()}
     </CollapsiblePanel>
   );
 }
