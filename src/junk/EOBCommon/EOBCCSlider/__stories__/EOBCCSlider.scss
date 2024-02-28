@@ -1,0 +1,16 @@
+.custom-ccslider {
+  margin: 15px 70px 0 0;
+
+  .rc-slider {
+    display: inline-block;
+    width: 200px;
+
+    .rc-slider-handle {
+      border-color: $primaryColor;
+    }
+
+    .rc-slider-track {
+      background: $primaryColor;
+    }
+  }
+}

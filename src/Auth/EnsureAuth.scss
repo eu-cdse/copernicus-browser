@@ -1,0 +1,49 @@
+@import '../variables.module.scss';
+
+.ensure-auth {
+  z-index: 10000;
+
+  .rodal-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ensure-user-logged-in-modal-text {
+    color: $textColor;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    @media only screen and (max-width: $breakpoint-500) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .login-button {
+        margin: 10px 0 0 0;
+      }
+    }
+  }
+
+  .login-button {
+    cursor: pointer;
+    color: $whiteColor;
+    padding: 10px 50px;
+    min-width: 100px;
+    margin-top: 40px;
+    background-color: $primaryColor;
+    width: fit-content;
+    font-weight: $fontWeightBold;
+    text-align: center;
+
+    &:hover {
+      background-color: $hoverPrimaryColor;
+    }
+  }
+}

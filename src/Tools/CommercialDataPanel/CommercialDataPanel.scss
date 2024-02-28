@@ -1,0 +1,81 @@
+@import '../../variables.module.scss';
+
+.commercial-data-panel {
+  color: $textColor;
+  display: flex;
+  flex-flow: column;
+  font-size: 14px;
+  margin-right: 0 !important;
+
+  .accordion-title {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .accordion-content {
+    p {
+      font-size: 1em;
+
+      a {
+        color: $primaryColor;
+      }
+    }
+
+    ul {
+      li {
+        a {
+          color: $primaryColor;
+        }
+      }
+    }
+  }
+
+  .date-picker {
+    .date-picker-input {
+      background: $mainLight;
+      color: $primaryColor;
+    }
+  }
+
+  .aoi-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    i {
+      color: $textColor;
+      padding: 0 5px;
+      cursor: pointer;
+
+      &.disabled {
+        color: $textColor;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .dropdown {
+    padding: 7px 0 2px 0;
+    color: $textColor;
+  }
+
+  .transaction-type-selection {
+    .eob-btn {
+      margin-right: 20px;
+      background-color: $mainLight;
+      border-radius: 0;
+      border-bottom: 3px solid $mainLight;
+      color: $textColor;
+      font-size: 14px;
+
+      &.selected {
+        border-bottom: 3px solid $primaryColor;
+      }
+
+      &:hover {
+        box-shadow: none;
+        color: $primaryColor;
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
+        "id": "1_TRUE_COLOR",
+        "title": "True color",
+        "description": "Based on bands 4, 3, 2",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"B04\",\"B03\",\"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\n// Contrast enhance / highlight compress\n\nconst maxR = 3.0; // max reflectance\nconst midR = 0.13;\nconst sat = 1.2;\nconst gamma = 1.8;\n\nfunction evaluatePixel(smp) {\n  const rgbLin = satEnh(sAdj(smp.B04), sAdj(smp.B03), sAdj(smp.B02));\n  return [sRGB(rgbLin[0]), sRGB(rgbLin[1]), sRGB(rgbLin[2]), smp.dataMask];\n}\n\nfunction sAdj(a) {\n  return adjGamma(adj(a, midR, 1, maxR));\n}\n\nconst gOff = 0.01;\nconst gOffPow = Math.pow(gOff, gamma);\nconst gOffRange = Math.pow(1 + gOff, gamma) - gOffPow;\n\nfunction adjGamma(b) {\n  return (Math.pow((b + gOff), gamma) - gOffPow)/gOffRange;\n}\n\n// Saturation enhancement\nfunction satEnh(r, g, b) {\n  const avgS = (r + g + b) / 3.0 * (1 - sat);\n  return [clip(avgS + r * sat), clip(avgS + g * sat), clip(avgS + b * sat)];\n}\n\nfunction clip(s) {\n  return s < 0 ? 0 : s > 1 ? 1 : s;\n}\n\n//contrast enhancement with highlight compression\nfunction adj(a, tx, ty, maxC) {\n  var ar = clip(a / maxC, 0, 1);\n  return ar * (ar * (tx/maxC + ty -1) - ty) / (ar * (2 * tx/maxC - 1) - tx/maxC);\n}\n\nconst sRGB = (c) => c <= 0.0031308 ? (12.92 * c) : (1.055 * Math.pow(c, 0.41666666666) - 0.055);\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-02-02T07:41:27.944226Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 20,
+            "previewMode": "EXTENDED_PREVIEW",
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/2_FALSE-COLOR",
+        "id": "2_FALSE-COLOR",
+        "title": "False Color",
+        "description": "Based on bands 8, 4, 3",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup(ds) {\n  return {\n    input: [\"B03\", \"B04\", \"B08\",\"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B08, samples.B04, samples.B03,samples.dataMask];\n    return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-02-02T07:41:36.985976Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/3_NDWI",
+        "id": "3_NDWI",
+        "title": "NDWI",
+        "description": "Based on combination of bands (B3 - B8)/(B3 + B8)",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n//ndwi\nconst colorRamp1 = [\n  [0, 0xffffff],\n  [1, 0x008000],\n];\nconst colorRamp2 = [\n  [0, 0xffffff],\n  [1, 0x0000cc],\n];\n\nlet viz1 = new ColorRampVisualizer(colorRamp1);\nlet viz2 = new ColorRampVisualizer(colorRamp2);\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B08\", \"SCL\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B03, samples.B08);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n\n  if (val < -0) {\n    imgVals = [...viz1.process(-val), samples.dataMask];\n  } else {\n    imgVals = [...viz2.process(Math.sqrt(Math.sqrt(val))), samples.dataMask];\n  }\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T14:22:54.357790Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 20,
+            "previewMode": "EXTENDED_PREVIEW",
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/4_ULYSSYS-WATER-QUALITY-VIEWER",
+        "id": "4_ULYSSYS-WATER-QUALITY-VIEWER",
+        "title": "Ulyssys Water Quality Viewer ",
+        "description": "Water sedimentation and chlorophyll content",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst PARAMS = {\n    // Indices\n    chlIndex: 'default',\n    tssIndex: 'default',\n    watermaskIndices: ['ndwi', 'hol'],\n    // Limits\n    chlMin: -0.005,\n    chlMax: 0.05,\n    tssMin: 0.075,\n    tssMax: 0.185,\n    waterMax: 0,\n    cloudMax: 0.02,\n    // Graphics\n    foreground: 'default',\n    foregroundOpacity: 1.0,\n    background: 'default',\n    backgroundOpacity: 1.0\n};\n \nlet B02, B03, B04, B05, B06, B07, B08, B8A, B09, B11;\n \nfunction getIndices(t) {\n    return t ? {\n        natural: \"[1.0*B07+1.4*B09-0.1*B14,1.1*B05+1.4*B06-0.2*B14,2.6*B04-B14*0.6]\",\n        chl: {\n            flh: \"B10-1.005*(B08+(B11-B08)*((0.681-0.665)/(0.708-0.665)))\",\n            rlh: \"B11-B10-(B18-B10*((0.70875-0.68125)*1000.0))/((0.885-0.68125)*1000.0)\",\n            mci: \"B11-((0.75375-0.70875)/(0.75375-0.68125))*B10-(1.0-(0.75375-0.70875)/(0.75375-0.68125))*B12\"\n        },\n        tss: {\n            b07: \"B07\",\n            b11: \"B11\"\n        },\n        watermask: {\n            ndwi: \"(B06-B17)/(B06+B17)\"\n        }\n    } : {\n        natural: \"[2.5*B04,2.5*B03,2.5*B02]\",\n        chl: {\n            rlh: \"B05-B04-(B07-B04*((0.705-0.665)*1000.0))/((0.783-0.665)*1000.0)\",\n            mci: \"B05-((0.74-0.705)/(0.74-0.665))*B04-(1.0-(0.74-0.705)/(0.74-0.665))*B06\"\n        },\n        tss: {\n            b05: \"B05\"\n        },\n        watermask: {\n            ndwi: \"(B03-B08)/(B03+B08)\"\n        }\n    }\n}\n \nfunction blend(t, n, e, r) {\n    return t.map((function(t, l) {\n        return t / 100 * e + n[l] / 100 * r\n    }))\n}\n \nfunction getAlpha(t, n, e) {\n    return n + (e - n) / 2 < t ? 100 : t <= n ? 0 : t >= e ? 1 : (t - n / 2) / (e - n) * 100\n}\n \nfunction getColors(t, n, e, r, l) {\n    let a, B;\n    switch (t) {\n        case \"chl\":\n            B = [\n                [.0034, .0142, .163],\n                [0, .416, .306],\n                [.486, .98, 0],\n                [.9465, .8431, .1048],\n                [1, 0, 0]\n            ], l && (B = B.reverse(), e *= 10, r /= 10), a = colorBlend(n, [e, e + (r - e) / 3, (e + r) / 2, r - (r - e) / 3, r], B);\n            break;\n        case \"tss\":\n            B = [\n                [.961, .871, .702],\n                [.396, .263, .129]\n            ], a = colorBlend(n, [e, r], B)\n    }\n    return a\n}\n \nfunction isPureWater(t) {\n    return t ? B06 < .319 && B17 < .166 && B06 - B16 >= .027 && B20 - B21 < .021 : B03 < .319 && B8A < .166 && B03 - B07 >= .027 && B09 - B11 < .021\n}\n \nfunction isCloud(t, n) {\n    const e = n ? (B04 - .175) / (.39 - .175) : (B02 - .175) / (.39 - .175);\n    return e > 1 || e > 0 && (B04 - B06) / (B04 + B06) > t\n}\n \nfunction getEval(s) {\n    return eval(s)\n}\n \nfunction isWater(t, n, e, r, l) {\n    if (0 === n.length) return !0; {\n        let a = !0;\n        for (let B = 0; B < n.length; B++) {\n            const u = n[B];\n            if (\"ndwi\" == u && getEval(t.ndwi) < e) {\n                a = !1;\n                break\n            }\n            if (\"hol\" == u && !isPureWater(l)) {\n                a = !1;\n                break\n            }\n            if (\"bcy\" == u && isCloud(r, l)) {\n                a = !1;\n                break\n            }\n        }\n        return a\n    }\n}\n \nfunction getBackground(t, n, e) {\n    let r, l = !1;\n    const a = parseInt(100 * e);\n    return \"default\" === t || \"natural\" === t ? (r = getEval(n), l = !0) : r = \"black\" === t ? [0, 0, 0] : \"white\" === t ? [1, 1, 1] : getStaticColor(t), l || 1 === e ? r : blend(r, getEval(n), a, 100 - a)\n}\n \nfunction getForeground(t, n, e, r) {\n    let l;\n    const a = parseInt(100 * r);\n    return l = \"natural\" === t ? getEval(e) : getStaticColor(t), 1 === r ? l : blend(l, n, a, 100 - a)\n}\n \nfunction getStaticColor(t) {\n    return [t[0] / 255, t[1] / 255, t[2] / 255]\n}\n \nfunction getValue(t) {\n    let n, e, r, l, a;\n    const B = t.chlIndex,\n        u = t.tssIndex,\n        o = t.background,\n        s = t.foreground,\n        c = t.foregroundOpacity,\n        i = \"undefined\" != typeof B18,\n        d = getIndices(i),\n        f = getBackground(o, d.natural, t.backgroundOpacity);\n    if (!isWater(d.watermask, t.watermaskIndices, t.waterMax, t.cloudMax, i)) return f;\n    if (\"default\" !== s) return getForeground(s, f, d.natural, c);\n    let g;\n    if (null !== B) {\n        const r = \"default\" === B ? i ? \"flh\" : \"mci\" : B;\n        n = getEval(d.chl[r]), e = getColors(\"chl\", n, t.chlMin, t.chlMax, i && \"flh\" === r)\n    }\n    if (null !== u) {\n        const n = \"default\" === u ? i ? \"b11\" : \"b05\" : u;\n        r = getEval(d.tss[n]), l = getColors(\"tss\", r, t.tssMin, t.tssMax), a = getAlpha(r, t.tssMin, t.tssMax)\n    }\n    g = null !== B && null !== u ? blend(l, e, a, 100 - a) : null !== B && null === u ? e : null !== u && null === B ? blend(l, f, a, 100 - a) : f;\n    const h = parseInt(100 * c);\n    return 1 === c ? g : blend(g, f, h, 100 - h)\n}\n \nfunction evaluatePixel(samples) {\n    B02 = samples.B02\n    B03 = samples.B03\n    B04 = samples.B04\n    B05 = samples.B05\n    B06 = samples.B06\n    B07 = samples.B06\n    B08 = samples.B08\n    B8A = samples.B8A\n    B09 = samples.B09\n    B11 = samples.B11\n    return [...getValue(PARAMS), samples.dataMask];\n}\n \nfunction setup() {\n    return {\n        input: [{\n            bands: [\"B02\", \"B03\", \"B04\", \"B05\", \"B06\", \"B07\", \"B08\", \"B8A\", \"B09\", \"B11\", \"dataMask\"]\n        }],\n        output: {\n            bands: 4\n        }\n    }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T14:23:09.639412Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/5_SWIR",
+        "id": "5_SWIR",
+        "title": "SWIR",
+        "description": "Based on bands 12, 8A, 4",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup() {\n  return {\n    input: [\"B12\", \"B8A\", \"B04\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B12, samples.B8A, samples.B04, samples.dataMask];\n    return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T14:22:08.488953Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 20,
+            "previewMode": "EXTENDED_PREVIEW",
+            "type": "S2L2A"
+        }
+    }
+]

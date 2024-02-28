@@ -1,0 +1,649 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/1_TRUE-COLOR",
+        "id": "1_TRUE-COLOR",
+        "title": "True Color",
+        "description": "Based on bands 4, 3 ,2",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"B04\",\"B03\",\"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\n// Contrast enhance / highlight compress\n\nconst maxR = 3.0; // max reflectance\nconst midR = 0.13;\nconst sat = 1.2;\nconst gamma = 1.8;\n\nfunction evaluatePixel(smp) {\n  const rgbLin = satEnh(sAdj(smp.B04), sAdj(smp.B03), sAdj(smp.B02));\n  return [sRGB(rgbLin[0]), sRGB(rgbLin[1]), sRGB(rgbLin[2]), smp.dataMask];\n}\n\nfunction sAdj(a) {\n  return adjGamma(adj(a, midR, 1, maxR));\n}\n\nconst gOff = 0.01;\nconst gOffPow = Math.pow(gOff, gamma);\nconst gOffRange = Math.pow(1 + gOff, gamma) - gOffPow;\n\nfunction adjGamma(b) {\n  return (Math.pow((b + gOff), gamma) - gOffPow)/gOffRange;\n}\n\n// Saturation enhancement\nfunction satEnh(r, g, b) {\n  const avgS = (r + g + b) / 3.0 * (1 - sat);\n  return [clip(avgS + r * sat), clip(avgS + g * sat), clip(avgS + b * sat)];\n}\n\nfunction clip(s) {\n  return s < 0 ? 0 : s > 1 ? 1 : s;\n}\n\n//contrast enhancement with highlight compression\nfunction adj(a, tx, ty, maxC) {\n  var ar = clip(a / maxC, 0, 1);\n  return ar * (ar * (tx/maxC + ty -1) - ty) / (ar * (2 * tx/maxC - 1) - tx/maxC);\n}\n\nconst sRGB = (c) => c <= 0.0031308 ? (12.92 * c) : (1.055 * Math.pow(c, 0.41666666666) - 0.055);\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-02-02T07:45:01.539271Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 20,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/2_FALSE-COLOR",
+        "id": "2_FALSE-COLOR",
+        "title": "False color",
+        "description": "Based on bands 8, 4, 3",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup(ds) {\n  return {\n    input: [\"B03\", \"B04\", \"B08\",\"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B08, samples.B04, samples.B03,samples.dataMask];\n    return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-02-02T07:45:19.036495Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "leastCC",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/3_NDVI",
+        "id": "3_NDVI",
+        "title": "NDVI",
+        "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
+        "styles": [
+            {
+                "name": "default",
+                "description": "# Vegetation Index (NDVI)\n\nThis index is a simple, but effective way for quantifying green vegetation.\n\nValues description: The value range of an NDVI is `-1` to `1`. Negative values of NDVI (values approaching `-1`) correspond to water. Values close to zero (`-0.1` to `0.1`) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately `0.2` to `0.4`), while high values indicate temperate and tropical rainforests (values approaching `1`).\n\n[More...](https://www.sentinel-hub.com/eoproducts/ndvi-normalized-difference-vegetation-index)",
+                "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B08\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B08, samples.B04);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n\n  if (val < -0.5) imgVals = [0.05, 0.05, 0.05, samples.dataMask];\n  else if (val < -0.2) imgVals = [0.75, 0.75, 0.75, samples.dataMask];\n  else if (val < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (val < 0) imgVals = [0.92, 0.92, 0.92, samples.dataMask];\n  else if (val < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (val < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (val < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (val < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (val < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (val < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (val < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (val < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (val < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (val < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (val < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (val < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (val < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (val < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (val < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (val < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n",
+                "legend": {
+                    "type": "continuous",
+                    "gradients": [
+                        {
+                            "color": "rgb(0%,0%,0%)",
+                            "label": "- 1.0",
+                            "position": 0.05
+                        },
+                        {
+                            "color": "rgb(75%,75%,75%)",
+                            "position": 0.050001
+                        },
+                        {
+                            "color": "rgb(75%,75%,75%)",
+                            "position": 0.1
+                        },
+                        {
+                            "color": "rgb(86%,86%,86%)",
+                            "position": 0.10001
+                        },
+                        {
+                            "color": "rgb(86%,86%,86%)",
+                            "position": 0.15
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "position": 0.150001
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "label": "0.0",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(100%,98%,80%)",
+                            "position": 0.20001
+                        },
+                        {
+                            "color": "rgb(100%,98%,80%)",
+                            "position": 0.25
+                        },
+                        {
+                            "color": "rgb(93%,91%,71%)",
+                            "position": 0.250001
+                        },
+                        {
+                            "color": "rgb(93%,91%,71%)",
+                            "position": 0.3
+                        },
+                        {
+                            "color": "rgb(87%,85%,61%)",
+                            "position": 0.30001
+                        },
+                        {
+                            "color": "rgb(87%,85%,61%)",
+                            "position": 0.35
+                        },
+                        {
+                            "color": "rgb(80%,78%,51%)",
+                            "position": 0.350001
+                        },
+                        {
+                            "color": "rgb(80%,78%,51%)",
+                            "position": 0.4
+                        },
+                        {
+                            "color": "rgb(74%,72%,42%)",
+                            "position": 0.40001
+                        },
+                        {
+                            "color": "rgb(74%,72%,42%)",
+                            "position": 0.45
+                        },
+                        {
+                            "color": "rgb(69%,76%,38%)",
+                            "position": 0.450001
+                        },
+                        {
+                            "color": "rgb(69%,76%,38%)",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(64%,80%,35%)",
+                            "position": 0.50001
+                        },
+                        {
+                            "color": "rgb(64%,80%,35%)",
+                            "position": 0.55
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "position": 0.550001
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "label": "0.2",
+                            "position": 0.6
+                        },
+                        {
+                            "color": "rgb(50%,70%,28%)",
+                            "position": 0.60001
+                        },
+                        {
+                            "color": "rgb(50%,70%,28%)",
+                            "position": 0.65
+                        },
+                        {
+                            "color": "rgb(44%,64%,25%)",
+                            "position": 0.650001
+                        },
+                        {
+                            "color": "rgb(44%,64%,25%)",
+                            "position": 0.7
+                        },
+                        {
+                            "color": "rgb(38%,59%,21%)",
+                            "position": 0.70001
+                        },
+                        {
+                            "color": "rgb(38%,59%,21%)",
+                            "position": 0.75
+                        },
+                        {
+                            "color": "rgb(31%,54%,18%)",
+                            "position": 0.750001
+                        },
+                        {
+                            "color": "rgb(31%,54%,18%)",
+                            "label": "0.4",
+                            "position": 0.8
+                        },
+                        {
+                            "color": "rgb(25%,49%,14%)",
+                            "position": 0.80001
+                        },
+                        {
+                            "color": "rgb(25%,49%,14%)",
+                            "position": 0.85
+                        },
+                        {
+                            "color": "rgb(19%,43%,11%)",
+                            "position": 0.850001
+                        },
+                        {
+                            "color": "rgb(19%,43%,11%)",
+                            "position": 0.9
+                        },
+                        {
+                            "color": "rgb(13%,38%,7%)",
+                            "position": 0.90001
+                        },
+                        {
+                            "color": "rgb(13%,38%,7%)",
+                            "position": 0.95
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "position": 0.950001
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "position": 0.990001
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "label": "1.0",
+                            "position": 1.05
+                        }
+                    ],
+                    "maxPosition": 1.05,
+                    "minPosition": 0.05
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:39:59.029354Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 20,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/4_EVI",
+        "id": "4_EVI",
+        "title": "EVI",
+        "description": "Enhanced Vegetation Index",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n// Enhanced Vegetation Index  (abbrv. EVI)\n// General formula: 2.5 * (NIR - RED) / ((NIR + 6*RED - 7.5*BLUE) + 1)\n// URL https://www.indexdatabase.de/db/si-single.php?sensor_id=96&rsindex_id=16\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B03\", \"B04\", \"B08\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let EVI =\n    (2.5 * (samples.B08 - samples.B04)) /\n    (samples.B08 + 6.0 * samples.B04 - 7.5 * samples.B02 + 1.0);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  // We limit the index value to [-1 , 1] as the EVI mostly falls in that range\n  const indexVal = samples.dataMask === 1 && EVI >= -1 && EVI <= 1 ? EVI : NaN;\n\n  if (EVI < -1.1) imgVals = [0, 0, 0, samples.dataMask];\n  else if (EVI < -0.2) imgVals = [0.75, 0.75, 1, samples.dataMask];\n  else if (EVI < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (EVI < 0) imgVals = [1, 1, 0.88, samples.dataMask];\n  else if (EVI < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (EVI < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (EVI < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (EVI < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (EVI < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (EVI < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (EVI < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (EVI < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (EVI < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (EVI < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (EVI < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (EVI < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (EVI < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (EVI < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (EVI < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (EVI < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [EVI, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n",
+                "legend": {
+                    "type": "continuous",
+                    "gradients": [
+                        {
+                            "color": "rgb(0%,0%,0%)",
+                            "label": "-1",
+                            "position": -1
+                        },
+                        {
+                            "color": "rgb(37%,37%,50%)",
+                            "label": "-0.5",
+                            "position": -0.5
+                        },
+                        {
+                            "color": "rgb(75%,75%,100%)",
+                            "label": "-0.2",
+                            "position": -0.2
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "label": "0.2",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(19%,38%,7%)",
+                            "label": "0.5",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "label": "",
+                            "position": 0.75
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "label": "1",
+                            "position": 1
+                        }
+                    ],
+                    "maxPosition": 1,
+                    "minPosition": -0.2
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:37:07.407024Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/5_ARVI",
+        "id": "5_ARVI",
+        "title": "ARVI",
+        "description": "Atmospherically Resistant Vegetation Index",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n// Atmospherically Resistant Vegetation Index   (abbrv. ARVI)\n//\n// General formula: (NIR - RED - y * (RED - BLUE))/ (NIR + RED - y*(RED-BLUE))\n//\n// URL https://www.indexdatabase.de/db/si-single.php?sensor_id=96&rsindex_id=4\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B03\", \"B04\", \"B09\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val =\n    (samples.B09 - samples.B04 - 0.106 * (samples.B04 - samples.B02)) /\n    (samples.B09 + samples.B04 - 0.106 * (samples.B04 - samples.B02));\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n\n  if (val < -1.1) imgVals = [0, 0, 0, samples.dataMask];\n  else if (val < -0.2) imgVals = [0.75, 0.75, 0.75, samples.dataMask];\n  else if (val < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (val < 0) imgVals = [1, 1, 0.88, samples.dataMask];\n  else if (val < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (val < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (val < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (val < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (val < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (val < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (val < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (val < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (val < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (val < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (val < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (val < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (val < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (val < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (val < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (val < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n",
+                "legend": {
+                    "type": "continuous",
+                    "gradients": [
+                        {
+                            "color": "rgb(0%,0%,0%)",
+                            "label": "-1",
+                            "position": -1
+                        },
+                        {
+                            "color": "rgb(37%,37%,50%)",
+                            "label": "-0.5",
+                            "position": -0.5
+                        },
+                        {
+                            "color": "rgb(75%,75%,100%)",
+                            "label": "-0.2",
+                            "position": -0.2
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "label": "0.2",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(19%,38%,7%)",
+                            "label": "0.5",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "label": "",
+                            "position": 0.75
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "label": "1",
+                            "position": 1
+                        }
+                    ],
+                    "maxPosition": 1,
+                    "minPosition": -0.2
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:35:46.969493Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/6_SAVI",
+        "id": "6_SAVI",
+        "title": "SAVI",
+        "description": "Soil Adjusted Vegetation Index",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n// Soil Adjusted Vegetation Index  (abbrv. SAVI)\n// General formula: (800nm - 670nm) / (800nm + 670nm + L) * (1 + L)\n// URL https://www.indexdatabase.de/db/si-single.php?sensor_id=96&rsindex_id=87\n// Initialize parameters\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B08\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let L = 0.428;\n  let savi =\n    ((samples.B08 - samples.B04) / (samples.B08 + samples.B04 + L)) * (1.0 + L);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? savi : NaN;\n\n  if (savi < -1.1) imgVals = [0, 0, 0, samples.dataMask];\n  else if (savi < -0.2) imgVals = [0.75, 0.75, 1, samples.dataMask];\n  else if (savi < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (savi < 0) imgVals = [1, 1, 0.88, samples.dataMask];\n  else if (savi < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (savi < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (savi < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (savi < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (savi < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (savi < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (savi < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (savi < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (savi < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (savi < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (savi < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (savi < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (savi < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (savi < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (savi < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (savi < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [savi, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n",
+                "legend": {
+                    "type": "continuous",
+                    "gradients": [
+                        {
+                            "color": "rgb(0%,0%,0%)",
+                            "label": "-1",
+                            "position": -1
+                        },
+                        {
+                            "color": "rgb(37%,37%,50%)",
+                            "label": "-0.5",
+                            "position": -0.5
+                        },
+                        {
+                            "color": "rgb(75%,75%,100%)",
+                            "label": "-0.2",
+                            "position": -0.2
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "label": "0.2",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(19%,38%,7%)",
+                            "label": "0.5",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "label": "",
+                            "position": 0.75
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "label": "1",
+                            "position": 1
+                        }
+                    ],
+                    "maxPosition": 1,
+                    "minPosition": -0.2
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:41:22.109522Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/7_MARI",
+        "id": "7_MARI",
+        "title": "mARI",
+        "description": "Modified Anthocyanin Reflectance Index",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n// Modified Anthocyanin reflectance index  (abbrv. mARI)\n// General formula: 1/550nm-1/700nm\n// URL https://www.indexdatabase.de/db/si-single.php?sensor_id=96&rsindex_id=214\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B05\", \"B07\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = (1 / samples.B03 - 1 / samples.B05) * samples.B07;\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  // we restrict the interval to [-1, 5] as it covers most of the value range\n  // val can get to +infinity which the histogram feature fails to evaluate\n  const indexVal = samples.dataMask === 1 && val >= -1 && val <= 5 ? val : NaN;\n\n  if (val < -1.1) imgVals = [0, 0, 0, samples.dataMask];\n  else if (val < -0.2) imgVals = [0.75, 0.75, 0.75, samples.dataMask];\n  else if (val < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (val < 0) imgVals = [1, 1, 0.88, samples.dataMask];\n  else if (val < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (val < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (val < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (val < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (val < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (val < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (val < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (val < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (val < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (val < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (val < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (val < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (val < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (val < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (val < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (val < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n",
+                "legend": {
+                    "type": "continuous",
+                    "gradients": [
+                        {
+                            "color": "rgb(0%,0%,0%)",
+                            "label": "-1",
+                            "position": -1
+                        },
+                        {
+                            "color": "rgb(37%,37%,50%)",
+                            "label": "-0.5",
+                            "position": -0.5
+                        },
+                        {
+                            "color": "rgb(75%,75%,100%)",
+                            "label": "-0.2",
+                            "position": -0.2
+                        },
+                        {
+                            "color": "rgb(100%,100%,88%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(57%,75%,32%)",
+                            "label": "0.2",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(19%,38%,7%)",
+                            "label": "0.5",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(6%,33%,4%)",
+                            "label": "",
+                            "position": 0.75
+                        },
+                        {
+                            "color": "rgb(0%,27%,0%)",
+                            "label": "1",
+                            "position": 1
+                        }
+                    ],
+                    "maxPosition": 1,
+                    "minPosition": -0.2
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:38:41.435650Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/8_BARREN-SOIL",
+        "id": "8_BARREN-SOIL",
+        "title": "Barren Soil",
+        "description": "Based on the combination: BSI, B08, B11",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n//Barren Soil \n//https://custom-scripts.sentinel-hub.com/sentinel-2/barren_soil/\n\nfunction evaluatePixel(samples) {\n    let val = 2.5 * ((samples.B11 + samples.B04)-(samples.B08 + samples.B02))/((samples.B11 + samples.B04)+(samples.B08 + samples.B02));\n    if (samples.B08>0.6){\n      return[1, 1, 1, samples.dataMask];\n    }\n    else {\n  \treturn [2.5* val, samples.B08, samples.B11, samples.dataMask];\n  }\n}\nfunction setup() {\n  return {\n    input: [{\n      bands: [ \"B02\", \"B04\", \"B08\", \"B11\", \"B12\", \"dataMask\" ]\n    }],\n    output: { bands: 4 }\n  }\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:36:24.291362Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "leastCC",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE/layers/FALSE-COLOR-11-8-2",
+        "id": "FALSE-COLOR-11-8-2",
+        "title": "Agriculture",
+        "description": "Based on bands B11, B08, B02",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B08\", \"B11\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B11, samples.B08, samples.B02, samples.dataMask];\n    return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/3eddab-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-10-23T12:35:06.847731Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "downsampling": "BICUBIC",
+            "mosaickingOrder": "leastCC",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S2L2A"
+        }
+    }
+]

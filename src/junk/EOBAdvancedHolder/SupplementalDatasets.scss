@@ -1,0 +1,130 @@
+@import '../../variables.module.scss';
+
+.supplemental-datasets {
+  .supplemental-dataset-label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .add-dataset {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    i {
+      font-size: 15px;
+      padding: 2.5px 0;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    select {
+      max-width: 200px;
+      margin-left: 10px;
+    }
+  }
+
+  .supplemental-dataset {
+    background: $mainLight;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    .supplemental-dataset-header {
+      background: $mainMedium;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-weight: bold;
+      border-bottom: 1px solid $primaryColor;
+      padding: 5px 10px;
+      cursor: pointer;
+      align-items: center;
+
+      span {
+        max-width: 200px;
+      }
+
+      i {
+        height: 15px;
+        width: 15px;
+
+        &.open-close {
+          font-size: 15px;
+        }
+
+        &.remove {
+          padding-top: 3px;
+        }
+      }
+    }
+
+    .supplemental-dataset-info {
+      padding: 0 10px 10px 10px;
+
+      .supplemental-dataset-alias-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        input[type='text'] {
+          width: calc(50% - 8px);
+          margin-left: 5px;
+        }
+
+        .invalid {
+          background: #fdd;
+        }
+      }
+
+      .mosaicking-order {
+        display: flex;
+        align-items: center;
+        padding-top: 3px;
+        justify-content: space-between;
+
+        select {
+          margin-left: 5px;
+          width: 50%;
+        }
+      }
+
+      .timespan {
+        padding-top: 2px;
+
+        input[type='checkbox'] {
+          margin-left: 0;
+        }
+
+        .timespan-picker {
+          background-color: $mainLight;
+          margin-top: 2px;
+
+          .input-value {
+            background: $mainLight;
+          }
+
+          .date-time-input {
+            display: flex;
+            flex-wrap: nowrap;
+            margin-left: 5px;
+            margin-right: 5px;
+
+            .date-time-input-label {
+              display: none;
+            }
+
+            .numeric-input input {
+              max-width: 30px;
+              background-color: inherit;
+            }
+          }
+
+          .date-input {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

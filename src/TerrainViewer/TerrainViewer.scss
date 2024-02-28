@@ -1,0 +1,230 @@
+@import '../variables.module.scss';
+
+/* stylelint-disable */
+.gwt-DialogBox,
+.sgDatePicker-calendarPopup {
+  z-index: 500;
+}
+/* stylelint-enable */
+
+.terrain-viewer-button {
+  z-index: 400;
+  cursor: pointer;
+  position: absolute;
+  top: 360px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: $mainLight;
+  padding: 0;
+  color: #fff;
+  margin: 0;
+  height: 40px;
+  width: 40px;
+  border: none;
+  overflow: visible;
+  right: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  &.is3d {
+    top: 310px;
+  }
+
+  .icon {
+    color: $primaryColor;
+    cursor: pointer;
+    width: 38px;
+  }
+
+  &.disabled {
+    .icon {
+      opacity: 0.5;
+    }
+  }
+}
+
+@keyframes slide-in {
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+
+  100% {
+    -webkit-transform: translateX(200%);
+  }
+}
+
+@keyframes indeterminate-loading {
+  from {
+    left: 0%;
+    width: 5%;
+  }
+
+  to {
+    left: 100%;
+    width: 5%;
+  }
+}
+
+#terrain-map-container {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  /* stylelint-disable */
+  .statusLoading {
+    display: none;
+  }
+  /* stylelint-enable */
+
+  .loader-bar {
+    background: $primaryColor;
+    position: fixed;
+    z-index: 1031;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    animation: indeterminate-loading 0.8s linear infinite;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .toolbar3d {
+    z-index: 400;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+
+    .button3d {
+      cursor: pointer;
+      margin-bottom: 10px;
+      width: 40px;
+      height: 40px;
+      font-size: 21px;
+      line-height: 40px;
+      background: $mainLight;
+      color: $secondaryColor;
+      -webkit-box-shadow: $boxShadow;
+      box-shadow: $boxShadow;
+      text-align: center;
+
+      svg {
+        fill: $primaryColor;
+      }
+
+      &.animated {
+        transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        -webkit-animation: slide-in 2s forwards; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: slide-in 2s forwards; /* Firefox < 16 */
+        -ms-animation: slide-in 2s forwards; /* Internet Explorer */
+        -o-animation: slide-in 2s forwards; /* Opera < 12.1 */
+        animation: slide-in 2s forwards;
+      }
+
+      .icon {
+        color: $primaryColor;
+      }
+
+      i {
+        color: $primaryColor;
+      }
+
+      &.help {
+        i {
+          color: $primaryColor;
+        }
+      }
+
+      &.closing {
+        -webkit-animation: slide-out 2s forwards; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: slide-out 2s forwards; /* Firefox < 16 */
+        -ms-animation: slide-out 2s forwards; /* Internet Explorer */
+        -o-animation: slide-out 2s forwards; /* Opera < 12.1 */
+        animation: slide-out 2s forwards;
+      }
+
+      &.enabled {
+        box-shadow: $boxShadow;
+
+        i {
+          color: $primaryColor;
+        }
+      }
+    }
+  }
+
+  .info3dcontainer {
+    z-index: 400;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+    background: $mainDark;
+    color: $textColor;
+    padding: 1px;
+    justify-content: center;
+    min-width: 250px;
+  }
+
+  .attribution {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 400;
+    display: flex;
+    flex-direction: row;
+    background: $mainDark;
+    padding: 1px;
+    justify-content: center;
+    min-width: 250px;
+
+    .attribution-link {
+      text-decoration: none;
+      color: $primaryColor;
+      font-size: 11px;
+      margin-right: 5px;
+    }
+  }
+}
+
+#terrain-map-container-timelapse {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

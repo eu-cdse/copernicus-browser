@@ -1,0 +1,34 @@
+{
+    "title": "Sentinel-2 Yearly Mosaics",
+    "layers": [
+        {
+            "id": "FALSE-COLOR-CLOUDLESS",
+            "name": "False Color Cloudless",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "NDVI",
+            "name": "NDVI",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "NDWI",
+            "name": "NDWI",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "TRUE-COLOR-CLOUDLESS",
+            "name": "True Color Cloudless",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

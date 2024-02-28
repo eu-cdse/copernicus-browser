@@ -1,0 +1,206 @@
+@import '../../variables.module.scss';
+
+.image-download {
+  color: $textColor;
+  background-color: $mainLight;
+  font-size: 14px;
+  padding: 15px;
+
+  .image-download-mode-selection {
+    display: flex;
+
+    .eob-btn {
+      margin-right: 20px;
+      background-color: $mainLight;
+      border-radius: 0;
+      border-bottom: 3px solid $mainLight;
+      color: $textColor;
+
+      &.selected {
+        border-bottom: 3px solid $primaryColor;
+      }
+
+      &:hover {
+        box-shadow: none;
+        color: $primaryColor;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .image-download-warning-panel {
+    margin: 10px 0 10px auto;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 14px;
+    color: $orangeColor;
+
+    .fa-warning {
+      margin-right: 6px;
+    }
+
+    div {
+      ul {
+        display: inline-block;
+        text-align: left;
+      }
+    }
+  }
+
+  .image-download-forms {
+    overflow: auto;
+
+    .image-download-warning {
+      margin: 10px 0 10px auto;
+      padding: 0 10px;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: $orangeColor;
+
+      .fa {
+        margin-right: 6px;
+      }
+    }
+
+    .form-field {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+      margin: 2px 0;
+      line-height: 30px;
+
+      label {
+        display: flex;
+        align-items: center;
+        flex: 0 0 33%;
+        max-width: 33%;
+
+        i {
+          margin-left: 5px;
+          color: $textColor;
+          cursor: pointer;
+        }
+      }
+
+      .form-input {
+        flex: 0 0 67%;
+        max-width: 67%;
+        display: flex;
+        justify-content: flex-end;
+
+        input {
+          background: $mainMedium;
+        }
+      }
+
+      &.disabled {
+        label > div:first-of-type,
+        .form-input {
+          pointer-events: none;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    input.full-width {
+      width: 100%;
+      text-align: left;
+      padding: 0.5em;
+      background: $mainMedium;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      color: $textColor;
+    }
+
+    input .full-width::placeholder {
+      color: #cccbcb;
+      opacity: 1;
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 6px;
+
+      label {
+        flex: 0 0 200px;
+      }
+
+      .dropdown {
+        flex: 1 1;
+      }
+
+      .wgs84-resolution {
+        .lat-lng {
+          padding-left: 15px;
+        }
+      }
+    }
+
+    .analytical-mode {
+      max-height: 650px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: all 0.5s;
+      transition-property: max-height, padding-bottom;
+      padding: 0 10px 0 30px;
+
+      .download-layers {
+        flex: 1 1;
+
+        .column {
+          float: left;
+          width: 50%;
+
+          .layer-title {
+            text-decoration: underline;
+            line-height: 20px;
+          }
+
+          label {
+            display: block;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .image-download-error-panel {
+    margin: 10px 0 10px auto;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 14px;
+
+    .image-download-error-header {
+      margin-bottom: 5px;
+      color: $orangeColor;
+
+      .fa {
+        margin-right: 6px;
+      }
+    }
+
+    .textarea-wrapper {
+      .error-container {
+        color: $textColor;
+        background-color: $mainLight;
+        padding: 5px;
+        text-align: left;
+        white-space: pre-wrap;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+    }
+  }
+
+  small {
+    .error {
+      color: $errorCol;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@import '../../../variables.module.scss';
+
+/* stylelint-disable */
+.cc-slider {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  div.rcStyler {
+    margin: 0 10px 0 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  div.rc-slider {
+    // RCSlider needs to have width defined via CSS. However if it is defined via CSS class, we
+    // can't change it via props. So we use 'inherit' here and set width on parent div.rcStyler.
+    width: inherit !important;
+    margin-bottom: 1px;
+  }
+
+  i.fa,
+  i.far,
+  i.fas {
+    width: 20px;
+
+    &.fa-cloud {
+      color: $iconGrayColor;
+    }
+  }
+
+  .percentage {
+    margin-left: 3px;
+    font-weight: $fontWeightBold;
+    color: $primaryColor;
+  }
+}

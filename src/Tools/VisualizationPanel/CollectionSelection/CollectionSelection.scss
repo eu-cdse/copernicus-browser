@@ -1,0 +1,314 @@
+@import '../../../variables.module.scss';
+
+.collection-cards-container {
+  max-height: 75vh;
+  overflow-y: scroll;
+  background: $mainMedium;
+}
+
+.sensors-satellites-selection {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: $primaryColor;
+
+  .collection-select-dropdown {
+    width: 50%;
+
+    /* stylelint-disable */
+    .collection-select__control {
+      background-color: $mainLight;
+      outline: none;
+      box-shadow: none;
+      border-bottom: 1px solid #6f707b;
+
+      .collection-select__indicators {
+        .collection-select__indicator {
+          .dropdown-indicator {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .collection-select__single-value {
+        color: $primaryColor;
+        font-size: 14px;
+        font-weight: $fontWeightBold;
+        opacity: 1;
+      }
+
+      .collection-select__input-container {
+        color: $primaryColor;
+        font-size: 14px;
+        font-weight: $fontWeightBold;
+        opacity: 1;
+      }
+
+      &.collection-select__control--menu-is-open {
+        background-color: $mainLight;
+
+        .collection-select__single-value {
+          color: $primaryColor;
+          opacity: 0.5;
+        }
+
+        .collection-select__input-container {
+          color: $primaryColor;
+        }
+      }
+    }
+
+    .collection-select__menu {
+      width: 100%;
+      background-color: $mainLight;
+      color: $mainDark;
+
+      .collection-select__menu-list {
+        margin: 2px;
+
+        &::-webkit-scrollbar-track {
+          background-color: $mainMedium;
+        }
+
+        .collection-select__option {
+          background-color: $mainLight;
+          height: 25px;
+          line-height: 25px;
+          font-size: 14px;
+          font-weight: $fontWeightNormal;
+          padding: 0 12px;
+          margin: 2px;
+          width: calc(100% - 4px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &.collection-select__option--is-focused {
+            background-color: #d2d2d2;
+          }
+
+          &.collection-select__option--is-selected {
+            background-color: $primaryColor;
+            color: $mainLight;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    /* stylelint-enable */
+  }
+}
+
+.collection-selection-container {
+  background: $mainLight;
+
+  .descriptions {
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .collection-label {
+    color: $textColor;
+    font-weight: $fontWeightBold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  .collection-buttons-container {
+    overflow: hidden;
+
+    .collection-buttons-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding-left: 7px;
+
+      .single-collection-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 97%;
+
+        .eob-btn {
+          width: 100%;
+        }
+
+        .collection-button {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-grow: 1;
+          color: $textColor;
+          background-color: $mainMedium;
+          font-weight: $fontWeightNormal;
+          text-align: left;
+          /*stylelint-disable*/
+          &.primary {
+            font-size: 14px;
+          }
+          /*stylelint-enable*/
+          &.secondary {
+            font-size: 14px;
+            margin: 5px 0;
+          }
+
+          &.selected {
+            background: $mainDark;
+            font-weight: $fontWeightBold;
+            color: $textColor;
+
+            &:hover {
+              background: $mainDark;
+              font-weight: $fontWeightBold;
+              color: $textColor;
+            }
+
+            path {
+              stroke: $primaryColor;
+            }
+          }
+        }
+      }
+    }
+
+    .observation-scenarios-wrapper {
+      margin: 20px 0 10px 7px;
+
+      .observation-scenarios-label {
+        display: flex;
+        align-items: center;
+        color: $textColor;
+        font-weight: $fontWeightBold;
+        margin-bottom: 5px;
+        margin-top: 10px;
+      }
+
+      .observation-scenarios-container {
+        display: flex;
+        flex-direction: column;
+
+        .polarization-container {
+          margin-left: 20px;
+        }
+
+        .orbit-direction-container {
+          .collection-label {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .s1-single-collection-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .s1-collection-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-grow: 1;
+            background: $mainDark;
+            color: $textColor;
+            font-weight: $fontWeightNormal;
+            text-align: left;
+            transition: background-color ease 0.2s;
+
+            &.primary {
+              font-size: 14px;
+            }
+
+            &.secondary {
+              font-size: 14px;
+              background: $mainMedium;
+              margin: 5px 0;
+
+              &:hover {
+                background: $mainDark;
+              }
+            }
+
+            &.selected {
+              background: $mainDark;
+              font-weight: $fontWeightBold;
+
+              &:hover {
+                background: $mainDark;
+              }
+
+              path {
+                stroke: $secondaryColor;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .dropdown-collection-selection {
+      margin-bottom: 20px;
+      margin-top: 10px;
+      background: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position-x: 100%;
+      background-position-y: 0;
+      border: none;
+      border-bottom: 1px solid #fff;
+      border-radius: 0;
+      padding: 7px 15px 2px 0;
+      color: #cdd5e3;
+      font-size: 0.9em;
+      width: 100%;
+      text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      :focus {
+        outline-offset: 0;
+      }
+
+      option {
+        color: #000;
+        border: none;
+        padding: 2px;
+        text-align: left;
+      }
+    }
+  }
+
+  .title-content {
+    display: flex;
+    align-items: center;
+    max-height: 33px;
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .loader {
+        margin: 0 5px;
+        height: initial;
+      }
+    }
+
+    .collection-search {
+      .collection-search-header {
+        .sensors-satellites-selection {
+          flex-basis: 100%;
+          display: flex;
+          align-items: center;
+          margin-bottom: 0;
+
+          .collection-select-dropdown {
+            width: calc(50% + 50px);
+          }
+        }
+      }
+    }
+  }
+}

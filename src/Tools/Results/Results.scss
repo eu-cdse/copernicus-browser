@@ -1,0 +1,223 @@
+@import '../../variables.module.scss';
+
+$textColor: $textColor;
+$headerBorderWidth: 2px;
+$headerPadding: 10px;
+
+.results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .results-heading {
+    padding: $headerPadding;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+  }
+
+  .rodal {
+    .results-heading {
+      box-shadow: none;
+      border-bottom: 1px solid $mainDark;
+    }
+
+    .rodal-close {
+      right: 16px;
+    }
+
+    .showing-n-results {
+      text-align: right;
+    }
+
+    .results-heading-left {
+      max-width: 50%;
+
+      .back-to-search {
+        text-align: center;
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .result-item {
+    margin: 5px;
+    position: relative;
+    transition: all ease 0.4s;
+    padding: 5px;
+    background: $mainLight;
+    box-shadow: $boxShadow;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+
+    .progress-bar {
+      margin-top: 5px;
+      margin-right: 5px;
+    }
+
+    &:first-of-type {
+      margin-top: 5px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 5px 10px;
+    }
+
+    .eob-btn {
+      padding: 2px 5px;
+      font-size: 12px;
+      text-align: center;
+      align-self: center;
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: row;
+
+      > :last-child {
+        margin-left: auto;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+
+        .tag {
+          text-align: center;
+          align-self: center;
+          padding: 2px 5px;
+          align-content: center;
+          background-color: $mainDark;
+          color: $textColor;
+          border-radius: 10px;
+          margin: 1px 5px 1px 0;
+          font-size: 10px;
+          font-weight: bold;
+        }
+      }
+
+      .buttons {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: $primaryColor;
+        fill: $primaryColor;
+        font-size: 14px;
+
+        .active {
+          color: $secondaryColor;
+        }
+
+        .disabled {
+          opacity: 0.5;
+
+          &:hover {
+            color: $textColor;
+            fill: $textColor;
+          }
+        }
+
+        > i,
+        svg {
+          margin: 0 3px;
+          width: 16px;
+
+          &:hover {
+            color: $secondaryColor;
+            fill: $secondaryColor;
+          }
+        }
+      }
+    }
+
+    .details {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      flex: 1;
+
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        div {
+          padding: 2px 2px 0 0;
+        }
+      }
+
+      .title {
+        word-wrap: anywhere;
+      }
+
+      .bold {
+        font-weight: bold;
+        word-wrap: anywhere;
+      }
+
+      .detail {
+        font-size: 13px;
+        padding: 3px 0;
+        display: flex;
+        flex-direction: row;
+
+        :first-child {
+          font-weight: $fontWeightBold;
+        }
+      }
+    }
+  }
+
+  .results-panel {
+    color: $textColor;
+    padding-bottom: 10px;
+
+    & > .eob-btn {
+      display: block;
+      text-align: center;
+    }
+
+    .rodal {
+      .rodal-close {
+        z-index: 1;
+      }
+
+      .results-header {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          font-size: 16px;
+          font-weight: $fontWeightBold;
+        }
+
+        .paragraph {
+          font-size: 14px;
+          padding: 10px 0;
+          border-bottom: 1px solid $mainDark;
+        }
+      }
+
+      .results-panel {
+        height: calc(100% - 60px);
+        overflow: auto;
+        padding-bottom: 0;
+      }
+    }
+
+    .results-controls {
+      width: 100%;
+    }
+  }
+}

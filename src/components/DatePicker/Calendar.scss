@@ -1,0 +1,202 @@
+@import '../../variables.module.scss';
+
+.calendar-wrapper {
+  color: $textColor;
+  margin-top: 5px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+
+  .year-month-form {
+    padding: 0 2.5rem;
+    display: table-caption;
+    text-align: center;
+    margin-bottom: 10px;
+
+    select {
+      option {
+        color: $textColor;
+      }
+    }
+  }
+
+  // stylelint-disable
+  .DayPicker-wrapper {
+    background-color: $mainLight;
+    padding-bottom: 10px;
+
+    select {
+      background: $mainLight;
+      color: $textColor;
+      cursor: default;
+      border: 1px solid #797373;
+      font-size: 14px;
+      text-transform: capitalize;
+      padding: 1px 2px;
+      margin: 0 2px;
+      max-width: 100px;
+      appearance: auto;
+    }
+  }
+
+  .DayPicker {
+    display: block;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .DayPicker-Day {
+    padding: 0.5em;
+    border: 2px solid $mainLight;
+    min-width: 30px;
+
+    @media screen and (max-width: 400px) {
+      min-width: 15px;
+    }
+  }
+
+  .DayPicker-Month {
+    margin: 1rem 0;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+  }
+
+  .DayPicker-Weekday {
+    font-size: 0.9rem;
+  }
+
+  .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    position: relative;
+    color: $whiteColor;
+    background-color: $primaryColor;
+    border-radius: 0;
+    border: none;
+    cursor: default;
+  }
+
+  .DayPicker-Day--available {
+    background-color: $mainMedium;
+    color: $textColor;
+    border-radius: 0;
+  }
+
+  .DayPicker:not(.DayPicker--interactionDisabled)
+    .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+    background-color: $mainDark;
+    border: 2px solid $mainDark;
+    border-radius: 0;
+  }
+
+  .DayPicker-Day--disabled {
+    color: $mainDark;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .DayPicker-Day--highlighted {
+    background-color: $mainDark;
+    border: 2px solid $primaryColor;
+    color: $textColor;
+    border-radius: 0;
+
+    &.DayPicker-Day--disabled {
+      color: $textColor;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &:hover {
+      border: 2px solid $primaryColor !important;
+    }
+  }
+
+  .DayPicker-Day--highlightedCloudy {
+    background-color: $mainMedium;
+    border: 2px solid $mainMedium;
+    color: $textColor;
+    border-radius: 0;
+
+    &.DayPicker-Day--disabled {
+      color: $mainDark;
+      pointer-events: none;
+    }
+  }
+
+  .DayPicker-Weekdays {
+    margin-top: 1rem;
+    display: table-header-group;
+    text-transform: capitalize;
+  }
+
+  .DayPicker-Caption {
+    padding: 0 2.5rem;
+    display: table-caption;
+    text-align: center;
+    margin-bottom: 1px;
+  }
+
+  .DayPicker-Day--today {
+    color: $primaryColor;
+    font-weight: 600;
+  }
+
+  // stylelint-enable
+
+  .date-nav-button {
+    background-color: #eee0;
+    border: none;
+    cursor: pointer;
+    padding: 19px 14px 14px 14px;
+    position: relative;
+
+    i {
+      color: $textColor;
+    }
+  }
+
+  .date-nav-button.left {
+    float: left;
+  }
+
+  .date-nav-button.right {
+    float: right;
+  }
+
+  .date-nav-button.disabled {
+    i {
+      color: rgba($color: $textColor, $alpha: 0.25);
+    }
+  }
+
+  .cc-slider {
+    width: 100%;
+
+    .rc-slider {
+      z-index: 1;
+
+      .percentage {
+        min-width: 40px;
+        font-weight: $fontWeightBold;
+        color: $primaryColor;
+      }
+    }
+  }
+
+  .cloud-cover-calendar-cc-section {
+    background-color: $mainLight;
+    color: $textColor;
+    display: flex;
+    padding: 10px 12px 0 12px;
+    font-size: 14px;
+    line-height: 16px;
+
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    .time-select-type {
+      flex-shrink: 2;
+    }
+  }
+}

@@ -1,0 +1,159 @@
+@import '../../variables.module.scss';
+
+.compare-layer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 10px 10px 10px;
+  clear: both;
+  user-select: none;
+  color: $textColor;
+  background-color: $mainMedium;
+  font-size: 14px;
+
+  &.normal-mode:hover {
+    background: $mainMedium;
+
+    & > div:first-child {
+      color: $whiteColor;
+    }
+  }
+
+  img.preview {
+    float: left;
+    margin-right: 10px;
+    width: 90px;
+  }
+
+  i {
+    padding-left: 6px;
+    font-size: 12px;
+  }
+
+  input {
+    width: 250px;
+    border: none;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+  }
+
+  .order-layers {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+
+    i {
+      color: $whiteColor;
+      padding: 0;
+      text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+    }
+  }
+
+  .compare-drag-handler {
+    cursor: move;
+  }
+
+  .compare-layer-content {
+    width: 100%;
+
+    .compare-layer-info {
+      display: flex;
+      flex-direction: column;
+      word-wrap: anywhere;
+      font-size: 13px;
+      height: 90px;
+      justify-content: space-evenly;
+
+      span {
+        margin-right: 25px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 290px;
+      }
+
+      .compare-panel-slider {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        font-size: 13px;
+        width: 100%;
+        height: 17px;
+        margin-bottom: 5px;
+
+        label {
+          color: $textColor;
+        }
+
+        span {
+          display: inline-block;
+          min-width: 30px;
+          margin-right: 5px;
+        }
+
+        .rc-slider {
+          margin: 0 15px;
+          height: 23px;
+
+          .rc-slider-rail {
+            height: 1px;
+            background-color: $sliderRailGray;
+            margin-top: 6px;
+          }
+
+          .rc-slider-track {
+            height: 1px;
+            background-color: $sliderPrimaryColor;
+            margin-top: 6px;
+          }
+
+          .rc-slider-handle {
+            width: 17px;
+            height: 17px;
+            margin-top: -2px;
+            border: none;
+            background-color: $sliderPrimaryColor;
+
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .remove-layer {
+    position: absolute;
+    bottom: 5px;
+    left: 70px;
+    color: $whiteColor;
+
+    i.fa-trash {
+      text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+      cursor: pointer;
+    }
+  }
+
+  .zoom-to-layer {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+
+    svg path {
+      fill: $textColor;
+    }
+  }
+
+  &.gu-mirror,
+  &.gu-transit {
+    color: $textColor;
+    opacity: 0.8;
+    background-color: $mainDark !important;
+    box-shadow: 0 3px 5px #000;
+    cursor: -webkit-grabbing !important;
+  }
+}

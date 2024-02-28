@@ -1,0 +1,224 @@
+@import '../../variables.module.scss';
+
+.pins-story-builder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 10px 10px 0;
+  box-sizing: border-box;
+  font-size: 16px;
+
+  .error {
+    color: #f60;
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 1px;
+    height: 50px;
+    padding: 0 15px;
+    line-height: 40px;
+    color: $textColor;
+  }
+
+  .horizontal-stack {
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+
+    .pins-selector {
+      overflow-y: auto;
+      margin-right: 20px;
+
+      .pin-item {
+        padding: 10px;
+        font-size: 14px;
+        clear: both;
+        border-bottom: 1px solid $mainDark;
+        user-select: none;
+        color: $textColor;
+        min-height: 65px;
+
+        &.normal-mode:hover {
+          background: #333440;
+          cursor: pointer;
+
+          & > div:first-child {
+            color: #fff;
+          }
+        }
+      }
+
+      .pin-item .pin-content {
+        display: flex;
+
+        .slide-image {
+          position: relative;
+          margin-right: 10px;
+        }
+      }
+
+      .pin-story-warning {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+
+        .fa {
+          margin-bottom: 10px;
+        }
+      }
+
+      .info-panel {
+        white-space: pre-line;
+        color: $textColor;
+        margin: 20px 10px;
+        max-width: 400px;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+
+        .fa {
+          margin-right: 10px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .vertical-stack {
+      width: 100%;
+      overflow-y: auto;
+
+      .fa.fa-spinner.downloading-images {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        color: #fff;
+        font-size: 26px;
+        line-height: 512px;
+        margin-bottom: 50px;
+        align-self: center;
+      }
+
+      .slides-preview {
+        flex: 1; // fill whole area
+        flex-grow: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: $mainMedium;
+        padding-top: 20px;
+
+        .controls {
+          margin: 20px 0;
+          color: #fff;
+          text-align: center;
+
+          button.play-pause {
+            background-color: transparent;
+            color: $primaryColor;
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size: 20px;
+
+            .fa {
+              margin: 5px 20px;
+            }
+          }
+
+          .interval-panel {
+            margin: 0 20px;
+
+            label {
+              margin-right: 5px;
+            }
+
+            input {
+              max-width: 40px;
+            }
+          }
+
+          div.rc-slider {
+            margin-left: 30px;
+          }
+
+          .timeline-label {
+            display: block;
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .slides-options {
+        flex-grow: 0;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        background-color: $mainDark;
+        padding: 7px 10px;
+        padding-bottom: 15px;
+
+        .react-toggle-checked .react-toggle-track,
+        .react-toggle.react-toggle-checked:hover .react-toggle-track {
+          background: $primaryColor;
+        }
+
+        .field {
+          width: 100%;
+          display: flex;
+          margin-bottom: 5px;
+          align-items: center;
+
+          // https://stylelint.io/user-guide/rules/no-descending-specificity#dom-limitations
+          /* stylelint-disable no-descending-specificity */
+          label {
+            flex-grow: 1;
+            margin-right: 20px;
+            color: $textColor;
+          }
+          /* stylelint-enable */
+        }
+      }
+
+      .slides-download {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: $mainDark;
+        padding-bottom: 20px;
+
+        .eob-btn {
+          min-width: 150px;
+          display: flex;
+          justify-content: center;
+
+          .progress {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-900) {
+  .pins-story-builder {
+    .horizontal-stack {
+      flex-direction: column;
+      height: auto;
+
+      & > * {
+        flex: 1; // fill whole area
+      }
+    }
+  }
+}

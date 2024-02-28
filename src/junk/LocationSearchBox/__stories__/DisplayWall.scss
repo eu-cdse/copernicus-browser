@@ -1,0 +1,30 @@
+/* stylelint-disable */
+.location-search-box-controlled {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 6vh;
+
+  input {
+    font-size: 14px;
+    border-width: 0 0 2px;
+    border-color: #151513;
+    padding: 0.5em 1em;
+    transition: border 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      border-color: #267dc0;
+      box-shadow: 0 0 0 transparent;
+    }
+  }
+
+  .search-item {
+    font-size: 14px;
+    padding: 0.5em 0.65em;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}

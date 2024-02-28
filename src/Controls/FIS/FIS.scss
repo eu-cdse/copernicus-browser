@@ -1,0 +1,166 @@
+@import '../../variables.module.scss';
+
+.fis {
+  color: $textColor;
+
+  .export-csv-button {
+    margin-right: 20px;
+    float: right;
+  }
+
+  div.ccslider {
+    font-size: 1em;
+    margin: -40px 70px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .last-band-msg {
+      font-size: 12px;
+    }
+  }
+
+  div.fis-content {
+    margin-top: 20px;
+    font-size: 0.8em;
+    padding: 10px;
+  }
+
+  div.fetching {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    height: 320px;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  div.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 320px;
+
+    .error-message {
+      word-break: break-all;
+      margin-bottom: 20px;
+    }
+  }
+
+  div.interval-buttons {
+    margin: 0 50px 20px;
+    display: flex;
+    justify-content: space-around;
+
+    a.eob-btn {
+      border-radius: 0;
+      border-bottom: 3px solid transparent;
+      color: $textColor;
+      background: $whiteBackground;
+    }
+
+    a.eob-btn.selected {
+      border-bottom: 3px solid $primaryColor;
+    }
+  }
+
+  div.fetching-small {
+    right: 30px;
+    top: -20px;
+    padding: 15px;
+  }
+
+  svg.background-graphics {
+    text {
+      fill: $textColor;
+    }
+
+    path,
+    line {
+      fill: none;
+    }
+
+    path.tick-line {
+      shape-rendering: crispEdges;
+      stroke: #666;
+      stroke-dasharray: 5, 5;
+    }
+
+    line.axis-baseline {
+      shape-rendering: crispEdges;
+      stroke: $textColor;
+    }
+  }
+
+  svg.legend {
+    margin-left: 50px;
+
+    text {
+      fill: $textColor;
+    }
+  }
+
+  svg.visualization-layer {
+    text {
+      fill: $textColor;
+    }
+
+    path,
+    line {
+      fill: $primaryColor;
+    }
+
+    .data-visualization {
+      .lines {
+        .xyframe-line {
+          path {
+            stroke: $primaryColor;
+          }
+        }
+      }
+
+      .points {
+        .frame-piece {
+          fill: $primaryColor;
+        }
+      }
+    }
+
+    path.tick-line {
+      shape-rendering: crispEdges;
+      stroke: #666;
+      stroke-dasharray: 5, 5;
+    }
+
+    line.axis-baseline {
+      shape-rendering: crispEdges;
+      stroke: $textColor;
+    }
+  }
+
+  div.annotation {
+    background-color: $mainMedium;
+    color: $textColor;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 200px;
+
+    ul {
+      padding-left: 20px;
+    }
+
+    hr {
+      border: none;
+      background-color: #666;
+      height: 1px;
+    }
+  }
+}
+
+.rc-tooltip {
+  z-index: 33333;
+}

@@ -1,0 +1,104 @@
+@import '../../variables.module.scss';
+
+.social-networks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+  padding: 0;
+  margin: 5px 0;
+  background-color: $mainLight;
+  box-shadow: none;
+  z-index: 5;
+
+  @media only screen and (max-width: 400px) {
+    & {
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .copy-url {
+        flex-grow: 1;
+      }
+
+      .social-buttons {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .short-url-section {
+    display: flex;
+
+    .short-url-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 245px;
+      height: 20px;
+      background-color: $mainMedium;
+      border-radius: 1px 0 0 1px;
+
+      .short-url {
+        color: $primaryColor;
+        font-size: 12px;
+        padding-left: 4px;
+      }
+
+      .copy-to-clipboard {
+        i {
+          cursor: pointer;
+          color: $primaryColor;
+          padding-right: 4px;
+        }
+      }
+    }
+
+    .create-short-url-wrapper {
+      .create-short-url {
+        font-size: 12px;
+        font-weight: $fontWeightBold;
+        background-color: $primaryColor;
+        border: none;
+        border-radius: 0 1px 1px 0;
+        color: $whiteColor;
+        width: 64px;
+        height: 20px;
+        padding: 0;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #0c4eac;
+        }
+      }
+    }
+  }
+
+  .holders {
+    display: flex;
+    align-items: center;
+
+    .facebook-share-button,
+    .twitter-share-button,
+    .linkedin-share-button {
+      display: flex;
+
+      svg {
+        fill: $primaryColor;
+        width: 19px;
+        height: 19px;
+      }
+    }
+  }
+
+  .social-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

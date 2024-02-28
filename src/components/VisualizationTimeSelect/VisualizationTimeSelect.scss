@@ -1,0 +1,290 @@
+@import '../../variables.module.scss';
+
+.visualization-time-select {
+  display: flex;
+  flex-direction: column;
+  text-transform: none;
+  color: $textColor;
+  background-color: $mainLight;
+  text-align: center;
+  position: relative;
+
+  .loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba($mainMedium, 0.75);
+    width: 100%;
+    height: 100%;
+    font-size: 32px;
+
+    span {
+      top: unset;
+    }
+  }
+
+  .datepicker-cloud-coverage-wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+
+    .date-picker-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .timespan-label {
+      display: flex;
+      align-items: center;
+      background-color: $mainMedium;
+      font-size: 13px;
+      height: 36px;
+      padding: 0 10px;
+
+      &:hover {
+        cursor: pointer;
+        border-color: $primaryColor;
+      }
+    }
+
+    .timespan-title-wrap {
+      display: flex;
+    }
+  }
+
+  .collapsible-panel {
+    .content {
+      margin-left: 4px;
+
+      .timespan-picker {
+        margin-top: 0;
+
+        .date-time-input {
+          .date-time-input-label {
+            margin-top: 0;
+            align-items: flex-end;
+          }
+        }
+      }
+    }
+
+    .title {
+      height: 35px;
+
+      .title-content {
+        .timespan-picker {
+          display: flex;
+
+          .date-time-input {
+            flex-wrap: unset;
+            align-items: baseline;
+
+            .date-time-input-label {
+              flex-basis: unset;
+              margin-top: 0;
+            }
+
+            .date-input {
+              .date-picker {
+                .date-picker-input-wrapper {
+                  .timespan-date-picker {
+                    width: 80px;
+                    margin-right: 0;
+                  }
+                }
+              }
+            }
+
+            .time-input {
+              margin-right: 15px;
+              padding: 0 5px;
+              background-color: $mainLight;
+
+              .time-input-hours-minutes {
+                width: 15px;
+                margin: 0;
+
+                &.no-full-width {
+                  width: 5px;
+                  height: 20px;
+                  display: flex;
+                  align-items: baseline;
+                  justify-content: center;
+                }
+
+                .numeric-input {
+                  border: none;
+                  margin: 0;
+
+                  label,
+                  .spinner {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+
+          .timespan-calendar-holder {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .title,
+    .expanded {
+      align-items: baseline !important;
+
+      &.expanded {
+        padding-bottom: 0;
+      }
+
+      .title-arrow-wrapper {
+        i {
+          margin-right: 0;
+          width: unset;
+          height: unset;
+          line-height: 33px;
+        }
+      }
+
+      .title-content {
+        flex-wrap: wrap;
+
+        .date-timespan-label {
+          display: flex;
+          flex-basis: 100%;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          margin-right: 18px;
+
+          .time-select-type {
+            text-transform: uppercase;
+            color: $primaryColor;
+            margin-left: 0;
+            width: auto;
+            margin-right: 6px;
+            font-size: 16px;
+          }
+
+          .date-tabs {
+            display: flex;
+            gap: 4px;
+
+            .single-mode-svg,
+            .mosaic-mode-svg,
+            .time-range-mode-svg {
+              box-shadow: 0 0 4px 4px #dddddd40;
+              cursor: pointer;
+            }
+
+            .active {
+              rect {
+                fill: $primaryColor;
+              }
+
+              path {
+                fill: $secondaryColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .small-action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 18px;
+    width: 67px;
+    background-color: $secondaryColor;
+    box-shadow: $boxShadow;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $hoverSecondaryColor;
+    }
+
+    svg {
+      width: 15px;
+      fill: $whiteColor;
+      transform: rotate(-45deg);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.35;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    margin-top: 14px;
+    margin-bottom: 12px;
+    background-color: $secondaryColor;
+    cursor: pointer;
+    box-shadow: $boxShadow;
+
+    &:hover {
+      background-color: $hoverSecondaryColor;
+    }
+
+    .action-button-text {
+      color: $whiteColor;
+      margin-right: 10px;
+      font-size: 14px;
+      font-weight: $fontWeightBold;
+    }
+
+    svg {
+      width: 13px;
+      fill: $whiteColor;
+      rotate: -45deg;
+    }
+
+    &.secondary {
+      background-color: $mainLight;
+      color: $primaryColor;
+      cursor: default;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      background-color: rgba($color: $secondaryColor, $alpha: 0.5);
+
+      svg {
+        fill: $whiteColor;
+      }
+    }
+  }
+
+  .secondary {
+    color: $primaryColor;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 3px 5px 3px;
+    cursor: pointer;
+
+    &.disabled {
+      color: $textColorGray;
+      pointer-events: none;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+/* stylelint-disable */
+.grouped-bands-to-rgb {
+  button {
+    background-color: #ccc;
+    color: #333;
+    border: 2px solid #ccc;
+    margin: 8px 0 0 15px;
+
+    &.selected {
+      border-color: #fff;
+    }
+  }
+
+  #colorsWrap {
+    margin: 0 15px;
+  }
+}

@@ -1,0 +1,88 @@
+$primaryColor: #0a4393;
+$secondaryColor: #77cc09;
+$tertiaryColor: #fabc20;
+$quaternaryColor: #19ab27;
+$mainDarkest: #3a4a61;
+$mainDark: #dbdfe3;
+$mainMedium: #f5f5f5;
+$mainLight: #fff;
+$yellowColor: #ffd617;
+$orangeColor: #f29527;
+
+$whiteColor: #fff;
+$whiteBackground: $whiteColor;
+$textColor: #041223;
+$grayColor: $textColor;
+$textColorGray: #818888;
+$randomGrayColor: #585867;
+$sliderPrimaryColor: $primaryColor;
+$sliderRailGray: #929494;
+$iconGrayColor: #c0c0cc;
+$errorCol: #da4453;
+$blueColor: #2e85ea;
+$customCheckboxBackgroundColor: #e4e7eb;
+$dropdownHoverBackground: #dcdfe3;
+
+$successColor: #77cc09;
+$warningColor: $tertiaryColor;
+
+$hoverPrimaryColor: #043983;
+$hoverSecondaryColor: #6cb907;
+$activePrimaryColor: #003066;
+
+$disabled: 0.5;
+
+$boxShadow: 0 0 6px rgba(0, 0, 0, 0.2);
+
+$controlsHeight: 40px;
+$toolsWidth: 450px;
+$additionalFiltersPanelWidth: 280px;
+
+$fontWeightNormal: 400;
+$fontWeightBold: 700;
+$fontFamily: 'Arial', 'Cabin', 'Tahoma', 'Verdana', 'Helvetica Neue', sans-serif;
+$fontFamilyHeadline: 'Arial Black', 'Cabin', 'Tahoma', 'Verdana', 'Helvetica Neue', sans-serif;
+
+$breakpoint-340: 340px;
+$breakpoint-360: 360px;
+$breakpoint-400: 400px;
+$breakpoint-415: 415px;
+$breakpoint-430: 430px;
+$breakpoint-450: 450px;
+$breakpoint-500: 500px;
+$breakpoint-600: 600px;
+$breakpoint-641: 641px;
+$breakpoint-700: 700px;
+$breakpoint-720: 720px;
+$breakpoint-740: 740px;
+$breakpoint-768: 768px;
+$breakpoint-890: 890px;
+$breakpoint-900: 900px;
+$breakpoint-940: 940px;
+$breakpoint-1024: 1024px;
+$breakpoint-1200: 1200px;
+$breakpoint-1280: 1280px;
+$breakpoint-1300: 1300px;
+
+/* stylelint-disable */
+:export {
+  primaryColor: $primaryColor;
+  mainDarkest: $mainDarkest;
+  mainDark: $mainDark;
+  mainMedium: $mainMedium;
+  mainLight: $mainLight;
+  whiteColor: $whiteColor;
+  whiteBackground: $whiteColor;
+  textColor: $textColor;
+  grayColor: $grayColor;
+  fontWeightNormal: $fontWeightNormal;
+  fontWeightBold: $fontWeightBold;
+  boxShadow: $boxShadow;
+  randomGrayColor: $randomGrayColor;
+  toolsWidth: $toolsWidth;
+  additionalFiltersPanelWidth: $additionalFiltersPanelWidth;
+  successColor: $successColor;
+  warningColor: $warningColor;
+  dropdownHoverBackground: $dropdownHoverBackground;
+}
+/* stylelint-enable */

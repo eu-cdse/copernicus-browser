@@ -1,0 +1,5 @@
+package.json
+src/translations/*.json
+src/assets/cache/capabilities/*.json
+src/assets/cache/configuration/*.json
+/build

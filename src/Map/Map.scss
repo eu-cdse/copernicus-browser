@@ -1,0 +1,201 @@
+@import '../variables.module.scss';
+
+#map {
+  background-color: #fff;
+  min-width: 280px;
+  min-height: 406px;
+  z-index: 0;
+
+  .maptiler-logo {
+    position: absolute;
+    bottom: 25px;
+    left: 10px;
+    z-index: 999;
+    width: 75px;
+    opacity: 0.75;
+    filter: drop-shadow($boxShadow);
+  }
+
+  .google-logo {
+    position: fixed;
+    bottom: 21px;
+    left: 90px;
+    z-index: 999;
+    width: 75px;
+    opacity: 0.75;
+    -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  @media (max-width: $breakpoint-1200) {
+    .maptiler-logo {
+      bottom: 25px;
+    }
+
+    .google-logo {
+      bottom: 31px;
+    }
+  }
+
+  @media (max-width: $breakpoint-890) {
+    .maptiler-logo {
+      bottom: 48px;
+    }
+
+    .google-logo {
+      bottom: 56px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .maptiler-logo {
+      bottom: 53px;
+      left: 5px;
+    }
+  }
+
+  .leaflet-control-container {
+    .leaflet-top.leaflet-right {
+      .leaflet-control-layers {
+        background: $mainLight;
+        color: $textColor;
+        border-radius: 0;
+        border: none;
+        margin-right: 10px;
+        box-shadow: $boxShadow;
+
+        .leaflet-control-layers-toggle {
+          background-image: url(layers.svg);
+          border: none;
+          width: 40px;
+          height: 40px;
+
+          svg {
+            fill: $primaryColor;
+          }
+        }
+
+        .leaflet-retina .leaflet-control-layers-toggle {
+          background-image: url(layers2x.png);
+        }
+      }
+    }
+
+    .leaflet-bottom.leaflet-left {
+      a:not(.leaflet-control-attribution) {
+        div {
+          left: 500px;
+        }
+      }
+    }
+  }
+
+  // Prevent visible tile borders on some browsers/devices - https://github.com/Leaflet/Leaflet/issues/3575#issuecomment-688644225
+  .leaflet-tile-container {
+    img[style*='width: 512px'] {
+      width: 512.5px !important;
+      height: 512.5px !important;
+    }
+
+    img[style*='width: 256px'] {
+      width: 256.5px !important;
+      height: 256.5px !important;
+    }
+  }
+}
+
+#map.left-align-attribution {
+  .leaflet-control-container {
+    .leaflet-control-attribution {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+#nprogress {
+  .bar {
+    background: linear-gradient(to right, $primaryColor 0%, $secondaryColor 100%);
+    height: 10px;
+
+    .peg {
+      display: none;
+    }
+
+    .spinner-icon {
+      border-top-color: $primaryColor;
+      border-left-color: $primaryColor;
+    }
+  }
+}
+
+/* stylelint-disable */
+.poi-wrapper > .poiPanel,
+.aoi-wrapper > .aoiPanel,
+.loi-wrapper > .loiPanel,
+.measure-wrapper > .measurePanel,
+.timelapse-wrapper > .timelapsePanelButton {
+  z-index: 400;
+  cursor: pointer;
+}
+
+.rodal {
+  z-index: 9999;
+  font: initial;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+/* stylelint-enable */
+
+.rodal-mask {
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+}
+
+.rodal-close {
+  position: absolute;
+  cursor: pointer;
+  top: 16px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.rodal-close::before,
+.rodal-close::after {
+  position: absolute;
+  content: '';
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  background: #999;
+  border-radius: 100%;
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
+}
+
+.rodal-close::before {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.rodal-close::after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.rodal-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 9999;
+  padding: 15px;
+  border-radius: 3px;
+  background: $mainDark;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}

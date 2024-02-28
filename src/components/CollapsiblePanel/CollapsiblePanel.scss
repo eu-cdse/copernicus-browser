@@ -1,0 +1,110 @@
+@import '../../variables.module.scss';
+
+.collapsible-panel {
+  position: relative;
+  overflow-y: hidden;
+  box-shadow: $boxShadow;
+
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .title {
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    color: $primaryColor;
+    font-size: 16px;
+    background: $mainLight;
+
+    .title-content {
+      display: flex;
+      flex-grow: 1;
+      max-width: 100%;
+      color: $primaryColor;
+      font-weight: $fontWeightBold;
+
+      @media (max-width: $breakpoint-430) {
+        .date-picker {
+          .date-picker-input-wrapper {
+            .date-picker-input {
+              width: 105px;
+            }
+          }
+        }
+
+        .cloud-coverage-picker {
+          margin-left: 12px;
+        }
+
+        .small-action-button {
+          margin-left: 12px;
+          width: 45px;
+        }
+      }
+
+      .theme-search {
+        display: flex;
+        width: 100%;
+
+        .theme-search-header {
+          display: flex;
+          flex-grow: 1;
+          margin-right: 68px;
+
+          .theme-selection {
+            flex-basis: 100%;
+            display: flex;
+
+            .theme-select-dropdown {
+              width: calc(50% + 50px);
+
+              /* stylelint-disable */
+              .theme-select__menu-list {
+                margin: 2px;
+              }
+              /* stylelint-enable */
+
+              .dropdown-indicator {
+                margin-right: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      color: #aaa;
+    }
+
+    .title-arrow-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      background-color: $mainLight;
+      box-shadow: $boxShadow;
+      color: $primaryColor;
+      border-radius: 100%;
+      width: 33px;
+      height: 33px;
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    position: relative;
+    border-top: none;
+
+    & > * {
+      margin: 8px 12px;
+    }
+  }
+}

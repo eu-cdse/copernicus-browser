@@ -1,0 +1,106 @@
+@import '../../../variables.module.scss';
+
+.collection-card-wrapper {
+  position: relative;
+  color: $textColor;
+  background-color: $mainDark;
+  border-radius: 2px;
+  margin-bottom: 25px;
+  padding: 8px;
+
+  &.selected-card {
+    border: 2px solid $primaryColor;
+  }
+
+  .open-close-button {
+    position: absolute;
+    background-color: $primaryColor;
+    color: $mainDark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 20px;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    cursor: pointer;
+
+    .fas.fa-chevron-down,
+    .fas.fa-chevron-up {
+      height: 14px;
+      width: 14px;
+    }
+
+    .fas.fa-chevron-up {
+      line-height: 0.8;
+    }
+  }
+
+  .collection-card-title {
+    width: fit-content;
+    color: $textColor;
+    padding: 5px 5px 0 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+
+    .fas.fa-arrow-right {
+      margin-left: 10px;
+      color: $primaryColor;
+      cursor: pointer;
+    }
+  }
+
+  .collection-card-description {
+    color: $textColor;
+    text-align: left;
+    padding: 0 5px 5px 5px;
+    font-size: 14px;
+    cursor: pointer;
+
+    p {
+      margin: 0;
+      margin-bottom: 10px;
+
+      a {
+        color: $primaryColor;
+      }
+    }
+  }
+
+  .collection-card-dataset-wrapper {
+    .collection-card-dataset {
+      background-color: $mainMedium;
+      border-radius: 2px;
+      margin: 5px;
+      padding: 5px;
+
+      &.selected-dataset {
+        background-color: $mainLight;
+      }
+
+      .collection-card-dataset-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .collection-card-dataset-description {
+        font-size: 14px;
+
+        p {
+          margin: 5px 0;
+
+          a {
+            color: $primaryColor;
+          }
+        }
+      }
+    }
+  }
+}

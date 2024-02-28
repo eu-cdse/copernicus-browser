@@ -1,0 +1,518 @@
+@import '../../variables.module.scss';
+
+.pins-selection-confirm {
+  background-color: $mainLight;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px 10px 10px;
+
+  .eob-btn {
+    background-color: $primaryColor;
+    color: $whiteColor;
+    font-weight: $fontWeightBold;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-left: 10px;
+
+      path {
+        fill: $whiteColor;
+      }
+    }
+  }
+
+  .pins-controls {
+    padding: 10px 25px;
+    background-color: $mainMedium;
+
+    .compare-pin-button {
+      color: $primaryColor;
+      float: left;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+.sticky {
+  position: sticky;
+  z-index: 1;
+}
+
+.error {
+  color: $orangeColor;
+  text-align: center;
+}
+
+.pin-description-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 10px 10px;
+
+  a {
+    color: $primaryColor;
+  }
+
+  textarea {
+    margin-bottom: 5px;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-size: 13px;
+    padding: 0.25em;
+    resize: none;
+  }
+
+  .notification {
+    padding: 10px 0 0 0;
+    margin: 0;
+  }
+
+  .description-edit-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    svg path {
+      fill: $textColor;
+    }
+
+    .confirm {
+      color: #aab226;
+    }
+
+    .cancel {
+      margin-right: 10px;
+      color: #b24626;
+    }
+  }
+}
+
+.pin-item {
+  margin: 10px;
+  font-size: 13px;
+  font-weight: $fontWeightNormal;
+  clear: both;
+  background-color: $mainMedium;
+  user-select: none;
+  color: $textColor;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.invalid {
+    background: $mainMedium;
+  }
+
+  .pin-top-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 90px;
+
+    .add-to-compare {
+      float: right;
+      font-size: 15px;
+
+      svg {
+        text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+
+        path {
+          fill: $textColor;
+        }
+      }
+    }
+
+    .pin-left-controls-container {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      bottom: 5px;
+      left: 5px;
+      width: 80px;
+
+      i {
+        color: $whiteColor;
+        padding: 0;
+        font-size: 16px;
+        text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+        cursor: pointer;
+      }
+
+      .pin-drag-handler {
+        display: flex;
+
+        i {
+          cursor: move;
+          text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+        }
+      }
+    }
+  }
+
+  div.preview-image {
+    position: relative;
+    display: block;
+    margin-right: 10px;
+
+    img {
+      width: 90px;
+      height: 90px;
+      display: block;
+    }
+  }
+
+  span.pin-selector {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    cursor: pointer;
+    right: 10px;
+    top: 0;
+
+    &::before {
+      content: '';
+      background: #fff;
+      left: 5px;
+      top: 5px;
+      width: 22px;
+      height: 22px;
+      border-radius: 11px;
+      position: absolute;
+      border: 1px solid #999;
+    }
+
+    &.selected::after {
+      content: '';
+      width: 4px;
+      height: 10px;
+      border-right: 2px solid $primaryColor;
+      border-bottom: 2px solid $primaryColor;
+      transform: rotate(45deg);
+      position: absolute;
+      left: 14px;
+      top: 10px;
+    }
+  }
+
+  .pin-title-text {
+    width: 100%;
+    word-wrap: anywhere;
+  }
+
+  input {
+    width: 80%;
+    border: none;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+  }
+
+  > span {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    cursor: pointer;
+    right: 10px;
+    top: 0;
+
+    &::before {
+      content: '';
+      background: #fff;
+      left: 5px;
+      top: 5px;
+      width: 22px;
+      height: 22px;
+      border-radius: 11px;
+      position: absolute;
+      border: 1px solid #999;
+    }
+
+    &.selected::after {
+      content: '';
+      width: 4px;
+      height: 10px;
+      border-right: 4px solid #191a25;
+      border-bottom: 4px solid #191a25;
+      transform: rotate(45deg);
+      position: absolute;
+      left: 13px;
+      top: 9px;
+    }
+  }
+
+  .pin-editable-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    .pin-edit-controls {
+      display: flex;
+      justify-content: flex-end;
+
+      svg path {
+        fill: $textColor;
+      }
+
+      .confirm {
+        color: #aab226;
+      }
+
+      .cancel {
+        margin-right: 10px;
+        color: #b24626;
+      }
+    }
+  }
+
+  .pin-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5px 0;
+    width: 100%;
+    margin-right: 10px;
+
+    .pin-info-row {
+      line-height: 16px;
+      font-size: 13px;
+      height: auto;
+
+      label {
+        height: 16px;
+      }
+    }
+
+    .pin-lat-lng-link {
+      color: $textColor;
+      text-decoration: underline;
+      border: none;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .pin-date {
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+
+    .pin-info-title {
+      height: auto;
+    }
+
+    .pin-location {
+      display: flex;
+
+      .pin-description-toggle {
+        margin-left: auto;
+        font-size: 16px;
+
+        svg {
+          text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+
+          path {
+            stroke: $textColor;
+          }
+        }
+      }
+    }
+  }
+
+  &.gu-mirror,
+  &.gu-transit {
+    color: $textColor;
+    opacity: 0.8;
+    background-color: $mainDark !important;
+    box-shadow: 0 3px 5px #000;
+    cursor: -webkit-grabbing !important;
+  }
+}
+
+.pins-header {
+  background-color: $mainLight;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px 0 10px;
+  z-index: 1;
+
+  .pins-header-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+
+    .pins-header-title {
+      font-size: 16px;
+      font-weight: $fontWeightBold;
+      text-transform: uppercase;
+    }
+
+    .pins-header-order-select {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .pins-header-order-label {
+        font-size: 13px;
+        font-weight: $fontWeightNormal;
+        margin-right: 10px;
+      }
+
+      .order-by-select-dropdown {
+        text-align: start;
+        width: 160px;
+
+        &.order-by-select--is-disabled { // stylelint-disable-line
+          opacity: 0.5;
+        }
+
+        /* stylelint-disable */
+        .order-by-select__single-value {
+          font-size: 13px;
+          font-weight: $fontWeightNormal;
+        }
+
+        .order-by-select__menu {
+          min-width: unset;
+
+          .order-by-select__menu-list {
+            .order-by-select__option {
+              height: 20px;
+              line-height: 20px;
+              font-size: 13px;
+              font-weight: $fontWeightNormal;
+              padding: 0 6px;
+            }
+          }
+        }
+
+        .order-by-select__indicators {
+          .order-by-select__indicator {
+            svg {
+              width: 11px;
+              margin-right: 5px;
+
+              #chevron-up,
+              #chevron-down {
+                stroke: $grayColor;
+              }
+            }
+          }
+        }
+        /* stylelint-enable */
+
+        .arrow-up-indicator {
+          /* stylelint-disable */
+          filter: brightness(0) saturate(100%) invert(8%) sepia(35%) saturate(1683%) hue-rotate(137deg)
+            brightness(89%) contrast(106%);
+          /* stylelint-enable */
+          -webkit-transform: rotate(180deg);
+          -moz-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
+          -o-transform: rotate(180deg);
+          transform: rotate(180deg);
+        }
+      }
+
+      .dropdown {
+        max-width: 130px;
+        outline: none;
+        color: $textColor;
+        font-size: 13px;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg width='14' height='7' viewBox='0 0 14 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 0.582031L6.83434 6.41637' stroke='%23041223' stroke-linecap='round'/%3e%3cpath d='M12.668 0.582031L6.83363 6.41637' stroke='%23041223' stroke-linecap='round'/%3e%3c/svg%3e");
+        background-position-x: 97%;
+        background-position-y: 30%;
+        padding: 0 15px 3px 0;
+      }
+    }
+  }
+
+  .pins-controls {
+    padding: 10px 25px;
+    background-color: $mainMedium;
+
+    .compare-pin-button {
+      color: $primaryColor;
+      float: left;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+.select-all-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  bottom: 0;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: $fontWeightBold;
+  width: 100%;
+  height: 35px;
+  color: $textColor;
+  cursor: pointer;
+  background-color: $mainMedium;
+}
+
+.pin-panel {
+  background-color: $mainLight;
+  color: $textColor;
+  display: flex;
+  flex-flow: column;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+
+  & > .eob-btn {
+    display: block;
+    text-align: center;
+  }
+
+  .clear-data {
+    float: right;
+    color: $primaryColor;
+    cursor: pointer;
+  }
+
+  .results-heading {
+    border-bottom: 2px solid $primaryColor;
+    padding: 5px 0;
+    margin-top: 10px;
+  }
+
+  .rodal .results-panel {
+    height: calc(100% - 20px);
+    overflow: auto;
+    background: $mainMedium;
+  }
+
+  .compare-toggle-panel {
+    display: flex;
+    padding-top: 8px;
+    justify-content: center;
+    text-align: center;
+    color: $textColor;
+  }
+}

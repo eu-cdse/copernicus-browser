@@ -1,0 +1,298 @@
+@import '../../variables.module.scss';
+
+.colors-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 50px;
+  border-radius: 6px;
+  text-align: center;
+  padding: 10px 0;
+
+  .band-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    width: 42px;
+    border-radius: 50px;
+    color: $whiteColor;
+    text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 8px;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translate(0, 0);
+    cursor: move;
+
+    .band-text {
+      position: relative;
+      left: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .band-item-runner {
+    justify-content: start;
+
+    .band-text-runner {
+      position: relative;
+      left: 5px;
+      animation: moveText 4s ease-in-out infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  }
+}
+
+.colors-output {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 0;
+
+  &.index {
+    font-size: 24px;
+    color: $textColor;
+  }
+
+  .divide {
+    padding: 0 10px;
+  }
+}
+
+.col-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: $randomGrayColor;
+  border-radius: 50px;
+  position: relative;
+  color: $whiteColor;
+
+  &::before {
+    position: absolute;
+    left: -5px;
+    right: -5px;
+    top: -5px;
+    bottom: -5px;
+    border-radius: 100px;
+    content: '';
+    display: block;
+    color: $whiteColor;
+  }
+
+  &.is-active {
+    opacity: 0.5;
+
+    &::before {
+      opacity: 0.8;
+      border: 2px solid $primaryColor;
+    }
+  }
+
+  &.can-drop {
+    &::before {
+      opacity: 1;
+      border: 2px solid $primaryColor;
+    }
+  }
+
+  .selected-band {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    color: $whiteColor;
+    font-size: 14px;
+    font-weight: bold;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translate(0, 0);
+
+    .band-text {
+      position: relative;
+      left: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .selected-band-runner {
+    justify-content: start;
+
+    .band-text-runner {
+      position: relative;
+      left: 3px;
+      animation: moveText 4s ease-in-out infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  }
+}
+
+.dropdown.index {
+  display: inline-block;
+  width: 110px;
+  padding-right: 26px;
+  font-size: 14px;
+  margin: 0;
+}
+
+// remove select dotted outline on firefox
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #fff;
+}
+
+// this could probably go in a seperate css
+.treshold {
+  position: relative;
+
+  .fa {
+    color: $primaryColor;
+    cursor: pointer;
+  }
+
+  .scale-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    input {
+      background: $mainDark;
+      border-radius: 2px;
+      border: 2px solid $mainLight;
+      color: $textColor;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 4px 0;
+      padding: 4px;
+      text-align: center;
+      width: 40px;
+    }
+  }
+
+  .gradient {
+    display: block;
+    width: 100%;
+    height: 30px;
+  }
+
+  .gradients-list {
+    border: 1px solid $mainDark;
+    position: absolute;
+    margin-top: 0;
+    z-index: 9000;
+  }
+
+  .gradient-option {
+    display: block;
+    width: 100px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .add-remove-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -38px;
+
+    .eob-btn.primary {
+      border-radius: 2px;
+      padding: 1px 3px;
+      margin-left: 4px;
+      margin-bottom: 16px;
+      min-width: initial;
+
+      i {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .slider-transparent-background {
+    background: url('./assets/transparent-background.png');
+    height: 34px;
+    box-sizing: border-box;
+    padding: 0 20px;
+    width: 100%;
+    position: relative;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      background: $errorCol;
+      height: 34px;
+      width: 4px;
+      position: absolute;
+    }
+
+    &::before {
+      left: 16px;
+      top: 0;
+    }
+
+    &::after {
+      top: 0;
+      right: 16px;
+    }
+  }
+
+  .slider {
+    width: 100%;
+    height: 42px;
+
+    .slider-keyboard-handle {
+      min-width: initial;
+
+      .handle-value {
+        position: relative;
+        margin-left: -10px;
+        font-size: 12px;
+        display: none;
+        background-color: $mainDark;
+        border-radius: 4px;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        width: 28px;
+        padding: 4px 2px;
+        text-align: center;
+      }
+
+      &:focus,
+      &:hover {
+        .handle-value {
+          color: white;
+          display: block;
+        }
+      }
+    }
+  }
+}

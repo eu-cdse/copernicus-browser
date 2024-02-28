@@ -1,0 +1,66 @@
+/* stylelint-disable */
+@import '../../../variables.module.scss';
+
+.eob-btn {
+  background: $secondaryColor;
+  border: none;
+  color: $whiteColor;
+  cursor: pointer;
+  display: inline-block;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-decoration: none;
+
+  span {
+    vertical-align: middle;
+  }
+
+  &.full-size {
+    display: block;
+    text-align: center;
+  }
+
+  i,
+  .svg-icon {
+    fill: $whiteColor;
+    margin-right: 5px;
+
+    &.fa-spinner {
+      margin-right: 0;
+    }
+  }
+
+  &:hover {
+    background-color: $hoverSecondaryColor;
+  }
+
+  &.secondary {
+    background: $mainDark;
+    color: $whiteColor;
+
+    &:hover {
+      background: rgba($mainDark, 0.8);
+    }
+  }
+
+  &.small {
+    padding: 6px 10px;
+    font-size: 15px;
+  }
+
+  &.visualize {
+    text-align: center;
+    padding: 6px 6px;
+  }
+
+  &.disabled,
+  &[disabled],
+  &[disabled]:hover {
+    color: $whiteColor;
+    background-color: rgba($color: $primaryColor, $alpha: 0.25);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}

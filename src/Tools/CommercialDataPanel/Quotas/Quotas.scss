@@ -1,0 +1,37 @@
+@import '../../../variables.module.scss';
+
+.commercial-data-quotas {
+  text-align: center;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      font-weight: 500;
+      border-bottom: 1px dashed $textColor;
+    }
+
+    td {
+      padding: 5px;
+    }
+  }
+
+  .loading {
+    display: flex;
+    padding: 20px 0;
+    justify-content: center;
+  }
+
+  .notification-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      margin-top: 1em;
+      margin-left: 0.5em;
+    }
+  }
+}

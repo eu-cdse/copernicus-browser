@@ -1,0 +1,8 @@
+<html>
+  <body>
+    <script>
+      const token = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)));
+      window.parent.postMessage({ type: 'CDSE_AUTH_REFRESH_TOKEN', token: token }, window.location.origin);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+@import '../../variables.module.scss';
+
+.notification {
+  margin: auto;
+  max-width: 400px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  color: $orangeColor;
+  font-size: 14px;
+
+  .fa.fa-times {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 16px;
+  }
+}

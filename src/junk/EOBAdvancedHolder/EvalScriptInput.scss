@@ -1,0 +1,19 @@
+@import '../../variables.module.scss';
+
+.code-editor-wrap {
+  height: 300px;
+  display: flex;
+}
+
+.info-uncheck-url {
+  margin-top: 8px;
+
+  .fa-info {
+    margin-right: 8px;
+  }
+}
+
+.evalscript-input {
+  display: flex;
+  flex-direction: column;
+}

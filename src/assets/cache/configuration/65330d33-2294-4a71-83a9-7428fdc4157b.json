@@ -1,0 +1,128 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE/layers/FALSE-COLOR-CLOUDLESS",
+        "id": "FALSE-COLOR-CLOUDLESS",
+        "title": "False Color Cloudless",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"B04\",\"B03\",\"B08\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\nlet factor = 1/10000;\nlet minVal = 0.0;\nlet maxVal = 0.5;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let val = [\n    factor * samples.B08, \n    factor * samples.B04,\n    factor * samples.B03];\n  let values = viz.processList(val);\n  values.push(samples.dataMask);\n  return values;\n}\n\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-12-05T16:18:33.800933Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BILINEAR",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE/layers/NDVI",
+        "id": "NDVI",
+        "title": "NDVI",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction setup() {\n    return {\n        input: [\"B04\", \"B08\",\"dataMask\"],\n        output: [\n\t\t\t{ id: \"default\", bands: 4 },\n\t\t\t{ id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n            { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n            { id: \"dataMask\", bands: 1 }\n\t\t]\n      };\n}\n\nfunction evaluatePixel(samples) {\n  \tlet factor = 1/2000;\n  \tlet Red = factor * samples.B04;\n  \tlet NIR = factor * samples.B08;\n    let val = index(NIR, Red);\n    let imgVals = null;\n    // The library for tiffs works well only if there is only one channel returned.\n    // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n    const indexVal = samples.dataMask === 1 ? val : NaN;\n  \n    if (val<-0.5) imgVals = [0.05,0.05,0.05,samples.dataMask];\n    else if (val<-0.2) imgVals = [0.75,0.75,0.75,samples.dataMask];\n    else if (val<-0.1) imgVals = [0.86,0.86,0.86,samples.dataMask];\n    else if (val<0) imgVals = [0.92,0.92,0.92,samples.dataMask];\n    else if (val<0.025) imgVals = [1,0.98,0.8,samples.dataMask];\n    else if (val<0.05) imgVals = [0.93,0.91,0.71,samples.dataMask];\n    else if (val<0.075) imgVals = [0.87,0.85,0.61,samples.dataMask];\n    else if (val<0.1) imgVals = [0.8,0.78,0.51,samples.dataMask];\n    else if (val<0.125) imgVals = [0.74,0.72,0.42,samples.dataMask];\n    else if (val<0.15) imgVals = [0.69,0.76,0.38,samples.dataMask];\n    else if (val<0.175) imgVals = [0.64,0.8,0.35,samples.dataMask];\n    else if (val<0.2) imgVals = [0.57,0.75,0.32,samples.dataMask];\n    else if (val<0.25) imgVals = [0.5,0.7,0.28,samples.dataMask];\n    else if (val<0.3) imgVals = [0.44,0.64,0.25,samples.dataMask];\n    else if (val<0.35) imgVals = [0.38,0.59,0.21,samples.dataMask];\n    else if (val<0.4) imgVals = [0.31,0.54,0.18,samples.dataMask];\n    else if (val<0.45) imgVals = [0.25,0.49,0.14,samples.dataMask];\n    else if (val<0.5) imgVals = [0.19,0.43,0.11,samples.dataMask];\n    else if (val<0.55) imgVals = [0.13,0.38,0.07,samples.dataMask];\n    else if (val<0.6) imgVals = [0.06,0.33,0.04,samples.dataMask];\n    else imgVals = [0,0.27,0,samples.dataMask];    \n  \t\n  \treturn {\n      default: imgVals,\n      index: [indexVal],\n      eobrowserStats:[val],\n      dataMask: [samples.dataMask]\n    };\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-14T11:00:53.962495Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE/layers/NDWI",
+        "id": "NDWI",
+        "title": "NDWI",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n//ndwi\nconst colorRamp1 = [\n  \t[0, 0xFFFFFF],\n  \t[1, 0x008000]\n  ];\nconst colorRamp2 = [\n  \t[0, 0xFFFFFF],\n  \t[1, 0x0000CC]\n  ];\n\nlet viz1 = new ColorRampVisualizer(colorRamp1);\nlet viz2 = new ColorRampVisualizer(colorRamp2);\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B08\",\"dataMask\"],\n    output: [\n\t\t{ id:\"default\", bands: 4 },\n        { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n        { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n        { id: \"dataMask\", bands: 1 }\n\t]\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let factor = 1/2000;\n  let Green = factor * samples.B03;\n  let NIR = factor * samples.B08;\n  let val = index(Green, NIR);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n  \n  if (val < -0) {\n    imgVals = [...viz1.process(-val), samples.dataMask];\n  } else {\n    imgVals = [...viz2.process(Math.sqrt(Math.sqrt(val))), samples.dataMask];\n  }\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats:[val],\n    dataMask: [samples.dataMask]\n  };\n}\n\n\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-14T11:01:51.417582Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE/layers/TRUE-COLOR-CLOUDLESS",
+        "id": "TRUE-COLOR-CLOUDLESS",
+        "title": "True Color Cloudless",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"B04\",\"B03\",\"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\n// Contrast enhance / highlight compress\n\nconst maxR = 3.0; // max reflectance\nconst midR = 0.13;\nconst sat = 1.2;\nconst gamma = 1.8;\nconst scalefac = 10000;\n\nfunction evaluatePixel(smp) {\n  const rgbLin = satEnh(sAdj(smp.B04/scalefac), sAdj(smp.B03/scalefac), sAdj(smp.B02/scalefac));\n  return [sRGB(rgbLin[0]), sRGB(rgbLin[1]), sRGB(rgbLin[2]), smp.dataMask];\n}\n\nfunction sAdj(a) {\n  return adjGamma(adj(a, midR, 1, maxR));\n}\n\nconst gOff = 0.01;\nconst gOffPow = Math.pow(gOff, gamma);\nconst gOffRange = Math.pow(1 + gOff, gamma) - gOffPow;\n\nfunction adjGamma(b) {\n  return (Math.pow((b + gOff), gamma) - gOffPow)/gOffRange;\n}\n\n// Saturation enhancement\nfunction satEnh(r, g, b) {\n  const avgS = (r + g + b) / 3.0 * (1 - sat);\n  return [clip(avgS + r * sat), clip(avgS + g * sat), clip(avgS + b * sat)];\n}\n\nfunction clip(s) {\n  return s < 0 ? 0 : s > 1 ? 1 : s;\n}\n\n//contrast enhancement with highlight compression\nfunction adj(a, tx, ty, maxC) {\n  var ar = clip(a / maxC, 0, 1);\n  return ar * (ar * (tx/maxC + ty -1) - ty) / (ar * (2 * tx/maxC - 1) - tx/maxC);\n}\n\nconst sRGB = (c) => c <= 0.0031308 ? (12.92 * c) : (1.055 * Math.pow(c, 0.41666666666) - 0.055);"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-12-14T14:24:10.505987Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BILINEAR",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

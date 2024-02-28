@@ -1,0 +1,143 @@
+@import '../../../variables.module.scss';
+
+.highlight-item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  clear: both;
+  margin-bottom: 10px;
+  user-select: none;
+  color: $textColor;
+  background-color: $mainLight;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.25);
+
+  img.preview {
+    width: 78px;
+  }
+
+  i {
+    font-size: 14px;
+  }
+
+  input {
+    width: 250px;
+    border: none;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+  }
+
+  .highlight-content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 78px auto;
+
+    > span {
+      height: 22px;
+      width: 22px;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    &.selected {
+      > span {
+        &::before {
+          content: '';
+          background: #fff;
+          left: 5px;
+          top: 5px;
+          width: 22px;
+          height: 22px;
+          border-radius: 11px;
+          position: absolute;
+        }
+
+        &::after {
+          content: '';
+          width: 4px;
+          height: 10px;
+          border-right: 4px solid #191a25;
+          border-bottom: 4px solid #191a25;
+          transform: rotate(45deg);
+          position: absolute;
+          left: 11px;
+          top: 8px;
+        }
+      }
+    }
+
+    &.unselected {
+      > span {
+        &::before {
+          content: '';
+          background: #fff;
+          left: 5px;
+          top: 5px;
+          width: 22px;
+          height: 22px;
+          border-radius: 11px;
+          position: absolute;
+        }
+      }
+    }
+
+    .pin-description-toggle {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin: 0;
+      padding: 0;
+      flex-grow: 1;
+      margin-bottom: 0;
+      right: 10px;
+      bottom: 10px;
+    }
+  }
+
+  .pin-description-container {
+    padding: 0 10px;
+  }
+
+  .highlight-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 40px 5px 10px;
+    position: relative;
+
+    .description-toggle {
+      svg {
+        path {
+          stroke: $textColor;
+        }
+      }
+    }
+
+    .highlight-info-row {
+      .add-to-compare {
+        margin-bottom: 10px;
+
+        svg {
+          fill: $textColor;
+        }
+      }
+    }
+  }
+
+  .zoom-to-highlight {
+    float: right;
+  }
+
+  &.gu-mirror,
+  &.gu-transit {
+    color: #fff;
+    opacity: 0.8;
+    background-color: $mainDark !important;
+    box-shadow: 0 3px 5px #000;
+    cursor: -webkit-grabbing !important;
+  }
+}

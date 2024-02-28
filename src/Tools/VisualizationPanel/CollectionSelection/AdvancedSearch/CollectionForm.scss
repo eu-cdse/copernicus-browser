@@ -1,0 +1,109 @@
+@import '../../../../variables.module.scss';
+
+.collection-group {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $mainDark;
+  padding: 10px 0;
+  row-gap: 9px;
+
+  .collection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .additional-filters-toggle {
+      &.button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $primaryColor;
+        font-size: 0.8rem;
+        font-weight: $fontWeightBold;
+        padding: 5px;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+
+        svg {
+          width: 15px;
+          margin-left: 10px;
+          fill: $primaryColor;
+        }
+
+        &.selected,
+        &:hover {
+          background-color: $hoverPrimaryColor;
+          color: $whiteColor;
+
+          svg {
+            fill: $secondaryColor;
+          }
+        }
+
+        &.selected {
+          background-color: $primaryColor;
+          color: $whiteColor;
+        }
+
+        &.disabled {
+          opacity: 0.35;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  .instrument {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    row-gap: 7px;
+  }
+
+  .product-type {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    row-gap: 7px;
+
+    .custom-checkbox-product-container:last-child {
+      margin-bottom: 7px;
+    }
+  }
+
+  .cloud-filter {
+    clear: both;
+    line-height: 30px;
+    position: relative;
+    display: block;
+  }
+
+  .selected-filters-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .tag {
+      background-color: $mainMedium;
+      color: $textColor;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      padding: 4px 6px;
+      margin: 5px 5px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+
+      i {
+        cursor: pointer;
+        margin-left: 2px;
+
+        &:hover {
+          color: $primaryColor;
+        }
+      }
+    }
+  }
+}

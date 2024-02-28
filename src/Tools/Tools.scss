@@ -1,0 +1,142 @@
+@import '../variables.module.scss';
+
+$searchBorderColour: $primaryColor;
+
+.tools-wrapper {
+  max-width: 450px;
+  height: 100vh;
+  max-height: 100%;
+  color: #868fa0;
+  background-color: $mainMedium;
+  position: relative;
+  box-shadow: $boxShadow;
+  z-index: 500;
+
+  @media screen and (max-width: 450px) {
+    height: calc(100% - 75px);
+    width: 100%;
+    position: absolute;
+  }
+
+  .tools-container {
+    position: relative;
+    max-height: 100vh;
+    height: 100%;
+    width: 450px;
+    flex-flow: column;
+
+    @media screen and (max-width: 450px) {
+      width: 100%;
+    }
+  }
+
+  .open-tools {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: $whiteColor;
+    background: $primaryColor;
+    border-radius: 40px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: all ease 0.4s;
+    box-shadow: $boxShadow;
+
+    i {
+      margin: 5px;
+      display: block;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      line-height: 30px;
+      transition: all ease 0.4s;
+    }
+
+    .date-picker-separator {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .date-picker {
+      margin: 8px 8px 0;
+      padding: 3px 5px;
+    }
+  }
+}
+
+.theme-select {
+  select {
+    width: 100%;
+  }
+
+  &.top {
+    padding: 15px 10px 20px 10px;
+  }
+
+  &.bottom {
+    margin-top: 20px;
+  }
+
+  .configurations-settings {
+    margin-left: 10px;
+    color: $primaryColor;
+  }
+}
+
+.data-source-group-tooltip {
+  .tooltip-description {
+    z-index: 1000;
+    margin-bottom: 2px;
+  }
+}
+
+.dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='373741' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 0;
+  border: none;
+  border-bottom: 1px solid $textColor;
+  border-radius: 0;
+  padding: 7px 15px 2px 0;
+  color: $textColor;
+  font-size: 0.9em;
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  :focus {
+    outline-offset: 0;
+  }
+
+  option {
+    color: #000;
+    border: none;
+    padding: 2px;
+    text-align: left;
+  }
+
+  option:disabled {
+    background: #ccc;
+    color: #3b3d4d;
+  }
+}
+
+.commercial-data-wrapper,
+.advanced-search-wrapper {
+  color: $textColor;
+
+  & > * {
+    margin: 5px 1px 5px 5px;
+  }
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

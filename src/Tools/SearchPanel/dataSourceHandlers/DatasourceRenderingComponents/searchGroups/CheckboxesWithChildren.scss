@@ -1,0 +1,16 @@
+.with-children {
+  .child-label {
+    font-size: 12px;
+    float: left;
+    clear: both;
+    color: #cdd5e3;
+  }
+
+  .child {
+    margin-left: 10px;
+  }
+
+  .warning {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,84 @@
+@import '../../../variables.module.scss';
+
+.commercial-data-order-options,
+.commercial-data-subscription-options {
+  .row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    padding: 7px 0 2px 0;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+
+      > input {
+        width: 100%;
+      }
+    }
+
+    .collection-selection {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      > input {
+        margin: 5px 0;
+      }
+    }
+
+    > * {
+      flex: 1;
+    }
+
+    /* stylelint-disable */
+    .padOnLeft {
+      i {
+        margin: 0 0 0 5px;
+      }
+      /* stylelint-enable */
+    }
+
+    a {
+      color: $primaryColor;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+
+    a {
+      width: 100%;
+    }
+
+    /* stylelint-disable */
+    .padOnLeft {
+      i {
+        margin: 0 0 0 5px !important;
+      }
+      /* stylelint-enable */
+    }
+  }
+
+  .selected-products {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+
+    .selected-product {
+      font-size: 12px;
+      display: flex;
+      flex-direction: row;
+      padding: 2px;
+      justify-content: space-between;
+      align-items: center;
+
+      i {
+        color: $primaryColor;
+        cursor: pointer;
+      }
+    }
+  }
+}

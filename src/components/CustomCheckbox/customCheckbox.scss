@@ -1,0 +1,55 @@
+@import '../../variables.module.scss';
+
+.custom-checkbox-container {
+  position: relative;
+
+  .custom-checkbox-label {
+    float: left;
+    clear: both;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+
+    .custom-checkbox[type='checkbox'] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      margin-right: 5px;
+      background-color: $customCheckboxBackgroundColor;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      &:active {
+        border: 1px solid $activePrimaryColor;
+      }
+
+      &:checked {
+        background-color: $primaryColor;
+      }
+
+      &:hover:checked {
+        background-color: $hoverPrimaryColor;
+      }
+
+      &:hover:active:checked {
+        border: 1px solid $activePrimaryColor;
+        background-color: $activePrimaryColor;
+      }
+    }
+
+    .check-mark {
+      fill: none;
+      stroke: $whiteColor;
+      position: absolute;
+      left: 4px;
+      top: 3px;
+    }
+
+    .custom-checkbox-text {
+      font-weight: $fontWeightNormal;
+    }
+  }
+}

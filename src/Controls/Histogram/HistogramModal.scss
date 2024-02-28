@@ -1,0 +1,89 @@
+@import './../../variables.module.scss';
+
+.histogram-modal {
+  z-index: 1002;
+  position: absolute;
+  background-color: $mainLight;
+  color: $textColor;
+
+  .loading-holder {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+
+    .loading {
+      text-align: center;
+
+      i {
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .error-holder {
+    height: 300px;
+    margin: 10px 20px 0;
+  }
+
+  .histogram {
+    cursor: crosshair;
+    display: flex;
+    justify-content: center;
+  }
+
+  svg.visualization-layer {
+    text {
+      fill: $textColor;
+    }
+
+    path.tick-line {
+      shape-rendering: crispEdges;
+      stroke: #666;
+      stroke-dasharray: 5, 5;
+    }
+
+    line.axis-baseline {
+      shape-rendering: crispEdges;
+      stroke: $textColor;
+    }
+
+    .data-visualization {
+      .pieces {
+        fill: $primaryColor;
+      }
+    }
+  }
+
+  svg.background-graphics {
+    text {
+      fill: $textColor;
+    }
+
+    path.tick-line {
+      shape-rendering: crispEdges;
+      stroke: #666;
+      stroke-dasharray: 5, 5;
+    }
+
+    line.axis-baseline {
+      shape-rendering: crispEdges;
+      stroke: $textColor;
+    }
+  }
+
+  div.annotation {
+    background-color: $mainLight;
+    color: $textColor;
+    border: 1px solid $textColor;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .recalculate-button {
+    color: $whiteColor;
+    float: right;
+    margin-right: 20px;
+  }
+}

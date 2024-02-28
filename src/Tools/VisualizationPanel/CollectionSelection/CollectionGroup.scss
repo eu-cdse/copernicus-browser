@@ -1,0 +1,52 @@
+@import '../../../variables.module.scss';
+
+.collection-button {
+  background: $mainDark;
+  color: $textColor;
+  font-weight: $fontWeightNormal;
+  box-shadow: $boxShadow;
+
+  &.primary {
+    font-size: 14px;
+  }
+
+  &.secondary {
+    font-size: 12px;
+    background: $mainLight;
+    margin: 5px 10px 5px 0;
+  }
+
+  &.secondary:hover {
+    background: $mainLight;
+  }
+
+  &.selected {
+    background-color: $primaryColor;
+  }
+
+  &.selected:hover {
+    background-color: $primaryColor;
+  }
+}
+
+.collection-button-wrapper {
+  margin: 5px;
+  display: inline-block;
+
+  &.collections-full-width {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    margin-top: 0;
+    border-bottom: 1px dashed $textColor;
+  }
+
+  .secondary-collection-button-title {
+    color: $textColor;
+    padding-bottom: 5px;
+    font-size: 14px;
+  }
+}

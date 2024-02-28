@@ -1,0 +1,37 @@
+{
+    "title": "Copernicus Urban (S3-SLSTR) API",
+    "layers": [
+        {
+            "id": "F1_VISUALIZED",
+            "name": "Thermal IR emission F1",
+            "description": "",
+            "dataset": "S3SLSTR",
+            "legendUrl": null
+        },
+        {
+            "id": "F2_VISUALIZED",
+            "name": "Thermal IR emission F2",
+            "description": "",
+            "dataset": "S3SLSTR",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S3SLSTR",
+            "bands": [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5",
+                "S6",
+                "S7",
+                "S8",
+                "S9",
+                "F1",
+                "F2"
+            ]
+        }
+    ]
+}

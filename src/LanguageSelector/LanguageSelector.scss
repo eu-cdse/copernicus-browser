@@ -1,0 +1,211 @@
+@import '../variables.module.scss';
+
+.language-selector {
+  max-height: 25px;
+
+  .menu-globe {
+    color: $whiteColor;
+    border-radius: 0;
+    width: 45px;
+    margin: 0;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu-flags {
+    position: static;
+    color: $whiteColor;
+    padding: 0;
+
+    button {
+      padding: 0;
+      color: $textColor;
+      text-transform: uppercase;
+      border: none;
+
+      &[aria-expanded='true'] {
+        display: flex;
+        align-items: flex-start;
+        height: 50px;
+
+        &::after {
+          content: '';
+          position: relative;
+          top: 8px;
+        }
+      }
+
+      span {
+        font-size: 13px;
+        font-weight: $fontWeightBold;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+      list-style-type: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: calc(100% - 57px);
+      max-height: none;
+      color: $textColor;
+      background-color: $mainLight;
+      padding: 20px;
+      padding-bottom: 60px;
+      border: none;
+      border-radius: 0;
+      text-transform: capitalize;
+      box-shadow: $boxShadow;
+      z-index: 2;
+      margin: 0 0 0 -3px;
+
+      li {
+        font-size: 13px;
+        padding: 6px 10px;
+
+        &:last-child {
+          position: absolute;
+          bottom: 20px;
+          grid-column: 2/3;
+        }
+      }
+
+      li:hover {
+        background-color: $primaryColor;
+        color: $whiteColor;
+      }
+
+      @media only screen and (max-height: 450px) {
+        & {
+          max-height: 200px;
+        }
+      }
+
+      @media only screen and (max-width: 450px) {
+        & {
+          grid-gap: 15px;
+          padding: 15px;
+          padding-bottom: 55px;
+
+          li:last-child {
+            bottom: 15px;
+          }
+        }
+      }
+    }
+
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] { /* stylelint-disable-line */
+      border-radius: 0;
+      width: 45px;
+      margin: 0;
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+
+      &::after {
+        content: url(./icons/chevron-down.svg);
+        display: flex;
+        align-items: center;
+        border: none;
+        width: unset;
+        margin-left: 7px;
+        font-size: 0;
+        transform: scale(0.8);
+      }
+
+      span {
+        color: $whiteColor;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+      display: none;
+    }
+
+    .ReactFlagsSelect-module_selectOptionValue__vS99- { /* stylelint-disable-line */
+      .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+        display: inline-flex;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] { /* stylelint-disable-line */
+      background-color: $mainLight;
+      color: $textColor;
+      border-radius: 0;
+      position: relative;
+      z-index: 3;
+      width: 45px;
+      margin: 0;
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+
+      &::after {
+        content: url(../icons/chevron-up.svg);
+        display: flex;
+        align-items: center;
+        border: none;
+        width: unset;
+        margin-left: 7px;
+        font-size: 0;
+        transform: scale(0.8);
+      }
+
+      span {
+        color: $textColor;
+      }
+    }
+
+    .ReactFlagsSelect-module_selectOption__3pcgW { /* stylelint-disable-line */
+      margin: 0 2px;
+    }
+  }
+
+  .ReactFlagsSelect-module_flagsSelect__2pfa2 { /* stylelint-disable-line */
+    ul {
+      #rfs-CA { /* stylelint-disable-line */
+        .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+          content: url(../LanguageSelector/icons/catalan-flag.svg);
+        }
+      }
+
+      #rfs-TO { /* stylelint-disable-line */
+        border-top: none;
+
+        .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+          content: url(../LanguageSelector/icons/people-group.svg);
+        }
+
+        .ReactFlagsSelect-module_label__27pw9 { /* stylelint-disable-line */
+          color: $primaryColor;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          overflow: visible;
+        }
+
+        &:hover {
+          background-color: $whiteBackground;
+        }
+      }
+    }
+  }
+
+  .menu-flags::after {
+    content: '';
+    position: absolute;
+    bottom: 7px;
+    left: 0;
+    right: 0;
+    width: 45px;
+    background: $whiteColor;
+    height: 1px;
+    border-radius: 10px 10px 10px 10px;
+  }
+}

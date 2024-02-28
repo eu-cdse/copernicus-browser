@@ -1,0 +1,50 @@
+@import '../../../variables.module.scss';
+
+.highlights-panel-container {
+  background-color: $mainLight;
+  color: $textColor;
+  display: flex;
+  flex-flow: column;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+
+  .highlights-panel {
+    position: relative;
+    overflow-y: hidden;
+    margin: 0;
+    background-color: $mainLight;
+
+    .highlights-notifications {
+      // make room for notification so the border stays closed
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .highlights-container {
+      position: relative;
+      margin: 10px 10px 10px 10px;
+    }
+  }
+
+  .highlights-panel-title {
+    font-size: 16px;
+    font-weight: $fontWeightBold;
+    text-transform: uppercase;
+    padding: 10px;
+
+    .badge {
+      right: -12px;
+    }
+
+    .highlights-panel-header-icon {
+      display: flex;
+      cursor: pointer;
+      position: relative;
+
+      &.active {
+        svg g path {
+          fill: $primaryColor;
+        }
+      }
+    }
+  }
+}

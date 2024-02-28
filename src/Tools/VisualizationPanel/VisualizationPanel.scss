@@ -1,0 +1,355 @@
+@import '../../variables.module.scss';
+
+.visualization-panel {
+  background-color: $whiteColor;
+  color: $textColor;
+
+  & > * {
+    margin: 5px 1px 5px 5px;
+  }
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  .tab-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 15px;
+
+    &.descriptions-tab-header {
+      padding-bottom: 15px;
+    }
+
+    .tab-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .close-tab {
+      margin-right: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .layer-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .preview {
+      display: flex;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .preview-custom {
+      background-color: #303333;
+      color: $whiteColor;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      padding-left: 10px;
+
+      small {
+        font-size: 10px;
+
+        @media screen and (max-width: 390px) {
+          width: 280px;
+          white-space: nowrap;
+          overflow-x: clip;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .active-title {
+        font-weight: $fontWeightBold;
+
+        @media screen and (max-width: 428px) {
+          width: 152px;
+          white-space: nowrap;
+          overflow-x: clip;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .active-description {
+        width: 200px;
+        white-space: nowrap;
+        overflow-x: clip;
+        text-overflow: ellipsis;
+
+        @media screen and (max-width: 423px) {
+          width: 150px;
+        }
+      }
+    }
+
+    .icons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 125px;
+      margin-right: 10px;
+
+      i {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      .plus {
+        color: $whiteColor;
+
+        &:hover {
+          color: $secondaryColor;
+          cursor: pointer;
+        }
+      }
+
+      .double-chevron-up {
+        path {
+          stroke: $whiteColor;
+        }
+      }
+
+      .double-chevron-down {
+        path {
+          stroke: $whiteColor;
+        }
+      }
+
+      .code {
+        path {
+          fill: $whiteColor;
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          path {
+            fill: $secondaryColor;
+          }
+        }
+      }
+
+      .double-chevron-up,
+      .double-chevron-down {
+        cursor: pointer;
+        width: 15px;
+        height: 13px;
+        margin-top: 2px;
+
+        &:hover {
+          path {
+            stroke: $secondaryColor;
+          }
+        }
+
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.35;
+        }
+      }
+
+      .active {
+        color: $secondaryColor;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    flex-flow: column;
+    border-bottom: 1px solid $primaryColor;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: bold;
+
+    .dataset-info {
+      display: flex;
+      text-align: center;
+      padding: 10px;
+      align-items: center;
+
+      .title {
+        display: flex;
+        color: white;
+        text-align: left;
+        font-size: 15px;
+
+        b {
+          color: $textColor;
+          text-transform: none;
+          padding-top: 5px;
+        }
+
+        .dataset-name {
+          margin-left: 5px;
+          padding-top: 8px;
+        }
+      }
+    }
+  }
+
+  .date-selection {
+    .visualization-time-select {
+      .time-select-type {
+        font-weight: bold;
+        font-size: 13px;
+        text-align: left;
+        width: 100%;
+      }
+
+      .timespan-picker {
+        .timespan-calendar-holder {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  .visualization-actions {
+    position: sticky;
+    bottom: 0;
+    font-size: 13px;
+    padding: 5px 10px;
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+
+    .action-bar {
+      justify-content: space-around;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+  }
+
+  .layer-selection {
+    display: block;
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+    color: $textColor;
+    font-size: 14px;
+    padding: 11px;
+
+    .layer-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .eob-btn {
+        font-size: 12px;
+      }
+    }
+
+    .layer-title {
+      font-size: 16px;
+      font-weight: $fontWeightBold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: $primaryColor;
+    }
+
+    .layer-container {
+      margin-bottom: 5px;
+      cursor: pointer;
+      background-color: $mainLight;
+      box-shadow: $boxShadow;
+
+      &:hover {
+        background-color: $mainDark;
+      }
+
+      &.active {
+        background-color: $primaryColor;
+        color: $whiteColor;
+        cursor: default;
+      }
+
+      .layer-actions {
+        padding: 11px 14px;
+        color: $whiteColor;
+
+        div {
+          font-size: 12px;
+
+          &:hover {
+            color: $secondaryColor;
+          }
+        }
+      }
+
+      .layer-details {
+        border-bottom: 0;
+        color: $textColor;
+        background-color: $mainDark;
+
+        .layer-description {
+          p:nth-child(2) {
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+
+    .custom-visualization {
+      background-color: $mainLight;
+
+      > * {
+        padding: 5px 5px 5px 0;
+      }
+
+      .action-bar {
+        padding: 5px 12px;
+        border-bottom: 2px solid $mainDark;
+        background-color: $mainMedium;
+
+        .action-wrapper {
+          &:hover {
+            color: $primaryColor;
+          }
+        }
+      }
+
+      .accordion-title {
+        font-size: 14px;
+        font-weight: $fontWeightBold;
+      }
+    }
+
+    .zoom-notification-footer {
+      // This is needed in order to display NotificationPanel properly inside the sidebar
+      padding-bottom: 1px;
+    }
+  }
+
+  .commercial-data-header {
+    background: $mainMedium;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 12px 5px 12px;
+    font-size: 16px;
+    font-weight: bold;
+
+    .commercial-data-close {
+      cursor: pointer;
+    }
+  }
+}

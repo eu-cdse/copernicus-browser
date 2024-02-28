@@ -1,0 +1,82 @@
+@import '../../variables.module.scss';
+
+.data-fusion {
+  padding: 5px 0 5px 0;
+  font-size: 12px;
+  margin-top: 5px;
+
+  .checkbox-holder.data-fusion-enabled {
+    margin-bottom: 5px;
+  }
+
+  .data-fusion-details {
+    padding: 2px 20px;
+
+    .primary-dataset-info {
+      margin-bottom: 5px;
+
+      input {
+        margin-left: 5px;
+
+        &.invalid {
+          background: #fdd;
+        }
+      }
+
+      .primary-dataset-label {
+        margin-bottom: 2px;
+      }
+
+      .primary-dataset-details {
+        padding-left: 20px;
+
+        & > * {
+          display: flex;
+          align-items: center;
+        }
+
+        input[type='text'] {
+          flex-grow: 1;
+        }
+
+        .mosaicking-order {
+          padding-top: 3px;
+
+          select {
+            flex-grow: 1;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+
+    .dropdown-normal-ui {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='373741' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position-x: 100%;
+      background-position-y: 0;
+      border: none;
+      border-bottom: 1px solid $textColor;
+      border-radius: 0;
+      padding: 7px 15px 2px 0;
+      color: $textColor;
+      text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      :focus {
+        outline-offset: 0;
+      }
+
+      option {
+        color: #000;
+        border: none;
+        padding: 2px;
+        text-align: left;
+      }
+    }
+  }
+}

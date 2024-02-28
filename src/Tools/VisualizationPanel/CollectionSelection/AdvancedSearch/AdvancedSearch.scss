@@ -1,0 +1,209 @@
+@import '../../../../variables.module.scss';
+
+.search-panel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin-right: 0;
+  background-color: $mainMedium;
+
+  &.disabled {
+    pointer-events: none;
+  }
+
+  p {
+    margin-top: 0.5em;
+    font-size: 0.8em;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  .top-label {
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+
+    .data-source-advanced-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: $primaryColor;
+      margin: 0;
+      padding-bottom: 12px;
+      text-transform: uppercase;
+    }
+  }
+
+  div.top-label,
+  div.select-time-range {
+    color: $primaryColor;
+    padding: 12px;
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+
+    .time-range-advanced-title {
+      padding-bottom: 12px;
+      text-transform: uppercase;
+      font-weight: $fontWeightBold;
+    }
+
+    .top-label {
+      padding-left: 0;
+    }
+
+    .filter-search-by-months {
+      color: $textColor;
+      margin-left: 0;
+    }
+  }
+
+  div.top-label > div {
+    font-weight: $fontWeightNormal;
+  }
+
+  div.top-label {
+    margin-bottom: 5px;
+  }
+
+  div.clear {
+    clear: both;
+  }
+
+  & > label,
+  & > label + * {
+    margin-bottom: 5px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .checkbox-group {
+    .title {
+      padding: 0;
+      display: flex;
+      clear: both;
+      justify-content: unset;
+      background: unset;
+    }
+
+    label {
+      color: $textColor;
+      font-size: 14px;
+    }
+
+    .no-theme-selected {
+      font-size: 14px;
+      color: $orangeColor;
+    }
+  }
+
+  .search-criteria-wrapper {
+    background-color: $mainLight;
+    box-shadow: $boxShadow;
+
+    input {
+      width: 100%;
+      height: 35px;
+      padding: 9px;
+      box-sizing: border-box;
+      font-size: 14px;
+      background-color: $mainLight;
+      box-shadow: $boxShadow;
+      color: $textColor;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  div.data-source-group {
+    clear: both;
+    padding: 2px 0;
+
+    label {
+      float: left;
+      clear: both;
+      color: $textColor;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+
+      input {
+        cursor: pointer;
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    div.datasources {
+      margin-left: 20px;
+      clear: both;
+    }
+
+    div.filters {
+      clear: both;
+
+      & > div {
+        float: left;
+      }
+
+      div.filter {
+        clear: both;
+        line-height: 30px;
+        position: relative;
+        display: block;
+
+        label {
+          vertical-align: middle;
+          display: inline-block;
+          margin-right: 20px;
+        }
+
+        select {
+          margin-left: 20px;
+          float: right;
+          height: 25px;
+        }
+      }
+    }
+  }
+
+  .notification {
+    a {
+      color: $primaryColor;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .search-btn-wrapper {
+    background: $mainLight;
+
+    .eob-btn {
+      margin: 0 10px 15px;
+      display: block;
+      text-align: center;
+      background-color: $secondaryColor;
+      box-shadow: $boxShadow;
+      font-size: 14px;
+
+      &:hover {
+        background-color: $hoverSecondaryColor;
+      }
+    }
+  }
+
+  .timespan-picker {
+    margin-top: 0;
+    text-align: center;
+    background: white;
+
+    .date-time-input {
+      .date-time-input-label {
+        margin-top: 0;
+        align-items: flex-end;
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+@import '../../variables.module.scss';
+
+.elevation-profile {
+  display: flex;
+  flex-direction: column;
+
+  &.draggable-dialog-box {
+    color: $textColor;
+    background-color: $whiteBackground;
+  }
+
+  .fetching {
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .error-message {
+    word-break: break-all;
+    margin-bottom: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+
+    div {
+      padding: 10px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .container {
+      .tooltip-content {
+        background: $mainMedium;
+        position: relative;
+        border: 1px solid $mainDark;
+        color: $textColor;
+        padding: 20px;
+        z-index: 100;
+        transform: translateX(-50%) translateY(5px);
+        min-width: 150px;
+      }
+
+      .axis-label {
+        font-size: 14px;
+      }
+
+      circle.frame-hover {
+        stroke: $textColor;
+        r: 4;
+      }
+
+      svg.background-graphics {
+        text {
+          fill: $textColor;
+        }
+
+        path,
+        line {
+          fill: none;
+        }
+
+        path.tick-line {
+          shape-rendering: crispEdges;
+          stroke: $mainDarkest;
+          stroke-dasharray: 5, 5;
+        }
+
+        line.axis-baseline {
+          shape-rendering: crispEdges;
+          stroke: $textColor;
+        }
+      }
+
+      svg.visualization-layer {
+        text {
+          fill: $textColor;
+        }
+
+        path,
+        line {
+          fill: none;
+        }
+
+        path.tick-line {
+          shape-rendering: crispEdges;
+          stroke: red;
+          stroke-dasharray: 5, 5;
+        }
+
+        line.axis-baseline {
+          shape-rendering: crispEdges;
+          stroke: $textColor;
+        }
+      }
+    }
+
+    .legend {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .item {
+        padding: 5px;
+        cursor: pointer;
+
+        span {
+          padding: 0 5px;
+          color: $textColor;
+        }
+      }
+    }
+  }
+}

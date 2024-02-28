@@ -1,0 +1,121 @@
+@import '../../variables.module.scss';
+
+/* stylelint-disable */
+.tabs-container {
+  height: 100%;
+  overflow-y: hidden;
+  display: flex;
+  flex-flow: column;
+
+  .sentinels-banner-position {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+
+.tabs-wrapper {
+  background-color: $primaryColor;
+
+  .tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 0 auto;
+    margin: 9px 9px 7px 9px;
+    padding: 0;
+    list-style: none;
+
+    li {
+      flex: 1;
+      text-align: center;
+      list-style: none;
+      cursor: pointer;
+      color: $whiteColor;
+      padding: 9px 9px 7px 9px;
+      text-transform: uppercase;
+      margin: 2px;
+
+      &:hover {
+        background-color: $hoverPrimaryColor;
+      }
+
+      @media screen and (max-width: $breakpoint-430) {
+        padding: 9px 9px 7px 9px;
+      }
+
+      @media screen and (max-width: $breakpoint-400) {
+        padding: 9px 9px 7px 9px;
+      }
+
+      @media screen and (max-width: $breakpoint-360) {
+        font-size: 15px;
+      }
+
+      @media screen and (max-width: $breakpoint-340) {
+        font-size: 14px;
+      }
+
+      &[disabled] {
+        color: #aaa;
+      }
+    }
+
+    .fa-icon {
+      font-size: 15px;
+      fill: #aaa;
+      margin: 0 6px 0 0;
+
+      @media screen and (max-width: $breakpoint-430) {
+        display: none;
+      }
+    }
+
+    & .tab-selected {
+      background-color: $hoverPrimaryColor;
+      box-shadow: $boxShadow;
+      font-weight: $fontWeightBold;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    .counter-badge {
+      margin-right: 5px;
+      padding: 3px 3px;
+      border-radius: 15%;
+      background: $primaryColor;
+      color: $whiteColor;
+      font-size: 14px;
+    }
+  }
+}
+
+.box-shadow-divider {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+.tabPanelContainer {
+  max-height: 100%;
+  overflow-y: scroll;
+
+  > div {
+    display: none;
+  }
+
+  > div.active {
+    display: block;
+  }
+}
+
+// Active only for mozilla firefox
+@-moz-document url-prefix() {
+  .tabPanelContainer {
+    padding-right: 4px;
+  }
+}

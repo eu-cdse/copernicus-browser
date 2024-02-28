@@ -1,0 +1,88 @@
+{
+    "title": "Copernicus Forestry (S2L1C) API",
+    "layers": [
+        {
+            "id": "1_TRUE-COLOR",
+            "name": "True Color",
+            "description": "Based on bands 4, 3, 2",
+            "dataset": "S2L1C",
+            "legendUrl": null
+        },
+        {
+            "id": "2_FALSE-COLOR",
+            "name": "False color",
+            "description": "Based on bands 8, 4, 3",
+            "dataset": "S2L1C",
+            "legendUrl": null
+        },
+        {
+            "id": "3_NDVI",
+            "name": "NDVI",
+            "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
+            "dataset": "S2L1C",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/255008-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=3_NDVI&style=default"
+        },
+        {
+            "id": "4_EVI",
+            "name": "EVI",
+            "description": "Enhanced Vegetation Index",
+            "dataset": "S2L1C",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/255008-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4_EVI&style=default"
+        },
+        {
+            "id": "5_ARVI",
+            "name": "ARVI",
+            "description": "Atmospherically Resistant Vegetation Index",
+            "dataset": "S2L1C",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/255008-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=5_ARVI&style=default"
+        },
+        {
+            "id": "6_SAVI",
+            "name": "SAVI",
+            "description": "Soil Adjusted Vegetation Index",
+            "dataset": "S2L1C",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/255008-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=6_SAVI&style=default"
+        },
+        {
+            "id": "7_MARI",
+            "name": "mARI",
+            "description": "Modified Anthocyanin Reflectance Index",
+            "dataset": "S2L1C",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/255008-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=7_MARI&style=default"
+        },
+        {
+            "id": "8_BARREN-SOIL",
+            "name": "Barren Soil",
+            "description": "Based on the combination: BSI, B08, B11",
+            "dataset": "S2L1C",
+            "legendUrl": null
+        },
+        {
+            "id": "FALSE-COLOR-11-8-2",
+            "name": "Agriculture",
+            "description": "Based on bands B11, B08, B02",
+            "dataset": "S2L1C",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S2L1C",
+            "bands": [
+                "B01",
+                "B02",
+                "B03",
+                "B04",
+                "B05",
+                "B06",
+                "B07",
+                "B08",
+                "B8A",
+                "B09",
+                "B10",
+                "B11",
+                "B12"
+            ]
+        }
+    ]
+}

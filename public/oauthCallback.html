@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      const params = Object.fromEntries(new URLSearchParams(window.location.hash.replace('#', '')));
+      if (params['expires_in']) {
+        params.expires_in = new Date().valueOf() + parseInt(params.expires_in) * 1000;
+      }
+
+      if (window.opener && window.opener.authorizationCallback) {
+        // handle callback from login popup window
+        if (params['access_token']) {
+          params.domain = window.opener.location.pathname;
+          window.opener.authorizationCallback.resolve(params);
+          window.close();
+        } else {
+          window.opener.authorizationCallback.reject('No access token');
+          window.close();
+        }
+      } else if (params['access_token']) {
+        // handle callback from signup email validation
+        const LOCAL_STORAGE_USER_AUTH_KEY = 'cdsebrowser_oauth';
+
+        localStorage.setItem(LOCAL_STORAGE_USER_AUTH_KEY, JSON.stringify(params));
+
+        window.location.href = window.location.origin + window.location.pathname.replace('oauthCallback.html', ''); // prettier-ignore
+      } else {
+        document.querySelector('body').innerText =
+          'Your browser seems to be stopping this window from communicating with the main window.';
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

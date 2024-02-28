@@ -1,0 +1,66 @@
+{
+    "title": "Copernicus Snow and Glaciers (S2L2A) API",
+    "layers": [
+        {
+            "id": "1_TRUE_COLOR",
+            "name": "True color",
+            "description": "Based on bands 4, 3, 2",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "2_FALSE_COLOR",
+            "name": "False color",
+            "description": "Based on bands 8, 4, 3",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "3_TONEMAPPED-NATURAL-COLOR",
+            "name": "Highlight Optimized Natural Color",
+            "description": "Enhanced natural color visualization",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "4_NDSI",
+            "name": "NDSI",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4_NDSI&style=default"
+        },
+        {
+            "id": "5_SNOW-CLASSIFIER",
+            "name": "Snow Classifier",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=5_SNOW-CLASSIFIER&style=default"
+        },
+        {
+            "id": "6_AGRICULTURE",
+            "name": "Agriculture",
+            "description": "Based on the combination of bands 11, 8, 2",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S2L2A",
+            "bands": [
+                "B01",
+                "B02",
+                "B03",
+                "B04",
+                "B05",
+                "B06",
+                "B07",
+                "B08",
+                "B8A",
+                "B09",
+                "B11",
+                "B12"
+            ]
+        }
+    ]
+}

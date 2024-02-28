@@ -1,0 +1,59 @@
+{
+    "title": "Copernicus Ocean - Water Bodies (S2L2A) API",
+    "layers": [
+        {
+            "id": "1_TRUE_COLOR",
+            "name": "True color",
+            "description": "Based on bands 4, 3, 2",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "2_FALSE-COLOR",
+            "name": "False Color",
+            "description": "Based on bands 8, 4, 3",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "3_NDWI",
+            "name": "NDWI",
+            "description": "Based on combination of bands (B3 - B8)/(B3 + B8)",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "4_ULYSSYS-WATER-QUALITY-VIEWER",
+            "name": "Ulyssys Water Quality Viewer ",
+            "description": "Water sedimentation and chlorophyll content",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "5_SWIR",
+            "name": "SWIR",
+            "description": "Based on bands 12, 8A, 4",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S2L2A",
+            "bands": [
+                "B01",
+                "B02",
+                "B03",
+                "B04",
+                "B05",
+                "B06",
+                "B07",
+                "B08",
+                "B8A",
+                "B09",
+                "B11",
+                "B12"
+            ]
+        }
+    ]
+}

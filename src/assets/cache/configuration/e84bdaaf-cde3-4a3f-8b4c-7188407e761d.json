@@ -1,0 +1,275 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/8_RGB-RATIO",
+        "id": "8_RGB-RATIO",
+        "title": "RGB ratio",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"HV\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(sample) {\n  return [sample.HH / 0.28,\n          sample.HV / 0.06,\n          sample.HV / sample.HH / 0.49,\n          sample.dataMask];\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-08-18T07:11:30.663480Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/9_SAR-URBAN",
+        "id": "9_SAR-URBAN",
+        "title": "SAR urban",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"HV\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  return [5.5 * sample.HV > 0.5, sample.HH, sample.HV * 8, sample.dataMask]\n}\n\n// ---\n\n/*URBAN AREAS\n  Sentinel1-AWS-IW-VVVH\n*/\n\n//return [5.5 * HV > 0.5, HH, HV * 8];"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-08-18T07:11:37.846424Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/ENHANCED-VISUALIZATION-ORTHORECTIFIED",
+        "id": "ENHANCED-VISUALIZATION-ORTHORECTIFIED",
+        "title": "Enhanced visualization",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"HV\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  var water_threshold = 25; //lower means more water\n \n  if (sample.HH / sample.HV > water_threshold) {\n    // watervis\n    return [sample.HH, 8 * sample.HH, 0.5 + 3 * sample.HH + 2000 * sample.HV, sample.dataMask];\n  } else {\n    // landvis\n    return [3 * sample.HH, 1.1 * sample.HH + 8.75 * sample.HV, 1.75 * sample.HV, sample.dataMask];\n  }\n}\n\n// ---\n\n/*\n// A simplified visualization based on:\n// Sentinel-1 False-Color Visualization V1.0.0\n// Twitter: Pierre Markuse (@pierre_markuse)\n// Website: https://pierre-markuse.net/\n// CC BY 4.0 International - https://creativecommons.org/licenses/by/4.0/\n\nvar water_threshold = 25; //lower means more water\n \nif (HH / HV > water_threshold) {\n  // watervis\n  return [HH, 8 * HH, 0.5 + 3 * HH + 2000 * HV];\n} else {\n  // landvis\n  return [3 * HH, 1.1 * HH + 8.75 * HV, 1.75 * HV];\n}\n*/"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-08-18T07:10:44.987435Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/SM-DH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED",
+        "id": "SM-DH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED",
+        "title": "HH - decibel gamma0",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.HH) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.HH)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n// displays HH in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HH) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HH) * 0.21714724095 + 1)];\n*/"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-27T14:21:20.866861Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/SM-DH-HH-LINEAR-GAMMA0-ORTHORECTIFIED",
+        "id": "SM-DH-HH-LINEAR-GAMMA0-ORTHORECTIFIED",
+        "title": "HH - linear gamma0 ",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.HH, 2 * samples.HH, 2 * samples.HH, samples.dataMask],\n    eobrowserStats: [samples.HH],\n    dataMask: [samples.dataMask],\n  };\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-27T14:21:48.712411Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/SM-DH-HV-DECIBEL-GAMMA0-ORTHORECTIFIED",
+        "id": "SM-DH-HV-DECIBEL-GAMMA0-ORTHORECTIFIED",
+        "title": "HV - decibel gamma0",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.HV) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.HV)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n// displays HV in decibels from -20 to 0\n// the following is simplified below\n// var log = 10 * Math.log(HV) / Math.LN10;\n// var val = Math.max(0, (log + 20) / 20);\n\nreturn [Math.max(0, Math.log(HV) * 0.21714724095 + 1)];\n*/"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-27T14:22:31.855027Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE/layers/SM-DH-HV-LINEAR-GAMMA0-ORTHORECTIFIED",
+        "id": "SM-DH-HV-LINEAR-GAMMA0-ORTHORECTIFIED",
+        "title": "HV - linear gamma0",
+        "description": "Orthorectified",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"HV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  }\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.HV, 2 * samples.HV, 2 * samples.HV, samples.dataMask],\n    eobrowserStats: [samples.HV],\n    dataMask: [samples.dataMask],\n  };\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e84bda-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2023-09-27T14:23:10.074274Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "resolution": "HIGH",
+            "acquisitionMode": "SM",
+            "polarization": "DH",
+            "backCoeff": "GAMMA0_ELLIPSOID",
+            "speckleFilter": {
+                "type": "NONE"
+            },
+            "orthorectify": true,
+            "demInstance": "COPERNICUS",
+            "type": "S1GRD"
+        }
+    }
+]

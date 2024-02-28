@@ -1,0 +1,35 @@
+@import '../../variables.module.scss';
+
+.progress-bar {
+  background-color: $mainMedium;
+  display: flex;
+
+  .pb-container {
+    width: 100%;
+    height: 7px;
+    display: flex;
+    align-self: center;
+    background-color: $mainDark;
+
+    .pb-bar {
+      height: 100%;
+      width: 0%;
+      background-color: $primaryColor;
+    }
+  }
+
+  .pb-label {
+    min-width: 10%;
+    padding: 3px 5px;
+    text-align: center;
+  }
+
+  i {
+    align-self: center;
+    cursor: pointer;
+
+    &:hover {
+      color: $primaryColor;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+    "title": "CDSE Sentinel-1-SM_VV+VH",
+    "layers": [
+        {
+            "id": "8_RGB-RATIO",
+            "name": "RGB ratio",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "9_SAR-URBAN",
+            "name": "SAR urban",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "ENHANCED-VISUALIZATION-ORTHORECTIFIED",
+            "name": "Enhanced visualization",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "SM-DV-VH-DECIBEL-GAMMA0-ORTHORECTIFIED",
+            "name": "VH - decibel gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "SM-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED",
+            "name": "VH - linear gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "SM-DV-VV-DECIBEL-GAMMA0-ORTHORECTIFIED",
+            "name": "VV - decibel gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        },
+        {
+            "id": "SM-DV-VV-LINEAR-GAMMA0-ORTHORECTIFIED",
+            "name": "VV - linear gamma0",
+            "description": "Orthorectified",
+            "dataset": "S1GRD",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S1GRD",
+            "bands": [
+                "VV",
+                "VH",
+                "HH",
+                "HV"
+            ]
+        }
+    ]
+}

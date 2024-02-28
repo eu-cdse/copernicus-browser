@@ -1,0 +1,130 @@
+@import '../../variables.module.scss';
+
+/* stylelint-disable */
+.advancedPanel {
+  font-size: 14px;
+
+  .grouped-bands-to-rgb {
+    button {
+      border: none;
+      background-color: $mainDark;
+      color: $textColor;
+      font-size: 14px;
+      padding: 3px 25px;
+      margin: 20px 15px 0 0;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &.selected {
+        border: 2px solid $primaryColor;
+        padding: 1px 23px;
+      }
+    }
+  }
+
+  .toggleBandMode {
+    position: relative;
+    float: right;
+    background: $mainDark;
+    width: 72px;
+    height: 28px;
+    border-radius: 30px;
+    padding: 2px;
+    cursor: pointer;
+
+    i {
+      border-radius: 20px;
+      padding: 2px 4px;
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      color: $whiteColor;
+      font-size: 16px;
+
+      &.script {
+        right: 8px;
+        left: auto;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      width: 30px;
+      height: 25px;
+      border-radius: 25px;
+      content: '';
+      background: $primaryColor;
+      transition: all ease 0.4s;
+    }
+
+    &.script::before {
+      left: 40px;
+    }
+  }
+
+  header {
+    padding: 5px 0 15px;
+  }
+
+  .scriptBtnPanel {
+    padding: 5px;
+    justify-self: center;
+
+    display: flex;
+    justify-content: center;
+
+    .eob-btn {
+      font-size: 12px;
+    }
+  }
+
+  .insert-url-block {
+    padding: 2px 20px;
+  }
+
+  .custom-visualisation-content {
+    background-color: $mainLight;
+
+    .help-tooltip {
+      float: right;
+    }
+
+    .custom-visualisation-wrapper {
+      padding: 0 10px 10px;
+    }
+
+    .custom-visualisation-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .tab-button {
+        flex: auto;
+        text-align: center;
+        list-style: none;
+        cursor: pointer;
+        color: $textColor;
+        height: 35px;
+        line-height: 35px;
+        background-color: $mainMedium;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .active {
+        background-color: $mainLight;
+      }
+
+      .not-clickable {
+        pointer-events: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@import '../../../variables.module.scss';
+
+.collection-search {
+  display: flex;
+  flex-direction: column;
+  color: $textColor;
+  width: 100%;
+
+  .collection-search-field-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .collection-search-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+
+    .collection-search-title {
+      color: $primaryColor;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .collection-search-tools {
+      display: flex;
+      flex-direction: row;
+      margin-right: 18px;
+      background-color: $mainLight;
+      gap: 4px;
+    }
+
+    .collection-search-tools-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 33px;
+      height: 33px;
+      box-shadow: 0 0 4px 4px #dddddd40;
+      cursor: pointer;
+
+      svg {
+        fill: $primaryColor;
+      }
+
+      &.active {
+        background-color: $primaryColor;
+
+        svg {
+          fill: $secondaryColor;
+        }
+      }
+
+      &.disabled {
+        opacity: $disabled;
+        cursor: default;
+      }
+    }
+  }
+
+  input {
+    border: none;
+    border-bottom: 1px solid $textColor;
+    width: 100%;
+    background: none;
+    color: $textColor;
+    font-size: 16px;
+    padding: 5px 25px 5px 5px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

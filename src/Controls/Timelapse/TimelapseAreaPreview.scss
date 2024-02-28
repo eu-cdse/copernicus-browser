@@ -1,0 +1,29 @@
+.timelapse-area-tooltip {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0);
+  box-shadow: none;
+
+  &::before {
+    border: 0;
+  }
+
+  .timelapse-area-tooltip-content {
+    width: 100%;
+    text-align: center;
+    color: #38f;
+    background: rgba(0, 0, 0, 0);
+    font-size: 20px;
+    transform: translateY(-60px);
+
+    &.description {
+      font-size: 0.8em;
+    }
+  }
+}
+
+.timelapse-area-play-icon {
+  color: #38f;
+  font-size: 40px;
+}

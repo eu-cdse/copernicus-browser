@@ -1,0 +1,54 @@
+@import '../../../../../variables.module.scss';
+
+.help-tooltip {
+  .react-tooltip-lite {
+    background: $mainMedium;
+    color: $textColor;
+    border-radius: 5px;
+    max-width: 300px !important;
+    font-size: 0.8em;
+  }
+
+  &.closed .react-tooltip-lite,
+  .react-tooltip-lite-arrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .react-tooltip-lite-up-arrow {
+    border-top: 10px solid $mainMedium;
+  }
+
+  .react-tooltip-lite-down-arrow {
+    border-bottom: 10px solid $mainMedium;
+  }
+
+  .react-tooltip-lite-right-arrow {
+    border-right: 10px solid $mainMedium;
+  }
+
+  .react-tooltip-lite-left-arrow {
+    border-left: 10px solid $mainMedium;
+  }
+
+  .help-tooltip-icon {
+    vertical-align: middle;
+    opacity: 0.5;
+    font-size: 12px;
+  }
+
+  .help-tooltip-icon:hover {
+    opacity: 1;
+  }
+  /* stylelint-disable */
+  &.padOnLeft {
+    padding-left: 5px;
+  }
+
+  &.padOnRight {
+    padding-right: 5px;
+  }
+  /* stylelint-enable */
+}

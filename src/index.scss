@@ -1,0 +1,132 @@
+@import './variables.module.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $fontFamily;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+// Leaflet.js overwrites CSS styles of buttons in the right-hand side panel,
+// so we need to be more specific:
+.leaflet-container {
+  /* stylelint-disable-next-line */
+  .controlsWrapper .panelButton i {
+    color: $primaryColor;
+  }
+}
+
+.leaflet-control-layers-list::before {
+  content: 'Layers:';
+}
+
+.leaflet-control-layers-base::before {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTM0MTg5NkY3RTQzMTFFNkFGQTBEQjdFQ0Q3MENBODkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTM0MTg5NzA3RTQzMTFFNkFGQTBEQjdFQ0Q3MENBODkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFMzQxODk2RDdFNDMxMUU2QUZBMERCN0VDRDcwQ0E4OSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFMzQxODk2RTdFNDMxMUU2QUZBMERCN0VDRDcwQ0E4OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PphzDioAAAFLSURBVHjarFYBEYMwDMxxE1AJSEBCHQwHQ8Ik4GASJmESKgEJlQAOWHqktyxLCuWWux9Hln7b9JMC67rCDhxiQMT1Y5F8bm/8HvGImBlxIGSbKcbVTNAinoLkSX4ZwyeXMT8T+NrVFXbp+QQ9YlLyC5WQ55Q4e5COE8QSni+4AYAFNusQV3qetTT2xjiWnMe72F6o3E0vzi8Sp9PyWHMeWt4HS0Wa9DRFacoxJZ1+OkX3IwXJmpCWybRJ038dMGep/DNBruSxEMfTNl+YAhyipeci1JHexwMq4hyb1ZR9AWZ70dIQrbI3iqrYXholFdw8IiAmxMD8A/kCxfDx3xy0PVUBxgq1xqYp8ZFTNEunkopMEAl5AdpZPDgn/KGLFqv77D1w+F6ovckseZoSP7qal5CrJ9/urmu/Jiaj27ozXxXy4ILI7yFBvAUYAAmbsTiyZet8AAAAAElFTkSuQmCC');
+  background-size: 16px 16px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  content: '';
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 4px;
+  left: 90%;
+}
+
+div.rc-slider {
+  display: inline-block;
+  width: 195px;
+
+  .rc-slider-rail {
+    background-color: $iconGrayColor;
+  }
+
+  .rc-slider-handle {
+    border-color: $primaryColor;
+    background-color: $primaryColor;
+    // Weird workaround for rc-slider. By default margin-left is minus (half of rc-slider-handle's width).
+    // https://github.com/react-component/slider/issues/433#issuecomment-397442871
+    // But here margin-left somehow needs to be 0 for slider to work correctly.
+    // Default values from rc-slider's CSS: width: 14px; margin-left: -7px;
+    margin-left: 0;
+  }
+
+  .rc-slider-track {
+    background: $primaryColor;
+  }
+}
+
+// remove after merging with eo-components
+/* stylelint-disable */
+.floatItem {
+  box-shadow: $boxShadow !important;
+}
+
+.react-toggle {
+  vertical-align: middle;
+  margin-left: 10px;
+
+  .react-toggle-track {
+    height: 18px;
+    width: 36px;
+  }
+
+  .react-toggle-thumb {
+    height: 16px;
+    width: 16px;
+    border-color: $whiteColor;
+  }
+}
+
+.react-toggle--checked .react-toggle-track,
+.react-toggle.react-toggle--checked:hover .react-toggle-track {
+  background: $quaternaryColor;
+}
+
+.react-toggle.react-toggle--focus .react-toggle-thumb {
+  box-shadow: none;
+}
+
+.react-toggle--checked .react-toggle-thumb {
+  left: 19px;
+}
+
+.react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+  box-shadow: none;
+}
+
+.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #4d4d4d;
+}
+
+.react-toggle.react-toggle--checked:hover .react-toggle-track {
+  background-color: $quaternaryColor;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $mainMedium $mainLight;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: $mainMedium;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $primaryColor;
+}
+/* stylelint-enable */
+
+.fa-cog {
+  color: $primaryColor;
+}

@@ -1,0 +1,238 @@
+@import '../../../variables.module.scss';
+
+.product-info-modal {
+  .rodal-dialog {
+    bottom: auto;
+    min-width: 80vw;
+    top: 5vh;
+    overflow: auto;
+
+    @media screen and (max-width: $breakpoint-400) {
+      bottom: 0;
+      top: 0;
+      min-width: 95%;
+
+      .product-info {
+        max-height: 95%;
+      }
+    }
+  }
+}
+
+.product-info-title {
+  font-weight: $fontWeightBold;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: $primaryColor;
+  margin: 0;
+}
+
+.product-info {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  color: $textColor;
+  margin-top: 10px;
+  max-height: 80vh;
+  font-size: 13px;
+
+  .main {
+    overflow-y: auto;
+
+    .product-info-content {
+      display: flex;
+      flex-direction: row;
+
+      .column {
+        margin-right: 10px;
+      }
+
+      .section-group {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 10px;
+        background-color: $mainMedium;
+
+        h3 {
+          color: $primaryColor;
+          text-transform: uppercase;
+        }
+
+        .section {
+          background-color: $mainDark;
+          margin: 2px 0;
+
+          .title,
+          .title-arrow-wrapper {
+            background-color: $mainDark;
+          }
+
+          .content {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .error-message {
+            padding: 10px 5px;
+          }
+
+          &.collapsible-panel {
+            box-shadow: none;
+
+            .title-content {
+              color: $textColor;
+            }
+
+            .title {
+              font-size: 14px;
+              padding: 5px 10px;
+
+              &.expanded {
+                .title-content {
+                  color: $primaryColor;
+                }
+              }
+            }
+
+            .title-arrow-wrapper {
+              box-shadow: none;
+            }
+
+            .content {
+              padding: 0 5px;
+
+              > * {
+                margin: 0;
+              }
+            }
+          }
+        }
+
+        &.preview {
+          margin-bottom: 10px;
+        }
+
+        &.footprint {
+          flex: 1;
+          display: flex;
+        }
+      }
+
+      .attributes {
+        width: 67%;
+        background-color: $mainMedium;
+
+        .row {
+          display: flex;
+          align-items: center;
+        }
+
+        .left {
+          font-weight: $fontWeightBold;
+          min-width: 150px;
+          width: 150px;
+          word-wrap: anywhere;
+        }
+
+        .right {
+          word-wrap: anywhere;
+        }
+
+        .attribute {
+          padding: 5px;
+        }
+      }
+
+      .previews {
+        width: 33%;
+
+        .preview-image {
+          flex: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+
+          img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: $breakpoint-768) {
+      .product-info-content {
+        flex-direction: column;
+
+        .attributes {
+          width: unset;
+          margin-bottom: 10px;
+        }
+
+        .previews {
+          width: unset;
+        }
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0 0 0;
+
+    .product-link {
+      padding: 5px 0;
+      display: flex;
+      color: $primaryColor;
+      align-items: center;
+      cursor: default;
+
+      label {
+        font-weight: $fontWeightBold;
+        color: $textColor;
+        white-space: nowrap;
+      }
+
+      div {
+        padding: 5px;
+        word-wrap: anywhere;
+      }
+
+      i {
+        cursor: pointer;
+      }
+    }
+
+    .actions {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .eob-btn.disabled {
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: $breakpoint-1300) {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+
+      .actions {
+        width: 100%;
+      }
+    }
+
+    @media screen and (max-width: $breakpoint-400) {
+      .actions {
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import '../../variables.module.scss';
+
+.cloud-coverage-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+  color: $primaryColor;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+
+  .fas.fa-cloud {
+    margin-right: 5px;
+    color: $iconGrayColor;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.35;
+  }
+}

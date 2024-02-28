@@ -1,0 +1,14 @@
+.data-fusion-additional-parameters-s1 {
+  .additional-parameter {
+    width: 100%;
+    display: flex;
+    padding-top: 3px;
+    align-items: center;
+    justify-content: space-between;
+
+    select {
+      width: 50%;
+      margin-left: 5px;
+    }
+  }
+}

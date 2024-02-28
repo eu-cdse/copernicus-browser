@@ -1,0 +1,40 @@
+@import '../../variables.module.scss';
+
+.action-bar {
+  justify-content: space-between;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  color: $textColor;
+  font-size: 13px;
+
+  i {
+    margin-right: 5px;
+  }
+
+  .action-wrapper {
+    padding: 5px 0;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    div {
+      text-decoration: underline 1px;
+      font-size: 12px;
+      font-weight: $fontWeightNormal;
+    }
+
+    &:hover {
+      color: $primaryColor;
+    }
+
+    &.active {
+      color: $primaryColor;
+    }
+
+    &.disabled {
+      cursor: default;
+      opacity: 0.3;
+    }
+  }
+}

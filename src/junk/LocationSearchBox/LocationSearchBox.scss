@@ -1,0 +1,119 @@
+@import '../../variables.module.scss';
+
+.search-box-wrapper {
+  position: absolute;
+  right: 60px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-size: 15px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: $boxShadow;
+  color: white;
+  z-index: 500;
+
+  &.position-with-3d {
+    right: 60px;
+  }
+
+  .location-search-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+
+    .autocomplete {
+      .icon-search {
+        color: $primaryColor;
+        width: 22px;
+        height: 20px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+      }
+
+      input {
+        width: 100%;
+        height: 40px;
+        padding-left: 40px;
+        flex-direction: column;
+        box-sizing: border-box;
+        font-size: 15px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+
+        &::placeholder {
+          color: rgba($textColor, 0.3);
+        }
+
+        &::-moz-focus-inner {
+          border: 0;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .search-item {
+        border-bottom: 1px solid $randomGrayColor;
+        padding: 4px;
+        cursor: pointer;
+
+        &:first-child {
+          border-top: 1px solid $randomGrayColor;
+        }
+
+        &:nth-last-child(1) {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: $primaryColor;
+          color: $whiteColor;
+        }
+      }
+
+      .api-switch {
+        padding: 4px 1px;
+
+        label {
+          display: block;
+        }
+
+        input {
+          width: auto;
+          height: auto;
+        }
+      }
+
+      .powered-by-google {
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-700) {
+  .search-box-wrapper {
+    &.open {
+      width: 45%;
+    }
+
+    .location-search-box {
+      .autocomplete.close {
+        input {
+          width: 0;
+        }
+      }
+    }
+  }
+}

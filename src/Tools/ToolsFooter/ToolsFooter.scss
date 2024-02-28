@@ -1,0 +1,152 @@
+@import '../../variables.module.scss';
+
+.tools-footer {
+  font-size: 12px;
+  color: $whiteColor;
+
+  .footer-info {
+    .free-signup {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      height: 34px;
+      background-color: $mainDark;
+
+      * {
+        font-size: 14px;
+        font-weight: $fontWeightNormal;
+      }
+    }
+
+    .credentials {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      height: 52px;
+      padding: 0 20px;
+      background-color: $primaryColor;
+      color: $whiteColor;
+
+      .banners {
+        display: inherit;
+        align-items: center;
+        gap: 24px;
+
+        .europe-banner {
+          display: inherit;
+          border: 1px solid $whiteColor;
+        }
+
+        .esa-banner {
+          display: inherit;
+          padding-top: 2px;
+        }
+
+        .copernicus-banner {
+          display: inherit;
+        }
+
+        @media screen and (max-width: 20px) {
+          .europe-banner {
+            svg {
+              width: 38px;
+            }
+          }
+
+          .esa-banner {
+            svg {
+              width: 40px;
+            }
+          }
+
+          .copernicus-banner {
+            svg {
+              width: 50px;
+            }
+          }
+        }
+      }
+
+      .links {
+        display: inherit;
+        align-items: center;
+        gap: 20px;
+
+        .about-container,
+        .support-container {
+          align-items: center;
+          gap: 5px;
+          text-align: center;
+
+          .about,
+          .support {
+            color: $whiteColor;
+            font-size: 13px;
+            font-weight: $fontWeightNormal;
+          }
+
+          @media screen and (max-width: 420px) {
+            gap: 10px;
+          }
+        }
+      }
+
+      .powered-by {
+        display: inherit;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+
+        * {
+          color: $whiteColor;
+          font-size: 12px;
+          font-weight: $fontWeightNormal;
+        }
+
+        a {
+          color: $whiteColor;
+        }
+      }
+
+      .app-version {
+        position: absolute;
+        bottom: 1px;
+        right: 5px;
+        font-family: $fontFamily;
+        font-size: 8px;
+        color: $whiteColor;
+        font-weight: $fontWeightNormal;
+        text-align: right;
+
+        span {
+          max-width: 40px;
+          white-space: nowrap;
+          overflow-x: clip;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-768) {
+    .footer-info {
+      display: none;
+    }
+  }
+
+  .footer-banner {
+    .banner-link {
+      .banner-img {
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      .banner-img:hover {
+        transform: scale(1.01);
+        transition: 0.3s ease-in-out;
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import '../../../variables.module.scss';
+
+.file-tree {
+  padding: 10px;
+  background-color: $mainDark;
+  display: flex;
+  flex-flow: column;
+  color: $textColor;
+  word-wrap: break-word;
+  font-size: 14px;
+
+  i {
+    padding: 0 5px;
+    min-width: 15px;
+
+    &.download {
+      color: $primaryColor;
+      cursor: pointer;
+    }
+  }
+
+  .node {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+
+    .selected {
+      background-color: $mainDarkest;
+    }
+
+    .expanded {
+      i {
+        color: $primaryColor;
+      }
+    }
+
+    .collapsed {
+      i {
+        color: $mainDarkest;
+      }
+    }
+  }
+
+  .children {
+    margin-left: 15px;
+  }
+
+  .file {
+    padding: 10px 0;
+    cursor: default;
+  }
+
+  .folder {
+    padding: 10px 0;
+    cursor: pointer;
+
+    &.root {
+      cursor: default;
+    }
+  }
+
+  .file,
+  .folder {
+    display: flex;
+    word-break: break-word;
+
+    &:hover {
+      background-color: $mainMedium;
+    }
+  }
+}

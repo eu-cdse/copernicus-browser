@@ -1,0 +1,38 @@
+/* stylelint-disable */
+@import '../../variables.module.scss';
+
+.image-download-preview-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0;
+
+  .image-download-preview-label {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  .image-download-preview,
+  .image-download-preview-placeholder {
+    height: 200px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+
+  .loader {
+    position: relative;
+    height: 200px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 28px;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
