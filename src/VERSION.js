@@ -1,1 +1,1 @@
-export const VERSION_INFO = { tag: 'CDSE-v0.0.0', branch: 'cdse/github-deploy-fix', commit: '6245cc6a166ee3c571e1acc0155b76b505a555c3' }
+export const VERSION_INFO = { tag: 'CDSE-v0.0.1', branch: 'cdse/github-deploy-fix', commit: '4d191adc8f4f45a85bcd2682861c28826c5bb15e' }
