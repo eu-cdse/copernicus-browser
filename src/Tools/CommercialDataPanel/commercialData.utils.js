@@ -17,7 +17,7 @@ import {
   PlanetItemType,
   setTPDIServiceBaseURL,
 } from '@sentinel-hub/sentinelhub-js';
-import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils.js';
+import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
 import store, { mainMapSlice, visualizationSlice, themesSlice, tabsSlice } from '../../store';
 import {
   TRANSACTION_TYPE,
@@ -27,10 +27,10 @@ import {
   SH_PAYING_ACCOUNT_TYPES,
 } from '../../const';
 import { getBoundsZoomLevel } from '../../utils/coords';
-import { isRectangle, isPolygon } from '../../utils/geojson.utils.js';
-import { getSHServiceRootUrl } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers.js';
+import { isRectangle, isPolygon } from '../../utils/geojson.utils';
+import { getSHServiceRootUrl } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
-const SH_SERVICES_URL = process.env.REACT_APP_SH_SERVICES_URL;
+const SH_SERVICES_URL = import.meta.env.VITE_SH_SERVICES_URL;
 
 setTPDIServiceBaseURL(SH_SERVICES_URL);
 

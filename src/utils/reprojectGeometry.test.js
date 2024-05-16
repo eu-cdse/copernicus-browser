@@ -96,9 +96,37 @@ const reprojectedPolygon = {
   ],
 };
 
+// issue from https://helpcenter.dataspace.copernicus.eu/hc/en-gb/community/posts/17823673386013-Tiff-is-blank
+const originalUtm53s = {
+  type: 'Polygon',
+  coordinates: [
+    [
+      [133.659283, -32.14713],
+      [133.737867, -32.14713],
+      [133.737867, -32.089847],
+      [133.659283, -32.089847],
+      [133.659283, -32.14713],
+    ],
+  ],
+};
+
+const reprojectedUtm53s = {
+  type: 'Polygon',
+  coordinates: [
+    [
+      [373559.710505, 6442468.625251],
+      [380971.34782, 6442558.218565],
+      [380896.963166, 6448908.40063],
+      [373480.691713, 6448818.893962],
+      [373559.710505, 6442468.625251],
+    ],
+  ],
+};
+
 test.each([
   [originalMultiPolygon, reprojectedMultiPolygon, 'EPSG:4326', 'EPSG:3857'],
   [originalPolygon, reprojectedPolygon, 'EPSG:4326', 'EPSG:3857'],
+  [originalUtm53s, reprojectedUtm53s, 'EPSG:4326', 'EPSG:32753'],
 ])('Test reprojectGeometry', (originalGeometry, expectedGeometry, fromProj, toProj) => {
   const reprojectedGeometry = reprojectGeometry(originalGeometry, { fromCrs: fromProj, toCrs: toProj });
   expect(reprojectedGeometry).toEqual(expectedGeometry);

@@ -340,7 +340,11 @@ function getRoundingFactor(imageWidthInMeters) {
 function timelapseBorders(width, height, bbox) {
   return {
     sortIndex: 1,
-    url: `https://api.maptiler.com/maps/${process.env.REACT_APP_MAPTILER_MAP_ID_BORDERS}/static/${bbox[0]},${bbox[1]},${bbox[2]},${bbox[3]}/${width}x${height}.png?key=${process.env.REACT_APP_MAPTILER_KEY}&attribution=false&padding=0`,
+    url: `https://api.maptiler.com/maps/${import.meta.env.VITE_MAPTILER_MAP_ID_BORDERS}/static/${bbox[0]},${
+      bbox[1]
+    },${bbox[2]},${bbox[3]}/${width}x${height}.png?key=${
+      import.meta.env.VITE_MAPTILER_KEY
+    }&attribution=false&padding=0`,
     params: {},
   };
 }
@@ -419,7 +423,7 @@ export const isImageCoverageEnough = (coveragePercent, canWeFilterByCoverage, mi
 
 export const generateS3PreSignedPost = async (access_token, filename) => {
   try {
-    const url = `${process.env.REACT_APP_EOB_BACKEND}generatepresignedpost`;
+    const url = `${import.meta.env.VITE_EOB_BACKEND}generatepresignedpost`;
     const requestParams = {
       responseType: 'json',
       headers: {

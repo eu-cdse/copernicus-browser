@@ -507,7 +507,9 @@ export function getTileCoord(minX, minY, maxX, maxY) {
 }
 
 export function getMaptilerUrl({ tileX, tileY, zoomLevel }) {
-  return `https://api.maptiler.com/maps/streets/256/${zoomLevel}/${tileX}/${tileY}.png?key=${process.env.REACT_APP_MAPTILER_KEY}`;
+  return `https://api.maptiler.com/maps/streets/256/${zoomLevel}/${tileX}/${tileY}.png?key=${
+    import.meta.env.VITE_MAPTILER_KEY
+  }`;
 }
 
 function getEarthCircumferenceAtLat(lat) {

@@ -49,7 +49,7 @@ export const customSelectStyle = {
       textOverflow: 'ellipsis',
       ':hover': {
         backgroundColor: !isSelected ? `${dropdownHoverBackground}` : ``,
-        cursor: state.value.customOption ? '' : 'pointer',
+        cursor: 'pointer',
       },
     };
   },

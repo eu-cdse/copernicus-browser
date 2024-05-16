@@ -1,5 +1,6 @@
 import { hasRole } from '../../../../Auth/authHelpers';
 import { FilterElement } from '../../../../api/OData/FilterElement';
+import { ODataColections } from '../../../../api/OData/ODataTypes';
 import {
   AttributeNames,
   AttributeOriginValues,
@@ -13,6 +14,7 @@ import {
   AttributeS2CollectionValues,
   AttributeProductClassValues,
   AttributeProductResolution,
+  FormatedAttributeNames,
 } from '../../../../api/OData/assets/attributes';
 import {
   createOriginFilter,
@@ -26,8 +28,8 @@ import { NumericInput } from './filters/NumericInput';
 
 export const collections = [
   {
-    id: 'S1',
-    label: 'SENTINEL-1',
+    id: ODataColections.S1.id,
+    label: ODataColections.S1.label,
     instruments: [
       {
         id: 'SAR',
@@ -152,8 +154,8 @@ export const collections = [
     ],
   },
   {
-    id: 'S2',
-    label: 'SENTINEL-2',
+    id: ODataColections.S2.id,
+    label: ODataColections.S2.label,
     instruments: [
       {
         id: 'MSI',
@@ -216,9 +218,10 @@ export const collections = [
       },
     ],
   },
+
   {
-    id: 'S3',
-    label: 'SENTINEL-3',
+    id: ODataColections.S3.id,
+    label: ODataColections.S3.label,
     instruments: [
       {
         id: 'OLCI',
@@ -314,8 +317,8 @@ export const collections = [
     ],
   },
   {
-    id: 'S5P',
-    label: 'SENTINEL-5P',
+    id: ODataColections.S5P.id,
+    label: ODataColections.S5P.label,
     instruments: [
       {
         id: 'TROPOMI',
@@ -385,8 +388,8 @@ export const collections = [
     ],
   },
   {
-    id: 'S6',
-    label: 'SENTINEL-6',
+    id: ODataColections.S6.id,
+    label: ODataColections.S6.label,
     instruments: [
       {
         id: 'S6AuxiliaryFiles',
@@ -403,4 +406,147 @@ export const collections = [
     ],
     supportsCloudCover: false,
   },
+  {
+    id: 'CCM',
+    label: 'CCM Optical',
+    supportsCollectionName: false,
+    instruments: [
+      {
+        id: 'VHR_EUROPE',
+        label: 'VHR Europe',
+        selected: true,
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'VHR_IMAGE_2015',
+            label: 'VHR Europe (2014–2016)',
+            queryByDatasetFull: true,
+          },
+          {
+            id: 'VHR_IMAGE_2018',
+            label: 'VHR Europe (2017–2019)',
+            queryByDatasetFull: true,
+          },
+          {
+            id: 'VHR_IMAGE_2021',
+            label: 'VHR Europe (2020–2022)',
+            queryByDatasetFull: true,
+          },
+        ],
+        supportsCloudCover: true,
+      },
+      {
+        id: 'VHR_URBAN_ATLAS',
+        label: ' VHR Urban Atlas',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'DAP_MG2b_01',
+            label: 'VHR Urban Atlas (2006, 2009)',
+            queryByDatasetFull: true,
+          },
+          {
+            id: 'VHR1-2_Urban_Atlas_2012',
+            label: 'VHR Urban Atlas (2011–2013)',
+            queryByDatasetFull: true,
+          },
+        ],
+        supportsCloudCover: true,
+      },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.eopIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.eopIdentifier(),
+      },
+      {
+        id: AttributeNames.platformShortName,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.platformShortName(),
+      },
+      {
+        id: AttributeNames.platformName,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.platformName(),
+      },
+      {
+        id: AttributeNames.datasetFull,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.datasetFull(),
+      },
+      {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
+      },
+      {
+        id: AttributeNames.acrossTrackIncidenceAngle,
+        render: NumericInput,
+        type: 'integer',
+        min: -180,
+        max: 180,
+        placeholder: '-180 - 180',
+      },
+    ],
+  },
+  /*
+  {
+    id: 'DEM',
+    label: 'COP-DEM',
+    supportsCloudCover: false,
+    supportsDates: false,
+    instruments: [
+      {
+        id: 'DGE',
+        label: 'DGE',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'DGE_30', name: 'DGE_30', label: 'DGE 30' },
+          { id: 'DGE_90', name: 'DGE_90', label: 'DGE 90' },
+        ],
+      },
+      {
+        id: 'DTE',
+        label: 'DTE',
+        supportsInstrumentName: false,
+        productTypes: [
+          { id: 'DTE_30', name: 'DTE_30', label: 'DTE 30' },
+          { id: 'DTE_90', name: 'DTE_90', label: 'DTE 90' },
+        ],
+      },
+    ],
+  },
+  */
+  /*
+  {
+    id: ODataColections.GLOBAL_MOSAICS.id,
+    label: ODataColections.GLOBAL_MOSAICS.label,
+    supportsCloudCover: false,
+    instruments: [
+      {
+        id: 'S2Mosaics',
+        label: 'Sentinel-2',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'S2MSI_L3__MCQ',
+            name: 'Quarterly Mosaics',
+            label: 'Quarterly Mosaics',
+            customFilterExpression: FilterElement.Attribute(
+              ODAtaAttributes.productType,
+              ODataFilterOperator.eq,
+              'S2MSI_L3__MCQ',
+            ),
+          },
+        ],
+      },
+    ],
+  },
+  */
 ];

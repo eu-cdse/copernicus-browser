@@ -1,9 +1,11 @@
 import * as wellknown from 'wellknown';
 import { ODataFilterBuilder } from './ODataFilterBuilder';
 import { ODataQueryBuilder } from './ODataQueryBuilder';
-import { ODataEntity, ODataFilterOperator, OrderingDirection } from './ODataTypes';
+import { ODataColections, ODataEntity, ODataFilterOperator, OrderingDirection } from './ODataTypes';
 import { ExpressionTreeOperator } from './ExpressionTree';
 import {
+  DEM_COPERNICUS_30_CDAS,
+  DEM_COPERNICUS_90_CDAS,
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
   S1_CDAS_EW_VV,
@@ -28,6 +30,7 @@ import {
   S5_NO2_CDAS,
   S5_O3_CDAS,
   S5_SO2_CDAS,
+  COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -43,8 +46,11 @@ import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandle
 import { Polarization } from '@sentinel-hub/sentinelhub-js';
 import { collections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
 import { FilterElement } from './FilterElement';
+import moment from 'moment';
 
 export const PAGE_SIZE = 50;
+
+export const MIN_SEARCH_DATE = moment.utc('2006-01-01').startOf('day');
 
 // S1 is not included as it's handled manually
 const PRODUCT_TYPE_TO_DATASETID = {
@@ -61,6 +67,9 @@ const PRODUCT_TYPE_TO_DATASETID = {
   L2__NO2___: S5_NO2_CDAS,
   L2__O3____: S5_O3_CDAS,
   L2__SO2___: S5_SO2_CDAS,
+  DGE_30: DEM_COPERNICUS_30_CDAS,
+  DGE_90: DEM_COPERNICUS_90_CDAS,
+  S2MSI_L3__MCQ: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
 };
 
 export const getDatasetIdFromProductType = (productType, attributes) => {
@@ -137,7 +146,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
   if (/^S1/.test(datasetId)) {
     const datasetParams = Sentinel1DataSourceHandler.getDatasetParams(datasetId);
     return {
-      id: 'S1',
+      id: ODataColections.S1.id,
       instrument: 'SAR',
       productType: 'GRD',
       selectedFilters: {
@@ -166,10 +175,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       },
     };
   }
+  if (datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC) {
+    return {
+      id: ODataColections.GLOBAL_MOSAICS.id,
+      instrument: 'S2Mosaics',
+      productType: 'S2MSI_L3__MCQ',
+    };
+  }
 
   if (/^S2/.test(datasetId)) {
     return {
-      id: 'S2',
+      id: ODataColections.S2.id,
       instrument: 'MSI',
       productType: getProductTypeFromDatasetId(datasetId),
       maxCC,
@@ -181,7 +197,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   if (/^S3/.test(datasetId)) {
     return {
-      id: 'S3',
+      id: ODataColections.S3.id,
       instrument: dsh.datasetSearchIds[datasetId],
       productType: getProductTypeFromDatasetId(datasetId),
     };
@@ -189,8 +205,16 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   if (/^S5/.test(datasetId)) {
     return {
-      id: 'S5P',
+      id: ODataColections.S5P.id,
       instrument: 'TROPOMI',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+
+  if (/^DEM/.test(datasetId)) {
+    return {
+      id: 'DEM',
+      instrument: 'DGE',
       productType: getProductTypeFromDatasetId(datasetId),
     };
   }
@@ -215,6 +239,16 @@ export const findAdditionalFiltersConfigById = (collectionId, id) => {
     return null;
   }
   return collection.additionalFilters.find((af) => af.id === id);
+};
+
+export const checkCollectionSupports = (collectionId, supportedProperty) => {
+  const collection = findCollectionConfigById(collectionId);
+
+  if (!collection) {
+    throw new Error(`No collection ${collection} found`);
+  }
+
+  return collection[supportedProperty] !== false;
 };
 
 export const checkInstrumentSupports = (instrumentId, supportedProperty) => {
@@ -258,7 +292,7 @@ export const checkAllProductsInInstrumentSupport = (instrumentId, supportedPrope
 export const checkAllProductsInCollectionSupport = (collectionId, supportedProperty) => {
   const collection = findCollectionConfigById(collectionId);
 
-  return collection.instruments.every((instrument) =>
+  return collection.instruments?.every((instrument) =>
     checkAllProductsInInstrumentSupport(instrument.id, supportedProperty),
   );
 };
@@ -285,22 +319,29 @@ const createTimeIntervalsFilter = (timeIntervals) => {
 const createProductTypeFilter = ({ productType, geometry }) => {
   const productTypeFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
   const productTypeConfig = findProductTypeConfigById(productType.id);
+  const { queryByDatasetFull } = findProductTypeConfigById(productType.id);
 
-  if (Array.isArray(productTypeConfig.name)) {
-    productTypeConfig.name.forEach((name) => {
-      productTypeFilter.contains(AttributeNames.productName, name, 'string');
-    });
+  if (productTypeConfig?.customFilterExpression) {
+    productTypeFilter.addExpression(productTypeConfig.customFilterExpression);
   } else {
-    productTypeFilter.contains(AttributeNames.productName, productTypeConfig.name, 'string');
-  }
-
-  if (productTypeConfig.notName !== undefined) {
-    if (Array.isArray(productTypeConfig.notName)) {
-      productTypeConfig.notName.forEach((notName) => {
-        productTypeFilter.notContains(AttributeNames.productName, notName, 'string');
+    if (Array.isArray(productTypeConfig.name)) {
+      productTypeConfig.name.forEach((name) => {
+        productTypeFilter.contains(AttributeNames.productName, name, 'string');
       });
     } else {
-      productTypeFilter.notContains(AttributeNames.productName, productTypeConfig.notName, 'string');
+      queryByDatasetFull
+        ? productTypeFilter.attribute(ODAtaAttributes.datasetFull, ODataFilterOperator.eq, productType.id)
+        : productTypeFilter.contains(AttributeNames.productName, productTypeConfig.name, 'string');
+    }
+
+    if (productTypeConfig.notName !== undefined) {
+      if (Array.isArray(productTypeConfig.notName)) {
+        productTypeConfig.notName.forEach((notName) => {
+          productTypeFilter.notContains(AttributeNames.productName, notName, 'string');
+        });
+      } else {
+        productTypeFilter.notContains(AttributeNames.productName, productTypeConfig.notName, 'string');
+      }
     }
   }
 
@@ -353,7 +394,12 @@ const createInstrumentFilter = ({ instrument, geometry }) => {
 
   //add instrument
   if (checkInstrumentSupports(instrument.id, SUPPORTED_PROPERTIES.InstrumentName)) {
-    instrumentFilter.attribute(ODAtaAttributes.instrument, ODataFilterOperator.eq, instrument.id);
+    const instrumentConfig = findInstrumentConfigById(instrument.id);
+    instrumentFilter.addExpression(
+      instrumentConfig?.customFilterExpression
+        ? instrumentConfig.customFilterExpression
+        : FilterElement.Attribute(ODAtaAttributes.instrument, ODataFilterOperator.eq, instrument.id),
+    );
   }
 
   //add cloud coverage if it is supported
@@ -366,7 +412,7 @@ const createInstrumentFilter = ({ instrument, geometry }) => {
     instrumentFilter.attribute(ODAtaAttributes.cloudCover, ODataFilterOperator.le, instrument.cloudCover);
   }
 
-  //add level 3 - product types
+  // add level 3 - product types
   const productTypesFilter = createProductTypesFilter({ instrument, geometry });
   if (productTypesFilter) {
     instrumentFilter.add(productTypesFilter);
@@ -484,10 +530,20 @@ const createCollectionFilter = ({ collection, geometry }) => {
   const collectionFilter = new ODataFilterBuilder();
 
   //add collection id
-  const label = findCollectionConfigById(collection.id)?.label;
-  collectionFilter.expression(AttributeNames.collectionName, ODataFilterOperator.eq, `'${label}'`);
+  const collectionConfig = findCollectionConfigById(collection.id);
+  if (collectionConfig?.supportsCollectionName === undefined || !!collectionConfig?.supportsCollectionName) {
+    collectionFilter.addExpression(
+      collectionConfig?.customFilterExpression
+        ? collectionConfig?.customFilterExpression
+        : FilterElement.Expression(
+            AttributeNames.collectionName,
+            ODataFilterOperator.eq,
+            `'${collectionConfig?.label}'`,
+          ),
+    );
+  }
 
-  //level2 - instruments
+  // level 2 - instruments
   const instrumentsFilter = createInstrumentsFilter({ collection, geometry });
   if (instrumentsFilter) {
     collectionFilter.and(instrumentsFilter);
@@ -515,13 +571,84 @@ const createCollectionsFilter = ({ collections, geometry }) => {
   }
 
   const collectionsFilter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
-  //level1 - collections
+  // level 1 - collections
   collections.forEach((collection) => {
     const collectionFilter = createCollectionFilter({ collection, geometry });
     collectionsFilter.add(collectionFilter);
   });
 
   return collectionsFilter.getTree();
+};
+
+const createCollectionGroupFilter = ({
+  collections,
+  geometry,
+  fromTime,
+  toTime,
+  timeIntervals,
+  supportsDates,
+}) => {
+  const collectionGroupFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
+
+  const collectionsFilter = createCollectionsFilter({ collections, geometry: roundGeometryValues(geometry) });
+  if (collectionsFilter) {
+    collectionGroupFilter.and(collectionsFilter);
+  }
+
+  if (supportsDates) {
+    if (fromTime) {
+      collectionGroupFilter.expression(AttributeNames.sensingTime, ODataFilterOperator.ge, fromTime);
+    }
+
+    if (toTime) {
+      collectionGroupFilter.expression(AttributeNames.sensingTime, ODataFilterOperator.lt, toTime);
+    }
+
+    const timeIntervalsFilter = createTimeIntervalsFilter(timeIntervals);
+    if (timeIntervalsFilter) {
+      collectionGroupFilter.and(timeIntervalsFilter);
+    }
+  }
+
+  return collectionGroupFilter.getTree();
+};
+
+const createCollectionGroupsFilter = (
+  { collections, geometry, fromTime, toTime, timeIntervals },
+  groupBy,
+) => {
+  if (!collections) {
+    return null;
+  }
+
+  const collectionGroup = new Map();
+
+  collections.forEach((collection) => {
+    const supports = checkCollectionSupports(collection.id, groupBy);
+    if (collectionGroup.has(supports)) {
+      collectionGroup.get(supports).push(collection);
+    } else {
+      collectionGroup.set(supports, [collection]);
+    }
+  });
+
+  const collectionGroupsFilter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
+
+  collectionGroup.forEach((collectionGroup, supports) => {
+    const collectionGroupFilter = createCollectionGroupFilter({
+      collections: collectionGroup,
+      geometry,
+      fromTime,
+      toTime,
+      timeIntervals,
+      [groupBy]: supports,
+    });
+    if (collectionGroupFilter) {
+      collectionGroupsFilter.or(collectionGroupFilter);
+    }
+  });
+
+  return collectionGroupsFilter.getTree();
 };
 
 const createProductFilter = ({ fromTime, toTime, geometry, name, collections, timeIntervals }) => {
@@ -531,22 +658,38 @@ const createProductFilter = ({ fromTime, toTime, geometry, name, collections, ti
     oDataFilterBuilder.contains(AttributeNames.productName, name, 'string');
   }
 
-  const collectionsFilter = createCollectionsFilter({ collections, geometry: roundGeometryValues(geometry) });
-  if (collectionsFilter) {
-    oDataFilterBuilder.and(collectionsFilter);
-  }
+  const collectionGroupsFilter = createCollectionGroupsFilter(
+    {
+      fromTime,
+      toTime,
+      geometry,
+      collections,
+      timeIntervals,
+    },
+    'supportsDates',
+  );
 
-  if (fromTime) {
-    oDataFilterBuilder.expression(AttributeNames.sensingTime, ODataFilterOperator.ge, fromTime);
-  }
+  if (collectionGroupsFilter) {
+    oDataFilterBuilder.and(collectionGroupsFilter);
+  } else {
+    // apply dates when no collection is selected - search by product name only
+    if (fromTime) {
+      oDataFilterBuilder.expression(AttributeNames.sensingTime, ODataFilterOperator.ge, fromTime);
+    }
 
-  if (toTime) {
-    oDataFilterBuilder.expression(AttributeNames.sensingTime, ODataFilterOperator.lt, toTime);
-  }
+    if (toTime) {
+      oDataFilterBuilder.expression(AttributeNames.sensingTime, ODataFilterOperator.lt, toTime);
+    }
 
-  const timeIntervalsFilter = createTimeIntervalsFilter(timeIntervals);
-  if (timeIntervalsFilter) {
-    oDataFilterBuilder.and(timeIntervalsFilter);
+    if (geometry) {
+      const wkt = wellknown.stringify(geometry);
+      oDataFilterBuilder.intersects(wkt);
+    }
+
+    const timeIntervalsFilter = createTimeIntervalsFilter(timeIntervals);
+    if (timeIntervalsFilter) {
+      oDataFilterBuilder.and(timeIntervalsFilter);
+    }
   }
 
   return oDataFilterBuilder.getQueryString();
@@ -581,14 +724,20 @@ const createBasicSearchQuery = ({ fromTime, toTime, orbitDirection, geometry, da
     collections = [
       {
         id: oDataCollectionInfo.id,
-        instruments: [
-          {
-            id: oDataCollectionInfo.instrument,
-            ...(oDataCollectionInfo.productType
-              ? { productTypes: [{ id: oDataCollectionInfo.productType }] }
-              : {}),
-          },
-        ],
+        ...(oDataCollectionInfo.instrument
+          ? {
+              instruments: oDataCollectionInfo.instrument
+                ? [
+                    {
+                      id: oDataCollectionInfo.instrument,
+                      ...(oDataCollectionInfo.productType
+                        ? { productTypes: [{ id: oDataCollectionInfo.productType }] }
+                        : {}),
+                    },
+                  ]
+                : [],
+            }
+          : {}),
         additionalFilters: oDataCollectionInfo.selectedFilters,
       },
     ];
@@ -596,8 +745,8 @@ const createBasicSearchQuery = ({ fromTime, toTime, orbitDirection, geometry, da
 
   const params = {
     collections,
-    fromTime,
     geometry,
+    fromTime,
     toTime,
   };
   return createAdvancedSearchQuery(params);

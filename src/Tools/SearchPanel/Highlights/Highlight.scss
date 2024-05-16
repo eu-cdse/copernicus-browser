@@ -131,13 +131,4 @@
   .zoom-to-highlight {
     float: right;
   }
-
-  &.gu-mirror,
-  &.gu-transit {
-    color: #fff;
-    opacity: 0.8;
-    background-color: $mainDark !important;
-    box-shadow: 0 3px 5px #000;
-    cursor: -webkit-grabbing !important;
-  }
 }

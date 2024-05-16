@@ -1,8 +1,8 @@
-import useAnonymousAuthFingerprint from '../AnonymousAuthFingerprint/useAnonymousAuthFingerprint';
+import useAnonymousAuthRecaptcha from '../AnonymousAuthRecaptcha/useAnonymousAuthRecaptcha';
 import { getUserTokenFromLocalStorage, logoutUser, onLogIn, openLoginWindow } from '../authHelpers';
 
 const useLoginLogout = () => {
-  const { getAnonymousToken, clearAnonTokenRefresh } = useAnonymousAuthFingerprint();
+  const { clearAnonTokenRefresh } = useAnonymousAuthRecaptcha();
 
   const doLogin = async () => {
     const token = await openLoginWindow();
@@ -12,7 +12,6 @@ const useLoginLogout = () => {
 
   const doLogout = async () => {
     const userToken = await getUserTokenFromLocalStorage();
-    await getAnonymousToken();
     await logoutUser(userToken);
   };
 

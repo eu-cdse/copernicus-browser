@@ -10,7 +10,7 @@ export function applyFilterMonthsToDateRange(fromMoment, toMoment, filterMonths)
   fromMoment = moment.utc(fromMoment.unix() * 1000);
   toMoment = moment.utc(toMoment.unix() * 1000);
 
-  if (filterMonths === null || filterMonths.length === 12) {
+  if (filterMonths === null || filterMonths === undefined || filterMonths.length === 12) {
     return [{ fromMoment: fromMoment, toMoment: toMoment }];
   }
 

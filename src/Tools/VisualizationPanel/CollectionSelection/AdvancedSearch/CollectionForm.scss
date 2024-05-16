@@ -68,8 +68,18 @@
     padding-left: 16px;
     row-gap: 7px;
 
-    .custom-checkbox-product-container:last-child {
-      margin-bottom: 7px;
+    .product-type-checkbox-tooltip-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .help-tooltip-icon {
+        cursor: pointer;
+      }
+
+      &:last-child {
+        margin-bottom: 7px;
+      }
     }
   }
 
@@ -105,5 +115,11 @@
         }
       }
     }
+  }
+}
+
+.help-tooltip {
+  .react-tooltip-lite {
+    width: 200px;
   }
 }

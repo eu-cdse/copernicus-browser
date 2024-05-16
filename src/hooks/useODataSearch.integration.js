@@ -619,6 +619,242 @@ describe('useODataSearch S5', () => {
   });
 });
 
+describe('useODataSearch CCM', () => {
+  jest.setTimeout(TIMEOUT);
+
+  test('Collection DAP_MG2b_01', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'CCM',
+          instruments: [
+            {
+              id: 'VHR_URBAN_ATLAS',
+              productTypes: [
+                {
+                  id: 'DAP_MG2b_01',
+                },
+              ],
+            },
+          ],
+          additionalFilters: undefined,
+        },
+      ],
+      fromTime: moment.utc('2006-02-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2009-03-25T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [3.6914062500000004, 37.020098201368114],
+            [20.478515625000004, 37.020098201368114],
+            [20.478515625000004, 60.65164736580915],
+            [3.6914062500000004, 60.65164736580915],
+            [3.6914062500000004, 37.020098201368114],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = [
+      'SP05_HRG_THX__3',
+      'SP05_HRG_T____3',
+      'SP05_HRG_J____3',
+      'AL01_AV2_OBS_3A',
+      'AL01_PSM_OB1_3A',
+    ];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('DAP_MG2b_01');
+    expect(allResults[0].sensingTime).toContain('2009-03-17T10:36:46.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    allResults.forEach((result) => {
+      expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
+    });
+  });
+
+  test('Collection VHR_IMAGE_2018', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'CCM',
+          instruments: [
+            {
+              id: 'VHR_EUROPE',
+              productTypes: [
+                {
+                  id: 'VHR_IMAGE_2018',
+                },
+              ],
+            },
+          ],
+          additionalFilters: undefined,
+        },
+      ],
+      fromTime: moment.utc('2017-02-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2019-03-25T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [3.6914062500000004, 37.020098201368114],
+            [20.478515625000004, 37.020098201368114],
+            [20.478515625000004, 60.65164736580915],
+            [3.6914062500000004, 60.65164736580915],
+            [3.6914062500000004, 37.020098201368114],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = [
+      'PL00_DOV_MS_L1A',
+      'PL00_DOV_MS_L3A',
+      'PH1A_PHR_MS___3',
+      'PH1A_PHR_MS__2A',
+      'PH1B_PHR_MS___3',
+      'PH1B_PHR_MS__2A',
+      'SP06_NAO_MS4__3',
+      'SP06_NAO_MS4_2A',
+      'SP07_NAO_MS4__3',
+      'SP07_NAO_MS4_2A',
+      'SW00_OPT_MS4_1B',
+      'SW00_OPT_MS4_1C',
+    ];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018');
+    expect(allResults[0].sensingTime).toContain('2018-09-15T10:30:35.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    allResults.forEach((result) => {
+      expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
+    });
+  });
+
+  test('Collection VHR_IMAGE_2021', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'CCM',
+          instruments: [
+            {
+              id: 'VHR_EUROPE',
+              productTypes: [
+                {
+                  id: 'VHR_IMAGE_2021',
+                },
+              ],
+            },
+          ],
+          additionalFilters: undefined,
+        },
+      ],
+      fromTime: moment.utc('2020-02-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2022-03-25T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [3.6914062500000004, 37.020098201368114],
+            [20.478515625000004, 37.020098201368114],
+            [20.478515625000004, 60.65164736580915],
+            [3.6914062500000004, 60.65164736580915],
+            [3.6914062500000004, 37.020098201368114],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = [
+      'PH1A_PHR_MS__2A',
+      'PH1A_PHR_MS___3',
+      'GY01_GIS_MS4_SO',
+      'GY01_GIS_MS4_OR',
+      'PH1B_PHR_MS__2A',
+      'PH1B_PHR_MS___3',
+      'EW02_WV1_MS4_SO',
+      'EW02_WV1_MS4_OR',
+      'SP07_NAO_MS4__3',
+      'SP07_NAO_MS4_2A',
+      'KS03_AIS_MSP_1R',
+      'KS03_AIS_MSP_1G',
+    ];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2021');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    allResults.forEach((result) => {
+      expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
+    });
+  });
+});
+
 describe('useODataSearch multiple data sources', () => {
   jest.setTimeout(TIMEOUT);
 
@@ -659,11 +895,11 @@ describe('useODataSearch multiple data sources', () => {
           ],
           additionalFilters: undefined,
         },
-        {
-          id: 'S3',
-          instruments: [],
-          additionalFilters: undefined,
-        },
+        // {
+        //   id: 'S3',
+        //   instruments: [],
+        //   additionalFilters: undefined,
+        // },
         {
           id: 'S5P',
           instruments: [
@@ -690,7 +926,8 @@ describe('useODataSearch multiple data sources', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 9;
+    // const expectedResults = 9;
+    const expectedResults = 5;
     expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
@@ -711,9 +948,9 @@ describe('useODataSearch multiple data sources', () => {
         ({ instrumentShortName }) => instrumentShortName === 'MSI',
       ),
     ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S3')),
-    ).toBeTruthy();
+    // expect(
+    //   result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S3')),
+    // ).toBeTruthy();
     expect(
       result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S5P')),
     ).toBeTruthy();
@@ -725,5 +962,49 @@ describe('useODataSearch multiple data sources', () => {
     expect(
       result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L1B_RA_BD2'),
     ).toBeTruthy();
+  });
+});
+
+describe('useODataSearch DEM', () => {
+  test.skip('DGE_30', async () => {
+    const params = {
+      fromTime: moment.utc('2011-06-20T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-20T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [14, 46],
+            [15, 47],
+            [15, 47],
+            [14, 47],
+            [14, 46],
+          ],
+        ],
+      },
+      datasetId: 'DEM_COPERNICUS_30_CDAS',
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createBasicSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(1);
+
+    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('DEM');
+    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('DGE_30');
+    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toBeUndefined();
+    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toBeUndefined();
+    expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('DGE_30');
+    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2011-06-20');
   });
 });

@@ -48,9 +48,9 @@ const saveLang = (locale) => {
 
 const setTtagLocale = async (locale) => {
   const { data: ttagObject } = await axios.get(
-    `${process.env.REACT_APP_ROOT_URL}translations/${locale}.po.json`,
+    `${import.meta.env.VITE_ROOT_URL}translations/${locale}.po.json`,
   );
-  if (process.env.REACT_APP_DEBUG_TRANSLATIONS === 'true') {
+  if (import.meta.env.VITE_DEBUG_TRANSLATIONS === 'true') {
     makeDebugTranslations(ttagObject);
   }
   addLocale(locale, ttagObject);

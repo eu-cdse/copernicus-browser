@@ -4,7 +4,7 @@ import store, { notificationSlice } from '../../store';
 
 import { getDataSourceHashtags } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
-const API_KEY = `${process.env.REACT_APP_REBRANDLY_API_KEY}`;
+const API_KEY = `${import.meta.env.VITE_REBRANDLY_API_KEY}`;
 const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
 const DOMAIN_TYPE = {
   CUSTOM_DOMAIN: 'USER',

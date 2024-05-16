@@ -1,4 +1,5 @@
 import moment from 'moment';
+import * as wellknown from 'wellknown';
 
 import oDataHelpers, {
   SUPPORTED_PROPERTIES,
@@ -43,6 +44,13 @@ describe('findCollectionConfigById', () => {
     expect(collection.instruments).toBeDefined();
     expect(collection.instruments.length).toBeGreaterThan(0);
   });
+
+  test('CCM', () => {
+    const collection = findCollectionConfigById('CCM');
+    expect(collection.id).toEqual('CCM');
+    expect(collection.instruments).toBeDefined();
+    expect(collection.instruments.length).toBeGreaterThan(0);
+  });
 });
 
 describe('findInstrumentConfigById', () => {
@@ -56,6 +64,20 @@ describe('findInstrumentConfigById', () => {
   test('MSI', () => {
     const instrument = findInstrumentConfigById('MSI');
     expect(instrument.id).toEqual('MSI');
+    expect(instrument.productTypes).toBeDefined();
+    expect(instrument.productTypes.length).toBeGreaterThan(0);
+  });
+
+  test('VHR Europe', () => {
+    const instrument = findInstrumentConfigById('VHR_EUROPE');
+    expect(instrument.id).toEqual('VHR_EUROPE');
+    expect(instrument.productTypes).toBeDefined();
+    expect(instrument.productTypes.length).toBeGreaterThan(0);
+  });
+
+  test('VHR Urban Atlas', () => {
+    const instrument = findInstrumentConfigById('VHR_URBAN_ATLAS');
+    expect(instrument.id).toEqual('VHR_URBAN_ATLAS');
     expect(instrument.productTypes).toBeDefined();
     expect(instrument.productTypes.length).toBeGreaterThan(0);
   });
@@ -91,6 +113,31 @@ describe('findProductTypeConfigById', () => {
     expect(productType.id).toEqual('SR_2_LAN___');
     expect(productType.label).toBeDefined();
   });
+
+  test('DAP_MG2b_01', () => {
+    const productType = findProductTypeConfigById('DAP_MG2b_01');
+    expect(productType.id).toEqual('DAP_MG2b_01');
+    expect(productType.label).toBeDefined();
+  });
+
+  test('VHR_IMAGE_2018', () => {
+    const productType = findProductTypeConfigById('VHR_IMAGE_2018');
+    expect(productType.id).toEqual('VHR_IMAGE_2018');
+    expect(productType.label).toBeDefined();
+  });
+
+  test('VHR_IMAGE_2021', () => {
+    const productType = findProductTypeConfigById('VHR_IMAGE_2021');
+    expect(productType.id).toEqual('VHR_IMAGE_2021');
+    expect(productType.label).toBeDefined();
+  });
+});
+
+describe('checkCollectionSupports', () => {
+  test('CCM CollectionName', () => {
+    const { supportsCollectionName } = findCollectionConfigById('CCM');
+    expect(supportsCollectionName).toBeFalsy();
+  });
 });
 
 describe('checkInstrumentSupports', () => {
@@ -107,6 +154,16 @@ describe('checkInstrumentSupports', () => {
   test('TROPOMI InstrumentName', () => {
     const sg = checkInstrumentSupports('TROPOMI', SUPPORTED_PROPERTIES.InstrumentName);
     expect(sg).toBeTruthy();
+  });
+
+  test('VHR Europe InstrumentName', () => {
+    const sg = checkInstrumentSupports('VHR_EUROPE', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeFalsy();
+  });
+
+  test('VHR Urban Atlas InstrumentName', () => {
+    const sg = checkInstrumentSupports('VHR_URBAN_ATLAS', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeFalsy();
   });
 
   test.each([
@@ -130,6 +187,18 @@ describe('checkAllInstrumentsInCollectionSupport', () => {
     const sg = checkAllInstrumentsInCollectionSupport('S5P', SUPPORTED_PROPERTIES.InstrumentName);
     expect(sg).toBeFalsy();
   });
+
+  test('CCM InstrumentName', () => {
+    const sg = checkAllInstrumentsInCollectionSupport('CCM', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeFalsy();
+  });
+});
+
+describe('checkProductsSupport ', () => {
+  test.each(['DAP_MG2b_01', 'VHR_IMAGE_2018', 'VHR_IMAGE_2021'])(`queryByDatasetFull`, (id) => {
+    const { queryByDatasetFull } = findProductTypeConfigById(id);
+    expect(queryByDatasetFull).toBeTruthy();
+  });
 });
 
 describe('checkProductTypeSupports', () => {
@@ -140,6 +209,21 @@ describe('checkProductTypeSupports', () => {
 
   test('RAW Geometry', () => {
     const sg = checkProductTypeSupports('RAW', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
+  test('DAP_MG2b_01 Geometry', () => {
+    const sg = checkProductTypeSupports('DAP_MG2b_01', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
+  test('VHR_IMAGE_2018 Geometry', () => {
+    const sg = checkProductTypeSupports('VHR_IMAGE_2018', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
+  test('VHR_IMAGE_2021 Geometry', () => {
+    const sg = checkProductTypeSupports('VHR_IMAGE_2021', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeTruthy();
   });
 
@@ -164,6 +248,16 @@ describe('checkAllProductsInInstrumentSupport', () => {
     const sg = checkAllProductsInInstrumentSupport('TROPOMI', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeFalsy();
   });
+
+  test('VHR Europe Geometry', () => {
+    const sg = checkAllProductsInInstrumentSupport('VHR_EUROPE', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
+  test('VHR Urban Atlas Geometry', () => {
+    const sg = checkAllProductsInInstrumentSupport('VHR_URBAN_ATLAS', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
 });
 
 describe('checkAllProductsInCollectionSupport', () => {
@@ -175,6 +269,11 @@ describe('checkAllProductsInCollectionSupport', () => {
   test('S5P Geometry', () => {
     const sg = checkAllProductsInCollectionSupport('S5P', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeFalsy();
+  });
+
+  test('CCM Geometry', () => {
+    const sg = checkAllProductsInCollectionSupport('CCM', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
   });
 });
 
@@ -466,5 +565,354 @@ describe('createAdvancedSearchQuery - contains name', () => {
     expect(filter).not.toBeNull();
     expect(filter.value).toContain(`contains(Name,'L1C')`);
     expect(filter.value).not.toContain(`and not contains(Name,'undefined')`);
+  });
+});
+
+describe('createAdvancedSearchQuery', () => {
+  const productName = 'S2';
+  const collectionS1 = { id: 'S1', label: 'SENTINEL-1', instruments: [{ id: 'SAR' }] };
+  const collectionS2 = { id: 'S2', label: 'SENTINEL-2', instruments: [{ id: 'MSI' }] };
+  const collectionDEM = { id: 'DEM', label: 'COP-DEM' };
+  const fromTime = '2023-06-29T00:00:00.000Z';
+  const toTime = '2023-06-29T23:59:59.999Z';
+  const geometry = {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [1, 1],
+        [1, 2],
+        [2, 2],
+        [2, 1],
+        [1, 1],
+      ],
+    ],
+  };
+
+  test('product name only', () => {
+    const params = {
+      name: productName,
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `contains(Name,'${productName}') and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime}`,
+    );
+  });
+
+  test('product name and geometry only', () => {
+    const params = {
+      name: productName,
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `contains(Name,'${productName}') and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime} and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')`,
+    );
+  });
+
+  test('one collection', () => {
+    const params = {
+      collections: [collectionS1],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((Collection/Name eq '${
+        collectionS1.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'SAR') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  // 2 collections
+  test('two collections', () => {
+    const params = {
+      collections: [collectionS1, collectionS2],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `(((Collection/Name eq '${
+        collectionS1.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'SAR') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) or (Collection/Name eq '${
+        collectionS2.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'MSI') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true)) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test.skip('collection with dates and collection without dates', () => {
+    const params = {
+      collections: [collectionS1, collectionDEM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `(((Collection/Name eq '${
+        collectionS1.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'SAR') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime}) or (Collection/Name eq '${
+        collectionDEM.label
+      }' and (((contains(Name,'DGE_30') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (contains(Name,'DGE_90') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) or ((contains(Name,'DTE_30') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (contains(Name,'DTE_90') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')))) and Online eq true))`,
+    );
+  });
+
+  test.skip('product name and collection without dates', () => {
+    const params = {
+      name: productName,
+      collections: [collectionDEM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `contains(Name,'${productName}') and (Collection/Name eq '${
+        collectionDEM.label
+      }' and (((contains(Name,'DGE_30') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (contains(Name,'DGE_90') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) or ((contains(Name,'DTE_30') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (contains(Name,'DTE_90') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')))) and Online eq true)`,
+    );
+  });
+
+  test('product name and collection with dates', () => {
+    const params = {
+      name: productName,
+      collections: [collectionS1],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `contains(Name,'${productName}') and ((Collection/Name eq '${
+        collectionS1.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'SAR') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+});
+
+describe('createAdvancedSearchQuery for CCM data', () => {
+  const fromTime = '2006-01-29T00:00:00.000Z';
+  const toTime = '2024-12-29T23:59:59.999Z';
+  const geometry = {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [1, 1],
+        [1, 2],
+        [2, 2],
+        [2, 1],
+        [1, 1],
+      ],
+    ],
+  };
+
+  test('one collection', () => {
+    const collectionCCM = {
+      id: 'CCM',
+      label: 'CCM Optical',
+      supportsCollectionName: false,
+      instruments: [
+        {
+          id: 'VHR_URBAN_ATLAS',
+          label: ' VHR Urban Atlas',
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'DAP_MG2b_01',
+              label: 'VHR Urban Atlas (2006, 2009)',
+              queryByDatasetFull: true,
+            },
+          ],
+        },
+      ],
+      supportsCloudCover: false,
+    };
+
+    const params = {
+      collections: [collectionCCM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `(((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'DAP_MG2b_01') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('two collections', () => {
+    const collectionCCM = {
+      id: 'CCM',
+      label: 'CCM Optical',
+      supportsCollectionName: false,
+      instruments: [
+        {
+          id: 'VHR_EUROPE',
+          label: 'Very High Resolution (VHR)',
+          selected: true,
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'VHR_IMAGE_2018',
+              label: 'VHR Europe (2017–2019)',
+              queryByDatasetFull: true,
+            },
+            {
+              id: 'VHR_IMAGE_2021',
+              label: 'VHR Europe (2020–2022)',
+              queryByDatasetFull: true,
+            },
+          ],
+        },
+      ],
+      supportsCloudCover: false,
+    };
+    const params = {
+      collections: [collectionCCM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2018') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2021') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('three collections', () => {
+    const collectionCCM = {
+      id: 'CCM',
+      label: 'CCM Optical',
+      supportsCollectionName: false,
+      instruments: [
+        {
+          id: 'VHR_EUROPE',
+          label: 'Very High Resolution (VHR)',
+          selected: true,
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'VHR_IMAGE_2018',
+              label: 'VHR Europe (2017–2019)',
+              queryByDatasetFull: true,
+            },
+            {
+              id: 'VHR_IMAGE_2021',
+              label: 'VHR Europe (2020–2022)',
+              queryByDatasetFull: true,
+            },
+          ],
+        },
+        {
+          id: 'VHR_URBAN_ATLAS',
+          label: 'Very High Resolution (VHR)',
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'DAP_MG2b_01',
+              label: 'VHR Urban Atlas (2006, 2009)',
+              queryByDatasetFull: true,
+            },
+          ],
+        },
+      ],
+      supportsCloudCover: false,
+    };
+    const params = {
+      collections: [collectionCCM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `(((((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2018') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2021') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'DAP_MG2b_01') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
   });
 });

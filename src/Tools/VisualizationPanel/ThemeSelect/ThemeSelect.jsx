@@ -1,0 +1,222 @@
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Select, { components } from 'react-select';
+import { t } from 'ttag';
+
+import store, {
+  notificationSlice,
+  visualizationSlice,
+  themesSlice,
+  authSlice,
+  collapsiblePanelSlice,
+} from '../../../store';
+import { getThemeName } from '../../../utils';
+import { usePrevious } from '../../../hooks/usePrevious';
+import { customSelectStyle } from '../../../components/CustomSelectInput/CustomSelectStyle';
+
+import {
+  MODE_THEMES_LIST,
+  USER_INSTANCES_THEMES_LIST,
+  URL_THEMES_LIST,
+  EXPIRED_ACCOUNT,
+  NOT_LOGGED_IN,
+} from '../../../const';
+import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
+import { openLoginWindow, createSetUserPayload } from '../../../Auth/authHelpers';
+
+import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
+
+import './ThemeSelect.scss';
+
+import MagnifierSvg from '../../../icons/magnifier.svg?react';
+import ChevronDown from '../../../icons/chevron-down.svg?react';
+
+const DropdownIndicator = (props) => {
+  return (
+    components.DropdownIndicator && (
+      <components.DropdownIndicator {...props}>
+        <CustomDropdownIndicator {...props} magnifier={MagnifierSvg} chevronDown={ChevronDown} />
+      </components.DropdownIndicator>
+    )
+  );
+};
+
+const createSelectOptions = (options = []) =>
+  options.map((option) => ({ value: option, label: getThemeName(option) }));
+
+const getSelectedOption = (selectedThemeId, groupedOptions) => {
+  if (!selectedThemeId || !groupedOptions) {
+    return null;
+  }
+
+  return groupedOptions.map((groupedOption) =>
+    groupedOption.options.find((t) => t?.value?.id === selectedThemeId),
+  );
+};
+
+function ThemeSelect({
+  user,
+  modeThemesList,
+  userInstancesThemesList,
+  urlThemesList,
+  selectedThemeId,
+  visualizationDate,
+  setShowLayerPanel,
+  setShowHighlightPanel,
+  highlightsAvailable,
+  themePanelExpanded,
+}) {
+  const previousVisualizationDate = usePrevious(visualizationDate);
+
+  useEffect(() => {
+    if (selectedThemeId === EXPIRED_ACCOUNT.instanceId) {
+      store.dispatch(
+        notificationSlice.actions.displayPanelError({
+          message: EXPIRED_ACCOUNT.errorMessage,
+          link: EXPIRED_ACCOUNT.errorLink,
+        }),
+      );
+    }
+  }, [selectedThemeId]);
+
+  useEffect(() => {
+    if (!previousVisualizationDate && visualizationDate) {
+      store.dispatch(collapsiblePanelSlice.actions.setThemePanelExpanded(false));
+    }
+    // eslint-disable-next-line
+  }, [visualizationDate]);
+
+  useEffect(() => {
+    highlightsAvailable ? setShowHighlightPanel(true) : setShowLayerPanel(true);
+    // eslint-disable-next-line
+  }, [highlightsAvailable]);
+
+  urlThemesList = urlThemesList.map((t) => ({ ...t, list: URL_THEMES_LIST }));
+  modeThemesList = modeThemesList.map((t) => ({ ...t, list: MODE_THEMES_LIST }));
+  userInstancesThemesList = userInstancesThemesList.map((t) => ({
+    ...t,
+    list: USER_INSTANCES_THEMES_LIST,
+  }));
+
+  if (!user) {
+    userInstancesThemesList.push({
+      name: NOT_LOGGED_IN.errorMessage,
+      id: NOT_LOGGED_IN.instanceId,
+      content: [],
+      list: USER_INSTANCES_THEMES_LIST,
+    });
+  }
+
+  const groupedOptions = [
+    {
+      label: t`Themes`,
+      options: createSelectOptions(!urlThemesList.length ? modeThemesList : urlThemesList),
+    },
+    { label: t`User configurations`, divider: true, options: createSelectOptions(userInstancesThemesList) },
+  ];
+
+  async function handleSelectTheme(selected) {
+    const theme = selected.value;
+    const { id: themeId, list: selectedThemesListId } = theme;
+    if (themeId === selectedThemeId) {
+      return;
+    }
+    if (themeId === NOT_LOGGED_IN.instanceId) {
+      const token = await openLoginWindow();
+      store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
+      return;
+    }
+    if (themeId === EXPIRED_ACCOUNT.instanceId) {
+      store.dispatch(
+        notificationSlice.actions.displayPanelError({
+          message: EXPIRED_ACCOUNT.errorMessage,
+          link: EXPIRED_ACCOUNT.errorLink,
+        }),
+      );
+    } else {
+      store.dispatch(notificationSlice.actions.displayPanelError(null));
+    }
+    store.dispatch(
+      themesSlice.actions.setSelectedThemeId({
+        selectedThemeId: themeId,
+        selectedThemesListId: selectedThemesListId,
+      }),
+    );
+    store.dispatch(visualizationSlice.actions.reset());
+    store.dispatch(collapsiblePanelSlice.actions.setDatePanelExpanded(false));
+    store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(false));
+
+    highlightsAvailable ? setShowHighlightPanel(true) : setShowLayerPanel(true);
+  }
+
+  const themesGroupLabel = ({ label }) => <span>{label}</span>;
+
+  const themePanelContent = () => (isExpanded) => {
+    if (!isExpanded) {
+      return null;
+    }
+
+    return (
+      <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
+        {!selectedThemeId && <div className="no-theme-message">{t`Please select a configuration`}:</div>}
+        <div className="theme-select-highlights-wrapper">
+          <div className="theme-label-select-wrapper">{themeSelectionDropdown()}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const themeSelectionDropdown = () => (
+    <div className="theme-search">
+      <div className="theme-search-header">
+        <div className="theme-selection">
+          <Select
+            value={getSelectedOption(selectedThemeId, groupedOptions)}
+            options={groupedOptions}
+            formatGroupLabel={themesGroupLabel}
+            placeholder={t`No configuration selected`}
+            onChange={handleSelectTheme}
+            styles={customSelectStyle}
+            menuPosition="fixed"
+            menuShouldBlockScroll={true}
+            className="theme-select-dropdown"
+            classNamePrefix="theme-select"
+            components={{ DropdownIndicator }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+  const themeHeaderCollapsed = () => (
+    <>
+      <div className="title-text">{t`Configurations:`}</div>
+    </>
+  );
+
+  return (
+    <CollapsiblePanel
+      title={themeSelectionDropdown()}
+      headerComponent={themeHeaderCollapsed()}
+      expanded={themePanelExpanded}
+      toggleExpanded={(v) => store.dispatch(collapsiblePanelSlice.actions.setThemePanelExpanded(v))}
+      className="theme-select-container"
+    >
+      {themePanelContent()}
+    </CollapsiblePanel>
+  );
+}
+
+const mapStoreToProps = (store) => ({
+  user: store.auth.user.userdata,
+  selectedThemeId: store.themes.selectedThemeId,
+  modeThemesList: store.themes.themesLists[MODE_THEMES_LIST],
+  userInstancesThemesList: store.themes.themesLists[USER_INSTANCES_THEMES_LIST],
+  urlThemesList: store.themes.themesLists[URL_THEMES_LIST],
+  themesLists: store.themes.themesLists,
+  selectedLanguage: store.language.selectedLanguage,
+  visualizationDate: store.visualization.toTime,
+  themePanelExpanded: store.collapsiblePanel.themePanelExpanded,
+});
+
+export default connect(mapStoreToProps, null)(ThemeSelect);

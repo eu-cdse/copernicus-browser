@@ -332,8 +332,7 @@
     }
   }
 
-  &.gu-mirror,
-  &.gu-transit {
+  &.dragging {
     color: $textColor;
     opacity: 0.8;
     background-color: $mainDark !important;

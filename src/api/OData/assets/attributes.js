@@ -5,6 +5,7 @@ export const AttributeNames = {
   collectionName: 'Collection/Name',
   cloudCover: 'cloudCover',
   instrumentShortName: 'instrumentShortName',
+  datasetFull: 'datasetFull',
   productType: 'productType',
   sensingTime: 'ContentDate/Start',
   productName: 'Name',
@@ -24,6 +25,10 @@ export const AttributeNames = {
   S2Collection: 'S2Collection',
   productClass: 'productClass',
   resolution: 'resolution',
+  eopIdentifier: 'eopIdentifier',
+  acrossTrackIncidenceAngle: 'acrossTrackIncidenceAngle',
+  resolutionClass: 'resolutionClass',
+  platformName: 'platformName',
 };
 
 export const FormatedAttributeNames = {
@@ -94,11 +99,17 @@ export const FormatedAttributeNames = {
   segmentStartTime: () => t`Segment start time`,
   productComposition: () => t`Product composition`,
   totalSlices: () => t`Total slices`,
+  eopIdentifier: () => t`Eop Identifier`,
+  datasetFull: () => t`Sub-dataset`,
+  acrossTrackIncidenceAngle: () => t`Max Across Track angle (ONA)`,
+  resolutionClass: () => t`Resolution class`,
+  platformName: () => t`Platform name`,
 };
 
 export const ODAtaAttributes = {
   cloudCover: new ODataDoubleAttribute(AttributeNames.cloudCover),
   instrument: new ODataStringAttribute(AttributeNames.instrumentShortName),
+  datasetFull: new ODataStringAttribute(AttributeNames.datasetFull),
   productType: new ODataStringAttribute(AttributeNames.productType),
   platformSerialIdentifier: new ODataStringAttribute(AttributeNames.platformSerialIdentifier),
   relativeOrbitNumber: new ODataIntegerAttribute(AttributeNames.relativeOrbitNumber),
@@ -112,6 +123,11 @@ export const ODAtaAttributes = {
   origin: new ODataStringAttribute(AttributeNames.origin),
   processorVersion: new ODataStringAttribute(AttributeNames.processorVersion),
   productClass: new ODataStringAttribute(AttributeNames.productClass),
+  eopIdentifier: new ODataStringAttribute(AttributeNames.eopIdentifier),
+  acrossTrackIncidenceAngle: new ODataDoubleAttribute(AttributeNames.acrossTrackIncidenceAngle),
+  resolutionClass: new ODataStringAttribute(AttributeNames.resolutionClass),
+  platformShortName: new ODataStringAttribute(AttributeNames.platformShortName),
+  platformName: new ODataStringAttribute(AttributeNames.platformName),
 };
 
 export const AttributeOriginValues = {

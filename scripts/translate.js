@@ -56,7 +56,7 @@ const updateTranslations = async () => {
     try {
       const filePath = path.join(translationsPath, lang.langCode);
       await exec(
-        `npx ttag update --extractLocation=never ${filePath}.po src && npx ttag po2json ${filePath}.po > ${filePath}.po.json`,
+        `npx ttag update --extractLocation=never --foldLength=76 ${filePath}.po src && npx ttag po2json ${filePath}.po > ${filePath}.po.json`,
       );
       console.log(`${filePath}.po updated`);
     } catch (err) {

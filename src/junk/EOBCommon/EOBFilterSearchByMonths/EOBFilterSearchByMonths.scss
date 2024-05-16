@@ -7,6 +7,12 @@
   flex-direction: column;
   margin: 10px 10px 10px 8px;
 
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+  }
+
   .months {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto;

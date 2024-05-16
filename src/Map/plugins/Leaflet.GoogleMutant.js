@@ -12,7 +12,7 @@ can do whatever you want with this stuff. If we meet some day, and you think
 this stuff is worth it, you can buy me a beer in return.
 */
 import L from 'leaflet';
-import { LRUMap } from './lru_map.js';
+import { LRUMap } from './lru_map';
 
 function waitForAPI(callback, context) {
   let checkCounter = 0,

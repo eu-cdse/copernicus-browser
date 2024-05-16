@@ -69,7 +69,7 @@ $headerPadding: 10px;
 
     .container {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 64px auto;
       grid-gap: 5px 10px;
     }
 

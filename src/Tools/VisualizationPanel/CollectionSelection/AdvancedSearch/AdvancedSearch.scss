@@ -112,6 +112,12 @@
       border: 0;
       border-radius: 0;
     }
+
+    .search-criteria-geometry-notice {
+      padding-top: 6px;
+      font-size: 10px;
+      color: $textColor;
+    }
   }
 
   div.data-source-group {

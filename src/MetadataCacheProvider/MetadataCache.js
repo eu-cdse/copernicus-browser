@@ -19,8 +19,8 @@ export const initMetadaCache = async (config) => {
     t.content.forEach(async (theme) => {
       const instanceId = theme.url.split('/').pop();
       try {
-        const response = await require(`../assets/cache/${config.dir}/${instanceId}.json`);
-        config.cache[instanceId] = response;
+        const response = await import(`../assets/cache/${config.dir}/${instanceId}.json`);
+        config.cache[instanceId] = response.default;
       } catch (e) {}
     }),
   );

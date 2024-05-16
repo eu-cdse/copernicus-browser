@@ -1,4 +1,8 @@
 .product-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   .no-image {
     display: flex;
     flex: 1;

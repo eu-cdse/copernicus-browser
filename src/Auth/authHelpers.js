@@ -11,18 +11,18 @@ export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
 
 export const getAuthUri = ({ redirect_uri }) => {
   const params = {
-    client_id: process.env.REACT_APP_CLIENTID,
+    client_id: import.meta.env.VITE_CLIENTID,
     redirect_uri: redirect_uri,
     response_type: 'token id_token',
     nonce: Math.round(Math.random() * Math.pow(10, 16)),
   };
-  return process.env.REACT_APP_AUTH_BASEURL + 'auth?' + new URLSearchParams(params);
+  return import.meta.env.VITE_AUTH_BASEURL + 'auth?' + new URLSearchParams(params);
 };
 
 export const openLoginWindow = async () => {
   return new Promise((resolve, reject) => {
     window.authorizationCallback = { resolve, reject };
-    const auth_uri = getAuthUri({ redirect_uri: `${process.env.REACT_APP_ROOT_URL}oauthCallback.html` });
+    const auth_uri = getAuthUri({ redirect_uri: `${import.meta.env.VITE_ROOT_URL}oauthCallback.html` });
     const popupWidth = 690;
     const popupHeight = 780;
 
@@ -121,7 +121,7 @@ const onLogOut = () => {
 
 export const logoutUser = async (userToken) => {
   axios
-    .get(process.env.REACT_APP_AUTH_BASEURL + 'logout', {
+    .get(import.meta.env.VITE_AUTH_BASEURL + 'logout', {
       withCredentials: true,
       params: {
         id_token_hint: userToken && userToken.id_token,
@@ -147,6 +147,21 @@ export const scheduleAction = (expires_at, updateBeforeExpiry, timeoutId, action
     action();
   }, timeout);
   return newTimeoutId;
+};
+
+export const fetchAnonTokenUsingService = async (anonTokenServiceUrl, body) => {
+  try {
+    const { data } = await axios.post(anonTokenServiceUrl, body, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    return data;
+  } catch (err) {
+    console.error('Error while fetching anonymous token', err.message);
+  }
+  return null;
 };
 
 export const hasRole = (userToken, role) => {

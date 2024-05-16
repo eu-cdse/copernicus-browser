@@ -8,9 +8,9 @@ const defaultRequestOptions = {
 };
 
 const ODataEndpoints = {
-  search: process.env.REACT_APP_CDAS_ODATA_SEARCH_URL,
-  download: process.env.REACT_APP_CDAS_ODATA_DOWNLOAD_URL,
-  listNodes: process.env.REACT_APP_CDAS_ODATA_DOWNLOAD_URL,
+  search: 'https://catalogue.dataspace.copernicus.eu/odata/v1/',
+  download: 'https://zipper.dataspace.copernicus.eu/odata/v1/',
+  listNodes: 'https://zipper.dataspace.copernicus.eu/odata/v1/',
 };
 
 const extractResponseErrorMessage = async (error) => {
@@ -89,8 +89,14 @@ const ODataApi = () => {
           delayBetweenRetries: delayBetweenRetries * 2,
         });
       }
-      console.error('executeRequest %s failed with %s', queryString);
-      throw e;
+      const responseErrorMessage = await extractResponseErrorMessage(e);
+      let errorMessage = e.message;
+      if (responseErrorMessage) {
+        errorMessage = `${errorMessage}:\n${responseErrorMessage}`;
+      }
+      console.error('executeRequest %s failed with %s', queryString, errorMessage);
+
+      throw new Error(errorMessage);
     }
   };
 

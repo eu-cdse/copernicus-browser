@@ -1,6 +1,6 @@
 ## About
 
-[Copernicus Browser](https://browser.dataspace.copernicus.eu/) is a search tool for satellite imagery, including Sentinel-1, 2, 3 and 5P. It was released as open-source to bring Earth Observation imagery closer to its end users.
+[Copernicus Browser](https://browser.dataspace.copernicus.eu/) is a search tool for satellite imagery, including Sentinel-1, 2, 3 and 5P. It was released as open-source to bring Earth Observation imagery closer to end users.
 
 Some features:
 
@@ -15,7 +15,7 @@ Some features:
 
 The use of Copernicus Browser is free of charge. To unlock advanced features, you need to create a free account ([here](https://identity.cloudferro.com/auth/realms/CDSE/protocol/openid-connect/auth?client_id=sh-5f8b63-YOUR-INSTANCEID-HERE&redirect_uri=https%3A%2F%2Fdataspace.copernicus.eu%2Fbrowser%2FoauthCallback.html&response_type=token&state=)).
 
-Copernicus Browser is part of the Copernicus Data Space Ecosystem, a new service to better access and exploit the EU's Copernicus satellites data. You can find out more about the service [here](https://dataspace.copernicus.eu/about) and in the Copernicus Browser user manual [here](https://documentation.dataspace.copernicus.eu/Applications/Browser.html) you will find a detailed overview of the Browser's functionality.
+Copernicus Browser is part of the Copernicus Data Space Ecosystem, a new service for better access to and use of data from the EU's Copernicus satellites. You can find out more about the service [here](https://dataspace.copernicus.eu/about) and in the Copernicus Browser user manual [here](https://documentation.dataspace.copernicus.eu/Applications/Browser.html) you will find a detailed overview of the Browser's functionality.
 
 <img src="copernicus_browser.png" />
 
@@ -25,11 +25,10 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualization ([li
 
 Contact us to get help about deploying the Browser on your infrastructure.
 
-* copy `.env.example` file and rename the copied file to `.env`, fill out the needed values
+* copy the file `.env.example` and rename the copied file to `.env`, fill out the needed values
 * use your instance ids in `*_themes.js`
 * Run `npm install`
 * Run `npm start` to run the application locally
-* Run `npm run storybook` to run storybook locally for testing components independently
 * Run `npm run prettier` to prettify `js`, `json`, `css` and `scss` files
 * Run `npm run lint` to lint `js`, `json`, `css` and `scss` files
 * Run `npm run build` to build the application sources
@@ -38,9 +37,9 @@ Contact us to get help about deploying the Browser on your infrastructure.
 * Run `npm run update-previews` to create layer preview images
 * Run `npm run update-metadata-cache` to create getCapabilities and configuration cache
 
-### Environment variables in .env file
+### Environment variables in the .env file
 
-The app relies on some values being provided as environment variables. The details are described in the collapsible part below.
+The app relies on some values being provided as environment variables. The details are described in the collapsible section below.
 
 <details>
   <summary>Click to expand</summary>
@@ -51,29 +50,29 @@ The app relies on some values being provided as environment variables. The detai
   - Needed for correctly setting URLs for assets and authentication.
   - `http://localhost:3000/` for local development, the whole public url for deployments on web servers
 
-- `REACT_APP_SH_SERVICES_URL`: URL at which the Sentinel Hub servicess are accessible 
+- `REACT_APP_SH_SERVICES_URL`: URL at which the Sentinel Hub services are accessible 
   - `https://sh.dataspace.copernicus.eu`
 
-Application supports usage with user login or anonymously (without the need to log in).
+Application supports usage with user login or anonymously (without having to log in).
 In case of anonymous usage, the instance ids in `default_themes.js` and `education_themes.js` need to be set. Contact us for support.
 
-Environment variables neede for user login:
+Environment variables needed for user login:
 - `REACT_APP_AUTH_BASEURL`: Base URL for user login
-  - contact us for support
+  - https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/ (URL in case you plan to use the Copernicus Dataspace Ecosytem user managment/login)
 - `REACT_APP_CLIENTID`: ID of the OAuth client created in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/) and designated for user login
   - create your OAuth client in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/)
 
 Environment variables needed for anonymous usage:
-- `REACT_APP_FINGERPRINT_API_KEY`: Fingerprint API key for anonymous authentication (to enable usage without user login)
+- `REACT_APP_CAPTCHA_SITE_KEY`: Google Captcha site key for anonymous authentication (to enable usage without user login)
   - contact us for support
-- `REACT_APP_ANON_AUTH_FINGERPRINT_URL`: Fingerprint URL for anonymous authentication (to enable usage without user login)
+- `REACT_APP_ANON_AUTH_SERVICE_URL`: URL for anonymous authentication (to enable usage without user login)
   - contact us for support
 
 #### Optional
 
 - `REACT_APP_EOB_BACKEND`: Backend for saving user pins and timelapses
   - contact us for support
-  - without it, users won't be able to save pins without downloading them or share timelapses
+  - without it, users cannot save pins without downloading them or share timelapses
 - `REACT_APP_MAPTILER_KEY`: MapTiler key for accessing maps on MapTiler
   - create your key on [MapTiler's website](https://www.maptiler.com/)
   - without it, there will be no basemaps or overlays other than the default OSM basemap
@@ -97,10 +96,10 @@ Environment variables needed for anonymous usage:
   - without it, users won't be able to download Copernicus Dataspace Ecosystem products
 - `REACT_APP_REBRANDLY_API_KEY`: URL shortener
   - create your account on [Rebrandly's website](https://www.rebrandly.com/)
-  - without it, users won't be able to share the short URL (copying long URL will still work)
+  - without it, users won't be able to share the short URL (the long URL still works)
 - `REACT_APP_PLANET_API_KEY`: Planet Labs API key for using their data
   - see [Planet Labs website](https://www.planet.com/)
-  - without it, users won't be able to buy Planet data through this app or view it in this app
+  - without it, users won't be able to buy Planet data through this app or view it in the app
 
 #### Optional, for maintenance
 - `APP_ADMIN_CLIENT_ID`: ID of the OAuth client created in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/) and used for updating configurations cache and preview images
@@ -119,7 +118,7 @@ Environment variables needed for anonymous usage:
 
 ## Multilanguage support
 
-Thanks to the efforts of various people and institutions, you can use the Copernicus Browser in your native language. Since the Browser is under constant development not all parts might be already translated in all languages.
+Thanks to the efforts of various people and institutions, you can use the Copernicus Browser in your native language. Since the Browser is under constant development, not all parts might be already translated in all languages.
 
 Your language is missing or incomplete and you want to help with the translation? Contact us at translation_support@sinergise.com for more information.
 

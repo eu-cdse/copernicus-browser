@@ -14,7 +14,7 @@ import {
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
 import { filterLayers, filterLayersProbaV } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
 import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType';
-import md5 from '../src/utils/md5';
+import { md5 } from 'js-md5';
 import dotenv from 'dotenv';
 import {
   PROBAV_S1,

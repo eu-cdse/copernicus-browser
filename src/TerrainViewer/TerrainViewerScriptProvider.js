@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const EOB3D_SCRIPT_SRC = `${process.env.REACT_APP_ROOT_URL}eob3d/eob3d.nocache.js`;
+const EOB3D_SCRIPT_SRC = `${import.meta.env.VITE_ROOT_URL}eob3d/eob3d.nocache.js`;
 
 export default function TerrainViewerScriptProvider({ children }) {
   const [scriptLoaded, setScriptLoaded] = useState(false);

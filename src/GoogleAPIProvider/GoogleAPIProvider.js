@@ -6,7 +6,7 @@ function GoogleAPIProvider({ children }) {
   const [googleAPI, setGoogleAPI] = useState(null);
 
   useEffect(() => {
-    const loader = new Loader({ apiKey: process.env.REACT_APP_GOOGLE_TOKEN, libraries: ['places'] });
+    const loader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_TOKEN, libraries: ['places'] });
     loader.load().then((g) => {
       setGoogleAPI(g);
     });
