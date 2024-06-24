@@ -1,3 +1,4 @@
+import React from 'react';
 import InputWithBouncyLimit from '../../../../../components/InputWithBouncyLimit/InputWithBouncyLimit';
 import { isFunction } from '../../../../../utils';
 import CollectionTooltip from '../../CollectionTooltip/CollectionTooltip';
@@ -15,10 +16,9 @@ export const NumericInput = ({ input, value = '', onChange }) => {
     <div key={`${input.id}`} className="filter-item numeric">
       <div className="title">
         <div>{input.title}</div>
-        <CollectionTooltip
-          className={'filter-item-tooltip'}
-          source={input.tooltip ?? input.title}
-        ></CollectionTooltip>
+        {!!input.tooltip && (
+          <CollectionTooltip className={'filter-item-tooltip'} source={input.tooltip}></CollectionTooltip>
+        )}
       </div>
       <div className="content">
         <InputWithBouncyLimit

@@ -7,6 +7,8 @@ import {
   UPDATE_BEFORE_EXPIRY_ANON_TOKEN,
   MAX_NUM_ANON_TOKEN_REQUESTS,
   fetchAnonTokenUsingService,
+  removeItemFromLocalStorage,
+  LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY,
 } from '../authHelpers';
 
 let anonTokenRefreshTimeout = null;
@@ -44,6 +46,7 @@ const useAnonymousAuthRecaptcha = () => {
   function clearAnonToken() {
     store.dispatch(authSlice.actions.setAnonToken(null));
     saveAnonTokenToLocalStorage(null);
+    removeItemFromLocalStorage(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY);
   }
 
   const clearAnonTokenRefresh = () => {

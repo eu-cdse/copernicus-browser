@@ -706,6 +706,7 @@ describe('useODataSearch CCM', () => {
               productTypes: [
                 {
                   id: 'VHR_IMAGE_2018',
+                  // productTypeIds: ['VHR_IMAGE_2018', 'VHR_IMAGE_2018_ENHANCED'],
                 },
               ],
             },
@@ -764,11 +765,19 @@ describe('useODataSearch CCM', () => {
       'SP07_NAO_MS4_2A',
       'SW00_OPT_MS4_1B',
       'SW00_OPT_MS4_1C',
+      'KS03_AIS_MSP_1G',
+      'KS03_AIS_MSP_1R',
+      'KS04_AIS_MSP_1G',
+      'KS04_AIS_MSP_1R',
+      'TR00_VHI_MS4_1B',
+      'TR00_VHI_MS4_1C',
     ];
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018');
     expect(allResults[0].sensingTime).toContain('2018-09-15T10:30:35.000Z');
+    // expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018_ENHANCED');
+    // expect(allResults[0].sensingTime).toContain('2018-10-05T10:23:17.000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     allResults.forEach((result) => {
       expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
@@ -852,6 +861,394 @@ describe('useODataSearch CCM', () => {
     allResults.forEach((result) => {
       expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
     });
+  });
+});
+
+describe('useODataSearch CCM DEM', () => {
+  jest.setTimeout(TIMEOUT);
+
+  test('Collection COP-DEM_EEA-10-DGED', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'restricted',
+              productTypes: [
+                {
+                  id: 'COP-DEM_EEA-10-DGED',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_DGE_10_9319'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_EEA-10-DGED');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
+  });
+
+  test('Collection COP-DEM_EEA-10-INSP', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'restricted',
+              productTypes: [
+                {
+                  id: 'COP-DEM_EEA-10-INSP',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_INS_10_52C5'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_EEA-10-INSP');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
+  });
+
+  test('Collection COP-DEM_GLO-30-DGED', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'restricted',
+              productTypes: [
+                {
+                  id: 'COP-DEM_GLO-30-DGED',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_DGE_30_A4AD'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-30-DGED');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
+  });
+
+  test('Collection COP-DEM_GLO-30-DTED', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'restricted',
+              productTypes: [
+                {
+                  id: 'COP-DEM_GLO-30-DTED',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_DTE_30_615C'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-30-DTED');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
+  });
+
+  test('Collection COP-DEM_GLO-90-DGED', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'open',
+              productTypes: [
+                {
+                  id: 'COP-DEM_GLO-90-DGED',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_DGE_90_A407'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-90-DGED');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
+  });
+
+  test('Collection COP-DEM_GLO-90-DTED', async () => {
+    const params = {
+      collections: [
+        {
+          id: 'DEM',
+          instruments: [
+            {
+              id: 'restricted',
+              productTypes: [
+                {
+                  id: 'COP-DEM_GLO-90-DTED',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      fromTime: moment.utc('2011-05-01T00:00:00.000Z').toDate().toISOString(),
+      toTime: moment.utc('2011-06-30T23:59:59.999Z').toDate().toISOString(),
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [9.84, 46.6],
+            [23.81, 46.6],
+            [23.81, 55.89],
+            [9.84, 55.89],
+            [9.84, 46.6],
+          ],
+        ],
+      },
+    };
+
+    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeNull();
+
+    act(() => {
+      result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
+    });
+    await waitForNextUpdate({ timeout: TIMEOUT });
+
+    expect(result.current[0].searchInProgress).toBeFalsy();
+    expect(result.current[0].oDataSearchResult).toBeTruthy();
+
+    const { allResults } = result.current[0].oDataSearchResult;
+
+    const expectedResults = 1;
+    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
+
+    const datasetFullAttribute = allResults[0].attributes.find(
+      (attribute) => attribute.Name === 'datasetFull',
+    );
+
+    const searchByProducts = ['SAR_DTE_90_61F6'];
+
+    expect(datasetFullAttribute.Name).toEqual('datasetFull');
+    expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-90-DTED');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
+    expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
 });
 

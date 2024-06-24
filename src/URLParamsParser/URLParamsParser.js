@@ -22,11 +22,11 @@ import store, {
 } from '../store';
 import { b64DecodeUnicode } from '../utils/base64MDN';
 
-import { computeNewValuesFromPoints } from '../junk/EOBEffectsPanel/AdvancedRgbEffects/CurveEditor/CurveEditor.utils';
 import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, TABS } from '../const';
 import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins } from '../Tools/Pins/Pin.utils';
+import { decrypt } from '../utils/encrypt';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -160,9 +160,6 @@ class URLParamsParser extends React.Component {
       redRange,
       greenRange,
       blueRange,
-      redCurve,
-      greenCurve,
-      blueCurve,
       minQa,
       mosaickingOrder,
       upsampling,
@@ -194,15 +191,15 @@ class URLParamsParser extends React.Component {
       parsedLat = DEFAULT_LAT_LNG.lat;
     }
     store.dispatch(mainMapSlice.actions.setPosition({ zoom: parsedZoom, lat: parsedLat, lng: parsedLng }));
-    const redCurveEffectDecoded = redCurve ? JSON.parse(decodeURI(redCurve)) : undefined;
-    const greenCurveEffectDecoded = greenCurve ? JSON.parse(decodeURI(greenCurve)) : undefined;
-    const blueCurveEffectDecoded = blueCurve ? JSON.parse(decodeURI(blueCurve)) : undefined;
 
     const newVisualizationParams = {
       datasetId: datasetId,
       fromTime: fromTime ? moment.utc(fromTime) : null,
       toTime: toTime ? moment.utc(toTime) : null,
-      visualizationUrl: visualizationUrl,
+      visualizationUrl:
+        visualizationUrl && !visualizationUrl.startsWith('https')
+          ? decrypt(visualizationUrl)
+          : visualizationUrl,
       layerId,
       evalscript: evalscript && !evalscripturl ? b64DecodeUnicode(evalscript) : undefined,
       customSelected: evalscript || evalscripturl ? true : undefined,
@@ -212,16 +209,6 @@ class URLParamsParser extends React.Component {
       redRangeEffect: redRange ? JSON.parse(redRange) : undefined,
       greenRangeEffect: greenRange ? JSON.parse(greenRange) : undefined,
       blueRangeEffect: blueRange ? JSON.parse(blueRange) : undefined,
-
-      redCurveEffect: redCurveEffectDecoded
-        ? { points: redCurveEffectDecoded, values: computeNewValuesFromPoints(redCurveEffectDecoded) }
-        : undefined,
-      greenCurveEffect: greenCurveEffectDecoded
-        ? { points: greenCurveEffectDecoded, values: computeNewValuesFromPoints(greenCurveEffectDecoded) }
-        : undefined,
-      blueCurveEffect: blueCurveEffectDecoded
-        ? { points: blueCurveEffectDecoded, values: computeNewValuesFromPoints(blueCurveEffectDecoded) }
-        : undefined,
 
       minQa: minQa ? parseInt(minQa) : undefined,
       mosaickingOrder: mosaickingOrder,

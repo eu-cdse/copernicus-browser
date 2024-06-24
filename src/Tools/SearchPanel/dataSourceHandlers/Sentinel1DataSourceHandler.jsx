@@ -126,7 +126,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   POLARIZATIONS = S1_OBSERVATION_SCENARIOS.POLARIZATIONS;
   ORBIT_DIRECTIONS = S1_OBSERVATION_SCENARIOS.ORBIT_DIRECTIONS;
 
-  urls = {};
   datasets = [];
   urls = {
     AWS: [],

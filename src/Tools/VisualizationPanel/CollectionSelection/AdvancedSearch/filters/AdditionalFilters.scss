@@ -101,6 +101,10 @@
         color: $whiteColor;
         font-weight: bold;
       }
+
+      &.disabled {
+        opacity: $disabled;
+      }
     }
 
     input {

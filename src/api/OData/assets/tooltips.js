@@ -85,6 +85,17 @@ const S5P = {
     t`The absolute Orbit Number is the number of orbits that have elapsed since the first ascending node crossing after launch.`,
 };
 
+export const DEM_INSTRUMENTS_TOOLTIP = [
+  {
+    id: 'open',
+    text: t`GLO-30 and GLO-90 are free and open COP DEM datasets, offering global coverage at resolutions of 30 and 90 m.`,
+  },
+  {
+    id: 'restricted',
+    text: t`EEA-10 is a COP DEM dataset available for eligible users only, offering European coverage at resolution of 10 m.`,
+  },
+];
+
 const AttributeTooltips = {
   S1,
   S2,

@@ -1,3 +1,4 @@
+import React from 'react';
 import jwt_dec from 'jwt-decode';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';

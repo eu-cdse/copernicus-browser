@@ -1,3 +1,5 @@
+import React from 'react';
+
 import CheckMark from '../../icons/check-mark.svg?react';
 import './customCheckbox.scss';
 

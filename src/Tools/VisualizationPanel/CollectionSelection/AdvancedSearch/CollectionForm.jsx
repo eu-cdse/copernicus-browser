@@ -10,6 +10,7 @@ import { getODataCollectionInfoFromDatasetId } from '../../../../api/OData/OData
 import SelectedFiltersList from './filters/SelectedFiltersList';
 import { connect } from 'react-redux';
 import { TABS } from '../../../../const';
+import { DEM_INSTRUMENTS_TOOLTIP } from '../../../../api/OData/assets/tooltips';
 import AdditionalFiltersToggle from './filters/AdditionalFiltersToggle';
 import { getAllFiltersForCollection } from './filters/AdditionalFilters.utils';
 import AdditionalFilters from './filters/AdditionalFilters';
@@ -326,11 +327,21 @@ function CollectionForm({
             const isInstrumentChecked = selectedCollections[collection.id][instrument.id];
             return (
               <div key={`${collection.id}-${instrument.id}`} className="instrument">
-                <CustomCheckbox
-                  checked={isInstrumentChecked}
-                  onChange={() => onInstrumentChange(instrument.id, collection.id)}
-                  label={instrument.label}
-                />
+                <div className="instrument-wrapper">
+                  <CustomCheckbox
+                    checked={isInstrumentChecked}
+                    onChange={() => onInstrumentChange(instrument.id, collection.id)}
+                    label={instrument.label}
+                  />
+                  {DEM_INSTRUMENTS_TOOLTIP.map(
+                    (tooltip) =>
+                      tooltip.id === instrument.id && (
+                        <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+                          <ReactMarkdown children={tooltip.text} />
+                        </HelpTooltip>
+                      ),
+                  )}
+                </div>
                 <div className="product-type">
                   {isInstrumentChecked &&
                     instrument.productTypes.map((productType) => (

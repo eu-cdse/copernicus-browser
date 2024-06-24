@@ -28,6 +28,17 @@ const DEFAULT_DOMAIN = { min: 0, max: 1 };
 const EQUATIONS = ['(A-B)/(A+B)', '(A/B)'];
 const DEFAULT_VALUES = spreadHandlersEvenly(2, DEFAULT_DOMAIN.min, DEFAULT_DOMAIN.max);
 
+const link1 =
+  'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndvi/#normalized-difference-vegetation-index';
+const link2 = 'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndwi/';
+const getTooltipContent = () => t`
+Create a simple band ratio (A/B) to highlight the spectral differences between two bands,
+or create a normalized difference index ((A-B)/(A+B)) to compare your data across time.\n\n
+Popular difference indices are the Normalized Difference Vegetation Index (NDVI),
+which uses the near-infrared and red bands or the Normalized Difference Water Index (NDWI),
+which uses the near-infrared and shortwave infrared bands.\n\nMore info [here](${link1}) or [here](${link2}).
+`;
+
 export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) => {
   const [equation, setEquation] = React.useState(EQUATIONS[0]);
   const [values, setValues] = React.useState(DEFAULT_VALUES); //
@@ -184,20 +195,10 @@ export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) =
     return null;
   }
 
-  const link1 =
-    'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndvi/#normalized-difference-vegetation-index';
-  const link2 = 'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndwi/';
-
   return (
     <React.Fragment>
       <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnRight">
-        <ReactMarkdown linkTarget="_blank">
-          {t`Create a simple band ratio (A/B) to highlight the spectral differences between two bands,
-          or create a normalized difference index ((A-B)/(A+B)) to compare your data across time.\n\n
-          Popular difference indices are the Normalized Difference Vegetation Index (NDVI),
-          which uses the near-infrared and red bands or the Normalized Difference Water Index (NDWI),
-          which uses the near-infrared and shortwave infrared bands.\n\nMore info [here](${link1}) or [here](${link2}).`}
-        </ReactMarkdown>
+        <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
       </HelpTooltip>
       <p>{t`Drag bands into the index equation`}</p>
       <div className="colors-container">

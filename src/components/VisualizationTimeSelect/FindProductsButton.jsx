@@ -85,14 +85,15 @@ const FindProductsButton = ({
 
   const getQueryParams = () => {
     const { fromTime, toTime } = getFromTimeToTime();
+    const dsh = getDataSourceHandler(datasetId);
 
     const params = {};
 
-    if (fromTime) {
+    if (!dsh?.isTimeless() && fromTime) {
       params['fromTime'] = fromTime.toISOString();
     }
 
-    if (toTime) {
+    if (!dsh?.isTimeless() && toTime) {
       params['toTime'] = toTime.toISOString();
     }
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ngettext, msgid } from 'ttag';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 import { TRANSACTION_TYPE } from '../../../const';

@@ -1,6 +1,6 @@
 import { hasRole } from '../../../../Auth/authHelpers';
 import { FilterElement } from '../../../../api/OData/FilterElement';
-import { ODataColections } from '../../../../api/OData/ODataTypes';
+import { ODataCollections, ODataFilterOperator } from '../../../../api/OData/ODataTypes';
 import {
   AttributeNames,
   AttributeOriginValues,
@@ -15,6 +15,8 @@ import {
   AttributeProductClassValues,
   AttributeProductResolution,
   FormatedAttributeNames,
+  ODataAttributes,
+  AttributeDEMDatasetVersions,
 } from '../../../../api/OData/assets/attributes';
 import {
   createOriginFilter,
@@ -28,8 +30,8 @@ import { NumericInput } from './filters/NumericInput';
 
 export const collections = [
   {
-    id: ODataColections.S1.id,
-    label: ODataColections.S1.label,
+    id: ODataCollections.S1.id,
+    label: ODataCollections.S1.label,
     instruments: [
       {
         id: 'SAR',
@@ -154,8 +156,8 @@ export const collections = [
     ],
   },
   {
-    id: ODataColections.S2.id,
-    label: ODataColections.S2.label,
+    id: ODataCollections.S2.id,
+    label: ODataCollections.S2.label,
     instruments: [
       {
         id: 'MSI',
@@ -220,8 +222,8 @@ export const collections = [
   },
 
   {
-    id: ODataColections.S3.id,
-    label: ODataColections.S3.label,
+    id: ODataCollections.S3.id,
+    label: ODataCollections.S3.label,
     instruments: [
       {
         id: 'OLCI',
@@ -317,8 +319,8 @@ export const collections = [
     ],
   },
   {
-    id: ODataColections.S5P.id,
-    label: ODataColections.S5P.label,
+    id: ODataCollections.S5P.id,
+    label: ODataCollections.S5P.label,
     instruments: [
       {
         id: 'TROPOMI',
@@ -388,8 +390,8 @@ export const collections = [
     ],
   },
   {
-    id: ODataColections.S6.id,
-    label: ODataColections.S6.label,
+    id: ODataCollections.S6.id,
+    label: ODataCollections.S6.label,
     instruments: [
       {
         id: 'S6AuxiliaryFiles',
@@ -418,13 +420,24 @@ export const collections = [
         supportsInstrumentName: false,
         productTypes: [
           {
+            id: 'DWH_MG2b_CORE_03',
+            label: 'VHR Europe (2011–2013)',
+            queryByDatasetFull: true,
+          },
+          {
             id: 'VHR_IMAGE_2015',
             label: 'VHR Europe (2014–2016)',
             queryByDatasetFull: true,
           },
           {
             id: 'VHR_IMAGE_2018',
-            label: 'VHR Europe (2017–2019)',
+            label: 'VHR Europe (2017–2019) (1)',
+            queryByDatasetFull: true,
+            // productTypeIds: ['VHR_IMAGE_2018', 'VHR_IMAGE_2018_ENHANCED'], // uncomment to display only 1 checkbox and query for both (also delete the below one)
+          },
+          {
+            id: 'VHR_IMAGE_2018_ENHANCED',
+            label: 'VHR Europe (2017–2019) (2)',
             queryByDatasetFull: true,
           },
           {
@@ -495,38 +508,88 @@ export const collections = [
       },
     ],
   },
-  /*
   {
-    id: 'DEM',
-    label: 'COP-DEM',
+    id: ODataCollections.DEM.id,
+    label: ODataCollections.DEM.label,
+    supportsCollectionName: false,
     supportsCloudCover: false,
-    supportsDates: false,
     instruments: [
       {
-        id: 'DGE',
-        label: 'DGE',
+        id: 'open',
+        label: 'Copernicus DEM (Global Coverage)',
         supportsInstrumentName: false,
         productTypes: [
-          { id: 'DGE_30', name: 'DGE_30', label: 'DGE 30' },
-          { id: 'DGE_90', name: 'DGE_90', label: 'DGE 90' },
+          {
+            id: 'COP-DEM_GLO-30-DGED',
+            label: 'COP-DEM_GLO-30-DGED',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-30-DTED',
+            label: 'COP-DEM_GLO-30-DTED',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-90-DGED',
+            label: 'COP-DEM_GLO-90-DGED',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-90-DTED',
+            label: 'COP-DEM_GLO-90-DTED',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
         ],
       },
       {
-        id: 'DTE',
-        label: 'DTE',
+        id: 'restricted',
+        label: 'Copernicus DEM (EEA Coverage)',
         supportsInstrumentName: false,
         productTypes: [
-          { id: 'DTE_30', name: 'DTE_30', label: 'DTE 30' },
-          { id: 'DTE_90', name: 'DTE_90', label: 'DTE 90' },
+          {
+            id: 'COP-DEM_EEA-10-DGED',
+            label: 'COP-DEM_EEA-10-DGED',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_EEA-10-INSP',
+            label: 'COP-DEM_EEA-10-INSP',
+            queryByDatasetFull: true,
+            productTypes: [],
+          },
         ],
       },
     ],
+    additionalFilters: [
+      {
+        id: AttributeNames.eopIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.eopIdentifier(),
+      },
+      {
+        id: AttributeNames.dataset,
+        render: MultiSelectInput,
+        defaultValue: AttributeDEMDatasetVersions.slice(-1),
+        options: AttributeDEMDatasetVersions,
+        selectionLimit: 5,
+      },
+      {
+        id: AttributeNames.gridId,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.gridId(),
+      },
+    ],
   },
-  */
-  /*
   {
-    id: ODataColections.GLOBAL_MOSAICS.id,
-    label: ODataColections.GLOBAL_MOSAICS.label,
+    id: ODataCollections.GLOBAL_MOSAICS.id,
+    label: ODataCollections.GLOBAL_MOSAICS.label,
     supportsCloudCover: false,
     instruments: [
       {
@@ -539,7 +602,7 @@ export const collections = [
             name: 'Quarterly Mosaics',
             label: 'Quarterly Mosaics',
             customFilterExpression: FilterElement.Attribute(
-              ODAtaAttributes.productType,
+              ODataAttributes.productType,
               ODataFilterOperator.eq,
               'S2MSI_L3__MCQ',
             ),
@@ -548,5 +611,4 @@ export const collections = [
       },
     ],
   },
-  */
 ];

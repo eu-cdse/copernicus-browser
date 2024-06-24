@@ -26,6 +26,8 @@ import './AdvancedSearch.scss';
 import CollectionForm from './CollectionForm';
 import { boundsToPolygon, getLeafletBoundsFromGeoJSON, appendPolygon } from '../../../../utils/geojson.utils';
 import oDataHelpers, { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
+import { ODataCollections } from '../../../../api/OData/ODataTypes';
+import { AttributeDEMDatasetsMap } from '../../../../api/OData/assets/attributes';
 
 import { withODataSearchHOC } from './withODataSearchHOC';
 
@@ -194,6 +196,54 @@ class AdvancedSearch extends Component {
     this.setState({
       datepickerIsExpanded: expanded,
     });
+  };
+
+  handleUpdateDEMCollectionDatasetFilters = (collectionForm, collection) => {
+    const dataset = collectionForm?.selectedFilters?.[collection.id]?.dataset;
+    if (!dataset) {
+      return;
+    }
+
+    const isDEMDatasetFilter = dataset.every((val) => val.id.includes(ODataCollections.DEM.id));
+    if (!(ODataCollections.DEM.id in collectionForm.selectedFilters) || !isDEMDatasetFilter) {
+      return;
+    }
+
+    const selectedDEMCollections = collection.instruments.map((instrument) => {
+      return instrument ? instrument : [];
+    });
+
+    const reconstructedValues = dataset.flatMap((val) => {
+      if (!selectedDEMCollections.length) {
+        return AttributeDEMDatasetsMap.flatMap((dataset) => {
+          return dataset.productTypes.map((productType) => ({ value: `${productType.id}/${val.value}` }));
+        });
+      }
+
+      return selectedDEMCollections.flatMap((collection) => {
+        return AttributeDEMDatasetsMap.flatMap((datasetMap) => {
+          if (collection.id === datasetMap.id) {
+            if (!collection.productTypes) {
+              if (collection.id === datasetMap.id) {
+                return datasetMap.productTypes.flatMap((productType) => {
+                  return { value: `${productType.id}/${val.value}` };
+                });
+              }
+            }
+
+            return collection.productTypes.flatMap((productType) => {
+              return { value: `${productType.id}/${val.value}` };
+            });
+          }
+
+          return [];
+        });
+      });
+    });
+
+    if (reconstructedValues.length > 0) {
+      collection.additionalFilters = { dataset: reconstructedValues };
+    }
   };
 
   setSelectedCollections = (selectedCollections) => {
@@ -376,6 +426,8 @@ class AdvancedSearch extends Component {
         );
         collection.instruments = instruments;
         collection.additionalFilters = collectionForm.selectedFilters?.[collection.id];
+
+        this.handleUpdateDEMCollectionDatasetFilters(collectionForm, collection);
       });
 
       params['collections'] = collections;

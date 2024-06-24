@@ -1,3 +1,4 @@
+import React from 'react';
 import store, { spectralExplorerSlice } from '../../store';
 
 const isSeriesDisplayed = (selectedSeries, datasetId, seriesId, defaultDisplayed = true) => {

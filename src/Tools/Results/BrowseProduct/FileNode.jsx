@@ -2,7 +2,7 @@ import { t } from 'ttag';
 
 import { getFileIcon, getNodeValueUri, handleError } from './BrowseProduct.utils';
 import { useODataDownload } from '../../../hooks/useODataDownload';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 export const FileNode = ({ node, selected, setSelected, product, userToken }) => {
   const [{ downloadInProgress, downloadError }, setDownloadParams] = useODataDownload();

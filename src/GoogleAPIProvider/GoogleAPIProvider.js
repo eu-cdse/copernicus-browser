@@ -6,10 +6,28 @@ function GoogleAPIProvider({ children }) {
   const [googleAPI, setGoogleAPI] = useState(null);
 
   useEffect(() => {
-    const loader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_TOKEN, libraries: ['places'] });
-    loader.load().then((g) => {
-      setGoogleAPI(g);
-    });
+    const loadGoogleApi = async () => {
+      const loader = new Loader({
+        apiKey: import.meta.env.VITE_GOOGLE_TOKEN,
+        libraries: ['geocoding', 'places'],
+      });
+      const [placesLibrary, geocodingLibrary] = await Promise.all([
+        loader.importLibrary('places'),
+        loader.importLibrary('geocoding'),
+      ]);
+      const { AutocompleteService } = placesLibrary;
+      const { Geocoder, GeocoderStatus } = geocodingLibrary;
+
+      setGoogleAPI({
+        maps: {
+          places: { AutocompleteService: AutocompleteService },
+          Geocoder: Geocoder,
+          GeocoderStatus: GeocoderStatus,
+        },
+      });
+    };
+
+    loadGoogleApi();
     // eslint-disable-next-line
   }, []);
 

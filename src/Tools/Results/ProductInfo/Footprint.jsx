@@ -1,7 +1,7 @@
 import { GeoJSON, Map, TileLayer } from 'react-leaflet';
 
 import './Footprint.scss';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getBoundsAndLatLng } from '../../CommercialDataPanel/commercialData.utils';
 
 const Footprint = ({ product, lat, lng }) => {

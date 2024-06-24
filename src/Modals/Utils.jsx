@@ -1,3 +1,4 @@
+import React from 'react';
 import Timelapse from '../Controls/Timelapse/Timelapse';
 import ImageDownload from '../Controls/ImgDownload/ImageDownload';
 import FIS from '../Controls/FIS/FIS';

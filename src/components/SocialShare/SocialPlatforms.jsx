@@ -1,3 +1,4 @@
+import React from 'react';
 import { t } from 'ttag';
 import ExternalLink from '../../ExternalLink/ExternalLink';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ResponsiveXYFrame } from 'semiotic';
 import { t } from 'ttag';
 import store, { elevationProfileSlice } from '../../store';

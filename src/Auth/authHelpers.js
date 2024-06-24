@@ -8,6 +8,7 @@ export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
 export const UPDATE_BEFORE_EXPIRY_USER_TOKEN = 3 * 60 * 1000; //minutes*seconds*miliseconds
 export const UPDATE_BEFORE_EXPIRY_ANON_TOKEN = 10 * 1000; //seconds*miliseconds
 export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
+export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
 
 export const getAuthUri = ({ redirect_uri }) => {
   const params = {
@@ -60,17 +61,23 @@ const saveTokenToLocalStorage = (key, token) => {
   localStorage.setItem(key, JSON.stringify(token));
 };
 
+export const getRecaptchaConsentFromLocalStorage = () =>
+  !!localStorage.getItem(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY);
+
+export const saveRecaptchaConsentToLocalStorage = () =>
+  localStorage.setItem(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY, true);
+
+export const removeItemFromLocalStorage = (key) => {
+  localStorage.removeItem(key);
+};
+
 export const saveUserTokenToLocalStorage = (token) =>
   saveTokenToLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY, token);
 export const saveAnonTokenToLocalStorage = (token) =>
   saveTokenToLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY, token);
 
-const removeTokenFromLocalStorage = (key) => {
-  localStorage.removeItem(key);
-};
-
-export const removeUserTokenFromLocalStorage = () => removeTokenFromLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY);
-export const removeAnonTokenFromLocalStorage = () => removeTokenFromLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY);
+export const removeUserTokenFromLocalStorage = () => removeItemFromLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY);
+export const removeAnonTokenFromLocalStorage = () => removeItemFromLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY);
 
 export const isTokenExpired = (token) => {
   if (!token) {

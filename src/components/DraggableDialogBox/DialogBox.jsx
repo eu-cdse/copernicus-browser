@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import './DialogBox.scss';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import useKeyPressed from '../../hooks/useKeyPressed';

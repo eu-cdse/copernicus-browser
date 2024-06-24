@@ -1,3 +1,4 @@
+import React from 'react';
 import { t } from 'ttag';
 
 import ChevronCollapse from '../../../../../Tools/Header/chevron-collapse.svg?react';

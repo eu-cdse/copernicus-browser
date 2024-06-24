@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { ModalId } from '../../const';
 import store, { modalSlice, spectralExplorerSlice } from '../../store';

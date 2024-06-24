@@ -4,7 +4,7 @@ import {
   AttributeOriginValues,
   AttributeProcessorVersionValues,
   AttributeS2CollectionValues,
-  ODAtaAttributes,
+  ODataAttributes,
 } from '../../../../../api/OData/assets/attributes';
 import { AttributeTooltips } from '../../../../../api/OData/assets/tooltips';
 import { ExpressionTreeOperator } from '../../../../../api/OData/ExpressionTree';
@@ -17,7 +17,7 @@ export const ADDITIONAL_FILTERS_ENABLED = true;
 
 export const getAdditionalFilterData = (collectionId, attributeId, props) => {
   const title = oDataHelpers.formatAttributesNames(attributeId);
-  let tooltip = title;
+  let tooltip;
   if (AttributeTooltips[collectionId]?.[attributeId]) {
     if (isFunction(AttributeTooltips[collectionId]?.[attributeId])) {
       tooltip = AttributeTooltips[collectionId]?.[attributeId]();
@@ -39,13 +39,13 @@ export const getAllFiltersForCollection = (collection) =>
   );
 
 // creates a filter tree for "origin" attribute where option AttributeOriginValues.CLOUDFERRO
-// needs an additional attribute ODAtaAttributes.processorVersion to be added to the filter query
+// needs an additional attribute ODataAttributes.processorVersion to be added to the filter query
 export const createOriginFilter = (key, value) => {
   const originOptionFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
-  originOptionFilter.attribute(ODAtaAttributes[key], ODataFilterOperator.eq, value);
+  originOptionFilter.attribute(ODataAttributes[key], ODataFilterOperator.eq, value);
   if (value === AttributeOriginValues.CLOUDFERRO.value) {
     originOptionFilter.attribute(
-      ODAtaAttributes.processorVersion,
+      ODataAttributes.processorVersion,
       ODataFilterOperator.eq,
       AttributeProcessorVersionValues.V99_99.value,
     );
@@ -66,7 +66,7 @@ export const createS2Collection1Filter = (key, value) => {
     s2Collection1Filter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
     S2Collection1ProcessorVersions.forEach((processorVersion) => {
       s2Collection1Filter.attribute(
-        ODAtaAttributes.processorVersion,
+        ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         processorVersion.value,
       );

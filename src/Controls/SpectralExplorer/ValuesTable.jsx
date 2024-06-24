@@ -1,3 +1,4 @@
+import React from 'react';
 import { t } from 'ttag';
 
 const TableRow = ({ id, items }) => (

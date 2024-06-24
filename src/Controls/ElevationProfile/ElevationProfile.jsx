@@ -1,3 +1,4 @@
+import React from 'react';
 import { t } from 'ttag';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import { useEffect, useState } from 'react';

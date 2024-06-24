@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 export const useDragPin = ({ id, index, itemType, moveItem }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [canDrag, setCanDrag] = useState(true);
 
   const ref = useRef(null);
 
@@ -62,6 +63,7 @@ export const useDragPin = ({ id, index, itemType, moveItem }) => {
     begin: () => {
       setIsDragging(true);
     },
+    canDrag: () => canDrag,
     end: () => {
       setIsDragging(false);
     },
@@ -69,5 +71,9 @@ export const useDragPin = ({ id, index, itemType, moveItem }) => {
 
   drag(drop(ref));
 
-  return { isDragging, previewRef, ref };
+  const shouldDrag = useCallback((state) => {
+    setCanDrag(state);
+  }, []);
+
+  return { isDragging, previewRef, ref, shouldDrag };
 };

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { t } from 'ttag';
 import { formatIndexValue } from './PixelExplorer.utils';

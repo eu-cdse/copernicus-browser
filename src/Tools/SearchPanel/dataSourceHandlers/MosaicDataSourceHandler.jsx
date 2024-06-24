@@ -343,8 +343,6 @@ function evaluatePixel(sample) {
     return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
   };
 
-  /*
   supportsFindProductsForCurrentView = (datasetId) =>
     datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC;
-  */
 }

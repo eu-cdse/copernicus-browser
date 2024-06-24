@@ -255,9 +255,6 @@ class Map extends React.Component {
       redRangeEffect,
       greenRangeEffect,
       blueRangeEffect,
-      redCurveEffect,
-      greenCurveEffect,
-      blueCurveEffect,
       minQa,
       mosaickingOrder,
       upsampling,
@@ -460,9 +457,6 @@ class Map extends React.Component {
                 redRangeEffect={redRangeEffect}
                 greenRangeEffect={greenRangeEffect}
                 blueRangeEffect={blueRangeEffect}
-                redCurveEffect={redCurveEffect}
-                greenCurveEffect={greenCurveEffect}
-                blueCurveEffect={blueCurveEffect}
                 minQa={minQa}
                 mosaickingOrder={mosaickingOrder}
                 upsampling={upsampling}
@@ -505,9 +499,6 @@ class Map extends React.Component {
                   redRangeEffect,
                   greenRangeEffect,
                   blueRangeEffect,
-                  redCurveEffect,
-                  greenCurveEffect,
-                  blueCurveEffect,
                   minQa,
                   mosaickingOrder,
                   upsampling,
@@ -563,9 +554,6 @@ class Map extends React.Component {
                     redRangeEffect={redRangeEffect}
                     greenRangeEffect={greenRangeEffect}
                     blueRangeEffect={blueRangeEffect}
-                    redCurveEffect={redCurveEffect}
-                    greenCurveEffect={greenCurveEffect}
-                    blueCurveEffect={blueCurveEffect}
                     minQa={minQa}
                     mosaickingOrder={mosaickingOrder}
                     upsampling={upsampling}

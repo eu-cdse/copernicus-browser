@@ -5,6 +5,7 @@ export const AttributeNames = {
   collectionName: 'Collection/Name',
   cloudCover: 'cloudCover',
   instrumentShortName: 'instrumentShortName',
+  dataset: 'dataset',
   datasetFull: 'datasetFull',
   productType: 'productType',
   sensingTime: 'ContentDate/Start',
@@ -29,6 +30,7 @@ export const AttributeNames = {
   acrossTrackIncidenceAngle: 'acrossTrackIncidenceAngle',
   resolutionClass: 'resolutionClass',
   platformName: 'platformName',
+  gridId: 'gridId',
 };
 
 export const FormatedAttributeNames = {
@@ -100,15 +102,18 @@ export const FormatedAttributeNames = {
   productComposition: () => t`Product composition`,
   totalSlices: () => t`Total slices`,
   eopIdentifier: () => t`Eop Identifier`,
+  dataset: () => t`Dataset`,
   datasetFull: () => t`Sub-dataset`,
   acrossTrackIncidenceAngle: () => t`Max Across Track angle (ONA)`,
   resolutionClass: () => t`Resolution class`,
   platformName: () => t`Platform name`,
+  gridId: () => t`Grid id`,
 };
 
-export const ODAtaAttributes = {
+export const ODataAttributes = {
   cloudCover: new ODataDoubleAttribute(AttributeNames.cloudCover),
   instrument: new ODataStringAttribute(AttributeNames.instrumentShortName),
+  dataset: new ODataStringAttribute(AttributeNames.dataset),
   datasetFull: new ODataStringAttribute(AttributeNames.datasetFull),
   productType: new ODataStringAttribute(AttributeNames.productType),
   platformSerialIdentifier: new ODataStringAttribute(AttributeNames.platformSerialIdentifier),
@@ -128,6 +133,7 @@ export const ODAtaAttributes = {
   resolutionClass: new ODataStringAttribute(AttributeNames.resolutionClass),
   platformShortName: new ODataStringAttribute(AttributeNames.platformShortName),
   platformName: new ODataStringAttribute(AttributeNames.platformName),
+  gridId: new ODataStringAttribute(AttributeNames.gridId),
 };
 
 export const AttributeOriginValues = {
@@ -203,3 +209,27 @@ export const AttributeProductResolution = {
   HIGH: { value: 'H', label: 'High' },
   MEDIUM: { value: 'M', label: 'Medium' },
 };
+
+export const AttributeDEMDatasetVersions = [
+  '2019_1',
+  '2019_2',
+  '2020_1',
+  '2020_2',
+  '2021_1',
+  '2021_2',
+  '2022_1',
+  '2023_1',
+].map((version) => ({ id: 'DEM', value: version, label: version }));
+
+export const AttributeDEMDatasetsMap = [
+  {
+    id: 'open',
+    productTypes: [
+      { id: 'COP-DEM_GLO-30-DGED' },
+      { id: 'COP-DEM_GLO-30-DTED' },
+      { id: 'COP-DEM_GLO-90-DGED' },
+      { id: 'COP-DEM_GLO-90-DTED' },
+    ],
+  },
+  { id: 'restricted', productTypes: [{ id: 'COP-DEM_EEA-10-DGED' }, { id: 'COP-DEM_EEA-10-INSP' }] },
+];

@@ -46,58 +46,50 @@ The app relies on some values being provided as environment variables. The detai
 
 #### Mandatory
 
-- `REACT_APP_ROOT_URL`: URL at which the app is (publicly) accessible
+- `VITE_ROOT_URL`: URL at which the app is (publicly) accessible
   - Needed for correctly setting URLs for assets and authentication.
   - `http://localhost:3000/` for local development, the whole public url for deployments on web servers
 
-- `REACT_APP_SH_SERVICES_URL`: URL at which the Sentinel Hub services are accessible 
+- `VITE_SH_SERVICES_URL`: URL at which the Sentinel Hub servicess are accessible 
   - `https://sh.dataspace.copernicus.eu`
 
 Application supports usage with user login or anonymously (without having to log in).
 In case of anonymous usage, the instance ids in `default_themes.js` and `education_themes.js` need to be set. Contact us for support.
 
-Environment variables needed for user login:
-- `REACT_APP_AUTH_BASEURL`: Base URL for user login
-  - https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/ (URL in case you plan to use the Copernicus Dataspace Ecosytem user managment/login)
-- `REACT_APP_CLIENTID`: ID of the OAuth client created in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/) and designated for user login
+Environment variables neede for user login:
+- `VITE_AUTH_BASEURL`: Base URL for user login
+  - contact us for support
+- `VITE_CLIENTID`: ID of the OAuth client created in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/) and designated for user login
   - create your OAuth client in the [Dashboard](https://shapps.dataspace.copernicus.eu/dashboard/)
 
 Environment variables needed for anonymous usage:
-- `REACT_APP_CAPTCHA_SITE_KEY`: Google Captcha site key for anonymous authentication (to enable usage without user login)
+- `VITE_CAPTCHA_SITE_KEY`: Google Captcha site key for anonymous authentication (to enable usage without user login)
   - contact us for support
-- `REACT_APP_ANON_AUTH_SERVICE_URL`: URL for anonymous authentication (to enable usage without user login)
+- `VITE_ANON_AUTH_SERVICE_URL`: URL for anonymous authentication (to enable usage without user login)
   - contact us for support
 
 #### Optional
 
-- `REACT_APP_EOB_BACKEND`: Backend for saving user pins and timelapses
+- `VITE_EOB_BACKEND`: Backend for saving user pins and timelapses
   - contact us for support
-  - without it, users cannot save pins without downloading them or share timelapses
-- `REACT_APP_MAPTILER_KEY`: MapTiler key for accessing maps on MapTiler
+  - without it, users won't be able to save pins without downloading them or share timelapses
+- `VITE_MAPTILER_KEY`: MapTiler key for accessing maps on MapTiler
   - create your key on [MapTiler's website](https://www.maptiler.com/)
   - without it, there will be no basemaps or overlays other than the default OSM basemap
-- `REACT_APP_MAPTILER_MAP_ID_<name>` 
+- `VITE_MAPTILER_MAP_ID_<name>` 
   - names and styles used in `src/Map/Layers.js`: `BORDERS`, `ROADS`, `CONTOUR`, `WATER`, `VOYAGER`, `LIGHT`, `LABELS`
   - create your maps on [MapTiler's website](https://www.maptiler.com/)
   - without it, there will be no basemaps or overlays other than the default OSM basemap
-- `REACT_APP_GOOGLE_TOKEN`: Google Maps API key for location search
+- `VITE_GOOGLE_TOKEN`: Google Maps API key for location search
   - see [Google's documentation](https://developers.google.com/maps/documentation/javascript/get-api-key)
   - without it, users won't be able to use Google for location search
-- `REACT_APP_GOOGLE_MAP_KEY`: Google Maps API key for Google satellite baselayer
+- `VITE_GOOGLE_MAP_KEY`: Google Maps API key for Google satellite baselayer
   - see [Google's documentation](https://developers.google.com/maps/documentation/javascript/get-api-key)
   - without it, there will be no Google Satellite basemap for paying users
-- `REACT_APP_CDAS_ODATA_SEARCH_URL`: Copernicus Dataspace Ecosystem URL for searching for products
-  - `https://catalogue.dataspace.copernicus.eu/odata/v1/`
-  - see [Copernicus Dataspace Ecosystem documentation](https://documentation.dataspace.copernicus.eu/APIs/OData.html)
-  - without it, users won't be able to search Copernicus Dataspace Ecosystem products
-- `REACT_APP_CDAS_ODATA_DOWNLOAD_URL`: Copernicus Dataspace Ecosystem URL for downloading products
-  - `https://zipper.dataspace.copernicus.eu/odata/v1/`
-  - see [Copernicus Dataspace Ecosystem documentation](https://documentation.dataspace.copernicus.eu/APIs/OData.html)
-  - without it, users won't be able to download Copernicus Dataspace Ecosystem products
-- `REACT_APP_REBRANDLY_API_KEY`: URL shortener
+- `VITE_REBRANDLY_API_KEY`: URL shortener
   - create your account on [Rebrandly's website](https://www.rebrandly.com/)
-  - without it, users won't be able to share the short URL (the long URL still works)
-- `REACT_APP_PLANET_API_KEY`: Planet Labs API key for using their data
+  - without it, users won't be able to share the short URL (copying long URL will still work)
+- `VITE_PLANET_API_KEY`: Planet Labs API key for using their data
   - see [Planet Labs website](https://www.planet.com/)
   - without it, users won't be able to buy Planet data through this app or view it in the app
 

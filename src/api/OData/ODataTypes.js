@@ -56,7 +56,7 @@ const ODataProductTypeExtension = {
   SR___POE_AX: ODataProductFileExtension.TGZ,
 };
 
-const ODataColections = {
+const ODataCollections = {
   S1: {
     id: 'S1',
     label: 'SENTINEL-1',
@@ -66,6 +66,7 @@ const ODataColections = {
   S5P: { id: 'S5P', label: 'SENTINEL-5P' },
   S6: { id: 'S6', label: 'SENTINEL-6' },
   GLOBAL_MOSAICS: { id: 'GLOBAL-MOSAICS', label: 'GLOBAL-MOSAICS' },
+  DEM: { id: 'DEM', label: 'CCM DEM' },
 };
 
 export {
@@ -76,5 +77,5 @@ export {
   OrderingDirection,
   ODataProductFileExtension,
   ODataProductTypeExtension,
-  ODataColections,
+  ODataCollections,
 };

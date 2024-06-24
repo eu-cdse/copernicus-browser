@@ -1,3 +1,4 @@
+import React from 'react';
 import { XYFrame } from 'semiotic';
 import { spectralExplorerLabels } from './SpectralExplorer.utils';
 

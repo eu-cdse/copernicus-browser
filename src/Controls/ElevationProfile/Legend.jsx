@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Legend = ({ data, selectedLineIdx = 0, setSelectedLineIdx }) => {
   return (
     <div className="legend">

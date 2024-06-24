@@ -44,7 +44,7 @@ export class TimelapsePreview extends Component {
 
   toggleDownloadPanel = (displayDownloadPanel) => {
     this.setState({
-      displayDownloadPanel: !!displayDownloadPanel ?? !this.state.displayDownloadPanel,
+      displayDownloadPanel: !!displayDownloadPanel,
     });
   };
 

@@ -23,6 +23,7 @@ import { ModalId } from '../const';
 import { replaceDeprecatedDatasetWithNew } from './handleOldUrls';
 import { rgbToHex } from '../junk/BandsToRGB/utils';
 import store, { authSlice, notificationSlice } from '../store';
+import { encrypt } from './encrypt';
 
 export function getUrlParams() {
   const urlParamString =
@@ -65,9 +66,6 @@ export function userCanAccessLockedFunctionality(user, selectedTheme) {
   - redRangeEffect: red range effect (slider)
   - greenRangeEffect: green range effect (slider)
   - blueRangeEffect: blue range effect (slider)
-  - redCurveEffect: part of the advanced rgb effects / manipulation 
-  - greenCurveEffect: part of the advanced rgb effects / manipulation
-  - blueCurveEffect: part of the advanced rgb effects / manipulation
   - minQa: minQa (min quality) for Sentinel-5P
   - upsampling: upsampling (SH datasets only)
   - downsampling: downsampling (SH datasets only)
@@ -101,9 +99,6 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     redRangeEffect,
     greenRangeEffect,
     blueRangeEffect,
-    redCurveEffect,
-    greenCurveEffect,
-    blueCurveEffect,
     minQa,
     mosaickingOrder,
     upsampling,
@@ -139,7 +134,7 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
   }
 
   if (visualizationUrl) {
-    params.visualizationUrl = visualizationUrl;
+    params.visualizationUrl = encrypt(visualizationUrl);
   }
   if (customSelected && evalscript && !evalscripturl) {
     params.evalscript = b64EncodeUnicode(evalscript);
@@ -185,16 +180,6 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     }
     if (blueRangeEffect && !(blueRangeEffect[0] === 0 && blueRangeEffect[1] === 1)) {
       params.blueRange = JSON.stringify(blueRangeEffect);
-    }
-
-    if (redCurveEffect && redCurveEffect.points) {
-      params.redCurve = JSON.stringify(redCurveEffect.points);
-    }
-    if (greenCurveEffect && greenCurveEffect.points) {
-      params.greenCurve = JSON.stringify(greenCurveEffect.points);
-    }
-    if (blueCurveEffect && blueCurveEffect.points) {
-      params.blueCurve = JSON.stringify(blueCurveEffect.points);
     }
 
     if (minQa !== undefined) {

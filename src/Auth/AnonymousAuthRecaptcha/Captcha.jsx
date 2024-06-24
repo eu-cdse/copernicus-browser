@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import { getRecaptchaConsentFromLocalStorage } from '../authHelpers';
 
 export const Captcha = forwardRef(({ action, onExecute, sitekey, onError, onLoad }, ref) => {
   const instance = useRef(null);
 
   const executeCaptcha = () => {
-    window.grecaptcha.enterprise.ready(async () => {
+    const recaptchaConsent = getRecaptchaConsentFromLocalStorage();
+    if (!recaptchaConsent) {
+      return;
+    }
+
+    window.grecaptcha?.enterprise.ready(async () => {
       try {
         const siteResponse = await window.grecaptcha.enterprise.execute(sitekey, {
           action,
@@ -22,6 +28,7 @@ export const Captcha = forwardRef(({ action, onExecute, sitekey, onError, onLoad
     () => {
       return {
         executeCaptcha,
+        loadCaptchaScript,
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,6 +36,11 @@ export const Captcha = forwardRef(({ action, onExecute, sitekey, onError, onLoad
   );
 
   const loadCaptchaScript = () => {
+    const recaptchaConsent = getRecaptchaConsentFromLocalStorage();
+    if (!recaptchaConsent) {
+      return;
+    }
+
     if (window.grecaptcha === undefined) {
       const script = document.createElement('script');
       script.type = 'text/javascript';

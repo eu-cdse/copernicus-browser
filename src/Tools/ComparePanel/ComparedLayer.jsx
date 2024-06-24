@@ -15,7 +15,7 @@ import './ComparedLayer.scss';
 import { useDragPin } from '../Pins/useDragPin';
 
 const ComparedLayer = ({ layer, compareMode, opacity, clipping, index, onDrop }) => {
-  const { ref, isDragging } = useDragPin({
+  const { ref, isDragging, shouldDrag } = useDragPin({
     id: layer.id,
     index: index,
     itemType: 'COMPARED_LAYER',
@@ -89,20 +89,24 @@ const ComparedLayer = ({ layer, compareMode, opacity, clipping, index, onDrop })
           {compareMode === COMPARE_OPTIONS.COMPARE_OPACITY.value && (
             <div className="compare-panel-slider opacity">
               <label>{t`Opacity`}:</label>
-              <Slider
-                min={0}
-                max={1}
-                step={0.01}
-                value={opacity != null ? opacity : 1.0}
-                onChange={onChange}
-              />
+              <span onMouseOver={() => shouldDrag(false)} onMouseOut={() => shouldDrag(true)}>
+                <Slider
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={opacity != null ? opacity : 1.0}
+                  onChange={onChange}
+                />
+              </span>
               <span>{opacity != null ? opacity : 1.0}</span>
             </div>
           )}
           {compareMode === COMPARE_OPTIONS.COMPARE_SPLIT.value && (
             <div className="compare-panel-slider split">
               <label>{t`Split position`}:</label>
-              <Range min={0} max={1} step={0.01} value={clipping ? clipping : [0, 1]} onChange={onChange} />
+              <span onMouseOver={() => shouldDrag(false)} onMouseOut={() => shouldDrag(true)}>
+                <Range min={0} max={1} step={0.01} value={clipping ? clipping : [0, 1]} onChange={onChange} />
+              </span>
             </div>
           )}
         </div>

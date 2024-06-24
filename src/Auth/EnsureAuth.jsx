@@ -6,6 +6,7 @@ import 'rodal/lib/rodal.css';
 import UserAuth from './UserAuth';
 
 import './EnsureAuth.scss';
+import ReactMarkdown from 'react-markdown';
 
 const AnonAuthButton = ({ executeAnonAuth }) => {
   return (
@@ -19,9 +20,9 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
   <Rodal
     animation="slideUp"
     customStyles={{
-      height: '150px',
+      height: '250px',
       bottom: 'auto',
-      width: '500px',
+      width: '550px',
       maxWidth: '90vw',
       top: '40vh',
       overflow: 'auto',
@@ -37,6 +38,11 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
       <UserAuth user={user} />
       <AnonAuthButton executeAnonAuth={executeAnonAuth} />
     </div>
+    <div className="recaptcha-cookie-notice">
+      <ReactMarkdown linkTarget="_blank">
+        {t`By continuing anonymously, you consent to the use of cookies by recaptcha.net and related collection, sharing and use of personal data by recaptcha.net. Alternatively, you can sign-in. See also [Terms and conditions](https://dataspace.copernicus.eu/terms-and-conditions)`}
+      </ReactMarkdown>
+    </div>
   </Rodal>
 );
 
@@ -48,7 +54,7 @@ const EnsureAuth = ({
   userAuthCompleted,
   executeAnonAuth,
 }) => {
-  if (!(userAuthCompleted && anonAuthCompleted)) {
+  if (!userAuthCompleted && !anonAuthCompleted) {
     return <div className="login-overlay" />;
   }
 

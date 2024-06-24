@@ -268,9 +268,6 @@ export default class PlanetBasemapDataSourceHandler extends DataSourceHandler {
 
   isSentinelHub = () => false;
 
-  supportsTimelapse = () => false;
-  supportsImgExport = () => false;
-
   isDisplayedAsGroup = () => true;
 
   getDescription = () => getPlanetBasemapMarkdown();

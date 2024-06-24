@@ -20,6 +20,16 @@ const CUSTOM_VISUALISATION_TABS = {
 
 export const CUSTOM_VISUALIZATION_URL_ROUTES = ['#custom-composite', '#custom-index', '#custom-script'];
 
+const tutorial = 'https://docs.sentinel-hub.com/api/latest/evalscript/#tutorials-and-other-related-materials';
+const repo = 'https://custom-scripts.sentinel-hub.com/';
+const getTooltipContent = () => t`
+An evalscript (or "custom script") is a piece of Javascript code that defines how the satellite data
+should be processed by Sentinel Hub (one of the underlying services that powers the Browser) and what values the
+service should return. \n\n
+Read more about custom scripts in our [tutorials](${tutorial}) or use already prepared scripts
+for different collections from the [custom script repository](${repo}).
+`;
+
 class EOBAdvancedHolder extends React.Component {
   state = {
     selectedTab: null,
@@ -75,10 +85,6 @@ class EOBAdvancedHolder extends React.Component {
       activeDatasource && activeDatasource.datasetId && activeDatasource.groupChannels
         ? activeDatasource.groupChannels(activeDatasource.datasetId)
         : null;
-
-    const tuturial =
-      'https://docs.sentinel-hub.com/api/latest/evalscript/#tutorials-and-other-related-materials';
-    const repo = 'https://custom-scripts.sentinel-hub.com/';
 
     return layers && channels ? (
       <div className="advancedPanel" style={style}>
@@ -137,13 +143,7 @@ class EOBAdvancedHolder extends React.Component {
           {selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
             <div className="custom-visualisation-wrapper">
               <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnRight">
-                <ReactMarkdown linkTarget="_blank">
-                  {t`An evalscript (or "custom script") is a piece of Javascript code that defines how the satellite data
-                  should be processed by Sentinel Hub (one of the underlying services that powers the Browser) and what values the
-                  service should return. \n\n
-                  Read more about custom scripts in our [tutorials](${tuturial}) or use already prepared scripts
-                  for different collections from the [custom script repository](${repo}).`}
-                </ReactMarkdown>
+                <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
               </HelpTooltip>
               <p>{t`Use custom script to create a custom visualization`}</p>
               {activeDatasource && (

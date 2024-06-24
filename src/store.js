@@ -433,9 +433,6 @@ export const visualizationSlice = createSlice({
     redRangeEffect: [0, 1],
     greenRangeEffect: [0, 1],
     blueRangeEffect: [0, 1],
-    redCurveEffect: undefined,
-    greenCurveEffect: undefined,
-    blueCurveEffect: undefined,
     minQa: undefined,
     mosaickingOrder: undefined,
     upsampling: undefined,
@@ -523,15 +520,6 @@ export const visualizationSlice = createSlice({
         state.blueRangeEffect = action.payload;
       }
     },
-    setRedCurveEffect: (state, action) => {
-      state.redCurveEffect = action.payload;
-    },
-    setGreenCurveEffect: (state, action) => {
-      state.greenCurveEffect = action.payload;
-    },
-    setBlueCurveEffect: (state, action) => {
-      state.blueCurveEffect = action.payload;
-    },
     setMinQa: (state, action) => {
       if (action.payload !== undefined) {
         state.minQa = action.payload;
@@ -580,15 +568,6 @@ export const visualizationSlice = createSlice({
       if (action.payload.blueRangeEffect !== undefined) {
         state.blueRangeEffect = action.payload.blueRangeEffect;
       }
-      if (action.payload.redCurveEffect !== undefined) {
-        state.redCurveEffect = action.payload.redCurveEffect;
-      }
-      if (action.payload.greenCurveEffect !== undefined) {
-        state.greenCurveEffect = action.payload.greenCurveEffect;
-      }
-      if (action.payload.blueCurveEffect !== undefined) {
-        state.blueCurveEffect = action.payload.blueCurveEffect;
-      }
       if (action.payload.minQa !== undefined) {
         state.minQa = action.payload.minQa;
       }
@@ -620,9 +599,6 @@ export const visualizationSlice = createSlice({
       state.redRangeEffect = [0, 1];
       state.greenRangeEffect = [0, 1];
       state.blueRangeEffect = [0, 1];
-      state.redCurveEffect = undefined;
-      state.greenCurveEffect = undefined;
-      state.blueCurveEffect = undefined;
       state.minQa = undefined;
       state.mosaickingOrder = undefined;
       state.upsampling = undefined;
@@ -636,9 +612,6 @@ export const visualizationSlice = createSlice({
       state.redRangeEffect = [0, 1];
       state.greenRangeEffect = [0, 1];
       state.blueRangeEffect = [0, 1];
-      state.redCurveEffect = undefined;
-      state.greenCurveEffect = undefined;
-      state.blueCurveEffect = undefined;
     },
     setDateMode: (state, action) => {
       state.dateMode = action.payload;
@@ -690,15 +663,6 @@ export const visualizationSlice = createSlice({
       }
       if (action.payload.blueRangeEffect !== undefined) {
         state.blueRangeEffect = action.payload.blueRangeEffect;
-      }
-      if (action.payload.redCurveEffect !== undefined) {
-        state.redCurveEffect = action.payload.redCurveEffect;
-      }
-      if (action.payload.greenCurveEffect !== undefined) {
-        state.greenCurveEffect = action.payload.greenCurveEffect;
-      }
-      if (action.payload.blueCurveEffect !== undefined) {
-        state.blueCurveEffect = action.payload.blueCurveEffect;
       }
       if (action.payload.minQa !== undefined) {
         state.minQa = action.payload.minQa;
@@ -753,9 +717,6 @@ export const visualizationSlice = createSlice({
       state.redRangeEffect = [0, 1];
       state.greenRangeEffect = [0, 1];
       state.blueRangeEffect = [0, 1];
-      state.redCurveEffect = undefined;
-      state.greenCurveEffect = undefined;
-      state.blueCurveEffect = undefined;
       state.minQa = undefined;
       state.mosaickingOrder = undefined;
       state.upsampling = undefined;

@@ -6,6 +6,7 @@ import {
   createSetUserPayload,
   getAnonTokenFromLocalStorage,
   getUserTokenFromLocalStorage,
+  saveRecaptchaConsentToLocalStorage,
 } from './authHelpers';
 import UserTokenRefresh from './UserTokenRefresh';
 import EnsureAuth from './EnsureAuth';
@@ -95,7 +96,11 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
         anonToken={anonToken}
         tokenRefreshInProgress={tokenRefreshInProgress}
         anonAuthCompleted={anonAuthCompleted}
-        executeAnonAuth={() => captchaRef.current.executeCaptcha()}
+        executeAnonAuth={() => {
+          saveRecaptchaConsentToLocalStorage();
+          captchaRef.current.loadCaptchaScript();
+          captchaRef.current.executeCaptcha();
+        }}
       ></EnsureAuth>
       <UserTokenRefresh>{children}</UserTokenRefresh>
     </>

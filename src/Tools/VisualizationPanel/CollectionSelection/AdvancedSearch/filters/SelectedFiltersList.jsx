@@ -1,3 +1,4 @@
+import React from 'react';
 import { ADDITIONAL_FILTERS_ENABLED } from './AdditionalFilters.utils';
 
 const Tag = ({ value, onRemove }) => {

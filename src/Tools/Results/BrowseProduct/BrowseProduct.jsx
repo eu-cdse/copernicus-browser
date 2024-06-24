@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'ttag';
 import FileTree from './FileTree';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';

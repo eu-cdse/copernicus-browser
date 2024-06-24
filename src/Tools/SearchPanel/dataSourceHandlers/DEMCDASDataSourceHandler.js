@@ -98,5 +98,5 @@ export default class DEMCDASDataSourceHandler extends DEMDataSourceHandler {
     }
   };
 
-  //supportsFindProductsForCurrentView = () => true;
+  supportsFindProductsForCurrentView = () => true;
 }

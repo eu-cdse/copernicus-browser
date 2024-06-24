@@ -197,24 +197,6 @@ export const defaultEffects = {
   redRangeEffect: [0, 1],
   greenRangeEffect: [0, 1],
   blueRangeEffect: [0, 1],
-  redCurveEffect: {
-    points: [
-      { x: 0, y: 0 },
-      { x: 1, y: 1 },
-    ],
-  },
-  greenCurveEffect: {
-    points: [
-      { x: 0, y: 0 },
-      { x: 1, y: 1 },
-    ],
-  },
-  blueCurveEffect: {
-    points: [
-      { x: 0, y: 0 },
-      { x: 1, y: 1 },
-    ],
-  },
   minQa: 50,
   upsampling: '',
   downsampling: '',

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const CustomDropdownIndicator = (props) => {
   const Magnifier = props.magnifier;
   const ChevronUp = props.chevronUp;

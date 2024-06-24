@@ -9,7 +9,7 @@ import store, { visualizationSlice } from '../../store';
 import { reqConfigMemoryCache } from '../../const';
 import { handleError } from '../../utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel.utils';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function DateSelection({
   zoom,
@@ -59,7 +59,8 @@ function DateSelection({
   }
 
   function updateSelectedTime(fromTime, toTime) {
-    if (!supportsTimerange) {
+    const dsh = getDataSourceHandler(datasetId);
+    if (dsh && !dsh.supportsTimeRange()) {
       fromTime = null;
     }
     store.dispatch(
