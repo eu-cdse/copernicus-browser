@@ -31,7 +31,7 @@ const useAnonymousAuthRecaptcha = () => {
         action = captchaRef.current.executeCaptcha;
       } else {
         //schedule dialog popup when refresh limit is reached
-        action = clearAnonToken;
+        action = clearAnonTokenAndRecaptchaConsent;
       }
 
       anonTokenRefreshTimeout = scheduleAction(
@@ -43,10 +43,10 @@ const useAnonymousAuthRecaptcha = () => {
     }
   };
 
-  function clearAnonToken() {
-    store.dispatch(authSlice.actions.setAnonToken(null));
+  function clearAnonTokenAndRecaptchaConsent() {
     saveAnonTokenToLocalStorage(null);
     removeItemFromLocalStorage(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY);
+    store.dispatch(authSlice.actions.setAnonToken(null));
   }
 
   const clearAnonTokenRefresh = () => {

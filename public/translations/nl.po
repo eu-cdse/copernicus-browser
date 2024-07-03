@@ -8155,3 +8155,14 @@ msgid ""
 "EEA-10 is a COP DEM dataset available for eligible users only, offering "
 "European coverage at resolution of 10 m."
 msgstr ""
+
+msgid "Draw an area of interest or line geometry on the exported image."
+msgstr ""
+
+msgid ""
+"To use Draw AOI or Line geometry on image, an area or line needs to be "
+"selected first."
+msgstr ""
+
+msgid "Draw AOI or Line on image"
+msgstr ""

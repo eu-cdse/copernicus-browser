@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cloneDeep from 'lodash.clonedeep';
 import { EOBCCSlider } from '../../../../junk/EOBCommon/EOBCCSlider/EOBCCSlider';
-import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 
 import './CollectionForm.scss';
@@ -10,7 +9,7 @@ import { getODataCollectionInfoFromDatasetId } from '../../../../api/OData/OData
 import SelectedFiltersList from './filters/SelectedFiltersList';
 import { connect } from 'react-redux';
 import { TABS } from '../../../../const';
-import { DEM_INSTRUMENTS_TOOLTIP } from '../../../../api/OData/assets/tooltips';
+import { InstrumentTooltips } from '../../../../api/OData/assets/tooltips';
 import AdditionalFiltersToggle from './filters/AdditionalFiltersToggle';
 import { getAllFiltersForCollection } from './filters/AdditionalFilters.utils';
 import AdditionalFilters from './filters/AdditionalFilters';
@@ -22,7 +21,7 @@ import {
   getCollectionFormConfig,
 } from './collectionFormConfig.utils';
 import { usePrevious } from '../../../../hooks/usePrevious';
-import HelpTooltip from '../../../SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
+import CollectionTooltip from '../CollectionTooltip/CollectionTooltip';
 
 const CLOUD_COVER_PERCENT = 100;
 
@@ -333,13 +332,8 @@ function CollectionForm({
                     onChange={() => onInstrumentChange(instrument.id, collection.id)}
                     label={instrument.label}
                   />
-                  {DEM_INSTRUMENTS_TOOLTIP.map(
-                    (tooltip) =>
-                      tooltip.id === instrument.id && (
-                        <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-                          <ReactMarkdown children={tooltip.text} />
-                        </HelpTooltip>
-                      ),
+                  {InstrumentTooltips[collection.id]?.[instrument.id] && (
+                    <CollectionTooltip source={InstrumentTooltips[collection.id][instrument.id]()} />
                   )}
                 </div>
                 <div className="product-type">
@@ -356,11 +350,9 @@ function CollectionForm({
                           label={productType.label}
                         />
                         {productType.supportsGeometry === false && (
-                          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-                            <ReactMarkdown
-                              children={t`Data product without location information - the product will be searched without geometry.`}
-                            />
-                          </HelpTooltip>
+                          <CollectionTooltip
+                            source={t`Data product without location information - the product will be searched without geometry.`}
+                          />
                         )}
                       </div>
                     ))}
@@ -404,6 +396,7 @@ function CollectionForm({
           allFilters={getAllFiltersForCollection(collection)}
           onReset={() => resetSelectedFilters(collection.id)}
           positionTop={additionFiltersPositionTop}
+          userToken={userToken}
         />
       )}
     </div>

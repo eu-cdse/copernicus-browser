@@ -3,8 +3,9 @@ import CollectionTooltip from '../../CollectionTooltip/CollectionTooltip';
 import { EOBButton } from '../../../../../junk/EOBCommon/EOBButton/EOBButton';
 import { t } from 'ttag';
 
-export const MultiSelectInput = ({ input, value = [], onChange }) => {
+export const MultiSelectInput = ({ input, value = [], onChange, userToken }) => {
   const selectionLimit = !!input.selectionLimit && value.length >= input.selectionLimit;
+  const options = input?.getOptions({ userToken }) ?? [];
 
   return (
     <div key={`${input.id}`} className="filter-item multiselect">
@@ -15,7 +16,7 @@ export const MultiSelectInput = ({ input, value = [], onChange }) => {
         )}
       </div>
       <div className="content">
-        {input?.options?.map((option) => {
+        {options.map((option) => {
           const isSelected = !!value?.find((v) => v.value === option.value);
           return (
             <EOBButton

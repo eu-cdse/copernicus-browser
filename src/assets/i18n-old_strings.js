@@ -5,3 +5,6 @@ t`Upload data`;
 t`Measure`;
 t`Show info`;
 t`Draw area of interest`;
+t`Draw AOI geometry on Image`;
+t`Draw the area of interest's geometry on the exported image.`;
+t`To use Draw AOI geometry on Image, area of interest needs to be selected first.`;

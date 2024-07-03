@@ -192,8 +192,9 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     userDescription,
     enabledOverlaysId,
     toTime,
-    drawAoiGeoToImg,
+    drawGeoToImg,
     aoiGeometry,
+    loiGeometry,
     bounds,
   } = params;
 
@@ -294,6 +295,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
   const mimeType = IMAGE_FORMATS_INFO[imageFormat].mimeType;
   const title = `${imageTitles.slice().reverse().join(', ')}`;
   const copyrightText = [...copyrightTexts].join(', ');
+  const geometryToDraw = loiGeometry ?? aoiGeometry;
   const finalBlob = await addImageOverlays(
     await canvasToBlob(canvas, mimeType),
     width,
@@ -315,8 +317,8 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     true,
     addLogos,
     drawCopernicusLogo,
-    drawAoiGeoToImg,
-    aoiGeometry,
+    drawGeoToImg,
+    geometryToDraw,
     bounds,
   );
   return {
@@ -354,8 +356,9 @@ export async function fetchImageFromParams(params, raiseWarning) {
     cancelToken,
     shouldClipExtraBands,
     getMapAuthToken,
-    drawAoiGeoToImg,
+    drawGeoToImg,
     aoiGeometry,
+    loiGeometry,
     bounds,
   } = params;
 
@@ -426,6 +429,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     addLogos = drawCopernicusLogo;
   }
 
+  const geometryToDraw = loiGeometry ?? aoiGeometry;
+
   const imageWithOverlays = await addImageOverlays(
     blob,
     width,
@@ -447,8 +452,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     true,
     addLogos,
     drawCopernicusLogo,
-    drawAoiGeoToImg,
-    aoiGeometry,
+    drawGeoToImg,
+    geometryToDraw,
     bounds,
   );
 
@@ -725,11 +730,11 @@ export async function addImageOverlays(
   showScaleBar = true,
   logos = true,
   drawCopernicusLogo = true,
-  drawAoiGeoToImg,
-  aoiGeometry,
+  drawGeoToImg,
+  geometryToDraw,
   bounds,
 ) {
-  if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawAoiGeoToImg)) {
+  if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawGeoToImg)) {
     return blob;
   }
   const canvas = document.createElement('canvas');
@@ -763,8 +768,8 @@ export async function addImageOverlays(
     const logoPartitionWidth = ctx.canvas.width * 0.4 - PARTITION_PADDING;
     await drawLogo(ctx, logoPartitionWidth, getLowerYAxis(ctx), drawCopernicusLogo);
   }
-  if (drawAoiGeoToImg) {
-    drawGeometryOnImg(ctx, aoiGeometry, bounds);
+  if (drawGeoToImg) {
+    drawGeometryOnImg(ctx, geometryToDraw, bounds);
   }
 
   return await canvasToBlob(canvas, mimeType);
@@ -1059,65 +1064,65 @@ const lineStyle = {
   lineWidth: 3,
 };
 
-function drawGeometryOnImg(ctx, aoiGeometry, leafletBounds) {
+function drawGeometryOnImg(ctx, geometryToDraw, leafletBounds) {
   const bbox = constructBBoxFromBounds(leafletBounds);
   const mercatorBBox = ensureMercatorBBox(bbox);
   const imageWidth = ctx.canvas.width;
   const imageHeight = ctx.canvas.height;
 
-  handleDrawGeometryOnImg(ctx, aoiGeometry, mercatorBBox, imageWidth, imageHeight);
+  handleDrawGeometryOnImg(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight);
 }
 
-function handleDrawGeometryOnImg(ctx, aoiGeometry, mercatorBBox, imageWidth, imageHeight) {
-  switch (aoiGeometry.type) {
+function handleDrawGeometryOnImg(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight) {
+  switch (geometryToDraw.type) {
+    case 'LineString':
+      drawLine(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
+      break;
     case 'Polygon':
-      drawPolygon(ctx, aoiGeometry, mercatorBBox, imageWidth, imageHeight, lineStyle);
+      drawPolygon(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
       break;
     case 'MultiPolygon':
-      drawMultiPolygon(ctx, aoiGeometry, mercatorBBox, imageWidth, imageHeight, lineStyle);
+      drawMultiPolygon(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
       break;
 
     default:
-      throw new Error(`${aoiGeometry.type} not supported. Only Polygon or MultiPolygon are supported`);
+      throw new Error(
+        `${geometryToDraw.type} not supported. Only LineString, Polygon or MultiPolygon are supported`,
+      );
   }
+}
+
+function drawPathSections(ctx, coords, mercatorBBox, imageWidth, imageHeight, lineStyle) {
+  ctx.strokeStyle = lineStyle.strokeColor;
+  ctx.lineWidth = lineStyle.lineWidth;
+  for (let i = 0; i < coords.length; i++) {
+    const lng = coords[i][0];
+    const lat = coords[i][1];
+    const pixelCoords = getPixelCoordinates(lng, lat, mercatorBBox, imageWidth, imageHeight);
+    if (i === 0) {
+      ctx.beginPath();
+      ctx.moveTo(pixelCoords.x, pixelCoords.y);
+    } else {
+      ctx.lineTo(pixelCoords.x, pixelCoords.y);
+    }
+  }
+  ctx.stroke();
+}
+
+function drawLine(ctx, geometry, mercatorBBox, imageWidth, imageHeight, lineStyle) {
+  drawPathSections(ctx, geometry.coordinates, mercatorBBox, imageWidth, imageHeight, lineStyle);
 }
 
 function drawPolygon(ctx, geometry, mercatorBBox, imageWidth, imageHeight, lineStyle) {
   for (const polygonCoords of geometry.coordinates) {
-    ctx.strokeStyle = lineStyle.strokeColor;
-    ctx.lineWidth = lineStyle.lineWidth;
-    for (let i = 0; i < polygonCoords.length; i++) {
-      const lng = polygonCoords[i][0];
-      const lat = polygonCoords[i][1];
-      const pixelCoords = getPixelCoordinates(lng, lat, mercatorBBox, imageWidth, imageHeight);
-      if (i === 0) {
-        ctx.beginPath();
-        ctx.moveTo(pixelCoords.x, pixelCoords.y);
-      } else {
-        ctx.lineTo(pixelCoords.x, pixelCoords.y);
-      }
-    }
-    ctx.stroke();
+    drawPathSections(ctx, polygonCoords, mercatorBBox, imageWidth, imageHeight, lineStyle);
   }
 }
 
 function drawMultiPolygon(ctx, geometry, mercatorBBox, imageWidth, imageHeight, lineStyle) {
   for (const polygonCoords of geometry.coordinates) {
-    ctx.strokeStyle = lineStyle.strokeColor;
-    ctx.lineWidth = lineStyle.lineWidth;
     for (const coords of polygonCoords) {
-      for (let i = 0; i < coords.length; i++) {
-        const lng = coords[i][0];
-        const lat = coords[i][1];
-        const pixelCoords = getPixelCoordinates(lng, lat, mercatorBBox, imageWidth, imageHeight);
-        if (i === 0) {
-          ctx.beginPath();
-          ctx.moveTo(pixelCoords.x, pixelCoords.y);
-        } else {
-          ctx.lineTo(pixelCoords.x, pixelCoords.y);
-        }
-      }
-      ctx.stroke();
+      drawPathSections(ctx, coords, mercatorBBox, imageWidth, imageHeight, lineStyle);
     }
   }
 }

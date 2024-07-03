@@ -15,8 +15,8 @@ export default class BasicForm extends React.Component {
   LEGEND_TITLE = t`Exported image will include legend.`;
   CROP_TO_AOI_TITLE = t`Crop image to the bounds of the area of interest.`;
   CROP_TO_AOI_DISABLED_TITLE = t`To use Crop to AOI, area of interest needs to be selected first.`;
-  DRAW_GEOMETRY_ON_IMAGE_TITLE = t`Draw the area of interest's geometry on the exported image.`;
-  DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE = t`To use Draw AOI geometry on Image, area of interest needs to be selected first.`;
+  DRAW_GEOMETRY_ON_IMAGE_TITLE = t`Draw an area of interest or line geometry on the exported image.`;
+  DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE = t`To use Draw AOI or Line geometry on image, an area or line needs to be selected first.`;
 
   componentDidMount() {
     const { updateFormData, addingMapOverlaysPossible } = this.props;
@@ -45,9 +45,12 @@ export default class BasicForm extends React.Component {
       isUserLoggedIn,
       isBasicForm,
       hasAoi,
+      hasLoi,
       cropToAoi,
-      drawAoiGeoToImg,
+      drawGeoToImg,
     } = this.props;
+
+    const drawingGeometryOnImageEnabled = hasAoi || hasLoi;
 
     return (
       <div>
@@ -132,26 +135,32 @@ export default class BasicForm extends React.Component {
           </div>
         ) : null}
         {isBasicForm ? (
-          <div className={`form-field ${hasAoi ? '' : 'disabled'}`}>
+          <div className={`form-field ${drawingGeometryOnImageEnabled ? '' : 'disabled'}`}>
             <label
-              title={hasAoi ? this.DRAW_GEOMETRY_ON_IMAGE_TITLE : this.DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE}
+              title={
+                drawingGeometryOnImageEnabled
+                  ? this.DRAW_GEOMETRY_ON_IMAGE_TITLE
+                  : this.DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE
+              }
             >
-              <div>{t`Draw AOI geometry on Image`}</div>
+              <div>{t`Draw AOI or Line on image`}</div>
               <i
                 className="fa fa-info-circle"
                 onClick={() => {
                   onErrorMessage(
-                    hasAoi ? this.DRAW_GEOMETRY_ON_IMAGE_TITLE : this.DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE,
+                    drawingGeometryOnImageEnabled
+                      ? this.DRAW_GEOMETRY_ON_IMAGE_TITLE
+                      : this.DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE,
                   );
                 }}
               />
             </label>
             <div className="form-input">
               <Toggle
-                checked={drawAoiGeoToImg}
+                checked={drawGeoToImg}
                 icons={false}
                 onChange={() => {
-                  updateFormData('drawAoiGeoToImg', !drawAoiGeoToImg);
+                  updateFormData('drawGeoToImg', !drawGeoToImg);
                 }}
               />
             </div>

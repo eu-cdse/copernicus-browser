@@ -171,6 +171,7 @@ export const AttributePlatformSerialIdentifierValues = {
   S1B: { value: 'B', label: 'S1B' },
   S2A: { value: 'A', label: 'S2A' },
   S2B: { value: 'B', label: 'S2B' },
+  S2C: { value: 'C', label: 'S2C' },
   S3A: { value: 'A', label: 'S3A' },
   S3B: { value: 'B', label: 'S3B' },
 };

@@ -1,5 +1,12 @@
+import store, { authSlice } from '../../store';
 import useAnonymousAuthRecaptcha from '../AnonymousAuthRecaptcha/useAnonymousAuthRecaptcha';
-import { getUserTokenFromLocalStorage, logoutUser, onLogIn, openLoginWindow } from '../authHelpers';
+import {
+  getUserTokenFromLocalStorage,
+  logoutUser,
+  onLogIn,
+  openLoginWindow,
+  saveAnonTokenToLocalStorage,
+} from '../authHelpers';
 
 const useLoginLogout = () => {
   const { clearAnonTokenRefresh } = useAnonymousAuthRecaptcha();
@@ -7,6 +14,8 @@ const useLoginLogout = () => {
   const doLogin = async () => {
     const token = await openLoginWindow();
     onLogIn(token);
+    store.dispatch(authSlice.actions.setAnonToken(null));
+    saveAnonTokenToLocalStorage(null);
     clearAnonTokenRefresh();
   };
 

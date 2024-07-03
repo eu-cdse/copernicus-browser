@@ -52,6 +52,7 @@ export function ImageDownloadForms(props) {
     allowShowLogoAnalytical,
     areEffectsSet,
     hasAoi,
+    hasLoi,
     aoiBounds,
     mapBounds,
     isUserLoggedIn,
@@ -253,6 +254,7 @@ export function ImageDownloadForms(props) {
           isUserLoggedIn={isUserLoggedIn}
           isBasicForm={true}
           hasAoi={hasAoi}
+          hasLoi={hasLoi}
         />
       )}
       {selectedTab === TABS.ANALYTICAL && (
@@ -303,7 +305,7 @@ export function ImageDownloadForms(props) {
           hasAoi={hasAoi}
           cropToAoi={selectedTab === TABS.BASIC ? basicFormState.cropToAoi : hasAoi}
           disabledDownload={disabledImagePreviewDownload}
-          drawAoiGeoToImg={selectedTab === TABS.BASIC ? basicFormState.drawAoiGeoToImg : false}
+          drawGeoToImg={selectedTab === TABS.BASIC ? basicFormState.drawGeoToImg : false}
           showComparePanel={showComparePanel}
         />
       )}

@@ -7,7 +7,6 @@ import store, {
   notificationSlice,
   visualizationSlice,
   themesSlice,
-  authSlice,
   collapsiblePanelSlice,
 } from '../../../store';
 import { getThemeName } from '../../../utils';
@@ -22,7 +21,6 @@ import {
   NOT_LOGGED_IN,
 } from '../../../const';
 import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { openLoginWindow, createSetUserPayload } from '../../../Auth/authHelpers';
 
 import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
 
@@ -30,6 +28,7 @@ import './ThemeSelect.scss';
 
 import MagnifierSvg from '../../../icons/magnifier.svg?react';
 import ChevronDown from '../../../icons/chevron-down.svg?react';
+import useLoginLogout from '../../../Auth/loginLogout/useLoginLogout';
 
 const DropdownIndicator = (props) => {
   return (
@@ -67,6 +66,7 @@ function ThemeSelect({
   themePanelExpanded,
 }) {
   const previousVisualizationDate = usePrevious(visualizationDate);
+  const { doLogin } = useLoginLogout();
 
   useEffect(() => {
     if (selectedThemeId === EXPIRED_ACCOUNT.instanceId) {
@@ -122,8 +122,7 @@ function ThemeSelect({
       return;
     }
     if (themeId === NOT_LOGGED_IN.instanceId) {
-      const token = await openLoginWindow();
-      store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
+      await doLogin();
       return;
     }
     if (themeId === EXPIRED_ACCOUNT.instanceId) {

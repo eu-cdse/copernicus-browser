@@ -18,6 +18,7 @@ import {
   ODataAttributes,
   AttributeDEMDatasetVersions,
 } from '../../../../api/OData/assets/attributes';
+import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
   createOriginFilter,
   createS1GRDResolutionFilter,
@@ -78,12 +79,18 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        options: [AttributePlatformSerialIdentifierValues.S1A, AttributePlatformSerialIdentifierValues.S1B],
+        getOptions: ({ userToken }) => [
+          AttributePlatformSerialIdentifierValues.S1A,
+          AttributePlatformSerialIdentifierValues.S1B,
+        ],
       },
       {
         id: AttributeNames.orbitDirection,
         render: MultiSelectInput,
-        options: [AttributeOrbitDirectionValues.ASCENDING, AttributeOrbitDirectionValues.DESCENDING],
+        getOptions: ({ userToken }) => [
+          AttributeOrbitDirectionValues.ASCENDING,
+          AttributeOrbitDirectionValues.DESCENDING,
+        ],
       },
       {
         id: AttributeNames.relativeOrbitNumber,
@@ -96,7 +103,7 @@ export const collections = [
       {
         id: AttributeNames.operationalMode,
         render: MultiSelectInput,
-        options: [
+        getOptions: ({ userToken }) => [
           AttributeOperationalModeValues.SM,
           AttributeOperationalModeValues.IW,
           AttributeOperationalModeValues.EW,
@@ -112,7 +119,7 @@ export const collections = [
       {
         id: AttributeNames.polarisationChannels,
         render: MultiSelectInput,
-        options: [
+        getOptions: ({ userToken }) => [
           AttributePolarisationChannelsValues.HH,
           AttributePolarisationChannelsValues.VV,
           AttributePolarisationChannelsValues.VV_VH,
@@ -125,18 +132,18 @@ export const collections = [
         render: MultiSelectInput,
         filterElement: FilterElement.Expression,
         defaultValue: [AttributeOnlineValues.online],
-        options: [AttributeOnlineValues.online, AttributeOnlineValues.offline],
+        getOptions: ({ userToken }) => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
       },
       {
         id: AttributeNames.resolution,
         title: 'Resolution',
         render: MultiSelectInput,
-        options: [
+        getOptions: ({ userToken }) => [
           AttributeProductResolution.FULL,
           AttributeProductResolution.HIGH,
           AttributeProductResolution.MEDIUM,
         ],
-        hasAccess: ({ userToken }) => hasRole(userToken, 's1-expert'),
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S1_EXPERT),
         filterElement: FilterElement.CustomFilter,
         customFilter: (key, value) => createS1GRDResolutionFilter(key, value),
       },
@@ -145,13 +152,13 @@ export const collections = [
         title: 'Product class',
         render: MultiSelectInput,
         defaultValue: [AttributeProductClassValues.STANDARD],
-        options: [
+        getOptions: ({ userToken }) => [
           AttributeProductClassValues.STANDARD,
           AttributeProductClassValues.CALIBRATION,
           AttributeProductClassValues.NOISE,
           AttributeProductClassValues.ANNOTATON,
         ],
-        hasAccess: ({ userToken }) => hasRole(userToken, 's1-expert'),
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S1_EXPERT),
       },
     ],
   },
@@ -187,7 +194,14 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        options: [AttributePlatformSerialIdentifierValues.S2A, AttributePlatformSerialIdentifierValues.S2B],
+        getOptions: ({ userToken }) =>
+          hasRole(userToken, EXPERT_ROLES.S2_EXPERT)
+            ? [
+                AttributePlatformSerialIdentifierValues.S2A,
+                AttributePlatformSerialIdentifierValues.S2B,
+                AttributePlatformSerialIdentifierValues.S2C,
+              ]
+            : [AttributePlatformSerialIdentifierValues.S2A, AttributePlatformSerialIdentifierValues.S2B],
       },
       {
         id: AttributeNames.relativeOrbitNumber,
@@ -200,14 +214,14 @@ export const collections = [
       {
         id: AttributeNames.origin,
         render: MultiSelectInput,
-        options: [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
+        getOptions: ({ userToken }) => [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
         filterElement: FilterElement.CustomFilter,
         customFilter: (key, value) => createOriginFilter(key, value),
       },
       {
         id: AttributeNames.S2Collection,
         render: MultiSelectInput,
-        options: [AttributeS2CollectionValues.COLLECTION1],
+        getOptions: ({ userToken }) => [AttributeS2CollectionValues.COLLECTION1],
         filterElement: FilterElement.CustomFilter,
         customFilter: (key, value) => createS2Collection1Filter(key, value),
       },
@@ -216,7 +230,7 @@ export const collections = [
         render: MultiSelectInput,
         filterElement: FilterElement.Expression,
         defaultValue: [AttributeOnlineValues.online],
-        options: [AttributeOnlineValues.online, AttributeOnlineValues.offline],
+        getOptions: ({ userToken }) => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
       },
     ],
   },
@@ -296,17 +310,27 @@ export const collections = [
       {
         id: AttributeNames.timeliness,
         render: MultiSelectInput,
-        options: [AttributeTimelinessValues.NR, AttributeTimelinessValues.ST, AttributeTimelinessValues.NT],
+        getOptions: ({ userToken }) => [
+          AttributeTimelinessValues.NR,
+          AttributeTimelinessValues.ST,
+          AttributeTimelinessValues.NT,
+        ],
       },
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        options: [AttributePlatformSerialIdentifierValues.S3A, AttributePlatformSerialIdentifierValues.S3B],
+        getOptions: ({ userToken }) => [
+          AttributePlatformSerialIdentifierValues.S3A,
+          AttributePlatformSerialIdentifierValues.S3B,
+        ],
       },
       {
         id: AttributeNames.orbitDirection,
         render: MultiSelectInput,
-        options: [AttributeOrbitDirectionValues.ASCENDING, AttributeOrbitDirectionValues.DESCENDING],
+        getOptions: ({ userToken }) => [
+          AttributeOrbitDirectionValues.ASCENDING,
+          AttributeOrbitDirectionValues.DESCENDING,
+        ],
       },
       {
         id: AttributeNames.relativeOrbitNumber,
@@ -373,7 +397,7 @@ export const collections = [
       {
         id: AttributeNames.processingMode,
         render: MultiSelectInput,
-        options: [
+        getOptions: ({ userToken }) => [
           AttributeProcessingModeValues.NRTI,
           AttributeProcessingModeValues.OFFL,
           AttributeProcessingModeValues.RPRO,
@@ -576,7 +600,7 @@ export const collections = [
         id: AttributeNames.dataset,
         render: MultiSelectInput,
         defaultValue: AttributeDEMDatasetVersions.slice(-1),
-        options: AttributeDEMDatasetVersions,
+        getOptions: ({ userToken }) => AttributeDEMDatasetVersions,
         selectionLimit: 5,
       },
       {

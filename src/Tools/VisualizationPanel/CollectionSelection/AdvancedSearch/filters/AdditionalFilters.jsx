@@ -21,6 +21,7 @@ const AdditionalFilters = ({
   onChange,
   allFilters,
   positionTop,
+  userToken,
 }) => {
   const [style, setStyle] = useState({});
   const { width: windowWidth } = useWindowSize();
@@ -53,6 +54,7 @@ const AdditionalFilters = ({
             input: filterItem,
             value: selectedFilters?.[filterItem.id],
             onChange: (value) => onChange(collectionId, filterItem.id, value),
+            userToken: userToken,
           }),
         )}
       </div>

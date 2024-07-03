@@ -5,12 +5,13 @@ import { t } from 'ttag';
 import ExternalLink from '../ExternalLink/ExternalLink';
 import store, { authSlice, modalSlice } from '../store';
 import { LOCAL_STORAGE_PRIVACY_CONSENT_KEY } from '../const';
-import { createSetUserPayload, openLoginWindow } from '../Auth/authHelpers';
 
 import './TermsAndPrivacyConsentForm.scss';
+import useLoginLogout from '../Auth/loginLogout/useLoginLogout';
 
 export default function TermsAndPrivacyConsentForm() {
   const [hasRejected, setHasRejected] = useState(false);
+  const { doLogin } = useLoginLogout();
 
   function onSelect(selection) {
     if (selection) {
@@ -23,9 +24,8 @@ export default function TermsAndPrivacyConsentForm() {
     }
   }
 
-  async function onLogIn() {
-    const token = await openLoginWindow();
-    store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
+  async function onLogInClick() {
+    await doLogin();
 
     onSelect(true);
   }
@@ -93,7 +93,7 @@ export default function TermsAndPrivacyConsentForm() {
             <div className="log-in-option">
               {t`If you have an account, you have already agreed to Terms of Service and Privacy Policy`}
               {'. '}
-              <span onClick={onLogIn} className="log-in-button">{t`Log in`}</span>
+              <span onClick={onLogInClick} className="log-in-button">{t`Log in`}</span>
             </div>
           </>
         )}

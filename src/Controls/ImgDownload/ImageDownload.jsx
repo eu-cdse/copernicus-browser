@@ -74,7 +74,7 @@ function ImageDownload(props) {
     userDescription: '',
     addMapOverlays: true,
     cropToAoi: hasAoi,
-    drawAoiGeoToImg: false,
+    drawGeoToImg: false,
     imageFormat: IMAGE_FORMATS.JPG,
   });
   const [analyticalFormState, setAnalyticalFormState] = useState({
@@ -657,6 +657,7 @@ function ImageDownload(props) {
           allowShowLogoAnalytical={!isGIBS}
           areEffectsSet={!!effects}
           hasAoi={!!props.aoiGeometry}
+          hasLoi={!!props.loiGeometry}
           is3D={props.is3D}
           isUserLoggedIn={isUserLoggedIn}
           updateSelectedLayers={updateSelectedLayers}
@@ -688,6 +689,7 @@ const mapStoreToProps = (store) => ({
   enabledOverlaysId: store.mainMap.enabledOverlaysId,
   user: store.auth.user,
   aoiGeometry: store.aoi.geometry,
+  loiGeometry: store.loi.geometry,
   selectedTabIndex: store.tabs.selectedTabIndex,
   comparedLayers: store.compare.comparedLayers,
   comparedOpacity: store.compare.comparedOpacity,

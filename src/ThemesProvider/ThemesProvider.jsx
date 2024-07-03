@@ -5,7 +5,7 @@ import { t } from 'ttag';
 import AlertProvider, { confirm } from 'react-alert-async';
 import { ModalId } from '../const';
 
-import store, { notificationSlice, themesSlice, visualizationSlice, authSlice, modalSlice } from '../store';
+import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
   prepareDataSourceHandlers,
   initializeDataSourceHandlers,
@@ -18,12 +18,7 @@ import {
   MODES,
   EXPIRED_ACCOUNT,
 } from '../const';
-import {
-  createSetUserPayload,
-  getUserTokenFromLocalStorage,
-  logoutUser,
-  openLoginWindow,
-} from '../Auth/authHelpers';
+import { getUserTokenFromLocalStorage, logoutUser, onLogIn, openLoginWindow } from '../Auth/authHelpers';
 
 import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
@@ -59,7 +54,7 @@ class ThemesProvider extends React.Component {
         }
         store.dispatch(modalSlice.actions.removeModal());
         const token = await openLoginWindow();
-        store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
+        onLogIn(token);
         await this.fetchUserInstances();
         this.setMode(selectedMode);
         this.setSelectedThemeIdFromMode(selectedMode, currentThemeId);

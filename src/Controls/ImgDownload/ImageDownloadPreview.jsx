@@ -31,8 +31,9 @@ const ImageDownloadPreview = (props) => {
     comparedLayers,
     hasAoi,
     cropToAoi,
-    drawAoiGeoToImg,
+    drawGeoToImg,
     aoiGeometry,
+    loiGeometry,
     pixelBounds,
     auth,
     aoiBounds,
@@ -77,8 +78,9 @@ const ImageDownloadPreview = (props) => {
       showLegend: false,
       showLogo: false,
       addMapOverlays: false,
-      drawAoiGeoToImg,
+      drawGeoToImg,
       aoiGeometry,
+      loiGeometry,
       geometry: cropToAoi ? aoiGeometry : undefined,
       bounds: cropToAoi ? aoiBounds : mapBounds,
     };
@@ -130,7 +132,7 @@ const ImageDownloadPreview = (props) => {
   useEffect(() => {
     fetchPreviewImg();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cropToAoi, drawAoiGeoToImg]);
+  }, [cropToAoi, drawGeoToImg]);
 
   useEffect(() => {
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
@@ -178,6 +180,7 @@ const mapStoreToProps = (store) => ({
   enabledOverlaysId: store.mainMap.enabledOverlaysId,
   user: store.auth.user,
   aoiGeometry: store.aoi.geometry,
+  loiGeometry: store.loi.geometry,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
   evalscripturl: store.visualization.evalscripturl,

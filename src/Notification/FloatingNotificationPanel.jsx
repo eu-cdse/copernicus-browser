@@ -4,10 +4,10 @@ import { getZoomConfiguration } from '../Tools/SearchPanel/dataSourceHandlers/he
 import { t } from 'ttag';
 import { EOBButton } from '../junk/EOBCommon//EOBButton/EOBButton';
 import { TABS } from '../const';
-import { openLoginWindow, onLogIn } from '../Auth/authHelpers';
 
 import './FloatingNotificationPanel.scss';
 import store, { mainMapSlice } from '../store';
+import useLoginLogout from '../Auth/loginLogout/useLoginLogout';
 
 const FloatingNotificationWrapper = ({ toolsOpen, children }) => {
   return (
@@ -17,22 +17,23 @@ const FloatingNotificationWrapper = ({ toolsOpen, children }) => {
   );
 };
 
-function renderUserAuthError({ userAuthError, toolsOpen }) {
+function RenderUserAuthError({ userAuthError, toolsOpen }) {
+  const { doLogin } = useLoginLogout();
+
   return (
     <FloatingNotificationWrapper toolsOpen={toolsOpen}>
       <div className="message">{userAuthError}</div>
       <EOBButton
         text={t`Login again`}
         onClick={async () => {
-          const token = await openLoginWindow();
-          onLogIn(token);
+          await doLogin();
         }}
       ></EOBButton>
     </FloatingNotificationWrapper>
   );
 }
 
-function renderZoomInAlert({ toolsOpen }) {
+function RenderZoomInAlert({ toolsOpen }) {
   return (
     <FloatingNotificationWrapper toolsOpen={toolsOpen}>
       <div className="message">{t`Please zoom in or search for a location of interest`}</div>
@@ -40,7 +41,7 @@ function renderZoomInAlert({ toolsOpen }) {
   );
 }
 
-function renderMapLoadingMessage({ toolsOpen, mapLoadingMessage }) {
+function RenderMapLoadingMessage({ toolsOpen, mapLoadingMessage }) {
   return (
     <FloatingNotificationWrapper toolsOpen={toolsOpen}>
       <div className="message">{mapLoadingMessage}</div>
@@ -66,15 +67,15 @@ function FloatingNotificationPanel({
   }
 
   if (userAuthError) {
-    return renderUserAuthError({ userAuthError, toolsOpen });
+    return RenderUserAuthError({ userAuthError, toolsOpen });
   }
 
   if (showZoomInAlert()) {
-    return renderZoomInAlert({ toolsOpen });
+    return RenderZoomInAlert({ toolsOpen });
   }
 
   if (mapLoadingMessage) {
-    return renderMapLoadingMessage({ toolsOpen, mapLoadingMessage });
+    return RenderMapLoadingMessage({ toolsOpen, mapLoadingMessage });
   }
   return null;
 }

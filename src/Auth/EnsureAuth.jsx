@@ -7,6 +7,7 @@ import UserAuth from './UserAuth';
 
 import './EnsureAuth.scss';
 import ReactMarkdown from 'react-markdown';
+import { getRecaptchaConsentFromLocalStorage } from './authHelpers';
 
 const AnonAuthButton = ({ executeAnonAuth }) => {
   return (
@@ -58,7 +59,7 @@ const EnsureAuth = ({
     return <div className="login-overlay" />;
   }
 
-  if (!(anonToken || user || tokenRefreshInProgress)) {
+  if (!(anonToken || user || tokenRefreshInProgress) && !getRecaptchaConsentFromLocalStorage()) {
     return <LoginRequired user={user} executeAnonAuth={executeAnonAuth} />;
   }
 
