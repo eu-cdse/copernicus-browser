@@ -20,7 +20,7 @@ export function createAddProductToWorkspacePayload(product) {
         getAttributes(product.attributes, AttributeNames.platformSerialIdentifier)?.Value ?? 'N/A',
       startDate: moment.utc(product.sensingTime).format(),
       online: product.online,
-      size: product.contentLength,
+      size: product.contentLength < 0 ? 0 : product.contentLength,
       productType: product.productType,
       ...(product?.previewUrl ? { thumbnailDownloadLink: product.previewUrl } : {}),
     },
@@ -53,12 +53,12 @@ export async function addProductToWorkspace(product) {
       }
     })
     .catch((error) => {
-      const detail = error?.response?.data?.detail || t`Something went wrong!`;
+      const errorMsg = error?.response?.data?.detail?.at(0).msg || t`Something went wrong!`;
       store.dispatch(
         floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
           notificationUniqueId: uuid(),
           notificationAlertType: 'warning',
-          notificationMsg: detail,
+          notificationMsg: errorMsg,
         }),
       );
     });

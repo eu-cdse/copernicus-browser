@@ -195,7 +195,7 @@ export const collections = [
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
         getOptions: ({ userToken }) =>
-          hasRole(userToken, EXPERT_ROLES.S2_EXPERT)
+          hasRole(userToken, EXPERT_ROLES.S2C_COMMISSIONING)
             ? [
                 AttributePlatformSerialIdentifierValues.S2A,
                 AttributePlatformSerialIdentifierValues.S2B,

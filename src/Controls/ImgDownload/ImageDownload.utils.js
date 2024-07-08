@@ -295,7 +295,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
   const mimeType = IMAGE_FORMATS_INFO[imageFormat].mimeType;
   const title = `${imageTitles.slice().reverse().join(', ')}`;
   const copyrightText = [...copyrightTexts].join(', ');
-  const geometryToDraw = loiGeometry ?? aoiGeometry;
+  const geometriesToDraw = [aoiGeometry, loiGeometry].filter((geo) => !!geo);
   const finalBlob = await addImageOverlays(
     await canvasToBlob(canvas, mimeType),
     width,
@@ -318,7 +318,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     addLogos,
     drawCopernicusLogo,
     drawGeoToImg,
-    geometryToDraw,
+    geometriesToDraw,
     bounds,
   );
   return {
@@ -429,7 +429,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     addLogos = drawCopernicusLogo;
   }
 
-  const geometryToDraw = loiGeometry ?? aoiGeometry;
+  const geometriesToDraw = [aoiGeometry, loiGeometry].filter((geo) => !!geo);
 
   const imageWithOverlays = await addImageOverlays(
     blob,
@@ -453,7 +453,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     addLogos,
     drawCopernicusLogo,
     drawGeoToImg,
-    geometryToDraw,
+    geometriesToDraw,
     bounds,
   );
 
@@ -731,7 +731,7 @@ export async function addImageOverlays(
   logos = true,
   drawCopernicusLogo = true,
   drawGeoToImg,
-  geometryToDraw,
+  geometriesToDraw,
   bounds,
 ) {
   if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawGeoToImg)) {
@@ -769,7 +769,7 @@ export async function addImageOverlays(
     await drawLogo(ctx, logoPartitionWidth, getLowerYAxis(ctx), drawCopernicusLogo);
   }
   if (drawGeoToImg) {
-    drawGeometryOnImg(ctx, geometryToDraw, bounds);
+    geometriesToDraw.forEach((geometry) => drawGeometryOnImg(ctx, geometry, bounds));
   }
 
   return await canvasToBlob(canvas, mimeType);
