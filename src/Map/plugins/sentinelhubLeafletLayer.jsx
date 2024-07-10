@@ -116,6 +116,8 @@ import {
   S1_CDAS_SM_HH,
   COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  S1_MONTHLY_MOSAIC_IW,
+  S1_MONTHLY_MOSAIC_DH,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -820,6 +822,8 @@ class SentinelHubLayer extends L.TileLayer {
           mosaickingOrder,
         );
       }
+      case S1_MONTHLY_MOSAIC_IW:
+      case S1_MONTHLY_MOSAIC_DH:
       case COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC:
       case COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC: {
         const dsh = getDataSourceHandler(datasetId);

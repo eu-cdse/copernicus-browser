@@ -132,6 +132,8 @@ import {
   S1_CDAS_SM_HHHV,
   COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  S1_MONTHLY_MOSAIC_DH,
+  S1_MONTHLY_MOSAIC_IW,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -140,6 +142,7 @@ import Sentinel5PCDASDataSourceHandler from './Sentinel5PCDASDataSourceHandler';
 import { DEMCDASLayer } from '@sentinel-hub/sentinelhub-js';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
+import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -147,6 +150,7 @@ initializeDataSourceHandlers();
 export function initializeDataSourceHandlers() {
   dataSourceHandlers = [
     new Sentinel1DataSourceHandler(),
+    new S1MosaicDataSourceHandler(),
     new Sentinel2AWSDataSourceHandler(),
     new Sentinel2CDASDataSourceHandler(),
     new MosaicDataSourceHandler(),
@@ -493,6 +497,9 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC:
     case COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC:
       return DATASOURCES.MOSAIC;
+    case S1_MONTHLY_MOSAIC_DH:
+    case S1_MONTHLY_MOSAIC_IW:
+      return DATASOURCES.S1_MOSAIC;
     default:
       return null;
   }
@@ -619,6 +626,8 @@ export const datasetLabels = {
   [PLANET_NICFI]: 'Planet NICFI Basemaps',
   [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics V2',
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
+  [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
+  [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',
 };
 
 export function getDatasetLabel(datasetId) {

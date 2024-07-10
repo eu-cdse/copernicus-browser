@@ -220,7 +220,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   };
 
   supportsCustomLayer(datasetId) {
-    const availableBands = this.collections[datasetId].availableBands;
+    const availableBands = this.collections[datasetId]?.availableBands;
     return availableBands && !!availableBands.length;
   }
 

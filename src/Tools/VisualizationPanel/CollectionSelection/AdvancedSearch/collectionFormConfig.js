@@ -17,6 +17,7 @@ import {
   FormatedAttributeNames,
   ODataAttributes,
   AttributeDEMDatasetVersions,
+  AttributeDEMDatasetsMap,
 } from '../../../../api/OData/assets/attributes';
 import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
@@ -433,9 +434,9 @@ export const collections = [
     supportsCloudCover: false,
   },
   {
-    id: 'CCM',
-    label: 'CCM Optical',
-    supportsCollectionName: false,
+    id: ODataCollections.OPTICAL.id,
+    label: ODataCollections.OPTICAL.label,
+    collectionName: ODataCollections.OPTICAL.collection,
     instruments: [
       {
         id: 'VHR_EUROPE',
@@ -446,28 +447,33 @@ export const collections = [
           {
             id: 'DWH_MG2b_CORE_03',
             label: 'VHR Europe (2011–2013)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
           },
           {
             id: 'VHR_IMAGE_2015',
             label: 'VHR Europe (2014–2016)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
           },
           {
             id: 'VHR_IMAGE_2018',
             label: 'VHR Europe (2017–2019) (1)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             // productTypeIds: ['VHR_IMAGE_2018', 'VHR_IMAGE_2018_ENHANCED'], // uncomment to display only 1 checkbox and query for both (also delete the below one)
           },
           {
             id: 'VHR_IMAGE_2018_ENHANCED',
             label: 'VHR Europe (2017–2019) (2)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
           },
           {
             id: 'VHR_IMAGE_2021',
             label: 'VHR Europe (2020–2022)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'DEM_VHR_2018',
+            label: 'VHR DEM (2018)',
+            customFilterQueryByDatasetFull: true,
           },
         ],
         supportsCloudCover: true,
@@ -479,13 +485,19 @@ export const collections = [
         productTypes: [
           {
             id: 'DAP_MG2b_01',
-            label: 'VHR Urban Atlas (2006, 2009)',
-            queryByDatasetFull: true,
+
+            label: 'VHR Urban Atlas (2006, 2009) (1)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'DAP_MG2b_02',
+            label: 'VHR Urban Atlas (2006, 2009) (2)',
+            customFilterQueryByDatasetFull: true,
           },
           {
             id: 'VHR1-2_Urban_Atlas_2012',
             label: 'VHR Urban Atlas (2011–2013)',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
           },
         ],
         supportsCloudCover: true,
@@ -535,7 +547,7 @@ export const collections = [
   {
     id: ODataCollections.DEM.id,
     label: ODataCollections.DEM.label,
-    supportsCollectionName: false,
+    collectionName: ODataCollections.DEM.collection,
     supportsCloudCover: false,
     instruments: [
       {
@@ -546,25 +558,25 @@ export const collections = [
           {
             id: 'COP-DEM_GLO-30-DGED',
             label: 'COP-DEM_GLO-30-DGED',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
           {
             id: 'COP-DEM_GLO-30-DTED',
             label: 'COP-DEM_GLO-30-DTED',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
           {
             id: 'COP-DEM_GLO-90-DGED',
             label: 'COP-DEM_GLO-90-DGED',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
           {
             id: 'COP-DEM_GLO-90-DTED',
             label: 'COP-DEM_GLO-90-DTED',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
         ],
@@ -577,13 +589,13 @@ export const collections = [
           {
             id: 'COP-DEM_EEA-10-DGED',
             label: 'COP-DEM_EEA-10-DGED',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
           {
             id: 'COP-DEM_EEA-10-INSP',
             label: 'COP-DEM_EEA-10-INSP',
-            queryByDatasetFull: true,
+            customFilterQueryByDatasetFull: true,
             productTypes: [],
           },
         ],
@@ -602,6 +614,15 @@ export const collections = [
         defaultValue: AttributeDEMDatasetVersions.slice(-1),
         getOptions: ({ userToken }) => AttributeDEMDatasetVersions,
         selectionLimit: 5,
+        preProcessFilters: (filters) => {
+          return filters.flatMap((filter) => {
+            return AttributeDEMDatasetsMap.flatMap((dataset) => {
+              return dataset.productTypes.map((productType) => ({
+                value: `${productType.id}/${filter.value}`,
+              }));
+            });
+          });
+        },
       },
       {
         id: AttributeNames.gridId,

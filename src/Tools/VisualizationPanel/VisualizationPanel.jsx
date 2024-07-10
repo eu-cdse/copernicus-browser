@@ -113,6 +113,7 @@ function VisualizationPanel({
   newPinsCount,
   visibleOnMap,
   authToken,
+  dataSourcesInitialized,
 }) {
   const selectedTheme = selectedThemesListId
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
@@ -226,6 +227,10 @@ function VisualizationPanel({
     }
   }, [windowHeight, shouldShowLayerList]);
 
+  if (!dataSourcesInitialized) {
+    return null;
+  }
+
   return (
     <div className="visualization-panel">
       <>
@@ -332,6 +337,7 @@ const mapStoreToProps = (store) => ({
   newCompareLayersCount: store.compare.newCompareLayersCount,
   newPinsCount: store.pins.newPinsCount,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
+  dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });
 
 export default connect(mapStoreToProps, null)(VisualizationPanel);

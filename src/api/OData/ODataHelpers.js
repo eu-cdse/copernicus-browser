@@ -48,6 +48,7 @@ import { Polarization } from '@sentinel-hub/sentinelhub-js';
 import { collections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
 import { FilterElement } from './FilterElement';
 import moment from 'moment';
+import { isFunction } from '../../utils';
 
 export const PAGE_SIZE = 50;
 
@@ -337,33 +338,30 @@ const createTimeIntervalsFilter = (timeIntervals) => {
 // (productType=Type.1 and intersects..)
 const createProductTypeFilter = ({ productTypeConfig, geometry }) => {
   const productTypeFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
-  const { queryByDatasetFull } = productTypeConfig;
 
-  if (productTypeConfig?.customFilterExpression) {
+  if (productTypeConfig.customFilterExpression) {
     productTypeFilter.addExpression(productTypeConfig.customFilterExpression);
+  } else if (productTypeConfig.customFilterQueryByDatasetFull) {
+    productTypeFilter.attribute(
+      ODataAttributes.datasetFull,
+      ODataFilterOperator.eq,
+      productTypeConfig.queryableId,
+    );
+  } else if (Array.isArray(productTypeConfig.name)) {
+    productTypeConfig.name.forEach((name) => {
+      productTypeFilter.contains(AttributeNames.productName, name, 'string');
+    });
   } else {
-    if (Array.isArray(productTypeConfig.name)) {
-      productTypeConfig.name.forEach((name) => {
-        productTypeFilter.contains(AttributeNames.productName, name, 'string');
+    productTypeFilter.contains(AttributeNames.productName, productTypeConfig.name, 'string');
+  }
+
+  if (productTypeConfig.notName !== undefined) {
+    if (Array.isArray(productTypeConfig.notName)) {
+      productTypeConfig.notName.forEach((notName) => {
+        productTypeFilter.notContains(AttributeNames.productName, notName, 'string');
       });
     } else {
-      queryByDatasetFull
-        ? productTypeFilter.attribute(
-            ODataAttributes.datasetFull,
-            ODataFilterOperator.eq,
-            productTypeConfig.queryableId,
-          )
-        : productTypeFilter.contains(AttributeNames.productName, productTypeConfig.name, 'string');
-    }
-
-    if (productTypeConfig.notName !== undefined) {
-      if (Array.isArray(productTypeConfig.notName)) {
-        productTypeConfig.notName.forEach((notName) => {
-          productTypeFilter.notContains(AttributeNames.productName, notName, 'string');
-        });
-      } else {
-        productTypeFilter.notContains(AttributeNames.productName, productTypeConfig.notName, 'string');
-      }
+      productTypeFilter.notContains(AttributeNames.productName, productTypeConfig.notName, 'string');
     }
   }
 
@@ -525,6 +523,7 @@ const createAdditionalFilters = (collectionId, additionalFilters) => {
       return;
     }
 
+    let additionalFilter = [...additionalFilters[key]];
     const additionalFilterConfig = findAdditionalFiltersConfigById(collectionId, key);
 
     if (!additionalFilterConfig) {
@@ -532,9 +531,13 @@ const createAdditionalFilters = (collectionId, additionalFilters) => {
       return;
     }
 
-    if (Array.isArray(additionalFilters[key])) {
+    if (additionalFilterConfig.preProcessFilters && isFunction(additionalFilterConfig.preProcessFilters)) {
+      additionalFilter = additionalFilterConfig.preProcessFilters(additionalFilter);
+    }
+
+    if (Array.isArray(additionalFilter)) {
       const multiValueFilter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
-      additionalFilters[key].forEach((option) => {
+      additionalFilter.forEach((option) => {
         applyAdditionalFilterElement(
           multiValueFilter,
           additionalFilterConfig,
@@ -550,7 +553,7 @@ const createAdditionalFilters = (collectionId, additionalFilters) => {
         additionalFilterConfig,
         key,
         ODataFilterOperator.eq,
-        additionalFilters[key],
+        additionalFilter,
       );
     }
   });
@@ -571,7 +574,9 @@ const createCollectionFilter = ({ collection, geometry }) => {
         : FilterElement.Expression(
             AttributeNames.collectionName,
             ODataFilterOperator.eq,
-            `'${collectionConfig?.label}'`,
+            `'${
+              collectionConfig?.collectionName ? collectionConfig?.collectionName : collectionConfig?.label
+            }'`,
           ),
     );
   }

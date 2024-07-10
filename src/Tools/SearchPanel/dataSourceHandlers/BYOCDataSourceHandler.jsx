@@ -13,6 +13,7 @@ import { DATASOURCES } from '../../../const';
 import { reprojectGeometry } from '../../../utils/reproject';
 import { getSHServiceRootUrl } from './dataSourceHandlers';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
+import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
 
@@ -36,6 +37,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   COPERNICUS_SERVICES_KNOWN_COLLECTIONS = new CopernicusServicesDataSourceHandler().getKnownCollectionsList();
   OTHER_KNOWN_COLLECTIONS = new OthersDataSourceHandler().getKnownCollectionsList();
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
+  MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
 
   willHandle(service, url, name, layers, preselected) {
     name = isFunction(name) ? name() : name;
@@ -45,7 +47,8 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
         l.collectionId &&
         !this.COPERNICUS_SERVICES_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.OTHER_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId),
+        !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
+        !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId),
     );
     if (customLayers.length === 0) {
       return false;

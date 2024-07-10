@@ -95,6 +95,7 @@ const mapStoreToProps = (store) => ({
   comparedLayers: store.compare.comparedLayers,
   is3D: store.mainMap.is3D,
   modalId: store.modal.id,
+  dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });
 
 export default connect(mapStoreToProps, null)(ImageDownloadBtn);

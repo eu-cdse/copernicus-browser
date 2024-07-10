@@ -1,0 +1,225 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/0-RGB-RATIO",
+        "id": "0-RGB-RATIO",
+        "title": "RGB Ratio",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VV\", \"VH\", \"dataMask\"],\n    output: { bands: 3 }\n  };\n}\n\nvar viz = new HighlightCompressVisualizer(0, 0.8);\nvar gain = 0.8;\n\n\nfunction evaluatePixel(sample) {\n  if (sample.dataMask == 0) {\n    return [0, 0, 0];\n  }\n  \n  let vals = [gain * sample.VV / 0.28,\n              gain * sample.VH / 0.06,\n              gain * sample.VH / sample.VV / 0.49];\n  \n  return viz.processList(vals);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:31:06.525580Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "timeRange": {
+                "startTime": {
+                    "type": "ABSOLUTE",
+                    "value": "2023-03-01T11:41:01.000"
+                }
+            },
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/1-SAR-URBAN",
+        "id": "1-SAR-URBAN",
+        "title": " SAR Urban",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VV\", \"VH\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  return [5.5 * sample.VH > 0.5, sample.VV, sample.VH * 8, sample.dataMask]\n}\n\n// ---\n\n/*URBAN AREAS\n  Sentinel1-AWS-IW-VVVH\n*/\n\n//return [5.5 * VH > 0.5, VV, VH * 8];"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:31:29.524324Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/ENHANCED",
+        "id": "ENHANCED",
+        "title": "Enhanced visualization",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VV\", \"VH\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(sample) {\n  var water_threshold = 25; //lower means more water\n \n  if (sample.VV / sample.VH > water_threshold) {\n    // watervis\n    return [sample.VV, 8 * sample.VV, 0.5 + 3 * sample.VV + 2000 * sample.VH, sample.dataMask];\n  } else {\n    // landvis\n    return [3 * sample.VV, 1.1 * sample.VV + 8.75 * sample.VH, 1.75 * sample.VH, sample.dataMask];\n  }\n}\n\n// ---\n\n/*\n// A simplified visualization based on:\n// Sentinel-1 False-Color Visualization V1.0.0\n// Twitter: Pierre Markuse (@pierre_markuse)\n// Website: https://pierre-markuse.net/\n// CC BY 4.0 International - https://creativecommons.org/licenses/by/4.0/\n\nvar water_threshold = 25; //lower means more water\n \nif (VV / VH > water_threshold) {\n  // watervis\n  return [VV, 8 * VV, 0.5 + 3 * VV + 2000 * VH];\n} else {\n  // landvis\n  return [3 * VV, 1.1 * VV + 8.75 * VH, 1.75 * VH];\n}\n*/"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:18:33.344883Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/VH-DECIBEL-GAMMA0",
+        "id": "VH-DECIBEL-GAMMA0",
+        "title": "VH - decibel gamma0",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.VH) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.VH)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n  // displays VH in decibels from -20 to 0\n  // the following is simplified below\n  // var log = 10 * Math.log(VH) / Math.LN10;\n  // var val = Math.max(0, (log + 20) / 20);\n  \n  return [Math.max(0, Math.log(VH) * 0.21714724095 + 1)];\n  */\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:18:50.035454Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/VH-LINEAR-GAMMA0",
+        "id": "VH-LINEAR-GAMMA0",
+        "title": "VH - linear gamma0",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VH\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.VH, 2 * samples.VH, 2 * samples.VH, samples.dataMask],\n    eobrowserStats: [samples.VH],\n    dataMask: [samples.dataMask],\n  };\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:18:58.162280Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/VV-DECIBEL-GAMMA0",
+        "id": "VV-DECIBEL-GAMMA0",
+        "title": "VV - decibel gamma0",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  const value = Math.max(0, Math.log(samples.VV) * 0.21714724095 + 1);\n  return {\n    default: [value, value, value, samples.dataMask],\n    eobrowserStats: [(10 * Math.log(samples.VV)) / Math.LN10],\n    dataMask: [samples.dataMask],\n  };\n}\n\n// ---\n/*\n  // displays VV in decibels from -20 to 0\n  // the following is simplified below\n  // var log = 10 * Math.log(VV) / Math.LN10;\n  // var val = Math.max(0, (log + 20) / 20);\n  \n  return [Math.max(0, Math.log(VV) * 0.21714724095 + 1)];\n*/\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:19:05.721557Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE/layers/VV-LINEAR-GAMMA0",
+        "id": "VV-LINEAR-GAMMA0",
+        "title": "VV - linear gamma0",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"VV\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  return {\n    default: [2 * samples.VV, 2 * samples.VV, 2 * samples.VV, samples.dataMask],\n    eobrowserStats: [samples.VV],\n    dataMask: [samples.dataMask],\n  };\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/c9e05c-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-03T06:19:16.905606Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c6623-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

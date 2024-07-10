@@ -93,6 +93,11 @@ async function displayLatestDateOnSelect({ datasetId, bounds, pixelBounds, maxCl
     });
     const fromTime = moment(latestDate).utc().startOf('day');
     const toTime = moment(latestDate).utc().endOf('day');
+
+    if (!fromTime.isValid() || !toTime.isValid()) {
+      return;
+    }
+
     store.dispatch(
       visualizationSlice.actions.setVisualizationTime({
         fromTime: fromTime,

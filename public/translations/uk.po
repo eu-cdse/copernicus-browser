@@ -10055,9 +10055,6 @@ msgstr ""
 msgid "Grid id"
 msgstr ""
 
-msgid "Selection limit: 5 items."
-msgstr ""
-
 msgid ""
 "GLO-30 and GLO-90 are free and open COP DEM datasets, offering global "
 "coverage at resolutions of 30 and 90 m."
@@ -10077,4 +10074,8 @@ msgid ""
 msgstr ""
 
 msgid "Draw AOI or Line on image"
+msgstr ""
+
+#, javascript-format
+msgid "Selection limit: ${ selectionLimit } items."
 msgstr ""

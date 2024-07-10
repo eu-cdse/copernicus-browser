@@ -189,6 +189,7 @@ export const DATASOURCES = {
   CUSTOM: 'CUSTOM',
   OTHER: 'OTHER',
   MOSAIC: 'MOSAIC',
+  S1_MOSAIC: 'Sentinel-1 Mosaic',
 };
 
 export const defaultEffects = {

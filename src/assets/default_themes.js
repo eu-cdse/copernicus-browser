@@ -128,6 +128,16 @@ export const DEFAULT_THEMES = [
         baseLayer: true,
       },
       {
+        name: 'Sentinel-1 Mosaics DH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/aa0b18-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Sentinel-1 Mosaics IW',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/c9e05c-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'WorldCover Annual Cloudless Mosaics V2',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/65330d-YOUR-INSTANCEID-HERE',

@@ -66,7 +66,8 @@ const ODataCollections = {
   S5P: { id: 'S5P', label: 'SENTINEL-5P' },
   S6: { id: 'S6', label: 'SENTINEL-6' },
   GLOBAL_MOSAICS: { id: 'GLOBAL-MOSAICS', label: 'GLOBAL-MOSAICS' },
-  DEM: { id: 'DEM', label: 'CCM DEM' },
+  OPTICAL: { id: 'OPTICAL', label: 'CCM Optical', collection: 'CCM' },
+  DEM: { id: 'DEM', label: 'CCM DEM', collection: 'CCM' },
 };
 
 export {
