@@ -535,7 +535,9 @@ const createAdditionalFilters = (collectionId, additionalFilters) => {
       return;
     }
 
-    let additionalFilter = [...additionalFilters[key]];
+    let additionalFilter = Array.isArray(additionalFilters[key])
+      ? [...additionalFilters[key]]
+      : additionalFilters[key];
     const additionalFilterConfig = findAdditionalFiltersConfigById(collectionId, key);
 
     if (!additionalFilterConfig) {
