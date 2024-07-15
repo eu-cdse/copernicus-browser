@@ -37,7 +37,7 @@ const Content = ({ values, datasetId, geometryType, bands, loading, error, selec
       const seriesId = createSeriesId({ geometryType: geometryType, datasetId: datasetId });
       allSeries.push({
         id: seriesId,
-        title: getTitleForGeometryType(geometryType),
+        getTitle: () => getTitleForGeometryType(geometryType),
         color: '#b6bf00',
         renderIdx: Number.POSITIVE_INFINITY,
         coordinates: values

@@ -13,6 +13,7 @@ export const SUPPORTED_LANGUAGES = [
   { langCode: 'fr', text: 'Français', flagCode: 'FR' },
   { langCode: 'it', text: 'Italiano', flagCode: 'IT' },
   { langCode: 'lv', text: 'Latviešu', flagCode: 'LV' },
+  { langCode: 'lt', text: 'Lietuvių', flagCode: 'LT' },
   { langCode: 'hu', text: 'Magyar', flagCode: 'HU' },
   { langCode: 'nl', text: 'Nederlands', flagCode: 'NL' },
   { langCode: 'pl', text: 'Polski', flagCode: 'PL' },

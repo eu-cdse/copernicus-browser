@@ -41,7 +41,7 @@ const Legend = ({ series, datasetId, selectedSeries }) => {
               style={{ color: line.color }}
               aria-hidden="true"
             ></i>
-            <span>{line.title}</span>
+            <span>{line.getTitle()}</span>
           </div>
         );
       })}

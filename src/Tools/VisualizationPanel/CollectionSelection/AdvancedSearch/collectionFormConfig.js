@@ -303,6 +303,13 @@ export const collections = [
           { id: 'SR___ROE_AX', name: 'SR___ROE_AX', label: 'SR___ROE_AX', supportsGeometry: false },
           { id: 'SR___MDO_AX', name: 'SR___MDO_AX', label: 'SR___MDO_AX', supportsGeometry: false },
           { id: 'SR___POE_AX', name: 'SR___POE_AX', label: 'SR___POE_AX', supportsGeometry: false },
+          {
+            id: 'AUX_COMB__',
+            name: 'AUX_COMB__',
+            label: 'AUX_COMB',
+            supportsGeometry: false,
+            customFilterQueryByProductType: true,
+          },
         ],
       },
     ],
@@ -428,6 +435,13 @@ export const collections = [
           { id: 'AX____POE__AX', name: 'AX____POE__AX', label: 'AX____POE__AX', supportsGeometry: false },
           { id: 'AX____ROE__AX', name: 'AX____ROE__AX', label: 'AX____ROE__AX', supportsGeometry: false },
           { id: 'AX____MOED_AX', name: 'AX____MOED_AX', label: 'AX____MOED_AX', supportsGeometry: false },
+          {
+            id: 'AUX_COMB__',
+            name: 'AUX_COMB__',
+            label: 'AUX_COMB',
+            supportsGeometry: false,
+            customFilterQueryByProductType: true,
+          },
         ],
       },
     ],
@@ -637,6 +651,23 @@ export const collections = [
     label: ODataCollections.GLOBAL_MOSAICS.label,
     supportsCloudCover: false,
     instruments: [
+      {
+        id: 'S1Mosaics',
+        label: 'Sentinel-1',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: '_IW_mosaic_',
+            name: '_IW_mosaic_',
+            label: 'IW Monthly Mosaics',
+          },
+          {
+            id: '_DH_mosaic_',
+            name: '_DH_mosaic_',
+            label: 'DH Monthly Mosaics',
+          },
+        ],
+      },
       {
         id: 'S2Mosaics',
         label: 'Sentinel-2',

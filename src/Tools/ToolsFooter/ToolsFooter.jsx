@@ -49,7 +49,10 @@ class ToolsFooter extends Component {
 
             <div className="links">
               <div className="about-container">
-                <ExternalLink className="about" href="https://dataspace.copernicus.eu">
+                <ExternalLink
+                  className="about"
+                  href="https://documentation.dataspace.copernicus.eu/Applications/Browser.html"
+                >
                   {t`About`}
                 </ExternalLink>
               </div>

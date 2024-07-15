@@ -623,6 +623,26 @@ describe('createAdvancedSearchQuery', () => {
   const productName = 'S2';
   const collectionS1 = { id: 'S1', label: 'SENTINEL-1', instruments: [{ id: 'SAR' }] };
   const collectionS2 = { id: 'S2', label: 'SENTINEL-2', instruments: [{ id: 'MSI' }] };
+  const collectionS3 = {
+    id: 'S3',
+    label: 'SENTINEL-3',
+    instruments: [
+      {
+        id: 'S3AuxiliaryFiles',
+        label: 'Auxiliary Data File',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'AUX_COMB__',
+            name: 'AUX_COMB__',
+            label: 'AUX_COMB',
+            supportsGeometry: false,
+            customFilterQueryByProductType: true,
+          },
+        ],
+      },
+    ],
+  };
   const collectionDEM = { id: 'DEM', label: 'COP-DEM' };
   const fromTime = '2023-06-29T00:00:00.000Z';
   const toTime = '2023-06-29T23:59:59.999Z';
@@ -799,6 +819,24 @@ describe('createAdvancedSearchQuery', () => {
       }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'instrumentShortName' and att/OData.CSC.StringAttribute/Value eq 'SAR') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('AUX_COMB__ product with customFilterQueryByProductType', () => {
+    const params = {
+      name: collectionS3.id,
+      collections: [collectionS3],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `contains(Name,'S3') and ((Collection/Name eq '${collectionS3.label}' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'AUX_COMB__') and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
     );
   });
 });
@@ -1330,6 +1368,105 @@ describe('createAdvancedSearchQuery for DEM data', () => {
       )}'`,
     );
     expect(filter.value).toContain(`ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`);
+  });
+});
+
+describe('createAdvancedSearchQuery for mosaics', () => {
+  const collectionS1Mosaics = {
+    id: 'GLOBAL-MOSAICS',
+    label: 'GLOBAL-MOSAICS',
+    instruments: [
+      {
+        id: 'S1Mosaics',
+        label: 'Sentinel-1',
+        productTypes: [
+          {
+            id: '_IW_mosaic_',
+            name: '_IW_mosaic_',
+            label: 'IW Monthly Mosaics',
+          },
+          {
+            id: '_DH_mosaic_',
+            name: '_DH_mosaic_',
+            label: 'DH Monthly Mosaics',
+          },
+        ],
+      },
+    ],
+  };
+  const collectionS2Mosaics = {
+    id: 'GLOBAL-MOSAICS',
+    label: 'GLOBAL-MOSAICS',
+    instruments: [
+      {
+        id: 'S2Mosaics',
+        label: 'Sentinel-2',
+        productTypes: [
+          {
+            id: 'S2MSI_L3__MCQ',
+            name: 'Quarterly Mosaics',
+          },
+        ],
+      },
+    ],
+  };
+  const fromTime = '2023-01-01T00:00:00.000Z';
+  const toTime = '2023-10-01T23:59:59.999Z';
+  const geometry = {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [1, 1],
+        [1, 2],
+        [2, 2],
+        [2, 1],
+        [1, 1],
+      ],
+    ],
+  };
+
+  test('S1 mosaics', () => {
+    const params = {
+      collections: [collectionS1Mosaics],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((Collection/Name eq '${
+        collectionS1Mosaics.label
+      }' and ((contains(Name,'_IW_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (contains(Name,'_DH_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('S2 mosaics', () => {
+    const params = {
+      collections: [collectionS2Mosaics],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((Collection/Name eq '${
+        collectionS2Mosaics.label
+      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'S2MSI_L3__MCQ') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
   });
 });
 

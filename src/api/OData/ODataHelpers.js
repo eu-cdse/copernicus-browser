@@ -31,6 +31,8 @@ import {
   S5_O3_CDAS,
   S5_SO2_CDAS,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  S1_MONTHLY_MOSAIC_IW,
+  S1_MONTHLY_MOSAIC_DH,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -72,6 +74,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'COP-DEM_GLO-30-DGED': DEM_COPERNICUS_30_CDAS,
   'COP-DEM_GLO-90-DGED': DEM_COPERNICUS_90_CDAS,
   S2MSI_L3__MCQ: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  S1SAR_L3_IW_MCM: S1_MONTHLY_MOSAIC_IW,
+  S1SAR_L3_DH_MCM: S1_MONTHLY_MOSAIC_DH,
 };
 
 export const getDatasetIdFromProductType = (productType, attributes) => {
@@ -195,6 +199,15 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       },
     };
   }
+
+  if (datasetId === S1_MONTHLY_MOSAIC_DH || datasetId === S1_MONTHLY_MOSAIC_IW) {
+    return {
+      id: ODataCollections.GLOBAL_MOSAICS.id,
+      instrument: 'S1Mosaics',
+      productType: datasetId === S1_MONTHLY_MOSAIC_DH ? '_DH_mosaic_' : '_IW_mosaic_',
+    };
+  }
+
   if (datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC) {
     return {
       id: ODataCollections.GLOBAL_MOSAICS.id,
@@ -336,17 +349,15 @@ const createTimeIntervalsFilter = (timeIntervals) => {
 
 // creates product type filter with geometry filter for products that support it
 // (productType=Type.1 and intersects..)
-const createProductTypeFilter = ({ productTypeConfig, geometry }) => {
+const createProductTypeFilter = ({ productTypeId, productTypeConfig, geometry }) => {
   const productTypeFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
 
   if (productTypeConfig.customFilterExpression) {
     productTypeFilter.addExpression(productTypeConfig.customFilterExpression);
   } else if (productTypeConfig.customFilterQueryByDatasetFull) {
-    productTypeFilter.attribute(
-      ODataAttributes.datasetFull,
-      ODataFilterOperator.eq,
-      productTypeConfig.queryableId,
-    );
+    productTypeFilter.attribute(ODataAttributes.datasetFull, ODataFilterOperator.eq, productTypeId);
+  } else if (productTypeConfig.customFilterQueryByProductType) {
+    productTypeFilter.attribute(ODataAttributes.productType, ODataFilterOperator.eq, productTypeId);
   } else if (Array.isArray(productTypeConfig.name)) {
     productTypeConfig.name.forEach((name) => {
       productTypeFilter.contains(AttributeNames.productName, name, 'string');
@@ -406,9 +417,10 @@ const createProductTypesFilter = ({ instrument, geometry }) => {
         ? productTypeConfig.productTypeIds
         : [productTypeConfig.id];
 
-    productTypeIds.forEach((queryableId) => {
+    productTypeIds.forEach((productTypeId) => {
       const productTypeFilter = createProductTypeFilter({
-        productTypeConfig: { ...productTypeConfig, queryableId },
+        productTypeId,
+        productTypeConfig,
         geometry,
       });
       productTypesFilter.add(productTypeFilter);

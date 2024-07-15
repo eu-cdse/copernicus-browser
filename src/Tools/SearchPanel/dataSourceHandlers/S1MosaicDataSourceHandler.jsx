@@ -61,4 +61,6 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
   getLowResolutionMetersPerPixelThreshold = (collectionId) => {
     return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
   };
+
+  supportsFindProductsForCurrentView = () => true;
 }

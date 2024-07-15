@@ -77,7 +77,7 @@ class ImageDownloadBtn extends Component {
       >
         {
           <div className={`${enabled ? '' : 'disabled'} ${modalId === ModalId.IMG_DOWNLOAD ? 'active' : ''}`}>
-            <DownloadIcon alt="download-icon" title={title} />
+            <DownloadIcon alt="download-icon" />
           </div>
         }
       </div>

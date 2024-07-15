@@ -4,7 +4,7 @@ import { S2_L2A_CDAS } from '../../Tools/SearchPanel/dataSourceHandlers/dataSour
 const s2l2a = [
   {
     id: 'Water',
-    title: t`Water (open ocean)`,
+    getTitle: () => t`Water (open ocean)`,
     color: 'blue',
     bands: [
       { name: 'B01', value: 0.0448 },
@@ -23,7 +23,7 @@ const s2l2a = [
   },
   {
     id: 'Grass',
-    title: t`Grass`,
+    getTitle: () => t`Grass`,
     color: 'green',
     bands: [
       { name: 'B01', value: 0.0406 },
@@ -42,7 +42,7 @@ const s2l2a = [
   },
   {
     id: 'Soil',
-    title: t`Soil (brown sand)`,
+    getTitle: () => t`Soil (brown sand)`,
     color: '#964B00',
     bands: [
       { name: 'B01', value: 0.0522 },
@@ -61,7 +61,7 @@ const s2l2a = [
   },
   {
     id: 'Concrete',
-    title: t`Concrete`,
+    getTitle: () => t`Concrete`,
     color: 'grey',
     bands: [
       { name: 'B01', value: 0.2932 },
@@ -81,7 +81,7 @@ const s2l2a = [
 
   {
     id: 'Snow',
-    title: t`Snow (medium granular snow)`,
+    getTitle: () => t`Snow (medium granular snow)`,
     color: 'black',
     bands: [
       { name: 'B01', value: 0.9838 },

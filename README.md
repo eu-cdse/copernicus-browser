@@ -124,6 +124,7 @@ Copernicus Browser, the evolution of EO Browser, shares many translations with i
 - Hungarian: Beata Malyusz, András Zlinszky
 - Italian: Annamaria Luongo, Giuseppe Petricca, Stefano Ippoliti
 - Latvian: Valters Žeižis
+- Lithuanian: [National Paying Agency](https://lrv.lt/lt/) (Ministry of Agriculture)
 - Polish [ESERO Poland](https://esero.kopernik.org.pl/)/[Copernicus Science Centre](https://esero.kopernik.org.pl/)
 - Slovenian: Krištof Oštir ([Faculty of Civil and Geodetic Engineering](https://www.en.fgg.uni-lj.si/), University of Ljubljana)
 - Spanish: ESERO Spain,  Jorge Delgado ([University of Jaén](https://www.ujaen.es/en))
