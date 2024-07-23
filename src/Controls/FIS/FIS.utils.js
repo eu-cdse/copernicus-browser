@@ -34,7 +34,7 @@ export function constructCSVFromData(data, dropColumns) {
 function constructCSVLine(objects, objectNames, dropColumns = [], header) {
   // This function only works for flat objects, as only that is needed currently
   // Extended code which constructs a line from nested objects can be found here:
-  // 
+  //
   let line = [];
   const constructHeader = !!header;
 
