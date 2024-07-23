@@ -19,10 +19,10 @@ import './Tools.scss';
 import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { USE_PINS_BACKEND } from './Pins/PinPanel';
-import CommercialData from './CommercialDataPanel/CommercialData';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
+import CommercialData from './CommercialData/CommercialData';
 
-const COMMERCIAL_DATA_ENABLED = false;
+// const COMMERCIAL_DATA_ENABLED = false;
 
 class Tools extends Component {
   state = {
@@ -235,19 +235,20 @@ class Tools extends Component {
                   isExpanded={true}
                 />
               </div>
-              {COMMERCIAL_DATA_ENABLED && userAccountInfo?.payingAccount && (
-                <Tab
-                  id="commercial-tab"
-                  title={t`Commercial`}
-                  enabled={userAccountInfo?.payingAccount}
-                  renderKey={TABS.COMMERCIAL_TAB}
-                >
-                  <div className="commercial-data-wrapper">
-                    <CommercialData userAccountInfo={userAccountInfo || {}} />
-                  </div>
-                </Tab>
-              )}
             </Tab>
+            {/*This check disabled for now. Waiting on role check response from API*/}
+            {/*{COMMERCIAL_DATA_ENABLED && userAccountInfo?.payingAccount && (*/}
+            <Tab
+              id="commercial-data-tab"
+              title={t`Order`}
+              enabled={userAccountInfo?.payingAccount}
+              renderKey={TABS.COMMERCIAL_TAB}
+            >
+              <div className="commercial-data-wrapper">
+                <CommercialData />
+              </div>
+            </Tab>
+            {/*)}*/}
           </Tabs>
           <ToolsFooter selectedLanguage={this.props.selectedLanguage} />
         </div>
