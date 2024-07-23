@@ -312,14 +312,11 @@ export const getDatasetIdFromInstanceId = async (instanceId, preset) => {
 export const datasourceToUrl = {
   'Sentinel-2 L1C': 'https://services.sentinel-hub.com/ogc/wms/42924c-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L2A': 'https://services.sentinel-hub.com/ogc/wms/bd86bc-YOUR-INSTANCEID-HERE',
-  'Sentinel-1 AWS (S1-AWS-IW-VVVH)':
-    'https://services.sentinel-hub.com/ogc/wms/f2068f-YOUR-INSTANCEID-HERE',
+  'Sentinel-1 AWS (S1-AWS-IW-VVVH)': 'https://services.sentinel-hub.com/ogc/wms/f2068f-YOUR-INSTANCEID-HERE',
   'Sentinel-1 GRD IW': 'https://eocloud.sentinel-hub.com/v1/wms/6a6b78-YOUR-INSTANCEID-HERE',
   'Sentinel-1 GRD EW': 'https://eocloud.sentinel-hub.com/v1/wms/52803c-YOUR-INSTANCEID-HERE',
-  'Sentinel-1 AWS (S1-AWS-EW-HHHV)':
-    'https://services.sentinel-hub.com/ogc/wms/694b40-YOUR-INSTANCEID-HERE',
-  'Sentinel-1 AWS (S1-AWS-IW-VV)':
-    'https://services.sentinel-hub.com/ogc/wms/118885-YOUR-INSTANCEID-HERE',
+  'Sentinel-1 AWS (S1-AWS-EW-HHHV)': 'https://services.sentinel-hub.com/ogc/wms/694b40-YOUR-INSTANCEID-HERE',
+  'Sentinel-1 AWS (S1-AWS-IW-VV)': 'https://services.sentinel-hub.com/ogc/wms/118885-YOUR-INSTANCEID-HERE',
   'Sentinel-1 GRD EW SH': 'https://eocloud.sentinel-hub.com/v1/wms/3f5321-YOUR-INSTANCEID-HERE',
   'Sentinel-5P AER_AI': 'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
   'Sentinel-5P CH4': 'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
@@ -352,16 +349,12 @@ export const datasourceToUrl = {
   'GIBS MISR': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
   'GIBS ASTER GDEM': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
   //volcanoes
-  'Change Detection, L8 USGS':
-    'https://services.sentinel-hub.com/ogc/wms/a2b6e4-YOUR-INSTANCEID-HERE',
-  'Landsat 8 USGS (Historical)':
-    'https://services.sentinel-hub.com/ogc/wms/a2b6e4-YOUR-INSTANCEID-HERE',
-  'Flooding/Droughts, L8 USGS':
-    'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
+  'Change Detection, L8 USGS': 'https://services.sentinel-hub.com/ogc/wms/a2b6e4-YOUR-INSTANCEID-HERE',
+  'Landsat 8 USGS (Historical)': 'https://services.sentinel-hub.com/ogc/wms/a2b6e4-YOUR-INSTANCEID-HERE',
+  'Flooding/Droughts, L8 USGS': 'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
   'Vegetation, L8 USGS': 'https://services.sentinel-hub.com/ogc/wms/4b077b-YOUR-INSTANCEID-HERE',
   'Change Detection, Envisat': 'https://eocloud.sentinel-hub.com/v1/wms/000830-YOUR-INSTANCEID-HERE',
-  'Envisat Meris (Historical)':
-    'https://eocloud.sentinel-hub.com/v1/wms/000830-YOUR-INSTANCEID-HERE',
+  'Envisat Meris (Historical)': 'https://eocloud.sentinel-hub.com/v1/wms/000830-YOUR-INSTANCEID-HERE',
   'Volcanoes, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/ad8bbb-YOUR-INSTANCEID-HERE',
   'Volcanoes, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/cb8d43-YOUR-INSTANCEID-HERE',
   'Volcanoes, L8 USGS': 'https://services.sentinel-hub.com/ogc/wms/53f4f3-YOUR-INSTANCEID-HERE',
@@ -370,24 +363,18 @@ export const datasourceToUrl = {
   'Vegetation, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/2730da-YOUR-INSTANCEID-HERE',
   'Earth From Space, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/4407ca-YOUR-INSTANCEID-HERE',
   'Earth From Space, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/4e7f01-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L1C introduction':
-    'https://services.sentinel-hub.com/ogc/wms/4407ca-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L2A introduction':
-    'https://services.sentinel-hub.com/ogc/wms/4e7f01-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L1C introduction': 'https://services.sentinel-hub.com/ogc/wms/4407ca-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L2A introduction': 'https://services.sentinel-hub.com/ogc/wms/4e7f01-YOUR-INSTANCEID-HERE',
   'Urban, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/02e09c-YOUR-INSTANCEID-HERE',
   'Urban, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/bf6e66-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C - urban': 'https://services.sentinel-hub.com/ogc/wms/02e09c-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L2A - urban': 'https://services.sentinel-hub.com/ogc/wms/bf6e66-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C urban': 'https://services.sentinel-hub.com/ogc/wms/02e09c-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L2A urban': 'https://services.sentinel-hub.com/ogc/wms/bf6e66-YOUR-INSTANCEID-HERE',
-  'Flooding/Droughts, S2L1C':
-    'https://services.sentinel-hub.com/ogc/wms/9a82b8-YOUR-INSTANCEID-HERE',
-  'Flooding/Droughts, S2L2A':
-    'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L1C - humidity':
-    'https://services.sentinel-hub.com/ogc/wms/9a82b8-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L2A - humidity':
-    'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
+  'Flooding/Droughts, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/9a82b8-YOUR-INSTANCEID-HERE',
+  'Flooding/Droughts, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L1C - humidity': 'https://services.sentinel-hub.com/ogc/wms/9a82b8-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L2A - humidity': 'https://services.sentinel-hub.com/ogc/wms/1f6348-YOUR-INSTANCEID-HERE',
   'Water Bodies, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/961331-YOUR-INSTANCEID-HERE',
   'Water Bodies, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/eac23b-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C water': 'https://services.sentinel-hub.com/ogc/wms/961331-YOUR-INSTANCEID-HERE',
@@ -396,16 +383,12 @@ export const datasourceToUrl = {
   'Geology, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/18f7c3-YOUR-INSTANCEID-HERE',
   'Geology, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/239b83-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C geology': 'https://services.sentinel-hub.com/ogc/wms/18f7c3-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L1C - geology':
-    'https://services.sentinel-hub.com/ogc/wms/18f7c3-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L2A - geology':
-    'https://services.sentinel-hub.com/ogc/wms/239b83-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L1C - geology': 'https://services.sentinel-hub.com/ogc/wms/18f7c3-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L2A - geology': 'https://services.sentinel-hub.com/ogc/wms/239b83-YOUR-INSTANCEID-HERE',
   'Agriculture, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/fa8422-YOUR-INSTANCEID-HERE',
   'Agriculture, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/c6c712-YOUR-INSTANCEID-HERE',
-  'Snow and Glaciers, S2L1C':
-    'https://services.sentinel-hub.com/ogc/wms/6ab085-YOUR-INSTANCEID-HERE',
-  'Snow and Glaciers, S2L2A':
-    'https://services.sentinel-hub.com/ogc/wms/08bc6d-YOUR-INSTANCEID-HERE',
+  'Snow and Glaciers, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/6ab085-YOUR-INSTANCEID-HERE',
+  'Snow and Glaciers, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/08bc6d-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C - snow': 'https://services.sentinel-hub.com/ogc/wms/6ab085-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L2A - snow': 'https://services.sentinel-hub.com/ogc/wms/08bc6d-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L1C snow': 'https://services.sentinel-hub.com/ogc/wms/6ab085-YOUR-INSTANCEID-HERE',
@@ -420,16 +403,14 @@ export const datasourceToUrl = {
   'Change Detection, L5 ESA': 'https://eocloud.sentinel-hub.com/v1/wms/e3e5e6-YOUR-INSTANCEID-HERE',
   //Wildfires
   'Wildfires, S2L1C': 'https://services.sentinel-hub.com/ogc/wms/146ebe-YOUR-INSTANCEID-HERE',
-  'Sentinel-2 L2A - wildfires':
-    'https://services.sentinel-hub.com/ogc/wms/aae187-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 L2A - wildfires': 'https://services.sentinel-hub.com/ogc/wms/aae187-YOUR-INSTANCEID-HERE',
   'Wildfires, S2L2A': 'https://services.sentinel-hub.com/ogc/wms/aae187-YOUR-INSTANCEID-HERE',
   'Sentinel-2 L2A - wildfires - pins':
     'https://services.sentinel-hub.com/ogc/wms/aae187-YOUR-INSTANCEID-HERE',
   'Wildfires (S-2 L2A)': 'https://services.sentinel-hub.com/ogc/wms/aae187-YOUR-INSTANCEID-HERE',
   /* Contradictory name origins from a wrongly named datasource name
    */
-  'Sentinel-2 S5P - wildfires':
-    'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
+  'Sentinel-2 S5P - wildfires': 'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
   //Atmoshphere_monitoring
   'Atmosphere CO': 'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
   'Atmosphere NO2': 'https://services.sentinel-hub.com/ogc/wms/2c5dc5-YOUR-INSTANCEID-HERE',
