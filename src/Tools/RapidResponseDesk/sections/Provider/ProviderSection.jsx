@@ -1,8 +1,8 @@
 import React from 'react';
 import './ProviderSection.scss';
 import { connect } from 'react-redux';
-import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { ProviderSectionProperties } from '../CommercialData.utils';
+import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
+import { ProviderSectionProperties } from '../../CommercialData.utils';
 
 const ProviderSection = ({ providerExpanded }) => {
   //TODO: Custom Header

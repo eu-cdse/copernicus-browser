@@ -1,8 +1,8 @@
 import React from 'react';
 import './AdvancedSection.scss';
 import { connect } from 'react-redux';
-import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { AdvancedSectionProperties } from '../CommercialData.utils';
+import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
+import { AdvancedSectionProperties } from '../../CommercialData.utils';
 
 const AdvancedSection = ({ advancedExpanded }) => {
   return (
