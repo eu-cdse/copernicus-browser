@@ -19,6 +19,22 @@
   .rapid-response-desk-footer {
     position: absolute;
     bottom: 0;
+    height: 53px;
+    background-color: $whiteBackground;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+
+    & > * {
+      padding: 0 8px;
+    }
+
+    .wrapped-buttons {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .section {
