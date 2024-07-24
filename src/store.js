@@ -1099,6 +1099,9 @@ export const collapsiblePanelSlice = createSlice({
     themePanelExpanded: true,
     collectionPanelExpanded: true,
     highlightsPanelExpanded: true,
+    areaTimeExpanded: true,
+    providerExpanded: true,
+    advancedExpanded: true,
   },
   reducers: {
     setDatePanelExpanded: (state, action) => {
@@ -1113,11 +1116,23 @@ export const collapsiblePanelSlice = createSlice({
     setHighlightsPanelExpanded: (state, action) => {
       state.highlightsPanelExpanded = action.payload;
     },
+    setAreaTimeExpanded: (state, action) => {
+      state.areaTimeExpanded = action.payload;
+    },
+    setProviderExpanded: (state, action) => {
+      state.providerExpanded = action.payload;
+    },
+    setAdvancedExpanded: (state, action) => {
+      state.advancedExpanded = action.payload;
+    },
     reset: (state) => {
       state.datePanelExpanded = true;
       state.themePanelExpanded = true;
       state.collectionPanelExpanded = true;
       state.highlightsPanelExpanded = true;
+      state.areaTimeExpanded = true;
+      state.providerExpanded = true;
+      state.advancedExpanded = true;
     },
   },
 });

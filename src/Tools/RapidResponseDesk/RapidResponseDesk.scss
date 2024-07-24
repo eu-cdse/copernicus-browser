@@ -3,4 +3,16 @@
 .rapid-response-desk {
   background-color: $whiteColor;
   color: $textColor;
+
+  & > * {
+    margin: 5px 1px 5px 5px;
+  }
+
+  .section {
+    &.inactive {
+      .title-content {
+        color: $textColor;
+      }
+    }
+  }
 }
