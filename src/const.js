@@ -116,7 +116,8 @@ export const MAX_SH_IMAGE_SIZE = 2500; // SH services have a limit for a max ima
 export const TABS = {
   VISUALIZE_TAB: 1,
   SEARCH_TAB: 2,
-  COMMERCIAL_TAB: 3,
+  RAPID_RESPONSE_DESK: 3,
+  COMMERCIAL_TAB: 4,
 };
 
 export const DISABLED_ORTHORECTIFICATION = 'DISABLED';
