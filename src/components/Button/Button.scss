@@ -1,0 +1,46 @@
+@import '../../variables.module.scss';
+
+.copernicus-button {
+  padding: 1px 2px;
+  height: 35px;
+  min-width: 109px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &.primary {
+    background-color: $whiteBackground;
+    color: $primaryColor;
+    border: 1px solid $primaryColor;
+
+    &:hover {
+      background-color: $dropdownHoverBackground;
+    }
+  }
+
+  &.danger {
+    background-color: $errorCol;
+    color: $textColor;
+
+    &:hover {
+      background-color: $dropdownHoverBackground;
+    }
+  }
+
+  &.secondary {
+    background-color: $secondaryColor;
+    color: $whiteColor;
+
+    &:hover {
+      background-color: $dropdownHoverBackground;
+    }
+  }
+
+  .label {
+    font-size: 13.8px;
+    font-weight: 700;
+    font-family: $fontFamily;
+  }
+}
