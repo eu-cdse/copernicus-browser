@@ -1,9 +1,9 @@
 import React from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
-import AreaAndTimeSection from './AreaTime/AreaAndTimeSection';
-import ProviderSection from './Provider/ProviderSection';
-import AdvancedSection from './Advanced/AdvancedSection';
+import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
+import ProviderSection from './sections/Provider/ProviderSection';
+import AdvancedSection from './sections/Advanced/AdvancedSection';
 
 const RapidResponseDesk = () => {
   return (

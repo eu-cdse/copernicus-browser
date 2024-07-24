@@ -1,8 +1,8 @@
 import React from 'react';
 import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
-import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { AreaAndTimeSectionProperties } from '../CommercialData.utils';
+import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
+import { AreaAndTimeSectionProperties } from '../../CommercialData.utils';
 
 const AreaAndTimeSection = ({ areaTimeExpanded }) => {
   return (
