@@ -20,7 +20,7 @@ import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { USE_PINS_BACKEND } from './Pins/PinPanel';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
-import CommercialData from './RapidResponseDesk/RapidResponseDesk';
+import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 
 // const COMMERCIAL_DATA_ENABLED = false;
 
@@ -239,14 +239,14 @@ class Tools extends Component {
             {/*This check disabled for now. Waiting on role check response from API*/}
             {/*{COMMERCIAL_DATA_ENABLED && userAccountInfo?.payingAccount && (*/}
             <Tab
-              id="commercial-data-tab"
+              id="rapid-response-desk-tab"
               title={t`Order`}
               /*This check disabled for now. Waiting on role check response from API*/
               // enabled={userAccountInfo?.payingAccount}
               renderKey={TABS.RAPID_RESPONSE_DESK}
             >
-              <div className="commercial-data-wrapper">
-                <CommercialData />
+              <div className="rapid-response-desk-wrapper">
+                <RapidResponseDesk />
               </div>
             </Tab>
             {/*)}*/}
