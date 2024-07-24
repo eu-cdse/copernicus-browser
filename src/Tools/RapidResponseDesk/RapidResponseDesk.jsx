@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
 import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
 import ProviderSection from './sections/Provider/ProviderSection';
 import AdvancedSection from './sections/Advanced/AdvancedSection';
 import { t } from 'ttag';
+import Button from '../../components/Button/Button';
 
 const RapidResponseDesk = () => {
+  const [cartSize] = useState(0);
+
+  // const updateCartSize = (size) => {
+  //   setCartSize(size);
+  // };
+
   return (
     <div className="rapid-response-desk">
       <div className="rapid-response-desk-body">
@@ -17,10 +24,12 @@ const RapidResponseDesk = () => {
       </div>
       <div className="rapid-response-desk-footer">
         <div className="wrapped-buttons">
-          <div>{t`VIEW CART`}</div>
-          <div>{t`DASHBOARD`}</div>
+          <Button label={t`VIEW CART` + ` (${cartSize})`} style={{ marginRight: '8px' }}></Button>
+          <Button label={t`DASHBOARD`}></Button>
         </div>
-        <div>{t`SEARCH`}</div>
+        <div className="search-button">
+          <Button label={t`SEARCH`} className="secondary" style={{ width: '126px' }}></Button>
+        </div>
       </div>
     </div>
   );
