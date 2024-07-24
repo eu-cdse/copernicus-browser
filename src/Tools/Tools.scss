@@ -140,3 +140,17 @@ $searchBorderColour: $primaryColor;
     margin-top: 0;
   }
 }
+
+#commercial-data-tab {
+  overflow-y: hidden;
+  flex: 1 1 auto;
+  display: flex;
+
+  .active {
+    flex: 1 1 auto;
+
+    .commercial-data-wrapper {
+      height: 100%;
+    }
+  }
+}
