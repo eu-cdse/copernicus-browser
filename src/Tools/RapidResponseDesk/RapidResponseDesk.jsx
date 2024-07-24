@@ -1,19 +1,21 @@
 import React from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
-import { getAppropriateAuthToken } from '../../App';
+import AreaAndTimeSection from './AreaTime/AreaAndTimeSection';
+import ProviderSection from './Provider/ProviderSection';
+import AdvancedSection from './Advanced/AdvancedSection';
 
-const RapidResponseDesk = ({ authToken }) => {
+const RapidResponseDesk = () => {
   return (
     <div className="rapid-response-desk">
-      <p>Rapid response desk</p>
-      <p>...</p>
+      <AreaAndTimeSection />
+      <ProviderSection />
+      <AdvancedSection />
+      {/* TODO: Add Result section here */}
     </div>
   );
 };
 
-const mapStoreToProps = (store) => ({
-  authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
-});
+const mapStoreToProps = (store) => ({});
 
 export default connect(mapStoreToProps, null)(RapidResponseDesk);
