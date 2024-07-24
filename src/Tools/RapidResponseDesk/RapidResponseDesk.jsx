@@ -8,10 +8,13 @@ import AdvancedSection from './Advanced/AdvancedSection';
 const RapidResponseDesk = () => {
   return (
     <div className="rapid-response-desk">
-      <AreaAndTimeSection />
-      <ProviderSection />
-      <AdvancedSection />
-      {/* TODO: Add Result section here */}
+      <div className="rapid-response-desk-body">
+        <AreaAndTimeSection />
+        <ProviderSection />
+        <AdvancedSection />
+        {/* TODO: Add Result section here */}
+      </div>
+      <div className="rapid-response-desk-footer">footer</div>
     </div>
   );
 };
