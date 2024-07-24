@@ -141,7 +141,7 @@ $searchBorderColour: $primaryColor;
   }
 }
 
-#commercial-data-tab {
+#rapid-response-desk-tab {
   overflow-y: hidden;
   flex: 1 1 auto;
   display: flex;
@@ -149,7 +149,7 @@ $searchBorderColour: $primaryColor;
   .active {
     flex: 1 1 auto;
 
-    .commercial-data-wrapper {
+    .rapid-response-desk-wrapper {
       height: 100%;
     }
   }
