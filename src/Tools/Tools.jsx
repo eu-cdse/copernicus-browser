@@ -20,7 +20,7 @@ import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { USE_PINS_BACKEND } from './Pins/PinPanel';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
-import CommercialData from './RapidResponseDesk/CommercialData';
+import CommercialData from './RapidResponseDesk/RapidResponseDesk';
 
 // const COMMERCIAL_DATA_ENABLED = false;
 
