@@ -5,8 +5,8 @@ import { getAppropriateAuthToken } from '../../App';
 
 const RapidResponseDesk = ({ authToken }) => {
   return (
-    <div className="commercial-data-panel">
-      <p>Commercial Data</p>
+    <div className="rapid-response-desk">
+      <p>Rapid response desk</p>
       <p>...</p>
     </div>
   );

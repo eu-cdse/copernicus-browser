@@ -196,7 +196,7 @@ class Tools extends Component {
       setShowComparePanel,
       setLastAddedPin,
     } = this.props;
-    const { userAccountInfo } = this.state;
+    // const { userAccountInfo } = this.state;
     return (
       <div className="tools-wrapper" style={{ width: toolsOpen ? '100%' : '0' }}>
         <div className="open-tools" onClick={toggleTools} style={{ display: toolsOpen ? 'none ' : 'block' }}>
@@ -241,8 +241,9 @@ class Tools extends Component {
             <Tab
               id="commercial-data-tab"
               title={t`Order`}
-              enabled={userAccountInfo?.payingAccount}
-              renderKey={TABS.COMMERCIAL_TAB}
+              /*This check disabled for now. Waiting on role check response from API*/
+              // enabled={userAccountInfo?.payingAccount}
+              renderKey={TABS.RAPID_RESPONSE_DESK}
             >
               <div className="commercial-data-wrapper">
                 <CommercialData />
