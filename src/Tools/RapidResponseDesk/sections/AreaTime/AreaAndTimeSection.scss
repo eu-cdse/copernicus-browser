@@ -3,4 +3,27 @@
 .area-time-body {
   display: flex;
   flex-direction: column;
+
+  .area-interest-container > * {
+    margin-bottom: 20px;
+  }
+
+  .coverage-slider-container {
+    display: flex;
+    align-items: center;
+
+    & > * {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .aoi-label-text {
+      padding-right: 22px;
+    }
+
+    .aoi-current-value-text {
+      padding-left: 22px;
+      color: $primaryColor;
+    }
+  }
 }

@@ -11,8 +11,15 @@ export const AreaAndTimeSectionProperties = Object.freeze({
   toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setAreaTimeExpanded(v)),
 });
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
+import Slider from 'rc-slider';
+import { t } from 'ttag';
+import store, { areaAndTimeSectionSlice } from '../../../../store';
 
-const AreaAndTimeSection = ({ areaTimeExpanded, aoiGeometry, aoiIsDrawing, mapBounds }) => {
+const AreaAndTimeSection = ({ areaTimeExpanded, aoiGeometry, aoiIsDrawing, mapBounds, aoiCoverage }) => {
+  const updateSliderValue = (value) => {
+    store.dispatch(areaAndTimeSectionSlice.actions.setAoiCoverage(value));
+  };
+
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
   const getBody = () => (
@@ -23,6 +30,19 @@ const AreaAndTimeSection = ({ areaTimeExpanded, aoiGeometry, aoiIsDrawing, mapBo
           aoiIsDrawing={aoiIsDrawing}
           mapBounds={mapBounds}
         ></AOISelection>
+        <div className="coverage-slider-container">
+          <label className="aoi-label-text">{`${t`AOI coverage`}:`}</label>
+          <Slider
+            className="aoi-slider"
+            min={0}
+            max={1}
+            step={0.01}
+            value={aoiCoverage}
+            onChange={updateSliderValue}
+          />
+          <span className="aoi-current-value-text">{`${Math.round(aoiCoverage * 100)}%`}</span>
+          <span></span>
+        </div>
       </div>
     </div>
   );
@@ -47,6 +67,7 @@ const mapStoreToProps = (store) => ({
   selectedLanguage: store.language.selectedLanguage,
   areaTimeExpanded: store.collapsiblePanel.areaTimeExpanded,
   aoiGeometry: store.aoi.geometry,
+  aoiCoverage: store.areaAndTimeSection.aoiCoverage,
   aoiIsDrawing: store.aoi.isDrawing,
   mapBounds: store.mainMap.bounds,
 });

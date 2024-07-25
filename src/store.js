@@ -1137,6 +1137,18 @@ export const collapsiblePanelSlice = createSlice({
   },
 });
 
+export const areaAndTimeSectionSlice = createSlice({
+  name: 'areaAndTimeSection',
+  initialState: {
+    aoiCoverage: 0.3,
+  },
+  reducers: {
+    setAoiCoverage: (state, action) => {
+      state.aoiCoverage = action.payload;
+    },
+  },
+});
+
 export const commercialDataSlice = createSlice({
   name: 'commercialData',
   initialState: {
@@ -1289,6 +1301,7 @@ const reducers = combineReducers({
   productDownload: productDownloadSlice.reducer,
   spectralExplorer: spectralExplorerSlice.reducer,
   elevationProfile: elevationProfileSlice.reducer,
+  areaAndTimeSection: areaAndTimeSectionSlice.reducer,
   tools: toolsSlice.reducer,
 });
 
