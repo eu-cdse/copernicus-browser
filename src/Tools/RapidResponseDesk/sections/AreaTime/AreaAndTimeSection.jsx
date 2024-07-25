@@ -2,7 +2,7 @@ import React from 'react';
 import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { AreaAndTimeSectionProperties } from '../../CommercialData.utils';
+import { AreaAndTimeSectionProperties } from '../../RapidResponseDesk.utils';
 
 const AreaAndTimeSection = ({ areaTimeExpanded }) => {
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
