@@ -3,20 +3,18 @@ import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { t } from 'ttag';
-import store, { collapsiblePanelSlice } from '../../../../store';
+import store, { collapsiblePanelSlice, areaAndTimeSectionSlice } from '../../../../store';
+import { AOISelection } from '../../../../components/AOISelection/AOISelection';
+import Slider from 'rc-slider';
+import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
+import moment from 'moment/moment';
+import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 
 export const AreaAndTimeSectionProperties = Object.freeze({
   id: 'area-time',
   title: () => t`Area & Time`,
   toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setAreaTimeExpanded(v)),
 });
-import { AOISelection } from '../../../../components/AOISelection/AOISelection';
-import Slider from 'rc-slider';
-import { t } from 'ttag';
-import store, { areaAndTimeSectionSlice } from '../../../../store';
-import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
-import moment from 'moment/moment';
-import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 
 const AreaAndTimeSection = ({
   areaTimeExpanded,
