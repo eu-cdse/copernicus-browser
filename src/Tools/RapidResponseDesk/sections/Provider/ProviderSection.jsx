@@ -2,7 +2,14 @@ import React from 'react';
 import './ProviderSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { ProviderSectionProperties } from '../../RapidResponseDesk.utils';
+import { t } from 'ttag';
+import store, { collapsiblePanelSlice } from '../../../../store';
+
+export const ProviderSectionProperties = Object.freeze({
+  id: 'provider',
+  title: () => t`Provider`,
+  toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setProviderExpanded(v)),
+});
 
 const ProviderSection = ({ providerExpanded }) => {
   //TODO: Custom Header
