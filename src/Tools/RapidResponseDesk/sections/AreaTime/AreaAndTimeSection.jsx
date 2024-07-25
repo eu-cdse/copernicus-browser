@@ -5,12 +5,14 @@ import CollapsiblePanel from '../../../../components/CollapsiblePanel/Collapsibl
 import { AreaAndTimeSectionProperties } from '../../CommercialData.utils';
 
 const AreaAndTimeSection = ({ areaTimeExpanded }) => {
+  const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
+
   return (
     <CollapsiblePanel
       key={AreaAndTimeSectionProperties.id}
       className={`section ${areaTimeExpanded ? 'active' : 'inactive'}`}
-      title={AreaAndTimeSectionProperties.title()}
-      headerComponent={AreaAndTimeSectionProperties.title()}
+      title={getTitle()}
+      headerComponent={getTitle()}
       expanded={areaTimeExpanded}
       toggleExpanded={AreaAndTimeSectionProperties.toggleExpanded}
     >
