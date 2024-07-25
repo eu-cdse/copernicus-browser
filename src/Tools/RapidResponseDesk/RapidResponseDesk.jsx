@@ -10,10 +10,6 @@ import Button from '../../components/Button/Button';
 const RapidResponseDesk = () => {
   const [cartSize] = useState(0);
 
-  // const updateCartSize = (size) => {
-  //   setCartSize(size);
-  // };
-
   return (
     <div className="rapid-response-desk">
       <div className="rapid-response-desk-body">
@@ -24,17 +20,19 @@ const RapidResponseDesk = () => {
       </div>
       <div className="rapid-response-desk-footer">
         <div className="wrapped-buttons">
-          <Button label={t`VIEW CART` + ` (${cartSize})`} style={{ marginRight: '8px' }}></Button>
-          <Button label={t`DASHBOARD`}></Button>
+          <Button label={t`View cart` + ` (${cartSize})`} style={{ marginRight: '8px' }}></Button>
+          <Button label={t`Dashboard`}></Button>
         </div>
         <div className="search-button">
-          <Button label={t`SEARCH`} className="secondary" style={{ width: '126px' }}></Button>
+          <Button label={t`Search`} className="secondary" style={{ width: '126px' }}></Button>
         </div>
       </div>
     </div>
   );
 };
 
-const mapStoreToProps = (store) => ({});
+const mapStoreToProps = (store) => ({
+  selectedLanguage: store.language.selectedLanguage,
+});
 
 export default connect(mapStoreToProps, null)(RapidResponseDesk);

@@ -22,6 +22,7 @@ const AreaAndTimeSection = ({ areaTimeExpanded }) => {
 };
 
 const mapStoreToProps = (store) => ({
+  selectedLanguage: store.language.selectedLanguage,
   areaTimeExpanded: store.collapsiblePanel.areaTimeExpanded,
 });
 

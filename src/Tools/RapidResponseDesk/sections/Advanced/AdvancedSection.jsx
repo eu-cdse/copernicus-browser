@@ -22,6 +22,7 @@ const AdvancedSection = ({ advancedExpanded }) => {
 };
 
 const mapStoreToProps = (store) => ({
+  selectedLanguage: store.language.selectedLanguage,
   advancedExpanded: store.collapsiblePanel.advancedExpanded,
 });
 

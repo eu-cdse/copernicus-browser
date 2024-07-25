@@ -196,7 +196,7 @@ class Tools extends Component {
       setShowComparePanel,
       setLastAddedPin,
     } = this.props;
-    // const { userAccountInfo } = this.state;
+
     return (
       <div className="tools-wrapper" style={{ width: toolsOpen ? '100%' : '0' }}>
         <div className="open-tools" onClick={toggleTools} style={{ display: toolsOpen ? 'none ' : 'block' }}>
