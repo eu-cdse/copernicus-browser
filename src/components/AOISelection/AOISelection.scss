@@ -10,6 +10,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-left: 10px;
+
+    .area-text {
+      line-height: 0;
+    }
 
     i {
       color: $primaryColor;
@@ -23,12 +28,13 @@
     }
   }
 
-  .react-toggle {
-    margin-left: 0;
+  label {
+    font-size: 14px;
+    font-weight: 700;
   }
 
-  > * {
-    flex: 1;
+  .react-toggle {
+    margin-left: 0;
   }
 
   a {

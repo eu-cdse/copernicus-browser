@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { t } from 'ttag';
-import { AOISelection } from './AOISelection';
+import { AOISelection } from '../../../components/AOISelection/AOISelection';
 import DateInput from './DateInput';
 import { SelectInput } from './SelectInput';
 import { providerSpecificSearchParameters, minDateRange, maxDateRange } from './config';

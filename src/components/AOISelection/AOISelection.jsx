@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import geo_area from '@mapbox/geojson-area';
 import L from 'leaflet';
 import { t } from 'ttag';
-import store, { aoiSlice, mainMapSlice } from '../../../store';
-import { EOBUploadGeoFile } from '../../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
-import { AOI_SHAPE } from '../../../const';
-import { UPLOAD_GEOMETRY_TYPE } from '../../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
-import { getBoundsAndLatLng } from '../../CommercialDataPanel/commercialData.utils';
+import './AOISelection.scss';
+import store, { aoiSlice, mainMapSlice } from '../../store';
+import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
+import { AOI_SHAPE } from '../../const';
+import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
+import { getBoundsAndLatLng } from '../../Tools/CommercialDataPanel/commercialData.utils';
 
 export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
   const [uploadDialog, setUploadDialog] = useState(false);
@@ -41,18 +42,16 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
 
   return (
     <div className="row">
-      <label title={t`Area of interest`}>{t`Area of interest`}</label>
+      <label title={`${t`Area of interest`}:`}>{`${t`Area of interest`}:`}</label>
       <div className="aoi-selection">
-        <div className="aoi-text">
-          {!!aoiGeometry ? (
+        {!!aoiGeometry && (
+          <div className="aoi-text">
             <span className="area-text">
               {(parseFloat(geo_area.geometry(aoiGeometry)) / 1000000).toFixed(2)} {`km`}
               <sup>2</sup>
             </span>
-          ) : (
-            <span>{t`Select`}:</span>
-          )}
-        </div>
+          </div>
+        )}
         <div className="aoi-buttons">
           {!aoiGeometry && !aoiIsDrawing && (
             <>
