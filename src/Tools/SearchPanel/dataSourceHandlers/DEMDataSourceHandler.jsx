@@ -60,7 +60,7 @@ export default class DEMDataSourceHandler extends DataSourceHandler {
   shLayer = DEMLayer;
   shDataset = DATASET_AWS_DEM;
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     const demLayers = layers.filter((l) => l.dataset && l.dataset.id === this.shDataset.id);
 
     if (demLayers.length === 0) {

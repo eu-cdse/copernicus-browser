@@ -1,10 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  BackscatterCoeff,
-  DEMInstanceTypeOrthorectification,
-  Interpolator,
-} from '@sentinel-hub/sentinelhub-js';
+import { Interpolator } from '@sentinel-hub/sentinelhub-js';
 
 import { t } from 'ttag';
 import 'react-toggle/style.css';
@@ -16,13 +12,7 @@ import SpeckleFilter from './SpeckleFilter';
 
 import './EOBEffectsPanel.scss';
 
-import {
-  BACK_COEF_OPTIONS,
-  defaultEffects,
-  DEM_3D_SOURCES,
-  DISABLED_ORTHORECTIFICATION,
-  ORTHORECTIFICATION_OPTIONS,
-} from '../../const';
+import { BACK_COEF_OPTIONS, defaultEffects, DEM_3D_SOURCES, ORTHORECTIFICATION_OPTIONS } from '../../const';
 import { visualizationSlice } from '../../store';
 import { getValueOrDefault, getDatasetDefaults } from '../../utils/effectsUtils';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
@@ -77,7 +67,6 @@ function renderInterpolationSelection({ effects, onUpdateUpsampling, onUpdateDow
 }
 
 function renderOrthorectificationSelection({ effects, onUpdateOrthorectification }) {
-  const isGamma0TerrainBackscatterCoeff = effects.backscatterCoeff === BackscatterCoeff.GAMMA0_TERRAIN;
   return (
     <EffectDropdown
       name={t`Orthorectification`}
@@ -86,9 +75,7 @@ function renderOrthorectificationSelection({ effects, onUpdateOrthorectification
       options={Object.keys(ORTHORECTIFICATION_OPTIONS).map((option) => ({
         value: option,
         label: ORTHORECTIFICATION_OPTIONS[option],
-        disabled: isGamma0TerrainBackscatterCoeff && option === DISABLED_ORTHORECTIFICATION,
       }))}
-      isLayerDefaultDisabled={isGamma0TerrainBackscatterCoeff}
       tooltip={
         <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
           {t`Orthorectification creates a planimetrically correct image. Specify the DEM used for Orthorectification process here.`}
@@ -108,7 +95,7 @@ function renderBackscatterCoeffSelection({ effects, onUpdateBackscatterCoeff }) 
     <EffectDropdown
       name={t`Backscatter coefficient`}
       value={getValueOrDefault(effects, 'backscatterCoeff', defaultEffects)}
-      onChange={(coeff) => onUpdateBackscatterCoeff(coeff, effects.orthorectification)}
+      onChange={onUpdateBackscatterCoeff}
       options={Object.keys(BACK_COEF_OPTIONS).map((option) => ({
         value: option,
         label: BACK_COEF_OPTIONS[option],
@@ -281,15 +268,8 @@ const mapDispatchToProps = (dispatch) => {
     onUpdateSpeckleFilter: (x) => dispatch(visualizationSlice.actions.setSpeckleFilter(x ? x : undefined)),
     onUpdateOrthorectification: (x) =>
       dispatch(visualizationSlice.actions.setOrthorectification(x ? x : undefined)),
-    onUpdateBackscatterCoeff: (x, ortho) => {
-      if (x === BackscatterCoeff.GAMMA0_TERRAIN && (ortho == null || ortho === DISABLED_ORTHORECTIFICATION)) {
-        dispatch(
-          visualizationSlice.actions.setOrthorectification(DEMInstanceTypeOrthorectification.COPERNICUS),
-        );
-      }
-
-      dispatch(visualizationSlice.actions.setBackScatterCoeff(x ? x : undefined));
-    },
+    onUpdateBackscatterCoeff: (x) =>
+      dispatch(visualizationSlice.actions.setBackScatterCoeff(x ? x : undefined)),
     onResetEffects: () => dispatch(visualizationSlice.actions.resetEffects()),
     onResetRgbEffects: () => dispatch(visualizationSlice.actions.resetRgbEffects()),
     onUpdateDemSource3D: (x) => dispatch(visualizationSlice.actions.setDemSource3D(x ? x : undefined)),

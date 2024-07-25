@@ -109,7 +109,7 @@ export default class OthersDataSourceHandler extends DataSourceHandler {
   defaultPreselectedDataset = ESA_WORLD_COVER;
   searchGroupLabel = t`Other`;
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     let handlesAny = false;
 
     for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {

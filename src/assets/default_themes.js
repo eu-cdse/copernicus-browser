@@ -1,22 +1,10 @@
 import { t } from 'ttag';
 
-export const S2QuarterlyCloudlessMosaicsInstance = {
+export const S2QuarterlyClodlessMosaicsInstance = {
   name: 'S2 Quarterly Cloudless Mosaics',
   service: 'WMS',
   url: 'https://sh.dataspace.copernicus.eu/ogc/wms/867895-YOUR-INSTANCEID-HERE',
-};
-
-export const S2QuarterlyCloudlessMosaicsBaseLayerTheme = {
-  name: 'Sentinel-2 Quarterly Cloudless Mosaics Base Layers Theme',
-  id: 'S2QCMBL-THEME',
-  content: [
-    {
-      ...S2QuarterlyCloudlessMosaicsInstance,
-      name: `${S2QuarterlyCloudlessMosaicsInstance.name} Base Layer`,
-      label: 'Sentinel-2 Mosaic',
-      baseLayer: true,
-    },
-  ],
+  preselected: true,
 };
 
 const EDUCATION_THEMES = [];
@@ -132,7 +120,13 @@ export const DEFAULT_THEMES = [
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/7a91ca-YOUR-INSTANCEID-HERE',
       },
-      { ...S2QuarterlyCloudlessMosaicsInstance, preselected: true },
+      {
+        name: 'S2 Quarterly Cloudless Mosaics',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/867895-YOUR-INSTANCEID-HERE',
+        preselected: true,
+        baseLayer: true,
+      },
       {
         name: 'Sentinel-1 Mosaics DH',
         service: 'WMS',

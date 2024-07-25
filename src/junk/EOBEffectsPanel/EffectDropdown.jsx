@@ -45,17 +45,10 @@ const EffectDropdown = ({
   options,
   tooltip = null,
   displayLayerDefault = true,
-  isLayerDefaultDisabled = false,
 }) => {
   const allOptions = [
     ...(displayLayerDefault
-      ? [
-          {
-            value: LAYER_DEFAULT.value,
-            label: getValueOrExecute(LAYER_DEFAULT.label),
-            disabled: isLayerDefaultDisabled,
-          },
-        ]
+      ? [{ value: LAYER_DEFAULT.value, label: getValueOrExecute(LAYER_DEFAULT.label) }]
       : []),
     ...options,
   ];
@@ -63,7 +56,6 @@ const EffectDropdown = ({
   const selectedOption = {
     value: value,
     label: getLabelForValue(value, allOptions),
-    disabled: false,
   };
 
   return (
@@ -84,7 +76,6 @@ const EffectDropdown = ({
           className="effect-dropdown-select-dropdown"
           classNamePrefix="effect-dropdown-select"
           components={{ DropdownIndicator }}
-          isOptionDisabled={(option) => option.disabled}
           isSearchable={false}
           menuPlacement="auto"
         />

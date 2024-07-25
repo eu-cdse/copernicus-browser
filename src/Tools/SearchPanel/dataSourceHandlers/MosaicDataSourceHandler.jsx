@@ -71,7 +71,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     name = isFunction(name) ? name() : name;
     const customLayers = layers.filter(
       (l) =>
@@ -87,7 +87,6 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
         themeName: name.replace(t`Based on: `, ''),
         availableBands: layer.availableBands,
         subType: layer.subType,
-        onlyForBaseLayer: onlyForBaseLayer,
       };
       // Once collections endpoint will be working properly,
       // title should be replaced with actual collection name (if service will provide such information)
@@ -100,13 +99,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     this.datasets.forEach((id) => {
       this.datasetSearchIds[id] = id;
       this.datasetSearchLabels[id] = this.collections[id].title;
-
-      const existingUrls = this.urls[id] ?? [];
-      if (!onlyForBaseLayer) {
-        existingUrls.push(url);
-      }
-
-      this.urls[id] = [...new Set(existingUrls)];
+      this.urls[id] = [...new Set([...(this.urls[id] ? this.urls[id] : []), url])];
     });
 
     this.allLayers = [...this.allLayers, ...layers];
@@ -195,7 +188,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   };
 
   getUrlsForDataset = (datasetId) => {
-    return this.urls[datasetId] ? [...new Set(this.urls[datasetId])] : [];
+    return this.urls[datasetId] || [];
   };
 
   getSentinelHubDataset = () => DATASET_BYOC;
@@ -352,6 +345,4 @@ function evaluatePixel(sample) {
 
   supportsFindProductsForCurrentView = (datasetId) =>
     datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC;
-
-  isOnlyForBaseLayer = (datasetId) => this.collections[datasetId].onlyForBaseLayer;
 }

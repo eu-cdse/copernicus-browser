@@ -89,12 +89,6 @@
             font-size: 13px;
             font-weight: $fontWeightNormal;
             padding: 0 6px;
-            
-            &--is-disabled {
-              background-color: $mainDark;
-              color: $textColor;
-              cursor: default;
-            }
           }
         }
       }

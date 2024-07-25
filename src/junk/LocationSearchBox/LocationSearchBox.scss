@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@import '../../variables.module.scss';
 
 .search-box-wrapper {
   position: absolute;
@@ -61,45 +61,42 @@
         }
       }
 
-      #async-places {
-        background-color: $whiteBackground;
-        border-top: 1px solid $randomGrayColor;
+      .search-item {
+        border-bottom: 1px solid $randomGrayColor;
+        padding: 4px;
+        cursor: pointer;
 
-        a {
-          color: $textColor;
-          text-decoration: none;
-          font-size: 13.5px;
-
-          .search-item {
-            border-bottom: 1px solid $randomGrayColor;
-            padding: 4px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: $primaryColor;
-              color: $whiteColor;
-            }
-          }
-
-          .api-switch {
-            padding: 4px 1px;
-
-            label {
-              display: block;
-            }
-
-            input {
-              width: auto;
-              height: auto;
-            }
-          }
-
-          .powered-by-google {
-            position: absolute;
-            right: 4px;
-            bottom: 4px;
-          }
+        &:first-child {
+          border-top: 1px solid $randomGrayColor;
         }
+
+        &:nth-last-child(1) {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: $primaryColor;
+          color: $whiteColor;
+        }
+      }
+
+      .api-switch {
+        padding: 4px 1px;
+
+        label {
+          display: block;
+        }
+
+        input {
+          width: auto;
+          height: auto;
+        }
+      }
+
+      .powered-by-google {
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
       }
     }
   }

@@ -115,37 +115,20 @@
           stroke: $textColor;
         }
       }
-
-      &-selected {
-        svg {
-          path {
-            stroke: $mainLight;
-          }
-        }
-      }
-
-      .highlight-info-row {
-        .add-to-compare {
-          margin-bottom: 10px;
-
-          svg {
-            fill: $textColor;
-          }
-        }
-      }
     }
 
-    .zoom-to-highlight {
-      float: right;
+    .highlight-info-row {
+      .add-to-compare {
+        margin-bottom: 10px;
+
+        svg {
+          fill: $textColor;
+        }
+      }
     }
   }
 
-  &-selected {
-    background-color: $primaryColor;
-    color: $mainLight;
-
-    a {
-      color: $mainLight;
-    }
+  .zoom-to-highlight {
+    float: right;
   }
 }

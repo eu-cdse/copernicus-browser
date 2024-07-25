@@ -54,7 +54,7 @@ class Highlight extends Component {
   };
 
   render() {
-    const { pin, index, isSelected } = this.props;
+    const { pin, index } = this.props;
     const { description, title } = pin;
     const { showDescription } = this.state;
 
@@ -62,10 +62,7 @@ class Highlight extends Component {
     const highlight = { ...pin, ...effects };
 
     return (
-      <div
-        className={`highlight-item highlight-item-${isSelected ? 'selected' : ''} normal-mode`}
-        id={`${index}`}
-      >
+      <div className="highlight-item normal-mode" id={`${index}`}>
         <div className="highlight-content" onClick={this.props.onSelect}>
           <PinPreviewImage pin={highlight} />
           <div className="highlight-info">
@@ -79,7 +76,7 @@ class Highlight extends Component {
                 title={showDescription ? t`Hide description` : t`Show description`}
                 onClick={this.toggleDescription}
               >
-                <div className={`description-toggle description-toggle-${isSelected ? 'selected' : ''}`}>
+                <div className="description-toggle">
                   {showDescription ? (
                     <DoubleChevronUp className="double-chevron-up" />
                   ) : (

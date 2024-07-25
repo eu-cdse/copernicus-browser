@@ -145,7 +145,7 @@ export default class Sentinel2AWSDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     const usesS2L2ADataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_S2L2A.id);
     const usesS2L1CDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_S2L1C.id);
     if (!usesS2L2ADataset && !usesS2L1CDataset) {

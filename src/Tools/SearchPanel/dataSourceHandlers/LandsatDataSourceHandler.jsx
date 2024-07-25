@@ -116,7 +116,7 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
     });
   }
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     //check if any of layers is handled by landsat datasets
     const hasLandsatDatasets = this.knownDatasets.some((ds) =>
       layers.find((l) => l.dataset === ds.shDataset),

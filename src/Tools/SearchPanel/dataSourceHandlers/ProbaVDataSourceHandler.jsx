@@ -49,7 +49,7 @@ export default class ProbaVDataSourceHandler extends DataSourceHandler {
   defaultPreselectedDataset = PROBAV_S1;
   preselectedDatasets = new Set();
 
-  willHandle(service, url, name, configs, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, configs, preselected) {
     if (url !== this.KNOWN_URL) {
       return false;
     }

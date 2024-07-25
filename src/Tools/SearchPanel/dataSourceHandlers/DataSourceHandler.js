@@ -24,11 +24,10 @@ export default class DataSourceHandler {
   defaultPreselectedDataset = null;
   limitMonthsSearch = 3;
 
-  willHandle(service, url, name, configs, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, configs, preselected) {
     // Returns boolean, indicating if the protocol (typically WMS / WMTS) and URL are
     // supported by this class; that is, this class knows how to handle them.
     // Should remember protocol / url so it can handle the subsequent method invocations.
-    // Should remember if the configuration is needed only for base layer, so it's hidden in search.
     // Note that `configs` is an object which can have 2 keys, `capabilities` and `instanceConfig`.
     return false;
   }
@@ -267,24 +266,8 @@ export default class DataSourceHandler {
       }
     }
 
-    // return preselected dataset if it's available
-    if (!!preselectedDataset) {
-      return preselectedDataset;
-    }
-
-    // if preselected dataset is not available and there are not datasets, return null
-    if (!this.datasets.length) {
-      return null;
-    }
-
-    // if preselected dataset is not available
-    // find the first avaialable dataset that is not used for base layer
-    const searchableDataset = this.datasets.find((ds) => !this.isOnlyForBaseLayer(ds));
-    if (!searchableDataset) {
-      return null;
-    }
-
-    return searchableDataset;
+    // in case nothing preselected is available, just take the first available dataset.
+    return !!preselectedDataset ? preselectedDataset : this.datasets.length ? this.datasets[0] : null;
   }
 
   getBaseLayerForDatasetId = () => null;
@@ -329,6 +312,4 @@ export default class DataSourceHandler {
   supportsDisplayLatestDateOnSelect = (datasetId) => false;
 
   supportsLowResolutionAlternativeCollection = () => false;
-
-  isOnlyForBaseLayer = (datasetId) => false;
 }

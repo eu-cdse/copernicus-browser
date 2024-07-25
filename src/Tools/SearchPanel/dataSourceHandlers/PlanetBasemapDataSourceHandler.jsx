@@ -64,7 +64,7 @@ export default class PlanetBasemapDataSourceHandler extends DataSourceHandler {
     [PLANET_NICFI]: 'Planet-NICFI',
   };
 
-  willHandle(service, url, name, configs, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, configs, preselected) {
     if (url !== this.KNOWN_URL) {
       return false;
     }

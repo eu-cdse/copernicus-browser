@@ -144,8 +144,6 @@ import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
-import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
-
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
 
@@ -177,9 +175,9 @@ export function initializeDataSourceHandlers() {
   ];
 }
 
-export function registerHandlers(service, url, name, configs = [], preselected, onlyForBaseLayer = false) {
+export function registerHandlers(service, url, name, configs = [], preselected) {
   const handledBy = dataSourceHandlers.filter((dsHandler) =>
-    dsHandler.willHandle(service, url, name, configs, preselected, onlyForBaseLayer),
+    dsHandler.willHandle(service, url, name, configs, preselected),
   );
   return handledBy.length !== 0;
 }
@@ -322,7 +320,9 @@ const checkKnownCollections = (collectionId) => {
   return collectionTitle;
 };
 
-async function prepareThemeDataSourceHandlers(theme) {
+export async function prepareDataSourceHandlers(theme) {
+  initializeDataSourceHandlers();
+
   const allLayers = await Promise.all(
     theme.content.map(async (dataSource) => {
       let dataSourceUrl = dataSource.url.replace(
@@ -358,42 +358,21 @@ async function prepareThemeDataSourceHandlers(theme) {
     }),
   );
   let failedThemeParts = [];
-  theme.content.forEach(({ service, url, name, preselected, baseLayer }, i) => {
+  theme.content.forEach(({ service, url, name, preselected }, i) => {
     if (allLayers[i] === null) {
-      const errorText = !!baseLayer
-        ? `Error retrieving additional data for ${service} service at ${url}, named ${name} in theme ${theme.name} used for base layer.`
-        : `Error retrieving additional data for ${service} service at ${url} which is included in theme part ${name}, skipping.`;
-      console.error(errorText);
+      console.error(
+        `Error retrieving additional data for ${service} service at ${url} which is included in theme part ${name}, skipping.`,
+      );
       failedThemeParts.push(name);
       return;
     }
-    const isHandled = registerHandlers(
-      service,
-      url,
-      name ? name : theme.name,
-      allLayers[i],
-      preselected,
-      baseLayer,
-    );
+    const isHandled = registerHandlers(service, url, name ? name : theme.name, allLayers[i], preselected);
     if (!isHandled) {
       console.error(
         `Ignoring entry, unsupported service: ${service} (only 'WMS' and 'WMTS' are currently supported) or url: ${url}`,
       );
     }
   });
-  return failedThemeParts;
-}
-
-export async function prepareDataSourceHandlers(theme) {
-  initializeDataSourceHandlers();
-
-  // for S2 Quarterly Mosaics base layer
-  const failedS2QuarterlyMosaicParts = await prepareThemeDataSourceHandlers(
-    S2QuarterlyCloudlessMosaicsBaseLayerTheme,
-  );
-  console.error(`Could not retrieve data for base layer: ${failedS2QuarterlyMosaicParts.toString()}`);
-
-  const failedThemeParts = await prepareThemeDataSourceHandlers(theme);
   store.dispatch(themesSlice.actions.setDataSourcesInitialized(true));
   return failedThemeParts;
 }

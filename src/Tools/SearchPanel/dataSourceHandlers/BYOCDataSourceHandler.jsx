@@ -39,7 +39,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
   MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     name = isFunction(name) ? name() : name;
     const customLayers = layers.filter(
       (l) =>

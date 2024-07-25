@@ -240,7 +240,7 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
 
   defaultPreselectedDataset = COPERNICUS_CORINE_LAND_COVER;
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     let handlesAny = false;
 
     for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {

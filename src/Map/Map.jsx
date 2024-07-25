@@ -32,8 +32,7 @@ import PreviewLayer from '../Tools/Results/PreviewLayer';
 import LeafletControls from './LeafletControls/LeafletControls';
 import SentinelHubLayerComponent from './plugins/sentinelhubLeafletLayer';
 import GlTileLayer from './plugins/GlTileLayer';
-import { baseLayers, overlayTileLayers, LAYER_ACCESS } from './Layers';
-import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
+import { baseLayers, overlayTileLayers, LAYER_ACCESS, S2QuarterlyCloudlessMosaicsInstance } from './Layers';
 import {
   getDatasetLabel,
   getDataSourceHandler,
@@ -166,7 +165,7 @@ class Map extends React.Component {
           });
         }
       } catch (e) {
-        console.error(`Unable to get latest date for mosaic base layer:`, S2QuarterlyMosaicDatasetId);
+        console.error(`Unable to get latest date for mosaick`, S2QuarterlyMosaicDatasetId);
       }
     }
   }
@@ -315,7 +314,7 @@ class Map extends React.Component {
 
     if (S2QMosaicReady) {
       shownBaseLayers = shownBaseLayers.map((baseLayer) => {
-        if (baseLayer.id === S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].name) {
+        if (baseLayer.id === S2QuarterlyCloudlessMosaicsInstance.name) {
           return {
             ...baseLayer,
             name: `${baseLayer.name} (${getQuarterlyInfo(latestS2QMosaicDate)})`,

@@ -1,11 +1,15 @@
 import { t } from 'ttag';
 
-import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
+import { DEFAULT_THEMES } from '../assets/default_themes';
 
 export const LAYER_ACCESS = {
   PUBLIC: 'public',
   PAID: 'paid',
 };
+
+export const S2QuarterlyCloudlessMosaicsInstance = DEFAULT_THEMES[0].content.find(
+  ({ baseLayer }) => baseLayer,
+);
 
 const MAPS_LABELS_DISCLAIMER = t`The designations employed and the presentation of material on this map do not imply the expression of any opinion whatsoever on the part of the European Union concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Kosovo*: This designation is without prejudice to positions on status, and is in line with UNSCR 1244/1999 and the ICJ Opinion on the Kosovo declaration of independence. Palestine*: This designation shall not be construed as recognition of a State of Palestine and is without prejudice to the individual positions of the Member States on this issue.`;
 
@@ -25,7 +29,7 @@ export const baseLayers = [
     attribution: `\u003ca href="https://www.openstreetmap.org/copyright" target="_blank" \u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e - \u003ca href="#" title="${MAPS_LABELS_DISCLAIMER}"\u003eDisclaimer\u003c/a\u003e`,
     urlType: 'WMTS',
     access: LAYER_ACCESS.PUBLIC,
-    checked: !S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0],
+    checked: !S2QuarterlyCloudlessMosaicsInstance,
   },
   {
     id: 'voyager',
@@ -52,12 +56,12 @@ export const baseLayers = [
     urlType: 'GOOGLE_MAPS',
     access: LAYER_ACCESS.PAID,
   },
-  ...(S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0]
+  ...(S2QuarterlyCloudlessMosaicsInstance
     ? [
         {
-          id: S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].name,
-          name: S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].label,
-          url: S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].url,
+          id: S2QuarterlyCloudlessMosaicsInstance.name,
+          name: 'Sentinel-2 Mosaic',
+          url: S2QuarterlyCloudlessMosaicsInstance.url,
           urlType: 'BYOC',
           access: LAYER_ACCESS.PUBLIC,
           checked: true,

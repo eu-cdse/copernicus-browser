@@ -188,7 +188,7 @@ export default class HLSAWSDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected) {
     const usesHLSDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_AWS_HLS.id);
     if (!usesHLSDataset) {
       return false;
