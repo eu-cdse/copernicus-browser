@@ -16,7 +16,8 @@
     border: 1px solid $primaryColor;
 
     &:hover {
-      background-color: $dropdownHoverBackground;
+      color: $whiteColor;
+      background-color: $primaryColor;
     }
   }
 
@@ -29,12 +30,12 @@
     }
   }
 
-  &.secondary {
+  &.success {
     background-color: $secondaryColor;
     color: $whiteColor;
 
     &:hover {
-      background-color: $dropdownHoverBackground;
+      background-color: $quaternaryColor;
     }
   }
 

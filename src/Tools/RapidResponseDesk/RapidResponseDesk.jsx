@@ -30,7 +30,7 @@ const RapidResponseDesk = () => {
         <div className="search-button">
           <Button
             label={t`Search`}
-            className="secondary"
+            className="success"
             styleClassName="uppercase-text"
             style={{ width: '126px' }}
           ></Button>
