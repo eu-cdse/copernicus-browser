@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
 import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
@@ -9,6 +9,11 @@ import Button from '../../components/Button/Button';
 
 const RapidResponseDesk = () => {
   const [cartSize] = useState(0);
+  const myRef = useRef(this);
+
+  useEffect(() => {
+    console.warn(myRef);
+  }, []);
 
   return (
     <div className="rapid-response-desk">

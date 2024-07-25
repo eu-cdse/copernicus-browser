@@ -26,4 +26,10 @@
       color: $primaryColor;
     }
   }
+
+  .date-picker-with-add {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
