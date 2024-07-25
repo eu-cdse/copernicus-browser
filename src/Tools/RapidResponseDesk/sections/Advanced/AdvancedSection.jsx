@@ -2,7 +2,14 @@ import React from 'react';
 import './AdvancedSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { AdvancedSectionProperties } from '../../RapidResponseDesk.utils';
+import { t } from 'ttag';
+import store, { collapsiblePanelSlice } from '../../../../store';
+
+export const AdvancedSectionProperties = Object.freeze({
+  id: 'advanced',
+  title: () => t`Advanced`,
+  toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setAdvancedExpanded(v)),
+});
 
 const AdvancedSection = ({ advancedExpanded }) => {
   const getTitle = () => <div className="uppercase-text">{AdvancedSectionProperties.title()}</div>;

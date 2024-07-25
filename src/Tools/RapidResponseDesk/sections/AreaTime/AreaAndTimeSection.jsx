@@ -2,7 +2,14 @@ import React from 'react';
 import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { AreaAndTimeSectionProperties } from '../../RapidResponseDesk.utils';
+import { t } from 'ttag';
+import store, { collapsiblePanelSlice } from '../../../../store';
+
+export const AreaAndTimeSectionProperties = Object.freeze({
+  id: 'area-time',
+  title: () => t`Area & Time`,
+  toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setAreaTimeExpanded(v)),
+});
 
 const AreaAndTimeSection = ({ areaTimeExpanded }) => {
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
