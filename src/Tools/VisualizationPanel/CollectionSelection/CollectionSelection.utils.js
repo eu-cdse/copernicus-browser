@@ -28,30 +28,35 @@ const checkFilter = (item, filter) => {
 const createCollectionGropsFromDataSourceHandlers = (filter, bounds) => {
   const collectionGroups = dataSourceHandlers
     .filter((dsh) => dsh.isHandlingAnyUrl())
-    .map((dsh) => ({
-      title: dsh.getSearchGroupLabel(),
-      datasource: dsh.datasource,
-      searchTags: [dsh.getSearchGroupLabel()],
-      displayedAsGroup: dsh.isDisplayedAsGroup(),
-      getDescription: () => dsh.getDescription(),
-      credits: credits[dsh.datasource],
-      preselectedDataset: dsh.getPreselectedDataset(bounds),
-      collections:
-        dsh.datasets && dsh.datasets.length
-          ? dsh.datasets.map((dataset) => {
-              const title = dsh.getDatasetSearchLabels() ? dsh.getDatasetSearchLabels()[dataset] : null;
-              const searchTags = [title, dataset, dsh.getSearchGroupLabel()].filter((t) => !!t);
-              return {
-                title: title || dataset,
-                getDescription: () => dsh.getDescriptionForDataset(dataset),
-                credits: credits[dataset],
-                datasource: dsh.datasource,
-                dataset: dataset,
-                searchTags: searchTags,
-              };
-            })
-          : undefined,
-    }))
+    .map((dsh) => {
+      const datasets = dsh.datasets ? dsh.datasets.filter((ds) => !dsh.isOnlyForBaseLayer(ds)) : [];
+      const collections = datasets.length
+        ? datasets.map((dataset) => {
+            const title = dsh.getDatasetSearchLabels() ? dsh.getDatasetSearchLabels()[dataset] : null;
+            const searchTags = [title, dataset, dsh.getSearchGroupLabel()].filter((t) => !!t);
+            return {
+              title: title || dataset,
+              getDescription: () => dsh.getDescriptionForDataset(dataset),
+              credits: credits[dataset],
+              datasource: dsh.datasource,
+              dataset: dataset,
+              searchTags: searchTags,
+            };
+          })
+        : undefined;
+
+      return {
+        title: dsh.getSearchGroupLabel(),
+        datasource: dsh.datasource,
+        searchTags: [dsh.getSearchGroupLabel()],
+        displayedAsGroup: dsh.isDisplayedAsGroup(),
+        getDescription: () => dsh.getDescription(),
+        credits: credits[dsh.datasource],
+        preselectedDataset: dsh.getPreselectedDataset(bounds),
+        collections: collections,
+      };
+    })
+    .filter((collectionGroup) => !!collectionGroup.collections)
     .filter((collectionGroup) => checkFilter(collectionGroup, filter))
     .map((collectionGroup) => {
       const filteredCollections = collectionGroup?.collections?.filter((c) => checkFilter(c, filter)) || [];

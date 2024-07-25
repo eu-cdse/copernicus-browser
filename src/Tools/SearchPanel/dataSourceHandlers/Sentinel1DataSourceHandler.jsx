@@ -223,7 +223,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   polarizations = { IW: {}, EW: {}, SM: {} };
   defaultPreselectedDataset = S1_CDAS_IW_VVVH;
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const hasAWSLayer = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_AWSEU_S1GRD.id);
     const hasCDASLayer = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S1GRD.id);
 

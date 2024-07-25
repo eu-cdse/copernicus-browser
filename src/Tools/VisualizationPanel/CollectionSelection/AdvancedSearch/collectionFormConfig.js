@@ -470,14 +470,9 @@ export const collections = [
           },
           {
             id: 'VHR_IMAGE_2018',
-            label: 'VHR Europe (2017–2019) (1)',
+            label: 'VHR Europe (2017–2019)',
             customFilterQueryByDatasetFull: true,
-            // productTypeIds: ['VHR_IMAGE_2018', 'VHR_IMAGE_2018_ENHANCED'], // uncomment to display only 1 checkbox and query for both (also delete the below one)
-          },
-          {
-            id: 'VHR_IMAGE_2018_ENHANCED',
-            label: 'VHR Europe (2017–2019) (2)',
-            customFilterQueryByDatasetFull: true,
+            productTypeIds: ['VHR_IMAGE_2018', 'VHR_IMAGE_2018_ENHANCED'],
           },
           {
             id: 'VHR_IMAGE_2021',
@@ -499,18 +494,60 @@ export const collections = [
         productTypes: [
           {
             id: 'DAP_MG2b_01',
-
-            label: 'VHR Urban Atlas (2006, 2009) (1)',
+            label: 'VHR Urban Atlas (2006, 2009)',
             customFilterQueryByDatasetFull: true,
-          },
-          {
-            id: 'DAP_MG2b_02',
-            label: 'VHR Urban Atlas (2006, 2009) (2)',
-            customFilterQueryByDatasetFull: true,
+            productTypeIds: ['DAP_MG2b_01', 'DAP_MG2b_02'],
           },
           {
             id: 'VHR1-2_Urban_Atlas_2012',
             label: 'VHR Urban Atlas (2011–2013)',
+            customFilterQueryByDatasetFull: true,
+          },
+        ],
+        supportsCloudCover: true,
+      },
+      {
+        id: 'HR_EUROPE',
+        label: 'HR Europe',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'DAP_MG2-3_01',
+            label: 'HR Europe (2006, 2009)',
+            customFilterQueryByDatasetFull: true,
+            productTypeIds: ['DAP_MG2-3_01', 'DWH_MG2_CORE_02'],
+          },
+          {
+            id: 'DWH_MG2_CORE_01',
+            label: 'HR Europe (2011–2013)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'HR_IMAGE_2015',
+            label: 'HR Europe (2014–2015)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'EUR_HR2_MULTITEMP',
+            label: 'HR Europe Monthly (Apr–Oct 2015)',
+            customFilterQueryByDatasetFull: true,
+          },
+        ],
+        supportsCloudCover: true,
+      },
+      {
+        id: 'MR_EUROPE',
+        label: 'MR Europe',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'MR_IMAGE_2015',
+            label: 'MR Europe Monthly (Mar-Oct 2014)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'DWH_MG2-3_CORE_08',
+            label: 'MR Europe Monthly (2011-2012)',
             customFilterQueryByDatasetFull: true,
           },
         ],
@@ -551,7 +588,7 @@ export const collections = [
       {
         id: AttributeNames.acrossTrackIncidenceAngle,
         render: NumericInput,
-        type: 'integer',
+        type: 'float',
         min: -180,
         max: 180,
         placeholder: '-180 - 180',

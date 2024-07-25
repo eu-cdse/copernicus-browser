@@ -33,6 +33,7 @@ $activePrimaryColor: #003066;
 $disabled: 0.5;
 
 $boxShadow: 0 0 6px rgba(0, 0, 0, 0.2);
+$boxShadowStrong: 0 0 10px rgba(0, 0, 0, 0.5);
 
 $controlsHeight: 40px;
 $toolsWidth: 450px;
@@ -78,6 +79,7 @@ $breakpoint-1300: 1300px;
   fontWeightNormal: $fontWeightNormal;
   fontWeightBold: $fontWeightBold;
   boxShadow: $boxShadow;
+  boxShadowStrong: $boxShadowStrong;
   randomGrayColor: $randomGrayColor;
   toolsWidth: $toolsWidth;
   additionalFiltersPanelWidth: $additionalFiltersPanelWidth;

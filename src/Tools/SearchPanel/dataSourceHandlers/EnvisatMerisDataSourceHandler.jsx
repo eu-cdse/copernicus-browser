@@ -112,7 +112,7 @@ export default class EnvisatMerisDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesDataset = !!layers.find((l) => l.dataset && l.dataset === DATASET_EOCLOUD_ENVISAT_MERIS);
     if (!usesDataset) {
       return false;

@@ -45,7 +45,7 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesS3SLSTRDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S3SLSTR.id);
     const usesS3OLCIDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S3OLCI.id);
 

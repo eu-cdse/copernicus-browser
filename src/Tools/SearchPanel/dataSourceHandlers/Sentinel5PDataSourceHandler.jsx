@@ -106,7 +106,7 @@ export default class Sentinel5PDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const s5pLayers = layers.filter((l) => l.dataset && l.dataset.id === this.shDataset.id);
     if (s5pLayers.length === 0) {
       return false;

@@ -14,7 +14,9 @@ class LocationSearchBox extends React.PureComponent {
   render() {
     const { value } = this.state;
 
-    return <LocationSearchBoxControlled value={value} onChange={this.handleInputChange} {...this.props} />;
+    return (
+      <LocationSearchBoxControlled value={value} onValueChange={this.handleInputChange} {...this.props} />
+    );
   }
 }
 

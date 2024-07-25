@@ -76,7 +76,7 @@ export default class ModisDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_MODIS.id);
     if (!usesDataset) {
       return false;

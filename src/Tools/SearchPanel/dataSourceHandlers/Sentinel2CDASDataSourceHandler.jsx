@@ -155,7 +155,7 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesS2L2ADataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S2L2A.id);
     const usesS2L1CDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S2L1C.id);
     if (!usesS2L2ADataset && !usesS2L1CDataset) {
