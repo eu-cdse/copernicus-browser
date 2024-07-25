@@ -20,11 +20,20 @@ const RapidResponseDesk = () => {
       </div>
       <div className="rapid-response-desk-footer">
         <div className="wrapped-buttons">
-          <Button label={t`View cart` + ` (${cartSize})`} style={{ marginRight: '8px' }}></Button>
-          <Button label={t`Dashboard`}></Button>
+          <Button
+            label={t`View cart` + ` (${cartSize})`}
+            styleClassName="uppercase-text"
+            style={{ marginRight: '8px' }}
+          ></Button>
+          <Button label={t`Dashboard`} styleClassName="uppercase-text"></Button>
         </div>
         <div className="search-button">
-          <Button label={t`Search`} className="secondary" style={{ width: '126px' }}></Button>
+          <Button
+            label={t`Search`}
+            className="secondary"
+            styleClassName="uppercase-text"
+            style={{ width: '126px' }}
+          ></Button>
         </div>
       </div>
     </div>

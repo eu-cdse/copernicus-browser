@@ -5,12 +5,14 @@ import CollapsiblePanel from '../../../../components/CollapsiblePanel/Collapsibl
 import { AdvancedSectionProperties } from '../../CommercialData.utils';
 
 const AdvancedSection = ({ advancedExpanded }) => {
+  const getTitle = () => <div className="uppercase-text">{AdvancedSectionProperties.title()}</div>;
+
   return (
     <CollapsiblePanel
       key={AdvancedSectionProperties.id}
       className={`section ${advancedExpanded ? 'active' : 'inactive'}`}
-      title={AdvancedSectionProperties.title()}
-      headerComponent={AdvancedSectionProperties.title()}
+      title={getTitle()}
+      headerComponent={getTitle()}
       expanded={advancedExpanded}
       toggleExpanded={AdvancedSectionProperties.toggleExpanded}
     >

@@ -6,12 +6,14 @@ import { ProviderSectionProperties } from '../../CommercialData.utils';
 
 const ProviderSection = ({ providerExpanded }) => {
   //TODO: Custom Header
+  const getTitle = () => <div className="uppercase-text">{ProviderSectionProperties.title()}</div>;
+
   return (
     <CollapsiblePanel
       key={ProviderSectionProperties.id}
       className={`section ${providerExpanded ? 'active' : 'inactive'}`}
-      title={ProviderSectionProperties.title()}
-      headerComponent={ProviderSectionProperties.title()}
+      title={getTitle()}
+      headerComponent={getTitle()}
       expanded={providerExpanded}
       toggleExpanded={ProviderSectionProperties.toggleExpanded}
     >
