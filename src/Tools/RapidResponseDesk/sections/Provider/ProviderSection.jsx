@@ -23,6 +23,7 @@ const ProviderSection = ({ providerExpanded }) => {
 };
 
 const mapStoreToProps = (store) => ({
+  selectedLanguage: store.language.selectedLanguage,
   providerExpanded: store.collapsiblePanel.providerExpanded,
 });
 
