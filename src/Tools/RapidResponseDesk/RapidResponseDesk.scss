@@ -8,7 +8,7 @@
   color: $textColor;
 
   .rapid-response-desk-body {
-    overflow-y: auto;
+    overflow-y: scroll;
 
     & > * {
       margin: 5px 1px 5px 5px;
