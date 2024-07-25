@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProviderSection.scss';
+import './ImageQualityAndProviderSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { t } from 'ttag';
@@ -11,7 +11,7 @@ export const ProviderSectionProperties = Object.freeze({
   toggleExpanded: (v) => store.dispatch(collapsiblePanelSlice.actions.setProviderExpanded(v)),
 });
 
-const ProviderSection = ({ providerExpanded }) => {
+const ImageQualityAndProviderSection = ({ providerExpanded }) => {
   //TODO: Custom Header
   const getTitle = () => <div className="uppercase-text">{ProviderSectionProperties.title()}</div>;
 
@@ -36,4 +36,4 @@ const mapStoreToProps = (store) => ({
   providerExpanded: store.collapsiblePanel.providerExpanded,
 });
 
-export default connect(mapStoreToProps, null)(ProviderSection);
+export default connect(mapStoreToProps, null)(ImageQualityAndProviderSection);
