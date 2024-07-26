@@ -26,8 +26,13 @@ const AreaAndTimeSection = ({
   minDate,
   maxDate,
 }) => {
-  const [fromMoment, setFromMoment] = useState(moment.utc().subtract(1, 'month').startOf('day'));
-  const [toMoment, setToMoment] = useState(moment.utc().endOf('day'));
+  const [dateTime, setDateTime] = useState([
+    {
+      from: moment.utc().subtract(1, 'month').startOf('day'),
+      to: moment.utc().endOf('day'),
+    },
+  ]);
+  const [dateRangesCounter, setDateRangesCounter] = useState(0);
   const [displayCalendarFrom, setDisplayCalendarFrom] = useState(false);
   const [displayCalendarTo, setDisplayCalendarTo] = useState(false);
 
@@ -42,7 +47,8 @@ const AreaAndTimeSection = ({
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
-  const getAndSetNextPrevDateFrom = async (direction, selectedDay, toMoment, minDate) => {
+  //TODO: merge this two into one method
+  const getAndSetNextPrevDateFrom = async (direction, selectedDay, id, fromMoment, toMoment, minDate) => {
     let newFromMoment;
     if (direction === 'prev') {
       newFromMoment = moment.utc(selectedDay).add(-1, 'days');
@@ -52,10 +58,11 @@ const AreaAndTimeSection = ({
     if (newFromMoment < minDate || newFromMoment > toMoment) {
       throw Error('invalidDateRange');
     }
-    setFromMoment(newFromMoment);
+
+    updateDateTime(id)(newFromMoment, toMoment);
   };
 
-  const getAndSetNextPrevDateTo = async (direction, selectedDay, fromMoment, maxDate) => {
+  const getAndSetNextPrevDateTo = async (direction, selectedDay, id, fromMoment, toMoment, maxDate) => {
     let newToMoment;
     if (direction === 'prev') {
       newToMoment = moment.utc(selectedDay).add(-1, 'days');
@@ -65,23 +72,36 @@ const AreaAndTimeSection = ({
     if (newToMoment > maxDate || newToMoment < fromMoment) {
       throw Error('invalidDateRange');
     }
-    setToMoment(newToMoment);
+
+    updateDateTime(id)(fromMoment, newToMoment);
+  };
+
+  const setAdditionalDateRange = () => {
+    setDateRangesCounter(dateRangesCounter + 1);
+  };
+
+  const updateDateTime = (id) => (fromTime, toTime) => {
+    console.error(fromTime);
+    setDateTime((prevState) => {
+      const updatedItems = prevState.map((item, index) =>
+        index === id ? { ...item, from: fromTime, to: toTime } : item,
+      );
+      return updatedItems;
+    });
   };
 
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
       {/*TODO: map through whole already selected dates*/}
+
       <div className="date-picker-with-add">
         <TimespanPicker
           id="aoi-time-select"
           minDate={minDateRange}
           maxDate={maxDateRange}
           datePickerInputStyle={{ width: '85px' }}
-          timespan={{ fromTime: fromMoment, toTime: toMoment }}
-          applyTimespan={(fromTime, toTime) => {
-            setFromMoment(fromTime);
-            setToMoment(toTime);
-          }}
+          timespan={{ fromTime: dateTime[dateRangesCounter].from, toTime: dateTime[dateRangesCounter].to }}
+          applyTimespan={updateDateTime(dateRangesCounter)}
           timespanExpanded={true}
           calendarHolder={cardHolderRef}
           displayCalendarFrom={displayCalendarFrom}
@@ -92,15 +112,29 @@ const AreaAndTimeSection = ({
           closeCalendarUntil={() => setDisplayCalendarTo(false)}
           showNextPrevDateArrows={true}
           getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-            await getAndSetNextPrevDateFrom(direction, selectedDay, toMoment, minDateRange)
+            await getAndSetNextPrevDateFrom(
+              direction,
+              selectedDay,
+              dateRangesCounter,
+              dateTime[dateRangesCounter].from,
+              dateTime[dateRangesCounter].to,
+              minDateRange,
+            )
           }
           getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-            await getAndSetNextPrevDateTo(direction, selectedDay, fromMoment, maxDateRange)
+            await getAndSetNextPrevDateTo(
+              direction,
+              selectedDay,
+              dateRangesCounter,
+              dateTime[dateRangesCounter].from,
+              dateTime[dateRangesCounter].to,
+              maxDateRange,
+            )
           }
           isDisabled={false}
         />
         <div className="add-button-container">
-          <Button icon={'fas fa-plus'} rounded={true}></Button>
+          <Button icon={'fas fa-plus'} rounded={true} onClick={setAdditionalDateRange}></Button>
         </div>
       </div>
       <div className="calendar-holder" ref={cardHolderRef} />
