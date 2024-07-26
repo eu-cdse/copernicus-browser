@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
 import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
-import ProviderSection from './sections/Provider/ImageQualityAndProviderSection';
+import ProviderSection from './sections/ImageQualityAndProviderSection/ImageQualityAndProviderSection';
 import AdvancedSection from './sections/Advanced/AdvancedSection';
 import { t } from 'ttag';
 import Button from '../../components/Button/Button';
