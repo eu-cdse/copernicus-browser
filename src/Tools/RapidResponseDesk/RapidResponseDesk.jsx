@@ -5,7 +5,7 @@ import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
 import ProviderSection from './sections/ImageQualityAndProviderSection/ImageQualityAndProviderSection';
 import AdvancedSection from './sections/Advanced/AdvancedSection';
 import { t } from 'ttag';
-import Button from '../../components/Button/Button';
+import Button, { ButtonType } from '../../components/Button/Button';
 
 const RapidResponseDesk = () => {
   const [cartSize] = useState(0);
@@ -34,8 +34,8 @@ const RapidResponseDesk = () => {
         </div>
         <div className="search-button">
           <Button
+            type={ButtonType.success}
             label={t`Search`}
-            className="success"
             styleClassName="uppercase-text"
             style={{ width: '126px' }}
           ></Button>
