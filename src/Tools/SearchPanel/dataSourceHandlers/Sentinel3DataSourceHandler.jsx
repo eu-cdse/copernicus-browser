@@ -266,7 +266,7 @@ export default class Sentinel3DataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesS3SLSTRDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_S3SLSTR.id);
     const usesS3OLCIDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_S3OLCI.id);
 

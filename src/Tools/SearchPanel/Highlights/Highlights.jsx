@@ -12,6 +12,10 @@ import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.ut
 import './Highlights.scss';
 
 class Highlights extends Component {
+  state = {
+    selectedPinIndex: null,
+  };
+
   onPinSelect = async (pin, comparingPins, sharePins) => {
     const {
       zoom,
@@ -87,6 +91,8 @@ class Highlights extends Component {
       is3D: this.props.is3D,
       terrainViewerId: this.props.terrainViewerId,
     });
+
+    this.setState({ selectedPin: pin });
   };
 
   setHighlightsSection = () => {
@@ -99,7 +105,11 @@ class Highlights extends Component {
               pin={pin}
               key={`${index}-${pin.title}-${pin._id}`}
               index={index}
-              onSelect={() => this.onPinSelect(pin)}
+              onSelect={() => {
+                this.onPinSelect(pin);
+                this.setState({ selectedPinIndex: index });
+              }}
+              isSelected={this.state.selectedPinIndex === index}
               canAddToCompare={!is3D}
             />
           ))}

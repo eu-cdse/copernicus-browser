@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import onClickOutside from 'react-onclickoutside';
-import LocationSearchBox from '../junk/LocationSearchBox/LocationSearchBox';
+import LocationSearchBox from '../LocationSearchBox/LocationSearchBox';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
 import { withLeaflet } from 'react-leaflet';

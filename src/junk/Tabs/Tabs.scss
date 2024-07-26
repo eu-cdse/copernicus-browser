@@ -71,9 +71,13 @@
     }
 
     & .tab-selected {
-      background-color: $hoverPrimaryColor;
-      box-shadow: $boxShadow;
+      box-shadow: $boxShadowStrong;
       font-weight: $fontWeightBold;
+      color: $secondaryColor;
+
+      &:hover {
+        background-color: $primaryColor;
+      }
     }
 
     &::after {

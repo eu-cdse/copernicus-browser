@@ -80,6 +80,8 @@ import {
   S1_CDAS_IW_HH,
   S1_CDAS_EW_VVVH,
   S1_CDAS_EW_VV,
+  S1_MONTHLY_MOSAIC_DH,
+  S1_MONTHLY_MOSAIC_IW,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -4797,6 +4799,8 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'ENHANCED-VISUALIZATION' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'ENHANCED' },
     ],
     description: () =>
       t`# Enhanced visualization\n\nThis script combines the gamma0 of the VV and VH polarizations into a false color visualization. It displays water areas in blue (partially black) and land in different shades of yellow/green. Urban areas are displayed in a light green-yellow (towards white), vegetated areas in mustard green and bare ground in a darker green.\n\nFor snowy and icy areas, the visualization can vary from light green-yellow over brighter green to dark brown or even black. In order not to confuse cryogenic features with non-cryogenic ones, some general information about the location is helpful in interpreting the image.`,
@@ -4810,6 +4814,8 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: '8_RGB-RATIO' },
       { datasourceId: S1_CDAS_IW_VVVH, layerId: '8_RGB-RATIO' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: '8_RGB-RATIO' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: '0-RGB-RATIO' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: '0-RGB-RATIO' },
     ],
     description: () =>
       t`# RGB ratio\n\nThis script combines the gamma0 of the VV and VH polarizations into a false color visualization. It uses the VV polarization in the red channel, the VH polarization in the green channel, and a ratio of VH/VV in the blue channel. It shows water areas in dark red (black), urban areas in yellow, vegetated areas in turquoise, and bare ground in dark purple.\n\nFor snowy and icy areas, the visualization can vary from light yellow to blue to red. In order not to confuse cryogenic features with non-cryogenic ones, some general information about the location is helpful in interpreting the image.`,
@@ -4823,6 +4829,8 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: '9_SAR-URBAN' },
       { datasourceId: S1_CDAS_IW_VVVH, layerId: '9_SAR-URBAN' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: '9_SAR-URBAN' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: '1-SAR-URBAN' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: '1-SAR-URBAN' },
     ],
     description: () =>
       t`# SAR Urban\n\nThe script is useful for locating urban areas and individual buildings. It uses the gamma0 of the VH polarization and the VV polarizations to highlight different buildings and topology orientations with purple and green colors. It can be used to track urban expansion, estimate building type, or locate buildings in risk areas (e.g., flooding).\n\nFor snowy and icy areas, the visualization can vary from white to purple to dark blue or even black. In order not to confuse cryogenic features with non-cryogenic ones, some general information about the location is helpful to interpret the image. \n\n More info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/urban_areas/).`,
@@ -4836,6 +4844,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_HHHV, layerId: 'SM-DH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'IW-DH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HH, layerId: 'IW-SH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'HH-DECIBEL-GAMMA0' },
     ],
     description: () =>
       t`# HH - decibel gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the HH polarization. The HH polarization is less sensitive to surface roughness compared to the VV polarization and is therefore used for detecting objects and hard targets such as ships. It provides good contrast between water and land surfaces. Compared to the linear gamma0 visualization, the decibel gamma0 visualization includes a logarithmic scaling of the data.`,
@@ -4849,6 +4858,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_HHHV, layerId: 'SM-DH-HH-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'IW-DH-HH-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HH, layerId: 'IW-SH-HH-LINEAR-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'HH-LINEAR-GAMMA0' },
     ],
     description: () =>
       t`# HH - linear gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the HH polarization. The HH polarization is less sensitive to surface roughness compared to the VV polarization and is therefore used for detecting objects and hard targets such as ships.`,
@@ -4859,6 +4869,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_EW_HHHV, layerId: 'EW-DH-HV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_SM_HHHV, layerId: 'SM-DH-HV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'IW-DH-HV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'HV-DECIBEL-GAMMA0' },
     ],
     description: () =>
       t`# HV - decibel gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the HV polarization. The values for the cross polarization (HV) are generally lower (darker visualization) than for the co-polarization (HH, VV). The HV polarization has higher values for surfaces characterized by volume scattering, e.g., branches, dry coil bodies, or canopies (lighter color in the visualization) and lower for surfaces with little to no scattering (darker color in the visualization). Compared to the linear gamma0 visualization, the decibel gamma0 visualization includes a logarithmic scaling of the data.`,
@@ -4869,6 +4880,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_EW_HHHV, layerId: 'EW-DH-HV-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_SM_HHHV, layerId: 'SM-DH-HV-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'IW-DH-HV-LINEAR-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'HV-LINEAR-GAMMA0' },
     ],
     description: () =>
       t`# HV - linear gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the HV polarization. The values for the cross polarization (HV) are generally lower (darker visualization) than for the co-polarization (HH, VV). The HV polarization has higher values for surfaces characterized by volume scattering, e.g., branches, dry coil bodies, or canopies (lighter color in the visualization) and lower for surfaces with little to no scattering (darker color in the visualization).`,
@@ -4879,6 +4891,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_IW_VVVH, layerId: 'IW-DV-VH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'SM-DV-VH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'EW-DV-VH-DECIBEL-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'VH-DECIBEL-GAMMA0' },
     ],
     description: () =>
       t`# VH - decibel gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the VH polarization. The values for the cross polarization (VH) are generally lower (darker visualization) than for the co-polarization (HH, VV). The VH polarization has higher values for surfaces characterized by volume scattering, e.g., branches, dry coil bodies, or canopies (lighter color in the visualization) and lower for surfaces with little to no scattering (darker color in the visualization). Compared to the linear gamma0 visualization, the decibel gamma0 visualization includes a logarithmic scaling of the data.`,
@@ -4889,6 +4902,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_IW_VVVH, layerId: 'IW-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'SM-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'EW-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'VH-LINEAR-GAMMA0' },
     ],
     description: () =>
       t`# VH - linear gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the VH polarization. The values for the cross polarization (VH) are generally lower (darker visualization) than for the co-polarization (HH, VV).  The VH polarization has higher values for surfaces characterized by volume scattering, e.g., branches, dry coil bodies, or canopies (lighter color in the visualization) and lower for surfaces with little to no scattering (darker color in the visualization).`,
@@ -4902,6 +4916,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'SM-DV-VV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VV, layerId: 'EW-DV-VV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'EW-DV-VV-DECIBEL-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'VV-DECIBEL-GAMMA0' },
     ],
     description: () =>
       t`# VV - decibel gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the VV polarization. Compared to the HH polarization, the VV polarization is more sensitive to surface roughness and is therefore often used in the detection of oil contamination or wake detection. Compared to the linear gamma0 visualization, the decibel gamma0 visualization includes a logarithmic scaling of the data.`,
@@ -4915,6 +4930,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'SM-DV-VV-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VV, layerId: 'EW-DV-VH-LINEAR-GAMMA0-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'EW-DV-VV-LINEAR-GAMMA0-ORTHORECTIFIED' },
+      { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'VV-LINEAR-GAMMA0' },
     ],
     description: () =>
       t`# VV - linear gamma0\n\nThis script displays a grayscale visualization of the gamma0 of the VV polarization. Compared to the HH polarization, the VV polarization is more sensitive to surface roughness and is therefore often used in the detection of oil contamination or wake detection.`,

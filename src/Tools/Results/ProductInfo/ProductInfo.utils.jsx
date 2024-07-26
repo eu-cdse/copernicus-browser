@@ -7,10 +7,7 @@ import { AttributeNames } from '../../../api/OData/assets/attributes';
 import { getLoggedInErrorMsg } from '../../../junk/ConstMessages';
 import BrowseProduct from '../BrowseProduct/BrowseProduct';
 import { ErrorMessage } from '../ResultItem';
-import {
-  COPERNICUS_CONTRIBUTING_MISSIONS,
-  CCM_PRODUCT_TYPE_ACCESS_RIGHTS,
-} from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 
 export const commonProductAttributes = [
   'name',
@@ -135,7 +132,7 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
     errorMessage = ErrorMessage.downloadOfflineProduct();
   }
 
-  if (showCCMDownloadAccessErrormessage(userToken, product)) {
+  if (shouldShowCCMAccessError(userToken, product)) {
     errorMessage = ErrorMessage.CCMAccessRoleNotEligible();
   }
 
@@ -146,10 +143,22 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
   return null;
 };
 
-export const checkCCMProduct = (product) =>
-  product.attributes.some((attribute) => attribute.Value === COPERNICUS_CONTRIBUTING_MISSIONS);
+export const shouldShowCCMAccessError = (userToken, product) =>
+  isProductCCM(product) && !hasCCMDownloadAccess(userToken, product);
 
-export const checkCMMDownloadAccess = (userToken, { productType }) => {
+export const isProductCCM = ({ productType }) => {
+  // we assume that all necessary access rights for products in CCM are in CCM_PRODUCT_TYPE_ACCESS_RIGHTS
+  // so, we can assume that the product with productType is part of CCM
+  // if there is an entry for productType in CCM_PRODUCT_TYPE_ACCESS_RIGHTS
+  const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
+  return downloadProductRoles !== undefined;
+};
+
+export const hasCCMDownloadAccess = (userToken, { productType }) => {
+  if (!userToken) {
+    return false;
+  }
+
   try {
     const roles = jwt_dec(userToken).realm_access.roles;
     const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
@@ -160,6 +169,3 @@ export const checkCMMDownloadAccess = (userToken, { productType }) => {
     return false;
   }
 };
-
-export const showCCMDownloadAccessErrormessage = (userToken, product) =>
-  userToken ? checkCCMProduct(product) && !checkCMMDownloadAccess(userToken, product) : false;

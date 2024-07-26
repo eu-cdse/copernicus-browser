@@ -774,10 +774,8 @@ describe('useODataSearch CCM Optical', () => {
     ];
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
-    expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018');
-    expect(allResults[0].sensingTime).toContain('2018-09-15T10:30:35.000Z');
-    // expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018_ENHANCED');
-    // expect(allResults[0].sensingTime).toContain('2018-10-05T10:23:17.000Z');
+    expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018_ENHANCED');
+    expect(allResults[0].sensingTime).toContain('2018-10-05T10:23:17.000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     allResults.forEach((result) => {
       expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();

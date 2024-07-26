@@ -147,7 +147,7 @@ export default class GibsDataSourceHandler extends DataSourceHandler {
   defaultPreselectedDataset = GIBS_MODIS_TERRA;
   preselectedDatasets = new Set();
 
-  willHandle(service, url, name, configs, preselected) {
+  willHandle(service, url, name, configs, preselected, onlyForBaseLayer) {
     if (url !== this.KNOWN_URL) {
       return false;
     }

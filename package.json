@@ -54,7 +54,7 @@
     "react": "^16.8.3",
     "react-alert-async": "^1.2.0",
     "react-app-polyfill": "^2.0.0",
-    "react-autocomplete": "^1.8.1",
+    "react-bootstrap-typeahead": "^6.3.2",
     "react-checkbox-group": "^3.0.1",
     "react-compound-slider": "^2.5.0",
     "react-day-picker": "^7.1.9",

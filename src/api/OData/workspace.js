@@ -37,6 +37,14 @@ export async function addProductToWorkspace(product) {
 
   const payload = createAddProductToWorkspacePayload(product);
 
+  const extractErrorMsg = (error) => {
+    if (Array.isArray(error?.response?.data?.detail)) {
+      return error.response.data.detail.at(0)?.msg;
+    }
+
+    return error?.response?.data?.detail;
+  };
+
   axios
     .post(url, payload, {
       headers: headers,
@@ -53,7 +61,7 @@ export async function addProductToWorkspace(product) {
       }
     })
     .catch((error) => {
-      const errorMsg = error?.response?.data?.detail?.at(0).msg || t`Something went wrong!`;
+      const errorMsg = extractErrorMsg(error) ?? t`Something went wrong!`;
       store.dispatch(
         floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
           notificationUniqueId: uuid(),
