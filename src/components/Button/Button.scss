@@ -39,9 +39,27 @@
     }
   }
 
+  &.rounded {
+    border-radius: 10px;
+    border: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &.icon {
+    width: 20px;
+  }
+
   .label {
     font-size: 13.8px;
     font-weight: 700;
     font-family: $fontFamily;
+  }
+
+  &:has(.icon) {
+    &.rounded {
+      border-radius: 50%;
+    }
+
+    min-width: 33px;
   }
 }

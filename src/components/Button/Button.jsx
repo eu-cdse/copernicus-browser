@@ -2,16 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Button.scss';
 
-const Button = ({ label, className, styleClassName, style, onClick }) => {
+export const ButtonType = Object.freeze({
+  success: 'success',
+  danger: 'danger',
+  primary: 'primary',
+});
+
+const Button = ({ label, icon, type, rounded, className, styleClassName, style, onClick }) => {
+  const buttonClass = `copernicus-button ${type}${rounded ? ` rounded` : ''}${
+    className ? ` ${className}` : ''
+  }${styleClassName ? ` ${styleClassName}` : ''}`;
+
   return (
-    <div style={style} className={`copernicus-button ${className} ${styleClassName}`} onClick={onClick}>
-      <span className="label">{label}</span>
+    <div style={style} className={buttonClass} onClick={onClick}>
+      {!icon ? (
+        <span className="label">{label}</span>
+      ) : (
+        <div className="icon">
+          <i className={icon}></i>
+        </div>
+      )}
     </div>
   );
 };
 
 Button.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  icon: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  rounded: PropTypes.bool,
   className: PropTypes.string,
   styleClassName: PropTypes.string,
   style: PropTypes.object,
@@ -19,7 +38,8 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  className: 'primary',
+  type: ButtonType.primary,
+  rounded: false,
   onClick: () => {},
 };
 
