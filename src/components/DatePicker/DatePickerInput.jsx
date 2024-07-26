@@ -17,6 +17,7 @@ function DatePickerInput(props) {
     nextDateBtnDisabled,
     setNextDateBtnDisabled,
     isDisabled,
+    datePickerInputStyle,
   } = props;
   const [dateValue, setDateValue] = useState(null);
   const [inputDisabled, setInputDisabled] = useState(false);
@@ -113,6 +114,7 @@ function DatePickerInput(props) {
         onBlur={handleBlur}
         onKeyPress={handleKeyPress}
         placeholder={dateFormat}
+        style={datePickerInputStyle}
       />
       {showNextPrevDateArrows && (
         <i

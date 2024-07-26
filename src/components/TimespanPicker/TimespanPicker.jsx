@@ -73,6 +73,7 @@ export class TimespanPicker extends Component {
       openCalendarUntil,
       closeCalendarUntil,
       dateLoading,
+      datePickerInputStyle,
       setDateLoading,
       nextDateBtnDisabled,
       setNextDateBtnDisabled,
@@ -114,6 +115,7 @@ export class TimespanPicker extends Component {
           isZoomLevelOk={isZoomLevelOk}
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
+          datePickerInputStyle={datePickerInputStyle}
         />
         <DateTimeInput
           id={`${id}-until`}
@@ -140,6 +142,7 @@ export class TimespanPicker extends Component {
           isZoomLevelOk={isZoomLevelOk}
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
+          datePickerInputStyle={datePickerInputStyle}
         />
         {hasCloudCoverage && (
           <div className={`timespan-picker-cc-slider`}>

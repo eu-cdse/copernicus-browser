@@ -58,6 +58,7 @@ export class DateTimeInput extends Component {
       isZoomLevelOk,
       isTimeRange,
       isDisabled,
+      datePickerInputStyle,
     } = this.props;
 
     if (!selectedTime) {
@@ -96,6 +97,7 @@ export class DateTimeInput extends Component {
             isZoomLevelOk={isZoomLevelOk}
             isTimeRange={isTimeRange}
             isDisabled={isDisabled}
+            datePickerInputStyle={datePickerInputStyle}
           />
         </div>
         <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>

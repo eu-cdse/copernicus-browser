@@ -255,6 +255,7 @@ class DatePicker extends Component {
       isZoomLevelOk,
       isTimeRange,
       isDisabled,
+      datePickerInputStyle,
     } = this.props;
 
     const { availableDays, loading, displayedDayMonth } = this.state;
@@ -280,6 +281,7 @@ class DatePicker extends Component {
             nextDateBtnDisabled={nextDateBtnDisabled}
             setNextDateBtnDisabled={setNextDateBtnDisabled}
             isDisabled={isDisabled}
+            datePickerInputStyle={datePickerInputStyle}
           />
         </div>
         {loading && !dateLoading && (

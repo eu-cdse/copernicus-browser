@@ -9,6 +9,7 @@ import Slider from 'rc-slider';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
 import moment from 'moment/moment';
 import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
+import Button from '../../../../components/Button/Button';
 
 export const AreaAndTimeSectionProperties = Object.freeze({
   id: 'area-time',
@@ -67,6 +68,45 @@ const AreaAndTimeSection = ({
     setToMoment(newToMoment);
   };
 
+  const setDateRangeContainer = () => (
+    <div className="date-picker-container">
+      {/*TODO: map through whole already selected dates*/}
+      <div className="date-picker-with-add">
+        <TimespanPicker
+          id="aoi-time-select"
+          minDate={minDateRange}
+          maxDate={maxDateRange}
+          datePickerInputStyle={{ width: '85px' }}
+          timespan={{ fromTime: fromMoment, toTime: toMoment }}
+          applyTimespan={(fromTime, toTime) => {
+            setFromMoment(fromTime);
+            setToMoment(toTime);
+          }}
+          timespanExpanded={true}
+          calendarHolder={cardHolderRef}
+          displayCalendarFrom={displayCalendarFrom}
+          openCalendarFrom={() => setDisplayCalendarFrom(true)}
+          closeCalendarFrom={() => setDisplayCalendarFrom(false)}
+          displayCalendarUntil={displayCalendarTo}
+          openCalendarUntil={() => setDisplayCalendarTo(true)}
+          closeCalendarUntil={() => setDisplayCalendarTo(false)}
+          showNextPrevDateArrows={true}
+          getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
+            await getAndSetNextPrevDateFrom(direction, selectedDay, toMoment, minDateRange)
+          }
+          getAndSetNextPrevDateTo={async (direction, selectedDay) =>
+            await getAndSetNextPrevDateTo(direction, selectedDay, fromMoment, maxDateRange)
+          }
+          isDisabled={false}
+        />
+        <div className="add-button-container">
+          <Button icon={'fas fa-plus'} rounded={true}></Button>
+        </div>
+      </div>
+      <div className="calendar-holder" ref={cardHolderRef} />
+    </div>
+  );
+
   const setBody = () => (
     <div className="area-time-body">
       <div className="area-interest-container">
@@ -87,38 +127,7 @@ const AreaAndTimeSection = ({
           />
           <span className="aoi-current-value-text">{`${Math.round(aoiCoverage * 100)}%`}</span>
         </div>
-        <div className="date-picker-container">
-          <div className="date-picker-with-add">
-            <TimespanPicker
-              id="aoi-time-select"
-              minDate={minDateRange}
-              maxDate={maxDateRange}
-              timespan={{ fromTime: fromMoment, toTime: toMoment }}
-              applyTimespan={(fromTime, toTime) => {
-                setFromMoment(fromTime);
-                setToMoment(toTime);
-              }}
-              timespanExpanded={true}
-              calendarHolder={cardHolderRef}
-              displayCalendarFrom={displayCalendarFrom}
-              openCalendarFrom={() => setDisplayCalendarFrom(true)}
-              closeCalendarFrom={() => setDisplayCalendarFrom(false)}
-              displayCalendarUntil={displayCalendarTo}
-              openCalendarUntil={() => setDisplayCalendarTo(true)}
-              closeCalendarUntil={() => setDisplayCalendarTo(false)}
-              showNextPrevDateArrows={true}
-              getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-                await getAndSetNextPrevDateFrom(direction, selectedDay, toMoment, minDateRange)
-              }
-              getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-                await getAndSetNextPrevDateTo(direction, selectedDay, fromMoment, maxDateRange)
-              }
-              isDisabled={false}
-            />
-            <span>plus</span>
-          </div>
-          <div className="calendar-holder" ref={cardHolderRef} />
-        </div>
+        {setDateRangeContainer()}
       </div>
     </div>
   );
