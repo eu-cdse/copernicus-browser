@@ -1,5 +1,7 @@
 @import '../../variables.module.scss';
 
+$footer-height: 53px;
+
 .rapid-response-desk {
   height: 100%;
   position: relative;
@@ -8,7 +10,7 @@
   .rapid-response-desk-body {
     position: absolute;
     top: 0;
-    bottom: 58px;
+    bottom: $footer-height;
     overflow-y: scroll;
 
     & > * {
@@ -20,7 +22,7 @@
   .rapid-response-desk-footer {
     position: absolute;
     bottom: 0;
-    height: 53px;
+    height: $footer-height;
     background-color: $whiteBackground;
     display: flex;
     justify-content: space-between;
