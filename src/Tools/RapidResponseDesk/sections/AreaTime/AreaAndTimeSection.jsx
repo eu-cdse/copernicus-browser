@@ -3,7 +3,7 @@ import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { t } from 'ttag';
-import store, { collapsiblePanelSlice, areaAndTimeSectionSlice } from '../../../../store';
+import store, { areaAndTimeSectionSlice, collapsiblePanelSlice } from '../../../../store';
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
 import Slider from 'rc-slider';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
@@ -78,65 +78,81 @@ const AreaAndTimeSection = ({
 
   const setAdditionalDateRange = () => {
     setDateRangesCounter(dateRangesCounter + 1);
+    setDateTime((prevState) => {
+      return [
+        ...prevState,
+        {
+          from: moment.utc().subtract(1, 'month').startOf('day'),
+          to: moment.utc().endOf('day'),
+        },
+      ];
+    });
   };
 
   const updateDateTime = (id) => (fromTime, toTime) => {
-    console.error(fromTime);
     setDateTime((prevState) => {
-      const updatedItems = prevState.map((item, index) =>
-        index === id ? { ...item, from: fromTime, to: toTime } : item,
-      );
-      return updatedItems;
+      return prevState.map((item, index) => (index === id ? { ...item, from: fromTime, to: toTime } : item));
     });
   };
+
+  const setTimespanPicker = (dateTimeRange, index) => (
+    <TimespanPicker
+      id="aoi-time-select"
+      minDate={minDateRange}
+      maxDate={maxDateRange}
+      datePickerInputStyle={(index + 1 > dateTime.length) ? null : { width: '85px' }}
+      timespan={{ fromTime: dateTimeRange.from, toTime: dateTimeRange.to }}
+      applyTimespan={updateDateTime(index)}
+      timespanExpanded={true}
+      calendarHolder={cardHolderRef}
+      displayCalendarFrom={displayCalendarFrom}
+      openCalendarFrom={() => setDisplayCalendarFrom(true)}
+      closeCalendarFrom={() => setDisplayCalendarFrom(false)}
+      displayCalendarUntil={displayCalendarTo}
+      openCalendarUntil={() => setDisplayCalendarTo(true)}
+      closeCalendarUntil={() => setDisplayCalendarTo(false)}
+      showNextPrevDateArrows={true}
+      getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
+        await getAndSetNextPrevDateFrom(
+          direction,
+          selectedDay,
+          index,
+          dateTime[index].from,
+          dateTime[index].to,
+          minDateRange,
+        )
+      }
+      getAndSetNextPrevDateTo={async (direction, selectedDay) =>
+        await getAndSetNextPrevDateTo(
+          direction,
+          selectedDay,
+          index,
+          dateTime[index].from,
+          dateTime[index].to,
+          maxDateRange,
+        )
+      }
+      isDisabled={false}
+    />
+  );
 
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
       {/*TODO: map through whole already selected dates*/}
-
-      <div className="date-picker-with-add">
-        <TimespanPicker
-          id="aoi-time-select"
-          minDate={minDateRange}
-          maxDate={maxDateRange}
-          datePickerInputStyle={{ width: '85px' }}
-          timespan={{ fromTime: dateTime[dateRangesCounter].from, toTime: dateTime[dateRangesCounter].to }}
-          applyTimespan={updateDateTime(dateRangesCounter)}
-          timespanExpanded={true}
-          calendarHolder={cardHolderRef}
-          displayCalendarFrom={displayCalendarFrom}
-          openCalendarFrom={() => setDisplayCalendarFrom(true)}
-          closeCalendarFrom={() => setDisplayCalendarFrom(false)}
-          displayCalendarUntil={displayCalendarTo}
-          openCalendarUntil={() => setDisplayCalendarTo(true)}
-          closeCalendarUntil={() => setDisplayCalendarTo(false)}
-          showNextPrevDateArrows={true}
-          getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-            await getAndSetNextPrevDateFrom(
-              direction,
-              selectedDay,
-              dateRangesCounter,
-              dateTime[dateRangesCounter].from,
-              dateTime[dateRangesCounter].to,
-              minDateRange,
-            )
-          }
-          getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-            await getAndSetNextPrevDateTo(
-              direction,
-              selectedDay,
-              dateRangesCounter,
-              dateTime[dateRangesCounter].from,
-              dateTime[dateRangesCounter].to,
-              maxDateRange,
-            )
-          }
-          isDisabled={false}
-        />
-        <div className="add-button-container">
-          <Button icon={'fas fa-plus'} rounded={true} onClick={setAdditionalDateRange}></Button>
-        </div>
-      </div>
+      {dateTime.map((dateTimeRange, index) => {
+        if (index + 1 < dateTime.length) {
+          return setTimespanPicker(dateTimeRange, index);
+        } else {
+          return (
+            <div className="date-picker-with-add">
+              {setTimespanPicker(dateTimeRange, index)}
+              <div className="add-button-container">
+                <Button icon={'fas fa-plus'} rounded={true} onClick={setAdditionalDateRange}></Button>
+              </div>
+            </div>
+          );
+        }
+      })}
       <div className="calendar-holder" ref={cardHolderRef} />
     </div>
   );
