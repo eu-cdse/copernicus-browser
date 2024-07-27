@@ -30,12 +30,12 @@ const AreaAndTimeSection = ({
     {
       from: moment.utc().subtract(1, 'month').startOf('day'),
       to: moment.utc().endOf('day'),
-      id: 0
+      id: 0,
+      displayCalendarFrom: false,
+      displayCalendarTo: false
     },
   ]);
   const [dateRangesCounter, setDateRangesCounter] = useState(0);
-  const [displayCalendarFrom, setDisplayCalendarFrom] = useState(false);
-  const [displayCalendarTo, setDisplayCalendarTo] = useState(false);
 
   const minDateRange = moment.utc(minDate ? minDate : MIN_SEARCH_DATE).startOf('day');
   const maxDateRange = moment.utc(maxDate).endOf('day');
@@ -53,7 +53,7 @@ const AreaAndTimeSection = ({
       if(id !== currentDateTime.id) {
         return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
       }
-    }) === undefined;
+    }) !== undefined;
   }
 
 
@@ -87,8 +87,8 @@ const AreaAndTimeSection = ({
       return [
         ...prevState,
         {
-          from: currentDateTimeRange.from.add(-1, 'days'),
-          to: currentDateTimeRange.from.add(-1, 'days').endOf('day'),
+          from: currentDateTimeRange.from.clone().add(-1, 'days'),
+          to: currentDateTimeRange.from.clone().add(-1, 'days').endOf('day'),
           id: dateRangesCounter + 1
         },
       ];
@@ -101,6 +101,22 @@ const AreaAndTimeSection = ({
     });
   };
 
+  const closeAllCalendarDialogs = () => {
+    setDateTime((prevState) => {
+      return prevState.map((item, index) => ({ ...item, displayCalendarFrom: false, displayCalendarTo: false}));
+    });
+  }
+
+  const updateCalendarOpenState = (selectedDateTime, state, isFrom = true) => {
+    if(state) {
+      closeAllCalendarDialogs();
+    }
+
+    setDateTime((prevState) => {
+      return prevState.map((item, index) => (index === selectedDateTime.id ? { ...item, displayCalendarFrom:  isFrom ? state : false, displayCalendarTo: !isFrom ? state : false} : item));
+    });
+  }
+
   const setTimespanPicker = (dateTimeRange, index) => (
     <TimespanPicker
       id="aoi-time-select"
@@ -111,12 +127,12 @@ const AreaAndTimeSection = ({
       applyTimespan={updateDateTime(index)}
       timespanExpanded={true}
       calendarHolder={cardHolderRef}
-      displayCalendarFrom={displayCalendarFrom}
-      openCalendarFrom={() => setDisplayCalendarFrom(true)}
-      closeCalendarFrom={() => setDisplayCalendarFrom(false)}
-      displayCalendarUntil={displayCalendarTo}
-      openCalendarUntil={() => setDisplayCalendarTo(true)}
-      closeCalendarUntil={() => setDisplayCalendarTo(false)}
+      displayCalendarFrom={dateTimeRange.displayCalendarFrom}
+      openCalendarFrom={() => updateCalendarOpenState(dateTimeRange, true)}
+      closeCalendarFrom={() => updateCalendarOpenState(dateTimeRange, false)}
+      displayCalendarUntil={dateTimeRange.displayCalendarTo}
+      openCalendarUntil={() => updateCalendarOpenState(dateTimeRange, true, false)}
+      closeCalendarUntil={() => updateCalendarOpenState(dateTimeRange, false, false)}
       showNextPrevDateArrows={true}
       getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
         await getAndSetNextPrevDate(
@@ -141,7 +157,6 @@ const AreaAndTimeSection = ({
 
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
-      {/*TODO: map through whole already selected dates*/}
       {dateTime.map((dateTimeRange, index) => {
         if (index + 1 < dateTime.length) {
           return setTimespanPicker(dateTimeRange, index);
