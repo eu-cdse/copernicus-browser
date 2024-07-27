@@ -30,6 +30,7 @@ const AreaAndTimeSection = ({
     {
       from: moment.utc().subtract(1, 'month').startOf('day'),
       to: moment.utc().endOf('day'),
+      id: 0
     },
   ]);
   const [dateRangesCounter, setDateRangesCounter] = useState(0);
@@ -46,6 +47,15 @@ const AreaAndTimeSection = ({
   };
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
+
+  const detectIfDateIsCovering = (id, selectedDateTime) => {
+    return dateTime.find(currentDateTime => {
+      if(id !== currentDateTime.id) {
+        return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
+      }
+    }) === undefined;
+  }
+
 
   //TODO: update this for later when time range dependencies will depnded on each other
   const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
@@ -64,17 +74,22 @@ const AreaAndTimeSection = ({
       throw Error('invalidDateRange');
     }
 
+    if(detectIfDateIsCovering(id, newMoment)) {
+      throw Error('invalidDateRange');
+    }
+
     isFrom ? updateDateTime(id)(newMoment, dateTimeRange.to) : updateDateTime(id)(dateTimeRange.from, newMoment);;
   };
 
-  const setAdditionalDateRange = () => {
+  const setAdditionalDateRange = (currentDateTimeRange) => {
     setDateRangesCounter(dateRangesCounter + 1);
     setDateTime((prevState) => {
       return [
         ...prevState,
         {
-          from: moment.utc().subtract(1, 'month').startOf('day'),
-          to: moment.utc().endOf('day'),
+          from: currentDateTimeRange.from.add(-1, 'days'),
+          to: currentDateTimeRange.from.add(-1, 'days').endOf('day'),
+          id: dateRangesCounter + 1
         },
       ];
     });
@@ -135,7 +150,7 @@ const AreaAndTimeSection = ({
             <div className="date-picker-with-add">
               {setTimespanPicker(dateTimeRange, index)}
               <div className="add-button-container">
-                <Button icon={'fas fa-plus'} rounded={true} onClick={setAdditionalDateRange}></Button>
+                <Button icon={'fas fa-plus'} rounded={true} onClick={() => setAdditionalDateRange(dateTimeRange)}></Button>
               </div>
             </div>
           );
