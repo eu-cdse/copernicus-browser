@@ -2,12 +2,13 @@
 
 .rapid-response-desk {
   height: 100%;
-  display: flex;
-  flex-direction: column;
   position: relative;
   color: $textColor;
 
   .rapid-response-desk-body {
+    position: absolute;
+    top: 0;
+    bottom: 58px;
     overflow-y: scroll;
 
     & > * {
