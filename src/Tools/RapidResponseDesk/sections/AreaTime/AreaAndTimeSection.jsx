@@ -47,33 +47,24 @@ const AreaAndTimeSection = ({
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
-  //TODO: merge this two into one method
-  const getAndSetNextPrevDateFrom = async (direction, selectedDay, id, fromMoment, toMoment, minDate) => {
-    let newFromMoment;
+  //TODO: update this for later when time range dependencies will depnded on each other
+  const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
+    let newMoment;
     if (direction === 'prev') {
-      newFromMoment = moment.utc(selectedDay).add(-1, 'days');
+      newMoment = moment.utc(selectedDay).add(-1, 'days');
     } else {
-      newFromMoment = moment.utc(selectedDay).add(1, 'days');
+      newMoment = moment.utc(selectedDay).add(1, 'days');
     }
-    if (newFromMoment < minDate || newFromMoment > toMoment) {
+
+    if (isFrom && (newMoment < minDateRange || newMoment > dateTimeRange.to)) {
       throw Error('invalidDateRange');
     }
 
-    updateDateTime(id)(newFromMoment, toMoment);
-  };
-
-  const getAndSetNextPrevDateTo = async (direction, selectedDay, id, fromMoment, toMoment, maxDate) => {
-    let newToMoment;
-    if (direction === 'prev') {
-      newToMoment = moment.utc(selectedDay).add(-1, 'days');
-    } else {
-      newToMoment = moment.utc(selectedDay).add(1, 'days');
-    }
-    if (newToMoment > maxDate || newToMoment < fromMoment) {
+    if (!isFrom && (newMoment > maxDateRange || newMoment < dateTimeRange.from)) {
       throw Error('invalidDateRange');
     }
 
-    updateDateTime(id)(fromMoment, newToMoment);
+    isFrom ? updateDateTime(id)(newMoment, dateTimeRange.to) : updateDateTime(id)(dateTimeRange.from, newMoment);;
   };
 
   const setAdditionalDateRange = () => {
@@ -113,23 +104,20 @@ const AreaAndTimeSection = ({
       closeCalendarUntil={() => setDisplayCalendarTo(false)}
       showNextPrevDateArrows={true}
       getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-        await getAndSetNextPrevDateFrom(
+        await getAndSetNextPrevDate(
           direction,
           selectedDay,
           index,
-          dateTime[index].from,
-          dateTime[index].to,
-          minDateRange,
+          dateTimeRange
         )
       }
       getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-        await getAndSetNextPrevDateTo(
+        await getAndSetNextPrevDate(
           direction,
           selectedDay,
           index,
-          dateTime[index].from,
-          dateTime[index].to,
-          maxDateRange,
+          dateTimeRange,
+          false
         )
       }
       isDisabled={false}
