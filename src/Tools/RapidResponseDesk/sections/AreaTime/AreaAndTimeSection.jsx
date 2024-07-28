@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
@@ -60,7 +60,10 @@ const AreaAndTimeSection = ({
     );
   };
 
-  //TODO: update this for later when time range dependencies will depnded on each other
+  useEffect(() => {
+    store.dispatch(areaAndTimeSectionSlice.actions.setDateTimeRange(dateTime));
+  }, [dateTime]);
+
   const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
     let newMoment;
     if (direction === 'prev') {
@@ -95,6 +98,8 @@ const AreaAndTimeSection = ({
           from: currentDateTimeRange.from.clone().add(-1, 'days'),
           to: currentDateTimeRange.from.clone().add(-1, 'days').endOf('day'),
           id: dateRangesCounter + 1,
+          displayCalendarFrom: false,
+          displayCalendarTo: false,
         },
       ];
     });
