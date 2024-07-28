@@ -32,7 +32,7 @@ const AreaAndTimeSection = ({
       to: moment.utc().endOf('day'),
       id: 0,
       displayCalendarFrom: false,
-      displayCalendarTo: false
+      displayCalendarTo: false,
     },
   ]);
   const [dateRangesCounter, setDateRangesCounter] = useState(0);
@@ -49,13 +49,16 @@ const AreaAndTimeSection = ({
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
   const detectIfDateIsCovering = (id, selectedDateTime) => {
-    return dateTime.find(currentDateTime => {
-      if(id !== currentDateTime.id) {
-        return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
-      }
-    }) !== undefined;
-  }
-
+    return (
+      dateTime.find((currentDateTime) => {
+        if (id !== currentDateTime.id) {
+          return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
+        } else {
+          return undefined;
+        }
+      }) !== undefined
+    );
+  };
 
   //TODO: update this for later when time range dependencies will depnded on each other
   const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
@@ -74,11 +77,13 @@ const AreaAndTimeSection = ({
       throw Error('invalidDateRange');
     }
 
-    if(detectIfDateIsCovering(id, newMoment)) {
+    if (detectIfDateIsCovering(id, newMoment)) {
       throw Error('invalidDateRange');
     }
 
-    isFrom ? updateDateTime(id)(newMoment, dateTimeRange.to) : updateDateTime(id)(dateTimeRange.from, newMoment);;
+    isFrom
+      ? updateDateTime(id)(newMoment, dateTimeRange.to)
+      : updateDateTime(id)(dateTimeRange.from, newMoment);
   };
 
   const setAdditionalDateRange = (currentDateTimeRange) => {
@@ -89,7 +94,7 @@ const AreaAndTimeSection = ({
         {
           from: currentDateTimeRange.from.clone().add(-1, 'days'),
           to: currentDateTimeRange.from.clone().add(-1, 'days').endOf('day'),
-          id: dateRangesCounter + 1
+          id: dateRangesCounter + 1,
         },
       ];
     });
@@ -103,26 +108,38 @@ const AreaAndTimeSection = ({
 
   const closeAllCalendarDialogs = () => {
     setDateTime((prevState) => {
-      return prevState.map((item, index) => ({ ...item, displayCalendarFrom: false, displayCalendarTo: false}));
+      return prevState.map((item, index) => ({
+        ...item,
+        displayCalendarFrom: false,
+        displayCalendarTo: false,
+      }));
     });
-  }
+  };
 
   const updateCalendarOpenState = (selectedDateTime, state, isFrom = true) => {
-    if(state) {
+    if (state) {
       closeAllCalendarDialogs();
     }
 
     setDateTime((prevState) => {
-      return prevState.map((item, index) => (index === selectedDateTime.id ? { ...item, displayCalendarFrom:  isFrom ? state : false, displayCalendarTo: !isFrom ? state : false} : item));
+      return prevState.map((item, index) =>
+        index === selectedDateTime.id
+          ? {
+              ...item,
+              displayCalendarFrom: isFrom ? state : false,
+              displayCalendarTo: !isFrom ? state : false,
+            }
+          : item,
+      );
     });
-  }
+  };
 
   const setTimespanPicker = (dateTimeRange, index) => (
     <TimespanPicker
       id="aoi-time-select"
       minDate={minDateRange}
       maxDate={maxDateRange}
-      datePickerInputStyle={(index + 1 > dateTime.length) ? null : { width: '85px' }}
+      datePickerInputStyle={index + 1 > dateTime.length ? null : { width: '85px' }}
       timespan={{ fromTime: dateTimeRange.from, toTime: dateTimeRange.to }}
       applyTimespan={updateDateTime(index)}
       timespanExpanded={true}
@@ -135,21 +152,10 @@ const AreaAndTimeSection = ({
       closeCalendarUntil={() => updateCalendarOpenState(dateTimeRange, false, false)}
       showNextPrevDateArrows={true}
       getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-        await getAndSetNextPrevDate(
-          direction,
-          selectedDay,
-          index,
-          dateTimeRange
-        )
+        await getAndSetNextPrevDate(direction, selectedDay, index, dateTimeRange)
       }
       getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-        await getAndSetNextPrevDate(
-          direction,
-          selectedDay,
-          index,
-          dateTimeRange,
-          false
-        )
+        await getAndSetNextPrevDate(direction, selectedDay, index, dateTimeRange, false)
       }
       isDisabled={false}
     />
@@ -165,7 +171,11 @@ const AreaAndTimeSection = ({
             <div className="date-picker-with-add">
               {setTimespanPicker(dateTimeRange, index)}
               <div className="add-button-container">
-                <Button icon={'fas fa-plus'} rounded={true} onClick={() => setAdditionalDateRange(dateTimeRange)}></Button>
+                <Button
+                  icon={'fas fa-plus'}
+                  rounded={true}
+                  onClick={() => setAdditionalDateRange(dateTimeRange)}
+                ></Button>
               </div>
             </div>
           );
