@@ -31,19 +31,47 @@
     display: flex;
     flex-direction: column;
 
+    .remove-button-container,
     .add-button-container {
       padding-left: 15px;
       display: flex;
-      height: 100%;
       justify-content: center;
-      align-items: center;
-      transform: translateY(19px);
     }
 
-    .date-picker-with-add {
+    .date-picker-content {
       display: flex;
       flex-direction: row;
       align-items: center;
+      position: relative;
+      padding-right: 50px;
+
+      &:has(.remove-button-container) {
+        align-items: start;
+
+        .remove-button-container {
+          position: absolute;
+          top: 0;
+          right: 0;
+          transform: translateY(5px);
+          padding-left: 15px;
+        }
+      }
+
+      &:has(.add-button-container) {
+        align-items: center;
+
+        .add-button-container {
+          position: absolute;
+          right: 0;
+          align-items: center;
+          transform: translateY(19px);
+        }
+      }
+
+      &.bottom-border {
+        border-bottom: 1px solid black;
+        padding-bottom: 15px;
+      }
     }
   }
 }

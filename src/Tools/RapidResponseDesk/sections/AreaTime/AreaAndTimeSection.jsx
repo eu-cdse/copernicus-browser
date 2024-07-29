@@ -139,12 +139,16 @@ const AreaAndTimeSection = ({
     });
   };
 
+  const removeTimespanFromList = (id) => {
+    setDateTime((prevState) => prevState.filter((item, index) => index !== id));
+  };
+
   const setTimespanPicker = (dateTimeRange, index) => (
     <TimespanPicker
       id="aoi-time-select"
       minDate={minDateRange}
       maxDate={maxDateRange}
-      datePickerInputStyle={index + 1 > dateTime.length ? null : { width: '85px' }}
+      datePickerInputStyle={{ width: '85px' }}
       timespan={{ fromTime: dateTimeRange.from, toTime: dateTimeRange.to }}
       applyTimespan={updateDateTime(index)}
       timespanExpanded={true}
@@ -169,12 +173,18 @@ const AreaAndTimeSection = ({
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
       {dateTime.map((dateTimeRange, index) => {
-        if (index + 1 < dateTime.length) {
-          return setTimespanPicker(dateTimeRange, index);
-        } else {
-          return (
-            <div className="date-picker-with-add">
-              {setTimespanPicker(dateTimeRange, index)}
+        return (
+          <div className={`date-picker-content${index + 1 < dateTime.length ? ' bottom-border' : ''}`}>
+            {setTimespanPicker(dateTimeRange, index)}
+            <div className="remove-button-container">
+              <Button
+                style={{ boxShadow: 'none', color: 'black' }}
+                icon={'fas fa-trash'}
+                rounded={true}
+                onClick={() => removeTimespanFromList(index)}
+              ></Button>
+            </div>
+            {dateTime.length === index + 1 && (
               <div className="add-button-container">
                 <Button
                   icon={'fas fa-plus'}
@@ -182,9 +192,9 @@ const AreaAndTimeSection = ({
                   onClick={() => setAdditionalDateRange(dateTimeRange)}
                 ></Button>
               </div>
-            </div>
-          );
-        }
+            )}
+          </div>
+        );
       })}
       <div className="calendar-holder" ref={cardHolderRef} />
     </div>
