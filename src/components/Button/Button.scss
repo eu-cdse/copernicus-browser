@@ -21,21 +21,32 @@
     }
   }
 
-  &.danger {
-    background-color: $errorCol;
-    color: $whiteColor;
+  &:not(.disabled) {
+    &.danger {
+      background-color: $errorCol;
+      color: $whiteColor;
 
-    &:hover {
-      background-color: $hoverError;
+      &:hover {
+        background-color: $hoverError;
+      }
     }
-  }
 
-  &.success {
-    background-color: $secondaryColor;
-    color: $whiteColor;
+    &.success {
+      background-color: $secondaryColor;
+      color: $whiteColor;
 
-    &:hover {
-      background-color: $hoverSecondaryColor;
+      &:hover {
+        background-color: $hoverSecondaryColor;
+      }
+    }
+
+    &.text {
+      background-color: transparent;
+      color: $textColor;
+
+      &:hover {
+        background-color: rgba($randomGrayColor, 0.5);
+      }
     }
   }
 
@@ -61,5 +72,14 @@
     }
 
     min-width: 33px;
+  }
+
+  &.disabled {
+    opacity: $disabled;
+    cursor: auto;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }

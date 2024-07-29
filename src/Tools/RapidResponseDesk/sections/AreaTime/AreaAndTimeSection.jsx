@@ -9,7 +9,7 @@ import Slider from 'rc-slider';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
 import moment from 'moment/moment';
 import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
-import Button from '../../../../components/Button/Button';
+import Button, { ButtonType } from '../../../../components/Button/Button';
 
 export const AreaAndTimeSectionProperties = Object.freeze({
   id: 'area-time',
@@ -26,7 +26,7 @@ const AreaAndTimeSection = ({
   minDate,
   maxDate,
 }) => {
-  const [dateTime, setDateTime] = useState([
+  const [timespanArray, setTimespanArray] = useState([
     {
       from: moment.utc().subtract(1, 'month').startOf('day'),
       to: moment.utc().endOf('day'),
@@ -35,7 +35,6 @@ const AreaAndTimeSection = ({
       displayCalendarTo: false,
     },
   ]);
-  const [dateRangesCounter, setDateRangesCounter] = useState(0);
 
   const minDateRange = moment.utc(minDate ? minDate : MIN_SEARCH_DATE).startOf('day');
   const maxDateRange = moment.utc(maxDate).endOf('day');
@@ -50,7 +49,7 @@ const AreaAndTimeSection = ({
 
   const detectIfDateIsCovering = (id, selectedDateTime) => {
     return (
-      dateTime.find((currentDateTime) => {
+      timespanArray.find((currentDateTime) => {
         if (id !== currentDateTime.id) {
           return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
         } else {
@@ -61,8 +60,8 @@ const AreaAndTimeSection = ({
   };
 
   useEffect(() => {
-    store.dispatch(areaAndTimeSectionSlice.actions.setDateTimeRange(dateTime));
-  }, [dateTime]);
+    store.dispatch(areaAndTimeSectionSlice.actions.setDateTimeRange(timespanArray));
+  }, [timespanArray]);
 
   const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
     let newMoment;
@@ -90,14 +89,13 @@ const AreaAndTimeSection = ({
   };
 
   const setAdditionalDateRange = (currentDateTimeRange) => {
-    setDateRangesCounter(dateRangesCounter + 1);
-    setDateTime((prevState) => {
+    setTimespanArray((prevState) => {
       return [
         ...prevState,
         {
           from: currentDateTimeRange.from.clone().add(-1, 'days'),
           to: currentDateTimeRange.from.clone().add(-1, 'days').endOf('day'),
-          id: dateRangesCounter + 1,
+          id: timespanArray.length,
           displayCalendarFrom: false,
           displayCalendarTo: false,
         },
@@ -106,13 +104,13 @@ const AreaAndTimeSection = ({
   };
 
   const updateDateTime = (id) => (fromTime, toTime) => {
-    setDateTime((prevState) => {
+    setTimespanArray((prevState) => {
       return prevState.map((item, index) => (index === id ? { ...item, from: fromTime, to: toTime } : item));
     });
   };
 
   const closeAllCalendarDialogs = () => {
-    setDateTime((prevState) => {
+    setTimespanArray((prevState) => {
       return prevState.map((item, index) => ({
         ...item,
         displayCalendarFrom: false,
@@ -126,7 +124,7 @@ const AreaAndTimeSection = ({
       closeAllCalendarDialogs();
     }
 
-    setDateTime((prevState) => {
+    setTimespanArray((prevState) => {
       return prevState.map((item, index) =>
         index === selectedDateTime.id
           ? {
@@ -140,7 +138,7 @@ const AreaAndTimeSection = ({
   };
 
   const removeTimespanFromList = (id) => {
-    setDateTime((prevState) => prevState.filter((item, index) => index !== id));
+    setTimespanArray((prevState) => prevState.filter((item, index) => index !== id));
   };
 
   const setTimespanPicker = (dateTimeRange, index) => (
@@ -172,19 +170,21 @@ const AreaAndTimeSection = ({
 
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
-      {dateTime.map((dateTimeRange, index) => {
+      {timespanArray.map((dateTimeRange, index) => {
         return (
-          <div className={`date-picker-content${index + 1 < dateTime.length ? ' bottom-border' : ''}`}>
+          <div className={`date-picker-content${index + 1 < timespanArray.length ? ' bottom-border' : ''}`}>
             {setTimespanPicker(dateTimeRange, index)}
             <div className="remove-button-container">
               <Button
                 style={{ boxShadow: 'none', color: 'black' }}
                 icon={'fas fa-trash'}
+                type={ButtonType.text}
+                disabled={timespanArray.length === 1}
                 rounded={true}
                 onClick={() => removeTimespanFromList(index)}
               ></Button>
             </div>
-            {dateTime.length === index + 1 && (
+            {timespanArray.length === index + 1 && (
               <div className="add-button-container">
                 <Button
                   icon={'fas fa-plus'}
