@@ -47,11 +47,11 @@ const AreaAndTimeSection = ({
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
-  const detectIfDateIsCovering = (id, selectedDateTime) => {
+  const detectIfDateIsOverlapping = (id, selectedTimespan) => {
     return (
-      timespanArray.find((currentDateTime) => {
-        if (id !== currentDateTime.id) {
-          return selectedDateTime.isBetween(currentDateTime.from, currentDateTime.to, undefined, '[]');
+      timespanArray.find((currentTimespan) => {
+        if (id !== currentTimespan.id) {
+          return selectedTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
         } else {
           return undefined;
         }
@@ -79,7 +79,7 @@ const AreaAndTimeSection = ({
       throw Error('invalidDateRange');
     }
 
-    if (detectIfDateIsCovering(id, newMoment)) {
+    if (detectIfDateIsOverlapping(id, newMoment)) {
       throw Error('invalidDateRange');
     }
 
@@ -151,6 +151,7 @@ const AreaAndTimeSection = ({
       applyTimespan={updateTimespan(index)}
       timespanExpanded={true}
       calendarHolder={cardHolderRef}
+      calendarClickLimit={(selectedTimespan) => detectIfDateIsOverlapping(index, selectedTimespan)}
       displayCalendarFrom={timespan.displayCalendarFrom}
       openCalendarFrom={() => updateCalendarOpenState(timespan, true)}
       closeCalendarFrom={() => updateCalendarOpenState(timespan, false)}
@@ -170,10 +171,10 @@ const AreaAndTimeSection = ({
 
   const setDateRangeContainer = () => (
     <div className="date-picker-container">
-      {timespanArray.map((dateTimeRange, index) => {
+      {timespanArray.map((timespanFrame, index) => {
         return (
           <div className={`date-picker-content${index + 1 < timespanArray.length ? ' bottom-border' : ''}`}>
-            {setTimespanPicker(dateTimeRange, index)}
+            {setTimespanPicker(timespanFrame, index)}
             <div className="remove-button-container">
               <Button
                 style={{ boxShadow: 'none', color: 'black' }}
@@ -189,7 +190,7 @@ const AreaAndTimeSection = ({
                 <Button
                   icon={'fas fa-plus'}
                   rounded={true}
-                  onClick={() => setAdditionalDateRange(dateTimeRange)}
+                  onClick={() => setAdditionalDateRange(timespanFrame)}
                 ></Button>
               </div>
             )}
