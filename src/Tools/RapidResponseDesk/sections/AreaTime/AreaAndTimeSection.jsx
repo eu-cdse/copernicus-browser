@@ -93,7 +93,7 @@ const AreaAndTimeSection = ({
       return [
         ...prevState,
         {
-          from: currentTimespanFrame.from.clone().add(-1, 'days'),
+          from: currentTimespanFrame.from.clone().add(-1, 'days').startOf('day'),
           to: currentTimespanFrame.from.clone().add(-1, 'days').endOf('day'),
           id: timespanArray.length,
           displayCalendarFrom: false,
@@ -151,7 +151,7 @@ const AreaAndTimeSection = ({
       applyTimespan={updateTimespan(index)}
       timespanExpanded={true}
       calendarHolder={cardHolderRef}
-      calendarClickLimit={(selectedTimespan) => detectIfDateIsOverlapping(index, selectedTimespan)}
+      timespanLimit={(selectedTimespan) => detectIfDateIsOverlapping(index, selectedTimespan)}
       displayCalendarFrom={timespan.displayCalendarFrom}
       openCalendarFrom={() => updateCalendarOpenState(timespan, true)}
       closeCalendarFrom={() => updateCalendarOpenState(timespan, false)}

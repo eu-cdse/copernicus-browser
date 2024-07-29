@@ -85,11 +85,11 @@ class DatePicker extends Component {
     }
   };
 
-  handleDayClick = (calendarClickLimit) => (day) => {
-    if (calendarClickLimit(moment.utc(day))) {
+  handleDayClick = (day) => {
+    if (this.props.timespanLimit(moment.utc(day).startOf(day))) {
       return;
     }
-    this.props.setSelectedDay(moment.utc(day));
+    this.props.setSelectedDay(moment.utc(day).startOf(day));
     this.closeCalendar();
 
     if (this.props.setNextDateBtnDisabled) {
@@ -259,7 +259,8 @@ class DatePicker extends Component {
       isTimeRange,
       isDisabled,
       datePickerInputStyle,
-      calendarClickLimit,
+      // eslint-disable-next-line no-unused-vars
+      timespanLimit,
     } = this.props;
 
     const { availableDays, loading, displayedDayMonth } = this.state;
@@ -305,7 +306,7 @@ class DatePicker extends Component {
             maxDate={maxDate}
             locale={locale}
             calendarContainer={calendarContainer}
-            handleDayClick={this.handleDayClick(calendarClickLimit)}
+            handleDayClick={this.handleDayClick}
             handleMonthOrYearDropdownChange={this.onMonthOrYearDropdownChange}
             handleClickOutside={this.handleClickOutside}
             outsideClickIgnoreClass={id}

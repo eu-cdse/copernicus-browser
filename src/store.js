@@ -1149,7 +1149,7 @@ export const areaAndTimeSectionSlice = createSlice({
     },
 
     setTimespanArray: (state, action) => {
-      state.timespanFrame = action.payload;
+      state.timespanArray = action.payload;
     },
   },
 });

@@ -85,7 +85,7 @@ export class TimespanPicker extends Component {
       isTimeRange,
       additionalTimeselectOptions,
       isDisabled,
-      calendarClickLimit,
+      timespanLimit,
     } = this.props;
     const additionalClassNameForDatePicker = 'timespan-date-picker';
 
@@ -117,7 +117,7 @@ export class TimespanPicker extends Component {
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
           datePickerInputStyle={datePickerInputStyle}
-          calendarClickLimit={calendarClickLimit}
+          timespanLimit={timespanLimit}
         />
         <DateTimeInput
           id={`${id}-until`}
@@ -145,7 +145,7 @@ export class TimespanPicker extends Component {
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
           datePickerInputStyle={datePickerInputStyle}
-          calendarClickLimit={calendarClickLimit}
+          timespanLimit={timespanLimit}
         />
         {hasCloudCoverage && (
           <div className={`timespan-picker-cc-slider`}>
