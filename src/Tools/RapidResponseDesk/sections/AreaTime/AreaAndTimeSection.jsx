@@ -173,7 +173,10 @@ const AreaAndTimeSection = ({
     <div className="date-picker-container">
       {timespanArray.map((timespanFrame, index) => {
         return (
-          <div className={`date-picker-content${index + 1 < timespanArray.length ? ' bottom-border' : ''}`}>
+          <div
+            key={`date-picker-${index}`}
+            className={`date-picker-content${index + 1 < timespanArray.length ? ' bottom-border' : ''}`}
+          >
             {setTimespanPicker(timespanFrame, index)}
             <div className="remove-button-container">
               <Button
