@@ -10,7 +10,8 @@ export const ButtonType = Object.freeze({
 });
 
 const Button = ({ label, icon, type, disabled, rounded, className, styleClassName, style, onClick }) => {
-  const buttonClass = `copernicus-button ${type}${rounded ? ` rounded` : ''}
+  const buttonClass = `copernicus-button ${type}
+  ${rounded ? ` rounded` : ''}
   ${className ? ` ${className}` : ''}
   ${styleClassName ? ` ${styleClassName}` : ''}
   ${disabled ? ` disabled` : ''}`;
