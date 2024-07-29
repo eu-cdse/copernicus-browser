@@ -60,10 +60,10 @@ const AreaAndTimeSection = ({
   };
 
   useEffect(() => {
-    store.dispatch(areaAndTimeSectionSlice.actions.setDateTimeRange(timespanArray));
+    store.dispatch(areaAndTimeSectionSlice.actions.setTimespanArray(timespanArray));
   }, [timespanArray]);
 
-  const getAndSetNextPrevDate = async (direction, selectedDay, id, dateTimeRange, isFrom = true) => {
+  const getAndSetNextPrevDate = async (direction, selectedDay, id, timespanFrame, isFrom = true) => {
     let newMoment;
     if (direction === 'prev') {
       newMoment = moment.utc(selectedDay).add(-1, 'days');
@@ -71,11 +71,11 @@ const AreaAndTimeSection = ({
       newMoment = moment.utc(selectedDay).add(1, 'days');
     }
 
-    if (isFrom && (newMoment < minDateRange || newMoment > dateTimeRange.to)) {
+    if (isFrom && (newMoment < minDateRange || newMoment > timespanFrame.to)) {
       throw Error('invalidDateRange');
     }
 
-    if (!isFrom && (newMoment > maxDateRange || newMoment < dateTimeRange.from)) {
+    if (!isFrom && (newMoment > maxDateRange || newMoment < timespanFrame.from)) {
       throw Error('invalidDateRange');
     }
 
@@ -84,17 +84,17 @@ const AreaAndTimeSection = ({
     }
 
     isFrom
-      ? updateDateTime(id)(newMoment, dateTimeRange.to)
-      : updateDateTime(id)(dateTimeRange.from, newMoment);
+      ? updateTimespan(id)(newMoment, timespanFrame.to)
+      : updateTimespan(id)(timespanFrame.from, newMoment);
   };
 
-  const setAdditionalDateRange = (currentDateTimeRange) => {
+  const setAdditionalDateRange = (currentTimespanFrame) => {
     setTimespanArray((prevState) => {
       return [
         ...prevState,
         {
-          from: currentDateTimeRange.from.clone().add(-1, 'days'),
-          to: currentDateTimeRange.from.clone().add(-1, 'days').endOf('day'),
+          from: currentTimespanFrame.from.clone().add(-1, 'days'),
+          to: currentTimespanFrame.from.clone().add(-1, 'days').endOf('day'),
           id: timespanArray.length,
           displayCalendarFrom: false,
           displayCalendarTo: false,
@@ -103,7 +103,7 @@ const AreaAndTimeSection = ({
     });
   };
 
-  const updateDateTime = (id) => (fromTime, toTime) => {
+  const updateTimespan = (id) => (fromTime, toTime) => {
     setTimespanArray((prevState) => {
       return prevState.map((item, index) => (index === id ? { ...item, from: fromTime, to: toTime } : item));
     });
@@ -119,14 +119,14 @@ const AreaAndTimeSection = ({
     });
   };
 
-  const updateCalendarOpenState = (selectedDateTime, state, isFrom = true) => {
+  const updateCalendarOpenState = (selectedTimespan, state, isFrom = true) => {
     if (state) {
       closeAllCalendarDialogs();
     }
 
     setTimespanArray((prevState) => {
       return prevState.map((item, index) =>
-        index === selectedDateTime.id
+        index === selectedTimespan.id
           ? {
               ...item,
               displayCalendarFrom: isFrom ? state : false,
@@ -141,28 +141,28 @@ const AreaAndTimeSection = ({
     setTimespanArray((prevState) => prevState.filter((item, index) => index !== id));
   };
 
-  const setTimespanPicker = (dateTimeRange, index) => (
+  const setTimespanPicker = (timespan, index) => (
     <TimespanPicker
       id="aoi-time-select"
       minDate={minDateRange}
       maxDate={maxDateRange}
       datePickerInputStyle={{ width: '85px' }}
-      timespan={{ fromTime: dateTimeRange.from, toTime: dateTimeRange.to }}
-      applyTimespan={updateDateTime(index)}
+      timespan={{ fromTime: timespan.from, toTime: timespan.to }}
+      applyTimespan={updateTimespan(index)}
       timespanExpanded={true}
       calendarHolder={cardHolderRef}
-      displayCalendarFrom={dateTimeRange.displayCalendarFrom}
-      openCalendarFrom={() => updateCalendarOpenState(dateTimeRange, true)}
-      closeCalendarFrom={() => updateCalendarOpenState(dateTimeRange, false)}
-      displayCalendarUntil={dateTimeRange.displayCalendarTo}
-      openCalendarUntil={() => updateCalendarOpenState(dateTimeRange, true, false)}
-      closeCalendarUntil={() => updateCalendarOpenState(dateTimeRange, false, false)}
+      displayCalendarFrom={timespan.displayCalendarFrom}
+      openCalendarFrom={() => updateCalendarOpenState(timespan, true)}
+      closeCalendarFrom={() => updateCalendarOpenState(timespan, false)}
+      displayCalendarUntil={timespan.displayCalendarTo}
+      openCalendarUntil={() => updateCalendarOpenState(timespan, true, false)}
+      closeCalendarUntil={() => updateCalendarOpenState(timespan, false, false)}
       showNextPrevDateArrows={true}
       getAndSetNextPrevDateFrom={async (direction, selectedDay) =>
-        await getAndSetNextPrevDate(direction, selectedDay, index, dateTimeRange)
+        await getAndSetNextPrevDate(direction, selectedDay, index, timespan)
       }
       getAndSetNextPrevDateTo={async (direction, selectedDay) =>
-        await getAndSetNextPrevDate(direction, selectedDay, index, dateTimeRange, false)
+        await getAndSetNextPrevDate(direction, selectedDay, index, timespan, false)
       }
       isDisabled={false}
     />

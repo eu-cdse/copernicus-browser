@@ -1141,15 +1141,15 @@ export const areaAndTimeSectionSlice = createSlice({
   name: 'areaAndTimeSection',
   initialState: {
     aoiCoverage: 0.3,
-    dateTimeRange: [],
+    timespanArray: [],
   },
   reducers: {
     setAoiCoverage: (state, action) => {
       state.aoiCoverage = action.payload;
     },
 
-    setDateTimeRange: (state, action) => {
-      state.dateTimeRange = action.payload;
+    setTimespanArray: (state, action) => {
+      state.timespanFrame = action.payload;
     },
   },
 });
