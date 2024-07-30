@@ -6,6 +6,7 @@ import ProviderSection from './sections/ImageQualityAndProviderSection/ImageQual
 import AdvancedSection from './sections/Advanced/AdvancedSection';
 import { t } from 'ttag';
 import Button, { ButtonType } from '../../components/Button/Button';
+import MessagePanel from '../VisualizationPanel/MessagePanel/MessagePanel';
 
 const RapidResponseDesk = () => {
   const [cartSize] = useState(0);
@@ -13,6 +14,7 @@ const RapidResponseDesk = () => {
   return (
     <div className="rapid-response-desk">
       <div className="rapid-response-desk-body">
+        <MessagePanel />
         <AreaAndTimeSection />
         <ProviderSection />
         <AdvancedSection />

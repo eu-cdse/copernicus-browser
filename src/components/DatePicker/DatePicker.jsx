@@ -86,9 +86,6 @@ class DatePicker extends Component {
   };
 
   handleDayClick = (day) => {
-    if (this.props.timespanLimit(moment.utc(day).startOf(day))) {
-      return;
-    }
     this.props.setSelectedDay(moment.utc(day).startOf(day));
     this.closeCalendar();
 
@@ -259,8 +256,6 @@ class DatePicker extends Component {
       isTimeRange,
       isDisabled,
       datePickerInputStyle,
-      // eslint-disable-next-line no-unused-vars
-      timespanLimit,
     } = this.props;
 
     const { availableDays, loading, displayedDayMonth } = this.state;

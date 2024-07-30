@@ -9,7 +9,7 @@ import VisualizationPanel from './VisualizationPanel/VisualizationPanel';
 import { Tabs, Tab } from '../junk/Tabs/Tabs';
 import ToolsFooter from './ToolsFooter/ToolsFooter';
 import AdvancedSearch from './VisualizationPanel/CollectionSelection/AdvancedSearch/AdvancedSearch';
-import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice } from '../store';
+import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice, themesSlice } from '../store';
 import { savePinsToServer, savePinsToSessionStorage, constructPinFromProps } from './Pins/Pin.utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel/VisualizationPanel.utils';
 import { checkIfCustom } from './SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -96,6 +96,11 @@ class Tools extends Component {
   };
 
   setActiveTabIndex = (index) => {
+    //Reset error message panel
+    store.dispatch(visualizationSlice.actions.setError(null));
+    store.dispatch(notificationSlice.actions.displayPanelError(null));
+    store.dispatch(themesSlice.actions.setFailedThemeParts([]));
+
     store.dispatch(tabsSlice.actions.setTabIndex(index));
   };
 

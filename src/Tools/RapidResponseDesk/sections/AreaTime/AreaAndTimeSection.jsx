@@ -3,7 +3,7 @@ import './AreaAndTimeSection.scss';
 import { connect } from 'react-redux';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { t } from 'ttag';
-import store, { areaAndTimeSectionSlice, collapsiblePanelSlice } from '../../../../store';
+import store, { areaAndTimeSectionSlice, collapsiblePanelSlice, notificationSlice } from '../../../../store';
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
 import Slider from 'rc-slider';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
@@ -25,6 +25,7 @@ const AreaAndTimeSection = ({
   aoiCoverage,
   minDate,
   maxDate,
+  overlappedRanges,
 }) => {
   const [timespanArray, setTimespanArray] = useState([
     {
@@ -37,7 +38,7 @@ const AreaAndTimeSection = ({
   ]);
 
   const minDateRange = moment.utc(minDate ? minDate : MIN_SEARCH_DATE).startOf('day');
-  const maxDateRange = moment.utc(maxDate).endOf('day');
+  const maxDateRange = moment.utc(maxDate).add(1, 'years').endOf('day');
 
   const cardHolderRef = useRef(null);
 
@@ -48,15 +49,46 @@ const AreaAndTimeSection = ({
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
 
   const detectIfDateIsOverlapping = (id, selectedTimespan) => {
-    return (
-      timespanArray.find((currentTimespan) => {
-        if (id !== currentTimespan.id) {
-          return selectedTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
-        } else {
-          return undefined;
-        }
-      }) !== undefined
-    );
+    const overlappedRange = timespanArray.find((currentTimespan) => {
+      if (id !== currentTimespan.id) {
+        return selectedTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
+      } else {
+        return undefined;
+      }
+    });
+
+    let newOverlappedRanges = overlappedRanges ? [...overlappedRanges] : [];
+
+    storeRangesWhichAreOverlapping(overlappedRange, newOverlappedRanges, id);
+  };
+
+  const storeRangesWhichAreOverlapping = (overlappedRange, newOverlappedRanges, id) => {
+    if (overlappedRange) {
+      store.dispatch(notificationSlice.actions.displayPanelError({ message: 'Overlap detected' }));
+      if (
+        !newOverlappedRanges.some(
+          (currentRange) =>
+            currentRange.selectedTimeRangeId === id && currentRange.overlappedRangeId === overlappedRange.id,
+        )
+      ) {
+        newOverlappedRanges.push({ selectedTimeRangeId: id, overlappedRangeId: overlappedRange.id });
+        store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
+      }
+    } else {
+      newOverlappedRanges = newOverlappedRanges.filter(
+        (range) => range.selectedTimeRangeId !== id && range.overlappedRangeId !== id,
+      );
+      store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
+    }
+
+    removeOverlapFlag(newOverlappedRanges);
+  };
+
+  const removeOverlapFlag = (newOverlappedRanges) => {
+    // remove error if no overlapping detected
+    if (newOverlappedRanges.length === 0) {
+      store.dispatch(notificationSlice.actions.displayPanelError(null));
+    }
   };
 
   useEffect(() => {
@@ -79,9 +111,7 @@ const AreaAndTimeSection = ({
       throw Error('invalidDateRange');
     }
 
-    if (detectIfDateIsOverlapping(id, newMoment)) {
-      throw Error('invalidDateRange');
-    }
+    detectIfDateIsOverlapping(id, newMoment);
 
     isFrom
       ? updateTimespan(id)(newMoment, timespanFrame.to)
@@ -104,6 +134,8 @@ const AreaAndTimeSection = ({
   };
 
   const updateTimespan = (id) => (fromTime, toTime) => {
+    detectIfDateIsOverlapping(id, fromTime);
+    detectIfDateIsOverlapping(id, toTime);
     setTimespanArray((prevState) => {
       return prevState.map((item, index) => (index === id ? { ...item, from: fromTime, to: toTime } : item));
     });
@@ -137,7 +169,19 @@ const AreaAndTimeSection = ({
     });
   };
 
+  const removeTimespanFromOverlappedRanges = (id) => {
+    let newOverlappedRanges = overlappedRanges ? [...overlappedRanges] : [];
+    newOverlappedRanges = newOverlappedRanges.filter(
+      (range) => range.selectedTimeRangeId !== id && range.overlappedRangeId !== id,
+    );
+    store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
+
+    removeOverlapFlag(newOverlappedRanges);
+  };
+
   const removeTimespanFromList = (id) => {
+    removeTimespanFromOverlappedRanges(id);
+
     setTimespanArray((prevState) => prevState.filter((item, index) => index !== id));
   };
 
@@ -151,7 +195,6 @@ const AreaAndTimeSection = ({
       applyTimespan={updateTimespan(index)}
       timespanExpanded={true}
       calendarHolder={cardHolderRef}
-      timespanLimit={(selectedTimespan) => detectIfDateIsOverlapping(index, selectedTimespan)}
       displayCalendarFrom={timespan.displayCalendarFrom}
       openCalendarFrom={() => updateCalendarOpenState(timespan, true)}
       closeCalendarFrom={() => updateCalendarOpenState(timespan, false)}
@@ -252,6 +295,7 @@ const mapStoreToProps = (store) => ({
   aoiCoverage: store.areaAndTimeSection.aoiCoverage,
   aoiIsDrawing: store.aoi.isDrawing,
   mapBounds: store.mainMap.bounds,
+  overlappedRanges: store.areaAndTimeSection.overlappedRanges,
 });
 
 export default connect(mapStoreToProps, null)(AreaAndTimeSection);

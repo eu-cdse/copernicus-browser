@@ -1142,6 +1142,7 @@ export const areaAndTimeSectionSlice = createSlice({
   initialState: {
     aoiCoverage: 0.3,
     timespanArray: [],
+    overlappedRanges: [],
   },
   reducers: {
     setAoiCoverage: (state, action) => {
@@ -1150,6 +1151,10 @@ export const areaAndTimeSectionSlice = createSlice({
 
     setTimespanArray: (state, action) => {
       state.timespanArray = action.payload;
+    },
+
+    setRangesOverlapped: (state, action) => {
+      state.overlappedRanges = action.payload;
     },
   },
 });

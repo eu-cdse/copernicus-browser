@@ -15,9 +15,6 @@ export class DateTimeInput extends Component {
   setHours = (hours) => {
     const { selectedTime } = this.props;
     const newSelectedTime = selectedTime.clone().hours(hours);
-    if (this.props.timespanLimit(newSelectedTime)) {
-      return;
-    }
 
     if (!this.isWithinAvailableRange(newSelectedTime)) {
       return;
@@ -28,9 +25,6 @@ export class DateTimeInput extends Component {
   setMinutes = (minutes) => {
     const { selectedTime } = this.props;
     const newSelectedTime = selectedTime.clone().minutes(minutes);
-    if (this.props.timespanLimit(newSelectedTime)) {
-      return;
-    }
 
     if (!this.isWithinAvailableRange(newSelectedTime)) {
       return;
@@ -67,7 +61,6 @@ export class DateTimeInput extends Component {
       isTimeRange,
       isDisabled,
       datePickerInputStyle,
-      timespanLimit,
     } = this.props;
 
     if (!selectedTime) {
@@ -107,7 +100,6 @@ export class DateTimeInput extends Component {
             isTimeRange={isTimeRange}
             isDisabled={isDisabled}
             datePickerInputStyle={datePickerInputStyle}
-            timespanLimit={timespanLimit}
           />
         </div>
         <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>
