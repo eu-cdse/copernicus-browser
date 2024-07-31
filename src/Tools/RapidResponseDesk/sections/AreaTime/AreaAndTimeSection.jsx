@@ -50,38 +50,67 @@ const AreaAndTimeSection = ({
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}:</div>;
 
-  const detectIfDateIsOverlapping = (id, selectedTimespan) => {
-    const overlappedRange = timespanArray.find((currentTimespan) => {
+  const detectIfDateIsOverlapping = (id, selectedFromTimespan, selectedToTimespan) => {
+    const overlappedFromRange = timespanArray.filter((currentTimespan) => {
       if (id !== currentTimespan.id) {
-        return selectedTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
+        return selectedFromTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
+      } else {
+        return undefined;
+      }
+    });
+
+    const overlappedToRange = timespanArray.filter((currentTimespan) => {
+      if (id !== currentTimespan.id) {
+        return selectedToTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
       } else {
         return undefined;
       }
     });
 
     let newOverlappedRanges = overlappedRanges ? [...overlappedRanges] : [];
-
-    storeRangesWhichAreOverlapping(overlappedRange, newOverlappedRanges, id);
+    storeRangesWhichAreOverlapping(overlappedFromRange, overlappedToRange, newOverlappedRanges, id);
   };
 
-  const storeRangesWhichAreOverlapping = (overlappedRange, newOverlappedRanges, id) => {
-    if (overlappedRange) {
+  const storeRangesWhichAreOverlapping = (
+    overlappedFromRange,
+    overlappedToRange,
+    newOverlappedRanges,
+    id,
+  ) => {
+    // clear all out for selected id and check for new overlaps
+    newOverlappedRanges = newOverlappedRanges.filter(
+      (range) => range.selectedTimeRangeId !== id && range.overlappedRangeId !== id,
+    );
+
+    if (overlappedFromRange.length > 0) {
       showOverlapMessage();
-      if (
-        !newOverlappedRanges.some(
-          (currentRange) =>
-            currentRange.selectedTimeRangeId === id && currentRange.overlappedRangeId === overlappedRange.id,
-        )
-      ) {
-        newOverlappedRanges.push({ selectedTimeRangeId: id, overlappedRangeId: overlappedRange.id });
-        store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
-      }
-    } else {
-      newOverlappedRanges = newOverlappedRanges.filter(
-        (range) => range.selectedTimeRangeId !== id && range.overlappedRangeId !== id,
-      );
-      store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
+      overlappedFromRange.forEach((range) => {
+        if (
+          !newOverlappedRanges.some(
+            (currentRange) =>
+              currentRange.selectedTimeRangeId === id && currentRange.overlappedRangeId === range.id,
+          )
+        ) {
+          newOverlappedRanges.push({ selectedTimeRangeId: id, overlappedRangeId: range.id });
+        }
+      });
     }
+
+    if (overlappedToRange.length > 0) {
+      showOverlapMessage();
+      overlappedToRange.forEach((range) => {
+        if (
+          !newOverlappedRanges.some(
+            (currentRange) =>
+              currentRange.selectedTimeRangeId === id && currentRange.overlappedRangeId === range.id,
+          )
+        ) {
+          newOverlappedRanges.push({ selectedTimeRangeId: id, overlappedRangeId: range.id });
+        }
+      });
+    }
+
+    store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
 
     removeOverlapFlag(newOverlappedRanges);
   };
@@ -128,8 +157,6 @@ const AreaAndTimeSection = ({
       throw Error('invalidDateRange');
     }
 
-    detectIfDateIsOverlapping(id, newMoment);
-
     isFrom
       ? updateTimespan(id)(newMoment, timespanFrame.to)
       : updateTimespan(id)(timespanFrame.from, newMoment);
@@ -151,8 +178,7 @@ const AreaAndTimeSection = ({
   };
 
   const updateTimespan = (id) => (fromTime, toTime) => {
-    detectIfDateIsOverlapping(id, fromTime);
-    detectIfDateIsOverlapping(id, toTime);
+    detectIfDateIsOverlapping(id, fromTime, toTime);
     setTimespanArray((prevState) => {
       return prevState.map((item, index) => (index === id ? { ...item, from: fromTime, to: toTime } : item));
     });
