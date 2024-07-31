@@ -50,9 +50,11 @@ function MessagePanel({
         <div className="message-panel-icon">
           <i className="fa fa-exclamation-circle" />
         </div>
-        <div onClick={closePanel} className="close-message-panel">
-          <i className="fas fa-times" />
-        </div>
+        {(panelError?.canBeClosed || panelError?.canBeClosed === undefined) && (
+          <div onClick={closePanel} className="close-message-panel">
+            <i className="fas fa-times" />
+          </div>
+        )}
       </div>
       <div className="message-panel-messages">
         {error && <VisualizationErrorPanel error={error} />}

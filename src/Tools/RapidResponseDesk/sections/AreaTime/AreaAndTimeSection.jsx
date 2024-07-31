@@ -10,6 +10,7 @@ import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPi
 import moment from 'moment/moment';
 import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 import Button, { ButtonType } from '../../../../components/Button/Button';
+import { TABS } from '../../../../const';
 
 export const AreaAndTimeSectionProperties = Object.freeze({
   id: 'area-time',
@@ -26,6 +27,7 @@ const AreaAndTimeSection = ({
   minDate,
   maxDate,
   overlappedRanges,
+  selectedTabIndex,
 }) => {
   const [timespanArray, setTimespanArray] = useState([
     {
@@ -64,9 +66,7 @@ const AreaAndTimeSection = ({
 
   const storeRangesWhichAreOverlapping = (overlappedRange, newOverlappedRanges, id) => {
     if (overlappedRange) {
-      store.dispatch(
-        notificationSlice.actions.displayPanelError({ message: t`Selected time ranges overlap` }),
-      );
+      showOverlapMessage();
       if (
         !newOverlappedRanges.some(
           (currentRange) =>
@@ -86,6 +86,15 @@ const AreaAndTimeSection = ({
     removeOverlapFlag(newOverlappedRanges);
   };
 
+  const showOverlapMessage = () => {
+    store.dispatch(
+      notificationSlice.actions.displayPanelError({
+        message: t`Please select non-overlapping time ranges.`,
+        canBeClosed: false,
+      }),
+    );
+  };
+
   const removeOverlapFlag = (newOverlappedRanges) => {
     // remove error if no overlapping detected
     if (newOverlappedRanges.length === 0) {
@@ -96,6 +105,12 @@ const AreaAndTimeSection = ({
   useEffect(() => {
     store.dispatch(areaAndTimeSectionSlice.actions.setTimespanArray(timespanArray));
   }, [timespanArray]);
+
+  useEffect(() => {
+    if (overlappedRanges.length > 0 && selectedTabIndex === TABS.RAPID_RESPONSE_DESK) {
+      showOverlapMessage();
+    }
+  }, [selectedTabIndex, overlappedRanges]);
 
   const getAndSetNextPrevDate = async (direction, selectedDay, id, timespanFrame, isFrom = true) => {
     let newMoment;
@@ -300,6 +315,7 @@ const mapStoreToProps = (store) => ({
   aoiIsDrawing: store.aoi.isDrawing,
   mapBounds: store.mainMap.bounds,
   overlappedRanges: store.areaAndTimeSection.overlappedRanges,
+  selectedTabIndex: store.tabs.selectedTabIndex,
 });
 
 export default connect(mapStoreToProps, null)(AreaAndTimeSection);
