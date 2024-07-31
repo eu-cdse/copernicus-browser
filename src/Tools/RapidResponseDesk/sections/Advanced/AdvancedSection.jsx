@@ -12,7 +12,7 @@ export const AdvancedSectionProperties = Object.freeze({
 });
 
 const AdvancedSection = ({ advancedExpanded }) => {
-  const getTitle = () => <div className="uppercase-text">{AdvancedSectionProperties.title()}</div>;
+  const getTitle = () => <div className="uppercase-text">{AdvancedSectionProperties.title()}:</div>;
 
   return (
     <CollapsiblePanel

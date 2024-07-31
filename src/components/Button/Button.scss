@@ -1,8 +1,7 @@
 @import '../../variables.module.scss';
 
 .copernicus-button {
-  padding: 1px 2px;
-  height: 35px;
+  height: 33px;
   min-width: 109px;
   display: flex;
   flex-direction: column;
@@ -42,18 +41,14 @@
 
     &.text {
       background-color: transparent;
-      color: $textColor;
-
-      &:hover {
-        background-color: rgba($randomGrayColor, 0.5);
-      }
+      color: $textColorGray;
     }
   }
 
   &.rounded {
     border-radius: 10px;
     border: 0;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
   }
 
   &.icon {

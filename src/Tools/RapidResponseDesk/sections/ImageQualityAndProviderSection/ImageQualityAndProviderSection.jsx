@@ -13,7 +13,7 @@ export const ProviderSectionProperties = Object.freeze({
 
 const ImageQualityAndProviderSection = ({ providerExpanded }) => {
   //TODO: Custom Header
-  const getTitle = () => <div className="uppercase-text">{ProviderSectionProperties.title()}</div>;
+  const getTitle = () => <div className="uppercase-text">{ProviderSectionProperties.title()}:</div>;
 
   return (
     <CollapsiblePanel

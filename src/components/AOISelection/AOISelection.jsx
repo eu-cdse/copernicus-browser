@@ -42,7 +42,7 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
 
   return (
     <div className="row">
-      <label title={`${t`Area of interest`}:`}>{`${t`Area of interest`}:`}</label>
+      <label title={`${t`Area of interest`}`}>{`${t`Area of interest`}:`}</label>
       <div className="aoi-selection">
         {!!aoiGeometry && (
           <div className="aoi-text">

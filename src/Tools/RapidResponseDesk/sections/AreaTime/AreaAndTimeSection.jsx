@@ -46,7 +46,7 @@ const AreaAndTimeSection = ({
     store.dispatch(areaAndTimeSectionSlice.actions.setAoiCoverage(value));
   };
 
-  const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}</div>;
+  const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}:</div>;
 
   const detectIfDateIsOverlapping = (id, selectedTimespan) => {
     const overlappedRange = timespanArray.find((currentTimespan) => {
@@ -64,7 +64,9 @@ const AreaAndTimeSection = ({
 
   const storeRangesWhichAreOverlapping = (overlappedRange, newOverlappedRanges, id) => {
     if (overlappedRange) {
-      store.dispatch(notificationSlice.actions.displayPanelError({ message: 'Overlap detected' }));
+      store.dispatch(
+        notificationSlice.actions.displayPanelError({ message: t`Selected time ranges overlap` }),
+      );
       if (
         !newOverlappedRanges.some(
           (currentRange) =>
@@ -221,20 +223,22 @@ const AreaAndTimeSection = ({
             className={`date-picker-content${index + 1 < timespanArray.length ? ' bottom-border' : ''}`}
           >
             {setTimespanPicker(timespanFrame, index)}
-            <div className="remove-button-container">
-              <Button
-                style={{ boxShadow: 'none', color: 'black' }}
-                icon={'fas fa-trash'}
-                type={ButtonType.text}
-                disabled={timespanArray.length === 1}
-                rounded={true}
-                onClick={() => removeTimespanFromList(index)}
-              ></Button>
-            </div>
+            {timespanArray.length > 1 && (
+              <div className="remove-button-container">
+                <Button
+                  icon={'fas fa-trash'}
+                  type={ButtonType.text}
+                  rounded={true}
+                  onClick={() => removeTimespanFromList(index)}
+                ></Button>
+              </div>
+            )}
             {timespanArray.length === index + 1 && (
               <div className="add-button-container">
                 <Button
                   icon={'fas fa-plus'}
+                  type={ButtonType.text}
+                  iconStyle={{ transform: 'scale(0.85)' }}
                   rounded={true}
                   onClick={() => setAdditionalDateRange(timespanFrame)}
                 ></Button>

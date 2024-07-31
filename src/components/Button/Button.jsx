@@ -9,7 +9,18 @@ export const ButtonType = Object.freeze({
   text: 'text',
 });
 
-const Button = ({ label, icon, type, disabled, rounded, className, styleClassName, style, onClick }) => {
+const Button = ({
+  label,
+  icon,
+  type,
+  disabled,
+  rounded,
+  className,
+  iconStyle,
+  styleClassName,
+  style,
+  onClick,
+}) => {
   const buttonClass = `copernicus-button ${type}
   ${rounded ? ` rounded` : ''}
   ${className ? ` ${className}` : ''}
@@ -22,7 +33,7 @@ const Button = ({ label, icon, type, disabled, rounded, className, styleClassNam
         <span className="label">{label}</span>
       ) : (
         <div className="icon">
-          <i className={icon}></i>
+          <i style={iconStyle} className={icon}></i>
         </div>
       )}
     </div>
@@ -38,6 +49,7 @@ Button.propTypes = {
   className: PropTypes.string,
   styleClassName: PropTypes.string,
   style: PropTypes.object,
+  iconStyle: PropTypes.object,
   onClick: PropTypes.func,
 };
 
