@@ -1,6 +1,7 @@
 @import '../../variables.module.scss';
 
 .copernicus-button {
+  user-select: none;
   height: 33px;
   min-width: 109px;
   display: flex;
@@ -14,35 +15,33 @@
     color: $primaryColor;
     border: 1px solid $primaryColor;
 
-    &:hover {
+    &:hover:not(.disabled) {
       color: $whiteColor;
       background-color: $primaryColor;
     }
   }
 
-  &:not(.disabled) {
-    &.danger {
-      background-color: $errorCol;
-      color: $whiteColor;
+  &.danger {
+    background-color: $errorCol;
+    color: $whiteColor;
 
-      &:hover {
-        background-color: $hoverError;
-      }
+    &:hover:not(.disabled) {
+      background-color: $hoverError;
     }
+  }
 
-    &.success {
-      background-color: $secondaryColor;
-      color: $whiteColor;
+  &.success {
+    background-color: $secondaryColor;
+    color: $whiteColor;
 
-      &:hover {
-        background-color: $hoverSecondaryColor;
-      }
+    &:hover:not(.disabled) {
+      background-color: $hoverSecondaryColor;
     }
+  }
 
-    &.text {
-      background-color: transparent;
-      color: $primaryColor;
-    }
+  &.text {
+    background-color: transparent;
+    color: $primaryColor;
   }
 
   &.rounded {
@@ -74,9 +73,5 @@
   &.disabled {
     opacity: $disabled;
     cursor: auto;
-
-    &:hover {
-      background-color: transparent;
-    }
   }
 }

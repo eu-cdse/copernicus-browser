@@ -8,7 +8,7 @@ import { t } from 'ttag';
 import Button, { ButtonType } from '../../components/Button/Button';
 import MessagePanel from '../VisualizationPanel/MessagePanel/MessagePanel';
 
-const RapidResponseDesk = () => {
+const RapidResponseDesk = ({ overlappedRanges }) => {
   const [cartSize] = useState(0);
 
   return (
@@ -31,6 +31,7 @@ const RapidResponseDesk = () => {
         </div>
         <div className="search-button">
           <Button
+            disabled={overlappedRanges.length > 0}
             type={ButtonType.success}
             label={t`Search`}
             styleClassName="uppercase-text"
@@ -44,6 +45,7 @@ const RapidResponseDesk = () => {
 
 const mapStoreToProps = (store) => ({
   selectedLanguage: store.language.selectedLanguage,
+  overlappedRanges: store.areaAndTimeSection.overlappedRanges,
 });
 
 export default connect(mapStoreToProps, null)(RapidResponseDesk);
