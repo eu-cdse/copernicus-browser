@@ -5,7 +5,6 @@ import CollapsiblePanel from '../../../../components/CollapsiblePanel/Collapsibl
 import { t } from 'ttag';
 import store, { areaAndTimeSectionSlice, collapsiblePanelSlice, notificationSlice } from '../../../../store';
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
-import Slider from 'rc-slider';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
 import moment from 'moment/moment';
 import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
@@ -44,16 +43,41 @@ const AreaAndTimeSection = ({
 
   const cardHolderRef = useRef(null);
 
-  const updateSliderValue = (value) => {
-    store.dispatch(areaAndTimeSectionSlice.actions.setAoiCoverage(value));
-  };
-
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}:</div>;
 
+  const checkIfSelectedTimespanIsBetweenTempTimespan = (
+    selectedFromTimespan,
+    selectedToTimespan,
+    tempTimespan,
+  ) => {
+    return (
+      selectedFromTimespan.isBetween(tempTimespan.from, tempTimespan.to, undefined, '[]') ||
+      selectedToTimespan.isBetween(tempTimespan.from, tempTimespan.to, undefined, '[]')
+    );
+  };
+
+  const checkIfTempTimespanIsBetweenSelectedTimespan = (
+    selectedFromTimespan,
+    selectedToTimespan,
+    tempTimespan,
+  ) => {
+    return (
+      tempTimespan.from.isBetween(selectedFromTimespan, selectedToTimespan, undefined, '[]') ||
+      tempTimespan.to.isBetween(selectedFromTimespan, selectedToTimespan, undefined, '[]')
+    );
+  };
+
   const detectIfDateIsOverlapping = (id, selectedFromTimespan, selectedToTimespan) => {
-    const overlappedFromRange = timespanArray.filter((currentTimespan) => {
-      if (id !== currentTimespan.id) {
-        return selectedFromTimespan.isBetween(currentTimespan.from, currentTimespan.to, undefined, '[]');
+    const overlappedFromRange = timespanArray.filter((tempTimespan) => {
+      if (id !== tempTimespan.id) {
+        return (
+          checkIfSelectedTimespanIsBetweenTempTimespan(
+            selectedFromTimespan,
+            selectedToTimespan,
+            tempTimespan,
+          ) ||
+          checkIfTempTimespanIsBetweenSelectedTimespan(selectedFromTimespan, selectedToTimespan, tempTimespan)
+        );
       } else {
         return undefined;
       }
@@ -300,18 +324,6 @@ const AreaAndTimeSection = ({
           aoiIsDrawing={aoiIsDrawing}
           mapBounds={mapBounds}
         ></AOISelection>
-        <div className="coverage-slider-container">
-          <label className="aoi-label-text">{`${t`AOI coverage`}:`}</label>
-          <Slider
-            className="aoi-slider"
-            min={0}
-            max={1}
-            step={0.01}
-            value={aoiCoverage}
-            onChange={updateSliderValue}
-          />
-          <span className="aoi-current-value-text">{`${Math.round(aoiCoverage * 100)}%`}</span>
-        </div>
         {setDateRangeContainer()}
       </div>
     </div>
