@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './RapidResponseDesk.scss';
 import { connect } from 'react-redux';
 import AreaAndTimeSection from './sections/AreaTime/AreaAndTimeSection';
@@ -7,9 +7,16 @@ import AdvancedSection from './sections/Advanced/AdvancedSection';
 import { t } from 'ttag';
 import Button, { ButtonType } from '../../components/Button/Button';
 import MessagePanel from '../VisualizationPanel/MessagePanel/MessagePanel';
+import store, { notificationSlice, themesSlice, visualizationSlice } from '../../store';
 
-const RapidResponseDesk = ({ overlappedRanges }) => {
+const RapidResponseDesk = ({ overlappedRanges, selectedTabIndex }) => {
   const [cartSize] = useState(0);
+
+  useEffect(() => {
+    store.dispatch(visualizationSlice.actions.setError(null));
+    store.dispatch(notificationSlice.actions.displayPanelError(null));
+    store.dispatch(themesSlice.actions.setFailedThemeParts([]));
+  }, [selectedTabIndex]);
 
   return (
     <div className="rapid-response-desk">
@@ -46,6 +53,7 @@ const RapidResponseDesk = ({ overlappedRanges }) => {
 const mapStoreToProps = (store) => ({
   selectedLanguage: store.language.selectedLanguage,
   overlappedRanges: store.areaAndTimeSection.overlappedRanges,
+  selectedTabIndex: store.tabs.selectedTabIndex,
 });
 
 export default connect(mapStoreToProps, null)(RapidResponseDesk);
