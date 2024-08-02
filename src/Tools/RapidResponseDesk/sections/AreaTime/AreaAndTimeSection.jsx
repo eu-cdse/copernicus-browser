@@ -81,7 +81,7 @@ const AreaAndTimeSection = ({
       }
     });
 
-    let newOverlappedRanges = overlappedRanges ? [...overlappedRanges] : [];
+    const newOverlappedRanges = overlappedRanges ? [...overlappedRanges] : [];
     storeRangesWhichAreOverlapping(overlappedFromRange, overlappedToRange, newOverlappedRanges, id);
   };
 
@@ -126,7 +126,7 @@ const AreaAndTimeSection = ({
 
     store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
 
-    removeOverlapFlag(newOverlappedRanges);
+    removeOverlapErrorMessageIfNoOverlap(newOverlappedRanges);
   };
 
   const showOverlapMessage = () => {
@@ -138,8 +138,7 @@ const AreaAndTimeSection = ({
     );
   };
 
-  const removeOverlapFlag = (newOverlappedRanges) => {
-    // remove error if no overlapping detected
+  const removeOverlapErrorMessageIfNoOverlap = (newOverlappedRanges) => {
     if (newOverlappedRanges.length === 0) {
       store.dispatch(notificationSlice.actions.displayPanelError(null));
     }
@@ -233,7 +232,7 @@ const AreaAndTimeSection = ({
     );
     store.dispatch(areaAndTimeSectionSlice.actions.setRangesOverlapped(newOverlappedRanges));
 
-    removeOverlapFlag(newOverlappedRanges);
+    removeOverlapErrorMessageIfNoOverlap(newOverlappedRanges);
   };
 
   const removeTimespanFromList = (id) => {
