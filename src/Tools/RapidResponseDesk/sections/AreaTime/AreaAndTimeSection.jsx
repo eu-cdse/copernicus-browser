@@ -45,23 +45,16 @@ const AreaAndTimeSection = ({
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionProperties.title()}:</div>;
 
-  const checkIfSelectedTimespanIsBetweenTempTimespan = (
+  const checkIfTimespanIsBetweenAnotherTimespan = (
     selectedFromTimespan,
     selectedToTimespan,
     tempTimespan,
   ) => {
     return (
+      // is selected timespan between temp timespan
       selectedFromTimespan.isBetween(tempTimespan.from, tempTimespan.to, undefined, '[]') ||
-      selectedToTimespan.isBetween(tempTimespan.from, tempTimespan.to, undefined, '[]')
-    );
-  };
-
-  const checkIfTempTimespanIsBetweenSelectedTimespan = (
-    selectedFromTimespan,
-    selectedToTimespan,
-    tempTimespan,
-  ) => {
-    return (
+      selectedToTimespan.isBetween(tempTimespan.from, tempTimespan.to, undefined, '[]') ||
+      // is temp timespan between selected timespan
       tempTimespan.from.isBetween(selectedFromTimespan, selectedToTimespan, undefined, '[]') ||
       tempTimespan.to.isBetween(selectedFromTimespan, selectedToTimespan, undefined, '[]')
     );
@@ -70,13 +63,10 @@ const AreaAndTimeSection = ({
   const detectIfDateIsOverlapping = (id, selectedFromTimespan, selectedToTimespan) => {
     const overlappedFromRange = timespanArray.filter((tempTimespan) => {
       if (id !== tempTimespan.id) {
-        return (
-          checkIfSelectedTimespanIsBetweenTempTimespan(
-            selectedFromTimespan,
-            selectedToTimespan,
-            tempTimespan,
-          ) ||
-          checkIfTempTimespanIsBetweenSelectedTimespan(selectedFromTimespan, selectedToTimespan, tempTimespan)
+        return checkIfTimespanIsBetweenAnotherTimespan(
+          selectedFromTimespan,
+          selectedToTimespan,
+          tempTimespan,
         );
       } else {
         return undefined;
