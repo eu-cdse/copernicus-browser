@@ -173,6 +173,14 @@ export const collections = [
         selected: true,
         supportsCloudCover: true,
         productTypes: [
+          {
+            id: 'MSI_L1B_DS',
+            name: 'L1B',
+            label: 'L1B',
+            productTypeIds: ['MSI_L1B_DS', 'MSI_L1B_GR'],
+            customFilterQueryByProductType: true,
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S2_EXPERT),
+          },
           { id: 'S2MSI1C', name: 'L1C', label: 'L1C' },
           { id: 'S2MSI2A', name: 'L2A', label: 'L2A' },
           // temporarily disabled upon ESA request
@@ -542,12 +550,12 @@ export const collections = [
         productTypes: [
           {
             id: 'MR_IMAGE_2015',
-            label: 'MR Europe Monthly (Mar-Oct 2014)',
+            label: 'MR Europe Monthly (Mar–Oct 2014)',
             customFilterQueryByDatasetFull: true,
           },
           {
             id: 'DWH_MG2-3_CORE_08',
-            label: 'MR Europe Monthly (2011-2012)',
+            label: 'MR Europe Monthly (2011–2012)',
             customFilterQueryByDatasetFull: true,
           },
         ],
@@ -574,10 +582,10 @@ export const collections = [
         placeholder: FormatedAttributeNames.platformName(),
       },
       {
-        id: AttributeNames.datasetFull,
+        id: AttributeNames.dataset,
         render: DefaultInput,
         type: 'text',
-        placeholder: FormatedAttributeNames.datasetFull(),
+        placeholder: FormatedAttributeNames.dataset(),
       },
       {
         id: AttributeNames.productType,
@@ -680,6 +688,63 @@ export const collections = [
         render: DefaultInput,
         type: 'text',
         placeholder: FormatedAttributeNames.gridId(),
+      },
+    ],
+  },
+  {
+    id: ODataCollections.CCM_SAR.id,
+    label: ODataCollections.CCM_SAR.label,
+    collectionName: ODataCollections.CCM_SAR.collection,
+    instruments: [
+      {
+        id: 'HR-MR',
+        label: 'HR-MR Sea Ice Monitoring',
+        supportsInstrumentName: false,
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'DWH_MG1_CORE_11',
+            label: 'HR-MR Sea Ice Monitoring (2011–2014)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
+            id: 'SAR_SEA_ICE',
+            label: 'HR-MR Sea Ice Monitoring (2015–2024)',
+            customFilterQueryByDatasetFull: true,
+          },
+        ],
+      },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.eopIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.eopIdentifier(),
+      },
+      {
+        id: AttributeNames.platformShortName,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.platformShortName(),
+      },
+      {
+        id: AttributeNames.platformName,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.platformName(),
+      },
+      {
+        id: AttributeNames.dataset,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.dataset(),
+      },
+      {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
       },
     ],
   },

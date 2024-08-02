@@ -8,13 +8,15 @@ import {
 import './EvalScriptInput.scss';
 import { t } from 'ttag';
 import { HTTPS } from '../../const';
-
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 
 export class EvalScriptInput extends React.Component {
+  prevEvalscript = '';
+
   constructor(props) {
     super(props);
     const { isEvalUrl, evalscripturl, evalscript } = props;
+    this.prevEvalscript = evalscript;
     this.state = {
       isEvalUrl,
       evalscripturl,
@@ -75,7 +77,7 @@ export class EvalScriptInput extends React.Component {
 
   refreshEvalscriptDisabled = () => {
     const { evalscript, evalscripturl, isEvalUrl } = this.state;
-    return (isEvalUrl && !evalscripturl) || (!isEvalUrl && !evalscript);
+    return (isEvalUrl && !evalscripturl) || (!isEvalUrl && !evalscript) || evalscript === this.prevEvalscript;
   };
 
   handleRefreshClick = (e) => {
@@ -83,6 +85,7 @@ export class EvalScriptInput extends React.Component {
       return;
     }
 
+    this.prevEvalscript = this.state.evalscript;
     this.props.onRefreshEvalscript();
   };
 
@@ -106,8 +109,8 @@ export class EvalScriptInput extends React.Component {
             portalId="code_editor_portal"
             zIndex={9999}
             onRunEvalscriptClick={this.handleRefreshClick}
-            runEvalscriptButtonText={t`Refresh Evalscript`}
-            runningEvalscriptButtonText={t`Refreshing Evalscript`}
+            runEvalscriptButtonText={t`Apply`}
+            runningEvalscriptButtonText={t`Applying`}
             readOnlyMessage={t`Editor is in read only mode. Uncheck "Load script from URL" to edit the code`}
           />
         </div>
@@ -166,7 +169,7 @@ export class EvalScriptInput extends React.Component {
             disabled={this.refreshEvalscriptDisabled()}
           >
             <i className="fa fa-refresh" />
-            {t`Refresh Evalscript`}
+            {t`Apply`}
           </button>
         </div>
       </div>

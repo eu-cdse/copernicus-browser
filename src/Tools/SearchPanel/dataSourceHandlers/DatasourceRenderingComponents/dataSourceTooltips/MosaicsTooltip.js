@@ -19,11 +19,9 @@ Data for each year is available in the catalog on the 1.1. of the corresponding 
 const getSentinel2QuarterlyCloudlessMosaic = () => t`
 The **Sentinel-2 Quarterly Mosaics** product offers an almost cloud-free image over the entire globe, created by stitching together the cloudless Sentinel-2 images acquired over a quarterly period (every 3 months) at a spatial resolution of 10 meters.
 
-More information can be found [here](https://documentation.dataspace.copernicus.eu/Data/Additional.html).
-
 **Coverage:** Global Coverage.
 
-**Data availability:** 2023
+**Data availability:** 2020 – 2024
 
 Data for each quarter is available in the catalog on the 1st day of the corresponding quarter (e.g. 1.1. or 1.4.).
 

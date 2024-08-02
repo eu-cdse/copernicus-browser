@@ -7,6 +7,10 @@ import {
 } from './dataSourceConstants';
 import moment from 'moment';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
+import {
+  getSentinel1IWMosaic,
+  getSentinel1DHMosaic,
+} from './DatasourceRenderingComponents/dataSourceTooltips/S1MosaicsTooltip';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [S1_MONTHLY_MOSAIC_DH]: {
@@ -63,4 +67,15 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
   };
 
   supportsFindProductsForCurrentView = () => true;
+
+  getDescriptionForDataset = (datasetId) => {
+    switch (datasetId) {
+      case S1_MONTHLY_MOSAIC_DH:
+        return getSentinel1DHMosaic();
+      case S1_MONTHLY_MOSAIC_IW:
+        return getSentinel1IWMosaic();
+      default:
+        return null;
+    }
+  };
 }

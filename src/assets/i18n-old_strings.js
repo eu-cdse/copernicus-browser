@@ -8,3 +8,5 @@ t`Draw area of interest`;
 t`Draw AOI geometry on Image`;
 t`Draw the area of interest's geometry on the exported image.`;
 t`To use Draw AOI geometry on Image, area of interest needs to be selected first.`;
+t`Refresh Evalscript`;
+t`Refreshing Evalscript`;

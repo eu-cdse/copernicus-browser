@@ -57,10 +57,7 @@ const ODataProductTypeExtension = {
 };
 
 const ODataCollections = {
-  S1: {
-    id: 'S1',
-    label: 'SENTINEL-1',
-  },
+  S1: { id: 'S1', label: 'SENTINEL-1' },
   S2: { id: 'S2', label: 'SENTINEL-2' },
   S3: { id: 'S3', label: 'SENTINEL-3' },
   S5P: { id: 'S5P', label: 'SENTINEL-5P' },
@@ -68,6 +65,7 @@ const ODataCollections = {
   GLOBAL_MOSAICS: { id: 'GLOBAL-MOSAICS', label: 'GLOBAL-MOSAICS' },
   OPTICAL: { id: 'OPTICAL', label: 'CCM Optical', collection: 'CCM' },
   DEM: { id: 'DEM', label: 'CCM DEM', collection: 'CCM' },
+  CCM_SAR: { id: 'CCM_SAR', label: 'CCM SAR', collection: 'CCM' },
 };
 
 export {

@@ -58,6 +58,13 @@ describe('findCollectionConfigById', () => {
     expect(collection.instruments).toBeDefined();
     expect(collection.instruments.length).toBeGreaterThan(0);
   });
+
+  test('CCM_SAR', () => {
+    const collection = findCollectionConfigById('CCM_SAR');
+    expect(collection.id).toEqual('CCM_SAR');
+    expect(collection.instruments).toBeDefined();
+    expect(collection.instruments.length).toBeGreaterThan(0);
+  });
 });
 
 describe('findInstrumentConfigById', () => {
@@ -85,6 +92,13 @@ describe('findInstrumentConfigById', () => {
   test('VHR Urban Atlas', () => {
     const instrument = findInstrumentConfigById('VHR_URBAN_ATLAS');
     expect(instrument.id).toEqual('VHR_URBAN_ATLAS');
+    expect(instrument.productTypes).toBeDefined();
+    expect(instrument.productTypes.length).toBeGreaterThan(0);
+  });
+
+  test('HR-MR', () => {
+    const instrument = findInstrumentConfigById('HR-MR');
+    expect(instrument.id).toEqual('HR-MR');
     expect(instrument.productTypes).toBeDefined();
     expect(instrument.productTypes.length).toBeGreaterThan(0);
   });
@@ -175,6 +189,12 @@ describe('findProductTypeConfigById', () => {
     expect(productType.label).toBeDefined();
   });
 
+  test('DWH_MG1_CORE_11', () => {
+    const productType = findProductTypeConfigById('DWH_MG1_CORE_11');
+    expect(productType.id).toEqual('DWH_MG1_CORE_11');
+    expect(productType.label).toBeDefined();
+  });
+
   test.each([
     ['COP-DEM_EEA-10-DGED'],
     ['COP-DEM_EEA-10-INSP'],
@@ -225,6 +245,11 @@ describe('checkInstrumentSupports', () => {
     expect(sg).toBeFalsy();
   });
 
+  test('HR-MR InstrumentName', () => {
+    const sg = checkInstrumentSupports('HR-MR', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeFalsy();
+  });
+
   test.each([
     ['S1AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
     ['S2AuxiliaryFiles', SUPPORTED_PROPERTIES.InstrumentName],
@@ -270,6 +295,11 @@ describe('checkAllInstrumentsInCollectionSupport', () => {
     const sg = checkAllInstrumentsInCollectionSupport('DEM', SUPPORTED_PROPERTIES.InstrumentName);
     expect(sg).toBeFalsy();
   });
+
+  test('CCM_SAR InstrumentName', () => {
+    const sg = checkAllInstrumentsInCollectionSupport('CCM_SAR', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeFalsy();
+  });
 });
 
 describe('checkProductsSupport ', () => {
@@ -286,6 +316,7 @@ describe('checkProductsSupport ', () => {
     'EUR_HR2_MULTITEMP',
     'MR_IMAGE_2015',
     'DWH_MG2-3_CORE_08',
+    'DWH_MG1_CORE_11',
   ])(`customFilterQueryByDatasetFull`, (id) => {
     const { customFilterQueryByDatasetFull } = findProductTypeConfigById(id);
     expect(customFilterQueryByDatasetFull).toBeTruthy();
@@ -348,6 +379,11 @@ describe('checkProductTypeSupports', () => {
     expect(sg).toBeTruthy();
   });
 
+  test('DWH_MG1_CORE_11 Geometry', () => {
+    const sg = checkProductTypeSupports('DWH_MG1_CORE_11', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
   test('L1B_IR_SIR Geometry', () => {
     const sg = checkProductTypeSupports('L1B_IR_SIR', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeFalsy();
@@ -389,6 +425,11 @@ describe('checkAllProductsInInstrumentSupport', () => {
     const sg = checkAllProductsInInstrumentSupport('MR_EUROPE', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeTruthy();
   });
+
+  test('HR-MR Geometry', () => {
+    const sg = checkAllProductsInInstrumentSupport('HR-MR', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
 });
 
 describe('checkAllProductsInCollectionSupport', () => {
@@ -409,6 +450,11 @@ describe('checkAllProductsInCollectionSupport', () => {
 
   test('Dem Geometry', () => {
     const sg = checkAllProductsInCollectionSupport('DEM', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+
+  test('CCM_SAR Geometry', () => {
+    const sg = checkAllProductsInCollectionSupport('CCM_SAR', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeTruthy();
   });
 });
@@ -1370,12 +1416,12 @@ describe('createAdvancedSearchQuery for CCM data', () => {
           productTypes: [
             {
               id: 'MR_IMAGE_2015',
-              label: 'MR Europe monthly (Mar-Oct 2014)',
+              label: 'MR Europe monthly (Mar–Oct 2014)',
               customFilterQueryByDatasetFull: true,
             },
             {
               id: 'DWH_MG2-3_CORE_08',
-              label: 'MR Europe monthly (2011-2012)',
+              label: 'MR Europe monthly (2011–2012)',
               customFilterQueryByDatasetFull: true,
             },
           ],
@@ -1398,6 +1444,52 @@ describe('createAdvancedSearchQuery for CCM data', () => {
       `((Collection/Name eq 'CCM' and ((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'MR_IMAGE_2015') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'DWH_MG2-3_CORE_08') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('CCM_SAR collections', () => {
+    const collectionCCM = {
+      id: 'CCM_SAR',
+      label: 'CCM SAR',
+      collectionName: 'CCM',
+      instruments: [
+        {
+          id: 'HR-MR',
+          label: 'HR-MR Sea Ice Monitoring',
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'DWH_MG1_CORE_11',
+              label: 'HR-MR Sea Ice Monitoring (2011–2014)',
+              customFilterQueryByDatasetFull: true,
+            },
+            {
+              id: 'SAR_SEA_ICE',
+              label: 'HR-MR Sea Ice Monitoring (2015–2024)',
+              customFilterQueryByDatasetFull: true,
+            },
+          ],
+        },
+      ],
+      supportsCloudCover: false,
+    };
+    const params = {
+      collections: [collectionCCM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((Collection/Name eq 'CCM' and ((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'DWH_MG1_CORE_11') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'SAR_SEA_ICE') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
     );
