@@ -134,6 +134,8 @@ import {
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   S1_MONTHLY_MOSAIC_DH,
   S1_MONTHLY_MOSAIC_IW,
+  S3OLCIL2_WATER,
+  S3OLCIL2_LAND,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -521,6 +523,9 @@ export function datasourceForDatasetId(datasetId) {
     case S1_MONTHLY_MOSAIC_DH:
     case S1_MONTHLY_MOSAIC_IW:
       return DATASOURCES.S1_MOSAIC;
+    case S3OLCIL2_LAND:
+    case S3OLCIL2_WATER:
+      return DATASOURCES.S3_CDAS;
     default:
       return null;
   }
@@ -573,6 +578,8 @@ export const datasetLabels = {
   [S3OLCI]: 'Sentinel-3 OLCI',
   [S3SLSTR_CDAS]: 'Sentinel-3 SLSTR',
   [S3OLCI_CDAS]: 'Sentinel-3 OLCI',
+  [S3OLCIL2_LAND]: 'Sentinel-3 OLCI L2 Land',
+  [S3OLCIL2_WATER]: 'Sentinel-3 OLCI L2 Water',
   [S5_O3]: 'Sentinel-5P O3',
   [S5_NO2]: 'Sentinel-5P NO2',
   [S5_SO2]: 'Sentinel-5P SO2',
@@ -767,6 +774,8 @@ export function getDataSourceHashtags(datasetId) {
     case S3OLCI:
     case S3SLSTR_CDAS:
     case S3OLCI_CDAS:
+    case S3OLCIL2_LAND:
+    case S3OLCIL2_WATER:
       return 'Sentinel-3,Copernicus';
     case S5_O3:
     case S5_NO2:

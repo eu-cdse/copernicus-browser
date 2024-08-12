@@ -54,7 +54,7 @@ import { isFunction } from '../../utils';
 
 export const PAGE_SIZE = 50;
 
-export const MIN_SEARCH_DATE = moment.utc('2006-01-01').startOf('day');
+export const MIN_SEARCH_DATE = moment.utc('2000-01-01').startOf('day');
 
 // S1 is not included as it's handled manually
 const PRODUCT_TYPE_TO_DATASETID = {
@@ -782,6 +782,7 @@ const createBasicSearchQuery = ({ fromTime, toTime, orbitDirection, geometry, da
                 ? [
                     {
                       id: oDataCollectionInfo.instrument,
+                      ...(oDataCollectionInfo.maxCC ? { cloudCover: oDataCollectionInfo.maxCC } : {}),
                       ...(oDataCollectionInfo.productType
                         ? { productTypes: [{ id: oDataCollectionInfo.productType }] }
                         : {}),

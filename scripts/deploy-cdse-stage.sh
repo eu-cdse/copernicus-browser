@@ -37,6 +37,6 @@ fi
 
 
 echo "Upload from local to target"
-lftp -e "mirror -R --delete-first $temp_local_path $target_path ; exit" -u $CDAS_STAGING_FTP_USERNAME,$CDAS_STAGING_FTP_PASSWORD $CDAS_STAGING_FTP_HOST
+lftp -e "mirror -R --delete-first --transfer-all --upload-older $temp_local_path $target_path ; exit" -u $CDAS_STAGING_FTP_USERNAME,$CDAS_STAGING_FTP_PASSWORD $CDAS_STAGING_FTP_HOST
 
 rm -rf "$temp_local_path"

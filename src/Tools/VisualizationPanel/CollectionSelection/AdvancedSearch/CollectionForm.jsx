@@ -8,7 +8,7 @@ import { getODataCollectionInfoFromDatasetId } from '../../../../api/OData/OData
 
 import SelectedFiltersList from './filters/SelectedFiltersList';
 import { connect } from 'react-redux';
-import { TABS } from '../../../../const';
+import { DEFAULT_CLOUD_COVER_PERCENT, TABS } from '../../../../const';
 import { InstrumentTooltips } from '../../../../api/OData/assets/tooltips';
 import AdditionalFiltersToggle from './filters/AdditionalFiltersToggle';
 import { getAllFiltersForCollection } from './filters/AdditionalFilters.utils';
@@ -360,7 +360,11 @@ function CollectionForm({
                     <div className="cloud-filter ">
                       <EOBCCSlider
                         sliderWidth={120}
-                        cloudCoverPercentage={maxCc[collection.id][instrument.id]}
+                        cloudCoverPercentage={
+                          maxCc[collection.id] && maxCc[collection.id][instrument.id]
+                            ? maxCc[collection.id][instrument.id]
+                            : DEFAULT_CLOUD_COVER_PERCENT
+                        }
                         onChange={(val) => onMaxCcChange(val, collection.id, instrument.id)}
                       />
                     </div>

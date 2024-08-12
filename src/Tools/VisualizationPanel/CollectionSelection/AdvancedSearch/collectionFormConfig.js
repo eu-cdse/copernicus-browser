@@ -235,6 +235,13 @@ export const collections = [
         customFilter: (key, value) => createS2Collection1Filter(key, value),
       },
       {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S2_EXPERT),
+      },
+      {
         id: AttributeNames.online,
         render: MultiSelectInput,
         filterElement: FilterElement.Expression,

@@ -170,6 +170,7 @@ export const DATASOURCES = {
   S2_CDAS: 'Sentinel-2 CDAS',
   S3: 'Sentinel-3',
   S3_CDAS: 'Sentinel-3 CDAS',
+  S3_CDAS_L2: 'Sentinel-3 CDAS L2',
   S5: 'Sentinel-5P',
   S5_CDAS: 'Sentinel-5P CDAS',
   MODIS: 'MODIS',

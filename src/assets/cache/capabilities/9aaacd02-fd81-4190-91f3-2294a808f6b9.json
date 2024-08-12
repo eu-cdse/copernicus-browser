@@ -1,0 +1,104 @@
+{
+    "title": "S3 OLCI L2",
+    "layers": [
+        {
+            "id": "1_LAND_GIFAPAR",
+            "name": "GIFAPAR",
+            "description": "Based on band GIFAPAR",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "1_WATER_IWV_W",
+            "name": "Integrated Water Vapour",
+            "description": "Based on band IWV_W",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "2_LAND_IWV_L",
+            "name": "Integrated water vapour column",
+            "description": "Based on band IWV_L",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "2_WATER_CHL_OC4ME",
+            "name": "Algal pigment concentration (open waters)",
+            "description": "Based on band CHL_OC4ME",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "3_LAND_OTCI",
+            "name": "OTCI",
+            "description": "OLCI Terrestrial Chlorophyll Index, Based on band OTCI",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "3_WATER_TSM_NN",
+            "name": "Total suspended matter concentration",
+            "description": "Based on band TSM_NN",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "4_LAND_RC681",
+            "name": "Rectified reflectance 681",
+            "description": "Based on band RC681 at 681 nm",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "4_WATER_PAR",
+            "name": "Photosynthetically active radiation",
+            "description": "Based on band PAR",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "5_LAND_RC865",
+            "name": "Rectified reflectance 865",
+            "description": "Based on band RC865 at 865 nm",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "5_WATER_KD490_M07",
+            "name": "Diffuse attenuation coefficient",
+            "description": "Based on band KD490_M07",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "6_WATER_A865",
+            "name": "Aerosol Angstrom exponent",
+            "description": "Based on band A865",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "7_WATER_T865",
+            "name": "Aerosol optical thickness",
+            "description": "Based on band T865",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "8_WATER_CHL_NN",
+            "name": "Algal pigment concentration (complex waters)",
+            "description": "Based on band CHL_NN",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        },
+        {
+            "id": "9_WATER_ADG443_NN",
+            "name": "CDM absorption coefficient",
+            "description": "Based on band ADG443_NN",
+            "dataset": "S3OLCIL2",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

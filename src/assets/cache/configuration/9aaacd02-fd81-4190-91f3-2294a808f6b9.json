@@ -1,0 +1,436 @@
+[
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/1_LAND_GIFAPAR",
+        "id": "1_LAND_GIFAPAR",
+        "title": "GIFAPAR",
+        "description": "Based on band GIFAPAR",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.GIFAPAR;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"GIFAPAR\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-12T11:45:26.822795Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/1_WATER_IWV_W",
+        "id": "1_WATER_IWV_W",
+        "title": "Integrated Water Vapour",
+        "description": "Based on band IWV_W",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 1.0;\nlet rangeMax = 70.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"IWV_W\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.IWV_W), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:55:41.800068Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/2_LAND_IWV_L",
+        "id": "2_LAND_IWV_L",
+        "title": "Integrated water vapour column",
+        "description": "Based on band IWV_L",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 1.0;\nlet maxVal = 70.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.IWV_L;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"IWV_L\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:55:47.091190Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/2_WATER_CHL_OC4ME",
+        "id": "2_WATER_CHL_OC4ME",
+        "title": "Algal pigment concentration (open waters)",
+        "description": "Based on band CHL_OC4ME",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_OC4ME\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_OC4ME), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:55:56.127562Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/3_LAND_OTCI",
+        "id": "3_LAND_OTCI",
+        "title": "OTCI",
+        "description": "OLCI Terrestrial Chlorophyll Index, Based on band OTCI",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3 \nconst map = [\n    [0.0, 0x00007d],\n    [0.8, 0x004ccc],\n    [1.44, 0xff3333],\n    [2.0, 0xffe500],\n    [3.2, 0x00cc19],\n    [3.6, 0x00cc19],\n    [4.0, 0xffffff]\n];\n\nconst visualizer = new ColorRampVisualizer(map);\nfunction setup() {\n    return {\n        input: [\"OTCI\", \"dataMask\"],\n        output: [{ id: \"default\", bands: 4 }]\n    };\n}\n\nfunction evaluatePixel(samples) {\n    return { default: [...visualizer.process(samples.OTCI), samples.dataMask] };\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T10:57:42.749590Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/3_WATER_TSM_NN",
+        "id": "3_WATER_TSM_NN",
+        "title": "Total suspended matter concentration",
+        "description": "Based on band TSM_NN",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 0.0;\nlet rangeMax = 3.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"TSM_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.TSM_NN), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:56:06.361094Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/4_LAND_RC681",
+        "id": "4_LAND_RC681",
+        "title": "Rectified reflectance 681",
+        "description": "Based on band RC681 at 681 nm",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.RC681;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"RC681\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:56:30.049216Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/4_WATER_PAR",
+        "id": "4_WATER_PAR",
+        "title": "Photosynthetically active radiation",
+        "description": "Based on band PAR",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 1200.0;\nlet rangeMax = 1600.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"PAR\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.PAR), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:56:43.831891Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/5_LAND_RC865",
+        "id": "5_LAND_RC865",
+        "title": "Rectified reflectance 865",
+        "description": "Based on band RC865 at 865 nm",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.RC865;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"RC865\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:57:04.159232Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/5_WATER_KD490_M07",
+        "id": "5_WATER_KD490_M07",
+        "title": "Diffuse attenuation coefficient",
+        "description": "Based on band KD490_M07",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = -1.2;\nlet rangeMax = 1.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"KD490_M07\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.KD490_M07), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:57:18.963892Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/6_WATER_A865",
+        "id": "6_WATER_A865",
+        "title": "Aerosol Angstrom exponent",
+        "description": "Based on band A865",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"A865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.A865), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:57:32.444769Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/7_WATER_T865",
+        "id": "7_WATER_T865",
+        "title": "Aerosol optical thickness",
+        "description": "Based on band T865",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 0.0;\nlet rangeMax = 1.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"T865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.T865), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:57:43.865971Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/8_WATER_CHL_NN",
+        "id": "8_WATER_CHL_NN",
+        "title": "Algal pigment concentration (complex waters)",
+        "description": "Based on band CHL_NN",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_NN), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:57:53.340361Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/9_WATER_ADG443_NN",
+        "id": "9_WATER_ADG443_NN",
+        "title": "CDM absorption coefficient",
+        "description": "Based on band ADG443_NN",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nconst oceanColor = [\n  [0.0000, normalizeRGB([147, 0, 108])],\n  [0.0471, normalizeRGB([111, 0, 144])],\n  [0.0980, normalizeRGB([72, 0, 183])],\n  [0.1490, normalizeRGB([33, 0, 222])],\n  [0.2000, normalizeRGB([0, 10, 255])],\n  [0.2471, normalizeRGB([0, 74, 255])],\n  [0.2980, normalizeRGB([0, 144, 255])],\n  [0.3490, normalizeRGB([0, 213, 255])],\n  [0.4000, normalizeRGB([0, 255, 215])],\n  [0.4471, normalizeRGB([0, 255, 119])],\n  [0.4980, normalizeRGB([0, 255, 15])],\n  [0.5490, normalizeRGB([96, 255, 0])],\n  [0.6000, normalizeRGB([200, 255, 0])],\n  [0.6471, normalizeRGB([255, 235, 0])],\n  [0.6980, normalizeRGB([255, 183, 0])],\n  [0.7490, normalizeRGB([255, 131, 0])],\n  [0.8000, normalizeRGB([255, 79, 0])],\n  [0.8471, normalizeRGB([255, 31, 0])],\n  [0.8980, normalizeRGB([230, 0, 0])],\n  [0.9490, normalizeRGB([165, 0, 0])],\n  [1.0000, normalizeRGB([105, 0, 0])]\n]\n\nfunction normalizeRGB(rgbArray) {\n  return rgbArray.map(v => v / 255);\n}\n\nfunction scale(data, minVal = 0.0, maxVal = 1.0) {\n  let vals = data.map(d => d[0]);\n  let dataMinVal = Math.min(...vals);\n  let dataMaxVal = Math.max(...vals);\n  return data.map(\n    d => [\n      minVal + (maxVal - minVal) / (dataMaxVal - dataMinVal) * (d[0] - dataMinVal),\n      d[1]\n    ]\n  )\n}\n\nlet rangeMin = -1.3;\nlet rangeMax = 1.3;\nlet viz = new ColorRampVisualizer(scale(oceanColor, rangeMin, rangeMax));\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"ADG443_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.ADG443_NN), samples.dataMask];\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-08-08T08:58:02.091769Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3OLCIL2"
+        }
+    }
+]

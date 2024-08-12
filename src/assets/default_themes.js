@@ -113,6 +113,12 @@ export const DEFAULT_THEMES = [
         preselected: true,
       },
       {
+        name: 'Sentinel-3 OLCI L2',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/9aaacd-YOUR-INSTANCEID-HERE',
+        preselected: true,
+      },
+      {
         name: 'Sentinel-3 SLSTR',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ef19b6-YOUR-INSTANCEID-HERE',

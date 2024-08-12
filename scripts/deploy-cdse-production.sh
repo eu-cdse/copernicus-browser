@@ -43,5 +43,5 @@ if [ $mirror_exit_code -eq 1 ]; then
 fi
 
 echo "Upload from local to target"
-lftp -e "mirror -R --delete-first $temp_local_path $target_path ; exit" -u $CDAS_PRODUCTION_FTP_USERNAME,$CDAS_PRODUCTION_FTP_PASSWORD $CDAS_PRODUCTION_FTP_HOST
+lftp -e "mirror -R --delete-first --transfer-all --upload-older $temp_local_path $target_path ; exit" -u $CDAS_PRODUCTION_FTP_USERNAME,$CDAS_PRODUCTION_FTP_PASSWORD $CDAS_PRODUCTION_FTP_HOST
 rm -rf "$temp_local_path"

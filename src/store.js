@@ -933,7 +933,7 @@ export const timelapseSlice = createSlice({
     filterMonths: null,
     selectedPeriod: 'day',
     minCoverageAllowed: 0,
-    maxCCPercentAllowed: 100,
+    maxCCPercentAllowed: null,
     isSelectAllChecked: true,
     showBorders: false,
     timelapseFPS: 1,
@@ -962,7 +962,7 @@ export const timelapseSlice = createSlice({
       state.filterMonths = null;
       state.selectedPeriod = 'day';
       state.minCoverageAllowed = 0;
-      state.maxCCPercentAllowed = 100;
+      state.maxCCPercentAllowed = null;
       state.isSelectAllChecked = true;
       state.showBorders = false;
       state.timelapseFPS = 1;

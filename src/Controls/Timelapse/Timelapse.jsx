@@ -75,7 +75,18 @@ class Timelapse extends Component {
   fetchUnsuitablePreviewsTimeoutId = null;
 
   async componentDidMount() {
-    const { fromTime, toTime, timelapseSharePreviewMode, auth, authToken, is3D } = this.props;
+    const {
+      fromTime,
+      toTime,
+      timelapseSharePreviewMode,
+      auth,
+      authToken,
+      is3D,
+      visualizationFromTime,
+      visualizationToTime,
+      maxCCPercentAllowed,
+      visualizationMaxCloudCoverage,
+    } = this.props;
 
     this.cancelToken = new CancelToken();
 
@@ -94,13 +105,16 @@ class Timelapse extends Component {
         authToken || auth.anonToken,
       );
 
-      if (!fromTime || !toTime) {
-        store.dispatch(
-          timelapseSlice.actions.setInitialTime({
-            time: this.props.visualizationToTime,
-            interval: is3D ? 'week' : 'month',
-          }),
-        );
+      if (!fromTime) {
+        store.dispatch(timelapseSlice.actions.setFromTime(visualizationFromTime));
+      }
+
+      if (!toTime) {
+        store.dispatch(timelapseSlice.actions.setToTime(visualizationToTime));
+      }
+
+      if (!maxCCPercentAllowed) {
+        store.dispatch(timelapseSlice.actions.setMaxCCPercentAllowed(visualizationMaxCloudCoverage));
       }
 
       if (timelapseSharePreviewMode) {
@@ -1194,7 +1208,9 @@ class Timelapse extends Component {
 
 const mapStoreToProps = (store) => ({
   zoom: store.mainMap.zoom,
+  visualizationFromTime: store.visualization.fromTime,
   visualizationToTime: store.visualization.toTime,
+  visualizationMaxCloudCoverage: store.visualization.cloudCoverage,
   pixelBounds: store.mainMap.pixelBounds,
   mapBounds: store.mainMap.bounds,
   aoi: store.aoi,

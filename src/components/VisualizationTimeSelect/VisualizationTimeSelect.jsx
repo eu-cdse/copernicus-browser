@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { t } from 'ttag';
+import moment from 'moment';
 
 import DatePicker from '../DatePicker/DatePicker';
 import { TimespanPicker } from '../../components/TimespanPicker/TimespanPicker';
@@ -99,10 +100,8 @@ export function VisualizationTimeSelect({
   }, [isTimeless]);
 
   useEffect(() => {
-    const updateSelectedDates = async () => {
-      isSingle
-        ? updateDate(selectedDay)
-        : updateDate(selectedDay ? selectedDay : await getLatestAvailableDate());
+    const updateSelectedDates = () => {
+      isSingle ? updateDate(selectedDay) : updateDate(selectedDay ? selectedDay : moment().utc());
     };
 
     updateSelectedDates();

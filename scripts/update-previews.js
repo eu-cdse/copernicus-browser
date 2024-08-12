@@ -9,6 +9,7 @@ import {
   setDebugEnabled,
   DATASET_S5PL2,
   DATASET_CDAS_S5PL2,
+  DATASET_CDAS_S3OLCIL2,
   CRS_EPSG3857,
 } from '@sentinel-hub/sentinelhub-js';
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
@@ -50,6 +51,7 @@ const forceBBoxForDataset = {
     860986.6866042254,
     5792092.255337515,
   ), // Some proba-v layers return an error when using EPSG4326
+  [DATASET_CDAS_S3OLCIL2.id]: new BBox(CRS_EPSG4326, 22.615356, 59.407355, 24.55719, 60.356847), // WATER layers
 };
 const globalMinDate = new Date(Date.UTC(1980, 1 - 1, 1));
 const now = new Date();

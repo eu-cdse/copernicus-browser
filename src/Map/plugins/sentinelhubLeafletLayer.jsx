@@ -12,6 +12,7 @@ import {
   S2L2ALayer,
   S3SLSTRLayer,
   S3OLCILayer,
+  S3OLCIL2CDASLayer,
   S5PL2Layer,
   Landsat8AWSLayer,
   Landsat8AWSLOTL1Layer,
@@ -118,6 +119,8 @@ import {
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
+  S3OLCIL2_LAND,
+  S3OLCIL2_WATER,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -643,6 +646,15 @@ class SentinelHubLayer extends L.TileLayer {
         });
       case S3OLCI_CDAS:
         return await new S3OLCICDASLayer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscripturl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+        });
+      case S3OLCIL2_WATER:
+      case S3OLCIL2_LAND:
+        return await new S3OLCIL2CDASLayer({
           evalscript: evalscript,
           evalscriptUrl: evalscripturl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
