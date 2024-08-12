@@ -33,6 +33,8 @@ import {
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
+  S3OLCIL2_LAND,
+  S3OLCIL2_WATER,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -62,6 +64,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S2MSI2A: S2_L2A_CDAS,
   OL_1_EFR___: S3OLCI_CDAS,
   SL_1_RBT___: S3SLSTR_CDAS,
+  OL_2_LFR___: S3OLCIL2_LAND,
+  OL_2_WFR___: S3OLCIL2_WATER,
   L2__AER_AI: S5_AER_AI_CDAS,
   //L2__AER_LH
   L2__CH4___: S5_CH4_CDAS,

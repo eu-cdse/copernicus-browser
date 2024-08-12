@@ -36,8 +36,8 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
   datasetSearchIds = {
     [S3OLCI_CDAS]: 'OLCI',
     [S3SLSTR_CDAS]: 'SLSTR',
-    [S3OLCIL2_WATER]: 'WATER',
-    [S3OLCIL2_LAND]: 'LAND',
+    [S3OLCIL2_WATER]: 'OLCI',
+    [S3OLCIL2_LAND]: 'OLCI',
   };
 
   urls = { [S3OLCI_CDAS]: [], [S3SLSTR_CDAS]: [], [S3OLCIL2_WATER]: [], [S3OLCIL2_LAND]: [] };
