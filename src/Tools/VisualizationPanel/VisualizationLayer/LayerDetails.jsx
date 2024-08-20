@@ -18,6 +18,7 @@ const LayerDetails = ({ viz, legend, detailsOpen, longDescription }) => {
         <ReactMarkdown
           rehypePlugins={[rehypeRaw, rehypeSanitize]}
           children={longDescription}
+          linkTarget="_blank"
           components={{
             link: (props) => <ExternalLink href={props.href}>{props.children}</ExternalLink>,
           }}

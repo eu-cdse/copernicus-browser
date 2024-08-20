@@ -1,0 +1,64 @@
+[
+  {
+      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b8b6e9-YOUR-INSTANCEID-HERE/layers/GAP-FILLED-FRACTIONAL-SNOW-COVER",
+      "id": "GAP-FILLED-FRACTIONAL-SNOW-COVER",
+      "title": "Gap Filled Fractional Snow Cover",
+      "description": "",
+      "styles": [
+          {
+              "name": "default",
+              "description": "Default layer style",
+              "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"GF\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\n\nconst ramps = [\n  [0, 0xffffff],\n  [100, 0x4d4dff],\n];\n\nconst visualizer = new ColorRampVisualizer(ramps);\n\nfunction evaluatePixel(sample) {\n  var GF_viz = visualizer.process(sample.GF);\n  if (sample.GF == 255) {\n    return [0, 0, 0, sample.dataMask];\n  } else if (sample.GF == 205) {\n    return [0.9, 0.9, 0.9, sample.dataMask];\n  } else {\n    return [GF_viz[0], GF_viz[1], GF_viz[2], sample.dataMask];\n  }\n}"
+          }
+      ],
+      "orderHint": 0,
+      "instance": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b8b6e9-YOUR-INSTANCEID-HERE"
+      },
+      "lastUpdated": "2024-07-08T15:06:54.526645Z",
+      "dataset": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+      },
+      "datasetSource": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+      },
+      "defaultStyleName": "default",
+      "datasourceDefaults": {
+          "mosaickingOrder": "mostRecent",
+          "temporal": false,
+          "collectionId": "e0e660-YOUR-INSTANCEID-HERE",
+          "type": "CUSTOM"
+      }
+  },
+  {
+      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b8b6e9-YOUR-INSTANCEID-HERE/layers/GAP-FILLED-FRACTIONAL-SNOW-COVER-QUALITY",
+      "id": "GAP-FILLED-FRACTIONAL-SNOW-COVER-QUALITY",
+      "title": "Gap Filled Fractional Snow Cover Quality",
+      "description": "",
+      "styles": [
+          {
+              "name": "default",
+              "description": "Default layer style",
+              "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"QC\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\nconst map = [\n  [0, 0x00a600], //0 - High Quality\n  [1, 0xa6e64d], //1 - Medium Quality\n  [2, 0xf2a64d], //2 - Low Quality\n  [3, 0xff0000], //3 - Minimal Quality\n  [250, 0xcccccc], //250 - Masked\n  [255, 0x000000], //255 - NODATA\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return [\n    visualizer.process(sample.QC)[0],\n    visualizer.process(sample.QC)[1],\n    visualizer.process(sample.QC)[2],\n    sample.dataMask,\n  ];\n}"
+          }
+      ],
+      "orderHint": 0,
+      "instance": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b8b6e9-YOUR-INSTANCEID-HERE"
+      },
+      "lastUpdated": "2024-07-08T15:06:54.516689Z",
+      "dataset": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+      },
+      "datasetSource": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+      },
+      "defaultStyleName": "default",
+      "datasourceDefaults": {
+          "mosaickingOrder": "mostRecent",
+          "temporal": false,
+          "collectionId": "e0e660-YOUR-INSTANCEID-HERE",
+          "type": "CUSTOM"
+      }
+  }
+]

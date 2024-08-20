@@ -1,0 +1,33 @@
+[
+  {
+      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/279b6a-YOUR-INSTANCEID-HERE/layers/PPI-VISUALIZATION",
+      "id": "PPI-VISUALIZATION",
+      "title": "PPI ",
+      "description": "Yearly Time-Series of the Plant Phenology Index",
+      "styles": [
+          {
+              "name": "default",
+              "description": "Default layer style",
+              "evalScript": "//VERSION=3\n// This custom script visualises Seasonal Trajectories PPI\n\nfunction setup() {\n  return {\n    input: [\"PPI\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n    mosaicking: Mosaicking.TILE,\n  };\n}\nconst map = [\n  [0.0, 0xffffe5],\n  [0.375, 0xf7fcb9],\n  [0.75, 0xd9f0a3],\n  [1.125, 0xaddd8e],\n  [1.5, 0x78c679],\n  [1.875, 0x41ab5d],\n  [2.25, 0x238443],\n  [2.625, 0x006837],\n  [3.0, 0x004529],\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(samples) {\n  for (let i = 0; i < samples.length; i++) {\n    let sample = samples[i];\n    if (sample.dataMask == 1) {\n      const val = sample.PPI * 0.0001;\n      const imgVals = [...visualizer.process(val), sample.dataMask];\n      return {\n        default: imgVals,\n        eobrowserStats: [val],\n        dataMask: [sample.dataMask],\n      };\n    }\n  }\n}\n"
+          }
+      ],
+      "orderHint": 0,
+      "instance": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/279b6a-YOUR-INSTANCEID-HERE"
+      },
+      "lastUpdated": "2024-07-08T15:06:54.505130Z",
+      "dataset": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+      },
+      "datasetSource": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+      },
+      "defaultStyleName": "default",
+      "datasourceDefaults": {
+          "mosaickingOrder": "mostRecent",
+          "temporal": false,
+          "collectionId": "90f0ab-YOUR-INSTANCEID-HERE",
+          "type": "CUSTOM"
+      }
+  }
+]

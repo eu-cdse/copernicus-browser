@@ -220,6 +220,7 @@ export const AttributeDEMDatasetVersions = [
   '2021_2',
   '2022_1',
   '2023_1',
+  '2024_1',
 ].map((version) => ({ id: 'DEM', value: version, label: version }));
 
 export const AttributeDEMDatasetsMap = [

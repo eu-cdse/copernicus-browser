@@ -3316,7 +3316,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Yearly Time-Series of the Plant Phenology Index\n\n\n\nPPI (Plant Phenology Index) is a physically-based vegetation index derived from radiative transfer equation and is calculated from red and Near-Infrared (NIR) spectral bands. It is linearly related to the green leaf area index, and can be used to track canopy green foliage dynamics and therefore provides an efficient approach to retrieving plant phenology. Seasonal Trajectories PPI product is a filtered yearly time series of PPI, providing the vegetation status for each pixel on a regular 10-day time step. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/st-ppi/).`,
+      t`# Yearly Time-Series of the Plant Phenology Index\n\n\n\nPPI (Plant Phenology Index) is a physically-based vegetation index derived from radiative transfer equation and is calculated from red and Near-Infrared (NIR) spectral bands. It is linearly related to the green leaf area index, and can be used to track canopy green foliage dynamics and therefore provides an efficient approach to retrieving plant phenology. Seasonal Trajectories PPI product is a filtered yearly time series of PPI, providing the vegetation status for each pixel on a regular 10-day time step. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/st-ppi/).`,
   },
   {
     match: [
@@ -3340,7 +3340,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Amplitude Parameter\n\n\n\nThis layer visualizes the seasonal amplitude parameter of the VPP (Vegetation Phenology and Productivity) parameter. It is calculated as a difference between the MAXV (season maximum value) and MINV (season minimum value) parameters. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-amplitude-ampl/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Amplitude Parameter\n\n\n\nThis layer visualizes the seasonal amplitude parameter of the VPP (Vegetation Phenology and Productivity) parameter. It is calculated as a difference between the MAXV (season maximum value) and MINV (season minimum value) parameters. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-amplitude-ampl/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3364,7 +3364,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Start of Season Values\n\n\n\nThis layer visualizes the SOSV parameter of the VPP (Vegetation Phenology and Productivity) parameter. SOSV represents the PPI (plant phenology index) value of the start-of-season day. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-start-of-season-value-sosv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Start of Season Values\n\n\n\nThis layer visualizes the SOSV parameter of the VPP (Vegetation Phenology and Productivity) parameter. SOSV represents the PPI (plant phenology index) value of the start-of-season day. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-start-of-season-value-sosv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3388,7 +3388,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# End of Season Values\n\n\n\nThis layer visualizes the EOSV parameter of the VPP (Vegetation Phenology and Productivity) parameter. EOSV is a PPI (plant phenology index) value of the end-of-season day. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-end-of-season-value-eosv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# End of Season Values\n\n\n\nThis layer visualizes the EOSV parameter of the VPP (Vegetation Phenology and Productivity) parameter. EOSV is a PPI (plant phenology index) value of the end-of-season day. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-end-of-season-value-eosv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3412,7 +3412,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Season Minimum Value\n\n\n\nThis layer visualizes the MINV parameter of the VPP (Vegetation Phenology and Productivity) parameter. MINV represents the average PPI (plant phenology index) value of the minima on the left and right sides of each season. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-season-minimum-value-minv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Season Minimum Value\n\n\n\nThis layer visualizes the MINV parameter of the VPP (Vegetation Phenology and Productivity) parameter. MINV represents the average PPI (plant phenology index) value of the minima on the left and right sides of each season. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-season-minimum-value-minv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3436,7 +3436,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Season Maximum Value\n\n\n\nThis layer visualizes the MAXV parameter of the VPP (Vegetation Phenology and Productivity) parameter. MAXV represents the PPI (plant phenology index) value at the day of the season maximum. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-season-maximum-value-maxv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Season Maximum Value\n\n\n\nThis layer visualizes the MAXV parameter of the VPP (Vegetation Phenology and Productivity) parameter. MAXV represents the PPI (plant phenology index) value at the day of the season maximum. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-season-maximum-value-maxv/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3470,7 +3470,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Slope of the Greening Period\n\n\n\nThis layer visualizes the LSLOPE parameter of the VPP (Vegetation Phenology and Productivity) parameter. LSLOPE represents the slope of the PPI (plant phenology index) of the greening-up period. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-slope-of-greening-up-period-lslope/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Slope of the Greening Period\n\n\n\nThis layer visualizes the LSLOPE parameter of the VPP (Vegetation Phenology and Productivity) parameter. LSLOPE represents the slope of the PPI (plant phenology index) of the greening-up period. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-slope-of-greening-up-period-lslope/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3504,7 +3504,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Slope of the Senescent Period\n\n\n\nThis layer visualizes the RSLOPE parameter of the VPP (Vegetation Phenology and Productivity) parameter. RSLOPE represents the slope of the PPI (plant phenology index) of the senescent period. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-slope-of-senescent-period-rslope/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Slope of the Senescent Period\n\n\n\nThis layer visualizes the RSLOPE parameter of the VPP (Vegetation Phenology and Productivity) parameter. RSLOPE represents the slope of the PPI (plant phenology index) of the senescent period. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-slope-of-senescent-period-rslope/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3528,7 +3528,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Seasonal Productivity Parameter\n\n\n\nThis layer visualizes the SPROD parameter of the VPP (Vegetation Phenology and Productivity) parameter. SPROD represents seasonal productivity. It is calculated as the sum of all daily PPI (plant phenology index) values between SOSD (start-of-season day) and EOSD (end-of-season day). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-seasonal-productivity-sprod/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Seasonal Productivity Parameter\n\n\n\nThis layer visualizes the SPROD parameter of the VPP (Vegetation Phenology and Productivity) parameter. SPROD represents seasonal productivity. It is calculated as the sum of all daily PPI (plant phenology index) values between SOSD (start-of-season day) and EOSD (end-of-season day). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-seasonal-productivity-sprod/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [
@@ -3552,7 +3552,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Total Productivity Parameter\n\n\n\nThis layer visualizes the TPROD parameter of the VPP (Vegetation Phenology and Productivity) parameter. TPROD represents total productivity. It is calculated as a sum of all daily PPI (plant phenology index) values, minus their base level value. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vpp-total-productivity-tprod/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
+      t`# Total Productivity Parameter\n\n\n\nThis layer visualizes the TPROD parameter of the VPP (Vegetation Phenology and Productivity) parameter. TPROD represents total productivity. It is calculated as a sum of all daily PPI (plant phenology index) values, minus their base level value. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vpp-total-productivity-tprod/) and [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_PSA, layerId: 'PERSISTENT-SNOW-AREA' }],
@@ -3574,7 +3574,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Persistent Snow Area\n\n\n\nThis script visualises Persistent Snow Area (PSA). The PSA product is generated annually from FSC products and provides the extent of persistent snow cover (the areas where snow is present throughout the hydrological year). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-psa-psa/).`,
+      t`# Persistent Snow Area\n\n\n\nThis script visualises Persistent Snow Area (PSA). The PSA product is generated annually from FSC products and provides the extent of persistent snow cover (the areas where snow is present throughout the hydrological year). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-psa-psa).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_PSA, layerId: 'PERSISTENT-SNOW-AREA-QUALITY' }],
@@ -3608,7 +3608,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Persistent Snow Area Quality\n\n\n\nThis script visualises the Persistent Snow Area Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-psa-psa-quality/).`,
+      t`# Persistent Snow Area Quality\n\n\n\nThis script visualises the Persistent Snow Area Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-psa-psa-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_WDS, layerId: 'SNOW-STATE-CLASSIFICATION' }],
@@ -3654,7 +3654,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Wet / Dry Snow - Snow State Classification \n\n\n\nThis script visualises the Wet / Dry Snow - Snow State Classification (WDS SSC). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-wds-ssc/).`,
+      t`# Wet / Dry Snow - Snow State Classification \n\n\n\nThis script visualises the Wet / Dry Snow - Snow State Classification (WDS SSC). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-wds-ssc/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_WDS, layerId: 'SNOW-STATE-CLASSIFICATION-QUALITY' }],
@@ -3688,7 +3688,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Wet / Dry Snow - Snow State Classification Quality\n\n\n\nThis script visualises the Wet / Dry Snow - Snow State Classification (WDS QCSSC) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-wds-ssc-quality/).`,
+      t`# Wet / Dry Snow - Snow State Classification Quality\n\n\n\nThis script visualises the Wet / Dry Snow - Snow State Classification (WDS QCSSC) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-wds-ssc-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_SWS, layerId: 'SAR-WET-SNOW' }],
@@ -3730,7 +3730,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# SAR Wet Snow - Wet Snow in high Mountains areas\n\n\n\nThis script visualises SAR Wet Snow in high Mountains - Wet Snow classification in high Mountains (SWS WSM). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-sws-wet-snow-classification-high-mountains/).`,
+      t`# SAR Wet Snow - Wet Snow in high Mountains areas\n\n\n\nThis script visualises SAR Wet Snow in high Mountains - Wet Snow classification in high Mountains (SWS WSM). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-sws-wet-snow-classification-high-mountains/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_SWS, layerId: 'SAR-WET-SNOW-QUALITY' }],
@@ -3764,7 +3764,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# SAR Wet Snow - Wet Snow in high Mountains Quality\n\n\n\nThis script visualises SAR Wet Snow in high Mountains - Wet Snow classification in high Mountains Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-sws-wet-snow-classification-high-mountains-quality/).`,
+      t`# SAR Wet Snow - Wet Snow in high Mountains Quality\n\n\n\nThis script visualises SAR Wet Snow in high Mountains - Wet Snow classification in high Mountains Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-sws-wet-snow-classification-high-mountains-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_FSC, layerId: 'FRACTIONAL-SNOW-COVER-ON-GROUND' }],
@@ -3823,7 +3823,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover - On-ground\n\n\n\nThis script visualises Fractional Snow Cover - On-ground Fractional Snow Cover (%) (FSCOG). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-fsc-on-ground-fsi/).`,
+      t`# Fractional Snow Cover - On-ground\n\n\n\nThis script visualises Fractional Snow Cover - On-ground Fractional Snow Cover (%) (FSCOG). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-fsc-on-ground-fsi/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_FSC, layerId: 'FRACTIONAL-SNOW-COVER-ON-GROUND-QUALITY' }],
@@ -3857,7 +3857,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover - On-ground Quality\n\n\n\nThis script visualises the Fractional Snow Cover - On-ground Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-fsc-on-ground-fsi-quality/).`,
+      t`# Fractional Snow Cover - On-ground Quality\n\n\n\nThis script visualises the Fractional Snow Cover - On-ground Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-fsc-on-ground-fsi-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_FSC, layerId: 'FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY' }],
@@ -3916,7 +3916,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover - Top of Canopy\n\n\n\nThis script visualises Fractional Snow Cover - Top of Canopy Fractional Snow Cover (%) (FSCTOC). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-fsc-top-of-canopy-fsi/).`,
+      t`# Fractional Snow Cover - Top of Canopy\n\n\n\nThis script visualises Fractional Snow Cover - Top of Canopy Fractional Snow Cover (%) (FSCTOC). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-fsc-top-of-canopy-fsi/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_FSC, layerId: 'FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY-QUALITY' }],
@@ -3950,7 +3950,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover - Top of Canopy Quality\n\n\n\nThis script visualises the Fractional Snow Cover - Top of Canopy Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-fsc-top-of-canopy-fsi-quality/).`,
+      t`# Fractional Snow Cover - Top of Canopy Quality\n\n\n\nThis script visualises the Fractional Snow Cover - Top of Canopy Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-fsc-top-of-canopy-fsi-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_FSC, layerId: 'FRACTIONAL-SNOW-COVER-NDSI' }],
@@ -4009,7 +4009,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover - NDSI\n\n\n\nThis script visualises Fractional Snow Cover NDSI. The product provides the NDSI values in the detected snow area, i.e. area where FSCTOC > 0%. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-fsc-ndsi/).`,
+      t`# Fractional Snow Cover - NDSI\n\n\n\nThis script visualises Fractional Snow Cover NDSI. The product provides the NDSI values in the detected snow area, i.e. area where FSCTOC > 0%. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-fsc-ndsi/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_GFSC, layerId: 'GAP-FILLED-FRACTIONAL-SNOW-COVER' }],
@@ -4068,7 +4068,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover (Gap-filled)\n\n\n\nThis script visualises Daily cumulative Gap-filled Fractional Snow Cover - Fractional Snow Cover (%). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-gfsc-fsc/).`,
+      t`# Fractional Snow Cover (Gap-filled)\n\n\n\nThis script visualises Daily cumulative Gap-filled Fractional Snow Cover - Fractional Snow Cover (%). Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-gfsc-fsc/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_GFSC, layerId: 'GAP-FILLED-FRACTIONAL-SNOW-COVER-QUALITY' }],
@@ -4102,7 +4102,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Fractional Snow Cover (Gap-filled) Quality\n\n\n\nThis script visualises the Daily cumulative Gap-filled Fractional Snow Cover - Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi-gfsc-fsc-quality/).`,
+      t`# Fractional Snow Cover (Gap-filled) Quality\n\n\n\nThis script visualises the Daily cumulative Gap-filled Fractional Snow Cover - Fractional Snow Cover (%) Quality layer. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrsi/hrsi-gfsc-fsc-quality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HRSI_RLIE_S1, layerId: 'RIVER-AND-LAKE-ICE-EXTENT-S1' }],
@@ -4304,7 +4304,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
     description: () =>
       t`# Fraction of Absorbed Photosynthetically Active Radiation
-      \n\n\n\nFAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the canopy. The index describes only the green parts of the canopy and is very useful for assessing the primary productivity of canopies. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vi-fapar/).`,
+      \n\n\n\nFAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the canopy. The index describes only the green parts of the canopy and is very useful for assessing the primary productivity of canopies. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-fapar/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HR_VPP_VEGETATION_INDICES, layerId: 'LAI-VISUALIZATION' }],
@@ -4325,7 +4325,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Leaf Area Index\n\n\n\LAI is defined as one half of the total area of photosynthetically active elements of the canopy per unit horizontal ground area. The LAI provided by HRVPP corresponds to actual LAI of all the canopy layers, including all green contributors. Practically, the LAI quantifies the thickness of the vegetation cover. Deeper green colors indicate thicker vegetation cover. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vi-lai/#).`,
+      t`# Leaf Area Index\n\n\n\LAI is defined as one half of the total area of photosynthetically active elements of the canopy per unit horizontal ground area. The LAI provided by HRVPP corresponds to actual LAI of all the canopy layers, including all green contributors. Practically, the LAI quantifies the thickness of the vegetation cover. Deeper green colors indicate thicker vegetation cover. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-lai/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HR_VPP_VEGETATION_INDICES, layerId: 'NDVI-VISUALIZATION' }],
@@ -4348,7 +4348,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Normalized Difference Vegetation Index\n\n\n\nNDVI quantifies vegetation photosynthetic capacity by measuring the difference between the Near-Infrared (NIR) (which vegetation strongly reflects) and red spectral bands (which vegetation absorbs). It is commonly used to monitor vegetation cover and density. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vi-ndvi/).`,
+      t`# Normalized Difference Vegetation Index\n\n\n\nNDVI quantifies vegetation photosynthetic capacity by measuring the difference between the Near-Infrared (NIR) (which vegetation strongly reflects) and red spectral bands (which vegetation absorbs). It is commonly used to monitor vegetation cover and density. Find more information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-ndvi/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_HR_VPP_VEGETATION_INDICES, layerId: 'PPI-VISUALIZATION' }],
@@ -4369,7 +4369,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Plant Phenology Index\n\n\n\nPPI (Plant Phenology Index) is a physically-based vegetation index derived from radiative transfer equation and is calculated from red and Near-Infrared (NIR) spectral bands. PPI is linearly related to the green leaf area index, and can be used to track canopy green foliage dynamics and therefore provides an efficient approach to retrieving plant phenology. Learn more [here](https://custom-scripts.sentinel-hub.com/copernicus_services/vi-ppi/#) and [here](https://land.copernicus.eu/user-corner/technical-library/product-user-manual-of-vegetation-indices/).`,
+      t`# Plant Phenology Index\n\n\n\nPPI (Plant Phenology Index) is a physically-based vegetation index derived from radiative transfer equation and is calculated from red and Near-Infrared (NIR) spectral bands. PPI is linearly related to the green leaf area index, and can be used to track canopy green foliage dynamics and therefore provides an efficient approach to retrieving plant phenology. Learn more [here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-ppi/) and [here](https://land.copernicus.eu/en/technical-library/product-user-manual-of-vegetation-indices/).`,
   },
 
   // HLS collection

@@ -1,0 +1,17 @@
+{
+  "title" : "HRSI The Wet/Dry Snow",
+  "layers" : [ {
+    "id" : "SNOW-STATE-CLASSIFICATION",
+    "name" : "Snow State Classification",
+    "description" : "",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  }, {
+    "id" : "SNOW-STATE-CLASSIFICATION-QUALITY",
+    "name" : "Snow State Classification Quality",
+    "description" : "",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  } ],
+  "datasets" : [ ]
+}

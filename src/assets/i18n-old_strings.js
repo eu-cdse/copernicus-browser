@@ -10,3 +10,4 @@ t`Draw the area of interest's geometry on the exported image.`;
 t`To use Draw AOI geometry on Image, area of interest needs to be selected first.`;
 t`Refresh Evalscript`;
 t`Refreshing Evalscript`;
+t`The **HR-S&I** product is part of the Copernicus Land Monitoring Service (CLMS) Biophysical Parameters product suite. The product is comprised of 7 parameters that describe the state of snow in near real time. These parameters are extracted from high-resolution spatial observations from the Sentinel-1 (Radar) and Sentinel-2 (Optical) constellations. Because it is time critical for several applications, every effort is made to provide NRT HR-S&I products between 6 and 12 hours after the data sensing time.`;

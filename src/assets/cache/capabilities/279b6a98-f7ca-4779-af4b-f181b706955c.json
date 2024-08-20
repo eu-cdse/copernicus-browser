@@ -1,0 +1,11 @@
+{
+  "title" : "HR-VPP Seasonal Trajectories",
+  "layers" : [ {
+    "id" : "PPI-VISUALIZATION",
+    "name" : "PPI ",
+    "description" : "Yearly Time-Series of the Plant Phenology Index",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  } ],
+  "datasets" : [ ]
+}

@@ -217,7 +217,7 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
         });
       }
       if (dataset === S3OLCIL2_WATER || dataset === S3OLCIL2_LAND) {
-        searchLayer = new S3OLCIL2CDASLayer({ instanceId: true, layerId: true });
+        searchLayer = new S3OLCIL2CDASLayer({ instanceId: true, layerId: true, maxCloudCoverPercent: maxCC });
       }
 
       const ff = new FetchingFunction(
@@ -296,10 +296,10 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
   };
 
   tilesHaveCloudCoverage(datasetId) {
-    if (datasetId === S3SLSTR_CDAS) {
-      return true;
+    if (datasetId === S3OLCI_CDAS) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
@@ -316,6 +316,7 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       case S3OLCIL2_LAND:
       case S3OLCIL2_WATER:
         return new S3OLCIL2CDASLayer({
+          maxCloudCoverPercent,
           evalscript: true,
         });
       default:

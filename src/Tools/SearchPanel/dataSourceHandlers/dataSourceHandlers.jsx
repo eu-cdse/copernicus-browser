@@ -10,8 +10,6 @@ import {
 import { parseStringPromise } from 'xml2js';
 
 import store, { notificationSlice, themesSlice } from '../../../store';
-
-import CopernicusServicesDataSourceHandler from './CopernicusServicesDataSourceHandler';
 import Sentinel1DataSourceHandler from './Sentinel1DataSourceHandler';
 import Sentinel2AWSDataSourceHandler from './Sentinel2AWSDataSourceHandler';
 import Sentinel3DataSourceHandler from './Sentinel3DataSourceHandler';
@@ -144,6 +142,8 @@ import Sentinel5PCDASDataSourceHandler from './Sentinel5PCDASDataSourceHandler';
 import { DEMCDASLayer } from '@sentinel-hub/sentinelhub-js';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
+import CopernicusHRVPPDataSourceHandler from './CopernicusHRVPPDataSourceHandler';
+import CopernicusHRSIDataSourceHandler from './CopernicusHRSIDataSourceHandler';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
@@ -170,7 +170,8 @@ export function initializeDataSourceHandlers() {
     new ModisDataSourceHandler(),
     new DEMDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
-    new CopernicusServicesDataSourceHandler(),
+    new CopernicusHRSIDataSourceHandler(),
+    new CopernicusHRVPPDataSourceHandler(),
     new ProbaVDataSourceHandler(),
     new GibsDataSourceHandler(),
     new BYOCDataSourceHandler(),
@@ -306,7 +307,11 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
 
 // try to get collection name from datasource handler for known collections (Copernicus&friends)
 const checkKnownCollections = (collectionId) => {
-  const datasourceHandlers = [new CopernicusServicesDataSourceHandler(), new OthersDataSourceHandler()];
+  const datasourceHandlers = [
+    new CopernicusHRSIDataSourceHandler(),
+    new CopernicusHRVPPDataSourceHandler(),
+    new OthersDataSourceHandler(),
+  ];
 
   let collectionTitle;
 
@@ -492,13 +497,11 @@ export function datasourceForDatasetId(datasetId) {
     case DEM_COPERNICUS_30_CDAS:
     case DEM_COPERNICUS_90_CDAS:
       return DATASOURCES.DEM_CDAS;
-    case COPERNICUS_CORINE_LAND_COVER:
-    case COPERNICUS_GLOBAL_LAND_COVER:
-    case COPERNICUS_WATER_BODIES:
     case COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES:
     case COPERNICUS_HR_VPP_VEGETATION_INDICES:
     case COPERNICUS_HR_VPP_VPP_S1:
     case COPERNICUS_HR_VPP_VPP_S2:
+      return DATASOURCES.COPERNICUS_HRVPP;
     case COPERNICUS_HRSI_PSA:
     case COPERNICUS_HRSI_WDS:
     case COPERNICUS_HRSI_SWS:
@@ -507,8 +510,7 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_HRSI_RLIE_S1:
     case COPERNICUS_HRSI_RLIE_S2:
     case COPERNICUS_HRSI_RLIE_S1_S2:
-    case COPERNICUS_CLC_ACCOUNTING:
-      return DATASOURCES.COPERNICUS;
+      return DATASOURCES.COPERNICUS_HRSI;
     case PLANET_NICFI:
       return DATASOURCES.PLANET_NICFI;
     case CNES_LAND_COVER:

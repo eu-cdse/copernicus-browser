@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useWindowSize from '../../../hooks/useWindowSize';
 import { usePrevious } from '../../../hooks/usePrevious';
 
 import { connect } from 'react-redux';
@@ -15,7 +14,7 @@ import {
   getSelectedCollectionTitle,
 } from './CollectionSelection.utils';
 import store, { collapsiblePanelSlice, visualizationSlice } from '../../../store';
-import { DATASOURCES, MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL } from '../../../const';
+import { DATASOURCES } from '../../../const';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
@@ -227,7 +226,6 @@ const CollectionSelection = ({
   const [filter, setFilter] = useState();
   const [collectionGroups, setCollectionGroups] = useState([]);
   const previousVisualizationDate = usePrevious(visualizationDate);
-  const { height: windowHeight } = useWindowSize();
 
   const onSelect = async (selectedCollection, orbitDirection = null) => {
     const selectedConfig = { ...selectedCollection };
@@ -301,21 +299,6 @@ const CollectionSelection = ({
     }
     // eslint-disable-next-line
   }, [visualizationDate]);
-
-  useEffect(
-    (prevDatasetId) => {
-      if (datasetId !== prevDatasetId) {
-        const shouldCollapse = windowHeight >= MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL;
-
-        if (shouldShowLayerList) {
-          store.dispatch(collapsiblePanelSlice.actions.setDatePanelExpanded(shouldCollapse));
-          store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(shouldCollapse));
-        }
-      }
-      // eslint-disable-next-line
-    },
-    [datasetId, shouldShowLayerList, windowHeight],
-  );
 
   const renderCollectionSelectionContent = (isExpanded) => {
     if (!dataSourcesInitialized) {

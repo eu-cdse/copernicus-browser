@@ -10,7 +10,7 @@ import { DATASOURCES } from '../../../const';
 
 export default class DEMCDASDataSourceHandler extends DEMDataSourceHandler {
   DATASETS = [DEM_COPERNICUS_30_CDAS, DEM_COPERNICUS_90_CDAS];
-  searchGroupLabel = 'COP-DEM';
+  searchGroupLabel = 'Copernicus DEM';
 
   datasetSearchLabels = {
     [DEM_COPERNICUS_30_CDAS]: 'Copernicus 30',

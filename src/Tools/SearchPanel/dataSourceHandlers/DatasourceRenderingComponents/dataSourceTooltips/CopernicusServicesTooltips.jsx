@@ -22,6 +22,14 @@ const getCopernicusServicesMarkdown = () => t`
 The Copernicus Services provide important information for six main areas: Ocean, Land and Atmosphere Monitoring, Emergency Response, Security and Climate Change. Copernicus Services data are based on both satellite Earth Observation imagery and in-situ data and benefit both Europe and the international community. More information can be found [here](https://www.copernicus.eu/en/copernicus-services).
 `;
 
+const getCopernicusSnowAndIceMarkdown = () => t`
+The High-Resolution Snow & Ice Monitoring service ([HR-S&I](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring)) is part of the Copernicus Land Monitoring Service (CLMS). The snow aspect of the service provides products measuring snow cover, snow state conditions, persistent snow area, as well as ice cover.
+`;
+
+const getCopercnicusVegetationMarkdown = () => t`
+The High-Resolution Vegetation Phenology and Productivity ([HR-VPP](https://land.copernicus.eu/en/products/vegetation)) product group is part of Copernicus Land Monitoring Service (CLMS) and offers a collection of datasets designed to provide analysis of vegetation status across the globe. It contains a broad range of datasets including phenology and productivity parameters, seasonal growth trajectories, vegetation properties and indices.
+`;
+
 const getCorineLandCoverMarkdown = () => t`
 **CORINE Land Cover (CLC)** inventory is a vector-based dataset that consists of 44 land cover and land use classes, derived from a series of satellite missions. In the majority of European countries, CLC is produced using visual interpretation of high resolution satellite imagery. In a few countries semi-automatic solutions are applied, using national in-situ data, satellite image processing, GIS integration and generalisation. More information [here](https://github.com/sentinel-hub/public-collections/tree/main/collections/corine-land-cover). 
 
@@ -74,7 +82,7 @@ The **Global Surface Water** collection is derived from Landsat 5, 7 and 8 image
 `;
 
 const getHRVPPSeasonalTrajectoriesMarkdown = () => t`
-The **Seasonal Trajectories** product is a filtered time series of Plant Phenology Index (PPI) provided yearly on a 10-daily basis. It is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The Seasonal Trajectories PPI is derived through fitting a smoothing and gap filling function to the yearly time-series raw PPI values generated from Sentinel-2 satellite observations. More information [here](https://collections.sentinel-hub.com/seasonal-trajectories/).
+The **Seasonal Trajectories** product is a filtered time series of Plant Phenology Index (PPI) provided yearly on a 10-daily basis. It is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The Seasonal Trajectories PPI is derived through fitting a smoothing and gap filling function to the yearly time-series raw PPI values generated from Sentinel-2 satellite observations.
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -86,7 +94,7 @@ The **Seasonal Trajectories** product is a filtered time series of Plant Phenolo
 `;
 
 const getHRVPPVegetationIndicesMarkdown = () => t`
-The **Vegetation Indices** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The product is comprised of 4 raw Vegetation Indices generated near real-time (NRT) from Sentinel-2 satellite observations. More information [here](https://collections.sentinel-hub.com/vegetation-indices/).
+The **Vegetation Indices** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The product is comprised of 4 raw Vegetation Indices generated near real-time (NRT) from Sentinel-2 satellite observations.
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -99,7 +107,6 @@ The **Vegetation Indices** product is part of the Copernicus Land Monitoring Ser
 
 const getHRVPPVPPS1Markdown = () => t`
 The **Vegetation Phenology and Productivity Parameters** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The VPP product is comprised of 13 parameters that describe specific stages of the seasonal vegetation growth cycle. These parameters are extracted from Seasonal Trajectories of the Plant Phenology Index (PPI) derived from Sentinel-2 satellite observations.
- More information [here](https://collections.sentinel-hub.com/vegetation-phenology-and-productivity-parameters-season-1/).
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -112,7 +119,6 @@ The **Vegetation Phenology and Productivity Parameters** product is part of the 
 
 const getHRVPPVPPS2Markdown = () => t`
 The **Vegetation Phenology and Productivity Parameters** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The VPP product is comprised of 13 parameters that describe specific stages of the seasonal vegetation growth cycle. These parameters are extracted from Seasonal Trajectories of the Plant Phenology Index (PPI) derived from Sentinel-2 satellite observations.
- More information [here](https://collections.sentinel-hub.com/vegetation-phenology-and-productivity-parameters-season-2/).
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -140,13 +146,8 @@ const CopernicusServicesTooltip = () =>
     credits: credits[DATASOURCES.COPERNICUS],
   });
 
-const HRSI = () => t`
-The **HR-S&I** product is part of the Copernicus Land Monitoring Service (CLMS) Biophysical Parameters product suite. The product is comprised of 7 parameters that describe the state of snow in near real time. These parameters are extracted from high-resolution spatial observations from the Sentinel-1 (Radar) and Sentinel-2 (Optical) constellations. Because it is time critical for several applications, every effort is made to provide NRT HR-S&I products between 6 and 12 hours after the data sensing time.`;
-
-const HRSIPSA = () => t`
+const HRSIPSAMarkdown = () => t`
 The **Persistent Snow Area (PSA)** product is generated annually from FSC products and provides the extent of persistent snow cover (the areas where snow is present throughout the hydrological year).
-
-More information [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/snow-products/persistent-snow-area).
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -157,10 +158,8 @@ More information [here](https://land.copernicus.eu/pan-european/biophysical-para
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIWDS = () => t`
+const HRSIWDSMarkdown = () => t`
 The **Wet/Dry Snow (WDS)** product maps the snow state conditions within the snow mask defined by the FSCTOC product.
-
-More information [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/snow-products/snow-state-conditions).
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -171,10 +170,8 @@ More information [here](https://land.copernicus.eu/pan-european/biophysical-para
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSISWS = () => t`
+const HRSISWSMarkdown = () => t`
 The **SAR Wet Snow (SWS)** product maps the wet snow extent in high-mountain areas.
-
-More information [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/snow-products/snow-state-conditions).
 
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
@@ -185,11 +182,9 @@ More information [here](https://land.copernicus.eu/pan-european/biophysical-para
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIFSC = () => t`
+const HRSIFSCMarkdown = () => t`
 The **Fractional Snow Cover (FSC)** product provides the snow fraction at the Top Of Canopy (FSCTOC) and On Ground (FSCOG). NDSI is also provided as part of this service.
 
-More information [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring).
-
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
 **Data Availability**: September 1, 2016 to present
@@ -199,11 +194,9 @@ More information [here](https://land.copernicus.eu/pan-european/biophysical-para
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIGFSC = () => t`
+const HRSIGFSCMarkdown = () => t`
 The daily cumulative **Gap-filled Fractional Snow Cover (GFSC)** product is a more complete version of the FSC product; gap-filled both at a spatial and temporal scale.
 
-More information [here](https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring).
-
 **Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
 
 **Data Availability**: September 1, 2016 to present
@@ -213,11 +206,9 @@ More information [here](https://land.copernicus.eu/pan-european/biophysical-para
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIRLIES1 = () => t`
+const HRSIRLIES1Markdown = () => t`
 **The River and Lake Ice Extent - Sentinel 1 (RLIE S1)** product measures the presence of ice in rivers and lakes described by the EU-HYDRO network database. It is released in near real time for the entire EEA zone based on the revisit time of the Sentinel-1 SAR constellation, and is generated at a spatial resolution of 20m x 20m.
 
-More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s1/).
-
 **Coverage**: Europe (EEA39 region) from longitude 25°W to 45°E and latitude 26°N to 72°N.
 
 **Data Availability**: September 1, 2016 - ongoing
@@ -227,11 +218,9 @@ More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s1/).
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIRLIES2 = () => t`
+const HRSIRLIES2Markdown = () => t`
 **The River and Lake Ice Extent - Sentinel 2 (RLIE S2)** product measures the presence of ice in rivers and lakes described by the EU-HYDRO network database. It is released in near real time for the entire EEA zone based on the revisit time of the Sentinel-2 constellation, and is generated at a spatial resolution of 20m x 20m.
 
-More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s2/).
-
 **Coverage**: Europe (EEA39 region) from longitude 25°W to 45°E and latitude 26°N to 72°N.
 
 **Data Availability**: September 1, 2016 - ongoing
@@ -241,11 +230,9 @@ More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s2/).
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
 
-const HRSIRLIES1S2 = () => t`
+const HRSIRLIES1S2Markdown = () => t`
 **The River and Lake Ice Extent S1+S2 (RLIE S1+S2)** product measures the presence of ice in rivers and lakes described by the EU-HYDRO network database. The RLIE S2 is gap-filled with the RLIE S1 and is only produced when both are acquired on the same day. It is delivered delayed with a 20m x 20m spatial resolution for the entire EEA39 zone.
 
-More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s1s2/).
-
 **Coverage**: Europe (EEA39 region) from longitude 25°W to 45°E and latitude 26°N to 72°N.
 
 **Data Availability**: September 1, 2016 - ongoing
@@ -254,15 +241,6 @@ More information [here](https://collections.sentinel-hub.com/hrsi-rlie-s1s2/).
 
 **Common Usage**: The product parameters can be applied to several applications such as weather forecasting, hydrological studies and water management. The snow and the ice cover are therefore essentials for assessing natural hazards such as floods, avalanches and managing the associated risks. The study of snow and ice cover also has socio-economic applications such as winter tourism, agriculture and forestry, hydroelectric power generation or water supply.
 `;
-
-const HRSIPSAMarkdown = () => `${HRSI()}\n\n${HRSIPSA()}`;
-const HRSIWDSMarkdown = () => `${HRSI()}\n\n${HRSIWDS()}`;
-const HRSISWSMarkdown = () => `${HRSI()}\n\n${HRSISWS()}`;
-const HRSIFSCMarkdown = () => `${HRSI()}\n\n${HRSIFSC()}`;
-const HRSIGFSCMarkdown = () => `${HRSI()}\n\n${HRSIGFSC()}`;
-const HRSIRLIES1Markdown = () => `${HRSI()}\n\n${HRSIRLIES1()}`;
-const HRSIRLIES2Markdown = () => `${HRSI()}\n\n${HRSIRLIES2()}`;
-const HRSIRLIES1S2Markdown = () => `${HRSI()}\n\n${HRSIRLIES1S2()}`;
 
 const Tooltip = (getMarkdown, url) => {
   return (
@@ -378,6 +356,8 @@ export {
   HRVPPVPPS2Tooltip,
   CLCAccountingTooltip,
   getCopernicusServicesMarkdown,
+  getCopernicusSnowAndIceMarkdown,
+  getCopercnicusVegetationMarkdown,
   getCorineLandCoverMarkdown,
   getGlobalLandCoverMarkdown,
   getWaterBodiesMarkdown,
@@ -400,4 +380,7 @@ export {
   HRSISWSMarkdown,
   HRSIFSCMarkdown,
   HRSIGFSCMarkdown,
+  HRSIRLIES1Markdown,
+  HRSIRLIES2Markdown,
+  HRSIRLIES1S2Markdown,
 };

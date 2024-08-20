@@ -101,14 +101,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_OC4ME\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_OC4ME), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -1.8;\nlet rangeMax = 2.2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_OC4ME\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_OC4ME), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:28:17.900374Z",
+        "lastUpdated": "2024-08-19T11:30:27.046316Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -163,14 +163,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 0.0;\nlet rangeMax = 3.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"TSM_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.TSM_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.5;\nlet rangeMax = 3;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"TSM_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.TSM_NN), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:31:41.346004Z",
+        "lastUpdated": "2024-08-19T11:30:58.349168Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -225,14 +225,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 1200.0;\nlet rangeMax = 1600.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"PAR\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.PAR), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = 300;\nlet rangeMax = 2100;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"PAR\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.PAR), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:31:23.726185Z",
+        "lastUpdated": "2024-08-19T11:31:16.082169Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -287,14 +287,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -1.2;\nlet rangeMax = 1.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"KD490_M07\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.KD490_M07), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.0;\nlet rangeMax = 1.5;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"KD490_M07\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.KD490_M07), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:29:36.467439Z",
+        "lastUpdated": "2024-08-19T11:32:07.206692Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -318,14 +318,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax)\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"A865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.A865), samples.dataMask];\n}"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax)\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"A865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.A865), samples.dataMask];\n}"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:27:24.206141Z",
+        "lastUpdated": "2024-08-19T11:32:32.438079Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -349,14 +349,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 0.0;\nlet rangeMax = 1.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"T865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.T865), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 1;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"T865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.T865), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:28:33.604943Z",
+        "lastUpdated": "2024-08-19T11:32:47.625302Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -380,14 +380,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 0.0;\nlet rangeMax = 2.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_NN), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:28:25.335104Z",
+        "lastUpdated": "2024-08-19T11:33:01.700289Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },
@@ -411,14 +411,14 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -1.3;\nlet rangeMax = 1.3;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"ADG443_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.ADG443_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -3;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"ADG443_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.ADG443_NN), samples.dataMask];\n}\n"
             }
         ],
         "orderHint": 0,
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2024-08-16T11:29:17.807978Z",
+        "lastUpdated": "2024-08-19T11:33:14.356621Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
         },

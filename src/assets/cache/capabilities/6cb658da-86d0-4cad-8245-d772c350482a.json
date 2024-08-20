@@ -1,0 +1,29 @@
+{
+  "title" : "HR-VPP Vegetation Indices",
+  "layers" : [ {
+    "id" : "FAPAR-VISUALIZATION",
+    "name" : "FAPAR ",
+    "description" : "Fraction of Absorbed Photosynthetically Active Radiation",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  }, {
+    "id" : "LAI-VISUALIZATION",
+    "name" : "LAI ",
+    "description" : "Leaf Area Index",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  }, {
+    "id" : "NDVI-VISUALIZATION",
+    "name" : "NDVI ",
+    "description" : "Normalized Difference Vegetation Index",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  }, {
+    "id" : "PPI-VISUALIZATION",
+    "name" : "PPI ",
+    "description" : "Plant Phenology Index",
+    "dataset" : "CUSTOM",
+    "legendUrl" : null
+  } ],
+  "datasets" : [ ]
+}

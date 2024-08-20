@@ -1,0 +1,64 @@
+[
+  {
+      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/96e44e-YOUR-INSTANCEID-HERE/layers/RIVER-AND-LAKE-ICE-EXTENT-S2",
+      "id": "RIVER-AND-LAKE-ICE-EXTENT-S2",
+      "title": "River and Lake Ice Extent S2",
+      "description": "",
+      "styles": [
+          {
+              "name": "default",
+              "description": "Default layer style",
+              "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"RLIE\", \"dataMask\"],\n    output: {\n      bands: 4,\n      sampleType: \"Auto\"\n    }\n  };\n\n}\n\nconst map = [\n  [1, 0x0000FE],  //1 - Open water\n  [100, 0x00E8FF],  //100 - Snow-covered or snow-free ice\n  [254, 0xFF0000],  //254 - Other features\n  [205, 0x7B7B7B],  //205 - Cloud or cloud shadows\n  [255, 0xFFFFFF]  //255 - No data\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  let rgbVis = visualizer.process(sample.RLIE);\n  return rgbVis.concat(sample.dataMask);\n}"
+          }
+      ],
+      "orderHint": 0,
+      "instance": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/96e44e-YOUR-INSTANCEID-HERE"
+      },
+      "lastUpdated": "2024-07-08T15:06:54.519778Z",
+      "dataset": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+      },
+      "datasetSource": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+      },
+      "defaultStyleName": "default",
+      "datasourceDefaults": {
+          "mosaickingOrder": "mostRecent",
+          "temporal": false,
+          "collectionId": "1b375f-YOUR-INSTANCEID-HERE",
+          "type": "CUSTOM"
+      }
+  },
+  {
+      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/96e44e-YOUR-INSTANCEID-HERE/layers/RIVER-AND-LAKE-ICE-EXTENT-S2-QUALITY",
+      "id": "RIVER-AND-LAKE-ICE-EXTENT-S2-QUALITY",
+      "title": "River and Lake Ice Extent S2 Quality",
+      "description": "",
+      "styles": [
+          {
+              "name": "default",
+              "description": "Default layer style",
+              "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"QC\", \"dataMask\"],\n    output: {\n      bands: 4,\n      sampleType: \"Auto\"\n    }\n  };\n\n}\n\nconst map = [\n  [0, 0x5DA400],  //0 - High quality\n  [1, 0xBDBD5B],  //1 - Medium quality\n  [2, 0xFFC000],  //2 - Low quality\n  [3, 0xFF0000],  //3 - Minimal quality\n  [205, 0x7B7B7B],  //205 - Cloud or cloud shadow\n  [255, 0xFFFFFF],  //255 - No data\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  let rgbVis = visualizer.process(sample.QC);\n  return rgbVis.concat(sample.dataMask);\n}"
+          }
+      ],
+      "orderHint": 0,
+      "instance": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/96e44e-YOUR-INSTANCEID-HERE"
+      },
+      "lastUpdated": "2024-07-08T15:06:54.524586Z",
+      "dataset": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+      },
+      "datasetSource": {
+          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+      },
+      "defaultStyleName": "default",
+      "datasourceDefaults": {
+          "mosaickingOrder": "mostRecent",
+          "temporal": false,
+          "collectionId": "1b375f-YOUR-INSTANCEID-HERE",
+          "type": "CUSTOM"
+      }
+  }
+]

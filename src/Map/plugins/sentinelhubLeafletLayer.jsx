@@ -660,6 +660,9 @@ class SentinelHubLayer extends L.TileLayer {
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
+          ...(cloudCoverage !== undefined && cloudCoverage !== null
+            ? { maxCloudCoverPercent: cloudCoverage }
+            : {}),
         });
       case S5_O3:
       case S5_NO2:

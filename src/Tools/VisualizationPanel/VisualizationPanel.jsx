@@ -127,6 +127,7 @@ function VisualizationPanel({
   const { height: windowHeight } = useWindowSize();
 
   const visualizationActionsRef = useRef();
+  const selectedTimeRef = useRef(toTime);
 
   useEffect(() => {
     if ((displaySocialShareOptions || displayEffects) && visualizationActionsRef.current) {
@@ -221,11 +222,15 @@ function VisualizationPanel({
   useEffect(() => {
     const shouldCollapse = windowHeight >= MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL;
 
-    if (shouldShowLayerList) {
+    if (shouldShowLayerList && selectedTimeRef.current) {
       store.dispatch(collapsiblePanelSlice.actions.setDatePanelExpanded(shouldCollapse));
       store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(shouldCollapse));
     }
-  }, [windowHeight, shouldShowLayerList]);
+  }, [windowHeight, shouldShowLayerList, datasetId]);
+
+  useEffect(() => {
+    selectedTimeRef.current = toTime;
+  }, [toTime]);
 
   if (!dataSourcesInitialized) {
     return null;

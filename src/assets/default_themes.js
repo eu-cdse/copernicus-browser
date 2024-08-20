@@ -155,6 +155,54 @@ export const DEFAULT_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/65330d-YOUR-INSTANCEID-HERE',
         preselected: true,
       },
+      {
+        name: 'HR-VPP Seasonal Trajectories',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/279b6a-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'HR-VPP Vegetation Indices',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6cb658-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'HR-VPP Vegetation Phenology and Productivity Parameters Season 1',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b54da6-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'HR-VPP Vegetation Phenology and Productivity Parameters Season 2',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b851e1-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Persistent Snow Area',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/65f9eb-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Wet/Dry Snow',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/a9217e-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'SAR Wet Snow',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/d9e828-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Fractional Snow Cover',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/2025fa-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Fractional Snow Cover (Gap-filled)',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b8b6e9-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'River and Lake Ice Extent - Sentinel-1',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/9a86a8-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'River and Lake Ice Extent - Sentinel-2',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/96e44e-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'River and Lake Ice Extent S1+S2',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/8cf23f-YOUR-INSTANCEID-HERE',
+      },
     ],
   },
   {

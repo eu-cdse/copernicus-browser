@@ -1,28 +1,22 @@
 import React from 'react';
-import { DATASET_BYOC, CRS_EPSG4326, BYOCLayer, BYOCSubTypes } from '@sentinel-hub/sentinelhub-js';
+import {
+  DATASET_BYOC,
+  CRS_EPSG4326,
+  BYOCLayer,
+  BYOCSubTypes,
+  LocationIdSHv3,
+} from '@sentinel-hub/sentinelhub-js';
 
 import DataSourceHandler from './DataSourceHandler';
 import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
-import { CopernicusServicesTooltip } from './DatasourceRenderingComponents/dataSourceTooltips/CopernicusServicesTooltips';
 import {
-  CorineLandCoverTooltip,
-  GlobalLandCoverTooltip,
-  WaterBodiesTooltip,
-  HRVPPSeasonalTrajectoriesTooltip,
-  HRVPPVegetationIndicesTooltip,
-  HRVPPVPPS1Tooltip,
-  HRVPPVPPS2Tooltip,
-  CLCAccountingTooltip,
-  getCopernicusServicesMarkdown,
-  getCorineLandCoverMarkdown,
-  getGlobalLandCoverMarkdown,
-  getWaterBodiesMarkdown,
-  getGlobalSurfaceWaterMarkdown,
-  getHRVPPSeasonalTrajectoriesMarkdown,
-  getHRVPPVegetationIndicesMarkdown,
-  getHRVPPVPPS1Markdown,
-  getHRVPPVPPS2Markdown,
-  getCLCAccountingMarkdown,
+  CopernicusServicesTooltip,
+  HRSIRLIES1Markdown,
+  HRSIRLIES1S2Markdown,
+  HRSIRLIES2Markdown,
+  getCopernicusSnowAndIceMarkdown,
+} from './DatasourceRenderingComponents/dataSourceTooltips/CopernicusServicesTooltips';
+import {
   HRSIPSATooltip,
   HRSIWDSTooltip,
   HRSISWSTooltip,
@@ -41,15 +35,6 @@ import HelpTooltip from './DatasourceRenderingComponents/HelpTooltip';
 
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import {
-  COPERNICUS_CORINE_LAND_COVER,
-  COPERNICUS_GLOBAL_LAND_COVER,
-  COPERNICUS_WATER_BODIES,
-  COPERNICUS_GLOBAL_SURFACE_WATER,
-  COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES,
-  COPERNICUS_HR_VPP_VEGETATION_INDICES,
-  COPERNICUS_HR_VPP_VPP_S1,
-  COPERNICUS_HR_VPP_VPP_S2,
-  COPERNICUS_CLC_ACCOUNTING,
   COPERNICUS_HRSI_PSA,
   COPERNICUS_HRSI_WDS,
   COPERNICUS_HRSI_SWS,
@@ -59,13 +44,6 @@ import {
   COPERNICUS_HRSI_RLIE_S2,
   COPERNICUS_HRSI_RLIE_S1_S2,
 } from './dataSourceConstants';
-import { CORINE_LAND_COVER_BANDS } from './datasourceAssets/copernicusCorineLandCoverBands';
-import { GLOBAL_LAND_COVER_BANDS } from './datasourceAssets/copernicusGlobalLandCoverBands';
-import { WATER_BODIES_BANDS } from './datasourceAssets/copernicusWaterBodiesBands';
-import { HR_VPP_SEASONAL_TRAJECTORIES_BANDS } from './datasourceAssets/HRVPPSeasonalTrajectoriesBands';
-import { HR_VPP_VEGETATION_INDICES_BANDS } from './datasourceAssets/HRVPPVegetationIndicesBands';
-import { HR_VPP_VPP_BANDS } from './datasourceAssets/HRVPPVPPBands';
-import { CLC_ACCOUNTING_BANDS } from './datasourceAssets/copernicusCLCAccountingBands';
 import { HRSI_PSA_BANDS } from './datasourceAssets/HRSIPSABands';
 import { HRSI_WDS_BANDS } from './datasourceAssets/HRSIWDSBands';
 import { HRSI_SWS_BANDS } from './datasourceAssets/HRSISWSBands';
@@ -78,14 +56,6 @@ import { filterLayers } from './filter';
 
 export default class CopernicusServicesDataSourceHandler extends DataSourceHandler {
   getDatasetSearchLabels = () => ({
-    [COPERNICUS_CORINE_LAND_COVER]: 'CORINE Land Cover',
-    [COPERNICUS_GLOBAL_LAND_COVER]: 'Global Land Cover',
-    [COPERNICUS_WATER_BODIES]: 'Water Bodies',
-    [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: 'Seasonal Trajectories',
-    [COPERNICUS_HR_VPP_VEGETATION_INDICES]: 'Vegetation Indices',
-    [COPERNICUS_HR_VPP_VPP_S1]: 'Vegetation Phenology and Productivity Season 1',
-    [COPERNICUS_HR_VPP_VPP_S2]: 'Vegetation Phenology and Productivity Season 2',
-    [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
     [COPERNICUS_HRSI_PSA]: 'Persistent Snow Area',
     [COPERNICUS_HRSI_WDS]: 'Wet/Dry Snow',
     [COPERNICUS_HRSI_SWS]: 'SAR Wet Snow',
@@ -97,14 +67,6 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
   });
 
   urls = {
-    [COPERNICUS_CORINE_LAND_COVER]: [],
-    [COPERNICUS_GLOBAL_LAND_COVER]: [],
-    [COPERNICUS_WATER_BODIES]: [],
-    [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: [],
-    [COPERNICUS_HR_VPP_VEGETATION_INDICES]: [],
-    [COPERNICUS_HR_VPP_VPP_S1]: [],
-    [COPERNICUS_HR_VPP_VPP_S2]: [],
-    [COPERNICUS_CLC_ACCOUNTING]: [],
     [COPERNICUS_HRSI_PSA]: [],
     [COPERNICUS_HRSI_WDS]: [],
     [COPERNICUS_HRSI_SWS]: [],
@@ -116,42 +78,10 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
   };
   datasets = [];
   allLayers = [];
-  datasource = DATASOURCES.COPERNICUS;
-  searchGroupLabel = 'Copernicus Services';
+  datasource = DATASOURCES.COPERNICUS_HRSI;
+  searchGroupLabel = 'Copernicus Snow & Ice';
 
   leafletZoomConfig = {
-    [COPERNICUS_CORINE_LAND_COVER]: {
-      min: 8,
-      max: 16,
-    },
-    [COPERNICUS_GLOBAL_LAND_COVER]: {
-      min: 7,
-      max: 16,
-    },
-    [COPERNICUS_WATER_BODIES]: {
-      min: 3,
-      max: 16,
-    },
-    [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: {
-      min: 0,
-      max: 25,
-    },
-    [COPERNICUS_HR_VPP_VEGETATION_INDICES]: {
-      min: 0,
-      max: 25,
-    },
-    [COPERNICUS_HR_VPP_VPP_S1]: {
-      min: 0,
-      max: 25,
-    },
-    [COPERNICUS_HR_VPP_VPP_S2]: {
-      min: 0,
-      max: 25,
-    },
-    [COPERNICUS_CLC_ACCOUNTING]: {
-      min: 0,
-      max: 25,
-    },
     [COPERNICUS_HRSI_PSA]: {
       min: 0,
       max: 25,
@@ -200,45 +130,26 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
 
   KNOWN_COLLECTIONS = {
     // temporary disable known collections
-    // [COPERNICUS_CORINE_LAND_COVER]: ['cbdba844-f86d-41dc-95ad-b3f7f12535e9'],
-    // [COPERNICUS_GLOBAL_LAND_COVER]: ['f0a97620-0e88-4c1f-a1ac-bb388fabdf2c'],
-    // [COPERNICUS_WATER_BODIES]: ['62bf6f6a-c584-48a8-a739-0bc60efee54a'],
-    // [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: ['90f0abac-87cf-4277-958b-d8c56d9e5371'],
-    // [COPERNICUS_HR_VPP_VEGETATION_INDICES]: ['472c0398-430d-4157-a62d-603363d7a4e8'],
-    // [COPERNICUS_HR_VPP_VPP_S1]: ['67c73156-095d-4f53-8a09-9ddf3848fbb6'],
-    // [COPERNICUS_HR_VPP_VPP_S2]: ['8c2bc96a-3c2c-482b-9394-031310171b33'],
-    // [COPERNICUS_CLC_ACCOUNTING]: ['4c5441a6-6040-4dc4-a392-c1317bbd1031'],
-    // [COPERNICUS_HRSI_PSA]: ['da7e0012-8c43-42db-a5dc-cfd606c8b2dd'],
-    // [COPERNICUS_HRSI_WDS]: ['02680a79-dba6-4eb5-a105-470472ece784'],
-    // [COPERNICUS_HRSI_SWS]: ['c56d1d6d-f042-4777-a2d6-87f650df59d2'],
-    // [COPERNICUS_HRSI_FSC]: ['80db97d0-fd6a-4e13-9cf3-d1842beaae5c'],
-    // [COPERNICUS_HRSI_GFSC]: ['e0e66010-ab8a-46d5-94bd-ae5c750e7341'],
-    // [COPERNICUS_HRSI_RLIE_S1]: ['fe2c0caf-fbe8-49a1-91ae-e730ea65116a'],
-    // [COPERNICUS_HRSI_RLIE_S2]: ['1b375fda-482c-484c-974f-7308f0b51359'],
-    // [COPERNICUS_HRSI_RLIE_S1_S2]: ['65235036-9897-40d2-aed3-40ba038a1f68'],
+    [COPERNICUS_HRSI_PSA]: ['da7e0012-8c43-42db-a5dc-cfd606c8b2dd'],
+    [COPERNICUS_HRSI_WDS]: ['02680a79-dba6-4eb5-a105-470472ece784'],
+    [COPERNICUS_HRSI_SWS]: ['c56d1d6d-f042-4777-a2d6-87f650df59d2'],
+    [COPERNICUS_HRSI_FSC]: ['80db97d0-fd6a-4e13-9cf3-d1842beaae5c'],
+    [COPERNICUS_HRSI_GFSC]: ['e0e66010-ab8a-46d5-94bd-ae5c750e7341'],
+    [COPERNICUS_HRSI_RLIE_S1]: ['fe2c0caf-fbe8-49a1-91ae-e730ea65116a'],
+    [COPERNICUS_HRSI_RLIE_S2]: ['1b375fda-482c-484c-974f-7308f0b51359'],
+    [COPERNICUS_HRSI_RLIE_S1_S2]: ['65235036-9897-40d2-aed3-40ba038a1f68'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
-    // temporary disable locations for known collections
-    // [COPERNICUS_CORINE_LAND_COVER]: LocationIdSHv3.cdse,
-    // [COPERNICUS_GLOBAL_LAND_COVER]: LocationIdSHv3.cdse,
-    // [COPERNICUS_WATER_BODIES]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HR_VPP_VEGETATION_INDICES]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HR_VPP_VPP_S1]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HR_VPP_VPP_S2]: LocationIdSHv3.cdse,
-    // [COPERNICUS_CLC_ACCOUNTING]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_PSA]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_WDS]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_SWS]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_FSC]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_GFSC]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_RLIE_S1]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_RLIE_S2]: LocationIdSHv3.cdse,
-    // [COPERNICUS_HRSI_RLIE_S1_S2]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_PSA]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_WDS]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_SWS]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_FSC]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_GFSC]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_RLIE_S1]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_RLIE_S2]: LocationIdSHv3.cdse,
+    [COPERNICUS_HRSI_RLIE_S1_S2]: LocationIdSHv3.cdse,
   };
-
-  defaultPreselectedDataset = COPERNICUS_CORINE_LAND_COVER;
 
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     let handlesAny = false;
@@ -292,58 +203,10 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
     );
   }
 
-  getDescription = () => getCopernicusServicesMarkdown();
+  getDescription = () => getCopernicusSnowAndIceMarkdown();
 
   renderOptionsHelpTooltips = (option) => {
     switch (option) {
-      case COPERNICUS_CORINE_LAND_COVER:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <CorineLandCoverTooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_GLOBAL_LAND_COVER:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <GlobalLandCoverTooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_WATER_BODIES:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <WaterBodiesTooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <HRVPPSeasonalTrajectoriesTooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_HR_VPP_VEGETATION_INDICES:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <HRVPPVegetationIndicesTooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_HR_VPP_VPP_S1:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <HRVPPVPPS1Tooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_HR_VPP_VPP_S2:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <HRVPPVPPS2Tooltip />
-          </HelpTooltip>
-        );
-      case COPERNICUS_CLC_ACCOUNTING:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <CLCAccountingTooltip />
-          </HelpTooltip>
-        );
       case COPERNICUS_HRSI_PSA:
         return (
           <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
@@ -450,21 +313,6 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
 
   getBands = (datasetId) => {
     switch (datasetId) {
-      case COPERNICUS_CORINE_LAND_COVER:
-        return CORINE_LAND_COVER_BANDS;
-      case COPERNICUS_GLOBAL_LAND_COVER:
-        return GLOBAL_LAND_COVER_BANDS;
-      case COPERNICUS_WATER_BODIES:
-        return WATER_BODIES_BANDS;
-      case COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES:
-        return HR_VPP_SEASONAL_TRAJECTORIES_BANDS;
-      case COPERNICUS_HR_VPP_VEGETATION_INDICES:
-        return HR_VPP_VEGETATION_INDICES_BANDS;
-      case COPERNICUS_HR_VPP_VPP_S1:
-      case COPERNICUS_HR_VPP_VPP_S2:
-        return HR_VPP_VPP_BANDS;
-      case COPERNICUS_CLC_ACCOUNTING:
-        return CLC_ACCOUNTING_BANDS;
       case COPERNICUS_HRSI_PSA:
         return HRSI_PSA_BANDS;
       case COPERNICUS_HRSI_WDS:
@@ -486,24 +334,6 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
 
   getDescriptionForDataset = (datasetId) => {
     switch (datasetId) {
-      case COPERNICUS_CORINE_LAND_COVER:
-        return getCorineLandCoverMarkdown();
-      case COPERNICUS_GLOBAL_LAND_COVER:
-        return getGlobalLandCoverMarkdown();
-      case COPERNICUS_WATER_BODIES:
-        return getWaterBodiesMarkdown();
-      case COPERNICUS_GLOBAL_SURFACE_WATER:
-        return getGlobalSurfaceWaterMarkdown();
-      case COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES:
-        return getHRVPPSeasonalTrajectoriesMarkdown();
-      case COPERNICUS_HR_VPP_VEGETATION_INDICES:
-        return getHRVPPVegetationIndicesMarkdown();
-      case COPERNICUS_HR_VPP_VPP_S1:
-        return getHRVPPVPPS1Markdown();
-      case COPERNICUS_HR_VPP_VPP_S2:
-        return getHRVPPVPPS2Markdown();
-      case COPERNICUS_CLC_ACCOUNTING:
-        return getCLCAccountingMarkdown();
       case COPERNICUS_HRSI_PSA:
         return HRSIPSAMarkdown();
       case COPERNICUS_HRSI_WDS:
@@ -514,6 +344,12 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
         return HRSIFSCMarkdown();
       case COPERNICUS_HRSI_GFSC:
         return HRSIGFSCMarkdown();
+      case COPERNICUS_HRSI_RLIE_S1:
+        return HRSIRLIES1Markdown();
+      case COPERNICUS_HRSI_RLIE_S2:
+        return HRSIRLIES2Markdown();
+      case COPERNICUS_HRSI_RLIE_S1_S2:
+        return HRSIRLIES1S2Markdown();
       default:
         return null;
     }
@@ -521,31 +357,6 @@ export default class CopernicusServicesDataSourceHandler extends DataSourceHandl
 
   generateEvalscript = (bands, datasetId, config) => {
     // NOTE: changing the format will likely break parseEvalscriptBands method.
-    if (datasetId === COPERNICUS_CORINE_LAND_COVER) {
-      return `//VERSION=3
-function setup() {
-  return {
-    input: ["CLC", "dataMask"],
-    output: { bands: 4 }
-  };
-}
-
-function evaluatePixel(sample) {
-  // This comment is required for evalscript parsing to work
-  return [${Object.values(bands)
-    .map((e, i) => `sample.CLC === ${e}`)
-    .join(',')}, ${JSON.stringify(
-        Object.values(bands).map((b) => parseInt(b)),
-      )}.includes(sample.CLC) ? sample.dataMask : 0];
-}
-`;
-    }
-    if (datasetId === COPERNICUS_GLOBAL_LAND_COVER) {
-      return this.defaultEvalscript(bands, 1 / 100);
-    }
-    if (datasetId === COPERNICUS_WATER_BODIES) {
-      return this.defaultEvalscript(bands, 1 / 255);
-    }
     return this.defaultEvalscript(bands, 1 / 1000);
   };
 
@@ -567,9 +378,6 @@ function evaluatePixel(sample) {
   };
 
   areBandsClasses = (datasetId) => {
-    if (datasetId === COPERNICUS_CORINE_LAND_COVER) {
-      return true;
-    }
     return false;
   };
 
