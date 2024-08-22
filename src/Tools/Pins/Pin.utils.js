@@ -534,7 +534,12 @@ export async function layerFromPin(pin, reqConfig) {
     visualizationUrl,
     (_, dataset) => (!shJsDataset ? true : dataset === shJsDataset),
     null,
-    reqConfig,
+    {
+      ...reqConfig,
+      cache: {
+        expiresIn: 0,
+      },
+    },
   ).catch((err) => {
     console.error(err);
     return null;

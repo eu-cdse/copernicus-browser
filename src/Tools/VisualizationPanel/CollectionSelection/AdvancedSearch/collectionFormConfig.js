@@ -18,6 +18,7 @@ import {
   ODataAttributes,
   AttributeDEMDatasetVersions,
   AttributeDEMDatasetsMap,
+  AttributeS2ProductTypeValues,
 } from '../../../../api/OData/assets/attributes';
 import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
@@ -236,9 +237,8 @@ export const collections = [
       },
       {
         id: AttributeNames.productType,
-        render: DefaultInput,
-        type: 'text',
-        placeholder: FormatedAttributeNames.productType(),
+        render: MultiSelectInput,
+        getOptions: () => [AttributeS2ProductTypeValues.MSI_L1B_GR, AttributeS2ProductTypeValues.MSI_L1B_DS],
         hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S2_EXPERT),
       },
       {

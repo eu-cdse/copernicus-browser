@@ -18,6 +18,9 @@ import {
   COPERNICUS_HRSI_FSC,
   COPERNICUS_HRSI_GFSC,
   IO_LULC_10M_ANNUAL,
+  COPERNICUS_HRSI_RLIE_S1,
+  COPERNICUS_HRSI_RLIE_S2,
+  COPERNICUS_HRSI_RLIE_S1_S2,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -170,6 +173,24 @@ export const credits = {
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring',
+    },
+  ],
+  [COPERNICUS_HRSI_RLIE_S1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/ice-products/ice-cover',
+    },
+  ],
+  [COPERNICUS_HRSI_RLIE_S2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/ice-products/ice-cover',
+    },
+  ],
+  [COPERNICUS_HRSI_RLIE_S1_S2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/ice-products/ice-cover',
     },
   ],
   [COPERNICUS_CLC_ACCOUNTING]: [

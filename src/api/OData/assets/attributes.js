@@ -143,6 +143,11 @@ export const AttributeOriginValues = {
 export const AttributeS2CollectionValues = {
   COLLECTION1: { value: 'COLLECTION1', label: 'Collection 1' },
 };
+export const AttributeS2ProductTypeValues = {
+  MSI_L1B_GR: { value: 'MSI_L1B_GR', label: 'MSI_L1B_GR' },
+  MSI_L1B_DS: { value: 'MSI_L1B_DS', label: 'MSI_L1B_DS' },
+};
+
 export const AttributeProcessorVersionValues = {
   V05_00: { value: '05.00', label: '05.00' },
   V05_09: { value: '05.09', label: '05.09' },

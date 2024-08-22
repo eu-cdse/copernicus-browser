@@ -342,8 +342,7 @@ async function prepareThemeDataSourceHandlers(theme) {
           timeout: 30000,
           responseType: 'text',
           cache: {
-            expiresIn: Number.POSITIVE_INFINITY,
-            targets: [CacheTarget.MEMORY],
+            expiresIn: 0,
           },
         });
         await updateLayersFromServiceIfNeeded(layers);
