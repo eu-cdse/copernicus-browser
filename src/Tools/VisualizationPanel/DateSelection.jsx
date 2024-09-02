@@ -131,6 +131,22 @@ function DateSelection({
     return dates;
   }
 
+  function setMinimalFlyoverCloudCoverage(tiles, flyovers) {
+    flyovers.forEach((flyover) => {
+      // detects flyovers which have multiple tiles for same date
+      const tilesWithSameDate = tiles.filter(
+        (filterTile) => moment(flyover.fromTime).diff(moment(filterTile.sensingTime), 'days') === 0,
+      );
+
+      // sets the lowest cloud coverage percent
+      if (tilesWithSameDate.length > 1) {
+        tilesWithSameDate.sort((tileA, tileB) => tileA.meta.cloudCoverPercent - tileB.meta.cloudCoverPercent);
+
+        flyover.meta.minimalCloudCoverPercent = tilesWithSameDate[0].meta.cloudCoverPercent;
+      }
+    });
+  }
+
   async function fetchAvailableFlyovers(day) {
     day = day ? moment.utc(day) : moment.utc();
     const monthStart = day.clone().startOf('month');
@@ -138,7 +154,9 @@ function DateSelection({
     const { bbox, layer } = await getLayerAndBBoxSetup();
     let flyovers = [];
     try {
+      const { tiles } = await layer.findTiles(bbox, monthStart, monthEnd);
       flyovers = await layer.findFlyovers(bbox, monthStart, monthEnd);
+      setMinimalFlyoverCloudCoverage(tiles, flyovers);
     } catch (err) {
       handleError(err, 'Unable to fetch available flyovers!\n', (msg) => console.error(msg));
     }

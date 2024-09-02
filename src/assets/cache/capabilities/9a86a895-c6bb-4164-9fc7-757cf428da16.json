@@ -1,17 +1,20 @@
 {
-  "title" : "HRSI River and Lake Ice Extent S1",
-  "layers" : [ {
-    "id" : "RIVER-AND-LAKE-ICE-EXTENT-S1",
-    "name" : "River and Lake Ice Extent S1",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  }, {
-    "id" : "RIVER-AND-LAKE-ICE-EXTENT-S1-QUALITY",
-    "name" : "River and Lake Ice Extent S1 Quality",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  } ],
-  "datasets" : [ ]
+    "title": "HRSI River and Lake Ice Extent S1",
+    "layers": [
+        {
+            "id": "RIVER-AND-LAKE-ICE-EXTENT-S1",
+            "name": "River and Lake Ice Extent S1",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "RIVER-AND-LAKE-ICE-EXTENT-S1-QUALITY",
+            "name": "River and Lake Ice Extent S1 Quality",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
 }

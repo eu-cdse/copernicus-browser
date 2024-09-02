@@ -1,17 +1,20 @@
 {
-  "title" : "HRSI The SAR Wet Snow",
-  "layers" : [ {
-    "id" : "SAR-WET-SNOW",
-    "name" : "SAR Wet Snow",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  }, {
-    "id" : "SAR-WET-SNOW-QUALITY",
-    "name" : "SAR Wet Snow Quality",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  } ],
-  "datasets" : [ ]
+    "title": "HRSI The SAR Wet Snow",
+    "layers": [
+        {
+            "id": "SAR-WET-SNOW",
+            "name": "SAR Wet Snow",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "SAR-WET-SNOW-QUALITY",
+            "name": "SAR Wet Snow Quality",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
 }

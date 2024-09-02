@@ -15,7 +15,7 @@
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-12-05T16:18:33.800933Z",
+        "lastUpdated": "2024-08-28T12:40:12.642229Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
         },
@@ -24,7 +24,8 @@
         },
         "defaultStyleName": "default",
         "datasourceDefaults": {
-            "upsampling": "BILINEAR",
+            "upsampling": "BICUBIC",
+            "downsampling": "NEAREST",
             "mosaickingOrder": "mostRecent",
             "temporal": false,
             "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
@@ -47,7 +48,7 @@
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-14T11:00:53.962495Z",
+        "lastUpdated": "2024-08-28T12:38:40.714492Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
         },
@@ -56,6 +57,8 @@
         },
         "defaultStyleName": "default",
         "datasourceDefaults": {
+            "upsampling": "NEAREST",
+            "downsampling": "BILINEAR",
             "mosaickingOrder": "mostRecent",
             "temporal": false,
             "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
@@ -78,7 +81,7 @@
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-09-14T11:01:51.417582Z",
+        "lastUpdated": "2024-08-28T12:39:32.195221Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
         },
@@ -87,6 +90,8 @@
         },
         "defaultStyleName": "default",
         "datasourceDefaults": {
+            "upsampling": "NEAREST",
+            "downsampling": "BILINEAR",
             "mosaickingOrder": "mostRecent",
             "temporal": false,
             "collectionId": "65d4af-YOUR-INSTANCEID-HERE",
@@ -109,7 +114,7 @@
         "instance": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65330d-YOUR-INSTANCEID-HERE"
         },
-        "lastUpdated": "2023-12-14T14:24:10.505987Z",
+        "lastUpdated": "2024-08-28T12:40:34.272625Z",
         "dataset": {
             "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
         },
@@ -118,7 +123,8 @@
         },
         "defaultStyleName": "default",
         "datasourceDefaults": {
-            "upsampling": "BILINEAR",
+            "upsampling": "BICUBIC",
+            "downsampling": "NEAREST",
             "mosaickingOrder": "mostRecent",
             "temporal": false,
             "collectionId": "65d4af-YOUR-INSTANCEID-HERE",

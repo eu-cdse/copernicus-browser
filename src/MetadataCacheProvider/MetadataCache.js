@@ -15,15 +15,19 @@ export const cacheConfig = {
 };
 
 export const initMetadaCache = async (config) => {
-  DEFAULT_THEMES.forEach((t) =>
-    t.content.forEach(async (theme) => {
+  const p1 = DEFAULT_THEMES.map(async (t) => {
+    const p2 = t.content.map(async (theme) => {
       const instanceId = theme.url.split('/').pop();
       try {
-        const response = await import(`../assets/cache/${config.dir}/${instanceId}.json`);
-        config.cache[instanceId] = response.default;
+        if (instanceId !== undefined) {
+          const response = await import(`../assets/cache/${config.dir}/${instanceId}.json`);
+          config.cache[instanceId] = response.default;
+        }
       } catch (e) {}
-    }),
-  );
+    });
+    return Promise.all(p2);
+  });
+  await Promise.all(p1);
 };
 
 export const getMetadataFromCache = (config, cacheKey) => {

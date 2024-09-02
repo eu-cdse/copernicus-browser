@@ -1,64 +1,64 @@
 [
-  {
-      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW",
-      "id": "SAR-WET-SNOW",
-      "title": "SAR Wet Snow",
-      "description": "",
-      "styles": [
-          {
-              "name": "default",
-              "description": "Default layer style",
-              "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"WSM\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\nconst map = [\n  [110, 0xff4dff], //110 - Wet Snow\n  [125, 0xffffff], //115 - Dry Snow or Snow free or patchy snow\n  [200, 0x000000], //200 - Radar Shadow\n  [210, 0x4d4dff], //210 - Water\n  [220, 0x00a600], //220 - Forest\n  [230, 0xf2a64d], //230 - Urban Areas\n  [240, 0xccffcc], //240 - Non-mountain areas\n  [255, 0xff0000], //255 - NODATA\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return [\n    visualizer.process(sample.WSM)[0],\n    visualizer.process(sample.WSM)[1],\n    visualizer.process(sample.WSM)[2],\n    sample.dataMask,\n  ];\n}"
-          }
-      ],
-      "orderHint": 0,
-      "instance": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
-      },
-      "lastUpdated": "2024-07-08T15:06:54.533116Z",
-      "dataset": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-      },
-      "datasetSource": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-      },
-      "defaultStyleName": "default",
-      "datasourceDefaults": {
-          "mosaickingOrder": "mostRecent",
-          "temporal": false,
-          "collectionId": "c56d1d-YOUR-INSTANCEID-HERE",
-          "type": "CUSTOM"
-      }
-  },
-  {
-      "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW-QUALITY",
-      "id": "SAR-WET-SNOW-QUALITY",
-      "title": "SAR Wet Snow Quality",
-      "description": "",
-      "styles": [
-          {
-              "name": "default",
-              "description": "Default layer style",
-              "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"QCWSM\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\nconst map = [\n  [0, 0x00a600], //0 - High Quality\n  [1, 0xa6e64d], //1 - Medium Quality\n  [2, 0xf2a64d], //2 - Low Quality\n  [3, 0xff0000], //3 - Minimal Quality\n  [250, 0xcccccc], //250 - Masked\n  [255, 0x000000], //255 - NODATA\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return [\n    visualizer.process(sample.QCWSM)[0],\n    visualizer.process(sample.QCWSM)[1],\n    visualizer.process(sample.QCWSM)[2],\n    sample.dataMask,\n  ];\n}"
-          }
-      ],
-      "orderHint": 0,
-      "instance": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
-      },
-      "lastUpdated": "2024-07-08T15:06:54.528695Z",
-      "dataset": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-      },
-      "datasetSource": {
-          "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-      },
-      "defaultStyleName": "default",
-      "datasourceDefaults": {
-          "mosaickingOrder": "mostRecent",
-          "temporal": false,
-          "collectionId": "c56d1d-YOUR-INSTANCEID-HERE",
-          "type": "CUSTOM"
-      }
-  }
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW",
+        "id": "SAR-WET-SNOW",
+        "title": "SAR Wet Snow",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"WSM\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\nconst map = [\n  [110, 0xff4dff], //110 - Wet Snow\n  [125, 0xffffff], //115 - Dry Snow or Snow free or patchy snow\n  [200, 0x000000], //200 - Radar Shadow\n  [210, 0x4d4dff], //210 - Water\n  [220, 0x00a600], //220 - Forest\n  [230, 0xf2a64d], //230 - Urban Areas\n  [240, 0xccffcc], //240 - Non-mountain areas\n  [255, 0xff0000], //255 - NODATA\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return [\n    visualizer.process(sample.WSM)[0],\n    visualizer.process(sample.WSM)[1],\n    visualizer.process(sample.WSM)[2],\n    sample.dataMask,\n  ];\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-08T15:06:54.533116Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "c56d1d-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW-QUALITY",
+        "id": "SAR-WET-SNOW-QUALITY",
+        "title": "SAR Wet Snow Quality",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"QCWSM\", \"dataMask\"],\n    output: { bands: 4, sampleType: \"AUTO\" },\n  };\n}\nconst map = [\n  [0, 0x00a600], //0 - High Quality\n  [1, 0xa6e64d], //1 - Medium Quality\n  [2, 0xf2a64d], //2 - Low Quality\n  [3, 0xff0000], //3 - Minimal Quality\n  [250, 0xcccccc], //250 - Masked\n  [255, 0x000000], //255 - NODATA\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return [\n    visualizer.process(sample.QCWSM)[0],\n    visualizer.process(sample.QCWSM)[1],\n    visualizer.process(sample.QCWSM)[2],\n    sample.dataMask,\n  ];\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instance": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
+        },
+        "lastUpdated": "2024-07-08T15:06:54.528695Z",
+        "dataset": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
+        },
+        "datasetSource": {
+            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
+        },
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "c56d1d-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
 ]

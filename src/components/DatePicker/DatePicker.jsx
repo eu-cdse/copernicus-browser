@@ -131,7 +131,7 @@ class DatePicker extends Component {
       if (hasCloudCoverFilter && isZoomLevelOk) {
         dateArray = dateArray.map((date) => ({
           date: moment.utc(date.fromTime),
-          cloudCoverPercent: date.meta.averageCloudCoverPercent,
+          cloudCoverPercent: date.meta.minimalCloudCoverPercent ?? date.meta.averageCloudCoverPercent,
         }));
       } else {
         dateArray = dateArray.map((date) => ({ date: moment.utc(date), cloudCoverPercent: null }));

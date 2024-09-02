@@ -1,17 +1,20 @@
 {
-  "title" : "HRSI Persistent Snow Area",
-  "layers" : [ {
-    "id" : "PERSISTENT-SNOW-AREA",
-    "name" : "Persistent Snow Area",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  }, {
-    "id" : "PERSISTENT-SNOW-AREA-QUALITY",
-    "name" : "Persistent Snow Area Quality",
-    "description" : "",
-    "dataset" : "CUSTOM",
-    "legendUrl" : null
-  } ],
-  "datasets" : [ ]
+    "title": "HRSI Persistent Snow Area",
+    "layers": [
+        {
+            "id": "PERSISTENT-SNOW-AREA",
+            "name": "Persistent Snow Area",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "PERSISTENT-SNOW-AREA-QUALITY",
+            "name": "Persistent Snow Area Quality",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
 }
