@@ -38,6 +38,22 @@ class PreviewLayer extends React.Component {
     });
   };
 
+  updateStyleIfHighlighted = (state) => {
+    if (state) {
+      return hoverStyle;
+    } else {
+      return defaultStyle;
+    }
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isHighlighted !== this.props.isHighlighted) {
+      this.setState({
+        style: this.updateStyleIfHighlighted(this.props.isHighlighted),
+      });
+    }
+  }
+
   render() {
     return (
       <GeoJSON

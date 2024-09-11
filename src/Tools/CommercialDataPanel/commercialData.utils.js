@@ -7,28 +7,32 @@ import inside from 'turf-inside';
 import { t } from 'ttag';
 import jwt_dec from 'jwt-decode';
 import {
-  TPDICollections,
-  TPDProvider,
-  TPDI,
+  AirbusConstellation,
   BYOCLayer,
   BYOCSubTypes,
   CRS_EPSG4326,
-  AirbusConstellation,
   PlanetItemType,
   setTPDIServiceBaseURL,
+  TPDI,
+  TPDICollections,
+  TPDProvider,
 } from '@sentinel-hub/sentinelhub-js';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
-import store, { mainMapSlice, visualizationSlice, themesSlice, tabsSlice } from '../../store';
+import store, { mainMapSlice, tabsSlice, themesSlice, visualizationSlice } from '../../store';
 import {
+  OrderType,
+  SH_PAYING_ACCOUNT_TYPES,
+  TABS,
   TRANSACTION_TYPE,
   USER_INSTANCES_THEMES_LIST,
-  OrderType,
-  TABS,
-  SH_PAYING_ACCOUNT_TYPES,
 } from '../../const';
 import { getBoundsZoomLevel } from '../../utils/coords';
-import { isRectangle, isPolygon } from '../../utils/geojson.utils';
+import { isPolygon, isRectangle } from '../../utils/geojson.utils';
 import { getSHServiceRootUrl } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import {
+  coordinatesNormalization,
+  doCoordinatesCrossAntimeridian,
+} from '../../utils/handelAntimeridianCoord.utils';
 
 const SH_SERVICES_URL = import.meta.env.VITE_SH_SERVICES_URL;
 
@@ -187,7 +191,11 @@ export const checkUserAccount = async (user) => {
 };
 
 export const getBoundsAndLatLng = (geometry) => {
-  const layer = L.geoJSON(geometry);
+  const geometryCopy = { ...geometry };
+  if (doCoordinatesCrossAntimeridian(geometryCopy.coordinates)) {
+    geometryCopy.coordinates = coordinatesNormalization(geometryCopy.coordinates, true);
+  }
+  const layer = L.geoJSON(geometryCopy);
   const bounds = layer.getBounds();
   const { lat, lng } = bounds.getCenter();
   const zoom = getBoundsZoomLevel(bounds);

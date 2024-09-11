@@ -65,6 +65,7 @@ import {
   findLatestDateWithData,
   getQuarterlyInfo,
 } from '../Tools/VisualizationPanel/SmartPanel/LatestDataAction.utils';
+import { manipulateODataSearchResultsWithAntimeridianDuplicates } from '../utils/handelAntimeridianCoord.utils';
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
 
 const BASE_PANE_ID = 'baseMapPane';
@@ -98,6 +99,7 @@ class Map extends React.Component {
     resetAction: () => store.dispatch(mainMapSlice.actions.setLoadingMessage(null)),
   });
   state = {
+    searchResultsAreas: [],
     accountInfo: {
       payingAccount: false,
       quotasEnabled: false,
@@ -113,6 +115,19 @@ class Map extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
+    // This part refers to the case if the search result is in the antimeridian section
+    // (Each polygon moves at approximately +180 and creates duplicates at -180, so that it is not cut off in any direction that the user moves it).
+    if (this.props.searchResults !== prevProps.searchResults) {
+      const responseResult = manipulateODataSearchResultsWithAntimeridianDuplicates(
+        prevProps.searchResults,
+        this.props.searchResults,
+      );
+
+      this.setState({
+        searchResultsAreas: responseResult,
+      });
+    }
+
     if (prevProps.auth !== this.props.auth) {
       // const accountInfo = await checkUserAccount(this.props.auth.user);
       // this.setState({ accountInfo: accountInfo });
@@ -246,6 +261,7 @@ class Map extends React.Component {
       selectedThemeId,
       selectedTabIndex,
       displayingSearchResults,
+      // eslint-disable-next-line no-unused-vars
       searchResults,
       highlightedTile,
       comparedLayers,
@@ -618,20 +634,16 @@ class Map extends React.Component {
         )}
         {!this.props.poiPosition ? null : <Marker id="poi-layer" position={this.props.poiPosition} />}
 
-        {searchResults && selectedTabIndex === TABS.SEARCH_TAB ? (
+        {this.state.searchResultsAreas && selectedTabIndex === TABS.SEARCH_TAB ? (
           <FeatureGroup onClick={this.onPreviewClick}>
-            {searchResults.map((tile, i) => (
-              <PreviewLayer tile={tile} key={`preview-layer-search-results-${i}`} />
+            {this.state.searchResultsAreas.map((tile, i) => (
+              <PreviewLayer
+                isHighlighted={tile.id === highlightedTile?.id}
+                tile={tile}
+                key={`preview-layer-search-results-${i}`}
+              />
             ))}
           </FeatureGroup>
-        ) : null}
-
-        {highlightedTile && selectedTabIndex === TABS.SEARCH_TAB ? (
-          <GeoJSON
-            key={highlightedTile.id}
-            data={highlightedTile.geometry}
-            style={() => highlightedTileStyle}
-          />
         ) : null}
 
         {this.props.elevationProfileHighlightedPoint ? (

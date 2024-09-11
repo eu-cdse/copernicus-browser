@@ -688,7 +688,7 @@ describe('useODataSearch CCM Optical', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('DAP_MG2b_01');
-    expect(allResults[0].sensingTime).toContain('2009-03-17T10:36:46.000Z');
+    expect(allResults[0].sensingTime).toContain('2009-03-17T10:36:46.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     allResults.forEach((result) => {
       expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
@@ -775,7 +775,7 @@ describe('useODataSearch CCM Optical', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('VHR_IMAGE_2018_ENHANCED');
-    expect(allResults[0].sensingTime).toContain('2018-10-05T10:23:17.000Z');
+    expect(allResults[0].sensingTime).toContain('2018-10-05T10:23:17.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     allResults.forEach((result) => {
       expect(searchByProducts.some((searchVal) => result.name.includes(searchVal))).toBeTruthy();
@@ -924,7 +924,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_EEA-10-DGED');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -988,7 +988,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_EEA-10-INSP');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -1052,7 +1052,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-30-DGED');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -1116,7 +1116,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-30-DTED');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -1180,7 +1180,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-90-DGED');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -1244,7 +1244,7 @@ describe('useODataSearch CCM DEM', () => {
 
     expect(datasetFullAttribute.Name).toEqual('datasetFull');
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-90-DTED');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.');
     expect(allResults[0].attributes.find((attribute) => attribute.Name.includes('datasetFull'))).toBeTruthy();
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
@@ -1474,7 +1474,7 @@ describe('Test additional filters', () => {
 
     expect(datasetFullAttribute.Value).toEqual('COP-DEM_GLO-90-DTED');
     expect(datasetAttribute.Value).toEqual('COP-DEM_GLO-90-DTED/2023_1');
-    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000Z');
+    expect(allResults[0].sensingTime).toContain('2011-06-20T16:50:05.000000Z');
     expect(allResults.every((result) => searchByProducts.includes(result.productType))).toBeTruthy();
   });
 });

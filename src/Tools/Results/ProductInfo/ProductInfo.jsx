@@ -112,9 +112,7 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
             disabled={workspaceProductErrorMessage}
             svgIcon={WorkspacePlusIcon}
             text={t`Workspace`}
-            title={
-              workspaceProductErrorMessage ? workspaceProductErrorMessage : ResultItemLabels.addToWorkspace()
-            }
+            title={ResultItemLabels.addToWorkspace()}
             onClick={() => {
               addProductToWorkspace(product);
               onClose();
@@ -130,11 +128,7 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
             loading={downloadInProgress}
             icon="download"
             text={t`Download`}
-            title={
-              downloadProductErrorMessage
-                ? downloadProductErrorMessage
-                : ResultItemLabels.downloadProductLabel()
-            }
+            title={ResultItemLabels.downloadProductLabel()}
             onClick={onDownload}
             onDisabledClick={() => {
               if (downloadProductErrorMessage) {

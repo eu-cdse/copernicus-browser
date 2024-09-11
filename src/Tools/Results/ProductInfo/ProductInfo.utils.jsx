@@ -126,13 +126,9 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
 
   if (!userToken) {
     errorMessage = getLoggedInErrorMsg();
-  }
-
-  if (!product.online) {
+  } else if (!product.online) {
     errorMessage = ErrorMessage.downloadOfflineProduct();
-  }
-
-  if (shouldShowCCMAccessError(userToken, product)) {
+  } else if (shouldShowCCMAccessError(userToken, product)) {
     errorMessage = ErrorMessage.CCMAccessRoleNotEligible();
   }
 

@@ -162,22 +162,14 @@ export const ResultItemFooter = ({
             title={ResultItemLabels.zoomToProduct()}
           ></i>
         )}
-        <WorkspacePlus
-          className={`workspace-plus ${workspaceProductErrorMessage ? 'disabled' : ''}`}
-          title={
-            workspaceProductErrorMessage ? workspaceProductErrorMessage : ResultItemLabels.addToWorkspace()
-          }
-          onClick={handleAddToWorkspace}
-        />
+        <i title={ResultItemLabels.addToWorkspace()} onClick={handleAddToWorkspace}>
+          <WorkspacePlus className={`workspace-plus ${workspaceProductErrorMessage ? 'disabled' : ''}`} />
+        </i>
         <i
           className={`fa fa-download ${
             downloadInProgress ? 'active disabled' : downloadDisabled ? 'disabled' : ''
           }`}
-          title={
-            downloadProductErrorMessage
-              ? downloadProductErrorMessage
-              : ResultItemLabels.downloadProductLabel()
-          }
+          title={ResultItemLabels.downloadProductLabel()}
           onClick={onDownload}
         ></i>
       </div>
