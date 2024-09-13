@@ -55,6 +55,10 @@ class PreviewLayer extends React.Component {
   }
 
   render() {
+    if (this.props.tile.geometry === undefined || Object.keys(this.props.tile.geometry).length === 0) {
+      return null;
+    }
+
     return (
       <GeoJSON
         data={this.props.tile.geometry}

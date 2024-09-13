@@ -129,7 +129,7 @@ export class TimelapseControls extends Component {
           loading={loadingImages || loadingLayer}
         />
 
-        {!isMobile && !!import.meta.env.VITE_EOB_BACKEND && (
+        {!isMobile && !!import.meta.env.VITE_CDSE_BACKEND && (
           <div className="add-layers">
             <span onClick={() => onSidebarPopupToggle('pins')}>
               <i className="fas fa-plus-circle"></i> {t`Add layers from pins`}

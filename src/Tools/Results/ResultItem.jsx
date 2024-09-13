@@ -201,7 +201,11 @@ const ResultItem = ({
           text={t`Visualize`}
           className="small"
           onClick={() => visualize({ onResultSelected, tile, currentZoom: zoom })}
-          title={visualizeButtonDisabled ? visualizeButtonDisabled : ''}
+          title={
+            visualizeButtonDisabled
+              ? visualizeButtonDisabled
+              : t`Visualize the latest acquisition for this day/location`
+          }
         />
         <ResultItemFooter
           userToken={userToken}

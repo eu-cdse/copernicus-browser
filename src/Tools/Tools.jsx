@@ -110,7 +110,7 @@ class Tools extends Component {
       selectedThemeId,
       newPinsCount,
     } = this.props;
-    if (!import.meta.env.VITE_EOB_BACKEND) {
+    if (!import.meta.env.VITE_CDSE_BACKEND) {
       store.dispatch(notificationSlice.actions.displayError(FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG));
       return;
     }

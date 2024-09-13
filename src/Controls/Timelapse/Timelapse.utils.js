@@ -423,7 +423,7 @@ export const isImageCoverageEnough = (coveragePercent, canWeFilterByCoverage, mi
 
 export const generateS3PreSignedPost = async (access_token, filename) => {
   try {
-    const url = `${import.meta.env.VITE_EOB_BACKEND}generatepresignedpost`;
+    const url = `${import.meta.env.VITE_CDSE_BACKEND}generatepresignedpost`;
     const requestParams = {
       responseType: 'json',
       headers: {

@@ -41,7 +41,7 @@ class App extends Component {
   async componentDidMount() {
     const { sharedPinsListIdFromUrlParams, compareShare } = this.props;
     if (sharedPinsListIdFromUrlParams) {
-      if (import.meta.env.VITE_EOB_BACKEND) {
+      if (import.meta.env.VITE_CDSE_BACKEND) {
         const pins = await importSharedPins(sharedPinsListIdFromUrlParams);
         if (pins) {
           this.setLastAddedPin(pins.uniqueId);

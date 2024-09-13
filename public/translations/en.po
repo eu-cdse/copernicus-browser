@@ -8339,3 +8339,6 @@ msgid ""
 "[here](https://land.copernicus.eu/en/technical-library/product-user-manual-"
 "of-vegetation-indices/)."
 msgstr ""
+
+msgid "Visualize the latest acquisition for this day/location"
+msgstr ""

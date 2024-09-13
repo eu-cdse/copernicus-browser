@@ -70,7 +70,7 @@ Environment variables needed for anonymous usage:
 
 #### Optional
 
-- `VITE_EOB_BACKEND`: Backend for saving user pins and timelapses
+- `VITE_CDSE_BACKEND`: Backend for saving user pins and timelapses
   - contact us for support
   - without it, users won't be able to save pins without downloading them or share timelapses
 - `VITE_MAPTILER_KEY`: MapTiler key for accessing maps on MapTiler

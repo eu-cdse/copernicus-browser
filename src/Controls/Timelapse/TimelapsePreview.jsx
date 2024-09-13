@@ -25,7 +25,7 @@ export class TimelapsePreview extends Component {
     if (displaySocialShareOptions) {
       this.onCloseWarning();
 
-      if (!import.meta.env.VITE_EOB_BACKEND) {
+      if (!import.meta.env.VITE_CDSE_BACKEND) {
         this.props.showErrorMessage(FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG);
         return;
       }

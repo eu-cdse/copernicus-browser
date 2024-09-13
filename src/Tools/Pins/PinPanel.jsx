@@ -57,7 +57,7 @@ const PINS_LC_NAME = 'eob-pins';
 export const UNSAVED_PINS = 'unsaved-pins';
 export const SAVED_PINS = 'saved-pins';
 export const OPERATION_SHARE = 'share';
-export const USE_PINS_BACKEND = false;
+export const USE_PINS_BACKEND = true;
 
 const ORDERING_MODE = {
   TITLE: 'title',
@@ -742,7 +742,7 @@ class PinPanel extends Component {
     const arePinsSelectable = operation === OPERATION_SHARE;
     const areAllPinsSelected = pinItems && selectedPins && selectedPins.length === pinItems.length;
 
-    if (!import.meta.env.VITE_EOB_BACKEND) {
+    if (!import.meta.env.VITE_CDSE_BACKEND) {
       return (
         <div className="pin-panel">
           <div className="pins-container">
