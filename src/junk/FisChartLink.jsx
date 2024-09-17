@@ -6,7 +6,13 @@ import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
 import { checkAllMandatoryOutputsExist } from '../utils/parseEvalscript';
 import { reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../const';
-import { getLayerNotSelectedMsg, getNotAvailableForErrorMsg, getLoggedInErrorMsg } from './ConstMessages';
+import {
+  getLayerNotSelectedMsg,
+  getNotAvailableForErrorMsg,
+  getLoggedInErrorMsg,
+  getHowToConfigLayersStatInfoMsg,
+  getStatisticalInfoMsg,
+} from './ConstMessages';
 
 const FisChartLink = (props) => {
   const [statisticalApiSupported, setStatisticalApiSupported] = useState(false);
@@ -46,12 +52,22 @@ const FisChartLink = (props) => {
   const isStatAvailableOnDatasource = isSelectedResult && statisticalApiSupported;
   const isLoggedIn = !!props.user.userdata;
 
+  const getTitleBasedOnStatus = (errorMessage) => {
+    if (!isLoggedIn) {
+      return errorMessage;
+    }
+
+    return `${getStatisticalInfoMsg()} (${
+      !isSelectedResult ? getLayerNotSelectedMsg() : getNotAvailableForErrorMsg(layerName)
+    }).`;
+  };
+
   const statsEnabled = () => (
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
     <a
       onClick={() => props.openFisPopup({ layerName: layerName })}
-      title={t`Statistical Info / Feature Info Service chart`}
+      title={getStatisticalInfoMsg()}
       className={`${props.active ? 'active' : ''}`}
     >
       <i className={`fa fa-bar-chart`} />
@@ -59,16 +75,15 @@ const FisChartLink = (props) => {
   );
 
   const statsError = (errorMessage) => {
-    const errorMsgWithTitle = t`Statistical Info / Feature Info Service chart` + `\n(${errorMessage})`;
     return (
       // jsx-a11y/anchor-is-valid
       // eslint-disable-next-line
       <a
         onClick={(e) => {
           e.preventDefault();
-          props.onErrorMessage(errorMsgWithTitle);
+          props.onErrorMessage(errorMessage);
         }}
-        title={errorMsgWithTitle}
+        title={getTitleBasedOnStatus(errorMessage)}
         className="disabled"
       >
         <i className={`fa fa-bar-chart`} />
@@ -81,7 +96,13 @@ const FisChartLink = (props) => {
   }
 
   if (!isStatAvailableOnDatasource) {
-    return statsError(!isSelectedResult ? getLayerNotSelectedMsg() : getNotAvailableForErrorMsg(layerName));
+    const statisticalInfoMsg = getStatisticalInfoMsg();
+    const additionalErrorMsg = !isSelectedResult
+      ? `(${getLayerNotSelectedMsg()})`
+      : `(${getNotAvailableForErrorMsg(layerName)}) \n${getHowToConfigLayersStatInfoMsg()}`;
+    const combinedStatErrorMsg = `${statisticalInfoMsg} \n${additionalErrorMsg}`;
+
+    return statsError(combinedStatErrorMsg);
   }
 
   return statsEnabled();

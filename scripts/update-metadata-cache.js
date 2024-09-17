@@ -1,28 +1,22 @@
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
 import fs from 'fs';
-import axios from 'axios';
-import dotenv from 'dotenv';
-import { getAuthToken } from './update-previews-utils';
-
-dotenv.config({ path: './.env' });
+import {
+  createHttpClient,
+  fetchInstancesById,
+  getArrayOfInstanceIds,
+  getCsvFullPath,
+  OGC_REQUEST_STATE,
+  setOgcRequestsStates,
+  SH_SERVICE_BASE_URL,
+} from './shared-functions';
+import { exit } from 'process';
 
 const rootDir = './src/assets/cache/';
 
-const SH_SERVICE_BASE_URL = 'https://sh.dataspace.copernicus.eu';
+const scriptParameters = process.argv.slice(2);
 
 function printOut(title, value) {
   console.log(`\n${'='.repeat(10)}\n${title}`, JSON.stringify(value, null, 4));
-}
-
-async function createHttpClient(authBaseUrl) {
-  const access_token = await getAuthToken(authBaseUrl);
-
-  const client = axios.create({
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  });
-  return client;
 }
 
 async function getConfigurationLayers(client, instanceId) {
@@ -47,16 +41,6 @@ async function getCapabilities(client, instanceId) {
   }
 
   return data;
-}
-
-async function fetchInstances(client) {
-  const response = await client.get(`${SH_SERVICE_BASE_URL}/configuration/v1/wms/instances`);
-  const instances = response.data
-    .map((instance) => instance.id)
-    .filter((instanceId) =>
-      DEFAULT_THEMES.some((t) => t.content.find((themes) => themes.url.indexOf(instanceId) > -1)),
-    );
-  return instances;
 }
 
 function save(projectSubDir, instanceId, backup) {
@@ -99,16 +83,26 @@ function removeExisting(instances) {
   });
 }
 
-async function run() {
+async function run(scriptParameters) {
   const authBaseUrl = process.env.APP_ADMIN_AUTH_BASEURL;
   if (!authBaseUrl) {
     throw new Error('APP_ADMIN_AUTH_BASEURL is not set');
   }
 
+  const csvFullPath = getCsvFullPath(scriptParameters);
+
+  let instances = csvFullPath ? getArrayOfInstanceIds(csvFullPath) : [];
+
   const httpClient = await createHttpClient(authBaseUrl);
-  //fetch instances from admin account
-  const instances = await fetchInstances(httpClient);
-  //remove existing cache
+
+  if (instances.length === 0) {
+    //fetch instances from admin account
+    instances = await fetchInstancesById(httpClient);
+  }
+
+  await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.ENABLE, httpClient);
+
+  // remove existing cache
   removeExisting(instances);
   for (let instanceId of instances) {
     printOut('Instance', instanceId);
@@ -127,9 +121,19 @@ async function run() {
       console.error('Saving response for getCapabilities ', instanceId, err);
     }
   }
+
+  await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.DISABLE, httpClient);
 }
 
-run()
+if (scriptParameters.length > 1) {
+  console.error('Incorrect number of parameters have been added.');
+  exit(1);
+}
+
+// examples
+// node -r esm scripts/update-metadata-cache
+// node -r esm scripts/update-metadata-cache data.csv
+run(scriptParameters)
   .then(() => {
     console.log('Done.');
   })

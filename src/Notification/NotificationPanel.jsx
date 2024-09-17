@@ -26,11 +26,7 @@ export const NotificationPanel = ({ type, msg, className, children }) => {
       {icon && <i className={`fas fa-${icon}`} />}
 
       {paragraphs &&
-        paragraphs.map((item, i) => (
-          <p key={i}>
-            <ReactMarkdown children={item} linkTarget="_blank" />
-          </p>
-        ))}
+        paragraphs.map((item, i) => <ReactMarkdown key={i} children={item} linkTarget="_blank" />)}
 
       {children && <p>{children}</p>}
     </div>

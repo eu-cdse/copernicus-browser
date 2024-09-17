@@ -545,7 +545,7 @@ export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelec
   } else if (customSelected) {
     layerName = 'Custom_script';
   } else {
-    layerName = layerTitle.replace(/ /gi, '_');
+    layerName = layerTitle?.replace(/ /gi, '_');
   }
 
   const datasetLabel = checkIfCustom(datasetId) ? datasetLabels[CUSTOM] : datasetLabels[datasetId];

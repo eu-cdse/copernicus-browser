@@ -170,13 +170,16 @@ class AdvancedSearch extends Component {
         newZoom = maxZoom;
       }
 
-      store.dispatch(
-        mainMapSlice.actions.setPosition({
-          lat: lat,
-          lng: lng,
-          zoom: newZoom,
-        }),
-      );
+      // zoom only in case if it can't display anything on the current resolution due to the min message
+      if (this.props.zoom < minZoom) {
+        store.dispatch(
+          mainMapSlice.actions.setPosition({
+            lat: lat,
+            lng: lng,
+            zoom: newZoom,
+          }),
+        );
+      }
     }
     this.props.setCollectionSelectionExpanded && this.props.setCollectionSelectionExpanded(false);
 
