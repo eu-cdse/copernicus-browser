@@ -11,7 +11,7 @@ const TableRow = ({ id, items }) => (
 
 const ValuesTable = ({ series = [], bands = [], selected = [] }) => {
   const displayedSeries = series?.filter((s) => selected.find((sel) => sel === s.id)) ?? [];
-  const headerItems = ['', ...displayedSeries.map((s) => s.title)];
+  const headerItems = ['', ...displayedSeries.map((s) => s.getTitle())];
 
   return (
     <div className="values-table">

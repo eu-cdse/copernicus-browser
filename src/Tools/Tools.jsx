@@ -227,7 +227,7 @@ class Tools extends Component {
                 saveLocalPinsOnLogin={this.saveLocalPinsOnLogin}
               />
             </Tab>
-            <Tab id="visualization-tab" title={t`Search`} renderKey={TABS.SEARCH_TAB}>
+            <Tab id="search-tab" title={t`Search`} renderKey={TABS.SEARCH_TAB}>
               <div className="advanced-search-wrapper">
                 <AdvancedSearch
                   showLayerPanel={showLayerPanel}

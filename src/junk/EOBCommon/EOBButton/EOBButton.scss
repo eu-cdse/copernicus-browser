@@ -50,6 +50,11 @@
     font-size: 15px;
   }
 
+  &.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &.visualize {
     text-align: center;
     padding: 6px 6px;

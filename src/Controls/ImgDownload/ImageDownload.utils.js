@@ -12,6 +12,7 @@ import {
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 import { point as turfPoint } from '@turf/helpers';
+import JSZip from 'jszip';
 
 import {
   getDataSourceHandler,
@@ -1563,4 +1564,53 @@ function getLegendTextWidth(txt, fontSize, fontFamily) {
   let context = element.getContext('2d');
   context.font = `${fontSize} ${fontFamily}`;
   return context.measureText(txt).width;
+}
+
+export function generateKmlFile(bounds, imageUrl) {
+  const north = bounds.getNorthEast().lat;
+  const south = bounds.getSouthWest().lat;
+  const east = bounds.getNorthEast().lng;
+  const west = bounds.getSouthWest().lng;
+
+  const centerLatitude = (north + south) / 2;
+  const centerLongitude = (east + west) / 2;
+
+  return `<?xml version='1.0' encoding='UTF-8'?>
+  <kml xmlns="http://www.opengis.net/kml/2.2">
+    <Folder>
+      <name>Sentinel-Hub Overlays</name>
+      <description>Ground overlays</description>
+      <GroundOverlay>
+        <name>Sentinel-Hub overlay</name>
+        <Icon>
+          <href>${imageUrl}</href>
+        </Icon>
+        <LatLonBox>
+          <north>${north}</north>
+          <south>${south}</south>
+          <east>${east}</east>
+          <west>${west}</west>
+        </LatLonBox>
+        <LookAt>
+    
+            <longitude>${centerLongitude}</longitude>
+    
+            <latitude>${centerLatitude}</latitude>
+    
+            <altitudeMode>clampToGround</altitudeMode>
+    
+        </LookAt>
+      </GroundOverlay>
+    </Folder>
+  </kml>`;
+}
+
+export async function prepareKmzFile(kmlContent, imageBlob, imageFormat) {
+  const zip = new JSZip();
+
+  zip.file('doc.kml', kmlContent);
+
+  zip.file(`image.${imageFormat}`, imageBlob.blob);
+
+  return await zip.generateAsync({ type: 'blob' });
 }

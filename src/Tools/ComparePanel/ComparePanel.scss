@@ -44,6 +44,7 @@
         .compare-mode-select-dropdown {
           text-align: start;
           width: 100%;
+          max-width: 77px;
 
           /* stylelint-disable */
           .compare-mode-select__single-value {
@@ -76,6 +77,13 @@
                   stroke: $grayColor;
                 }
               }
+            }
+          }
+
+          .compare-mode-select__menu-portal {
+            & > * {
+              right: 0;
+              width: fit-content;
             }
           }
           /* stylelint-enable */

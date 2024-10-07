@@ -85,11 +85,45 @@ const S5P = {
     t`The absolute Orbit Number is the number of orbits that have elapsed since the first ascending node crossing after launch.`,
 };
 
+const OPTICAL = {
+  [AttributeNames.eopIdentifier]: () =>
+    t`The unique identifier for a metadata item, including the ground segment namespace to ensure uniqueness within EOP. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+  [AttributeNames.platformShortName]: () =>
+    t`Four characters code used for identifying the specific mission (e.g. SP05 for Spot5, PH00 for Pleiades Constellation). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+  [AttributeNames.platformName]: () =>
+    t`Full mission identifier name (e.g. SPOT 6/7 Constellation, Planetscope). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+  [AttributeNames.dataset]: () =>
+    t`Full dataset identifier associated to the product (e.g. VHR_IMAGE_2021/IE/Level_3). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+  [AttributeNames.productType]: () =>
+    t`The product type, specific to the mission, instrument and processing level (e.g. HRG_THX__3_56FB). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+  [AttributeNames.acrossTrackIncidenceAngle]: () =>
+    t`Maximum absolute value of Off Nadir Angle of the acquired data when available (optional). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data).`,
+};
+
+const CCM_SAR = {
+  [AttributeNames.eopIdentifier]: () =>
+    t`The unique identifier for a metadata item, including the ground segment namespace to ensure uniqueness within EOP. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data).`,
+  [AttributeNames.platformShortName]: () =>
+    t`Four characters code used for identifying the specific mission (e.g. CS01 for COSMO-SkyMed 1, IE00 for ICEYE). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data).`,
+  [AttributeNames.platformName]: () =>
+    t`Full mission identifier name (e.g. RADARSAT-2, TerraSAR-X). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data).`,
+  [AttributeNames.dataset]: () =>
+    t`Full dataset identifier associated to the product (e.g. SAR_SEA_ICE/RS02/Eurarctic). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data).`,
+  [AttributeNames.productType]: () =>
+    t`The product type, specific to the mission, instrument and processing level (e.g. SAR_SW_SCW_1BD2). See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data).`,
+};
+
 const DEM = {
   open: () =>
     t`GLO-30 and GLO-90 are free and open COP DEM datasets, offering global coverage at resolutions of 30 and 90 m.`,
   restricted: () =>
     t`EEA-10 is a COP DEM dataset available for eligible users only, offering European coverage at resolution of 10 m.`,
+  [AttributeNames.eopIdentifier]: () =>
+    t`The unique identifier for a metadata item, including the ground segment namespace to ensure uniqueness within EOP. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
+  [AttributeNames.deliveryId]: () =>
+    t`The delivery ID allows searching for a specific COP DEM delivery. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
+  [AttributeNames.gridId]: () =>
+    t`This attribute allows selection of available data for a specific grid ID. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
 };
 
 const InstrumentTooltips = {
@@ -101,6 +135,9 @@ const AttributeTooltips = {
   S2,
   S3,
   S5P,
+  OPTICAL,
+  CCM_SAR,
+  DEM,
 };
 
 export { InstrumentTooltips, AttributeTooltips };

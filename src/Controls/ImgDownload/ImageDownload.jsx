@@ -25,6 +25,8 @@ import {
   getNicename,
   fetchAndPatchImagesFromParams,
   getImageDimensions,
+  generateKmlFile,
+  prepareKmzFile,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
@@ -357,7 +359,7 @@ function ImageDownload(props) {
       datasetId: datasetId,
       width: width,
       height: height,
-      imageFormat: imageFormat,
+      imageFormat: getCorrespondingImageFormatIfKmz(imageFormat),
       selectedCrs: selectedCrs,
       fromTime: fromTime,
       toTime: toTime,
@@ -439,11 +441,23 @@ function ImageDownload(props) {
     const { ext: imageExt } = IMAGE_FORMATS_INFO[imageFormat];
 
     if (images.length === 1) {
-      FileSaver.saveAs(images[0].blob, `${images[0].nicename}.${imageExt}`);
+      if (imageExt === 'kmz') {
+        const kml = generateKmlFile(bounds, `image.${baseParams.imageFormat}`);
+        const kmz = await prepareKmzFile(kml, images[0], baseParams.imageFormat);
+        FileSaver.saveAs(kmz, `${images[0].nicename}.${imageExt}`);
+      } else {
+        FileSaver.saveAs(images[0].blob, `${images[0].nicename}.${imageExt}`);
+      }
     } else if (images.length > 1) {
       const zip = new JSZip();
       for (let i = 0; i < images.length; i++) {
-        zip.file(`${images[i].nicename}.${imageExt}`, images[i].blob);
+        if (imageExt === 'kmz') {
+          const kml = generateKmlFile(bounds, `image.${baseParams.imageFormat}`);
+          const kmz = await prepareKmzFile(kml, images[i], baseParams.imageFormat);
+          zip.file(`${images[i].nicename}.kmz`, kmz);
+        } else {
+          zip.file(`${images[i].nicename}.${imageExt}`, images[i].blob);
+        }
       }
 
       if (Object.keys(zip.files).length > 0) {
@@ -453,6 +467,16 @@ function ImageDownload(props) {
       }
     }
     setLoadingImages(false);
+  }
+
+  function getCorrespondingImageFormatIfKmz(imageFormat) {
+    if (imageFormat === IMAGE_FORMATS.KMZ_JPG) {
+      return IMAGE_FORMATS.JPG;
+    } else if (imageFormat === IMAGE_FORMATS.KMZ_PNG) {
+      return IMAGE_FORMATS.PNG;
+    } else {
+      return imageFormat;
+    }
   }
 
   async function downloadPrint(formData) {

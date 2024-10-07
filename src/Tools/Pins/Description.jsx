@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
 import { t } from 'ttag';
 
 import ExternalLink from '../../ExternalLink/ExternalLink';
 import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPanel';
 
 import PencilIcon from './icons/pencil-icon.svg?react';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 class Description extends React.Component {
   state = {
@@ -52,7 +51,7 @@ class Description extends React.Component {
           <NotificationPanel type="info" msg={t`This pin currently has no description.`} />
         ) : (
           <ReactMarkdown
-            rehypePlugins={[rehypeRaw, rehypeSanitize]}
+            rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
             children={content || ''}
             components={{
               link: (props) => <ExternalLink href={props.href}>{props.children}</ExternalLink>,

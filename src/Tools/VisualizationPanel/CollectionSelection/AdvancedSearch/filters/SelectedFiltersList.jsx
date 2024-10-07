@@ -26,12 +26,16 @@ const renderArrayAsTags = ({ collectionId, filterItemId, value, onChange }) =>
     />
   ));
 
-const renderFilterItemValue = ({ collectionId, filterItemId, value, onChange }) => {
+const renderFilterItemValue = ({ collectionId, filterItem, filterItemId, value, onChange }) => {
   if (value === null || value === undefined || value === '') {
     return null;
   }
-  const render = Array.isArray(value) ? renderArrayAsTags : renderValueAsTag;
-  return render({ collectionId, filterItemId, value, onChange });
+  const render = filterItem.customTag
+    ? filterItem.customTag
+    : Array.isArray(value)
+    ? renderArrayAsTags
+    : renderValueAsTag;
+  return render({ collectionId, filterItemId, value, onChange, Tag });
 };
 
 const SelectedFiltersList = ({ collectionId, selectedFilters, onChange, allFilters = [] }) => {
@@ -47,6 +51,7 @@ const SelectedFiltersList = ({ collectionId, selectedFilters, onChange, allFilte
           renderFilterItemValue({
             collectionId: collectionId,
             filterItemId: filterItem.id,
+            filterItem: filterItem,
             value: selectedFilters[filterItem.id],
             onChange: (value) => onChange(collectionId, filterItem.id, value),
           }),

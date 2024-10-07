@@ -199,7 +199,7 @@ const ResultItem = ({
         <EOBButton
           disabled={!!visualizeButtonDisabled}
           text={t`Visualize`}
-          className="small"
+          className="small ellipsis"
           onClick={() => visualize({ onResultSelected, tile, currentZoom: zoom })}
           title={
             visualizeButtonDisabled

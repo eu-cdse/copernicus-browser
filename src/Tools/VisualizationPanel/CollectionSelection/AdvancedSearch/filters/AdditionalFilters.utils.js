@@ -82,6 +82,14 @@ export const createS1GRDResolutionFilter = (key, value) => {
   return s1GRDResolutionFilter;
 };
 
+export const createAcrossTrackIncidenceAngleFilter = (key, value) => {
+  const values = [value, -value];
+  const filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
+  filter.attribute(ODataAttributes.acrossTrackIncidenceAngle, ODataFilterOperator.le, Math.max(...values));
+  filter.attribute(ODataAttributes.acrossTrackIncidenceAngle, ODataFilterOperator.ge, Math.min(...values));
+  return filter;
+};
+
 export const getS5MaxAbsoluteOrbit = () => {
   const days = moment.utc().endOf('day').diff(moment.utc('2017-10-13'), 'days');
   const orbitalCycle = 16;

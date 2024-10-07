@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
 
 import ExternalLink from '../../../ExternalLink/ExternalLink';
 import Legend from '../Legend';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../rehypeConfig';
 
 const LayerDetails = ({ viz, legend, detailsOpen, longDescription }) => {
   if (!detailsOpen) {
@@ -16,7 +15,7 @@ const LayerDetails = ({ viz, legend, detailsOpen, longDescription }) => {
       <Legend legendDefinitionFromLayer={legend} legendUrl={viz.legendUrl} />
       <div className="layer-description">
         <ReactMarkdown
-          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
           children={longDescription}
           linkTarget="_blank"
           components={{

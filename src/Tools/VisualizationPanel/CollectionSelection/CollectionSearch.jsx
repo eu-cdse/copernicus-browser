@@ -57,6 +57,7 @@ export const CollectionSearchTools = ({
         <div
           className={`collection-search-tools-wrapper ${showLayerPanel ? 'active' : ''}`}
           title={t`Layers Panel`}
+          id="layers-panel-button"
         >
           <Layer />
         </div>
@@ -72,6 +73,7 @@ export const CollectionSearchTools = ({
             highlightsAvailable ? '' : 'disabled'
           }`}
           title={t`Highlights Panel`}
+          id="highlights-panel-button"
         >
           <Highlight />
         </div>
@@ -85,6 +87,7 @@ export const CollectionSearchTools = ({
         <div
           className={`collection-search-tools-wrapper ${showComparePanel ? 'active' : ''}`}
           title={t`Compare Panel`}
+          id="compare-panel-button"
         >
           <Compare />
         </div>
@@ -94,6 +97,7 @@ export const CollectionSearchTools = ({
         <div
           className={`collection-search-tools-wrapper ${showPinPanel ? 'active' : ''}`}
           title={t`Pins Panel`}
+          id="pins-panel-button"
         >
           <Pin />
         </div>

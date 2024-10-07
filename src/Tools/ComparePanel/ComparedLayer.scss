@@ -84,18 +84,19 @@
         margin-bottom: 5px;
 
         label {
+          text-wrap: nowrap;
           color: $textColor;
         }
 
         span {
-          display: inline-block;
-          min-width: 30px;
-          margin-right: 5px;
+          display: contents;
         }
 
         .rc-slider {
+          width: 100%;
           margin: 0 15px;
           height: 23px;
+          transform: translateY(12.5%);
 
           .rc-slider-rail {
             height: 1px;

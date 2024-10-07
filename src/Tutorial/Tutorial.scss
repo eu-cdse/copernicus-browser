@@ -1,28 +1,5 @@
 @import '../variables.module.scss';
 
-.tutorial-wrap {
-  background-color: rgb(255, 255, 255);
-  border-radius: 5px;
-  box-sizing: border-box;
-  color: rgb(51, 51, 51);
-  font-size: 16px;
-  max-width: 100%;
-  padding: 15px;
-  position: relative;
-  width: 800px;
-  max-height: 80vh;
-}
-
-.tutorial-body {
-  line-height: 1.4;
-  text-align: center;
-
-  a {
-    color: $primaryColor;
-    cursor: pointer;
-  }
-}
-
 .activate-close-animation {
   display: block !important;
   animation-name: animateCloseInfo;
@@ -50,109 +27,20 @@
   }
 }
 
-.close-cross {
-  background-color: transparent;
-  border: 0;
-  border-radius: 0;
-  cursor: pointer;
-  line-height: 1;
-  padding: 15px;
-  -webkit-appearance: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.tutorial-footer {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.tutorial-button {
-  background-color: rgb(182, 191, 0);
-  border: 0;
-  border-radius: 4px;
-  color: $mainMedium;
-  cursor: pointer;
-  line-height: 1;
-  padding: 8px;
-  -webkit-appearance: none;
-  font-size: 14px;
-  margin: 2px;
-}
-
-.tutorial-button:disabled {
-  background-color: rgb(145, 145, 145);
-}
-
-.content-div-style {
-  text-align: left;
-  max-height: 60vh;
-  overflow-y: auto;
-  font-size: 16px;
-
-  p:last-child {
-    color: $primaryColor;
-  }
-
-  h1 {
-    font-size: 32px;
-    font-family: $fontFamilyHeadline;
-    color: $primaryColor;
-  }
-}
-
-.tutorial-title {
-  font-size: 20px;
-  margin: 0 0 10px;
-}
-
-.content-wrapper {
-  padding: 0 10px;
-}
-
-.tutorial-firstpage-nextbutton {
-  margin-right: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
-  border: 1px solid rgb(182, 191, 0);
-}
-
-.tutorial-firstpage-closebutton {
-  padding-left: 70px;
-  padding-right: 70px;
-  font-size: 16px;
-  font-weight: $fontWeightBold;
-  text-align: center;
-  color: $whiteColor;
-  background-color: $primaryColor;
-  border-radius: 0;
-
-  &:hover {
-    background-color: $hoverPrimaryColor;
-  }
-}
-
-.tutorial-firstpage-footer {
-  padding-bottom: 30px;
-}
-
 .tutorial-panel-button {
   position: absolute !important;
   right: 10px;
   font-size: 12px;
-  color: #fff;
+  color: $primaryColor;
   z-index: 400;
-  background: $mainDark;
+  background: $whiteBackground;
   height: 40px;
   box-shadow: $boxShadow;
   text-align: center;
 
   &.tutorial-infopanel-button {
     top: 10px;
-    background: $mainDark;
+    background: $whiteBackground;
   }
 
   &#tutorial-animatedinfopanel-button {
@@ -169,7 +57,7 @@
   }
 
   i {
-    font-size: 21px;
+    font-size: 20px;
     line-height: 40px;
     width: 40px;
     cursor: pointer;
@@ -185,5 +73,184 @@
 
   a.disabled {
     opacity: 0.5;
+  }
+}
+
+.content-div-style {
+  text-align: left;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0 4px;
+
+  &.first-step {
+    text-align: center;
+    padding-bottom: 40px;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .link {
+    text-decoration: underline;
+    color: $primaryColor;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  p,
+  li {
+    img {
+      width: 25px;
+      box-shadow: $boxShadow;
+      vertical-align: middle;
+    }
+
+    span {
+      padding: 4px 6px;
+      box-shadow: $boxShadow;
+      cursor: default;
+
+      &.icon {
+        color: $primaryColor;
+        background-color: $whiteBackground;
+        white-space: nowrap;
+
+        &.inverted {
+          color: $whiteColor;
+          background-color: $primaryColor;
+        }
+
+        &.large-padding {
+          padding: 4px 10px;
+        }
+      }
+
+      &.active-icon {
+        color: $secondaryColor;
+        background-color: $primaryColor;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.tutorial-wrap {
+  background-color: $tutorialBackgroundColor;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: $tutorialTextColor;
+  font-size: 16px;
+  max-width: 100%;
+  padding: 15px;
+  position: relative;
+  width: 800px;
+  max-height: 80vh;
+
+  .tutorial-body {
+    line-height: 1.4;
+    text-align: center;
+
+    a {
+      color: $primaryColor;
+      cursor: pointer;
+    }
+
+    .close-cross {
+      background-color: transparent;
+      border: 0;
+      border-radius: 0;
+      cursor: pointer;
+      line-height: 1;
+      padding: 15px;
+      -webkit-appearance: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .tutorial-title {
+      font-size: 20px;
+      margin: 0 0 10px;
+
+      p {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          box-shadow: $boxShadow;
+        }
+      }
+    }
+
+    .content-wrapper {
+      padding: 0 10px;
+
+      .logo {
+        display: flex;
+      }
+    }
+
+    .tutorial-footer {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding: 0 10px;
+
+      .tutorial-button {
+        background-color: $primaryColor;
+        border: 0;
+        border-radius: 4px;
+        color: $whiteColor;
+        cursor: pointer;
+        line-height: 1;
+        padding: 8px;
+        -webkit-appearance: none;
+        font-size: 14px;
+        margin: 2px;
+
+        &.step {
+          color: $whiteColor;
+          outline-color: transparent;
+          width: 60px;
+          padding: 7px;
+          margin: 2px 4px;
+
+          i {
+            font-size: 18px;
+          }
+        }
+
+        &:disabled {
+          background-color: $primaryColor;
+          opacity: 0.5;
+          cursor: default;
+        }
+      }
+
+      .tutorial-closebutton {
+        margin: 2px 8px 2px 0;
+        padding-left: 30px;
+        padding-right: 30px;
+        color: $primaryColor;
+        background: $tutorialBackgroundColor;
+        border: 1px solid $primaryColor;
+      }
+
+      .tutorial-buttons {
+        display: flex;
+        align-items: center;
+
+        .tutorial-page-index {
+          opacity: 0.5;
+          margin-right: 8px;
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 }

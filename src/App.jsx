@@ -230,10 +230,7 @@ class App extends Component {
           })}
         <Notification />
         {!is3D && !terrainViewerId && authenticated && (
-          <Tutorial
-            popupDisabled={this.state.hasSwitchedFrom3D || this.props.timelapseSharePreviewMode}
-            selectedLanguage={this.props.selectedLanguage}
-          />
+          <Tutorial selectedLanguage={this.props.selectedLanguage} />
         )}
         {is3D && (
           <SearchBox

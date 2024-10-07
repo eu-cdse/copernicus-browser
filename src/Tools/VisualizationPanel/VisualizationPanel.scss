@@ -107,13 +107,21 @@
       justify-content: space-between;
       width: 125px;
       margin-right: 10px;
+      column-gap: 2px;
 
       i {
         margin-left: 10px;
         cursor: pointer;
       }
 
+      svg {
+        min-width: 21px;
+      }
+
       .plus {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         color: $whiteColor;
 
         &:hover {

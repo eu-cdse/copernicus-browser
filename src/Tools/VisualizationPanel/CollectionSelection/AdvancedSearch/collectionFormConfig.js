@@ -22,6 +22,7 @@ import {
 } from '../../../../api/OData/assets/attributes';
 import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
+  createAcrossTrackIncidenceAngleFilter,
   createOriginFilter,
   createS1GRDResolutionFilter,
   createS2Collection1Filter,
@@ -30,6 +31,7 @@ import {
 import { DefaultInput } from './filters/DefaultInput';
 import { MultiSelectInput } from './filters/MultiSelectInput';
 import { NumericInput } from './filters/NumericInput';
+import { AcrossTrackIncidenceAngleTag } from './filters/CustomTags';
 
 export const collections = [
   {
@@ -607,6 +609,9 @@ export const collections = [
         min: -180,
         max: 180,
         placeholder: '-180 - 180',
+        filterElement: FilterElement.CustomFilter,
+        customFilter: (key, value) => createAcrossTrackIncidenceAngleFilter(key, value),
+        customTag: AcrossTrackIncidenceAngleTag,
       },
     ],
   },
@@ -675,7 +680,7 @@ export const collections = [
         placeholder: FormatedAttributeNames.eopIdentifier(),
       },
       {
-        id: AttributeNames.dataset,
+        id: AttributeNames.deliveryId,
         render: MultiSelectInput,
         defaultValue: AttributeDEMDatasetVersions.slice(-1),
         getOptions: ({ userToken }) => AttributeDEMDatasetVersions,

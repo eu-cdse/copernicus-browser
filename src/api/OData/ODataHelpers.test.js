@@ -1767,7 +1767,7 @@ describe('createAdditionalFilters', () => {
         },
       ],
       additionalFilters: {
-        dataset: [
+        deliveryId: [
           {
             id: 'DEM',
             value: '2023_1',

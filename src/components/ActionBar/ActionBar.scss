@@ -7,18 +7,24 @@
   flex-direction: row;
   color: $textColor;
   font-size: 13px;
+  column-gap: 10px;
 
   i {
     margin-right: 5px;
   }
 
   .action-wrapper {
+    flex-direction: row;
     padding: 5px 0;
     display: flex;
     cursor: pointer;
     align-items: center;
+    overflow: hidden;
 
     div {
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       text-decoration: underline 1px;
       font-size: 12px;
       font-weight: $fontWeightNormal;

@@ -1420,7 +1420,7 @@ describe('Test additional filters', () => {
             },
           ],
           additionalFilters: {
-            dataset: [
+            deliveryId: [
               {
                 id: 'DEM',
                 value: '2023_1',

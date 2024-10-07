@@ -70,8 +70,8 @@ const LayerHeader = ({
       </div>
       {isActive && (
         <div className="icons">
-          <div className={`plus ${actionsOpen ? 'active' : ''}`} onClick={toggleActions}>
-            <i className={`fas ${actionsOpen ? 'fa-minus' : 'fa-plus'}`} title={t`Add to`}></i> {t`Add to`}
+          <div title={t`Add to`} className={`plus ${actionsOpen ? 'active' : ''}`} onClick={toggleActions}>
+            <i className={`fas ${actionsOpen ? 'fa-minus' : 'fa-plus'}`}></i> {t`Add to`}
           </div>
 
           {hasEvalScript && (
