@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE/layers/1_TOPOGRAPHIC",
         "id": "1_TOPOGRAPHIC",
         "title": "Topographic",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b001a3-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-12-11T14:28:17.260373Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM/sources/4"
-        },
+        "collectionType": "DEM",
+        "datasetSourceId": 4,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "clampNegative": false,
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE/layers/COLOR",
         "id": "COLOR",
         "title": "Color",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b001a3-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-12-11T10:16:57.916631Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM/sources/4"
-        },
+        "collectionType": "DEM",
+        "datasetSourceId": 4,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "clampNegative": false,
@@ -61,7 +47,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE/layers/GRAYSCALE",
         "id": "GRAYSCALE",
         "title": "Grayscale",
         "description": "",
@@ -73,16 +58,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b001a3-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-12-11T10:16:44.352829Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM/sources/4"
-        },
+        "collectionType": "DEM",
+        "datasetSourceId": 4,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "clampNegative": false,
@@ -92,7 +71,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE/layers/SEPIA",
         "id": "SEPIA",
         "title": "Sepia",
         "description": "",
@@ -104,16 +82,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b001a3-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b001a3-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-12-11T10:18:24.689009Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/DEM/sources/4"
-        },
+        "collectionType": "DEM",
+        "datasetSourceId": 4,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "clampNegative": false,

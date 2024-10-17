@@ -68,6 +68,7 @@ export function VisualizationTimeSelect({
   showLayerPanel,
   setShowLayerPanel,
   dateMode,
+  compareShare,
 }) {
   const [loading, setLoading] = useState(false);
   const calendarHolder = useRef(null);
@@ -123,7 +124,7 @@ export function VisualizationTimeSelect({
   }
 
   function openLayerPanel() {
-    if (!showLayerPanel && setShowLayerPanel) {
+    if (!showLayerPanel && setShowLayerPanel && !compareShare) {
       setShowLayerPanel(true);
     }
   }

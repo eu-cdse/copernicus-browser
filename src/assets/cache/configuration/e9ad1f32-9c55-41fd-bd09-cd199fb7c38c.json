@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands 4,3,2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "e9ad1f-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:59:35.894707Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE/layers/2_FALSE_COLOR",
         "id": "2_FALSE_COLOR",
         "title": "False color",
         "description": "Based on bands 8,4,3",
@@ -45,16 +37,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "e9ad1f-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:59:45.418365Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -65,7 +51,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE/layers/3_NDVI",
         "id": "3_NDVI",
         "title": "NDVI",
         "description": "Based on combination of bands (B8 - B4)/(B8 + B4)",
@@ -256,16 +241,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/e9ad1f-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "e9ad1f-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T12:59:00.103475Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

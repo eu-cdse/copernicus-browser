@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6fead8-YOUR-INSTANCEID-HERE/layers/EW-SH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED",
         "id": "EW-SH-HH-DECIBEL-GAMMA0-ORTHORECTIFIED",
         "title": "HH - decibel gamma0",
         "description": "Orthorectified",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6fead8-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6fead8-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-09-27T10:00:17.023372Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
-        },
+        "collectionType": "S1GRD",
+        "datasetSourceId": 3,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -39,7 +32,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6fead8-YOUR-INSTANCEID-HERE/layers/EW-SH-HH-LINEAR-GAMMA0-ORTHORECTIFIED",
         "id": "EW-SH-HH-LINEAR-GAMMA0-ORTHORECTIFIED",
         "title": "HH - linear gamma0",
         "description": "Orthorectified",
@@ -51,16 +43,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6fead8-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6fead8-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-09-27T10:00:45.591043Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S1GRD/sources/3"
-        },
+        "collectionType": "S1GRD",
+        "datasetSourceId": 3,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

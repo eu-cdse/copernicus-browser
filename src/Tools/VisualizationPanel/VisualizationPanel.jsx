@@ -114,6 +114,7 @@ function VisualizationPanel({
   visibleOnMap,
   authToken,
   dataSourcesInitialized,
+  compareShare,
 }) {
   const selectedTheme = selectedThemesListId
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
@@ -241,11 +242,16 @@ function VisualizationPanel({
       <>
         {selectedThemeId !== EXPIRED_ACCOUNT.instanceId && datasetId && (
           <div className="date-selection">
-            <DateSelection showLayerPanel={showLayerPanel} setShowLayerPanel={setShowLayerPanel} />
+            <DateSelection
+              compareShare={compareShare}
+              showLayerPanel={showLayerPanel}
+              setShowLayerPanel={setShowLayerPanel}
+            />
           </div>
         )}
         <MessagePanel />
         <ThemeSelect
+          compareShare={compareShare}
           setShowLayerPanel={setShowLayerPanel}
           highlightsAvailable={highlightsAvailable}
           setShowHighlightPanel={setShowHighlightPanel}

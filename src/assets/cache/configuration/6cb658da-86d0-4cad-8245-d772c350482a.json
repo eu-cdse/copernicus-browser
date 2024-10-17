@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE/layers/FAPAR-VISUALIZATION",
         "id": "FAPAR-VISUALIZATION",
         "title": "FAPAR ",
         "description": "Fraction of Absorbed Photosynthetically Active Radiation",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6cb658-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.506324Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE/layers/LAI-VISUALIZATION",
         "id": "LAI-VISUALIZATION",
         "title": "LAI ",
         "description": "Leaf Area Index",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6cb658-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.506262Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -62,7 +48,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE/layers/NDVI-VISUALIZATION",
         "id": "NDVI-VISUALIZATION",
         "title": "NDVI ",
         "description": "Normalized Difference Vegetation Index",
@@ -74,16 +59,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6cb658-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.537195Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -93,7 +72,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE/layers/PPI-VISUALIZATION",
         "id": "PPI-VISUALIZATION",
         "title": "PPI ",
         "description": "Plant Phenology Index",
@@ -105,16 +83,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6cb658-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6cb658-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.512281Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

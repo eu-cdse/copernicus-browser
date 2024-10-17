@@ -129,7 +129,7 @@ class ThemesProvider extends React.Component {
     const { access_token } = this.props.user;
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SH_SERVICES_URL}/configuration/v1/wms/instances`,
+        `${import.meta.env.VITE_SH_SERVICES_URL}/api/v2/configuration/instances`,
         {
           responseType: 'json',
           headers: {

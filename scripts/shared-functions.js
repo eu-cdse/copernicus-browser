@@ -49,7 +49,7 @@ export async function createHttpClient(authBaseUrl) {
 }
 
 export async function fetchInstances(client, scriptParameters) {
-  const response = await client.get(`${SH_SERVICE_BASE_URL}/configuration/v1/wms/instances`);
+  const response = await client.get(`${SH_SERVICE_BASE_URL}/api/v2/configuration/instances`);
   // Removes enable | disable from script parameters
   if (scriptParameters && scriptParameters.length > 0) {
     return response.data.filter((utility) =>
@@ -61,7 +61,7 @@ export async function fetchInstances(client, scriptParameters) {
 }
 
 export async function fetchInstancesById(client) {
-  const response = await client.get(`${SH_SERVICE_BASE_URL}/configuration/v1/wms/instances`);
+  const response = await client.get(`${SH_SERVICE_BASE_URL}/api/v2/configuration/instances`);
   return response.data
     .map((instance) => instance.id)
     .filter((instanceId) =>
@@ -75,7 +75,7 @@ async function changeOgcRequestsState(client, instances, isOgcRequestsDisable) {
       const { layers, ...instanceWithoutLayers } = instance;
       instanceWithoutLayers.additionalData.disabled = isOgcRequestsDisable;
       await client.put(
-        `${SH_SERVICE_BASE_URL}/configuration/v1/wms/instances/${instanceWithoutLayers.id}`,
+        `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceWithoutLayers.id}`,
         instanceWithoutLayers,
       );
     } catch (error) {

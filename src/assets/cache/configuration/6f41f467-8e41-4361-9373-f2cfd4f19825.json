@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE/layers/F1_VISUALIZED",
         "id": "F1_VISUALIZED",
         "title": "F1 Brightness Temperature",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6f41f4-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T10:54:05.495374Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -32,7 +25,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE/layers/F2_VISUALIZED",
         "id": "F2_VISUALIZED",
         "title": "F2 Brightness Temperature",
         "description": "",
@@ -44,16 +36,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6f41f4-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T10:54:24.265710Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -64,7 +50,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE/layers/FALSE_COLOR",
         "id": "FALSE_COLOR",
         "title": "False Color based on bands S3, S2, and S1",
         "description": "",
@@ -76,16 +61,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6f41f4-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6f41f4-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T10:54:39.789277Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

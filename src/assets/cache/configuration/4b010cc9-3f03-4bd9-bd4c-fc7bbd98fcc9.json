@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands B8, B6, B4",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T14:56:57.300025Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -30,7 +23,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR_ENHANCED",
         "id": "1_TRUE_COLOR_ENHANCED",
         "title": "Enhanced Natural Color",
         "description": "",
@@ -42,16 +34,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T16:36:35.673331Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -60,7 +46,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/2_OTCI",
         "id": "2_OTCI",
         "title": "OTCI",
         "description": "OLCI Terrestrial Chlorophyll Index, Based on combination of bands (B12 - B11)/(B11 - B10)",
@@ -72,16 +57,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:15:30.826999Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -90,7 +69,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/3_TRISTIMULUS",
         "id": "3_TRISTIMULUS",
         "title": "Tristimulus",
         "description": "",
@@ -102,16 +80,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:35:01.942734Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -120,7 +92,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/4_RGB__17_5_2_",
         "id": "4_RGB__17_5_2_",
         "title": "RGB",
         "description": "Based on bands B17, B5, B2",
@@ -132,16 +103,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T14:57:46.849648Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -150,7 +115,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/5_RGB__17_6_3_",
         "id": "5_RGB__17_6_3_",
         "title": "RGB",
         "description": "Based on bands B17, B6, B3",
@@ -162,16 +126,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T14:57:28.144275Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -180,7 +138,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE/layers/6_TRUE-COLOR-HIGLIGHT-OPTIMIZED",
         "id": "6_TRUE-COLOR-HIGLIGHT-OPTIMIZED",
         "title": "Highlight Optimized Natural Color",
         "description": "",
@@ -192,16 +149,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/4b010c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "4b010c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T16:36:43.146499Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCI/sources/8"
-        },
+        "collectionType": "S3OLCI",
+        "datasetSourceId": 8,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

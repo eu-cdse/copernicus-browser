@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65f9eb-YOUR-INSTANCEID-HERE/layers/PERSISTENT-SNOW-AREA",
         "id": "PERSISTENT-SNOW-AREA",
         "title": "Persistent Snow Area",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65f9eb-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "65f9eb-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:29.703159Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65f9eb-YOUR-INSTANCEID-HERE/layers/PERSISTENT-SNOW-AREA-QUALITY",
         "id": "PERSISTENT-SNOW-AREA-QUALITY",
         "title": "Persistent Snow Area Quality",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/65f9eb-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "65f9eb-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:29.771174Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

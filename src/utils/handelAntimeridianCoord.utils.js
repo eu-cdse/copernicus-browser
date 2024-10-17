@@ -1,3 +1,70 @@
+import { hasDuplicateObjects } from './index';
+import L from 'leaflet';
+
+export function splitPolygonOnAntimeridian(ring) {
+  const westPolygon = [];
+  const eastPolygon = [];
+  let lastPointWasOverAntimeridian;
+
+  ring.forEach((point, index) => {
+    let [lng, lat] = point;
+    const isOverAntimeridian = lng > 180 || lng < -180;
+
+    if (isOverAntimeridian) {
+      lng = lng > 180 ? -360 + lng : 360 + lng;
+    }
+
+    if (
+      (lastPointWasOverAntimeridian === false && isOverAntimeridian) ||
+      (lastPointWasOverAntimeridian && !isOverAntimeridian)
+    ) {
+      const crossingPoint = findCrossingPoint(ring[index - 1], [lng, lat]);
+      westPolygon.push(crossingPoint.west);
+      eastPolygon.push(crossingPoint.east);
+    }
+
+    if (lng < 0) {
+      westPolygon.push([lng, lat]);
+    } else {
+      eastPolygon.push([lng, lat]);
+    }
+
+    if (ring.length - 1 === index) {
+      if (!hasDuplicateObjects(westPolygon) && westPolygon.length >= 1) {
+        westPolygon.push(westPolygon[0]);
+      }
+
+      if (!hasDuplicateObjects(eastPolygon) && eastPolygon.length >= 1) {
+        eastPolygon.push(eastPolygon[0]);
+      }
+    }
+
+    lastPointWasOverAntimeridian = isOverAntimeridian;
+  });
+
+  return { westPolygon, eastPolygon };
+}
+
+function findCrossingPoint(lastPoint, currentPoint) {
+  let [lastLng, lastLat] = lastPoint;
+  let [lng, lat] = currentPoint;
+
+  const crossingLng = lastLng < 0 ? -180 : 180;
+
+  if (Math.abs(lng - lastLng) > 180) {
+    if (lng < 0) {
+      lng += 360;
+    } else {
+      lastLng += 360;
+    }
+  }
+
+  const slope = (lat - lastLat) / (lng - lastLng);
+  const crossingLat = lastLat + slope * (crossingLng - lastLng);
+
+  return { east: [180, crossingLat], west: [-180, crossingLat] };
+}
+
 export function doCoordinatesCrossAntimeridian(coordinates) {
   let hasPositive = false;
   let hasNegative = false;
@@ -18,29 +85,126 @@ export function doCoordinatesCrossAntimeridian(coordinates) {
   return hasPositive && hasNegative;
 }
 
-export function coordinatesNormalization(coordinates, ignoreDuplicates = false) {
+export function normalizeLongitude(lng) {
+  if (lng < -180) {
+    return lng + 360;
+  }
+  if (lng > 180) {
+    return lng - 360;
+  }
+  return lng;
+}
+
+export function unNormalizeLongitude(lng, toWest) {
+  if (toWest && lng > 0) {
+    return lng - 360;
+  }
+  if (!toWest && lng < 0) {
+    return lng + 360;
+  }
+  return lng;
+}
+
+export function normalizeBoundingBox(bbox) {
+  const minLat = bbox._southWest.lat;
+  let minLng = bbox._southWest.lng;
+  const maxLat = bbox._northEast.lat;
+  let maxLng = bbox._northEast.lng;
+
+  if (minLng > 180) {
+    minLng -= 360;
+  } else if (minLng < -180) {
+    minLng += 360;
+  }
+
+  if (maxLng > 180) {
+    maxLng -= 360;
+  } else if (maxLng < -180) {
+    maxLng += 360;
+  }
+
+  return L.latLngBounds(L.latLng(minLat, minLng), L.latLng(maxLat, maxLng));
+}
+
+export function unNormalizeMultiPolygonCoordinates(
+  coordinates,
+  unNormalizeAllRingsToFaceEast = false,
+  ignoreReversedMultiPolygons = false,
+) {
   return coordinates.map((polygon) => {
     const ringsArray = [];
 
     polygon.forEach((ring) => {
       const originalCoordinates = [];
-      const duplicatedCoordinates = [];
+      const reverseCoordinates = [];
+
+      const amountOfCoordinatesToWest = !unNormalizeAllRingsToFaceEast
+        ? ring.filter((coordinate) => coordinate[0] < 0).length
+        : 0;
+      const amountOfCoordinatesToEast = !unNormalizeAllRingsToFaceEast
+        ? ring.filter((coordinate) => coordinate[0] > 0).length
+        : 0;
 
       ring.forEach((coordinate) => {
         const [longitude, latitude] = coordinate;
-        const normalizedCoordinate = [longitude < 0 ? longitude + 360 : longitude, latitude];
-        originalCoordinates.push(longitude < 0 ? [...normalizedCoordinate] : coordinate);
+        const unNormalizedCoordinate = [
+          unNormalizeLongitude(
+            longitude,
+            unNormalizeAllRingsToFaceEast ? false : amountOfCoordinatesToWest > amountOfCoordinatesToEast,
+          ),
+          latitude,
+        ];
+        originalCoordinates.push(unNormalizedCoordinate);
 
-        if (!ignoreDuplicates) {
-          const invertedCoordinate = [longitude > 0 ? longitude - 360 : longitude, latitude];
-          duplicatedCoordinates.push([...invertedCoordinate]);
+        if (!ignoreReversedMultiPolygons && !unNormalizeAllRingsToFaceEast) {
+          const invertedCoordinate = [
+            unNormalizeLongitude(longitude, amountOfCoordinatesToWest < amountOfCoordinatesToEast),
+            latitude,
+          ];
+          reverseCoordinates.push([...invertedCoordinate]);
         }
       });
 
-      ringsArray.push(originalCoordinates, duplicatedCoordinates);
+      if (!ignoreReversedMultiPolygons && !unNormalizeAllRingsToFaceEast) {
+        ringsArray.push(originalCoordinates, reverseCoordinates);
+      } else {
+        ringsArray.push(originalCoordinates);
+      }
     });
 
     return ringsArray;
+  });
+}
+
+export function multiPolygonCoordinatesNormalization(coordinates) {
+  return coordinates.map((polygon) => {
+    const ringsArray = [];
+
+    polygon.forEach((ring) => {
+      const originalCoordinates = [];
+
+      ring.forEach((coordinate) => {
+        const [longitude, latitude] = coordinate;
+        originalCoordinates.push([normalizeLongitude(longitude), latitude]);
+      });
+
+      ringsArray.push(originalCoordinates);
+    });
+
+    return ringsArray;
+  });
+}
+
+export function polygonCoordinatesNormalization(coordinates) {
+  return coordinates.map((ring) => {
+    const originalCoordinates = [];
+
+    ring.forEach((coordinate) => {
+      const [longitude, latitude] = coordinate;
+      originalCoordinates.push([normalizeLongitude(longitude), latitude]);
+    });
+
+    return originalCoordinates;
   });
 }
 
@@ -74,7 +238,7 @@ export function manipulateODataSearchResultsWithAntimeridianDuplicates(prevSearc
       dataCopy.geometry?.type === 'MultiPolygon' &&
       doCoordinatesCrossAntimeridian(dataCopy.geometry?.coordinates)
     ) {
-      dataCopy.geometry.coordinates = coordinatesNormalization(dataCopy.geometry.coordinates);
+      dataCopy.geometry.coordinates = unNormalizeMultiPolygonCoordinates(dataCopy.geometry.coordinates);
     }
     return dataCopy;
   });

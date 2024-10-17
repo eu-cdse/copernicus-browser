@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands 4, 3, 2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:43:24.771534Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/2_FALSE_COLOR",
         "id": "2_FALSE_COLOR",
         "title": "False color",
         "description": "Based on bands 8, 4, 3",
@@ -45,16 +37,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:43:49.571132Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -66,7 +52,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/3_TONEMAPPED-NATURAL-COLOR",
         "id": "3_TONEMAPPED-NATURAL-COLOR",
         "title": "Highlight Optimized Natural Color",
         "description": "Enhanced natural color visualization",
@@ -78,16 +63,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:09:37.108968Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -98,7 +77,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/4_NDSI",
         "id": "4_NDSI",
         "title": "NDSI",
         "description": "",
@@ -119,16 +97,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:10:12.553824Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -139,7 +111,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/5_SNOW-CLASSIFIER",
         "id": "5_SNOW-CLASSIFIER",
         "title": "Snow Classifier",
         "description": "",
@@ -160,16 +131,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:10:47.347601Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -179,7 +144,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE/layers/6_AGRICULTURE",
         "id": "6_AGRICULTURE",
         "title": "Agriculture",
         "description": "Based on the combination of bands 11, 8, 2",
@@ -191,16 +155,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a55e9e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a55e9e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:08:44.688078Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",

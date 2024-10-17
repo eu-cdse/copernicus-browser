@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW",
         "id": "SAR-WET-SNOW",
         "title": "SAR Wet Snow",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "d9e828-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.533116Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE/layers/SAR-WET-SNOW-QUALITY",
         "id": "SAR-WET-SNOW-QUALITY",
         "title": "SAR Wet Snow Quality",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/d9e828-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "d9e828-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.528695Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

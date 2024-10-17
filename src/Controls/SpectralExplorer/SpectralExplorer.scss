@@ -184,6 +184,18 @@
           }
         }
       }
+
+      .credits {
+        align-self: center;
+        font-size: 0.6rem;
+        padding: 0.5rem;
+        font-weight: 600;
+        color: $primaryColor;
+
+        a {
+          color: $primaryColor;
+        }
+      }
     }
   }
 }

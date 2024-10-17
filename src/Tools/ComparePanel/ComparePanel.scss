@@ -139,8 +139,9 @@
     background-color: $mainMedium;
     padding: 10px;
     display: flex;
-    margin-top: 0;
+    margin: -5px 10px 10px 10px;
     box-shadow: none;
+    justify-content: space-between;
 
     @media only screen and (max-width: 400px) {
       & {
@@ -156,6 +157,16 @@
 
     .copy-url {
       flex-grow: 1;
+
+      .short-url-container {
+        width: 225px;
+
+        .short-url {
+          width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     .social-buttons {

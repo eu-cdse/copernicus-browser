@@ -6,7 +6,7 @@ const getFrameProps = ({ series, labels, tooltipItems, maxReflectance = 1 }) => 
   const frameProps = {
     lines: series,
     className: 'chart',
-    size: [650, 370],
+    size: [930, 450],
     margin: { left: 60, right: 30, top: 30, bottom: 60 },
 
     xAccessor: (d) => {

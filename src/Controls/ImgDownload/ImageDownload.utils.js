@@ -12,8 +12,8 @@ import {
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 import { point as turfPoint } from '@turf/helpers';
+import L from 'leaflet';
 import JSZip from 'jszip';
-
 import {
   getDataSourceHandler,
   datasetLabels,
@@ -48,6 +48,13 @@ import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
 import { isAuthIdUtm } from '../../utils/utm';
 import { reprojectGeometry } from '../../utils/reproject';
 import { getBboxFromCoords } from '../../utils/geojson.utils';
+import {
+  multiPolygonCoordinatesNormalization,
+  normalizeBoundingBox,
+  normalizeLongitude,
+  polygonCoordinatesNormalization,
+  splitPolygonOnAntimeridian,
+} from '../../utils/handelAntimeridianCoord.utils';
 
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
@@ -101,17 +108,42 @@ export function getImageDimensionFromBoundsWithCap(bounds, datasetId) {
     resolution = dsh.getResolutionLimits(datasetId).resolution;
   }
   const maxResolution = resolution || 0.5;
-  const { width, height } = getImageDimensions(bounds, [maxResolution, maxResolution], CRS_EPSG3857.authId);
-  const ratio = height / width;
-  const isLandscape = width >= height;
+  const separatedBoundsAndPolygons = getSeparateBoundsAndPolygonsIfCrossingAntimeridian(bounds);
+
+  let tempWidth = 0;
+  let tempHeight = 0;
+
+  if (separatedBoundsAndPolygons.length > 1) {
+    for (let tempSeparatedBoundsAndPolygons of separatedBoundsAndPolygons) {
+      const { width, height } = getImageDimensions(
+        tempSeparatedBoundsAndPolygons.bounds,
+        [maxResolution, maxResolution],
+        CRS_EPSG3857.authId,
+      );
+      tempWidth += width;
+      tempHeight = height;
+    }
+  } else {
+    const normalizedBounds = normalizeBoundingBox(bounds);
+    const { width, height } = getImageDimensions(
+      normalizedBounds,
+      [maxResolution, maxResolution],
+      CRS_EPSG3857.authId,
+    );
+    tempWidth = width;
+    tempHeight = height;
+  }
+
+  const ratio = tempHeight / tempWidth;
+  const isLandscape = tempWidth >= tempHeight;
 
   let newImgWidth;
   let newImgHeight;
   if (isLandscape) {
-    newImgWidth = Math.min(width, MAX_SH_IMAGE_SIZE);
+    newImgWidth = Math.min(tempWidth, MAX_SH_IMAGE_SIZE);
     newImgHeight = newImgWidth * ratio;
   } else {
-    newImgHeight = Math.min(height, MAX_SH_IMAGE_SIZE);
+    newImgHeight = Math.min(tempHeight, MAX_SH_IMAGE_SIZE);
     newImgWidth = newImgHeight / ratio;
   }
 
@@ -394,16 +426,76 @@ export async function fetchImageFromParams(params, raiseWarning) {
     );
   }
 
-  const options = {
-    ...params,
-    apiType: apiType,
-    imageFormat: mimeType,
-    getMapAuthToken: getMapAuthToken,
-  };
+  let blobArray = [];
+  let blob;
 
-  const blob = await fetchImage(layer, options).catch((err) => {
-    throw err;
-  });
+  // There is a different usage. Sometimes is geometry sometimes aoiGeometry. I think only one would be enough.
+  let currentGeometry = aoiGeometry ? aoiGeometry : params.geometry;
+
+  const separatedBoundingBoxesAndPolygons = getSeparateBoundsAndPolygonsIfCrossingAntimeridian(
+    bounds,
+    width,
+    currentGeometry,
+  );
+
+  if (separatedBoundingBoxesAndPolygons.length > 1) {
+    for (let tempBbAndPolygons of separatedBoundingBoxesAndPolygons) {
+      let tempGeometry;
+      if (tempBbAndPolygons.coordinates.length > 0) {
+        tempGeometry = !tempBbAndPolygons.hasMultiPolygons
+          ? { type: 'Polygon', coordinates: tempBbAndPolygons.coordinates }
+          : { type: 'MultiPolygon', coordinates: tempBbAndPolygons.coordinates };
+      }
+
+      const options = {
+        ...params,
+        width: tempBbAndPolygons.width,
+        geometry: tempGeometry,
+        bounds: tempBbAndPolygons.bounds,
+        apiType: apiType,
+        imageFormat: mimeType,
+        getMapAuthToken: getMapAuthToken,
+      };
+
+      const blob = await fetchImage(layer, options).catch((err) => {
+        throw err;
+      });
+
+      blobArray.push(blob);
+    }
+  } else {
+    const normalizedBounds = normalizeBoundingBox(bounds);
+    let tempGeometry;
+    if (params.geometry) {
+      tempGeometry = {
+        type: params.geometry.type,
+        coordinates:
+          params.geometry.type === 'MultiPolygon'
+            ? multiPolygonCoordinatesNormalization(params.geometry.coordinates)
+            : polygonCoordinatesNormalization(params.geometry.coordinates),
+      };
+    }
+
+    const options = {
+      ...params,
+      bounds: normalizedBounds,
+      geometry: tempGeometry,
+      apiType: apiType,
+      imageFormat: mimeType,
+      getMapAuthToken: getMapAuthToken,
+    };
+
+    blob = await fetchImage(layer, options).catch((err) => {
+      throw err;
+    });
+  }
+
+  if (blobArray.length > 1 && (params.mergeImages || params.mergeImages === undefined)) {
+    await mergeFetchedImages(blobArray).then((mergedBlob) => {
+      blob = mergedBlob;
+      blobArray = [];
+    });
+  }
 
   let legendUrl, legendDefinition, copyrightText, title;
 
@@ -432,34 +524,97 @@ export async function fetchImageFromParams(params, raiseWarning) {
 
   const geometriesToDraw = [aoiGeometry, loiGeometry].filter((geo) => !!geo);
 
-  const imageWithOverlays = await addImageOverlays(
-    blob,
-    width,
-    height,
-    mimeType,
-    lat,
-    lng,
-    zoom,
-    showLegend,
-    showCaptions,
-    addMapOverlays,
-    showLogo,
-    userDescription,
-    enabledOverlaysId,
-    legendDefinition,
-    legendUrl,
-    copyrightText,
-    title,
-    true,
-    addLogos,
-    drawCopernicusLogo,
-    drawGeoToImg,
-    geometriesToDraw,
-    bounds,
-  );
+  async function getReturnValueWithMultipleBlobs() {
+    return await Promise.all(
+      blobArray.map(async (tempBlob, index) => {
+        const imageWithOverlays = await addImageOverlays(
+          tempBlob,
+          separatedBoundingBoxesAndPolygons[index].width,
+          height,
+          mimeType,
+          lat,
+          lng,
+          zoom,
+          showLegend,
+          showCaptions,
+          addMapOverlays,
+          showLogo,
+          userDescription,
+          enabledOverlaysId,
+          legendDefinition,
+          legendUrl,
+          copyrightText,
+          title,
+          true,
+          addLogos,
+          drawCopernicusLogo,
+          drawGeoToImg,
+          geometriesToDraw,
+          bounds,
+        );
 
-  const nicename = getNicename(fromTime, toTime, datasetId, layer.title, customSelected, isRawBand, bandName);
-  return { blob: imageWithOverlays, nicename: nicename };
+        const nicename = getNicename(
+          fromTime,
+          toTime,
+          datasetId,
+          layer.title,
+          customSelected,
+          isRawBand,
+          bandName,
+        );
+        return {
+          blob: imageWithOverlays,
+          nicename: nicename,
+          bbAndPolygons: separatedBoundingBoxesAndPolygons[index],
+        };
+      }),
+    );
+  }
+
+  async function getReturnValueSingleBlob() {
+    const imageWithOverlays = await addImageOverlays(
+      blob,
+      width,
+      height,
+      mimeType,
+      lat,
+      lng,
+      zoom,
+      showLegend,
+      showCaptions,
+      addMapOverlays,
+      showLogo,
+      userDescription,
+      enabledOverlaysId,
+      legendDefinition,
+      legendUrl,
+      copyrightText,
+      title,
+      true,
+      addLogos,
+      drawCopernicusLogo,
+      drawGeoToImg,
+      geometriesToDraw,
+      bounds,
+    );
+
+    const nicename = getNicename(
+      fromTime,
+      toTime,
+      datasetId,
+      layer.title,
+      customSelected,
+      isRawBand,
+      bandName,
+    );
+    return { blob: imageWithOverlays, nicename: nicename };
+  }
+
+  if (blobArray.length > 1 && params.mergeImages === false) {
+    return { multipleImages: await getReturnValueWithMultipleBlobs() };
+  } else {
+    return await getReturnValueSingleBlob();
+  }
 }
 
 async function overrideEvalscriptIfNeeded(
@@ -1566,7 +1721,7 @@ function getLegendTextWidth(txt, fontSize, fontFamily) {
   return context.measureText(txt).width;
 }
 
-export function generateKmlFile(bounds, imageUrl) {
+function createGroundOverlay(bounds, imageFormat, index = undefined) {
   const north = bounds.getNorthEast().lat;
   const south = bounds.getSouthWest().lat;
   const east = bounds.getNorthEast().lng;
@@ -1575,15 +1730,10 @@ export function generateKmlFile(bounds, imageUrl) {
   const centerLatitude = (north + south) / 2;
   const centerLongitude = (east + west) / 2;
 
-  return `<?xml version='1.0' encoding='UTF-8'?>
-  <kml xmlns="http://www.opengis.net/kml/2.2">
-    <Folder>
-      <name>Sentinel-Hub Overlays</name>
-      <description>Ground overlays</description>
-      <GroundOverlay>
+  return `<GroundOverlay>
         <name>Sentinel-Hub overlay</name>
         <Icon>
-          <href>${imageUrl}</href>
+          <href>image${index !== undefined ? `_${index}` : ''}.${imageFormat}</href>
         </Icon>
         <LatLonBox>
           <north>${north}</north>
@@ -1600,17 +1750,197 @@ export function generateKmlFile(bounds, imageUrl) {
             <altitudeMode>clampToGround</altitudeMode>
     
         </LookAt>
-      </GroundOverlay>
-    </Folder>
-  </kml>`;
+      </GroundOverlay>`;
 }
 
-export async function prepareKmzFile(kmlContent, imageBlob, imageFormat) {
+export function generateKmlFile(bounds, imageFormat) {
+  let groundOverlays = [];
+  if (Array.isArray(bounds)) {
+    bounds.forEach((tempBounds, index) => {
+      groundOverlays.push(createGroundOverlay(tempBounds, imageFormat, index));
+    });
+  } else {
+    groundOverlays.push(createGroundOverlay(bounds, imageFormat));
+  }
+
+  if (groundOverlays.length === 2) {
+    return `<?xml version='1.0' encoding='UTF-8'?>
+  <kml xmlns="http://www.opengis.net/kml/2.2">
+    <Folder>
+      <name>Sentinel-Hub Overlays</name>
+      <description>Ground overlays</description>
+      ${groundOverlays[0]}
+      ${groundOverlays[1]}
+    </Folder>
+  </kml>`;
+  } else {
+    return `<?xml version='1.0' encoding='UTF-8'?>
+  <kml xmlns="http://www.opengis.net/kml/2.2">
+    <Folder>
+      <name>Sentinel-Hub Overlays</name>
+      <description>Ground overlays</description>
+      ${groundOverlays[0]}
+    </Folder>
+  </kml>`;
+  }
+}
+
+export async function prepareKmzFile(kmlContent, imageBlobs, imageFormat) {
   const zip = new JSZip();
 
   zip.file('doc.kml', kmlContent);
 
-  zip.file(`image.${imageFormat}`, imageBlob.blob);
+  if (Array.isArray(imageBlobs)) {
+    imageBlobs.forEach((image, index) => {
+      zip.file(`image_${index}.${imageFormat}`, image.blob);
+    });
+  } else {
+    zip.file(`image.${imageFormat}`, imageBlobs.blob);
+  }
 
   return await zip.generateAsync({ type: 'blob' });
+}
+
+function calculateSplitWidths(minLng, maxLng, width) {
+  let westRange, eastRange, totalRange;
+
+  // calculate split widths
+  if (minLng > 0) {
+    eastRange = 180 - minLng;
+    westRange = maxLng - 180;
+    totalRange = westRange + eastRange;
+  } else {
+    eastRange = Math.abs(minLng + 180);
+    westRange = Math.abs(180 + maxLng);
+    totalRange = westRange + eastRange;
+  }
+
+  const westWidth = Math.floor((westRange / totalRange) * width);
+  const eastWidth = Math.floor((eastRange / totalRange) * width);
+
+  return { westWidth, eastWidth };
+}
+
+function getSeparateBoundsAndPolygonsIfCrossingAntimeridian(bounds, width, geometry = null) {
+  const minLng = bounds.getWest();
+  const maxLng = bounds.getEast();
+  const minLat = bounds.getSouth();
+  const maxLat = bounds.getNorth();
+
+  if ((maxLng > 180 && minLng > 180) || (maxLng < -180 && maxLng < -180)) {
+    return [];
+  }
+
+  let westPolygons = [];
+  let eastPolygons = [];
+  let hasWestMultiPolygons = false;
+  let hasEastMultiPolygons = false;
+
+  function setWestAndEastPolygons(eastPolygon, westPolygon) {
+    if (westPolygon.length > 0) {
+      // is MultiPolygon
+      if (westPolygons.length === 1) {
+        westPolygons = [[westPolygons[0]], [westPolygon]];
+        hasWestMultiPolygons = true;
+      } else if (westPolygons.length >= 2) {
+        westPolygons.push([westPolygon]);
+      } else {
+        westPolygons.push(westPolygon);
+      }
+    }
+
+    if (eastPolygon.length > 0) {
+      // is MultiPolygon
+      if (eastPolygons.length === 1) {
+        eastPolygons = [[eastPolygons[0]], [eastPolygon]];
+        hasEastMultiPolygons = true;
+      } else if (eastPolygons.length >= 2) {
+        eastPolygons.push([eastPolygon]);
+      } else {
+        eastPolygons.push(eastPolygon);
+      }
+    }
+  }
+
+  if (maxLng > 180 || minLng < -180) {
+    const boxEast = L.latLngBounds(L.latLng(minLat, normalizeLongitude(minLng)), L.latLng(maxLat, 180));
+
+    const boxWest = L.latLngBounds(L.latLng(minLat, -180), L.latLng(maxLat, normalizeLongitude(maxLng)));
+
+    const { westWidth, eastWidth } = calculateSplitWidths(minLng, maxLng, width);
+
+    geometry?.coordinates.forEach((ring) => {
+      if (geometry.type === 'MultiPolygon') {
+        ring.forEach((coordinate) => {
+          const { eastPolygon, westPolygon } = splitPolygonOnAntimeridian(coordinate);
+
+          setWestAndEastPolygons(eastPolygon, westPolygon);
+        });
+      } else {
+        const { eastPolygon, westPolygon } = splitPolygonOnAntimeridian(ring);
+        setWestAndEastPolygons(eastPolygon, westPolygon);
+      }
+    });
+
+    return [
+      {
+        bounds: boxEast,
+        width: eastWidth,
+        coordinates: eastPolygons,
+        hasMultiPolygons: hasEastMultiPolygons,
+      },
+      {
+        bounds: boxWest,
+        width: westWidth,
+        coordinates: westPolygons,
+        hasMultiPolygons: hasWestMultiPolygons,
+      },
+    ];
+  } else {
+    return [];
+  }
+}
+
+export async function mergeFetchedImages(blobArray) {
+  return new Promise((resolve, reject) => {
+    const images = [];
+    let loadedImages = 0;
+
+    blobArray.forEach((blob, index) => {
+      const img = new Image();
+      img.src = window.URL.createObjectURL(blob);
+      images.push(img);
+
+      img.onload = function () {
+        loadedImages++;
+        if (loadedImages === blobArray.length) {
+          resolve(mergeImages(images));
+        }
+      };
+      img.onerror = () => reject(new Error(`Failed to load image at index ${index}`));
+    });
+  });
+
+  function mergeImages(images) {
+    const totalWidth = images.reduce((sum, img) => sum + img.width, 0);
+    const maxHeight = Math.max(...images.map((img) => img.height));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = totalWidth;
+    canvas.height = maxHeight;
+
+    const ctx = canvas.getContext('2d');
+
+    let currentX = 0;
+    images.forEach((img) => {
+      ctx.drawImage(img, currentX, 0);
+      currentX += img.width;
+    });
+
+    return new Promise((resolve) => {
+      canvas.toBlob(function (mergedBlob) {
+        resolve(mergedBlob);
+      });
+    });
+  }
 }

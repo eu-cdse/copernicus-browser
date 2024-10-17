@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE/layers/FALSE-COLOR-CLOUDLESS",
         "id": "FALSE-COLOR-CLOUDLESS",
         "title": "False Color Cloudless",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "867895-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-28T12:41:01.636510Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE/layers/NDVI",
         "id": "NDVI",
         "title": "NDVI",
         "description": "",
@@ -45,16 +37,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "867895-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-28T12:42:10.663330Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "NEAREST",
@@ -66,7 +52,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE/layers/NDWI",
         "id": "NDWI",
         "title": "NDWI",
         "description": "",
@@ -78,16 +63,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "867895-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-28T12:42:27.561142Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "NEAREST",
@@ -99,7 +78,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE/layers/TRUE-COLOR-CLOUDLESS",
         "id": "TRUE-COLOR-CLOUDLESS",
         "title": "True Color Cloudless",
         "description": "",
@@ -111,16 +89,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/867895-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "867895-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-28T12:41:17.529809Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",

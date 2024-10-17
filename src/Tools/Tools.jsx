@@ -195,6 +195,7 @@ class Tools extends Component {
       showComparePanel,
       setShowComparePanel,
       setLastAddedPin,
+      compareShare,
     } = this.props;
     const { userAccountInfo } = this.state;
     return (
@@ -225,6 +226,7 @@ class Tools extends Component {
                 setShowComparePanel={setShowComparePanel}
                 setLastAddedPin={setLastAddedPin}
                 saveLocalPinsOnLogin={this.saveLocalPinsOnLogin}
+                compareShare={compareShare}
               />
             </Tab>
             <Tab id="search-tab" title={t`Search`} renderKey={TABS.SEARCH_TAB}>

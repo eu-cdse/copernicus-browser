@@ -21,7 +21,7 @@ function printOut(title, value) {
 
 async function getConfigurationLayers(client, instanceId) {
   const { data } = await client.get(
-    `${SH_SERVICE_BASE_URL}/configuration/v1/wms/instances/${instanceId}/layers`,
+    `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceId}/layers`,
   );
 
   if (data && data.length) {

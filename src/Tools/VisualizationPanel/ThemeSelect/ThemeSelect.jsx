@@ -64,6 +64,7 @@ function ThemeSelect({
   setShowHighlightPanel,
   highlightsAvailable,
   themePanelExpanded,
+  compareShare,
 }) {
   const previousVisualizationDate = usePrevious(visualizationDate);
   const { doLogin } = useLoginLogout();
@@ -87,7 +88,9 @@ function ThemeSelect({
   }, [visualizationDate]);
 
   useEffect(() => {
-    highlightsAvailable ? setShowHighlightPanel(true) : setShowLayerPanel(true);
+    if (!compareShare) {
+      highlightsAvailable ? setShowHighlightPanel(true) : setShowLayerPanel(true);
+    }
     // eslint-disable-next-line
   }, [highlightsAvailable]);
 

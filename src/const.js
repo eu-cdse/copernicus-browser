@@ -285,3 +285,5 @@ export const SH_PAYING_ACCOUNT_TYPES = [
   SH_ACCOUNT_TYPE.ENTERPRISE_S,
   SH_ACCOUNT_TYPE.ENTERPRISE_L,
 ];
+
+export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';

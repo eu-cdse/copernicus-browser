@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands 4, 3, 2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "7e2a0c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:41:27.944226Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/2_FALSE-COLOR",
         "id": "2_FALSE-COLOR",
         "title": "False Color",
         "description": "Based on bands 8, 4, 3",
@@ -45,16 +37,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "7e2a0c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T07:41:36.985976Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -65,7 +51,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/3_NDWI",
         "id": "3_NDWI",
         "title": "NDWI",
         "description": "Based on combination of bands (B3 - B8)/(B3 + B8)",
@@ -77,16 +62,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "7e2a0c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:22:54.357790Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -97,7 +76,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/4_ULYSSYS-WATER-QUALITY-VIEWER",
         "id": "4_ULYSSYS-WATER-QUALITY-VIEWER",
         "title": "Ulyssys Water Quality Viewer ",
         "description": "Water sedimentation and chlorophyll content",
@@ -109,16 +87,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "7e2a0c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:23:09.639412Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -128,7 +100,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE/layers/5_SWIR",
         "id": "5_SWIR",
         "title": "SWIR",
         "description": "Based on bands 12, 8A, 4",
@@ -140,16 +111,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/7e2a0c-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "7e2a0c-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:22:08.488953Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

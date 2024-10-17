@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/1_TRUE-COLOR",
         "id": "1_TRUE-COLOR",
         "title": "True Color",
         "description": "Based on bands 4,3,2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:48:26.862805Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -32,7 +25,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/2_FALSE-COLOR",
         "id": "2_FALSE-COLOR",
         "title": "False color",
         "description": "Based on bands 8,4,3",
@@ -44,16 +36,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:48:40.059568Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -64,7 +50,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/3_NDVI",
         "id": "3_NDVI",
         "title": "NDVI",
         "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
@@ -252,16 +237,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:32:40.222225Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -271,7 +250,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/4_EVI",
         "id": "4_EVI",
         "title": "EVI",
         "description": "Enhanced Vegetation Index",
@@ -330,16 +308,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:30:59.692460Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -349,7 +321,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/8_BARREN-SOIL",
         "id": "8_BARREN-SOIL",
         "title": "Barren Soil",
         "description": "Based on the combination: BSI, B08, B11",
@@ -361,16 +332,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:30:34.440606Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "leastCC",
@@ -380,7 +345,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/9_MOISTURE-STRESS",
         "id": "9_MOISTURE-STRESS",
         "title": "Moisture Stress",
         "description": "Classified NDMI for irrigation",
@@ -413,16 +377,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:32:06.714862Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -432,7 +390,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/99_MOISTURE-INDEX",
         "id": "99_MOISTURE-INDEX",
         "title": "Moisture Index",
         "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
@@ -485,16 +442,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:31:38.153184Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -504,7 +455,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/FALSE-COLOR-11-8-2",
         "id": "FALSE-COLOR-11-8-2",
         "title": "Agriculture",
         "description": "Based on bands B11, B08, B02",
@@ -516,16 +466,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:30:15.371031Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -536,7 +480,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE/layers/SAVI",
         "id": "SAVI",
         "title": "SAVI",
         "description": "Soil Adjusted Vegetation Index",
@@ -548,16 +491,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/6e1aa1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "6e1aa1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:32:53.653953Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

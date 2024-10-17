@@ -1,7 +1,7 @@
 import { cacheConfig, getMetadataFromCache } from './MetadataCache';
 
 const configurationRequestRegEx = new RegExp(
-  /(services.sentinel-hub.com|creodias.sentinel-hub.com|dataspace.copernicus.eu)\/configuration\/v1\/wms\/instances/,
+  /(services.sentinel-hub.com|creodias.sentinel-hub.com|dataspace.copernicus.eu)\/api\/v2\/configuration\/instances/,
 );
 
 const isConfigurationRequest = ({ url }) => {

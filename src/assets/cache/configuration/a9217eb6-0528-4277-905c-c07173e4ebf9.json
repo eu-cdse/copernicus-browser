@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a9217e-YOUR-INSTANCEID-HERE/layers/SNOW-STATE-CLASSIFICATION",
         "id": "SNOW-STATE-CLASSIFICATION",
         "title": "Snow State Classification",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a9217e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a9217e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.516610Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a9217e-YOUR-INSTANCEID-HERE/layers/SNOW-STATE-CLASSIFICATION-QUALITY",
         "id": "SNOW-STATE-CLASSIFICATION-QUALITY",
         "title": "Snow State Classification Quality",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/a9217e-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "a9217e-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.523742Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

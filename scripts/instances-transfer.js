@@ -56,7 +56,7 @@ const fetchInstance = async (clients, platformsMapping, platform, ids) => {
           ids.map(async (id) => {
             try {
               const response = await clients[httpClient].get(
-                `${endpoint}/configuration/v1/wms/instances/${id}`,
+                `${endpoint}/api/v2/configuration/instances/${id}`,
               );
 
               const {
@@ -95,7 +95,7 @@ const fetchInstance = async (clients, platformsMapping, platform, ids) => {
 const getLayersConfiguration = async (clients, endpoint, httpClient, instance) => {
   try {
     const { id } = instance;
-    const response = await clients[httpClient].get(`${endpoint}/configuration/v1/wms/instances/${id}/layers`);
+    const response = await clients[httpClient].get(`${endpoint}/api/v2/configuration/instances/${id}/layers`);
 
     return Promise.all(
       response.data.map(async (d) => {
@@ -124,7 +124,7 @@ async function cloneInstances(clients, instancesConfiguration) {
 
         try {
           const response = await clients[httpClientToClone].post(
-            `${endpoint}/configuration/v1/wms/instances`,
+            `${endpoint}/api/v2/configuration/instances`,
             rest,
           );
 
@@ -152,7 +152,7 @@ const cloneLayersConfiguration = (httpClients, clonedInstancesConfiguration) => 
 
       try {
         const response = await httpClients[httpClientToClone].post(
-          `${endpoint}/configuration/v1/wms/instances/${instanceId}/layers`,
+          `${endpoint}/api/v2/configuration/instances/${instanceId}/layers`,
           layer,
         );
 

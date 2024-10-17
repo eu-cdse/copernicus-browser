@@ -30,7 +30,7 @@ import { getBoundsZoomLevel } from '../../utils/coords';
 import { isPolygon, isRectangle } from '../../utils/geojson.utils';
 import { getSHServiceRootUrl } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
-  coordinatesNormalization,
+  unNormalizeMultiPolygonCoordinates,
   doCoordinatesCrossAntimeridian,
 } from '../../utils/handelAntimeridianCoord.utils';
 
@@ -193,7 +193,7 @@ export const checkUserAccount = async (user) => {
 export const getBoundsAndLatLng = (geometry) => {
   const geometryCopy = { ...geometry };
   if (doCoordinatesCrossAntimeridian(geometryCopy.coordinates)) {
-    geometryCopy.coordinates = coordinatesNormalization(geometryCopy.coordinates, true);
+    geometryCopy.coordinates = unNormalizeMultiPolygonCoordinates(geometryCopy.coordinates, true, true);
   }
   const layer = L.geoJSON(geometryCopy);
   const bounds = layer.getBounds();
@@ -237,7 +237,7 @@ export const fetchUserBYOCLayers = async (user, instances = []) => {
         responseType: 'json',
         headers: headers,
       };
-      const url = `${SH_SERVICES_URL}/configuration/v1/wms/instances/${instance.id}/layers`;
+      const url = `${SH_SERVICES_URL}/api/v2/configuration/instances/${instance.id}/layers`;
       return axios.get(url, requestConfig);
     } catch (err) {
       console.error('Error fetching layers for instance', instance.id, err);

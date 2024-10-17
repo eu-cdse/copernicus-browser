@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/1_AMPL-VISUALIZATION",
         "id": "1_AMPL-VISUALIZATION",
         "title": "Amplitude Parameter",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.461065Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/2_SOSV-VISUALIZATION",
         "id": "2_SOSV-VISUALIZATION",
         "title": "Start of Season Values",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.435491Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -62,7 +48,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/3_EOSV-VISUALIZATION",
         "id": "3_EOSV-VISUALIZATION",
         "title": "End of Season Values",
         "description": "",
@@ -74,16 +59,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.493219Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -93,7 +72,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/4_MINV-VISUALIZATION",
         "id": "4_MINV-VISUALIZATION",
         "title": "Season Minimum Values",
         "description": "",
@@ -105,16 +83,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.524348Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -124,7 +96,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/5_MAXV-VISUALIZATION",
         "id": "5_MAXV-VISUALIZATION",
         "title": "Season Maximum Values",
         "description": "",
@@ -136,16 +107,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.504801Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -155,7 +120,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/6_LSLOPE-VISUALIZATION",
         "id": "6_LSLOPE-VISUALIZATION",
         "title": "Slope of the Greening Period",
         "description": "",
@@ -167,16 +131,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.497661Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -186,7 +144,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/7_RSLOPE-VISUALIZATION",
         "id": "7_RSLOPE-VISUALIZATION",
         "title": "Slope of the Senescent Period",
         "description": "",
@@ -198,16 +155,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.480412Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -217,7 +168,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/8_SPROD-VISUALIZATION",
         "id": "8_SPROD-VISUALIZATION",
         "title": "Seasonal Productivity Parameter",
         "description": "",
@@ -229,16 +179,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.486736Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -248,7 +192,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE/layers/9_TPROD-VISUALIZATION",
         "id": "9_TPROD-VISUALIZATION",
         "title": "Total Productivity Parameter",
         "description": "",
@@ -260,16 +203,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/b851e1-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "b851e1-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.485050Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

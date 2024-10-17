@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/1_TRUE-COLOR",
         "id": "1_TRUE-COLOR",
         "title": "True Color",
         "description": "Based on bands 4,3,2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:50:17.859264Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -32,7 +25,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/2_FALSE-COLOR-URBAN",
         "id": "2_FALSE-COLOR-URBAN",
         "title": "False Color Urban",
         "description": "Based on bands B12, B11, B04",
@@ -44,16 +36,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:50:31.846860Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -64,7 +50,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/3_URBAN-CLASSIFIED",
         "id": "3_URBAN-CLASSIFIED",
         "title": "Urban Classified",
         "description": "",
@@ -97,16 +82,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:29:14.075887Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "leastCC",
@@ -116,7 +95,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/4_GREEN_CITY",
         "id": "4_GREEN_CITY",
         "title": "Green City",
         "description": "",
@@ -128,16 +106,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T12:18:28.354790Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "leastCC",
@@ -147,7 +119,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/5_URBAN-LAND-INFRARED-COLOR",
         "id": "5_URBAN-LAND-INFRARED-COLOR",
         "title": "Urban Land Infrared Color",
         "description": "",
@@ -159,16 +130,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:29:27.753412Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -179,7 +144,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE/layers/6_NDVI",
         "id": "6_NDVI",
         "title": "NDVI",
         "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
@@ -191,16 +155,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/af9f44-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "af9f44-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:28:29.057926Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

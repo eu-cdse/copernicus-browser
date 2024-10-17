@@ -6,8 +6,7 @@ import TutorialComponent from './TutorialComponent';
 import { TUTORIAL_STEPS, TUTORIAL_STEPS_MOBILE } from './TutorialContent';
 
 import './Tutorial.scss';
-
-const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
+import { SHOW_TUTORIAL_LC } from '../const';
 
 const Tutorial = ({ selectedLanguage }) => {
   const [steps, setSteps] = useState([]);

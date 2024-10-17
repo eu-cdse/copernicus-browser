@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/F1_VISUALIZED",
         "id": "F1_VISUALIZED",
         "title": "F1 Brightness Temperature",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:24:08.462448Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/F2_VISUALIZED",
         "id": "F2_VISUALIZED",
         "title": "F2 Brightness Temperature",
         "description": "",
@@ -45,16 +37,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:28:12.142276Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -66,7 +52,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/FALSE_COLOR",
         "id": "FALSE_COLOR",
         "title": "False Color",
         "description": "Based on bands S3, S2, S1",
@@ -78,16 +63,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-08-23T14:56:22.326429Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -98,7 +77,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S1_VISUALIZED",
         "id": "S1_VISUALIZED",
         "title": "S1 Reflectance ",
         "description": "",
@@ -110,16 +88,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:47:29.851461Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -131,7 +103,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S2_VISUALIZED",
         "id": "S2_VISUALIZED",
         "title": "S2 Reflectance ",
         "description": "",
@@ -143,16 +114,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:47:36.173308Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -164,7 +129,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S3_VISUALIZED",
         "id": "S3_VISUALIZED",
         "title": "S3 Reflectance ",
         "description": "",
@@ -176,16 +140,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:47:42.989868Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -197,7 +155,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S4_VISUALIZED",
         "id": "S4_VISUALIZED",
         "title": "S4 Reflectance ",
         "description": "",
@@ -209,16 +166,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:47:48.441234Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -229,7 +180,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S5_VISUALIZED",
         "id": "S5_VISUALIZED",
         "title": "S5 Reflectance ",
         "description": "",
@@ -241,16 +191,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:47:56.235504Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -262,7 +206,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S6_VISUALIZED",
         "id": "S6_VISUALIZED",
         "title": "S6 Reflectance ",
         "description": "",
@@ -274,16 +217,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:48:07.064827Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -295,7 +232,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S7_VISUALIZED",
         "id": "S7_VISUALIZED",
         "title": "S7 Brightness Temperature ",
         "description": "",
@@ -307,16 +243,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:48:26.654915Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -328,7 +258,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S8_VISUALIZED",
         "id": "S8_VISUALIZED",
         "title": "S8 Brightness Temperature ",
         "description": "",
@@ -340,16 +269,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:48:32.888550Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -361,7 +284,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE/layers/S9_VISUALIZED",
         "id": "S9_VISUALIZED",
         "title": "S9 Brightness Temperature ",
         "description": "",
@@ -373,16 +295,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ef19b6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ef19b6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-05-31T07:48:44.780628Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

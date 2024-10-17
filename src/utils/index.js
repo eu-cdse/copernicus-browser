@@ -648,3 +648,17 @@ export async function handleError(
 }
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function hasDuplicateObjects(array) {
+  const uniqueSet = new Set();
+
+  for (const item of array) {
+    const serializedItem = JSON.stringify(item);
+    if (uniqueSet.has(serializedItem)) {
+      return true;
+    }
+    uniqueSet.add(serializedItem);
+  }
+
+  return false;
+}

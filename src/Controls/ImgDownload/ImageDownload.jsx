@@ -202,24 +202,12 @@ function ImageDownload(props) {
 
     let { width, height } = getMapDimensions(pixelBounds);
 
-    if (aoiGeometry && cropToAoi) {
-      // defaultWidth and defaultHeight are in this case referring to bounds of the geometry
-      // We keep one of the map dimensions and scale the other
-      const ratio = defaultWidth / defaultHeight;
+    const ratio = defaultWidth / defaultHeight;
 
-      if (ratio >= 1) {
-        height = Math.floor(width / ratio);
-      } else {
-        width = Math.floor(ratio * height);
-      }
+    if (ratio >= 1) {
+      height = Math.floor(width / ratio);
     } else {
-      const ratio = defaultWidth / defaultHeight;
-
-      if (ratio >= 1) {
-        height = Math.floor(width / ratio);
-      } else {
-        width = Math.floor(ratio * height);
-      }
+      width = Math.floor(ratio * height);
     }
 
     const baseParams = {
@@ -275,14 +263,20 @@ function ImageDownload(props) {
   }
 
   async function executeDownloadBasicVisualization(props, formData, baseParams) {
-    let image;
+    let blob;
     const { imageFormat, cropToAoi } = formData;
     const bounds = cropToAoi ? props.aoiBounds : props.mapBounds;
     const correctProjection = !formData.addMapOverlays ? CRS_EPSG4326.authId : CRS_EPSG3857.authId;
 
     try {
-      image = await fetchImageFromParams(
-        { ...props, ...formData, ...baseParams, bounds, selectedCrs: correctProjection },
+      blob = await fetchImageFromParams(
+        {
+          ...props,
+          ...formData,
+          ...baseParams,
+          bounds,
+          selectedCrs: correctProjection,
+        },
         setWarnings,
       );
     } catch (err) {
@@ -290,8 +284,9 @@ function ImageDownload(props) {
       setLoadingImages(false);
       return;
     }
+
     const { ext: imageExt } = IMAGE_FORMATS_INFO[imageFormat];
-    FileSaver.saveAs(image.blob, `${image.nicename}.${imageExt}`);
+    FileSaver.saveAs(blob.blob, `${blob.nicename}.${imageExt}`);
     setLoadingImages(false);
   }
 
@@ -332,6 +327,7 @@ function ImageDownload(props) {
       clipExtraBandsTiff,
       customResolution,
     } = formData;
+    const { ext: imageExt } = IMAGE_FORMATS_INFO[imageFormat];
     const bounds = aoiGeometry ? aoiBounds : mapBounds;
     const resolutionDivisor = RESOLUTION_DIVISORS[selectedResolution].value;
     let width;
@@ -360,6 +356,7 @@ function ImageDownload(props) {
       width: width,
       height: height,
       imageFormat: getCorrespondingImageFormatIfKmz(imageFormat),
+      mergeImages: imageExt !== 'kmz' && imageExt !== 'tiff',
       selectedCrs: selectedCrs,
       fromTime: fromTime,
       toTime: toTime,
@@ -438,25 +435,19 @@ function ImageDownload(props) {
       ),
     ).then((images) => images.filter((img) => img !== null));
 
-    const { ext: imageExt } = IMAGE_FORMATS_INFO[imageFormat];
-
     if (images.length === 1) {
-      if (imageExt === 'kmz') {
-        const kml = generateKmlFile(bounds, `image.${baseParams.imageFormat}`);
-        const kmz = await prepareKmzFile(kml, images[0], baseParams.imageFormat);
-        FileSaver.saveAs(kmz, `${images[0].nicename}.${imageExt}`);
+      if (images[0].multipleImages) {
+        await setFileSaverOrAddToZipForAntimeridianCrossingImages(images[0].multipleImages);
       } else {
-        FileSaver.saveAs(images[0].blob, `${images[0].nicename}.${imageExt}`);
+        await setFileSaverOrAddToZipForSingleImage();
       }
     } else if (images.length > 1) {
       const zip = new JSZip();
       for (let i = 0; i < images.length; i++) {
-        if (imageExt === 'kmz') {
-          const kml = generateKmlFile(bounds, `image.${baseParams.imageFormat}`);
-          const kmz = await prepareKmzFile(kml, images[i], baseParams.imageFormat);
-          zip.file(`${images[i].nicename}.kmz`, kmz);
+        if (images[i].multipleImages) {
+          await setFileSaverOrAddToZipForAntimeridianCrossingImages(images[i].multipleImages, zip);
         } else {
-          zip.file(`${images[i].nicename}.${imageExt}`, images[i].blob);
+          await setFileSaverOrAddToZipForSingleImage(zip);
         }
       }
 
@@ -466,6 +457,58 @@ function ImageDownload(props) {
         FileSaver.saveAs(content, zipFilename);
       }
     }
+
+    async function setFileSaverOrAddToZipForAntimeridianCrossingImages(multipleImages, zip) {
+      if (imageExt === 'kmz') {
+        const kml = generateKmlFile(
+          multipleImages.map((image) => image.bbAndPolygons.bounds),
+          baseParams.imageFormat,
+        );
+        const kmz = await prepareKmzFile(kml, multipleImages, baseParams.imageFormat);
+        if (zip) {
+          zip.file(`${multipleImages[0].nicename}.kmz`, kmz);
+        } else {
+          FileSaver.saveAs(kmz, `${multipleImages[0].nicename}.${imageExt}`);
+        }
+      } else if (imageExt === 'tiff') {
+        if (zip) {
+          for (let i = 0; i < multipleImages.length; i++) {
+            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, multipleImages[i].blob);
+          }
+        } else {
+          zip = new JSZip();
+          for (let i = 0; i < multipleImages.length; i++) {
+            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, multipleImages[i].blob);
+          }
+
+          const content = await zip.generateAsync({ type: 'blob' });
+          const zipFilename = multipleImages[0].nicename;
+          FileSaver.saveAs(content, zipFilename);
+        }
+      }
+    }
+
+    async function setFileSaverOrAddToZipForSingleImage(zip) {
+      if (imageExt === 'kmz') {
+        const kml = generateKmlFile(bounds, baseParams.imageFormat);
+        const kmz = await prepareKmzFile(kml, images[0], baseParams.imageFormat);
+
+        if (zip) {
+          zip.file(`${images[0].nicename}.kmz`, kmz);
+        } else {
+          FileSaver.saveAs(kmz, `${images[0].nicename}.${imageExt}`);
+        }
+      } else {
+        if (zip) {
+          for (let i = 0; i < images.length; i++) {
+            zip.file(`${images[i].nicename}.${imageExt}`, images[i].blob);
+          }
+        } else {
+          FileSaver.saveAs(images[0].blob, `${images[0].nicename}.${imageExt}`);
+        }
+      }
+    }
+
     setLoadingImages(false);
   }
 

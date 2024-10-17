@@ -22,7 +22,7 @@ import store, {
 } from '../store';
 import { b64DecodeUnicode } from '../utils/base64MDN';
 
-import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, TABS } from '../const';
+import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, SHOW_TUTORIAL_LC, TABS } from '../const';
 import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins } from '../Tools/Pins/Pin.utils';
@@ -44,11 +44,20 @@ class URLParamsParser extends React.Component {
       };
     }
 
+    this.checkAndDisplayTutorial(params);
     this.setStore(params);
     this.setState({
       params: params,
     });
   }
+
+  checkAndDisplayTutorial = (params) => {
+    const { shouldDisplayTutorial } = params;
+
+    if (shouldDisplayTutorial === 'true') {
+      window.localStorage.setItem(SHOW_TUTORIAL_LC, true);
+    }
+  };
 
   containsEOB2Params = (params) => {
     return !!(

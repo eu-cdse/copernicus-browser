@@ -203,6 +203,7 @@ class App extends Component {
           setShowPinPanel={this.setShowPinPanel}
           showComparePanel={this.state.showComparePanel}
           setShowComparePanel={this.setShowComparePanel}
+          compareShare={this.props.compareShare}
         />
         <TerrainViewerScriptProvider>
           <TerrainViewer setLastAddedPin={this.setLastAddedPin} toolsOpen={this.props.toolsOpen} />

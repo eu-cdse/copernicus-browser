@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/1_LAND_GIFAPAR",
         "id": "1_LAND_GIFAPAR",
         "title": "GIFAPAR",
         "description": "Based on band GIFAPAR",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-16T11:31:01.152736Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/1_WATER_IWV_W",
         "id": "1_WATER_IWV_W",
         "title": "Integrated Water Vapour",
         "description": "Based on band IWV_W",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-16T11:30:54.991230Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -62,7 +48,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/2_LAND_IWV_L",
         "id": "2_LAND_IWV_L",
         "title": "Integrated water vapour column",
         "description": "Based on band IWV_L",
@@ -74,16 +59,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-08T08:55:47.091190Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -93,7 +72,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/2_WATER_CHL_OC4ME",
         "id": "2_WATER_CHL_OC4ME",
         "title": "Algal pigment concentration (open waters)",
         "description": "Based on band CHL_OC4ME",
@@ -105,16 +83,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:30:27.046316Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -124,7 +96,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/3_LAND_OTCI",
         "id": "3_LAND_OTCI",
         "title": "OTCI",
         "description": "OLCI Terrestrial Chlorophyll Index, Based on band OTCI",
@@ -136,16 +107,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-08T10:57:42.749590Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -155,7 +120,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/3_WATER_TSM_NN",
         "id": "3_WATER_TSM_NN",
         "title": "Total suspended matter concentration",
         "description": "Based on band TSM_NN",
@@ -167,16 +131,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:30:58.349168Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -186,7 +144,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/4_LAND_RC681",
         "id": "4_LAND_RC681",
         "title": "Rectified reflectance 681",
         "description": "Based on band RC681 at 681 nm",
@@ -198,16 +155,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-08T08:56:30.049216Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -217,7 +168,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/4_WATER_PAR",
         "id": "4_WATER_PAR",
         "title": "Photosynthetically active radiation",
         "description": "Based on band PAR",
@@ -229,16 +179,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:31:16.082169Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -248,7 +192,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/5_LAND_RC865",
         "id": "5_LAND_RC865",
         "title": "Rectified reflectance 865",
         "description": "Based on band RC865 at 865 nm",
@@ -260,16 +203,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-08T08:57:04.159232Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -279,7 +216,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/5_WATER_KD490_M07",
         "id": "5_WATER_KD490_M07",
         "title": "Diffuse attenuation coefficient",
         "description": "Based on band KD490_M07",
@@ -291,16 +227,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:32:07.206692Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -310,7 +240,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/6_WATER_A865",
         "id": "6_WATER_A865",
         "title": "Aerosol Angstrom exponent",
         "description": "Based on band A865",
@@ -322,16 +251,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:32:32.438079Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -341,7 +264,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/7_WATER_T865",
         "id": "7_WATER_T865",
         "title": "Aerosol optical thickness",
         "description": "Based on band T865",
@@ -353,16 +275,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:32:47.625302Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -372,7 +288,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/8_WATER_CHL_NN",
         "id": "8_WATER_CHL_NN",
         "title": "Algal pigment concentration (complex waters)",
         "description": "Based on band CHL_NN",
@@ -384,16 +299,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:33:01.700289Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -403,7 +312,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE/layers/9_WATER_ADG443_NN",
         "id": "9_WATER_ADG443_NN",
         "title": "CDM absorption coefficient",
         "description": "Based on band ADG443_NN",
@@ -415,16 +323,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/9aaacd-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-08-19T11:33:14.356621Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3OLCIL2/sources/22"
-        },
+        "collectionType": "S3OLCIL2",
+        "datasetSourceId": 22,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

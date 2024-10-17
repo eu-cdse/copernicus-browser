@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/91d827-YOUR-INSTANCEID-HERE/layers/F1_VISUALIZED",
         "id": "F1_VISUALIZED",
         "title": "Thermal IR emission F1",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/91d827-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "91d827-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T10:51:15.998402Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -32,7 +25,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/91d827-YOUR-INSTANCEID-HERE/layers/F2_VISUALIZED",
         "id": "F2_VISUALIZED",
         "title": "Thermal IR emission F2",
         "description": "",
@@ -44,16 +36,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/91d827-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "91d827-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-17T10:52:00.240230Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S3SLSTR/sources/9"
-        },
+        "collectionType": "S3SLSTR",
+        "datasetSourceId": 9,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

@@ -99,8 +99,8 @@ const SpectralExplorer = ({
   return (
     <DraggableDialogBox
       className="spectral-explorer"
-      width={700}
-      height={550}
+      width={950}
+      height={650}
       onClose={onClose}
       title={`${spectralExplorerLabels.title()}: ${getDatasetLabel(datasetId)}`}
       modal={false}

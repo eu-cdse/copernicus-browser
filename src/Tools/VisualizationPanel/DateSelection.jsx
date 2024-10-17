@@ -25,6 +25,7 @@ function DateSelection({
   showLayerPanel,
   setShowLayerPanel,
   dateMode,
+  compareShare,
 }) {
   const [maxCloudCoverTemp, setMaxCloudCoverTemp] = useState(maxCloudCover);
   let minDateRange = moment.utc('1972-07-01');
@@ -203,6 +204,7 @@ function DateSelection({
       showLayerPanel={showLayerPanel}
       setShowLayerPanel={setShowLayerPanel}
       dateMode={dateMode}
+      compareShare={compareShare}
     />
   );
 }

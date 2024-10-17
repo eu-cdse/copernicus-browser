@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands 4,3,2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:00:55.908570Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/2_MOISTURE-INDEX",
         "id": "2_MOISTURE-INDEX",
         "title": "Moisture index",
         "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
@@ -86,16 +78,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:24:24.918284Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -106,7 +92,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/3_NDWI",
         "id": "3_NDWI",
         "title": "NDWI",
         "description": "Based on combination of bands (B3 - B8)/(B3 + B8)",
@@ -118,16 +103,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:25:52.732866Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -138,7 +117,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/4_MOISTURE-STRESS",
         "id": "4_MOISTURE-STRESS",
         "title": "Moisture Stress",
         "description": "Classified NDMI for irrigation",
@@ -171,16 +149,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:24:50.968468Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -190,7 +162,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/5_NDVI",
         "id": "5_NDVI",
         "title": "NDVI",
         "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
@@ -381,16 +352,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-11-17T07:57:21.518505Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -401,7 +366,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE/layers/6-SWIR",
         "id": "6-SWIR",
         "title": "SWIR",
         "description": "Based on bands 12,8A,4",
@@ -413,22 +377,65 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/8184c6-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:26:22.439476Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L2A/sources/2"
-        },
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
             "maxCloudCoverage": 20,
             "previewMode": "EXTENDED_PREVIEW",
+            "type": "S2L2A"
+        }
+    },
+    {
+        "id": "FALSE-COLOR-URBAN",
+        "title": "False-color-urban",
+        "description": "Based on bands 12,11,4",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup() {\n  return {\n    input: [\"B12\", \"B11\", \"B04\",\"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = [samples.B12, samples.B11, samples.B04,samples.dataMask];\n  return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2024-10-10T09:19:12.545339Z",
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
+            "type": "S2L2A"
+        }
+    },
+    {
+        "id": "HIGHLIGHT-OPTIMIZED-NATURAL-COLOR",
+        "title": "Highlight Optimized Natural Color",
+        "description": "Enhanced natural color visualization",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup() {\n   return {\n    input: [\"B04\", \"B03\", \"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n\tvar R = samples.B04 > 0.15 ? Math.cbrt(0.6 * samples.B04) : 2.9876031644 * samples.B04\n\tvar G = samples.B03 > 0.15 ? Math.cbrt(0.6 * samples.B03) : 2.9876031644 * samples.B03\n\tvar B = samples.B02 > 0.15 ? Math.cbrt(0.6 * samples.B02) : 2.9876031644 * samples.B02\n\treturn [R, G, B, samples.dataMask]\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "8184c6-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2024-10-10T09:19:49.620282Z",
+        "collectionType": "S2L2A",
+        "datasetSourceId": 2,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 50,
             "type": "S2L2A"
         }
     }

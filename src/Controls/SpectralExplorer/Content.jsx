@@ -8,6 +8,7 @@ import LineChart from './LineChart';
 import { createSeriesId, getCentralWaveLength, getTitleForGeometryType } from './SpectralExplorer.utils';
 import { connect } from 'react-redux';
 import store, { spectralExplorerSlice } from '../../store';
+import ExternalLink from '../../ExternalLink/ExternalLink';
 
 const SPECTRAL_EXPLORER_TABS = {
   CHART: 'CHART',
@@ -105,6 +106,16 @@ const Content = ({ values, datasetId, geometryType, bands, loading, error, selec
           selected: selectedSeries?.[datasetId] || [],
         })}
         <Legend series={series} selectedSeries={selectedSeries} datasetId={datasetId} />
+        <div className="credits">
+          {t`Credits:`}{' '}
+          <ExternalLink href="https://crustal.usgs.gov/speclab/SNTL2.php?page=1">
+            USGS Spectral Library
+          </ExternalLink>
+          {', '}
+          <ExternalLink href="https://speclib.jpl.nasa.gov/library">
+            ECOSTRESS Spectral Library (NASA)
+          </ExternalLink>
+        </div>
       </div>
     </div>
   );

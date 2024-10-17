@@ -14,20 +14,19 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
   const [shortUrl, setShortUrl] = useState('');
 
   let currentUrl = window.location.href;
+  if (extraParams) {
+    currentUrl +=
+      '&' +
+      Object.keys(extraParams)
+        .map((k) => `${k}=${encodeURIComponent(extraParams[k])}`)
+        .join('&');
+  }
 
   useEffect(() => {
     sharedLinks[currentUrl] ? setShortUrl(sharedLinks[currentUrl]) : setShortUrl('');
   }, [sharedLinks, currentUrl]);
 
-  const shortenUrl = async (extraParams) => {
-    if (extraParams) {
-      currentUrl +=
-        '&' +
-        Object.keys(extraParams)
-          .map((k) => `${k}=${encodeURIComponent(extraParams[k])}`)
-          .join('&');
-    }
-
+  const shortenUrl = async () => {
     setShortUrl(await getShortUrl(currentUrl));
   };
 
@@ -57,10 +56,7 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
         </div>
 
         <div className="create-short-url-wrapper">
-          <button
-            className={`create-short-url ${shortUrl ? 'disabled' : ''}`}
-            onClick={() => shortenUrl(extraParams)}
-          >
+          <button className={`create-short-url ${shortUrl ? 'disabled' : ''}`} onClick={() => shortenUrl()}>
             {t`Generate`}
           </button>
         </div>

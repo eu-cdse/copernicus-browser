@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE/layers/FRACTIONAL-SNOW-COVER-NDSI",
         "id": "FRACTIONAL-SNOW-COVER-NDSI",
         "title": "Fractional Snow Cover NDSI",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "2025fa-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.496622Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -31,7 +24,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE/layers/FRACTIONAL-SNOW-COVER-ON-GROUND",
         "id": "FRACTIONAL-SNOW-COVER-ON-GROUND",
         "title": "Fractional Snow Cover On Ground",
         "description": "",
@@ -43,16 +35,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "2025fa-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.495604Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -62,7 +48,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE/layers/FRACTIONAL-SNOW-COVER-ON-GROUND-QUALITY",
         "id": "FRACTIONAL-SNOW-COVER-ON-GROUND-QUALITY",
         "title": "Fractional Snow Cover On Ground Quality",
         "description": "",
@@ -74,16 +59,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "2025fa-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.523155Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -93,7 +72,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE/layers/FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY",
         "id": "FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY",
         "title": "Fractional Snow Cover Top Of Canopy",
         "description": "",
@@ -105,16 +83,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "2025fa-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.518086Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -124,7 +96,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE/layers/FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY-QUALITY",
         "id": "FRACTIONAL-SNOW-COVER-TOP-OF-CANOPY-QUALITY",
         "title": "Fractional Snow Cover Top Of Canopy Quality",
         "description": "",
@@ -136,16 +107,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/2025fa-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "2025fa-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-08T15:06:54.519801Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

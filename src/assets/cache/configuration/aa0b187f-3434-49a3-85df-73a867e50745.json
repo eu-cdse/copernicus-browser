@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/0-RGB-RATIO",
         "id": "0-RGB-RATIO",
         "title": "RGB Ratio",
         "description": "",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:21:53.224643Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "timeRange": {
@@ -41,7 +34,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/1-SAR-URBAN",
         "id": "1-SAR-URBAN",
         "title": "SAR Urban",
         "description": "",
@@ -53,16 +45,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:22:24.717316Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -72,7 +58,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/ENHANCED-VISUALIZATION",
         "id": "ENHANCED-VISUALIZATION",
         "title": "Enhanced visualization",
         "description": "",
@@ -84,16 +69,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:19:32.274505Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -103,7 +82,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/HH-DECIBEL-GAMMA0",
         "id": "HH-DECIBEL-GAMMA0",
         "title": "HH - decibel gamma0",
         "description": "",
@@ -115,16 +93,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:19:43.931039Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -134,7 +106,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/HH-LINEAR-GAMMA0",
         "id": "HH-LINEAR-GAMMA0",
         "title": "HH - linear gamma0",
         "description": "",
@@ -146,16 +117,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:19:53.286029Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -165,7 +130,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/HV-DECIBEL-GAMMA0",
         "id": "HV-DECIBEL-GAMMA0",
         "title": "HV - decibel gamma0",
         "description": "",
@@ -177,16 +141,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:20:01.230258Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -196,7 +154,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE/layers/HV-LINEAR-GAMMA0",
         "id": "HV-LINEAR-GAMMA0",
         "title": "HV - linear gamma0",
         "description": "",
@@ -208,16 +165,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/aa0b18-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "aa0b18-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-07-03T06:20:09.123304Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/CUSTOM/sources/10"
-        },
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

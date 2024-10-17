@@ -42,6 +42,20 @@
             "description": "Based on bands 12,8A,4",
             "dataset": "S2L2A",
             "legendUrl": null
+        },
+        {
+            "id": "FALSE-COLOR-URBAN",
+            "name": "False-color-urban",
+            "description": "Based on bands 12,11,4",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "HIGHLIGHT-OPTIMIZED-NATURAL-COLOR",
+            "name": "Highlight Optimized Natural Color",
+            "description": "Enhanced natural color visualization",
+            "dataset": "S2L2A",
+            "legendUrl": null
         }
     ],
     "datasets": [

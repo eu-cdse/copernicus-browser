@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/1_TRUE_COLOR",
         "id": "1_TRUE_COLOR",
         "title": "True color",
         "description": "Based on bands 4,3,2",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2024-02-02T08:52:11.821954Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -33,7 +26,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/2_MOISTURE-INDEX",
         "id": "2_MOISTURE-INDEX",
         "title": "Moisture index",
         "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
@@ -86,16 +78,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:03:09.160605Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -106,7 +92,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/3_NDWI",
         "id": "3_NDWI",
         "title": "NDWI",
         "description": "Based on combination of bands (B3 - B8)/(B3 + B8)",
@@ -118,16 +103,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:05:17.111774Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -138,7 +117,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/4_MOISTURE-STRESS",
         "id": "4_MOISTURE-STRESS",
         "title": "Moisture Stress",
         "description": "Classified NDMI for irrigation",
@@ -171,16 +149,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:03:37.665090Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -190,7 +162,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/5_NDVI",
         "id": "5_NDVI",
         "title": "NDVI",
         "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
@@ -381,16 +352,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:04:48.945392Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "upsampling": "BICUBIC",
@@ -402,7 +367,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE/layers/6-SWIR",
         "id": "6-SWIR",
         "title": "SWIR",
         "description": "Based on bands 12,8A,4",
@@ -414,16 +378,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/ede228-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "ede228-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-10-23T14:05:43.486135Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S2L1C/sources/1"
-        },
+        "collectionType": "S2L1C",
+        "datasetSourceId": 1,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",

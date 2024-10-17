@@ -1,6 +1,5 @@
 [
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/AER_AI_340_AND_380_VISUALIZED",
         "id": "AER_AI_340_AND_380_VISUALIZED",
         "title": "AER AI 340 and 380",
         "description": "UV Aerosol Index from 380 and 340 nm",
@@ -12,16 +11,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:37:18.453037Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -30,7 +23,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/AER_AI_354_AND_388_VISUALIZED",
         "id": "AER_AI_354_AND_388_VISUALIZED",
         "title": "AER AI 354 and 388",
         "description": "UV Aerosol Index from 388 and 354 nm",
@@ -42,16 +34,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:41:42.321999Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -60,7 +46,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CH4_VISUALIZED",
         "id": "CH4_VISUALIZED",
         "title": "Methane",
         "description": "Column averaged dry air mixing ratio of methane",
@@ -72,16 +57,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:49:23.257203Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -90,7 +69,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_BASE_HEIGHT_VISUALIZED",
         "id": "CLOUD_BASE_HEIGHT_VISUALIZED",
         "title": "Base height",
         "description": "Cloud base height",
@@ -102,16 +80,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:44:11.278241Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -120,7 +92,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_BASE_PRESSURE_VISUALIZED",
         "id": "CLOUD_BASE_PRESSURE_VISUALIZED",
         "title": "Base pressure",
         "description": "Cloud base pressure",
@@ -132,16 +103,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:45:09.937709Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -150,7 +115,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_FRACTION_VISUALIZED",
         "id": "CLOUD_FRACTION_VISUALIZED",
         "title": "Effective radiometric cloud fraction",
         "description": "Effective radiometric cloud fraction",
@@ -162,16 +126,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:48:15.885910Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -180,7 +138,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_OPTICAL_THICKNESS_VISUALIZED",
         "id": "CLOUD_OPTICAL_THICKNESS_VISUALIZED",
         "title": "Optical thickness",
         "description": "Cloud optical thickness",
@@ -192,16 +149,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:50:26.337595Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -210,7 +161,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_TOP_HEIGHT_VISUALIZED",
         "id": "CLOUD_TOP_HEIGHT_VISUALIZED",
         "title": "Top height",
         "description": "Cloud top height",
@@ -222,16 +172,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:52:12.495397Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -240,7 +184,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CLOUD_TOP_PRESSURE_VISUALIZED",
         "id": "CLOUD_TOP_PRESSURE_VISUALIZED",
         "title": "Top pressure",
         "description": "Cloud top pressure",
@@ -252,16 +195,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:52:42.161897Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -270,7 +207,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/CO_VISUALIZED",
         "id": "CO_VISUALIZED",
         "title": "Carbon Monoxide",
         "description": "Carbon Monoxide total column",
@@ -282,16 +218,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:47:39.115917Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -300,7 +230,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/HCHO_VISUALIZED",
         "id": "HCHO_VISUALIZED",
         "title": "Formaldehyde",
         "description": "Formaldehyde troposheric vertical column",
@@ -312,16 +241,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:48:47.728633Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -330,7 +253,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/NO2_VISUALIZED",
         "id": "NO2_VISUALIZED",
         "title": "Nitrogen Dioxide",
         "description": "Nitrogen Dioxide tropospheric column",
@@ -342,16 +264,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:49:55.417842Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -360,7 +276,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/O3_VISUALIZED",
         "id": "O3_VISUALIZED",
         "title": "Ozone",
         "description": "Ozone total column",
@@ -372,16 +287,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:50:58.433233Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
@@ -390,7 +299,6 @@
         }
     },
     {
-        "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE/layers/SO2_VISUALIZED",
         "id": "SO2_VISUALIZED",
         "title": "Sulfur Dioxide",
         "description": "Sulfur Dioxide total column",
@@ -402,16 +310,10 @@
             }
         ],
         "orderHint": 0,
-        "instance": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/wms/instances/0b0f5a-YOUR-INSTANCEID-HERE"
-        },
+        "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
         "lastUpdated": "2023-06-13T05:51:35.152533Z",
-        "dataset": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2"
-        },
-        "datasetSource": {
-            "@id": "https://sh.dataspace.copernicus.eu/configuration/v1/datasets/S5PL2/sources/7"
-        },
+        "collectionType": "S5PL2",
+        "datasetSourceId": 7,
         "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
