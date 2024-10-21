@@ -121,6 +121,7 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
+  CDSE_GLC_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -824,7 +825,8 @@ class SentinelHubLayer extends L.TileLayer {
       case ESA_WORLD_COVER:
       case COPERNICUS_GLOBAL_SURFACE_WATER:
       case IO_LULC_10M_ANNUAL:
-      case GLOBAL_HUMAN_SETTLEMENT: {
+      case GLOBAL_HUMAN_SETTLEMENT:
+      case CDSE_GLC_COLLECTION: {
         const dsh = getDataSourceHandler(datasetId);
         return await this.createBYOCLayer(
           url,

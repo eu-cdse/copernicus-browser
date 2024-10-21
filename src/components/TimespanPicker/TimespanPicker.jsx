@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { t } from 'ttag';
+import moment from 'moment';
 
 import { DateTimeInput } from './DateTimeInput';
 import { EOBCCSlider } from '../../junk/EOBCommon/EOBCCSlider/EOBCCSlider';
@@ -30,8 +31,8 @@ export class TimespanPicker extends Component {
       return;
     }
     this.setState({
-      fromTime: fromTime.clone(),
-      toTime: toTime.clone(),
+      fromTime: moment(fromTime).clone(),
+      toTime: moment(toTime).clone(),
     });
   };
 

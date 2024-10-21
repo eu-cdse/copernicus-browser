@@ -134,6 +134,7 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
+  CDSE_GLC_COLLECTION,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -147,6 +148,7 @@ import CopernicusHRSIDataSourceHandler from './CopernicusHRSIDataSourceHandler';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
+import GLCDataSourceHandler from './GLCDataSourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -177,6 +179,7 @@ export function initializeDataSourceHandlers() {
     new BYOCDataSourceHandler(),
     new PlanetBasemapDataSourceHandler(),
     new OthersDataSourceHandler(),
+    new GLCDataSourceHandler(),
   ];
 }
 
@@ -527,6 +530,8 @@ export function datasourceForDatasetId(datasetId) {
     case S3OLCIL2_LAND:
     case S3OLCIL2_WATER:
       return DATASOURCES.S3_CDAS;
+    case CDSE_GLC_COLLECTION:
+      return DATASOURCES.GLOBAL_LAND_COVER;
     default:
       return null;
   }
@@ -657,6 +662,7 @@ export const datasetLabels = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
   [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',
+  [CDSE_GLC_COLLECTION]: 'Global Land Cover',
 };
 
 export function getDatasetLabel(datasetId) {

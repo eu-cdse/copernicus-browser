@@ -25,7 +25,7 @@ const checkFilter = (item, filter) => {
   return false;
 };
 
-const createCollectionGropsFromDataSourceHandlers = (filter, bounds) => {
+const createCollectionGroupsFromDataSourceHandlers = (filter, bounds) => {
   const collectionGroups = dataSourceHandlers
     .filter((dsh) => dsh.isHandlingAnyUrl())
     .map((dsh) => {
@@ -67,7 +67,7 @@ const createCollectionGropsFromDataSourceHandlers = (filter, bounds) => {
 };
 
 const getSelectedCollectionTitle = (selected) => {
-  const collectionGroups = createCollectionGropsFromDataSourceHandlers();
+  const collectionGroups = createCollectionGroupsFromDataSourceHandlers();
   const collectionGroup = collectionGroups.find((cg) => cg.datasource === selected.datasource);
 
   const collection =
@@ -114,4 +114,8 @@ async function displayLatestDateOnSelect({ datasetId, bounds, pixelBounds, maxCl
   }
 }
 
-export { createCollectionGropsFromDataSourceHandlers, getSelectedCollectionTitle, displayLatestDateOnSelect };
+export {
+  createCollectionGroupsFromDataSourceHandlers,
+  getSelectedCollectionTitle,
+  displayLatestDateOnSelect,
+};

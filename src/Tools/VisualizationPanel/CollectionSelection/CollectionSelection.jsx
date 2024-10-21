@@ -9,7 +9,7 @@ import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePa
 import Sentinel1Collection from './Sentinel1Collection';
 import { CollectionSearch, CollectionSearchTools } from './CollectionSearch';
 import {
-  createCollectionGropsFromDataSourceHandlers,
+  createCollectionGroupsFromDataSourceHandlers,
   displayLatestDateOnSelect,
   getSelectedCollectionTitle,
 } from './CollectionSelection.utils';
@@ -240,7 +240,7 @@ const CollectionSelection = ({
       setShowLayerPanel(true);
     }
     if (!selectedConfig.dataset) {
-      const collectionGroupsFromDsh = createCollectionGropsFromDataSourceHandlers(filter, bounds);
+      const collectionGroupsFromDsh = createCollectionGroupsFromDataSourceHandlers(filter, bounds);
       const collectionGroup = collectionGroupsFromDsh.find(
         (collectionGroup) => collectionGroup.datasource === selectedCollection.datasource,
       );
@@ -281,7 +281,7 @@ const CollectionSelection = ({
 
   useEffect(() => {
     if (dataSourcesInitialized) {
-      const collectionGroupsFromDsh = createCollectionGropsFromDataSourceHandlers(filter);
+      const collectionGroupsFromDsh = createCollectionGroupsFromDataSourceHandlers(filter);
       setCollectionGroups(collectionGroupsFromDsh);
       const preSelected = collectionGroupsFromDsh.find((collectionGroup) => {
         const { collections } = collectionGroup;

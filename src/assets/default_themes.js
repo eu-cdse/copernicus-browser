@@ -203,6 +203,10 @@ export const DEFAULT_THEMES = [
         name: 'River and Lake Ice Extent S1+S2',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/8cf23f-YOUR-INSTANCEID-HERE',
       },
+      {
+        name: 'Global Land Cover',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/f44fbd-YOUR-INSTANCEID-HERE',
+      },
     ],
   },
   {
@@ -222,6 +226,20 @@ export const DEFAULT_THEMES = [
       },
     ],
     pins: [
+      {
+        lat: 41.96432,
+        lng: -122.38866,
+        zoom: 13,
+        title: 'Dam Removal on the Klamath River (True Color)',
+        toTime: '2024-04-11',
+        layerId: '1_TRUE_COLOR',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/25444d-YOUR-INSTANCEID-HERE',
+        description:
+          "Many of the Earth's rivers have been altered by dams and reservoirs, providing renewable hydropower and water supply for human use. However, these dams disrupt the habitat network and have a negative effect on water quality. The world's largest dam removal project on the Klamath river in California and Oregon, USA, includes the demolition of four dams, with guided regeneration of the up-and downstream habitats. This project is reopening access for salmon and other migratory fish to more than 600 km of the river system. In addition to their importance for biodiversity, salmon are also a key element of local First Nations culture. [The Klamath River Dam Removal]( https://whitewatertours.com/klamath-river-dam-removal-project-summer-2024-update/) project paves the way for other large-scale riparian habitat restoration projects, providing an example for responsible stewardship of nature.",
+      },
       {
         title: 'Clew Bay and Achill Island, Ireland',
         lat: 53.86376,
@@ -612,6 +630,12 @@ export const DEFAULT_THEMES = [
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE',
       },
+      // {
+      //   name: 'EOB3 Landsat-8 L2 API',
+      //   service: 'WMS',
+      //   url: 'https://services-uswest2.sentinel-hub.com/ogc/wms/fa0736-YOUR-INSTANCEID-HERE',
+      //   preselected: true,
+      // },
     ],
     pins: [
       // {
@@ -689,6 +713,52 @@ export const DEFAULT_THEMES = [
       //   description:
       //     'Carbon monoxide (CO) is an important atmospheric trace gas for our understanding of tropospheric chemistry. In certain urban areas, it is a major atmospheric pollutant. The main sources of CO are combustion of fossil fuels, biomass burning, and atmospheric oxidation of methane and other hydrocarbons, whereas fossil fuel combustion is the main source of CO at Northern mid-latitudes, the oxidation of isoprene and biomass burning play an important role in the tropics. TROPOMI on the Sentinel 5 Precursor (S5P) satellite observes the global CO abundance exploiting clear-sky and cloudy-sky Earth radiance measurements in the 2.3 µm spectral range of the shortwave infrared (SWIR) part of the solar spectrum. [More...](http://www.tropomi.eu/data-products/carbon-monoxide)',
       // },
+      // {
+      //   lat: 46.04941,
+      //   lng: 14.50676,
+      //   zoom: 13,
+      //   title: 'Heatwave in Ljubljana (Land Surface Temperature)',
+      //   toTime: '2023-07-16',
+      //   layerId: null,
+      //   themeId: 'HIGHLIGHT',
+      //   datasetId: 'AWS_LOTL2',
+      //   evalscript:
+      //     '\nvar band = "B10";\n\n\nvar option = 0;\n\n\nvar minC = 15;\nvar maxC = 55;\n\n\n\nvar NDVIs = 0.2;\nvar NDVIv = 0.8;\n\nvar waterE = 0.991;\nvar soilE = 0.966;\nvar vegetationE = 0.973;\n\nvar C = 0.009; \n\nvar bCent = (band == "B10") ? 0.000010895 : 0.000012005;\n\nvar rho = 0.01438; // m K\n\n\nif (option == 2) {\n\tminC = 0;\n\tmaxC = 25;\n}\nlet viz = ColorGradientVisualizer.createRedTemperature(minC, maxC);\n\n\nfunction setup() {\n\treturn {\n\t\tinput: [{\n\t\t\tbands: [\n\t\t\t\t"B03",\n\t\t\t\t"B04",\n\t\t\t\t"B05",\n\t\t\t\t"B10"\n\t\t\t]\n\t\t}],\n\t\toutput: { bands: 3 }\n\t}\n}\n\n\nfunction LSEcalc(NDVI, Pv) {\n\tvar LSE;\n\tif (NDVI < 0) {\n\t\tLSE = waterE;\n\t} else if (NDVI < NDVIs) {\n\t\tLSE = soilE;\n\t} else if (NDVI > NDVIv) {\n\t\tLSE = vegetationE;\n\t} else {\n\t\tLSE = vegetationE * Pv + soilE * (1 - Pv) + C;\n\t}\n\treturn LSE;\n}\n\nfunction evaluatePixelOrig(samples) {\n\n\tvar LSTmax = -999;\n\tvar LSTavg = 0;\n\tvar LSTstd = 0;\n\tvar reduceNavg = 0;\n\tvar N = samples.length;\n\n\n\tvar LSTarray = [];\n\n\tfor (var i = 0; i < N; i++) {\n\t\t//// for LST\n\t\t// B10 or B11\n\t\tvar Bi = (band == "B10") ? samples[i].B10 : samples[i].B11;\n\t\tvar B03i = samples[i].B03;\n\t\tvar B04i = samples[i].B04;\n\t\tvar B05i = samples[i].B05;\n\n\n\t\tif ((Bi > 173 && Bi < 65000) && (B03i > 0 && B04i > 0 && B05i > 0)) {\n\n\t\t\tvar b10BTi = Bi - 273.15;\n\n\t\t\tvar NDVIi = (B05i - B04i) / (B05i + B04i);\n\t\t\tvar PVi = Math.pow(((NDVIi - NDVIs) / (NDVIv - NDVIs)), 2);\t\n\t\t\tvar LSEi = LSEcalc(NDVIi, PVi);\n\t\t\tvar LSTi = (b10BTi / (1 + (((bCent * b10BTi) / rho) * Math.log(LSEi))));\n\n\t\t\tLSTavg = LSTavg + LSTi;\n\n\t\t\tif (LSTi > LSTmax) { LSTmax = LSTi; }\n\t\t\tLSTarray.push(LSTi);\n\t\t} else {\n\t\t\t++reduceNavg;\n\t\t}\n\t}\n\tN = N - reduceNavg;\n\n\tLSTavg = LSTavg / N;\n\n\tfor (var i = 0; i < LSTarray.length; i++) {\n\t\tLSTstd = LSTstd + (Math.pow(LSTarray[i] - LSTavg, 2));\n\t}\n\tLSTstd = (Math.pow(LSTstd / (LSTarray.length - 1), 0.5));\n\n\tlet outLST = (option == 0)\n\t\t? LSTavg\n\t\t: (option == 1)\n\t\t\t? LSTmax\n\t\t\t: LSTstd;\n\n\treturn viz.process(outLST);\n}\nfunction evaluatePixel(sample, scene, metadata, customData, outputMetadata) {\n\treturn evaluatePixelOrig([sample], [scene], metadata, customData, outputMetadata);\n}',
+      //   evalscripturl: '',
+      //   visualizationUrl:
+      //     'https://services-uswest2.sentinel-hub.com/ogc/wms/fa0736-YOUR-INSTANCEID-HERE',
+      //   dataFusion: [],
+      //   description:
+      //     'In July 2023, southern Europe experienced a severe heatwave. This Landsat 8 image from July 16 shows the [Land Surface Temperature](https://custom-scripts.sentinel-hub.com/landsat-8/land_surface_temperature_mapping/) in the city of Ljubljana. The color scale ranges from dark red (15°C) to white (55°C). Clouds are shown as white data gaps, with cloud shadows significantly darker (colder) than their surroundings. The coldest feature on this image is the Sava River in the northern part of the image. Parks and forests are also significantly colder than buildings and streets. The hottest areas are large metal roofs and parking lots located in industrial areas in the north and northeast. Such images help city governments adapt to climate change by preserving green spaces, planting trees, and avoiding dense buildup to mitigate the effects of heatwaves. Compare the thermal visualisation to the True Color image [here](https://sentinelshare.page.link/M8qB) or check out the aerial imagery [here](https://ipi.eprostor.gov.si/jv/).',
+      // },
+      {
+        lat: 28.94447,
+        lng: 76.84387,
+        zoom: 9,
+        title: 'Deteriorating Air Quality in New Delhi (Aerosol Index)',
+        toTime: '2023-11-02',
+        layerId: 'AER_AI_340_AND_380_VISUALIZED',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S5_AER_AI_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE',
+        description:
+          'The air quality in and around New Delhi has reached alarming levels and is affecting the well-being of residents. The region has been experiencing high concentrations of pollutants from various sources such as vehicular emissions, industrial activities, burning of crops and other sources, forming a thick layer of smog, especially during winters. These pollutants can have serious effects on health by causing respiratory problems, aggravating pre-existing conditions and posing risks to cardiovascular health. Sentinel-5P plays a crucial role in monitoring and visualizing the extent of air pollution with its spatial resolution of 3.5×5.5 km, daily revisit and advanced atmospheric monitoring capabilities by capturing the distribution of key pollutants in the atmosphere. The satellite data reveals the spatial and temporal patterns of pollution, allowing authorities to identify pollution hotspots and track the movement of pollutants in the region.',
+      },
+      {
+        lat: 13.790071437194856,
+        lng: -129.649658203125,
+        zoom: 7,
+        title: 'Hurricane Dora’s Historic Journey (Cloud Base Pressure)',
+        toTime: '2023-08-04',
+        layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S5_CLOUD_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE',
+        description:
+          'Hurricane Dora started its journey across the Eastern Pacific near Mexico on July 31 when it developed into a tropical depression [[1]](https://www.wunderground.com/hurricane/eastern-pacific/2023/hurricane-dora). Warmer ocean temperatures over the Eastern and Central Pacific caused by El Nino led to a quick intensification of Dora, evolving into a strong, category 4 hurricane by August 4. Dora is now the longest lasting category 4 hurricane in the Pacific Ocean and one of two cyclones that crossed the Pacific from East to West [[2]](https://www.hawaiinewsnow.com/2023/08/12/hurricane-dora-makes-history-without-making-landfall/)[[3]](https://www.foxweather.com/weather-news/hurricane-dora-wildfires-high-surf-hawaii). Sentinel-5P allows us to track the path of the cyclone by measuring air pressure at the base of the cloud. Hurricanes are low-pressure tropical cyclones; thus they can be identified as rotating air masses with low pressure up to 10000 Pa.',
+      },
       {
         title: 'High NO2 concentrations, India',
         lat: 22.28,
@@ -1078,6 +1148,12 @@ export const DEFAULT_THEMES = [
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ede228-YOUR-INSTANCEID-HERE',
       },
+      {
+        name: 'Copernicus Sentinel-1 Education + API (V3)',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b50152-YOUR-INSTANCEID-HERE',
+        preselected: true,
+      },
       // {
       //   name: 'Humidity (L8 USGS)',
       //   service: 'WMS',
@@ -1086,6 +1162,117 @@ export const DEFAULT_THEMES = [
       // },
     ],
     pins: [
+      {
+        title: 'Winter Flooding in the UK (Custom)',
+        datasetId: 'S1_CDAS_IW_VVVH',
+        themeId: 'FLOODING',
+        layerId: null,
+        lat: 51.74266,
+        lng: -1.48006,
+        zoom: 12,
+        fromTime: '2024-01-04T00:00:00.000Z',
+        toTime: '2024-01-04T23:59:59.999Z',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/b50152-YOUR-INSTANCEID-HERE',
+        description:
+          'In late 2023 and early 2024, north-western Europe experienced very high levels of rainfall, which led to widespread river flooding. In the winter months, when multispectral imagery is degraded by lower light levels and widespread cloud cover, the Sentinel-1 SAR platform offers an ideal platform for monitoring surface water flooding at a regional scale as the sensor can penetrate the cloud cover. The low backscatter of surface waters also clearly distinguishes them from other land cover types.',
+        evalscript: `//VERSION=3
+          function setup() {
+              return {
+                  input: [
+                      {
+                          datasource: "S2L2A",
+                          bands: ["B08"],
+                      },
+                      {
+                          datasource: "S1GRD",
+                          bands: ["VV", "dataMask"],
+                      },
+                  ],
+                  output: { bands: 4 },
+                  mosaicking: "SIMPLE",
+              };
+          }
+          
+          function toDB(input) {
+              return (10 * Math.log(input)) / Math.LN10;
+          }
+          
+          //threshold value for water detection, reduce for more water, increase for less water
+          const lim = 15;
+          //gain value for image brightness (increase for brighter image)
+          const f = 2.5;
+          
+          function evaluatePixel(sample) {
+              var S1 = sample.S1GRD[0];
+              var S2 = sample.S2L2A[0];
+              if (toDB(S1.VV) <= -1 * lim) {
+                  return [S1.VV * 10, S1.VV * 10, S1.VV * 50, 1];
+              } else {
+                  return [f * S2.B08, f * S2.B08, f * S2.B08, 1];
+              }
+          }
+          `,
+        evalscripturl: '',
+        dataFusion: [
+          {
+            id: 'CDAS_S1GRD',
+            alias: 'S1GRD',
+            additionalParameters: {
+              polarization: 'DV',
+              acquisitionMode: 'IW',
+              resolution: 'HIGH',
+            },
+          },
+          {
+            id: 'CDAS_S2L2A',
+            alias: 'S2L2A',
+            timespan: [new Date('2023-04-04T00:00:00.000Z'), new Date('2023-04-04T23:59:59.999Z')],
+            mosaickingOrder: 'mostRecent',
+          },
+        ],
+      },
+      {
+        lat: -1.27508,
+        lng: -62.10022,
+        zoom: 13,
+        title: 'Amazon Drought (Highlight Optimized Natural Color)',
+        toTime: '2023-10-02',
+        layerId: 'HIGHLIGHT-OPTIMIZED-NATURAL-COLOR',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/8184c6-YOUR-INSTANCEID-HERE',
+        description:
+          'The Amazon watershed has experienced an extraordinary drought in late September and early October 2023 that will most likely become the worst drought event ever recorded in the region [[1]](https://www.reuters.com/business/environment/amazon-drought-chokes-river-traffic-threatens-northern-corn-exports-2023-10-09/). This time of year is normally the driest part of the year in the region, but the current conditions are exceptional. According to the National Institute for Amazon Research, the drought is caused by a combination of El Niño, the occasional warming of the Pacific Ocean surface, and the warming of the northern tropical Atlantic Ocean. Droughts are a significant factor in forest carbon loss and also affect endangered species such as the Amazon river dolphin. Compared to the same season in previous years, large areas of uncovered sediments are evident, and areas occupied by wetlands and open waters are greatly reduced.',
+      },
+      {
+        lat: 39.67285,
+        lng: 21.96239,
+        zoom: 10,
+        title: 'Flooding in Central Greece (False Color Urban)',
+        toTime: '2023-09-10',
+        layerId: 'FALSE-COLOR-URBAN',
+        themeId: 'FLOODING',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/8184c6-YOUR-INSTANCEID-HERE',
+        description:
+          'After a summer of brutal heatwaves, central Greece was hit by devastating flooding in the first half of September 2023 with over a year’s worth of rainfall falling in 24 hours in some places [[1]](https://www.bbc.com/news/world-europe-66751510). So far, the death toll has reached 17 people, with hundreds awaiting to be rescued. Much of the Thessaly region, the breadbasket of Greece, remains underwater or buried under a deep layer of mud and silt [[2]](https://www.theguardian.com/world/2023/sep/09/greek-rescuers-working-through-the-night-to-locate-villagers-trapped-by-flood). The high rainfall totals are thought to have been caused by an unusual omega weather system event - in which a zone of high pressure is sandwiched between two areas of low pressure. The same weather system is also to blame for the unseasonal UK heatwave and flooding in Bulgaria and Turkey [[3]](https://www.theguardian.com/world/2023/sep/06/uk-heatwave-floods-south-east-europe-omega-weather-system). The scale of the flooding is perfectly illustrated using a False Color composite based on the SWIR and NIR bands acquired by Sentinel-2. This particular visualisation uses the [False Color Urban RGB composite](https://custom-scripts.sentinel-hub.com/sentinel-2/false-color-urban-rgb/), which is also excellent for showing flooded areas.',
+      },
+      {
+        lat: -3.17573,
+        lng: 29.23157,
+        zoom: 12,
+        title: 'Devastating Flooding in DR Congo (Enhanced Visualization)',
+        toTime: '2023-05-05',
+        layerId: '2_ENHANCED-VISUALIZATION-2',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S1_CDAS_IW_VVVH',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/b50152-YOUR-INSTANCEID-HERE',
+        description:
+          'The Democratic Republic of Congo experienced one of the largest flood and landslide events in recent history between 2 and 4 May 2023, with more than 400 confirmed deaths, some 5,500 missing and immense property damage [[1]](https://edition.cnn.com/2023/05/08/africa/flooding-congo-dead-intl/index.html). The image has been captured by a Synthetic Aperture Radar (SAR), which provides another type of imagery as it can penetrate clouds. It can capture data at any time of day as it does not depend on sunlight, and works in all weather conditions. This makes the sensor a very useful tool to provide timely information about such devastating natural disasters.',
+      },
       // {
       //   title: 'Flood in Madagascar (True Color)',
       //   lat: -15.4924,
@@ -1661,6 +1848,11 @@ export const DEFAULT_THEMES = [
     id: 'SNOW',
     content: [
       {
+        name: 'CDSE Sentinel-1-IW_VV+VH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ea8206-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'Snow (S2L2A)',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE',
@@ -1690,6 +1882,34 @@ export const DEFAULT_THEMES = [
       //   description:
       //     'The narrow, 220 km wide Khatanga gulf is believed to hold 9.5 billion tons of geological reserves. Despite being one of the least accessible areas in the Russian Arctic, with the nearest 2.500 population town, Khatanga, 350 km away, oil industry development of the area is being considered. [Learn more.](https://bit.ly/2JQT31o)',
       // },
+      {
+        lat: 64.92239,
+        lng: 22.28622,
+        zoom: 9,
+        title: 'Heavy Ice in the Bothnian Bay (RGB Ratio)',
+        toTime: '2024-02-12',
+        layerId: '8_RGB-RATIO',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S1_CDAS_IW_VVVH',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/ea8206-YOUR-INSTANCEID-HERE',
+        description:
+          'This winter, the Bothnian Sea froze about a month earlier than usual. This Sentinel-1 image shows the variety of ice patterns. Open water is red, land is yellow to green, ice is yellow when it is very rough, blue or dark red when its surface is flat. Under such conditions, the shipping lanes have to be maintained by a special icebreaker fleet. These images - which are regularly available despite long polar nights and cloudy weather - are crucial for optimizing icebreaking activities and maintaining maritime transport networks in winter.',
+      },
+      {
+        lat: 48.15097,
+        lng: 10.78308,
+        zoom: 10,
+        title: 'Onset of Winter in Southern Germany (True Color)',
+        toTime: '2023-12-07T23:59:59.999Z',
+        layerId: '1_TRUE_COLOR',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE',
+        description:
+          'On the morning of December 2, 2023, some people in Southern Germany may have felt like they were watching the wrong movie when they woke up to almost half a meter of fresh snow. The weather services reported the highest snow depths for this time of year since recording (e.g. 45 cm for Munich). The trigger for the huge masses of snow was a moisture-rich warm front from south-western Europe, which collided with a cold front from Scandinavia over the northern Alpine foothills. What offered perfect conditions for all winter enthusiasts caused chaos, frustration and considerable obstructions on other fronts. Traffic in the region came to a standstill, airports were not operating, sport events had to be canceled and the subsequent snowmelt a few days later led to flooded fields and roads [[1](https://www.theguardian.com/world/2023/dec/02/snow-chaos-southern-germany-munich-airport-suspends-flights)].',
+      },
       {
         title: 'Bear Glacier, Alaska (Highlight Optimized Natural Color)',
         lat: 60.0004,
@@ -2484,6 +2704,20 @@ export const DEFAULT_THEMES = [
     ],
     pins: [
       {
+        lat: 19.01141,
+        lng: -98.64796,
+        zoom: 13,
+        title: 'Popocatépetl Ash Emission (True Color)',
+        toTime: '2024-03-06',
+        layerId: 'TRUE-COLOR',
+        themeId: 'VOLCANOES',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/150710-YOUR-INSTANCEID-HERE',
+        description:
+          "On 6 March, Mexico's most active volcano increased its ash and gas emissions, posing a threat to Mexico City. It is located around 70 kilometres south-east of the city and threatens around 25 million people. There are 1500 active volcanoes worldwide, most of them along the Pacific Rim, known as the [Ring of Fire](https://en.wikipedia.org/wiki/Ring_of_Fire), of which around 50 erupt every year. Timely detection of dangerous volcanoes is crucial for over 500 million people living nearby. Space monitoring detects subtle changes, assesses the risks and supports response measures. EO Browser offers several preset band combinations, such as [True Color Composite](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/), which uses the visible light bands - red, green, and blue - in the corresponding red, green and blue color channels, resulting in a naturally coloured output that depicts the Earth as humans would naturally see it.",
+      },
+      {
         title: 'Yasur Volcano, Vanatu (IR Highlights)',
         lat: -19.52667,
         lng: 169.43665,
@@ -2605,103 +2839,117 @@ export const DEFAULT_THEMES = [
       },
     ],
   },
-  // {
-  //   name: () => t`Wildfires`,
-  //   id: 'WILDFIRES',
-  //   content: [
-  //     {
-  //       name: 'Wildfires (S2L2A)',
-  //       service: 'WMS',
-  //       url: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
-  //       preselected: true,
-  //       layersExclude: ['BURN-AREA-INDEX-BAI'],
-  //     },
-  //     {
-  //       name: 'Wildfires (S2L1C)',
-  //       service: 'WMS',
-  //       url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ce3273-YOUR-INSTANCEID-HERE',
-  //       layersExclude: ['BURN-AREA-INDEX-BAI'],
-  //     },
-  //     {
-  //       name: 'Wildfires (S3-SLSTR)',
-  //       service: 'WMS',
-  //       url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6d91d5-YOUR-INSTANCEID-HERE',
-  //       preselected: true,
-  //     },
-  //     {
-  //       name: 'Wildfires (S3-OLCI)',
-  //       service: 'WMS',
-  //       url: 'https://sh.dataspace.copernicus.eu/ogc/wms/61016e-YOUR-INSTANCEID-HERE',
-  //     },
-  //     {
-  //       name: 'Sentinel-5P O3 / NO2 / ...',
-  //       service: 'WMS',
-  //       url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE',
-  //     },
-  //   ],
-  //   pins: [
-  // {
-  //   title: 'Wildfires in Australia, January 2019 (Pierre Markuse script)',
-  //   lat: -21.9374,
-  //   lng: 116.6572,
-  //   zoom: 12,
-  //   datasetId: 'S2_L2A_CDAS',
-  //   layerId: 'WILDFIRES-PIERRE-MARKUSE',
-  //   visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
-  //   toTime: '2019-01-05',
-  //   evalscript: '',
-  //   evalscripturl: '',
-  //   themeId: 'WILDFIRES',
-  //   description:
-  //     'The 2019-2020 [Australian bushfire season](https://www.esa.int/ESA_Multimedia/Images/2019/11/Bushfires_rage_in_Australia) has destroyed 46 million hectares of land, including buildings. Nearly [3 billion animals died](https://www.bbc.com/news/world-australia-53549936) or were displaced. Wildfires occur in Australia every summer (the peak is usually in February), but a severe drought in 2020 made it the hottest and driest year on record with high temperatures and windy conditions. Learn more [here](https://www.directrelief.org/2020/06/six-months-after-australias-wildfires-recovery-continues/). Air pollution is one of the factors that can be monitored to assess the severity of wildfires by Copernicus [Sentinel-5P](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/sentinel-5p/).',
-  // },
-  // {
-  //   title: 'Wildfires in California, August 2018 (Atmospheric Penetration)',
-  //   lat: 37.6047,
-  //   lng: -119.8787,
-  //   zoom: 11,
-  //   datasetId: 'S2_L2A_CDAS',
-  //   layerId: 'ATMOSPHERIC-PENETRATION',
-  //   visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
-  //   toTime: '2018-08-05',
-  //   evalscript: '',
-  //   evalscripturl: '',
-  //   themeId: 'WILDFIRES',
-  //   description:
-  //     'In November 2018, the Camp Fire in Butte County and the Woolsey Fire near Los Angeles ignited a wildfire that killed 90 people, burned 250,000 acres and destroyed 20,000 buildings. [Wildfires](https://www.who.int/health-topics/wildfires?gclid=EAIaIQobChMIkouu8v3u_AIVTfl3Ch3-xwE8EAAYASAAEgKfj_D_BwE#tab=tab_1) pollute the air and produce unhealthy gases that can be measured in communities hundreds of miles away. A hotter and drier climate, as well as high temperatures and strong winds, increase the risk of wildfires. Long-term trends related to global warming make it inevitable to improve disaster management and wildfire monitoring. Careless people are often the reason why fires break out. In addition, as California’s population grows, so does the population density in high fire risk areas. Learn more [here](https://news.stanford.edu/2018/11/28/reflections-california-wildfires/). Air pollution is one of the factors that can be monitored to assess the severity of wildfires by Copernicus [Sentinel-5P](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/sentinel-5p/).',
-  // },
-  // {
-  //   title: 'Wildfires in Croatia, July 2017 (Pierre Markuse script)',
-  //   lat: 43.4918,
-  //   lng: 16.619,
-  //   zoom: 11,
-  //   datasetId: 'S2_L2A_CDAS',
-  //   layerId: 'WILDFIRES-PIERRE-MARKUSE',
-  //   visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
-  //   toTime: '2017-07-17',
-  //   evalscript: '',
-  //   evalscripturl: '',
-  //   themeId: 'WILDFIRES',
-  //   description:
-  //     'In the summer of 2017, a heat wave and a lack of rainfall led to a drought on the Adriatic coast. The dry, hot forest floor became extremely vulnerable to wildfires. Many wildfires are caused by careless people lighting campfires or throwing away cigarette butts while the wind spreads the fire faster. Firefighters struggled to contain the fires and keep them away from homes. In total, an astonishing 83,000 hectares of forest burned. Wildfires happen every summer, but due to global warming and less rainfall, they’ll now be even more common in our everyday lives. Learn more [here](http://www.euroforecaster.org/newsletter23/extreme_wildfire.pdf).',
-  // },
-  // {
-  //   title: 'Wildfires in Funchal (Pierre Markuse script)',
-  //   lat: 32.7335,
-  //   lng: -17.0427,
-  //   zoom: 12,
-  //   datasetId: 'S2_L1C_CDAS',
-  //   layerId: 'WILDFIRES',
-  //   visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/ce3273-YOUR-INSTANCEID-HERE',
-  //   toTime: '2016-08-17',
-  //   evalscript: '',
-  //   evalscripturl: '',
-  //   themeId: 'WILDFIRES',
-  //   description:
-  //     'In August 2016, a [wildfire](https://www.esa.int/ESA_Multimedia/Images/2016/09/Fire-scarred_Madeira2) broke out on the Portuguese mainland and the island of Madeira after weeks of drought and temperatures above 35°C. The fire spread quickly and the smoke increased. Four days later, the fires were mostly extinguished, but a large area of forest remained. The hot and dry conditions favoured the forest fire, but there are also people who accidentally or intentionally set fire to the forest with disastrous effects on nature, people in the area and their property. The government used the [EU Civil Protection Mechanism](https://civil-protection-humanitarian-aid.ec.europa.eu/what/civil-protection/eu-civil-protection-mechanism_en#:~:text=Print%20friendly%20pdf-,What%20is%20it%3F,preparedness%2C%20and%20response%20to%20disasters.), which allowed other European countries to help. Learn more [here](https://earthobservatory.nasa.gov/images/88590/fires-char-madeira).',
-  // },
-  //     ],
-  //   },
+  {
+    name: () => t`Wildfires`,
+    id: 'WILDFIRES',
+    content: [
+      {
+        name: 'Wildfires (S2L2A)',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
+        preselected: true,
+        layersExclude: ['BURN-AREA-INDEX-BAI'],
+      },
+      {
+        name: 'Wildfires (S2L1C)',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ce3273-YOUR-INSTANCEID-HERE',
+        layersExclude: ['BURN-AREA-INDEX-BAI'],
+      },
+      {
+        name: 'Wildfires (S3-SLSTR)',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6d91d5-YOUR-INSTANCEID-HERE',
+        preselected: true,
+      },
+      {
+        name: 'Wildfires (S3-OLCI)',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/61016e-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'Sentinel-5P O3 / NO2 / ...',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE',
+      },
+    ],
+    pins: [
+      {
+        lat: 53.10351,
+        lng: -75.56396,
+        zoom: 10,
+        title: 'Wildfires in Canada (SWIR)',
+        toTime: '2023-06-20',
+        layerId: 'SWIR',
+        themeId: 'HIGHLIGHT',
+        datasetId: 'S2_L2A_CDAS',
+        evalscripturl: '',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
+        description:
+          'Since March 2023, Canada has experienced a series of record-breaking wildfires that intensified particularly in June [[1]]( https://www.nytimes.com/2023/06/17/world/americas/canada-wildfires-season.html). The wildfires have affected 11 provinces and territories, including Alberta, Nova Scotia, Ontario and Quebec. Smoke from the fires has led to evacuations and air quality alerts in Canada, the United States and Europe. The province of Quebec has been particularly hard hit, as shown in the image captured by Sentinel-2 L2A, with the SWIR visualization applied. SWIR highlights freshly burned land as the difference in moisture between freshly burned areas and their undamaged surroundings is clearly visible.',
+      },
+      {
+        title: 'Wildfires in Australia, January 2019 (Pierre Markuse script)',
+        lat: -21.9374,
+        lng: 116.6572,
+        zoom: 12,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: 'WILDFIRES-PIERRE-MARKUSE',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
+        toTime: '2019-01-05',
+        evalscript: '',
+        evalscripturl: '',
+        themeId: 'WILDFIRES',
+        description:
+          'The 2019-2020 [Australian bushfire season](https://www.esa.int/ESA_Multimedia/Images/2019/11/Bushfires_rage_in_Australia) has destroyed 46 million hectares of land, including buildings. Nearly [3 billion animals died](https://www.bbc.com/news/world-australia-53549936) or were displaced. Wildfires occur in Australia every summer (the peak is usually in February), but a severe drought in 2020 made it the hottest and driest year on record with high temperatures and windy conditions. Learn more [here](https://www.directrelief.org/2020/06/six-months-after-australias-wildfires-recovery-continues/). Air pollution is one of the factors that can be monitored to assess the severity of wildfires by Copernicus [Sentinel-5P](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/sentinel-5p/).',
+      },
+      {
+        title: 'Wildfires in California, August 2018 (Atmospheric Penetration)',
+        lat: 37.6047,
+        lng: -119.8787,
+        zoom: 11,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: 'ATMOSPHERIC-PENETRATION',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
+        toTime: '2018-08-05',
+        evalscript: '',
+        evalscripturl: '',
+        themeId: 'WILDFIRES',
+        description:
+          'In November 2018, the Camp Fire in Butte County and the Woolsey Fire near Los Angeles ignited a wildfire that killed 90 people, burned 250,000 acres and destroyed 20,000 buildings. [Wildfires](https://www.who.int/health-topics/wildfires?gclid=EAIaIQobChMIkouu8v3u_AIVTfl3Ch3-xwE8EAAYASAAEgKfj_D_BwE#tab=tab_1) pollute the air and produce unhealthy gases that can be measured in communities hundreds of miles away. A hotter and drier climate, as well as high temperatures and strong winds, increase the risk of wildfires. Long-term trends related to global warming make it inevitable to improve disaster management and wildfire monitoring. Careless people are often the reason why fires break out. In addition, as California’s population grows, so does the population density in high fire risk areas. Learn more [here](https://news.stanford.edu/2018/11/28/reflections-california-wildfires/). Air pollution is one of the factors that can be monitored to assess the severity of wildfires by Copernicus [Sentinel-5P](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/sentinel-5p/).',
+      },
+      {
+        title: 'Wildfires in Croatia, July 2017 (Pierre Markuse script)',
+        lat: 43.4918,
+        lng: 16.619,
+        zoom: 11,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: 'WILDFIRES-PIERRE-MARKUSE',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE',
+        toTime: '2017-07-17',
+        evalscript: '',
+        evalscripturl: '',
+        themeId: 'WILDFIRES',
+        description:
+          'In the summer of 2017, a heat wave and a lack of rainfall led to a drought on the Adriatic coast. The dry, hot forest floor became extremely vulnerable to wildfires. Many wildfires are caused by careless people lighting campfires or throwing away cigarette butts while the wind spreads the fire faster. Firefighters struggled to contain the fires and keep them away from homes. In total, an astonishing 83,000 hectares of forest burned. Wildfires happen every summer, but due to global warming and less rainfall, they’ll now be even more common in our everyday lives. Learn more [here](http://www.euroforecaster.org/newsletter23/extreme_wildfire.pdf).',
+      },
+      {
+        title: 'Wildfires in Funchal (Pierre Markuse script)',
+        lat: 32.7335,
+        lng: -17.0427,
+        zoom: 12,
+        datasetId: 'S2_L1C_CDAS',
+        layerId: 'WILDFIRES',
+        visualizationUrl: 'https://sh.dataspace.copernicus.eu/ogc/wms/ce3273-YOUR-INSTANCEID-HERE',
+        toTime: '2016-08-17',
+        evalscript: '',
+        evalscripturl: '',
+        themeId: 'WILDFIRES',
+        description:
+          'In August 2016, a [wildfire](https://www.esa.int/ESA_Multimedia/Images/2016/09/Fire-scarred_Madeira2) broke out on the Portuguese mainland and the island of Madeira after weeks of drought and temperatures above 35°C. The fire spread quickly and the smoke increased. Four days later, the fires were mostly extinguished, but a large area of forest remained. The hot and dry conditions favoured the forest fire, but there are also people who accidentally or intentionally set fire to the forest with disastrous effects on nature, people in the area and their property. The government used the [EU Civil Protection Mechanism](https://civil-protection-humanitarian-aid.ec.europa.eu/what/civil-protection/eu-civil-protection-mechanism_en#:~:text=Print%20friendly%20pdf-,What%20is%20it%3F,preparedness%2C%20and%20response%20to%20disasters.), which allowed other European countries to help. Learn more [here](https://earthobservatory.nasa.gov/images/88590/fires-char-madeira).',
+      },
+    ],
+  },
 
   ...educationThemesDefaultMode,
 ];

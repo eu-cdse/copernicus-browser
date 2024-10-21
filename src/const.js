@@ -192,6 +192,7 @@ export const DATASOURCES = {
   OTHER: 'OTHER',
   MOSAIC: 'MOSAIC',
   S1_MOSAIC: 'Sentinel-1 Mosaic',
+  GLOBAL_LAND_COVER: 'Global Land Cover',
 };
 
 export const defaultEffects = {

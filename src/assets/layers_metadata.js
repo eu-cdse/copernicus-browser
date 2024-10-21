@@ -84,6 +84,7 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
+  CDSE_GLC_COLLECTION,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5258,5 +5259,143 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '3_LAND_OTCI' }],
     description: () =>
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
+  },
+  {
+    match: [{ datasourceId: CDSE_GLC_COLLECTION, layerId: 'DISCRETE-CLASSIFICATION-MAP' }],
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#282828',
+          label: 'No input data',
+        },
+        {
+          color: '#ffbb22',
+          label: 'Shrubs',
+        },
+        {
+          color: '#ffff4c',
+          label: 'Herbaceous\nvegetation',
+        },
+        {
+          color: '#f096ff',
+          label: 'Cropland',
+        },
+        {
+          color: '#fa0000',
+          label: 'Urban built up',
+        },
+        {
+          color: '#b4b4b4',
+          label: 'Bare sparse\nvegetation',
+        },
+        {
+          color: '#f0f0f0',
+          label: 'Snow and Ice',
+        },
+        {
+          color: '#0032c8',
+          label: 'Permanent\nwater bodies',
+        },
+        {
+          color: '#0096a0',
+          label: 'Herbaceous\nwetland',
+        },
+        {
+          color: '#fae6a0',
+          label: 'Moss and lichen',
+        },
+        {
+          color: '#58481f',
+          label: 'Closed forest,\nevergreen needle leaf',
+        },
+        {
+          color: '#009900',
+          label: 'Closed forest,\nevergreen, broad leaf',
+        },
+        {
+          color: '#70663e',
+          label: 'Closed forest,\ndeciduous needle leaf',
+        },
+        {
+          color: '#00cc00',
+          label: 'Closed forest,\ndeciduous broad leaf',
+        },
+        {
+          color: '#4e751f',
+          label: 'Closed forest,\nmixed',
+        },
+        {
+          color: '#007800',
+          label: 'Closed forest,\nunknown',
+        },
+        {
+          color: '#666000',
+          label: 'Open forest,\nevergreen needle leafs',
+        },
+        {
+          color: '#8db400',
+          label: 'Open forest,\nevergreen broad leaf',
+        },
+        {
+          color: '#8d7400',
+          label: 'Open forest,\ndeciduous needle leaf',
+        },
+        {
+          color: '#a0dc00',
+          label: 'Open forest,\ndeciduous broad leaf',
+        },
+        {
+          color: '#929900',
+          label: 'Open forest,\nmixed',
+        },
+        {
+          color: '#648c00',
+          label: 'Open forest,\nunknown',
+        },
+        {
+          color: '#000080',
+          label: 'Open sea',
+        },
+      ],
+    },
+
+    description: () =>
+      t`# Discrete Classification Map\n\n\n\nThis layer visualises Global Land Cover discrete classification map with 23 classes defined using the UN-FAO Land Cover Classification System (LCCS) and with color scheme defined in the Product User Manual. More info [here](https://collections.sentinel-hub.com/global-land-cover/readme.html).`,
+  },
+  {
+    match: [{ datasourceId: CDSE_GLC_COLLECTION, layerId: 'FOREST-TYPE-LAYER' }],
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#ffffff',
+          label: 'Not a forest',
+        },
+        {
+          color: '#58481f',
+          label: 'Evergreen niddle leaf',
+        },
+        {
+          color: '#009900',
+          label: 'Evergreen broad leaf',
+        },
+        {
+          color: '#70663e',
+          label: 'Deciduous needle leaf',
+        },
+        {
+          color: '#00cc00',
+          label: 'Deciduous broad leaf',
+        },
+        {
+          color: '#4e751f',
+          label: 'Mix of forest type ',
+        },
+      ],
+    },
+
+    description: () =>
+      t`# Forest Types\n\n\n\nVisualized forest types based on 6 classes, as defined in the UN-FAO Land Cover Classification System (LCCS). More info [here](https://collections.sentinel-hub.com/global-land-cover/readme.html).`,
   },
 ];

@@ -1,0 +1,94 @@
+{
+    "title": "Copernicus Wildfires (S2L2A) API",
+    "layers": [
+        {
+            "id": "1_FALSE-COLOR",
+            "name": "False Color",
+            "description": "Based on bands 8, 4, 3",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "ATMOSPHERIC-PENETRATION",
+            "name": "Atmospheric Penetration",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "BURN-AREA-INDEX-BAI",
+            "name": "Burn Area Index (BAI)",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "BURNED-AREAS-DETECTION",
+            "name": "Burned Area Detection",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/81ed0b-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=BURNED-AREAS-DETECTION&style=default"
+        },
+        {
+            "id": "MOISTURE-INDEX",
+            "name": "Moisture Index",
+            "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "NORMALIZED-BURN-RATIO-NBR",
+            "name": "Normalized Burn Ratio (NBR)",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI",
+            "name": "Normalized Difference Vegetation Index (NDVI)",
+            "description": "Based on the combination of bands (B8 - B4)/(B8 + B4)",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "SWIR",
+            "name": "SWIR",
+            "description": "Based on bands 12,8A,4",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "TRUE-COLOR",
+            "name": "True color",
+            "description": "Based on bands 4,3,2",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        },
+        {
+            "id": "WILDFIRES-PIERRE-MARKUSE",
+            "name": "Wildfires",
+            "description": "",
+            "dataset": "S2L2A",
+            "legendUrl": null
+        }
+    ],
+    "datasets": [
+        {
+            "name": "S2L2A",
+            "bands": [
+                "B01",
+                "B02",
+                "B03",
+                "B04",
+                "B05",
+                "B06",
+                "B07",
+                "B08",
+                "B8A",
+                "B09",
+                "B11",
+                "B12"
+            ]
+        }
+    ]
+}
