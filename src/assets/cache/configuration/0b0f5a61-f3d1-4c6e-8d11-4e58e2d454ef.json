@@ -7,12 +7,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"AER_AI_340_380\";\nvar minVal = -1.0;\nvar maxVal = 5.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = -1.0;\nvar maxVal = 5.0;\nvar diff = maxVal - minVal;\nconst map = [\n  [minVal, 0x00007f],\n  [minVal + 0.125 * diff, 0x0000ff],\n  [minVal + 0.375 * diff, 0x00ffff],\n  [minVal + 0.625 * diff, 0xffff00],\n  [minVal + 0.875 * diff, 0xff0000],\n  [maxVal, 0x7f0000],\n];\n\nconst visualizer = new ColorRampVisualizer(map);\n\nfunction setup() {\n  return {\n    input: [\"AER_AI_340_380\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  const statsVal = isFinite(samples.AER_AI_340_380) ? samples.AER_AI_340_380 : NaN;\n\n  return {\n    default: [...visualizer.process(samples.AER_AI_340_380), samples.dataMask],\n    eobrowserStats:[statsVal],\n    dataMask: [samples.dataMask],\n  };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:27:37.848943Z",
+        "lastUpdated": "2023-06-13T05:37:18.453037Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -30,12 +30,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"AER_AI_354_388\";\nconst minVal = -1;\nconst maxVal = 5;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = -1.0;\nvar maxVal = 5.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"AER_AI_354_388\",\"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const statsVal = isFinite(samples.AER_AI_354_388) ? samples.AER_AI_354_388 : NaN;\n   const [r, g, b] = visualizer.process(samples.AER_AI_354_388);\n   return {\n      default: [r, g, b, samples.dataMask],\n      eobrowserStats: [statsVal],\n      dataMask: [samples.dataMask],\n    };\n  \n  \n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:28:40.848161Z",
+        "lastUpdated": "2023-06-13T05:41:42.321999Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -53,12 +53,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CH4\";\nvar minVal = 1600.0;\nvar maxVal = 2000.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 1600.0;\nvar maxVal = 2000.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CH4\",\"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples. CH4);\n   const statsVal = isFinite(samples.CH4) ? samples.CH4 : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T07:06:31.232888Z",
+        "lastUpdated": "2023-06-13T05:49:23.257203Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -76,12 +76,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_BASE_HEIGHT\";\nvar minVal = 0.0;\nvar maxVal = 20000.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 20000.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_BASE_HEIGHT\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const statsVal = isFinite(samples.CLOUD_BASE_HEIGHT) ? samples.CLOUD_BASE_HEIGHT : NaN;\n\n   const [r, g, b] = visualizer.process(samples.CLOUD_BASE_HEIGHT);\n   return {\n            default: [r, g, b, samples.dataMask],\n            eobrowserStats: [statsVal],\n            dataMask: [samples.dataMask],\n   };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:45:53.586512Z",
+        "lastUpdated": "2023-06-13T05:44:11.278241Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -99,12 +99,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_BASE_PRESSURE\";\nvar minVal = 10000.0;\nvar maxVal = 110000.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 10000.0;\nvar maxVal = 110000.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_BASE_PRESSURE\",\"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CLOUD_BASE_PRESSURE);\n   const statsVal = isFinite(samples.CLOUD_BASE_PRESSURE) ? samples.CLOUD_BASE_PRESSURE : NaN;\n   return {\n            default: [r, g, b, samples.dataMask],\n            eobrowserStats: [statsVal],\n            dataMask: [samples.dataMask],\n          };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:46:36.966481Z",
+        "lastUpdated": "2023-06-13T05:45:09.937709Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -122,12 +122,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_FRACTION\";\nvar minVal = 0.0;\nvar maxVal = 1.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 1.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_FRACTION\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CLOUD_FRACTION);\n   const statsVal = isFinite(samples.CLOUD_FRACTION) ? samples.CLOUD_FRACTION : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:47:45.861047Z",
+        "lastUpdated": "2023-06-13T05:48:15.885910Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -145,12 +145,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_OPTICAL_THICKNESS\";\nvar minVal = 0.0;\nvar maxVal = 250.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 250.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_OPTICAL_THICKNESS\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CLOUD_OPTICAL_THICKNESS);\n   const statsVal = isFinite(samples.CLOUD_OPTICAL_THICKNESS) ? samples.CLOUD_OPTICAL_THICKNESS : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n    };\n\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:45:07.279031Z",
+        "lastUpdated": "2023-06-13T05:50:26.337595Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -168,12 +168,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_TOP_HEIGHT\";\nvar minVal = 0.0;\nvar maxVal = 20000.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 20000.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_TOP_HEIGHT\",\"dataMask\"],\n \toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CLOUD_TOP_HEIGHT);\n   const statsVal = isFinite(samples.CLOUD_TOP_HEIGHT) ? samples.CLOUD_TOP_HEIGHT : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:52:21.943853Z",
+        "lastUpdated": "2023-06-13T05:52:12.495397Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -191,12 +191,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CLOUD_TOP_PRESSURE\";\nvar minVal = 10000.0;\nvar maxVal = 110000.0;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 10000.0;\nvar maxVal = 110000.0;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CLOUD_TOP_PRESSURE\",\"dataMask\"],\n     output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CLOUD_TOP_PRESSURE);\n   const statsVal = isFinite(samples.CLOUD_TOP_PRESSURE) ? samples.CLOUD_TOP_PRESSURE : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:53:14.281692Z",
+        "lastUpdated": "2023-06-13T05:52:42.161897Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -214,12 +214,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"CO\";\nvar minVal = 0.0;\nvar maxVal = 0.1;\nvar diff = maxVal - minVal;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 0.1;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"CO\",\"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.CO);\n   const statsVal = isFinite(samples.CO) ? samples.CO : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T06:32:31.326948Z",
+        "lastUpdated": "2023-06-13T05:47:39.115917Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -237,12 +237,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"HCHO\";\nvar minVal = 0.0;\nvar maxVal = 0.001;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 0.001;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"HCHO\",\"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.HCHO);\n   const statsVal = isFinite(samples.HCHO) ? samples.HCHO : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T07:04:55.785239Z",
+        "lastUpdated": "2023-06-13T05:48:47.728633Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -260,12 +260,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"NO2\";\nvar minVal = 0.0;\nvar maxVal = 0.0001;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 0.0001;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"NO2\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.NO2);\n   const statsVal = isFinite(samples.NO2) ? samples.NO2 : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T07:07:17.338842Z",
+        "lastUpdated": "2023-06-13T05:49:55.417842Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -283,12 +283,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"O3\";\nvar minVal = 0.0;\nvar maxVal = 0.36;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 0.36;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"O3\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.O3);\n   const statsVal = isFinite(samples.O3) ? samples.O3 : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T07:08:51.253014Z",
+        "lastUpdated": "2023-06-13T05:50:58.433233Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
@@ -306,12 +306,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst band = \"SO2\";\nvar minVal = 0.0;\nvar maxVal = 0.01;\n\nfunction setup() {\n  return {\n    input: [band, \"dataMask\"],\n    output: {\n      bands: 4,\n    },\n  };\n}\n\nvar viz = ColorRampVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n  let ret = viz.process(samples[band]);\n  ret.push(samples.dataMask);\n  return ret;\n}"
+                "evalScript": "//VERSION=3\nvar minVal = 0.0;\nvar maxVal = 0.01;\nvar diff = maxVal - minVal;\nconst map = [\n\t[minVal, 0x00007f], \n\t[minVal + 0.125 * diff, 0x0000ff],\n\t[minVal + 0.375 * diff, 0x00ffff],\n\t[minVal + 0.625 * diff, 0xffff00],\n\t[minVal + 0.875 * diff, 0xff0000],\n\t[maxVal, 0x7f0000]\n]; \n\nconst visualizer = new ColorRampVisualizer(map)\nfunction setup() {\n   return {\n    input: [\"SO2\",\"dataMask\"],\n\toutput: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n   const [r, g, b] = visualizer.process(samples.SO2);\n   const statsVal = isFinite(samples.SO2) ? samples.SO2 : NaN;\n   return {\n        default: [r, g, b, samples.dataMask],\n        eobrowserStats: [statsVal],\n        dataMask: [samples.dataMask],\n      };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "0b0f5a-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-10-21T07:09:51.997002Z",
+        "lastUpdated": "2023-06-13T05:51:35.152533Z",
         "collectionType": "S5PL2",
         "datasetSourceId": 7,
         "defaultStyleName": "default",
