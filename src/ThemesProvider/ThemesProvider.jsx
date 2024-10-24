@@ -18,7 +18,7 @@ import {
   MODES,
   EXPIRED_ACCOUNT,
 } from '../const';
-import { getUserTokenFromLocalStorage, logoutUser, onLogIn, openLoginWindow } from '../Auth/authHelpers';
+import { logoutUser, openLogin } from '../Auth/authHelpers';
 
 import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
@@ -49,15 +49,10 @@ class ThemesProvider extends React.Component {
       });
       if (shouldExecuteLogin) {
         if (loginAsDifferentUser) {
-          const token = await getUserTokenFromLocalStorage();
-          await logoutUser(token);
+          await logoutUser();
         }
         store.dispatch(modalSlice.actions.removeModal());
-        const token = await openLoginWindow();
-        onLogIn(token);
-        await this.fetchUserInstances();
-        this.setMode(selectedMode);
-        this.setSelectedThemeIdFromMode(selectedMode, currentThemeId);
+        await openLogin();
       }
     } catch (err) {
       store.dispatch(visualizationSlice.actions.reset());

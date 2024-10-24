@@ -11235,3 +11235,6 @@ msgid ""
 "biodiversity, climate change, forest and water resources, land degradation "
 "& desertification and rural development."
 msgstr ""
+
+msgid "An error has occurred during login process"
+msgstr ""

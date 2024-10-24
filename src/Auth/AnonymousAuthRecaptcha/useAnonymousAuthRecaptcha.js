@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import store, { authSlice } from '../../store';
 import {
   getTokenExpiration,
@@ -49,12 +49,12 @@ const useAnonymousAuthRecaptcha = () => {
     store.dispatch(authSlice.actions.setAnonToken(null));
   }
 
-  const clearAnonTokenRefresh = () => {
+  const clearAnonTokenRefresh = useCallback(() => {
     anonTokenRequestsCounter = 0;
     if (anonTokenRefreshTimeout) {
       clearTimeout(anonTokenRefreshTimeout);
     }
-  };
+  }, []);
 
   const getAnonymousToken = async (siteResponse) => {
     try {

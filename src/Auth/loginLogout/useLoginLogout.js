@@ -1,27 +1,12 @@
-import store, { authSlice } from '../../store';
-import useAnonymousAuthRecaptcha from '../AnonymousAuthRecaptcha/useAnonymousAuthRecaptcha';
-import {
-  getUserTokenFromLocalStorage,
-  logoutUser,
-  onLogIn,
-  openLoginWindow,
-  saveAnonTokenToLocalStorage,
-} from '../authHelpers';
+import { logoutUser, openLogin } from '../authHelpers';
 
 const useLoginLogout = () => {
-  const { clearAnonTokenRefresh } = useAnonymousAuthRecaptcha();
-
   const doLogin = async () => {
-    const token = await openLoginWindow();
-    onLogIn(token);
-    store.dispatch(authSlice.actions.setAnonToken(null));
-    saveAnonTokenToLocalStorage(null);
-    clearAnonTokenRefresh();
+    return await openLogin();
   };
 
   const doLogout = async () => {
-    const userToken = await getUserTokenFromLocalStorage();
-    await logoutUser(userToken);
+    await logoutUser();
   };
 
   return { doLogin, doLogout };

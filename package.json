@@ -40,6 +40,7 @@
     "js-md5": "^0.8.3",
     "jszip": "^3.2.2",
     "jwt-decode": "^2.2.0",
+    "keycloak-js": "^25.0.5",
     "leaflet": "^1.6.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",

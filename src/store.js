@@ -41,6 +41,7 @@ export const aoiSlice = createSlice({
       state.isDrawing = false;
       state.shape = null;
       state.isPlacingVertex = false;
+      state.editMode = false;
     },
     startDrawing: (state, action) => {
       state.isDrawing = action.payload.isDrawing;
@@ -49,6 +50,9 @@ export const aoiSlice = createSlice({
     },
     clearMap: (state, action) => {
       state.clearMap = action.payload;
+    },
+    setEditMode: (state, action) => {
+      state.editMode = action.payload;
     },
   },
 });

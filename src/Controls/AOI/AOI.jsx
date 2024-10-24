@@ -59,9 +59,44 @@ class AOI extends Component {
         store.dispatch(aoiSlice.actions.setisPlacingVertex(false));
       }
     });
+
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+
+    const aoiBeforeLogin = sessionStorage.getItem('aoi');
+
+    if (aoiBeforeLogin) {
+      const sessionAoi = JSON.parse(aoiBeforeLogin);
+      store.dispatch(
+        aoiSlice.actions.set({
+          geometry: sessionAoi.geometry,
+          bounds: L.latLngBounds(
+            L.latLng(sessionAoi.bounds._southWest.lat, sessionAoi.bounds._southWest.lng),
+            L.latLng(sessionAoi.bounds._northEast.lat, sessionAoi.bounds._northEast.lng),
+          ),
+          isPlacingVertex: false,
+        }),
+      );
+    }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
+  }
+
+  handleBeforeUnload = (event) => {
+    const bounds = this.props.aoiBounds;
+    const geometry = this.props.aoiGeometry;
+    if (bounds && geometry) {
+      sessionStorage.setItem('aoi', JSON.stringify({ geometry: geometry, bounds: bounds }));
+    } else {
+      sessionStorage.removeItem('aoi');
+    }
+    event.returnValue = '';
+  };
+
   componentDidUpdate(prevProps) {
+    this.setEditModeIfPolygonsInSessionStorage(prevProps);
+
     if (!!this.props.aoiIsDrawing && !prevProps.aoiIsDrawing) {
       this.onStartDrawingPolygon(this.props.aoiShape);
     }
@@ -77,6 +112,19 @@ class AOI extends Component {
       store.dispatch(aoiSlice.actions.clearMap(false));
     }
   }
+
+  setEditModeIfPolygonsInSessionStorage = () => {
+    if (this.props.aoiGeometry && this.props.aoiBounds && !this.props.aoiEditMode) {
+      const AOILayerRef = Object.values(this.props.map._layers).find((layer) => {
+        return layer.options?.id === 'aoi-layer';
+      });
+
+      if (AOILayerRef) {
+        store.dispatch(aoiSlice.actions.setEditMode(true));
+        this.enableEdit();
+      }
+    }
+  };
 
   enableEdit = () => {
     this.props.map.eachLayer((l) => {
@@ -183,7 +231,7 @@ class AOI extends Component {
 
   render() {
     const selectedBounds =
-      this.props.mapBounds && this.state.drawingInProgress
+      (this.props.mapBounds && this.state.drawingInProgress) || this.props.aoiBounds
         ? this.props.aoiGeometry
           ? this.props.aoiGeometry
           : getGeoJSONFromLeafletBounds(this.props.mapBounds)
@@ -236,6 +284,9 @@ const mapStoreToProps = (store) => ({
   aoiGeometry: store.aoi.geometry,
   aoiIsDrawing: store.aoi.isDrawing,
   aoiShape: store.aoi.shape,
+  aoiBounds: store.aoi.bounds,
+  aoiEditMode: store.aoi.editMode,
+  aoi: store.aoi,
   aoiClearMap: store.aoi.clearMap,
   mapBounds: store.mainMap.bounds,
   layerId: store.visualization.layerId,
@@ -243,6 +294,7 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   customSelected: store.visualization.customSelected,
   modalId: store.modal.id,
+  userAuthCompleted: store.userAuthCompleted,
 });
 
 export default connect(mapStoreToProps, null)(AOI);

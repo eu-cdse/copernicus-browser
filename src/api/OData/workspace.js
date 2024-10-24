@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { t } from 'ttag';
 
 import store, { floatingPanelNotificationSlice } from '../../store';
-import { getUserTokenFromLocalStorage } from '../../Auth/authHelpers';
+import { getAccessToken } from '../../Auth/authHelpers';
 import { AttributeNames } from './assets/attributes';
 
 const getAttributes = (attributes, name) => attributes.find((attribute) => attribute.Name === name);
@@ -28,10 +28,10 @@ export function createAddProductToWorkspacePayload(product) {
 }
 
 export async function addProductToWorkspace(product) {
-  const token = await getUserTokenFromLocalStorage();
+  const token = getAccessToken();
   const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace/OData.CSC.Create`;
   const headers = {
-    Authorization: `Bearer ${token.access_token}`,
+    Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
   };
 

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
-import store, { authSlice } from '../store';
 import {
-  createSetUserPayload,
   getAnonTokenFromLocalStorage,
-  getUserTokenFromLocalStorage,
+  initKeycloak,
+  saveAnonTokenToLocalStorage,
   saveRecaptchaConsentToLocalStorage,
 } from './authHelpers';
 import UserTokenRefresh from './UserTokenRefresh';
@@ -15,41 +13,17 @@ import useAnonymousAuthRecaptcha from './AnonymousAuthRecaptcha/useAnonymousAuth
 import { usePrevious } from '../hooks/usePrevious';
 
 import './Auth.scss';
+import store, { authSlice } from '../store';
 
 const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => {
   const [userAuthCompleted, setUserAuthCompleted] = useState(false);
-  const [anonAuthCompleted, setAnonAuthCompleted] = useState(false);
-
+  const [, setAnonAuthCompleted] = useState(false);
   const { saveAndDispatchToken, getAnonymousToken, captchaRef, clearAnonTokenRefresh } =
     useAnonymousAuthRecaptcha();
 
   const prevUser = usePrevious(user);
 
-  const initialUserAuth = async () => {
-    let token;
-    try {
-      token = await getUserTokenFromLocalStorage();
-      if (token) {
-        store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    setUserAuthCompleted(true);
-    return token;
-  };
-
   const initialAnonAuth = async () => {
-    const userToken = await initialUserAuth();
-    if (userToken) {
-      //skip anon auth if we have user token
-      setAnonAuthCompleted(true);
-    } else {
-      setInitialAnonToken();
-    }
-  };
-
-  const setInitialAnonToken = async () => {
     clearAnonTokenRefresh();
     let anonToken = await getAnonTokenFromLocalStorage();
     if (anonToken) {
@@ -61,11 +35,24 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
   };
 
   useEffect(() => {
+    const initialUserAuth = async () => {
+      const authenticatedUser = await initKeycloak();
+
+      if (authenticatedUser) {
+        store.dispatch(authSlice.actions.setAnonToken(null));
+        saveAnonTokenToLocalStorage(null);
+        clearAnonTokenRefresh();
+        setAnonAuthCompleted(true);
+      }
+      setUserAuthCompleted(true);
+    };
+
     initialUserAuth();
-  }, []);
+  }, [clearAnonTokenRefresh]);
 
   useEffect(() => {
     if (!user && prevUser) {
+      setUserAuthCompleted(false);
       setAnonAuthCompleted(false);
       captchaRef.current.executeCaptcha();
     }
@@ -74,6 +61,11 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
 
   return (
     <>
+      {!userAuthCompleted && (
+        <div className="initial-loader">
+          <i className="fa fa-cog fa-spin fa-3x fa-fw" />
+        </div>
+      )}
       <Captcha
         ref={captchaRef}
         onExecute={async (siteResponse) => {
@@ -91,11 +83,10 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
         action="LOGIN"
       ></Captcha>
       <EnsureAuth
-        userAuthCompleted={userAuthCompleted}
         user={user}
         anonToken={anonToken}
+        userAuthCompleted={userAuthCompleted}
         tokenRefreshInProgress={tokenRefreshInProgress}
-        anonAuthCompleted={anonAuthCompleted}
         executeAnonAuth={() => {
           saveRecaptchaConsentToLocalStorage();
           captchaRef.current.loadCaptchaScript();

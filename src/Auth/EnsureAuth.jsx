@@ -47,19 +47,12 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
   </Rodal>
 );
 
-const EnsureAuth = ({
-  user,
-  anonToken,
-  tokenRefreshInProgress,
-  anonAuthCompleted,
-  userAuthCompleted,
-  executeAnonAuth,
-}) => {
-  if (!userAuthCompleted && !anonAuthCompleted) {
-    return <div className="login-overlay" />;
-  }
-
-  if (!(anonToken || user || tokenRefreshInProgress) && !getRecaptchaConsentFromLocalStorage()) {
+const EnsureAuth = ({ user, anonToken, tokenRefreshInProgress, executeAnonAuth, userAuthCompleted }) => {
+  if (
+    !(anonToken || user || tokenRefreshInProgress) &&
+    !getRecaptchaConsentFromLocalStorage() &&
+    userAuthCompleted
+  ) {
     return <LoginRequired user={user} executeAnonAuth={executeAnonAuth} />;
   }
 

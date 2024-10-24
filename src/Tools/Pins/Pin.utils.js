@@ -9,7 +9,7 @@ import store, { pinsSlice, tabsSlice } from '../../store';
 import { DEFAULT_THEMES } from '../../assets/default_themes.js';
 import { VERSION_INFO } from '../../VERSION';
 import { b64DecodeUnicode } from '../../utils/base64MDN';
-import { getUserTokenFromLocalStorage } from '../../Auth/authHelpers';
+import { isUserAuthenticated } from '../../Auth/authHelpers';
 import { getDataSourceHandler, getDatasetLabel } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 import {
@@ -482,7 +482,7 @@ export function getPinsFromStorage(user) {
 }
 
 export async function importSharedPins(sharedPinsListId) {
-  const isUserLoggedIn = await getUserTokenFromLocalStorage();
+  const isUserLoggedIn = isUserAuthenticated();
   const [existingPins] = await Promise.all([getPinsFromStorage(isUserLoggedIn)]);
   const sharedPins = await getSharedPins(sharedPinsListId);
 

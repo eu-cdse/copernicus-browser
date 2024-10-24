@@ -1,8 +1,9 @@
 import jwt_dec from 'jwt-decode';
 import store, { authSlice, notificationSlice } from '../store';
 import axios from 'axios';
+import Keycloak from 'keycloak-js';
+import { t } from 'ttag';
 
-export const LOCAL_STORAGE_USER_AUTH_KEY = 'cdsebrowser_oauth';
 export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
 
 export const UPDATE_BEFORE_EXPIRY_USER_TOKEN = 3 * 60 * 1000; //minutes*seconds*miliseconds
@@ -10,34 +11,92 @@ export const UPDATE_BEFORE_EXPIRY_ANON_TOKEN = 10 * 1000; //seconds*miliseconds
 export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
 export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
 
-export const getAuthUri = ({ redirect_uri }) => {
-  const params = {
-    client_id: import.meta.env.VITE_CLIENTID,
-    redirect_uri: redirect_uri,
-    response_type: 'token id_token',
-    nonce: Math.round(Math.random() * Math.pow(10, 16)),
-  };
-  return import.meta.env.VITE_AUTH_BASEURL + 'auth?' + new URLSearchParams(params);
+const keycloakInstance = new Keycloak({
+  url: import.meta.env.VITE_AUTH_BASEURL_PRODUCTION + 'auth',
+  realm: import.meta.env.VITE_REALM_PRODUCTION,
+  clientId: import.meta.env.VITE_CLIENTID,
+});
+
+export const initKeycloak = async () => {
+  try {
+    const authenticated = await keycloakInstance.init({
+      onLoad: 'check-sso',
+      checkLoginIframe: false,
+    });
+
+    if (authenticated) {
+      setAuthenticatedUser();
+    }
+    return authenticated;
+  } catch (error) {
+    console.error('Failed to initialize keycloak:', error);
+    return false;
+  }
 };
 
-export const openLoginWindow = async () => {
-  return new Promise((resolve, reject) => {
-    window.authorizationCallback = { resolve, reject };
-    const auth_uri = getAuthUri({ redirect_uri: `${import.meta.env.VITE_ROOT_URL}oauthCallback.html` });
-    const popupWidth = 690;
-    const popupHeight = 780;
+const setAuthenticatedUser = () => {
+  const userPayload = {
+    userdata: keycloakInstance.idTokenParsed,
+    access_token: keycloakInstance.token,
+    token_expiration: keycloakInstance.tokenParsed.exp * 1000,
+  };
 
-    window.open(
-      auth_uri,
-      'popupWindow',
-      `width=${popupWidth},height=${popupHeight},left=${window.screen.width / 2 - popupWidth / 2},top=${
-        window.screen.height / 2 - popupHeight / 2
-      }`,
-    );
-  }).then((token) => {
-    saveUserTokenToLocalStorage(token);
-    return token;
-  });
+  store.dispatch(authSlice.actions.setUser(userPayload));
+};
+
+export const isUserAuthenticated = () => {
+  return keycloakInstance.authenticated;
+};
+
+export const getAccessToken = () => {
+  return keycloakInstance.token;
+};
+
+export const openLogin = async () => {
+  try {
+    const authenticated = await keycloakInstance.login();
+
+    // This will not be reached anymore
+
+    if (authenticated) {
+      setAuthenticatedUser();
+    }
+    return authenticated;
+  } catch (error) {
+    store.dispatch(notificationSlice.actions.displayError(t`An error has occurred during login process`));
+    return false;
+  }
+};
+
+export const refreshUserToken = async () => {
+  try {
+    if (keycloakInstance.authenticated) {
+      const refreshed = await keycloakInstance.updateToken(UPDATE_BEFORE_EXPIRY_USER_TOKEN);
+
+      if (refreshed) {
+        setAuthenticatedUser();
+      }
+      return refreshed;
+    }
+  } catch (error) {
+    console.error('Error during token refresh', error);
+    return false;
+  }
+};
+
+export const scheduleTokenRefresh = (expires_at, updateBeforeExpiry, refreshTimeout, refresh = () => {}) => {
+  const now = Date.now();
+  const expires_in = expires_at - now;
+  const timeout = Math.max(expires_in - updateBeforeExpiry, 0);
+  if (refreshTimeout) {
+    clearTimeout(refreshTimeout);
+  }
+  //schedule refresh
+  refreshTimeout = setTimeout(() => {
+    refresh();
+  }, timeout);
+
+  return refreshTimeout;
 };
 
 const getTokenFromLocalStorage = async (key) => {
@@ -54,7 +113,6 @@ const getTokenFromLocalStorage = async (key) => {
   }
 };
 
-export const getUserTokenFromLocalStorage = () => getTokenFromLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY);
 export const getAnonTokenFromLocalStorage = () => getTokenFromLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY);
 
 const saveTokenToLocalStorage = (key, token) => {
@@ -71,13 +129,8 @@ export const removeItemFromLocalStorage = (key) => {
   localStorage.removeItem(key);
 };
 
-export const saveUserTokenToLocalStorage = (token) =>
-  saveTokenToLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY, token);
 export const saveAnonTokenToLocalStorage = (token) =>
   saveTokenToLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY, token);
-
-export const removeUserTokenFromLocalStorage = () => removeItemFromLocalStorage(LOCAL_STORAGE_USER_AUTH_KEY);
-export const removeAnonTokenFromLocalStorage = () => removeItemFromLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY);
 
 export const isTokenExpired = (token) => {
   if (!token) {
@@ -88,12 +141,6 @@ export const isTokenExpired = (token) => {
   const expirationDate = getTokenExpiration(token);
   return expirationDate < now;
 };
-
-const decodeToken = (token, type) => jwt_dec(token[type]);
-
-export const decodeIdToken = (token) => decodeToken(token, 'id_token');
-
-export const decodeAccessToken = (token) => decodeToken(token, 'access_token');
 
 export const getTokenExpiration = (token) => {
   try {
@@ -108,38 +155,12 @@ export const getTokenExpiration = (token) => {
   return 0;
 };
 
-export const createSetUserPayload = (token) => {
-  return {
-    userdata: decodeIdToken(token),
-    access_token: token.access_token,
-    token_expiration: getTokenExpiration(token),
-  };
-};
-
-export const onLogIn = (token) => {
-  store.dispatch(authSlice.actions.setUser(createSetUserPayload(token)));
-};
-
-const onLogOut = () => {
-  removeUserTokenFromLocalStorage();
-  store.dispatch(authSlice.actions.resetUser());
-  store.dispatch(notificationSlice.actions.removeNotification());
-};
-
-export const logoutUser = async (userToken) => {
-  axios
-    .get(import.meta.env.VITE_AUTH_BASEURL + 'logout', {
-      withCredentials: true,
-      params: {
-        id_token_hint: userToken && userToken.id_token,
-      },
-    })
-    .catch((e) => {
-      console.error(e);
-    })
-    .finally(() => {
-      onLogOut();
-    });
+export const logoutUser = async () => {
+  try {
+    await keycloakInstance.logout();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const scheduleAction = (expires_at, updateBeforeExpiry, timeoutId, action = () => {}) => {
@@ -176,10 +197,8 @@ export const hasRole = (userToken, role) => {
     return false;
   }
 
-  const decodedToken = jwt_dec(userToken);
-  const roles = decodedToken?.realm_access?.roles ?? [];
+  const roles = keycloakInstance.tokenParsed.group_membership ?? [];
   return !!roles.find((r) => {
-    const pattern = new RegExp(role);
-    return pattern.test(r);
+    return r.includes(role.replace('-', '_'));
   });
 };
