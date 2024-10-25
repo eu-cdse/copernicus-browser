@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { t } from 'ttag';
-import { EDUCATION_MODE } from '../const';
 import {
   CNES_LAND_COVER,
   ESA_WORLD_COVER,
@@ -11,27 +10,16 @@ import {
   COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES,
   S3SLSTR,
   S3SLSTR_CDAS,
-  S5_CH4,
-  S5_SO2,
   S5_SO2_CDAS,
-  S5_HCHO,
   S5_HCHO_CDAS,
   S5_CH4_CDAS,
-  S5_O3,
   S5_O3_CDAS,
-  S5_NO2,
   S5_NO2_CDAS,
-  S5_CO,
   S5_CO_CDAS,
-  S5_AER_AI,
   S5_AER_AI_CDAS,
-  S5_CLOUD,
   S5_CLOUD_CDAS,
-  S2L1C,
-  S2L2A,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
-  MODIS,
   AWS_LETML2,
   AWS_LETML1,
   AWS_HLS,
@@ -50,9 +38,6 @@ import {
   AWS_LTML1,
   AWS_LTML2,
   ENVISAT_MERIS,
-  ESA_L5,
-  ESA_L7,
-  ESA_L8,
   AWS_LMSSL1,
   COPERNICUS_GLOBAL_SURFACE_WATER,
   COPERNICUS_HRSI_PSA,
@@ -100,9 +85,6 @@ import {
 export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
-      { datasourceId: S3SLSTR, layerId: 'S7_VISUALIZED' },
-      { datasourceId: S3SLSTR, layerId: 'S8_VISUALIZED' },
-      { datasourceId: S3SLSTR, layerId: 'S9_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'S7_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'S8_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'S9_VISUALIZED' },
@@ -128,8 +110,6 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S3SLSTR, layerId: 'F1_VISUALIZED' },
-      { datasourceId: S3SLSTR, layerId: 'F2_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'F1_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'F2_VISUALIZED' },
     ],
@@ -156,10 +136,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CH4, layerId: 'CH4_VISUALIZED' },
-      { datasourceId: S5_CH4_CDAS, layerId: 'CH4_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CH4_CDAS, layerId: 'CH4_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 1600,
@@ -177,10 +154,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_HCHO, layerId: 'HCHO_VISUALIZED' },
-      { datasourceId: S5_HCHO_CDAS, layerId: 'HCHO_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_HCHO_CDAS, layerId: 'HCHO_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -198,10 +172,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_SO2, layerId: 'SO2_VISUALIZED' },
-      { datasourceId: S5_SO2_CDAS, layerId: 'SO2_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_SO2_CDAS, layerId: 'SO2_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -219,10 +190,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_O3, layerId: 'O3_VISUALIZED' },
-      { datasourceId: S5_O3_CDAS, layerId: 'O3_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_O3_CDAS, layerId: 'O3_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -240,10 +208,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_NO2, layerId: 'NO2_VISUALIZED' },
-      { datasourceId: S5_NO2_CDAS, layerId: 'NO2_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_NO2_CDAS, layerId: 'NO2_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -261,10 +226,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CO, layerId: 'CO_VISUALIZED' },
-      { datasourceId: S5_CO_CDAS, layerId: 'CO_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CO_CDAS, layerId: 'CO_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -283,8 +245,6 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S5_AER_AI, layerId: 'AER_AI_340_AND_380_VISUALIZED' },
-      { datasourceId: S5_AER_AI, layerId: 'AER_AI_354_AND_388_VISUALIZED' },
       { datasourceId: S5_AER_AI_CDAS, layerId: 'AER_AI_340_AND_380_VISUALIZED' },
       { datasourceId: S5_AER_AI_CDAS, layerId: 'AER_AI_354_AND_388_VISUALIZED' },
     ],
@@ -305,10 +265,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_BASE_HEIGHT_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_BASE_HEIGHT_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_BASE_HEIGHT_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0,
@@ -326,10 +283,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 10000.0,
@@ -347,10 +301,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_FRACTION_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_FRACTION_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_FRACTION_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -369,10 +320,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_OPTICAL_THICKNESS_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_OPTICAL_THICKNESS_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_OPTICAL_THICKNESS_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -391,10 +339,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_TOP_HEIGHT_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_TOP_HEIGHT_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_TOP_HEIGHT_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 0.0,
@@ -412,10 +357,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: S5_CLOUD, layerId: 'CLOUD_TOP_PRESSURE_VISUALIZED' },
-      { datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_TOP_PRESSURE_VISUALIZED' },
-    ],
+    match: [{ datasourceId: S5_CLOUD_CDAS, layerId: 'CLOUD_TOP_PRESSURE_VISUALIZED' }],
     legend: {
       type: 'continuous',
       minPosition: 10000.0,
@@ -570,30 +512,16 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '3_NDVI' },
-      { datasourceId: S2L2A, layerId: '3_NDVI' },
       { datasourceId: S2_L1C_CDAS, layerId: '3_NDVI' },
       { datasourceId: S2_L2A_CDAS, layerId: '3_NDVI' },
-      { datasourceId: ENVISAT_MERIS, layerId: 'NDVI' },
-      { datasourceId: S2L1C, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
-      { datasourceId: S2L2A, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
-      { datasourceId: AWS_L8L1C, layerId: '4-NDVI' },
-      { datasourceId: AWS_LOTL1, layerId: '4-NDVI' },
-      { datasourceId: AWS_LOTL2, layerId: '4-NDVI' },
-      { datasourceId: AWS_LTML1, layerId: '4_NDVI' },
-      { datasourceId: AWS_LTML2, layerId: '4_NDVI' },
-      { datasourceId: ESA_L8, layerId: '3_NDVI' },
-      { datasourceId: ESA_L7, layerId: '3_NDVI' },
-      { datasourceId: ESA_L5, layerId: '3_NDVI' },
-      { datasourceId: MODIS, layerId: 'NDVI' },
-      { datasourceId: S2L1C, layerId: '6_NDVI' },
-      { datasourceId: S2L2A, layerId: '6_NDVI' },
-      { datasourceId: S2L1C, layerId: '5_NDVI' },
-      { datasourceId: S2L2A, layerId: '5_NDVI' },
-      { datasourceId: AWS_LETML2, layerId: 'NDVI' },
-      { datasourceId: AWS_LETML1, layerId: 'NDVI' },
-      { datasourceId: AWS_LMSSL1, layerId: 'NDVI' },
-      { datasourceId: AWS_HLS, layerId: '3_NDVI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '6_NDVI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '6_NDVI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5_NDVI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5_NDVI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '3_NDVI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '3_NDVI' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
     ],
     legend: {
       type: 'continuous',
@@ -644,79 +572,49 @@ export const PREDEFINED_LAYERS_METADATA = [
         { position: 1.1, color: 'rgb(0%,27%,0%)', label: ' 1' },
       ],
     },
-    titles: () => ({
-      [EDUCATION_MODE.id]: 'NDVI',
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: 'Normalized Difference Vegetation Index',
-    }),
     description: () =>
       t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/) and [here.](https://eos.com/ndvi/)`,
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4_EVI' },
-      { datasourceId: S2L2A, layerId: '4_EVI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_EVI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_EVI' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `EVI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Enhanced Vegetation Index`,
-    }),
     description: () =>
       t`# Enhanced Vegetation Index (EVI)\n\nThe enhanced vegetation index (EVI) is an 'optimized' vegetation index as it corrects for soil background signals and atmospheric influences. It is very useful in areas of dense canopy cover. The range of values for EVI is -1 to 1, with healthy vegetation generally around 0.20 to 0.80.\n\n\n\n\n\nMore infos [here](https://custom-scripts.sentinel-hub.com/sentinel-2/evi/) and [here.](https://earthobservatory.nasa.gov/features/MeasuringVegetation/measuring_vegetation_4.php)`,
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '5_ARVI', themeId: 'FORESTRY' },
-      { datasourceId: S2L2A, layerId: '5_ARVI', themeId: 'FORESTRY' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5_ARVI', themeId: 'FORESTRY' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5_ARVI', themeId: 'FORESTRY' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `ARVI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Atmospherically Resistant Vegetation Index `,
-    }),
     description: () =>
       t`# Atmospherically Resistant Vegetation Index (ARVI)\n\nThe Atmospherically Resistant Vegetation Index (ARVI) is a vegetation index that minimizes the effects of atmospheric scattering. It is most useful for regions with high content of atmospheric aerosol (fog, dust, smoke, air pollution). The range for an ARVI is -1 to 1 where green vegetation generally falls between values of 0.20 to 0.80.\n\n\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/arvi/) and [here.](https://eos.com/blog/6-spectral-indexes-on-top-of-ndvi-to-make-your-vegetation-analysis-complete/)`,
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '6_SAVI', themeId: 'FORESTRY' },
-      { datasourceId: S2L2A, layerId: '6_SAVI', themeId: 'FORESTRY' },
-      { datasourceId: S2L1C, layerId: 'SAVI', themeId: 'AGRICULTURE' },
-      { datasourceId: S2L2A, layerId: 'SAVI', themeId: 'AGRICULTURE' },
+      { datasourceId: S2_L1C_CDAS, layerId: '6_SAVI', themeId: 'FORESTRY' },
+      { datasourceId: S2_L2A_CDAS, layerId: '6_SAVI', themeId: 'FORESTRY' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'SAVI', themeId: 'AGRICULTURE' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'SAVI', themeId: 'AGRICULTURE' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `SAVI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Soil Adjusted Vegetation Index`,
-    }),
     description: () =>
       t`# Soil Adjusted Vegetation Index (SAVI)\n\n The Soil Adjusted Vegetation Index is similar to Normalized Difference Vegetation Index (NDVI) but is used in areas where vegetative cover is low (< 40%). The index is a transformation technique that minimizes soil brightness influences from spectral vegetation indices involving red and near-infrared (NIR) wavelengths. The index is helpful when analysing young crops, arid regions with sparse vegetation and exposed soil surfaces.\n\n\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/savi/) and [here.](https://eos.com/blog/6-spectral-indexes-on-top-of-ndvi-to-make-your-vegetation-analysis-complete/)`,
   },
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '7_MARI' },
-      { datasourceId: S2L2A, layerId: '7_MARI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '7_MARI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '7_MARI' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `MARI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Modified Anthocyanin Reflectance Index`,
-    }),
     description: () =>
       t`# Modified Anthocyanin Reflectance Index (mARI/ARI2)\n\nAnthocyanins are pigments common in higher plants, causing their red, blue and purple coloration. They provide valuable information about the physiological status of plants, as they are considered indicators of various types of plant stresses. The reflectance of anthocyanin is highest around 550nm. However, the same wavelengths are reflected by chlorophyll as well. To isolate the anthocyanins, the 700nm spectral band, that reflects only chlorophyll and not anthocyanins, is subtracted.\n\nTo correct for leaf density and thickness, the near infrared spectral band (in the recommended wavelengths of 760-800nm), which is related to leaf scattering, is added to the basic ARI index. The new index is called modified ARI or mARI (also ARI2).\n\nmARI values for the examined trees in [this original article](https://custom-scripts.sentinel-hub.com/sentinel-2/mari/) ranged in values from 0 to 8.\n\n\n\n\n\nMore info [here.](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1227&context=natrespapers)`,
   },
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4_GREEN-CITY' },
-      { datasourceId: S2L2A, layerId: '4_GREEN-CITY' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_GREEN_CITY' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_GREEN-CITY' },
     ],
 
     description: () =>
@@ -725,8 +623,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '3_URBAN-CLASSIFIED' },
-      { datasourceId: S2L2A, layerId: '3_URBAN-CLASSIFIED' },
+      { datasourceId: S2_L1C_CDAS, layerId: '3_URBAN-CLASSIFIED' },
+      { datasourceId: S2_L2A_CDAS, layerId: '3_URBAN-CLASSIFIED' },
     ],
 
     description: () =>
@@ -735,8 +633,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '5_URBAN-LAND-INFRARED-COLOR' },
-      { datasourceId: S2L2A, layerId: '5_URBAN-LAND-INFRARED-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5_URBAN-LAND-INFRARED-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5_URBAN-LAND-INFRARED-COLOR' },
     ],
 
     description: () =>
@@ -745,10 +643,10 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4_MOISTURE-STRESS' },
-      { datasourceId: S2L2A, layerId: '4_MOISTURE-STRESS' },
-      { datasourceId: S2L1C, layerId: '9_MOISTURE-STRESS' },
-      { datasourceId: S2L2A, layerId: '9_MOISTURE-STRESS' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_MOISTURE-STRESS' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_MOISTURE-STRESS' },
+      { datasourceId: S2_L1C_CDAS, layerId: '9_MOISTURE-STRESS' },
+      { datasourceId: S2_L2A_CDAS, layerId: '9_MOISTURE-STRESS' },
     ],
 
     description: () =>
@@ -756,16 +654,16 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '5-MOISTURE-INDEX1' },
-      { datasourceId: S2L2A, layerId: '5-MOISTURE-INDEX1' },
       { datasourceId: S2_L1C_CDAS, layerId: '5-MOISTURE-INDEX1' },
       { datasourceId: S2_L2A_CDAS, layerId: '5-MOISTURE-INDEX1' },
-      { datasourceId: S2L1C, layerId: 'MOISTURE-INDEX' },
-      { datasourceId: S2L2A, layerId: 'MOISTURE-INDEX' },
-      { datasourceId: S2L1C, layerId: '2_MOISTURE-INDEX' },
-      { datasourceId: S2L2A, layerId: '2_MOISTURE-INDEX' },
-      { datasourceId: S2L1C, layerId: '99_MOISTURE-INDEX' },
-      { datasourceId: S2L2A, layerId: '99_MOISTURE-INDEX' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5-MOISTURE-INDEX1' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5-MOISTURE-INDEX1' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'MOISTURE-INDEX' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'MOISTURE-INDEX' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_MOISTURE-INDEX' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_MOISTURE-INDEX' },
+      { datasourceId: S2_L1C_CDAS, layerId: '99_MOISTURE-INDEX' },
+      { datasourceId: S2_L2A_CDAS, layerId: '99_MOISTURE-INDEX' },
       { datasourceId: AWS_LETML2, layerId: 'MOISTURE-INDEX' },
       { datasourceId: AWS_LETML1, layerId: 'MOISTURE-INDEX' },
       { datasourceId: AWS_HLS, layerId: '4_MOISTURE-INDEX' },
@@ -784,24 +682,17 @@ export const PREDEFINED_LAYERS_METADATA = [
         { position: 0.8, color: 'rgb(0%,0%,50%)', label: '> 0.8' },
       ],
     },
-    titles: () => ({
-      [EDUCATION_MODE.id]: `NDMI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Normalized Difference Moisture Index`,
-    }),
     description: () =>
       t`# Normalized Difference Moisture Index (NDMI)\n\nThe normalized difference moisture Index (NDMI) is used to determine vegetation water content and monitor droughts. The value range of the NDMI is -1 to 1. Negative values of NDMI (values approaching -1) correspond to barren soil. Values around zero (-0.2 to 0.4) generally correspond to water stress. High, positive values represent high canopy without water stress (approximately 0.4 to 1).\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ndmi/)`,
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '7-NDWI' },
-      { datasourceId: S2L2A, layerId: '7-NDWI' },
       { datasourceId: S2_L1C_CDAS, layerId: '7-NDWI' },
       { datasourceId: S2_L2A_CDAS, layerId: '7-NDWI' },
-      { datasourceId: S2L1C, layerId: '3_NDWI' },
-      { datasourceId: S2L2A, layerId: '3_NDWI' },
-      { datasourceId: MODIS, layerId: 'NDWI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '7-NDWI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '7-NDWI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '3_NDWI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '3_NDWI' },
       { datasourceId: AWS_LTML1, layerId: '5_NDWI' },
       { datasourceId: AWS_LTML2, layerId: '5_NDWI' },
       { datasourceId: AWS_LETML1, layerId: 'NDWI' },
@@ -819,48 +710,22 @@ export const PREDEFINED_LAYERS_METADATA = [
         { position: 0.8, color: 'rgb(0%,0%,100%)', label: '0.8' },
       ],
     },
-    titles: () => ({
-      [EDUCATION_MODE.id]: `NDWI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Normalized Difference Water Index`,
-    }),
     description: () =>
       t`# Normalized Difference Water Index (NDWI)\n\nThe normalized difference water index is most appropriate for water body mapping. Values of water bodies are larger than 0.5. Vegetation has smaller values. Built-up features have positive values between zero and 0.2.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ndwi/)`,
   },
 
   {
-    match: [{ datasourceId: MODIS, layerId: 'NDWI' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -0.8,
-      maxPosition: 0.8,
-      gradients: [
-        { position: -0.8, color: 'rgb(0%,100%,0%)', label: '< -0.8' },
-        { position: 0, color: 'rgb(100%,100%,100%)', label: '0' },
-        { position: 0.8, color: 'rgb(0%,0%,100%)', label: '0.8' },
-      ],
-    },
-    titles: () => ({
-      [EDUCATION_MODE.id]: `NDWI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Normalized Difference Water Index`,
-    }),
-    description: () =>
-      t`# Normalized Difference Water Index (NDWI)\n\nThe normalized difference water index is most appropriate for water body mapping. Values of water bodies are larger than 0.5. Vegetation has smaller values. Built-up features have positive values between zero and 0.2.`,
-  },
-
-  {
     match: [
-      { datasourceId: S2L1C, layerId: '2_FALSE_COLOR' },
-      { datasourceId: S2L2A, layerId: '2_FALSE_COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '1_FALSE-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '1_FALSE-COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE_COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE_COLOR' },
-      { datasourceId: S2L1C, layerId: 'FALSE-COLOR' },
-      { datasourceId: S2L2A, layerId: 'FALSE-COLOR' },
-      { datasourceId: S2L1C, layerId: '2_FALSE-COLOR' },
-      { datasourceId: S2L2A, layerId: '2_FALSE-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE_COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE_COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'FALSE-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE-COLOR' },
       { datasourceId: AWS_LETML2, layerId: 'FALSE-COLOR' },
       { datasourceId: AWS_LETML1, layerId: 'FALSE-COLOR' },
       { datasourceId: S3SLSTR, layerId: 'FALSE_COLOR' },
@@ -915,14 +780,14 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '1_TRUE_COLOR' },
-      { datasourceId: S2L2A, layerId: '1_TRUE_COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '1_TRUE_COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '1_TRUE_COLOR' },
-      { datasourceId: S2L1C, layerId: 'TRUE-COLOR' },
-      { datasourceId: S2L2A, layerId: 'TRUE-COLOR' },
-      { datasourceId: S2L1C, layerId: '1_TRUE-COLOR' },
-      { datasourceId: S2L2A, layerId: '1_TRUE-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '1_TRUE_COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '1_TRUE_COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'TRUE-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'TRUE-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '1_TRUE-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '1_TRUE-COLOR' },
       { datasourceId: S3OLCI, layerId: '1_TRUE-COLOR' },
       { datasourceId: S3OLCI_CDAS, layerId: '1_TRUE-COLOR' },
     ],
@@ -994,14 +859,14 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4-FALSE-COLOR-URBAN' },
-      { datasourceId: S2L2A, layerId: '4-FALSE-COLOR-URBAN' },
       { datasourceId: S2_L1C_CDAS, layerId: '4-FALSE-COLOR-URBAN' },
       { datasourceId: S2_L2A_CDAS, layerId: '4-FALSE-COLOR-URBAN' },
-      { datasourceId: S2L1C, layerId: 'FALSE-COLOR-URBAN' },
-      { datasourceId: S2L2A, layerId: 'FALSE-COLOR-URBAN' },
-      { datasourceId: S2L1C, layerId: '2_FALSE-COLOR-URBAN' },
-      { datasourceId: S2L2A, layerId: '2_FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4-FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4-FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE-COLOR-URBAN' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE-COLOR-URBAN' },
       { datasourceId: AWS_LOTL2, layerId: 'FALSE-COLOR-URBAN' },
     ],
 
@@ -1021,12 +886,12 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'FALSE-COLOR-11-8-2' },
-      { datasourceId: S2L2A, layerId: 'FALSE-COLOR-11-8-2' },
-      { datasourceId: S2L1C, layerId: 'FALSE-COLOR-1182' },
-      { datasourceId: S2L2A, layerId: 'FALSE-COLOR-1182' },
-      { datasourceId: S2L1C, layerId: '6_AGRICULTURE' },
-      { datasourceId: S2L2A, layerId: '6_AGRICULTURE' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'FALSE-COLOR-11-8-2' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR-11-8-2' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'FALSE-COLOR-1182' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR-1182' },
+      { datasourceId: S2_L1C_CDAS, layerId: '6_AGRICULTURE' },
+      { datasourceId: S2_L2A_CDAS, layerId: '6_AGRICULTURE' },
     ],
 
     description: () =>
@@ -1035,8 +900,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '5_SNOW-CLASSIFIER' },
-      { datasourceId: S2L2A, layerId: '5_SNOW-CLASSIFIER' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5_SNOW-CLASSIFIER' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5_SNOW-CLASSIFIER' },
     ],
 
     description: () =>
@@ -1045,8 +910,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4_ULYSSYS-WATER-QUALITY-VIEWER' },
-      { datasourceId: S2L2A, layerId: '4_ULYSSYS-WATER-QUALITY-VIEWER' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_ULYSSYS-WATER-QUALITY-VIEWER' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_ULYSSYS-WATER-QUALITY-VIEWER' },
     ],
 
     description: () =>
@@ -1055,22 +920,16 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '6-SWIR' },
-      { datasourceId: S2L2A, layerId: '6-SWIR' },
       { datasourceId: S2_L1C_CDAS, layerId: '6-SWIR' },
       { datasourceId: S2_L2A_CDAS, layerId: '6-SWIR' },
-      { datasourceId: S2L1C, layerId: '5_SWIR' },
-      { datasourceId: S2L2A, layerId: '5_SWIR' },
-      { datasourceId: S2L1C, layerId: 'SWIR' },
-      { datasourceId: S2L2A, layerId: 'SWIR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '6-SWIR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '6-SWIR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '5_SWIR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '5_SWIR' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'SWIR' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'SWIR' },
       { datasourceId: AWS_HLS, layerId: '5_SWIR' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `SWIR`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Short Wave Infrared Composite`,
-    }),
     description: () =>
       t`# Short wave infrared composite (SWIR)\n\nShort wave infrared (SWIR) measurements can help scientists estimate how much water is present in plants and soil, as water absorbs SWIR wavelengths. Short wave infrared bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) are also useful for distinguishing between cloud types (water clouds versus ice clouds), snow and ice, all of which appear white in visible light. In this composite vegetation appears in shades of green, soils and built-up areas are in various shades of brown, and water appears black. Newly burned land reflects strongly in SWIR bands, making them valuable for mapping fire damages. Each rock type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/swir-rgb/)`,
   },
@@ -1080,43 +939,31 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: AWS_LETML2, layerId: 'SWIR' },
       { datasourceId: AWS_LETML1, layerId: 'SWIR' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `SWIR`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Short Wave Infrared Composite`,
-    }),
     description: () =>
       t`# Short wave infrared composite (SWIR)\n\nShort wave infrared (SWIR) measurements can help scientists estimate how much water is present in plants and soil, as water absorbs SWIR wavelengths. Short wave infrared bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) are also useful for distinguishing between cloud types (water clouds versus ice clouds), snow and ice, all of which appear white in visible light. In this composite vegetation appears in shades of green, soils and built-up areas are in various shades of brown, and water appears black. Newly burned land reflects strongly in SWIR bands, making them valuable for mapping fire damages. Each rock type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-4-5-tm/swir/)`,
   },
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '8-NDSI' },
-      { datasourceId: S2L2A, layerId: '8-NDSI' },
       { datasourceId: S2_L1C_CDAS, layerId: '8-NDSI' },
       { datasourceId: S2_L2A_CDAS, layerId: '8-NDSI' },
-      { datasourceId: S2L1C, layerId: '4_NDSI' },
-      { datasourceId: S2L2A, layerId: '4_NDSI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '8-NDSI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '8-NDSI' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_NDSI' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_NDSI' },
     ],
-    titles: () => ({
-      [EDUCATION_MODE.id]: `NDSI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Normalised Difference Snow Index`,
-    }),
     description: () =>
       t`# Normalised Difference Snow Index (NDSI)\n\nThe Sentinel-2 normalised difference snow index can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. Snow cover is represented in bright vivid blue.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndsi-visualized/).`,
   },
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '3_TONEMAPPED-NATURAL-COLOR' },
-      { datasourceId: S2L2A, layerId: '3_TONEMAPPED-NATURAL-COLOR' },
-      { datasourceId: S2L1C, layerId: '2_HIGHLIGHT-OPTIMIZED-NATURAL-COLOR' },
-      { datasourceId: S2L2A, layerId: '2_HIGHLIGHT-OPTIMIZED-NATURAL-COLOR' },
-      { datasourceId: S2L1C, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
-      { datasourceId: S2L2A, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '3_TONEMAPPED-NATURAL-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '3_TONEMAPPED-NATURAL-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_HIGHLIGHT-OPTIMIZED-NATURAL-COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_HIGHLIGHT-OPTIMIZED-NATURAL-COLOR' },
+      { datasourceId: S2_L1C_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: AWS_LETML1, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
@@ -1130,8 +977,8 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: '3_GEOLOGY-12-8-2' },
-      { datasourceId: S2L2A, layerId: '3_GEOLOGY-12-8-2' },
+      { datasourceId: S2_L1C_CDAS, layerId: '3_GEOLOGY-12-8-2' },
+      { datasourceId: S2_L2A_CDAS, layerId: '3_GEOLOGY-12-8-2' },
     ],
 
     description: () =>
@@ -1140,8 +987,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: '4_GEOLOGY-8-11-12' },
-      { datasourceId: S2L2A, layerId: '4_GEOLOGY-8-11-12' },
+      { datasourceId: S2_L1C_CDAS, layerId: '4_GEOLOGY-8-11-12' },
+      { datasourceId: S2_L2A_CDAS, layerId: '4_GEOLOGY-8-11-12' },
     ],
 
     description: () =>
@@ -1150,16 +997,16 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'WILDFIRES-PIERRE-MARKUSE' },
-      { datasourceId: S2L2A, layerId: 'WILDFIRES-PIERRE-MARKUSE' },
-      { datasourceId: S2L1C, layerId: 'WILDFIRES' },
-      { datasourceId: S2L2A, layerId: 'WILDFIRES' },
-      { datasourceId: S2L1C, layerId: 'WILDFIRES-NORMAL-MODE' },
-      { datasourceId: S2L2A, layerId: 'WILDFIRES-NORMAL-MODE' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'WILDFIRES-PIERRE-MARKUSE' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'WILDFIRES-PIERRE-MARKUSE' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'WILDFIRES' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'WILDFIRES' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'WILDFIRES-NORMAL-MODE' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'WILDFIRES-NORMAL-MODE' },
     ],
 
     description: () =>
-      t`# Wildfires\n\nThis script, created by Pierre Markuse, visualizes wildfires using Sentinel-2 data. It combines natural color background with some NIR/SWIR data for smoke penetration and more detail, while adding highlights from B11 and B12 to show fires in red and orange colors.\n\n\n\nMore info [here.](https://pierre-markuse.net/2017/08/07/visualizing-wildfires-sentinel-2-imagery-eo-browser/)`,
+      t`# Wildfires\n\nThis script, created by Pierre Markuse, visualizes wildfires using Sentinel-2 data. It combines natural color background with some NIR/SWIR data for smoke penetration and more detail, while adding highlights from B11 and B12 to show fires in red and orange colors.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/markuse_fire/)`,
   },
 
   {
@@ -1175,10 +1022,10 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'BURN-AREA-INDEX-BAI' },
-      { datasourceId: S2L2A, layerId: 'BURN-AREA-INDEX-BAI' },
-      { datasourceId: S2L1C, layerId: 'BURN-AREA-INDEX' },
-      { datasourceId: S2L2A, layerId: 'BURN-AREA-INDEX' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'BURN-AREA-INDEX-BAI' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'BURN-AREA-INDEX-BAI' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'BURN-AREA-INDEX' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'BURN-AREA-INDEX' },
     ],
     legend: {
       type: 'continuous',
@@ -1192,22 +1039,16 @@ export const PREDEFINED_LAYERS_METADATA = [
         { position: 100, color: 'rgb(0%,0%,0%)', label: '6' },
       ],
     },
-    titles: () => ({
-      [EDUCATION_MODE.id]: `BAI`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Burned Area Index`,
-    }),
     description: () =>
       t`# Burned Area Index\n\nBurned Area Index takes advantage of the wider spectrum of Visible, Red-Edge, NIR and SWIR bands.\n\nValues description:()=> The range of values for the index is \`-1\` to \`1\` for burn scars, and \`1\` - \`6\` for active fires. Different fire intensities may result in different thresholds; the current values were calibrated, as per original author, on mostly Mediterranen regions.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/bais2/)`,
   },
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'NORMALIZED-BURN-RATIO-NBR' },
-      { datasourceId: S2L2A, layerId: 'NORMALIZED-BURN-RATIO-NBR' },
-      { datasourceId: S2L1C, layerId: 'NORMALIZED-BURN-RATIO' },
-      { datasourceId: S2L2A, layerId: 'NORMALIZED-BURN-RATIO' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-BURN-RATIO-NBR' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'NORMALIZED-BURN-RATIO-NBR' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-BURN-RATIO' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'NORMALIZED-BURN-RATIO' },
     ],
     legend: {
       type: 'continuous',
@@ -1221,19 +1062,13 @@ export const PREDEFINED_LAYERS_METADATA = [
         { position: 100, color: 'rgb(0%,0%,0%)', label: '1' },
       ],
     },
-    titles: () => ({
-      [EDUCATION_MODE.id]: `NBR`,
-    }),
-    shortDescriptions: () => ({
-      [EDUCATION_MODE.id]: `Normalized Burn Ratio`,
-    }),
     description: () =>
-      t`# Normalized Burn Ratio (NBR)\n\nNormalized Burn Ratio is frequently used to estimate burn severity. It uses near-infrared (NIR) and shortwave-infrared (SWIR) wavelengths. Healthy vegetation has a high reflectance in the near-infrared portion of the spectrum, and a low short-wave infrared reflectance. On the other hand, burned areas have a high shortwave infrared reflectance but low reflectance in the near infrared Darker pixels indicate burned areas.\n\n\n\nMore info [here](http://gsp.humboldt.edu/OLM/Courses/GSP_216_Online/lesson5-1/NBR.html) and [here.](https://mybinder.org/v2/gh/sentinel-hub/education/master?filepath=wildfires%2FWildfires%20from%20Satellite%20Images.ipynb)`,
+      t`# Normalized Burn Ratio (NBR)\n\nNormalized Burn Ratio is frequently used to estimate burn severity. It uses near-infrared (NIR) and shortwave-infrared (SWIR) wavelengths. Healthy vegetation has a high reflectance in the near-infrared portion of the spectrum, and a low short-wave infrared reflectance. On the other hand, burned areas have a high shortwave infrared reflectance but low reflectance in the near infrared Darker pixels indicate burned areas.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/nbr/).`,
   },
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'ATMOSPHERIC-PENETRATION' },
-      { datasourceId: S2L2A, layerId: 'ATMOSPHERIC-PENETRATION' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'ATMOSPHERIC-PENETRATION' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'ATMOSPHERIC-PENETRATION' },
     ],
 
     description: () =>
@@ -1242,10 +1077,10 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'BARREN-SOIL' },
-      { datasourceId: S2L2A, layerId: 'BARREN-SOIL' },
-      { datasourceId: S2L1C, layerId: '8_BARREN-SOIL' },
-      { datasourceId: S2L2A, layerId: '8_BARREN-SOIL' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'BARREN-SOIL' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'BARREN-SOIL' },
+      { datasourceId: S2_L1C_CDAS, layerId: '8_BARREN-SOIL' },
+      { datasourceId: S2_L2A_CDAS, layerId: '8_BARREN-SOIL' },
     ],
 
     description: () =>
@@ -1254,8 +1089,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'TRUE-COLOR-LAVA-FLOW' },
-      { datasourceId: S2L2A, layerId: 'TRUE-COLOR-LAVA-FLOW' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'TRUE-COLOR-LAVA-FLOW' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'TRUE-COLOR-LAVA-FLOW' },
     ],
 
     description: () =>
@@ -1264,8 +1099,8 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S2L1C, layerId: 'BURNED-AREAS-DETECTION' },
-      { datasourceId: S2L2A, layerId: 'BURNED-AREAS-DETECTION' },
+      { datasourceId: S2_L1C_CDAS, layerId: 'BURNED-AREAS-DETECTION' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'BURNED-AREAS-DETECTION' },
     ],
 
     description: () =>
@@ -1275,7 +1110,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       {
-        datasourceId: S2L2A,
+        datasourceId: S2_L2A_CDAS,
         layerId: 'SCENE-CLASSIFICATION',
         timeFrom: moment('2022-01-25').utc().startOf('day'),
       },
@@ -1346,7 +1181,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       {
-        datasourceId: S2L2A,
+        datasourceId: S2_L2A_CDAS,
         layerId: 'SCENE-CLASSIFICATION',
         timeTo: moment('2022-01-24').utc().endOf('day'),
       },
@@ -1465,39 +1300,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
     description: () =>
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
-  },
-
-  {
-    match: [{ datasourceId: MODIS, layerId: 'SALINITY-INDEX' }],
-    legend: {
-      type: 'continuous',
-      gradients: [
-        {
-          color: 'rgb(100%,100%,100%)',
-          label: '0',
-          position: 0,
-        },
-        {
-          color: 'rgb(50%,70%,0%)',
-          label: '0.3',
-          position: 0.3,
-        },
-        {
-          color: 'rgb(0%,40%,0%)',
-          label: '0.6',
-          position: 0.6,
-        },
-        {
-          color: 'rgb(0%,0%,0%)',
-          label: 1,
-          position: 1,
-        },
-      ],
-      maxPosition: 1,
-      minPosition: 0,
-    },
-    description: () =>
-      t`# Normalized Difference Salinity Index\n\nThe index visualizes the amount of salt present in soils. Soil salinization is one of the most common land degradation processes, especially in arid and semi-arid regions, where precipitation exceeds evaporation. \n\n Higher values indicate higher salinity and low values indicate lower salinity.\n\nRead more [here,](https://webapps.itc.utwente.nl/librarywww/papers_2003/msc/wrem/khaier.pdf) [here](https://modis.gsfc.nasa.gov/sci_team/pubs/abstract_new.php?id=29271) and [here.](https://www.indexdatabase.de/db/i-single.php?id=57)`,
   },
 
   {

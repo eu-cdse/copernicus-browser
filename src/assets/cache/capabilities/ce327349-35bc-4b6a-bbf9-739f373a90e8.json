@@ -27,7 +27,7 @@
             "name": "Burned Areas Detection",
             "description": "",
             "dataset": "S2L1C",
-            "legendUrl": null
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ce3273-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=BURNED-AREAS-DETECTION&style=default"
         },
         {
             "id": "MOISTURE-INDEX",
