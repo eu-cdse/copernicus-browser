@@ -1,113 +1,130 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DatePicker from '../DatePicker/DatePicker';
 import { NumericInput } from './NumericInput';
 
-export class DateTimeInput extends Component {
-  setDay = (day) => {
-    const { selectedTime } = this.props;
-    const newSelectedTime = selectedTime
+let timeoutId = null;
+export const DateTimeInput = (props) => {
+  const [localDateTime, setLocalDateTime] = useState(null);
+
+  const {
+    id,
+    selectedTime,
+    minDate,
+    maxDate,
+    label,
+    calendarContainer,
+    onQueryDatesForActiveMonth,
+    hasCloudCoverage,
+    showNextPrevDateArrows,
+    getAndSetNextPrevDate,
+    additionalClassNameForDatePicker,
+    maxCloudCover,
+    displayCalendar,
+    openCalendar,
+    closeCalendar,
+    dateLoading,
+    setDateLoading,
+    nextDateBtnDisabled,
+    setNextDateBtnDisabled,
+    isTimeless,
+    isZoomLevelOk,
+    isTimeRange,
+    isDisabled,
+    setSelectedTime,
+  } = props;
+
+  useEffect(() => {
+    if (selectedTime) {
+      setLocalDateTime(selectedTime.clone());
+    }
+  }, [selectedTime]);
+
+  useEffect(() => {
+    if (localDateTime && !localDateTime.isSame(selectedTime)) {
+      if (!!timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        if (!isWithinAvailableTimeRange(localDateTime)) {
+          setLocalDateTime(selectedTime.clone());
+          return;
+        }
+
+        setSelectedTime(localDateTime.clone());
+      }, 300);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localDateTime]);
+
+  if (!localDateTime) {
+    return null;
+  }
+
+  const setDay = (day) => {
+    const newSelectedDateTime = localDateTime
       .clone()
       .set({ date: day.get('date'), month: day.get('month'), year: day.get('year') });
-    this.props.setSelectedTime(newSelectedTime);
+    setLocalDateTime(newSelectedDateTime.clone());
   };
 
-  setHours = (hours) => {
-    const { selectedTime } = this.props;
-    const newSelectedTime = selectedTime.clone().hours(hours);
-    if (!this.isWithinAvailableRange(newSelectedTime)) {
-      return;
-    }
-    this.props.setSelectedTime(newSelectedTime);
+  const setHours = (hours) => {
+    const newSelectedDateTime = localDateTime.clone().hours(hours);
+    setLocalDateTime(newSelectedDateTime.clone());
   };
 
-  setMinutes = (minutes) => {
-    const { selectedTime } = this.props;
-    const newSelectedTime = selectedTime.clone().minutes(minutes);
-    if (!this.isWithinAvailableRange(newSelectedTime)) {
-      return;
-    }
-    this.props.setSelectedTime(newSelectedTime);
+  const setMinutes = (minutes) => {
+    const newSelectedDateTime = localDateTime.clone().minutes(minutes);
+    setLocalDateTime(newSelectedDateTime.clone());
   };
 
-  isWithinAvailableRange = (newSelectedDay) => {
-    const { minDate, maxDate } = this.props;
-    return newSelectedDay >= minDate && newSelectedDay <= maxDate;
+  const isWithinAvailableTimeRange = (newSelectedDateTime) => {
+    return newSelectedDateTime >= minDate && newSelectedDateTime <= maxDate;
   };
 
-  render() {
-    const {
-      id,
-      selectedTime,
-      label,
-      calendarContainer,
-      onQueryDatesForActiveMonth,
-      hasCloudCoverage,
-      showNextPrevDateArrows,
-      getAndSetNextPrevDate,
-      additionalClassNameForDatePicker,
-      maxCloudCover,
-      displayCalendar,
-      openCalendar,
-      closeCalendar,
-      dateLoading,
-      setDateLoading,
-      nextDateBtnDisabled,
-      setNextDateBtnDisabled,
-      isTimeless,
-      isZoomLevelOk,
-      isTimeRange,
-      isDisabled,
-    } = this.props;
+  const hours = localDateTime.clone().utc().format('HH');
+  const minutes = localDateTime.clone().utc().format('mm');
 
-    if (!selectedTime) {
-      return null;
-    }
-
-    const hours = selectedTime.clone().utc().format('HH');
-    const minutes = selectedTime.clone().utc().format('mm');
-
-    return (
-      <div className={`date-time-input ${isTimeRange ? 'expanded' : ''}`}>
-        <div className="date-time-input-label">{label}</div>
-        <div className="date-input">
-          <DatePicker
-            id={id}
-            calendarContainer={calendarContainer}
-            selectedDay={selectedTime}
-            setSelectedDay={this.setDay}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
-            hasCloudCoverFilter={hasCloudCoverage}
-            showNextPrevDateArrows={showNextPrevDateArrows}
-            getAndSetNextPrevDate={getAndSetNextPrevDate}
-            additionalClassNameForDatePicker={additionalClassNameForDatePicker}
-            maxCloudCover={maxCloudCover}
-            setMaxCloudCover={this.setMaxCloudCover}
-            displayCalendar={displayCalendar}
-            openCalendar={openCalendar}
-            closeCalendar={closeCalendar}
-            dateLoading={dateLoading}
-            setDateLoading={setDateLoading}
-            nextDateBtnDisabled={nextDateBtnDisabled}
-            setNextDateBtnDisabled={setNextDateBtnDisabled}
-            isTimeless={isTimeless}
-            isZoomLevelOk={isZoomLevelOk}
-            isTimeRange={isTimeRange}
-            isDisabled={isDisabled}
-          />
+  return (
+    <div className={`date-time-input ${isTimeRange ? 'expanded' : ''}`}>
+      <div className="date-time-input-label">{label}</div>
+      <div className="date-input">
+        <DatePicker
+          id={id}
+          calendarContainer={calendarContainer}
+          selectedDay={localDateTime}
+          setSelectedDay={setDay}
+          minDate={minDate}
+          maxDate={maxDate}
+          onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
+          hasCloudCoverFilter={hasCloudCoverage}
+          showNextPrevDateArrows={showNextPrevDateArrows}
+          getAndSetNextPrevDate={getAndSetNextPrevDate}
+          additionalClassNameForDatePicker={additionalClassNameForDatePicker}
+          maxCloudCover={maxCloudCover}
+          displayCalendar={displayCalendar}
+          openCalendar={openCalendar}
+          closeCalendar={closeCalendar}
+          dateLoading={dateLoading}
+          setDateLoading={setDateLoading}
+          nextDateBtnDisabled={nextDateBtnDisabled}
+          setNextDateBtnDisabled={setNextDateBtnDisabled}
+          isTimeless={isTimeless}
+          isZoomLevelOk={isZoomLevelOk}
+          isTimeRange={isTimeRange}
+          isDisabled={isDisabled}
+        />
+      </div>
+      <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>
+        <div className="time-input-hours-minutes">
+          <NumericInput label="hh" min="0" max="23" value={hours} setValue={setHours} />
         </div>
-        <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>
-          <div className="time-input-hours-minutes">
-            <NumericInput label="hh" min="0" max="23" value={hours} setValue={this.setHours} />
-          </div>
-          <div className="time-input-hours-minutes no-full-width">:</div>
-          <div className="time-input-hours-minutes no-right-margin">
-            <NumericInput label="mm" min="0" max="59" value={minutes} setValue={this.setMinutes} />
-          </div>
+        <div className="time-input-hours-minutes no-full-width">:</div>
+        <div className="time-input-hours-minutes no-right-margin">
+          <NumericInput label="mm" min="0" max="59" value={minutes} setValue={setMinutes} />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

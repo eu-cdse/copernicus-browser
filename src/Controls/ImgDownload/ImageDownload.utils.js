@@ -229,6 +229,8 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     aoiGeometry,
     loiGeometry,
     bounds,
+    aoiWidthInMeters,
+    mapWidthInMeters,
   } = params;
 
   const canvas = document.createElement('canvas');
@@ -353,6 +355,8 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     drawGeoToImg,
     geometriesToDraw,
     bounds,
+    aoiWidthInMeters,
+    mapWidthInMeters,
   );
   return {
     finalImage: finalBlob,
@@ -393,6 +397,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     aoiGeometry,
     loiGeometry,
     bounds,
+    aoiWidthInMeters,
+    mapWidthInMeters,
   } = params;
 
   const layer = await getLayerFromParams(params, cancelToken);
@@ -551,6 +557,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
           drawGeoToImg,
           geometriesToDraw,
           bounds,
+          aoiWidthInMeters,
+          mapWidthInMeters,
         );
 
         const nicename = getNicename(
@@ -596,6 +604,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
       drawGeoToImg,
       geometriesToDraw,
       bounds,
+      aoiWidthInMeters,
+      mapWidthInMeters,
     );
 
     const nicename = getNicename(
@@ -889,6 +899,8 @@ export async function addImageOverlays(
   drawGeoToImg,
   geometriesToDraw,
   bounds,
+  aoiWidthInMeters,
+  mapWidthInMeters,
 ) {
   if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawGeoToImg)) {
     return blob;
@@ -905,7 +917,7 @@ export async function addImageOverlays(
   if (showCaptions) {
     let scalebar;
     if (showScaleBar) {
-      scalebar = getScaleBarInfo();
+      scalebar = getScaleBarInfo(aoiWidthInMeters, mapWidthInMeters);
     }
     await drawCaptions(ctx, userDescription, title, copyrightText, scalebar, logos, drawCopernicusLogo);
   }
@@ -1074,15 +1086,45 @@ export const drawMapOverlaysOnCanvas = async (ctx, lat, lng, zoom, width, enable
   }
 };
 
-export const getScaleBarInfo = () => {
+const roundScaleValue = (val) => {
+  if (val >= 1000) {
+    return Math.round(val / 1000);
+  } else if (val >= 100) {
+    return Math.round(val / 100) * 100;
+  } else if (val >= 100) {
+    return Math.round(val / 10) * 10;
+  } else if (val >= 5) {
+    return 5;
+  }
+  return 1;
+};
+
+export const getScaleBarInfo = (aoiWidthInMeters = null, mapWidthInMeters = null) => {
   const scaleBarEl = document.querySelector('.leaflet-control-scale-line');
-  const scaleBar = scaleBarEl
-    ? {
-        text: scaleBarEl.innerHTML,
-        width: scaleBarEl.offsetWidth,
-      }
-    : null;
-  return scaleBar;
+  if (!scaleBarEl) {
+    return null;
+  }
+
+  if (aoiWidthInMeters !== null && mapWidthInMeters !== null) {
+    // get ratio between scale and actual width of map
+    // mapBounds in m === currentScale in m
+    // aoiBounds in m === x in m
+    // x = currentScale * aoiBounds / mapBounds
+    const [val, unit] = scaleBarEl.innerHTML.split(' ');
+    const x = (val * (unit === 'km' ? 1000 : 1) * aoiWidthInMeters) / mapWidthInMeters;
+    const newUnit = x >= 1000 ? 'km' : 'm';
+    const newValue = roundScaleValue(x);
+
+    return {
+      text: `${newValue} ${newUnit}`,
+      width: scaleBarEl.offsetWidth,
+    };
+  } else {
+    return {
+      text: scaleBarEl.innerHTML,
+      width: scaleBarEl.offsetWidth,
+    };
+  }
 };
 
 export const drawCaptions = async (

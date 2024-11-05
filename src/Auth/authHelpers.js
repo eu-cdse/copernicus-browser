@@ -197,8 +197,7 @@ export const hasRole = (userToken, role) => {
     return false;
   }
 
-  const roles = keycloakInstance.tokenParsed.group_membership ?? [];
-  return !!roles.find((r) => {
-    return r.includes(role.replace('-', '_'));
-  });
+  const roles = keycloakInstance.tokenParsed?.realm_access?.roles ?? [];
+  const pattern = new RegExp(role);
+  return !!roles.find((r) => pattern.test(r));
 };

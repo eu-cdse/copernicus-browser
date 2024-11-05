@@ -27,6 +27,7 @@ import {
   getImageDimensions,
   generateKmlFile,
   prepareKmzFile,
+  getDimensionsInMeters,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
@@ -251,6 +252,8 @@ function ImageDownload(props) {
           return newCLayer;
         }),
         selectedCrs: correctProjection,
+        aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+        mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
       },
       setWarnings,
       setError,
@@ -276,6 +279,8 @@ function ImageDownload(props) {
           ...baseParams,
           bounds,
           selectedCrs: correctProjection,
+          aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+          mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
         },
         setWarnings,
       );
@@ -377,6 +382,8 @@ function ImageDownload(props) {
       ...(isTimespanModeSelected(fromTime, toTime) && !isNullOrUndefined(cloudCoverage)
         ? { cloudCoverage: cloudCoverage }
         : {}),
+      aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+      mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
     };
 
     if (customSelected) {
@@ -548,6 +555,8 @@ function ImageDownload(props) {
       geometry: aoiGeometry,
       effects: effects,
       getMapAuthToken: getMapAuthToken,
+      aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+      mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
     };
 
     let image;

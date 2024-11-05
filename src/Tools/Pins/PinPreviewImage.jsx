@@ -21,8 +21,8 @@ import { reqConfigMemoryCache, reqConfigGetMap } from '../../const';
 import { getConstellationFromDatasetId } from '../SearchPanel/dataSourceHandlers/HLSAWSDataSourceHandler.utils';
 
 const PIN_PREVIEW_DIMENSIONS = {
-  WIDTH: 70,
-  HEIGHT: 70,
+  WIDTH: 90,
+  HEIGHT: 90,
 };
 
 class PinPreviewImage extends React.Component {
