@@ -399,6 +399,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     bounds,
     aoiWidthInMeters,
     mapWidthInMeters,
+    selectedCrs,
   } = params;
 
   const layer = await getLayerFromParams(params, cancelToken);
@@ -453,10 +454,15 @@ export async function fetchImageFromParams(params, raiseWarning) {
           : { type: 'MultiPolygon', coordinates: tempBbAndPolygons.coordinates };
       }
 
+      const reprojectedGeom = reprojectGeometry(tempGeometry, {
+        toCrs: selectedCrs,
+        fromCrs: CRS_EPSG4326.authId,
+      });
+
       const options = {
         ...params,
         width: tempBbAndPolygons.width,
-        geometry: tempGeometry,
+        geometry: reprojectedGeom,
         bounds: tempBbAndPolygons.bounds,
         apiType: apiType,
         imageFormat: mimeType,
@@ -482,10 +488,15 @@ export async function fetchImageFromParams(params, raiseWarning) {
       };
     }
 
+    const reprojectedGeom = reprojectGeometry(tempGeometry, {
+      toCrs: selectedCrs,
+      fromCrs: CRS_EPSG4326.authId,
+    });
+
     const options = {
       ...params,
       bounds: normalizedBounds,
-      geometry: tempGeometry,
+      geometry: reprojectedGeom,
       apiType: apiType,
       imageFormat: mimeType,
       getMapAuthToken: getMapAuthToken,

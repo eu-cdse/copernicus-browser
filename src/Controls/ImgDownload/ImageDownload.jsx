@@ -57,7 +57,6 @@ import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 
 import './ImageDownload.scss';
 import { DATASOURCES } from '../../const';
-import { reprojectGeometry } from '../../utils/reproject';
 import { CUSTOM_TAG } from './AnalyticalForm';
 
 function ImageDownload(props) {
@@ -348,10 +347,7 @@ function ImageDownload(props) {
     }
 
     const shouldClipExtraBands = clipExtraBandsTiff && isTiff(imageFormat);
-    const reprojectedGeom = reprojectGeometry(aoiGeometry, {
-      toCrs: selectedCrs,
-      fromCrs: CRS_EPSG4326.authId,
-    });
+
     cancelToken = new CancelToken();
 
     const requestsParams = [];
@@ -366,7 +362,7 @@ function ImageDownload(props) {
       fromTime: fromTime,
       toTime: toTime,
       bounds: bounds,
-      geometry: reprojectedGeom,
+      geometry: aoiGeometry,
       minQa: minQa,
       ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
       upsampling: upsampling,
