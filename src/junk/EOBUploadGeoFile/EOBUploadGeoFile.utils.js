@@ -5,10 +5,14 @@ import { t } from 'ttag';
 import union from '@turf/union';
 import { coordEach } from '@turf/meta';
 import JSZip from 'jszip';
+import shp from 'shpjs';
 
 const uploadGeoFileErrorMessages = {
   UNSUPORTED_FILE_TYPE: () => t`File type not supported`,
   ERROR_PARSING_FILE: () => t`There was a problem parsing the file`,
+  ERROR_PARSING_SHP: () => t`There was a problem parsing the shp file`,
+  INVALID_SHP_CONTENT: () => t`The .zip file is missing content. The .prj and .shp files are required`,
+  INVALID_PROJECTION: () => t`Invalid geodetic system detected`,
   ERROR_PARSING_GEOMETRY: () => t`There was a problem parsing input geometry`,
   UNSUPORTED_GEOJSON_TYPE: (
     supportedGeometryTypes = SUPPORTED_GEOMETRY_TYPES[UPLOAD_GEOMETRY_TYPE.POLYGON],
@@ -17,6 +21,8 @@ const uploadGeoFileErrorMessages = {
     return t`Unsupported GeoJSON geometry type! Only ${supported} are supported.`;
   },
 };
+
+const SHAPEFILE_UPLOAD_EXPECTED_FILES = ['shp', 'prj'];
 
 const UPLOAD_GEOMETRY_TYPE = {
   POLYGON: 'POLYGON',
@@ -216,10 +222,24 @@ const convertToGeoJson = (data, format = null) => {
 
 const parseContent = (data, type = UPLOAD_GEOMETRY_TYPE.POLYGON, format = null) => {
   let geoJson = convertToGeoJson(data, format);
+  return getUnion(geoJson, type);
+};
+
+const parseZip = async (zipFile, type = UPLOAD_GEOMETRY_TYPE.POLYGON) => {
+  // shp files only
+  try {
+    const arrayBuffer = await readFileAsArrayBuffer(zipFile);
+    const geoJson = await shp(arrayBuffer);
+    return getUnion(geoJson, type);
+  } catch (error) {
+    throw new Error(uploadGeoFileErrorMessages.ERROR_PARSING_SHP());
+  }
+};
+
+const getUnion = (geoJson, type) => {
   const geometries = extractGeometriesFromGeoJson(geoJson, SUPPORTED_GEOMETRY_TYPES[type]);
   const geometriesWithoutZ = geometries.map((geometry) => removeExtraCoordDimensionsIfNeeded(geometry));
-  const union = createUnion(geometriesWithoutZ, type);
-  return union;
+  return createUnion(geometriesWithoutZ, type);
 };
 
 const loadFileContent = async (file, format) => {
@@ -236,6 +256,7 @@ const loadFileContent = async (file, format) => {
           .async('string')
           .then((data) => resolve(data));
       });
+    } else if (format === 'zip') {
     } else {
       const reader = new FileReader();
       reader.onload = (e) => resolve(e.target.result);
@@ -244,15 +265,88 @@ const loadFileContent = async (file, format) => {
   });
 };
 
+async function checkIfValidShapeFile(file) {
+  try {
+    const jszip = new JSZip();
+
+    const zip = await jszip.loadAsync(file);
+
+    const files = Object.keys(zip.files);
+
+    if (files.length > 0) {
+      // get all consideredFiles
+      const consideredFiles = files.filter((tempFile) => {
+        const fileType = tempFile.split('.').pop();
+        if (fileType) {
+          return SHAPEFILE_UPLOAD_EXPECTED_FILES.some((type) => fileType === type);
+        } else {
+          return false;
+        }
+      });
+
+      // check if prj. has EPSG:4326/GCS_WGS_1984
+      await Promise.all(
+        consideredFiles.map(async (tempFile) => {
+          try {
+            const fileType = tempFile.split('.').pop();
+            await isEPSG4326UsedInPrjFile(zip, tempFile, fileType);
+          } catch (error) {
+            throw error;
+          }
+        }),
+      );
+
+      if (consideredFiles.length === 2) {
+        return;
+      } else {
+        throw uploadGeoFileErrorMessages.INVALID_SHP_CONTENT();
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Error(error);
+    }
+  }
+}
+
+async function isEPSG4326UsedInPrjFile(zip, tempFile, fileType) {
+  if (!fileType.includes(SHAPEFILE_UPLOAD_EXPECTED_FILES[1])) {
+    return;
+  }
+  try {
+    const content = await zip.file(tempFile).async('text');
+    if (content.includes(`GEOGCS["GCS_WGS_1984"`) || content.includes(`GEOGCS["EPSG:4326"`)) {
+      return;
+    } else {
+      throw uploadGeoFileErrorMessages.INVALID_PROJECTION();
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function readFileAsArrayBuffer(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+    reader.readAsArrayBuffer(file);
+  });
+}
+
 export {
   uploadGeoFileErrorMessages,
   getFileExtension,
   isFileTypeSupported,
   parseContent,
+  parseZip,
   loadFileContent,
   UPLOAD_GEOMETRY_TYPE,
   SUPPORTED_GEOMETRY_TYPES,
   extractGeometriesFromGeoJson,
   createUnion,
   removeExtraCoordDimensionsIfNeeded,
+  checkIfValidShapeFile,
 };

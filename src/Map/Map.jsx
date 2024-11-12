@@ -39,7 +39,7 @@ import {
   getDataSourceHandler,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAppropriateAuthToken, getGetMapAuthToken } from '../App';
-import { handleError } from '../utils';
+import { getUrlParams, handleError } from '../utils';
 import TimelapseAreaPreview from '../Controls/Timelapse/TimelapseAreaPreview';
 import SearchBox from '../SearchBox/SearchBox';
 
@@ -255,7 +255,6 @@ class Map extends React.Component {
       toTime,
       customSelected,
       evalscript,
-      evalscripturl,
       dataFusion,
       dataSourcesInitialized,
       selectedThemeId,
@@ -292,6 +291,8 @@ class Map extends React.Component {
       elevationProfileHighlightedPoint,
       cloudCoverage,
     } = this.props;
+
+    const { evalscripturl } = getUrlParams();
 
     const zoomConfig = getZoomConfiguration(datasetId);
 
@@ -772,7 +773,6 @@ const mapStoreToProps = (store) => {
     toTime: store.visualization.toTime,
     customSelected: store.visualization.customSelected,
     evalscript: store.visualization.evalscript,
-    evalscripturl: store.visualization.evalscripturl,
     dataFusion: store.visualization.dataFusion,
     cloudCoverage: store.visualization.cloudCoverage,
     dataSourcesInitialized: store.themes.dataSourcesInitialized,

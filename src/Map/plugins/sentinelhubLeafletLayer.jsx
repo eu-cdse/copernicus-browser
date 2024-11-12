@@ -153,7 +153,6 @@ class SentinelHubLayer extends L.TileLayer {
       url,
       layers,
       evalscript,
-      evalscripturl,
       dataFusion,
       fromTime,
       toTime,
@@ -175,7 +174,6 @@ class SentinelHubLayer extends L.TileLayer {
     this.layer = this.createLayer(url, {
       datasetId: datasetId,
       evalscript: evalscript,
-      evalscripturl: evalscripturl,
       dataFusion: dataFusion,
       fromTime: fromTime,
       toTime: toTime,
@@ -346,7 +344,6 @@ class SentinelHubLayer extends L.TileLayer {
       url,
       layers,
       evalscript,
-      evalscripturl,
       dataFusion,
       datasetId,
       customSelected,
@@ -365,7 +362,6 @@ class SentinelHubLayer extends L.TileLayer {
     this.layer = this.createLayer(url, {
       datasetId: datasetId,
       evalscript: evalscript,
-      evalscripturl: evalscripturl,
       dataFusion: dataFusion,
       layer: layers,
       customSelected: customSelected,
@@ -1011,10 +1007,6 @@ class SentinelHubLayerComponent extends GridLayer {
       if (params.evalscript) {
         options.evalscript = params.evalscript;
         options.evalscripturl = null;
-      }
-      if (params.evalscripturl) {
-        options.evalscript = null;
-        options.evalscripturl = params.evalscripturl;
       }
       if (params.dataFusion) {
         options.dataFusion = params.dataFusion;

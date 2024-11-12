@@ -14,7 +14,7 @@ import Map from './Map/Map';
 import Notification from './Notification/Notification';
 import Tools from './Tools/Tools';
 import { Modals, propsSufficientToRender } from './Modals/Utils';
-import { updatePath } from './utils/';
+import { getUrlParams, updatePath } from './utils/';
 import { importSharedPins } from './Tools/Pins/Pin.utils';
 import TerrainViewerScriptProvider from './TerrainViewer/TerrainViewerScriptProvider';
 import TerrainViewer from './TerrainViewer/TerrainViewer';
@@ -92,10 +92,11 @@ class App extends Component {
   }
 
   async componentDidUpdate(prevProps) {
+    const { evalscripturl } = getUrlParams();
     if (this.props.handlePositions === prevProps.handlePositions) {
-      updatePath(this.props);
+      updatePath({ ...this.props, evalscripturl });
     } else {
-      updatePath(this.props, false);
+      updatePath({ ...this.props, evalscripturl }, false);
     }
 
     if (this.props.authToken && this.props.authToken !== prevProps.authToken) {
@@ -286,7 +287,6 @@ const mapStoreToProps = (store) => ({
   layerId: store.visualization.layerId,
   customSelected: store.visualization.customSelected,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
   cloudCoverage: store.visualization.cloudCoverage,
   themesUrl: store.themes.themesUrl,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { getUrlParams, parsePosition, parseDataFusion } from '../utils';
+import { getUrlParams, parsePosition, parseDataFusion, fetchEvalscriptFromEvalscripturl } from '../utils';
 import {
   datasourceToDatasetId,
   dataSourceToThemeId,
@@ -20,7 +20,7 @@ import store, {
   compareLayersSlice,
   tabsSlice,
 } from '../store';
-import { b64DecodeUnicode } from '../utils/base64MDN';
+import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
 import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, SHOW_TUTORIAL_LC, TABS } from '../const';
 import { ModalId } from '../const';
@@ -44,12 +44,29 @@ class URLParamsParser extends React.Component {
       };
     }
 
+    params = await this.parseEvalscriptFromEvalscriptUrl(params);
+
     this.checkAndDisplayTutorial(params);
     this.setStore(params);
     this.setState({
       params: params,
     });
   }
+
+  parseEvalscriptFromEvalscriptUrl = async (params) => {
+    const { evalscripturl } = params;
+
+    if (!evalscripturl) {
+      return params;
+    }
+
+    const { data } = await fetchEvalscriptFromEvalscripturl(evalscripturl);
+
+    return {
+      ...params,
+      evalscript: b64EncodeUnicode(data),
+    };
+  };
 
   checkAndDisplayTutorial = (params) => {
     const { shouldDisplayTutorial } = params;
@@ -210,7 +227,7 @@ class URLParamsParser extends React.Component {
           ? decrypt(visualizationUrl)
           : visualizationUrl,
       layerId,
-      evalscript: evalscript && !evalscripturl ? b64DecodeUnicode(evalscript) : undefined,
+      evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
       customSelected: evalscript || evalscripturl ? true : undefined,
       evalscripturl,
       gainEffect: gain ? parseFloat(gain) : undefined,

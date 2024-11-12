@@ -11,7 +11,7 @@ import { YYYY_MM_REGEX } from '../SearchPanel/dataSourceHandlers/PlanetBasemapDa
 import { PLANET_NICFI } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { sortLayers } from './VisualizationPanel.utils';
 import store, { visualizationSlice } from '../../store';
-import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
+import { getUrlParams, parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
 import { usePrevious } from '../../hooks/usePrevious';
 
 import { reqConfigMemoryCache, DATASOURCES } from '../../const';
@@ -19,7 +19,6 @@ import { reqConfigMemoryCache, DATASOURCES } from '../../const';
 function LayerSelection({
   selectedLayerId,
   visualizedEvalscript,
-  visualizedEvalscriptUrl,
   customSelected,
   visualizedDataFusion,
   datasetId,
@@ -38,6 +37,8 @@ function LayerSelection({
   toggleLayerActions,
   layerActionsOpen,
 }) {
+  const { evalscripturl: visualizedEvalscriptUrl } = getUrlParams();
+
   const [layers, setLayers] = useState([]);
   const [loadingLayersInProgress, setLoadingLayersInProgress] = useState(false);
   const [evalscript, setEvalscript] = useState(visualizedEvalscript);
@@ -272,7 +273,6 @@ function LayerSelection({
         visibleOnMap: true,
         dataFusion: dataFusion,
         evalscript: evalscript,
-        evalscripturl: useEvalscriptUrl ? evalscriptUrl : null,
       }),
     );
   }
@@ -327,7 +327,6 @@ function LayerSelection({
 const mapStoreToProps = (store) => ({
   selectedLayerId: store.visualization.layerId,
   visualizedEvalscript: store.visualization.evalscript,
-  visualizedEvalscriptUrl: store.visualization.evalscripturl,
   customSelected: store.visualization.customSelected,
   visualizedDataFusion: store.visualization.dataFusion,
   datasetId: store.visualization.datasetId,

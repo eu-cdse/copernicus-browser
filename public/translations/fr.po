@@ -6683,21 +6683,6 @@ msgstr ""
 "La création et l'édition d'une série temporelle ne sont pas supportées dans "
 "la version mobile."
 
-msgid ""
-"Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create "
-"area of interest. Area will be used for clipping when exporting an image."
-msgstr ""
-"Téléchargez un fichier KML/KMZ, WKT (dans EPSG: 4326), GPX ou GEOJSON/JSON "
-"pour créer une zone d'intérêt. La zone sera utilisée pour le détourage lors "
-"de l'exportation d'une image."
-
-msgid ""
-"Drop KML/KMZ, GPX, WKT (in EPSG:4326), GEOJSON/JSON file or search your "
-"computer"
-msgstr ""
-"Déposez un fichier KML/KMZ, GPX, WKT (dans EPSG:4326), GEOJSON/JSON ou "
-"faites une recherche sur votre ordinateur"
-
 msgid "DEM instance"
 msgstr "instance DEM"
 
@@ -11488,4 +11473,22 @@ msgid ""
 "More info "
 "[here](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/"
 "nbr/)."
+msgstr ""
+
+msgid "There was a problem parsing the shp file"
+msgstr ""
+
+msgid "Invalid geodetic system detected"
+msgstr ""
+
+msgid "The .zip file is missing content. The .prj and .shp files are required"
+msgstr ""
+
+msgid ""
+"Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file "
+"to create an area of interest. The area will be used for clipping when "
+"exporting an image."
+msgstr ""
+
+msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
 msgstr ""

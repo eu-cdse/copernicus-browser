@@ -32,7 +32,7 @@ import { getGetMapAuthToken } from '../App';
 import { constructGetMapParamsEffects, getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { DATASOURCES, DEM_3D_CUSTOM_TO_DATASOURCE, reqConfigGetMap, reqConfigMemoryCache } from '../const';
 import Controls from '../Controls/Controls';
-import { constructPanelError, isDataFusionEnabled } from '../utils';
+import { constructPanelError, getUrlParams, isDataFusionEnabled } from '../utils';
 import ExternalLink from '../ExternalLink/ExternalLink';
 
 import IconSun from './icons/icon-sun.svg?react';
@@ -55,6 +55,8 @@ function TerrainViewer(props) {
   const [timeoutId, setTimeoutId] = useState(null);
   const [loader, setLoader] = useState();
   const terrainViewerContainer = useRef();
+
+  const { evalscripturl } = getUrlParams();
 
   const {
     toTime,
@@ -126,7 +128,7 @@ function TerrainViewer(props) {
         layer &&
         props.dataSourcesInitialized &&
         props.datasetId &&
-        (props.layerId || props.evalscript || props.evalscripturl)
+        (props.layerId || props.evalscript || evalscripturl)
       ) {
         const newLayer = await getLayerFromParams(props).catch((e) => {
           console.warn(e.message);
@@ -645,7 +647,6 @@ const mapStoreToProps = (store) => ({
   is3D: store.mainMap.is3D,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   visualizationUrl: store.visualization.visualizationUrl,
   fromTime: store.visualization.fromTime,

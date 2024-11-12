@@ -6168,21 +6168,6 @@ msgstr ""
 "Tworzenie i edytowanie animacji poklatkowych nie jest wspierane na "
 "urządzeniach mobilnych."
 
-msgid ""
-"Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create "
-"area of interest. Area will be used for clipping when exporting an image."
-msgstr ""
-"Prześlij plik KML/KMZ, GPX, WKT (w EPSG:4326) lub GEOJSON/JSON, aby "
-"utworzyć obszar zainteresowania. Obszar ten będzie używany do przycinania "
-"podczas eksportowania obrazu."
-
-msgid ""
-"Drop KML/KMZ, GPX, WKT (in EPSG:4326), GEOJSON/JSON file or search your "
-"computer"
-msgstr ""
-"Upuść plik KML/KMZ, GPX, WKT (w EPSG:4326), GEOJSON/JSON lub przeszukaj "
-"swój komputer"
-
 msgid "DEM instance"
 msgstr "Przykład DEM"
 
@@ -10524,4 +10509,22 @@ msgid ""
 "More info "
 "[here](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/"
 "nbr/)."
+msgstr ""
+
+msgid "There was a problem parsing the shp file"
+msgstr ""
+
+msgid "Invalid geodetic system detected"
+msgstr ""
+
+msgid "The .zip file is missing content. The .prj and .shp files are required"
+msgstr ""
+
+msgid ""
+"Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file "
+"to create an area of interest. The area will be used for clipping when "
+"exporting an image."
+msgstr ""
+
+msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
 msgstr ""

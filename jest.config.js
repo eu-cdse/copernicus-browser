@@ -1,4 +1,5 @@
 module.exports = {
+  setupFiles: ['./jest.setup.js'],
   collectCoverage: false,
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],

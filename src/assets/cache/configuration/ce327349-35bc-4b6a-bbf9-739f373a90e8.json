@@ -80,12 +80,21 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"B02\", \"B03\", \"B04\", \"B08\", \"B11\", \"B12\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n}\n\nfunction evaluatePixel(samples) {\n\tvar NDWI=index(samples.B03, samples.B08); \n\tvar NDVI=index(samples.B08, samples.B04);\n\tvar INDEX= ((samples.B11 - samples.B12) / (samples.B11 + samples.B12))+(samples.B08);\n\n  \tif((INDEX>0.1)||(samples.B02>0.1)||(samples.B11<0.1)||(NDVI>0.3)||(NDWI > 0.1)){\n  \t\treturn[2.5*samples.B04, 2.5*samples.B03, 2.5*samples.B02, samples.dataMask]\n\t}\n\telse {\n \treturn [1, 0, 0, samples.dataMask]\n\t}\n}"
+                "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"B02\", \"B03\", \"B04\", \"B08\", \"B11\", \"B12\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n}\n\nfunction evaluatePixel(samples) {\n\tvar NDWI=index(samples.B03, samples.B08); \n\tvar NDVI=index(samples.B08, samples.B04);\n\tvar INDEX= ((samples.B11 - samples.B12) / (samples.B11 + samples.B12))+(samples.B08);\n\n  \tif((INDEX>0.1)||(samples.B02>0.1)||(samples.B11<0.1)||(NDVI>0.3)||(NDWI > 0.1)){\n  \t\treturn[2.5*samples.B04, 2.5*samples.B03, 2.5*samples.B02, samples.dataMask]\n\t}\n\telse {\n \treturn [1, 0, 0, samples.dataMask]\n\t}\n}",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(100%, 0%, 0%)",
+                            "label": "Burned"
+                        }
+                    ]
+                }
             }
         ],
         "orderHint": 0,
         "instanceId": "ce3273-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2023-10-18T09:04:27.639043Z",
+        "lastUpdated": "2024-10-23T15:40:36.742815Z",
         "collectionType": "S2L1C",
         "datasetSourceId": 1,
         "defaultStyleName": "default",

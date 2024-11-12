@@ -6136,21 +6136,6 @@ msgstr "Kernel de re-mostreig"
 msgid "Creating and editing a timelapse is not supported on mobile."
 msgstr "La creació i edició d'un timelapse no és compatible amb el mòbil."
 
-msgid ""
-"Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create "
-"area of interest. Area will be used for clipping when exporting an image."
-msgstr ""
-"Carregueu un fitxer KML/KMZ, GPX, WKT (en EPSG:4326) o GEOJSON/JSON per "
-"crear una àrea d'interès. L'àrea s'utilitzarà per retallar en exportar una "
-"imatge."
-
-msgid ""
-"Drop KML/KMZ, GPX, WKT (in EPSG:4326), GEOJSON/JSON file or search your "
-"computer"
-msgstr ""
-"Deixa anar el fitxer KML/KMZ, GPX, WKT (en EPSG:4326), GEOJSON/JSON o cerca "
-"a l'ordinador"
-
 msgid "DEM instance"
 msgstr "Instància de DEM"
 
@@ -11159,4 +11144,22 @@ msgid ""
 "More info "
 "[here](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/"
 "nbr/)."
+msgstr ""
+
+msgid "There was a problem parsing the shp file"
+msgstr ""
+
+msgid "Invalid geodetic system detected"
+msgstr ""
+
+msgid "The .zip file is missing content. The .prj and .shp files are required"
+msgstr ""
+
+msgid ""
+"Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file "
+"to create an area of interest. The area will be used for clipping when "
+"exporting an image."
+msgstr ""
+
+msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
 msgstr ""

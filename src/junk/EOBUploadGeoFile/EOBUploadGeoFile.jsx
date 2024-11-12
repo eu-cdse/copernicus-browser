@@ -9,7 +9,9 @@ import {
   parseContent,
   getFileExtension,
   loadFileContent,
+  parseZip,
   UPLOAD_GEOMETRY_TYPE,
+  checkIfValidShapeFile,
 } from './EOBUploadGeoFile.utils';
 
 import './EOBUploadGeoFile.scss';
@@ -22,7 +24,7 @@ const getFileUploadText = (fileUploadType) => {
       fileUploadText = t`Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file.`;
       break;
     default:
-      fileUploadText = t`Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create area of interest. Area will be used for clipping when exporting an image.`;
+      fileUploadText = t`Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create an area of interest. The area will be used for clipping when exporting an image.`;
   }
 
   return fileUploadText;
@@ -41,8 +43,12 @@ export class EOBUploadGeoFile extends Component {
         const file = ok[0];
         const format = getFileExtension(file.name);
         try {
-          const data = await loadFileContent(file, format);
-          this.handleParseContent(data, this.props.type, format);
+          if (format !== 'zip') {
+            const data = await loadFileContent(file, format);
+            this.handleParseContent(data, this.props.type, format);
+          } else {
+            this.handleParseZip(file, this.props.type, format);
+          }
         } catch (e) {
           this.setState({ error: e.message });
         }
@@ -59,10 +65,21 @@ export class EOBUploadGeoFile extends Component {
     }
   };
 
+  handleParseZip = async (content, type = UPLOAD_GEOMETRY_TYPE.POLYGON, format = null) => {
+    try {
+      await checkIfValidShapeFile(content);
+
+      let area = await parseZip(content, type);
+      this.props.onUpload(area);
+    } catch (e) {
+      this.setState({ error: `Error: ${e.message}` });
+    }
+  };
+
   render() {
     const fileUploadTitle = t`File upload`;
     const fileUploadText = getFileUploadText(this.props.type);
-    const dropAFileString = t`Drop KML/KMZ, GPX, WKT (in EPSG:4326), GEOJSON/JSON file or search your computer`;
+    const dropAFileString = t`Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file.`;
 
     const { inputGeometry } = this.state;
     return ReactDOM.createPortal(

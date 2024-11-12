@@ -36,7 +36,9 @@ class EOBAdvancedHolder extends React.Component {
   };
 
   initTabs = () => {
-    const hashIndex = CUSTOM_VISUALIZATION_URL_ROUTES.indexOf(this.props.location.hash);
+    const hashIndex = CUSTOM_VISUALIZATION_URL_ROUTES.findIndex((hash) =>
+      this.props.location.hash.includes(hash),
+    );
     if (hashIndex !== -1) {
       this.setState({ selectedTab: hashIndex });
     }

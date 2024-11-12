@@ -49,6 +49,7 @@ import {
   getTimelapsePreviewsFromTerrainViewer,
 } from '../../TerrainViewer/TerrainViewer.utils';
 import { md5 } from 'js-md5';
+import { getUrlParams } from '../../utils';
 
 const TIME_UNITS = {
   SECONDS: 'seconds',
@@ -451,6 +452,7 @@ class Timelapse extends Component {
     const { auth, showBorders, aoi, mapBounds, pixelBounds, is3D, maxCCPercentAllowed, minCoverageAllowed } =
       this.props;
     const { canWeFilterByClouds, canWeFilterByCoverage } = this.state;
+    const { evalscripturl } = getUrlParams();
 
     const size = is3D ? determineDefaultImageSize3D(pixelBounds) : determineDefaultImageSize(mapBounds, aoi);
 
@@ -508,6 +510,7 @@ class Timelapse extends Component {
           images: imagesToFetch,
           getMapParams: {
             ...this.props,
+            evalscripturl,
             format: MimeTypes.JPEG,
           },
           width: size.width,
@@ -1219,7 +1222,6 @@ const mapStoreToProps = (store) => ({
   customSelected: store.visualization.customSelected,
   visualizationUrl: store.visualization.visualizationUrl,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
