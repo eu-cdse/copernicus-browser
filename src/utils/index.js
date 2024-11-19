@@ -92,6 +92,7 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     evalscripturl,
     customSelected,
     selectedThemeId,
+    themeIdFromUrlParams,
     themesUrl,
     selectedTabIndex,
     gainEffect,
@@ -126,8 +127,8 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     lng: currentLng,
   };
 
-  if (selectedThemeId) {
-    params.themeId = selectedThemeId;
+  if (selectedThemeId || themeIdFromUrlParams) {
+    params.themeId = selectedThemeId || themeIdFromUrlParams;
   }
   if (themesUrl) {
     params.themesUrl = themesUrl;

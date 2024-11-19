@@ -21,7 +21,6 @@ import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { USE_PINS_BACKEND } from './Pins/PinPanel';
 import CommercialData from './CommercialDataPanel/CommercialData';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
-import { getUrlParams } from '../utils';
 
 const COMMERCIAL_DATA_ENABLED = false;
 
@@ -109,8 +108,8 @@ class Tools extends Component {
       customSelected,
       selectedThemeId,
       newPinsCount,
+      evalscripturl,
     } = this.props;
-    const { evalscripturl } = getUrlParams();
     if (!import.meta.env.VITE_CDSE_BACKEND) {
       store.dispatch(notificationSlice.actions.displayError(FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG));
       return;
@@ -273,6 +272,7 @@ const mapStoreToProps = (store) => ({
   layerId: store.visualization.layerId,
   customSelected: store.visualization.customSelected,
   evalscript: store.visualization.evalscript,
+  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   cloudCoverage: store.visualization.cloudCoverage,
   selectedTabIndex: store.tabs.selectedTabIndex,

@@ -46,7 +46,7 @@ import {
   getLoggedInErrorMsg,
   getOnlyBasicImgDownloadAvailableMsg,
 } from '../../junk/ConstMessages';
-import { isDataFusionEnabled, fetchEvalscriptFromEvalscripturl, getUrlParams } from '../../utils';
+import { isDataFusionEnabled, fetchEvalscriptFromEvalscripturl } from '../../utils';
 import {
   constructGetMapParamsEffects,
   getVisualizationEffectsFromStore,
@@ -69,8 +69,6 @@ function ImageDownload(props) {
   const [warnings, setWarnings] = useState(null);
 
   const hasAoi = !!props.aoiGeometry;
-
-  const { evalscripturl } = getUrlParams();
 
   const [basicFormState, setBasicFormState] = useState({
     showLegend: false,
@@ -245,7 +243,6 @@ function ImageDownload(props) {
         ...props,
         ...formData,
         ...baseParams,
-        evalscripturl,
         bounds,
         comparedLayers: props.comparedLayers.map((cLayer) => {
           let newCLayer = Object.assign({}, cLayer);
@@ -279,7 +276,6 @@ function ImageDownload(props) {
           ...props,
           ...formData,
           ...baseParams,
-          evalscripturl,
           bounds,
           selectedCrs: correctProjection,
           aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
@@ -304,6 +300,7 @@ function ImageDownload(props) {
     setLoadingImages(true);
     const {
       evalscript,
+      evalscripturl,
       visualizationUrl,
       datasetId,
       dataFusion,
@@ -544,7 +541,6 @@ function ImageDownload(props) {
     const height = Math.floor(((imageWidthInches * defaultHeight) / defaultWidth) * resolutionDpi);
 
     const params = {
-      evalscripturl,
       showCaptions: showCaptions,
       showLegend: showLegend,
       userDescription: userDescription,
@@ -581,7 +577,6 @@ function ImageDownload(props) {
     const image = await getTerrainViewerImage({
       ...props,
       ...formData,
-      evalscripturl,
       imageFormat: IMAGE_FORMATS_INFO[imageFormat],
     });
     const nicename = getNicename(fromTime, toTime, datasetId, layerId, customSelected, false);
@@ -774,6 +769,7 @@ const mapStoreToProps = (store) => ({
   comparedClipping: store.compare.comparedClipping,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
+  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   visualizationUrl: store.visualization.visualizationUrl,
   fromTime: store.visualization.fromTime,

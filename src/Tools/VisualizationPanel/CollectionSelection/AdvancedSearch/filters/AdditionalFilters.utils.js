@@ -56,7 +56,6 @@ export const createOriginFilter = (key, value) => {
 export const createS2Collection1Filter = (key, value) => {
   const S2Collection1ProcessorVersions = [
     AttributeProcessorVersionValues.V05_00,
-    AttributeProcessorVersionValues.V05_09,
     AttributeProcessorVersionValues.V05_10,
   ];
 
@@ -65,11 +64,31 @@ export const createS2Collection1Filter = (key, value) => {
   if (value === AttributeS2CollectionValues.COLLECTION1.value) {
     s2Collection1Filter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
     S2Collection1ProcessorVersions.forEach((processorVersion) => {
-      s2Collection1Filter.attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        processorVersion.value,
-      );
+      if (processorVersion.timeLimitations) {
+        const s2Collection1V0510Filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
+        s2Collection1V0510Filter.expression(
+          AttributeNames.sensingTime,
+          ODataFilterOperator.ge,
+          processorVersion.timeLimitations.fromTime,
+        );
+        s2Collection1V0510Filter.expression(
+          AttributeNames.sensingTime,
+          ODataFilterOperator.lt,
+          processorVersion.timeLimitations.toTime,
+        );
+        s2Collection1V0510Filter.attribute(
+          ODataAttributes.processorVersion,
+          ODataFilterOperator.eq,
+          processorVersion.value,
+        );
+        s2Collection1Filter.add(s2Collection1V0510Filter.getTree());
+      } else {
+        s2Collection1Filter.attribute(
+          ODataAttributes.processorVersion,
+          ODataFilterOperator.eq,
+          processorVersion.value,
+        );
+      }
     });
   }
 

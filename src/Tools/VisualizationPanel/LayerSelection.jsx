@@ -11,7 +11,7 @@ import { YYYY_MM_REGEX } from '../SearchPanel/dataSourceHandlers/PlanetBasemapDa
 import { PLANET_NICFI } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { sortLayers } from './VisualizationPanel.utils';
 import store, { visualizationSlice } from '../../store';
-import { getUrlParams, parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
+import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
 import { usePrevious } from '../../hooks/usePrevious';
 
 import { reqConfigMemoryCache, DATASOURCES } from '../../const';
@@ -25,6 +25,7 @@ function LayerSelection({
   fromTime,
   toTime,
   visualizationUrl,
+  visualizedEvalscriptUrl,
   selectedThemeId,
   themesLists,
   selectedThemesListId,
@@ -37,8 +38,6 @@ function LayerSelection({
   toggleLayerActions,
   layerActionsOpen,
 }) {
-  const { evalscripturl: visualizedEvalscriptUrl } = getUrlParams();
-
   const [layers, setLayers] = useState([]);
   const [loadingLayersInProgress, setLoadingLayersInProgress] = useState(false);
   const [evalscript, setEvalscript] = useState(visualizedEvalscript);
@@ -273,6 +272,7 @@ function LayerSelection({
         visibleOnMap: true,
         dataFusion: dataFusion,
         evalscript: evalscript,
+        evalscripturl: evalscriptUrl,
       }),
     );
   }
@@ -333,6 +333,7 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   visualizationUrl: store.visualization.visualizationUrl,
+  visualizedEvalscriptUrl: store.visualization.evalscripturl,
   selectedThemeId: store.themes.selectedThemeId,
   selectedThemesListId: store.themes.selectedThemesListId,
   themesLists: store.themes.themesLists,

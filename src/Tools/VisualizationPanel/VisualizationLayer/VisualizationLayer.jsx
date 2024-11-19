@@ -105,6 +105,7 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   evalscript: store.visualization.evalscript,
+  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

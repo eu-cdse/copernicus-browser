@@ -56,6 +56,7 @@ class ThemesProvider extends React.Component {
       }
     } catch (err) {
       store.dispatch(visualizationSlice.actions.reset());
+      store.dispatch(themesSlice.actions.reset());
     } finally {
       store.dispatch(modalSlice.actions.removeModal());
     }

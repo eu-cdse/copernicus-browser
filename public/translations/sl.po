@@ -8821,13 +8821,6 @@ msgstr ""
 msgid "Collection"
 msgstr "Zbirka"
 
-msgid ""
-"Sentinel-2 Collection 1 represents the product dataset generated starting "
-"from processing baseline 05.XX included."
-msgstr ""
-"Zbirka Sentinel-2 Collection 1 predstavlja nabor podatkov, ustvarjen z "
-"začetkom obdelave izhodiščnih podatkov 05.XX."
-
 msgid "Based on bands B4, B3, B2"
 msgstr "Na podlagi kanalov B4, B3, B2"
 
@@ -11055,4 +11048,11 @@ msgid ""
 msgstr ""
 
 msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
+msgstr ""
+
+msgid ""
+"Sentinel-2 Collection 1 represents the product dataset generated from "
+"processing baselines 05.00 and 05.10. See more "
+"[here](https://sentiwiki.copernicus.eu/web/s2-processing#S2Processing-"
+"Collection-1ProcessingBaselineS2-Processing-Collection-Processing-Baseline)."
 msgstr ""

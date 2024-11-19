@@ -35,6 +35,7 @@ ReactDOM.render(
                         <GoogleAPIProvider>
                           {({ googleAPI }) => (
                             <App
+                              themeIdFromUrlParams={themeId}
                               sharedPinsListIdFromUrlParams={sharedPinsListId}
                               googleAPI={googleAPI}
                               compareShare={compareShare}

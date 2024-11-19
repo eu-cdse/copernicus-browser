@@ -612,15 +612,11 @@ describe('createAdvancedSearchQuery', () => {
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
     expect(filter.value).toContain(
-      `(${FilterElement.Attribute(
+      `((ContentDate/Start ge 2015-07-04T00:00:00.000Z and ContentDate/Start lt 2021-12-31T00:00:00.000Z and ${FilterElement.Attribute(
         ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         AttributeProcessorVersionValues.V05_00.value,
-      )} or ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_09.value,
-      )} or ${FilterElement.Attribute(
+      )}) or (ContentDate/Start ge 2022-01-01T00:00:00.000Z and ContentDate/Start lt 2023-12-13T07:00:00.000Z and ${FilterElement.Attribute(
         ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         AttributeProcessorVersionValues.V05_10.value,
@@ -648,7 +644,6 @@ describe('createAdvancedSearchQuery', () => {
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
     expect(filter.value).not.toContain(AttributeProcessorVersionValues.V05_00.value);
-    expect(filter.value).not.toContain(AttributeProcessorVersionValues.V05_09.value);
     expect(filter.value).not.toContain(AttributeProcessorVersionValues.V05_10.value);
   });
 
@@ -673,15 +668,19 @@ describe('createAdvancedSearchQuery', () => {
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
     expect(filter.value).toContain(
-      `(${FilterElement.Attribute(
+      `((ContentDate/Start ge ${
+        AttributeProcessorVersionValues.V05_00.timeLimitations.fromTime
+      } and ContentDate/Start lt ${
+        AttributeProcessorVersionValues.V05_00.timeLimitations.toTime
+      } and ${FilterElement.Attribute(
         ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         AttributeProcessorVersionValues.V05_00.value,
-      )} or ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_09.value,
-      )} or ${FilterElement.Attribute(
+      )}) or (ContentDate/Start ge ${
+        AttributeProcessorVersionValues.V05_10.timeLimitations.fromTime
+      } and ContentDate/Start lt ${
+        AttributeProcessorVersionValues.V05_10.timeLimitations.toTime
+      } and ${FilterElement.Attribute(
         ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         AttributeProcessorVersionValues.V05_10.value,

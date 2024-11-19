@@ -12,6 +12,8 @@ import {
   DATASET_CDAS_S3OLCIL2,
   CRS_EPSG3857,
 } from '@sentinel-hub/sentinelhub-js';
+import { exit } from 'process';
+import fs from 'fs';
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
 import { filterLayers, filterLayersProbaV } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
 import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType';
@@ -24,9 +26,17 @@ import {
 } from '../src/Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { DATASOURCES } from '../src/const';
 import { getAuthToken } from './update-previews-utils';
-const fs = require('fs');
+import {
+  createHttpClient,
+  getArrayOfInstanceIds,
+  getCsvFullPath,
+  OGC_REQUEST_STATE,
+  setOgcRequestsStates,
+} from './shared-functions';
 
 dotenv.config({ path: './.env' });
+
+const scriptParameters = process.argv.slice(2);
 
 const BBOX_SIZE = 0.03;
 const interestingBBoxes = [
@@ -113,11 +123,16 @@ async function findSomeResults(layer, nResults = 20) {
   return [];
 }
 
-async function updatePreviews(previewsDir, previewsIndexFile) {
+async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) {
   const authBaseUrl = process.env.APP_ADMIN_AUTH_BASEURL;
   if (!authBaseUrl) {
     throw new Error('APP_ADMIN_AUTH_BASEURL is not set');
   }
+  const csvFullPath = getCsvFullPath(scriptParameters);
+
+  let instances = csvFullPath ? getArrayOfInstanceIds(csvFullPath) : [];
+
+  const httpClient = await createHttpClient(authBaseUrl);
 
   const authToken = await getAuthToken(authBaseUrl);
   setAuthToken(authToken);
@@ -126,8 +141,18 @@ async function updatePreviews(previewsDir, previewsIndexFile) {
     fs.mkdirSync(previewsDir);
   }
 
+  await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.ENABLE, httpClient);
+
   // fetch new previews:
   let previews = [];
+
+  try {
+    if (csvFullPath) {
+      previews = JSON.parse(fs.readFileSync(previewsIndexFile, 'utf-8'));
+    }
+  } catch (error) {
+    throw new Error(`Error while reading previews file, ${error}`);
+  }
 
   for (let themes of [DEFAULT_THEMES]) {
     for (let theme of themes) {
@@ -140,6 +165,10 @@ async function updatePreviews(previewsDir, previewsIndexFile) {
         }
         if (contentPart.url.includes('api.planet.com')) {
           console.warn('Temporarily skipping Planet layers - missing stitching of');
+          continue;
+        }
+
+        if (instances.length > 0 && !instances.some((instance) => contentPart.url.includes(instance))) {
           continue;
         }
 
@@ -203,8 +232,10 @@ async function updatePreviews(previewsDir, previewsIndexFile) {
           );
 
           if (fs.existsSync(fullFileName)) {
+            if (!instances) {
+              previews.push(fileName);
+            }
             console.log('  ...exists, skipping.');
-            previews.push(fileName);
             continue;
           }
 
@@ -264,11 +295,21 @@ async function updatePreviews(previewsDir, previewsIndexFile) {
     }
   }
 
+  await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.DISABLE, httpClient);
+
   // write an index file so we know (in Playground app) which files exist:
   fs.writeFileSync(previewsIndexFile, JSON.stringify(previews, null, 2).concat('\n'));
 }
 
-updatePreviews('./public/previews', './src/previews.json')
+if (scriptParameters.length > 1) {
+  console.error('Incorrect number of parameters have been added.');
+  exit(1);
+}
+
+// examples
+// node -r esm scripts/update-previews
+// node -r esm scripts/update-previews data.csv
+updatePreviews('./public/previews', './src/previews.json', scriptParameters)
   .then(() => console.log('DONE.'))
   .catch((err) => {
     console.error(err);

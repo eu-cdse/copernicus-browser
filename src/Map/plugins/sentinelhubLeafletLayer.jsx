@@ -281,6 +281,20 @@ class SentinelHubLayer extends L.TileLayer {
           }
         }
       }
+
+      if (layer.evalscriptUrl && !layer.evalscript) {
+        try {
+          await layer.fetchEvalscriptUrlIfNeeded(reqConfig);
+        } catch (error) {
+          if (!isCancelled(error)) {
+            if (onTileImageError) {
+              onTileImageError(error);
+            }
+            console.error('There has been a problem with your fetch operation: ', error.message);
+          }
+        }
+      }
+
       const apiType = layer.supportsApiType(ApiType.PROCESSING)
         ? ApiType.PROCESSING
         : layer.supportsApiType(ApiType.WMTS)

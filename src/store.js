@@ -430,6 +430,7 @@ export const visualizationSlice = createSlice({
     layerId: undefined,
     customSelected: false,
     evalscript: undefined,
+    evalscripturl: undefined,
     dataFusion: [],
     gainEffect: 1,
     gammaEffect: 1,
@@ -466,6 +467,7 @@ export const visualizationSlice = createSlice({
       state.customSelected = false;
       state.evalscript = undefined;
       state.dataFusion = [];
+      state.evalscripturl = undefined;
       if (orbitDirection) {
         state.orbitDirection = orbitDirection;
       } else {
@@ -486,6 +488,9 @@ export const visualizationSlice = createSlice({
     },
     setEvalscript: (state, action) => {
       state.evalscript = action.payload;
+    },
+    setEvalscripturl: (state, action) => {
+      state.evalscripturl = action.payload;
     },
     setDataFusion: (state, action) => {
       state.dataFusion = action.payload;
@@ -638,6 +643,9 @@ export const visualizationSlice = createSlice({
       if (action.payload.evalscript !== undefined) {
         state.evalscript = action.payload.evalscript;
       }
+      if (action.payload.evalscripturl !== undefined) {
+        state.evalscripturl = action.payload.evalscripturl;
+      }
       if (action.payload.dataFusion !== undefined) {
         state.dataFusion = action.payload.dataFusion;
       }
@@ -704,6 +712,7 @@ export const visualizationSlice = createSlice({
       state.layerId = undefined;
       state.customSelected = false;
       state.evalscript = undefined;
+      state.evalscripturl = undefined;
       state.dataFusion = [];
       state.visibleOnMap = false;
       state.gainEffect = 1;

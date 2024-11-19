@@ -18,7 +18,6 @@ import './ImageDownloadPreview.scss';
 import { TABS } from './ImageDownloadForms';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import Loader from '../../Loader/Loader';
-import { getUrlParams } from '../../utils';
 
 const ImageDownloadPreview = (props) => {
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -44,7 +43,6 @@ const ImageDownloadPreview = (props) => {
     is3D,
     showComparePanel,
   } = props;
-  const { evalscripturl } = getUrlParams();
 
   const fetchPreviewImg = async (layerId = null) => {
     setFetchingPreviewImage(true);
@@ -70,7 +68,6 @@ const ImageDownloadPreview = (props) => {
 
     const params = {
       ...props,
-      evalscripturl,
       cancelToken,
       effects,
       getMapAuthToken,
@@ -186,6 +183,7 @@ const mapStoreToProps = (store) => ({
   loiGeometry: store.loi.geometry,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
+  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   visualizationUrl: store.visualization.visualizationUrl,
   fromTime: store.visualization.fromTime,

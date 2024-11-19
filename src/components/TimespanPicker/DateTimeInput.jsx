@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import DatePicker from '../DatePicker/DatePicker';
 import { NumericInput } from './NumericInput';
 
-let timeoutId = null;
 export const DateTimeInput = (props) => {
-  const [localDateTime, setLocalDateTime] = useState(null);
-
   const {
     id,
     selectedTime,
@@ -34,57 +31,42 @@ export const DateTimeInput = (props) => {
     setSelectedTime,
   } = props;
 
-  useEffect(() => {
-    if (selectedTime) {
-      setLocalDateTime(selectedTime.clone());
-    }
-  }, [selectedTime]);
-
-  useEffect(() => {
-    if (localDateTime && !localDateTime.isSame(selectedTime)) {
-      if (!!timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
-      timeoutId = setTimeout(() => {
-        if (!isWithinAvailableTimeRange(localDateTime)) {
-          setLocalDateTime(selectedTime.clone());
-          return;
-        }
-
-        setSelectedTime(localDateTime.clone());
-      }, 300);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localDateTime]);
-
-  if (!localDateTime) {
-    return null;
-  }
-
   const setDay = (day) => {
-    const newSelectedDateTime = localDateTime
+    const newSelectedDateTime = selectedTime
       .clone()
       .set({ date: day.get('date'), month: day.get('month'), year: day.get('year') });
-    setLocalDateTime(newSelectedDateTime.clone());
+
+    if (isWithinAvailableTimeRange(newSelectedDateTime)) {
+      setSelectedTime(newSelectedDateTime.clone());
+    }
   };
 
   const setHours = (hours) => {
-    const newSelectedDateTime = localDateTime.clone().hours(hours);
-    setLocalDateTime(newSelectedDateTime.clone());
+    const newSelectedDateTime = selectedTime.clone().hours(hours);
+    if (isWithinAvailableTimeRange(newSelectedDateTime)) {
+      setSelectedTime(newSelectedDateTime.clone());
+      return newSelectedDateTime.clone();
+    } else {
+      return null;
+    }
   };
 
   const setMinutes = (minutes) => {
-    const newSelectedDateTime = localDateTime.clone().minutes(minutes);
-    setLocalDateTime(newSelectedDateTime.clone());
+    const newSelectedDateTime = selectedTime.clone().minutes(minutes);
+    if (isWithinAvailableTimeRange(newSelectedDateTime)) {
+      setSelectedTime(newSelectedDateTime.clone());
+      return newSelectedDateTime.clone();
+    } else {
+      return null;
+    }
   };
 
   const isWithinAvailableTimeRange = (newSelectedDateTime) => {
     return newSelectedDateTime >= minDate && newSelectedDateTime <= maxDate;
   };
 
-  const hours = localDateTime.clone().utc().format('HH');
-  const minutes = localDateTime.clone().utc().format('mm');
+  const hours = selectedTime?.clone().utc().format('HH');
+  const minutes = selectedTime?.clone().utc().format('mm');
 
   return (
     <div className={`date-time-input ${isTimeRange ? 'expanded' : ''}`}>
@@ -93,7 +75,7 @@ export const DateTimeInput = (props) => {
         <DatePicker
           id={id}
           calendarContainer={calendarContainer}
-          selectedDay={localDateTime}
+          selectedDay={selectedTime}
           setSelectedDay={setDay}
           minDate={minDate}
           maxDate={maxDate}
