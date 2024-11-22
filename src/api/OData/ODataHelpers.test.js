@@ -612,7 +612,7 @@ describe('createAdvancedSearchQuery', () => {
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
     expect(filter.value).toContain(
-      `((ContentDate/Start ge 2015-07-04T00:00:00.000Z and ContentDate/Start lt 2021-12-31T00:00:00.000Z and ${FilterElement.Attribute(
+      `((ContentDate/Start ge 2015-07-04T00:00:00.000Z and ContentDate/Start lt 2021-12-31T23:59:59.999Z and ${FilterElement.Attribute(
         ODataAttributes.processorVersion,
         ODataFilterOperator.eq,
         AttributeProcessorVersionValues.V05_00.value,

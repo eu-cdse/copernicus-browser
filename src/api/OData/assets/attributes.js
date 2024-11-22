@@ -155,7 +155,7 @@ export const AttributeProcessorVersionValues = {
   V05_00: {
     value: '05.00',
     label: '05.00',
-    timeLimitations: { fromTime: '2015-07-04T00:00:00.000Z', toTime: '2021-12-31T00:00:00.000Z' },
+    timeLimitations: { fromTime: '2015-07-04T00:00:00.000Z', toTime: '2021-12-31T23:59:59.999Z' },
   },
   V05_09: { value: '05.09', label: '05.09' },
   V05_10: {
