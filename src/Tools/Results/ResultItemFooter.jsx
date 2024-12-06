@@ -16,7 +16,13 @@ import { addProductToWorkspace } from '../../api/OData/workspace';
 import WorkspacePlus from '../../icons/workspace-plus.svg?react';
 
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
-import { ODataProductFileExtension, ODataProductTypeExtension } from '../../api/OData/ODataTypes';
+import {
+  ODataCollections,
+  ODataProductFileExtension,
+  ODataProductTypeExtension,
+} from '../../api/OData/ODataTypes';
+import { AttributeNames } from '../../api/OData/assets/attributes';
+import moment from 'moment';
 
 export const ResultItemLabels = {
   productInfo: () => t`Product info`,
@@ -54,8 +60,19 @@ const openProductDetailsModal = ({ tile, downloadInProgress, onDownload }) => {
   );
 };
 
-const getFileNameWithExtensionForProductType = ({ name, productType }) => {
+const getFileNameWithExtensionForProductType = ({ name, productType, attributes, sensingTime }) => {
   const extension = ODataProductTypeExtension[productType];
+
+  // Explanation for this hack: https://hello.planet.com/code/sentinel-hub/sentinel-frontend/cdse/copernicus-browser/-/issues/256
+  // download shouldn't be zipped in this case for S5P
+  const platformShortName = attributes.find((attr) => attr.Name === AttributeNames.platformShortName);
+  if (
+    platformShortName !== undefined &&
+    platformShortName.Value === ODataCollections.S5P.label &&
+    moment(sensingTime).isSameOrAfter(moment('2024-11-19T00:00:00.000000Z'))
+  ) {
+    return name;
+  }
 
   //ignore extension for EOF product types
   if (extension === ODataProductFileExtension.EOF) {

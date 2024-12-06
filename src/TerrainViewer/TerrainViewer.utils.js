@@ -507,7 +507,7 @@ export function getTileCoord(minX, minY, maxX, maxY) {
 }
 
 export function getMaptilerUrl({ tileX, tileY, zoomLevel }) {
-  return `https://api.maptiler.com/maps/streets/256/${zoomLevel}/${tileX}/${tileY}.png?key=${
+  return `https://api.maptiler.com/maps/streets-v2/256/${zoomLevel}/${tileX}/${tileY}.png?key=${
     import.meta.env.VITE_MAPTILER_KEY
   }`;
 }
