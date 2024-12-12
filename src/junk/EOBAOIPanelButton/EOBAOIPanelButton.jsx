@@ -82,7 +82,7 @@ export class EOBAOIPanelButton extends React.Component {
             <sup>2</sup>
           </span>
         )}
-        <span>
+        <span style={{ display: 'inline-flex' }}>
           {
             // jsx-a11y/anchor-is-valid
             // eslint-disable-next-line

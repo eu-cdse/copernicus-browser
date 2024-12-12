@@ -45,7 +45,7 @@ class EOBPOIPanelButton extends React.Component {
   };
 
   renderMarkerInfo = () => (
-    <span>
+    <span style={{ display: 'inline-flex' }}>
       {
         // jsx-a11y/anchor-is-valid
         // eslint-disable-next-line

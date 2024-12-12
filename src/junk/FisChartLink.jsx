@@ -14,6 +14,8 @@ import {
   getStatisticalInfoMsg,
 } from './ConstMessages';
 
+import StatisticalInfoIcon from '../icons/statistical_info.svg?react';
+
 const FisChartLink = (props) => {
   const [statisticalApiSupported, setStatisticalApiSupported] = useState(false);
   const [layerName, setLayerName] = useState();
@@ -69,8 +71,9 @@ const FisChartLink = (props) => {
       onClick={() => props.openFisPopup({ layerName: layerName })}
       title={getStatisticalInfoMsg()}
       className={`${props.active ? 'active' : ''}`}
+      style={{ height: '40px' }}
     >
-      <i className={`fa fa-bar-chart`} />
+      <StatisticalInfoIcon />
     </a>
   );
 
@@ -85,8 +88,9 @@ const FisChartLink = (props) => {
         }}
         title={getTitleBasedOnStatus(errorMessage)}
         className="disabled"
+        style={{ height: '40px' }}
       >
-        <i className={`fa fa-bar-chart`} />
+        <StatisticalInfoIcon />
       </a>
     );
   };

@@ -210,14 +210,11 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) =>
-          hasRole(userToken, EXPERT_ROLES.S2C_COMMISSIONING)
-            ? [
-                AttributePlatformSerialIdentifierValues.S2A,
-                AttributePlatformSerialIdentifierValues.S2B,
-                AttributePlatformSerialIdentifierValues.S2C,
-              ]
-            : [AttributePlatformSerialIdentifierValues.S2A, AttributePlatformSerialIdentifierValues.S2B],
+        getOptions: () => [
+          AttributePlatformSerialIdentifierValues.S2A,
+          AttributePlatformSerialIdentifierValues.S2B,
+          AttributePlatformSerialIdentifierValues.S2C,
+        ],
       },
       {
         id: AttributeNames.relativeOrbitNumber,

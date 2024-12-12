@@ -9,6 +9,8 @@ import {
   spectralExplorerLabels,
 } from './SpectralExplorer.utils';
 
+import SpectralExplorerIcon from '../../icons/spectral_explorer.svg?react';
+
 const checkButtonDisabled = ({ datasetId, geometry, fromTime, toTime, user }) => {
   if (!user.userdata) {
     return `${spectralExplorerLabels.title()}\n(${spectralExplorerLabels.errorLogIn()})`;
@@ -80,8 +82,9 @@ const SpectralExplorerButton = ({
       }}
       title={errorMessage ? errorMessage : spectralExplorerLabels.title()}
       className={errorMessage ? 'disabled' : ''}
+      style={{ height: '40px' }}
     >
-      <i className={`fa fa-line-chart`} aria-hidden="true"></i>
+      <SpectralExplorerIcon />
     </a>
   );
 };
