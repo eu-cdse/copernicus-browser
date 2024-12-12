@@ -42,7 +42,6 @@ import {
   AttributeOnlineValues,
   AttributeOperationalModeValues,
   AttributeOrbitDirectionValues,
-  AttributePlatformSerialIdentifierValues,
   AttributePolarisationChannelsValues,
   FormatedAttributeNames,
   ODataAttributes,
@@ -138,15 +137,6 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     }
     if (/DGE_90/.test(productType)) {
       return PRODUCT_TYPE_TO_DATASETID['COP-DEM_GLO-90-DGED'];
-    }
-  }
-
-  if ([S2_L1C_CDAS, S2_L2A_CDAS].includes(PRODUCT_TYPE_TO_DATASETID[productType])) {
-    const platformSerialIdentifier = attributes.find(
-      (attribute) => attribute?.Name === AttributeNames.platformSerialIdentifier,
-    );
-    if (platformSerialIdentifier?.Value === AttributePlatformSerialIdentifierValues.S2C.value) {
-      return null;
     }
   }
 
