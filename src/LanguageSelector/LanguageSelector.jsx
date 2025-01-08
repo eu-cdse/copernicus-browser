@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import ReactFlagsSelect from 'react-flags-select';
 
 import store, { languageSlice } from '../store';
-import { changeLanguage, SUPPORTED_LANGUAGES } from './langUtils';
+import { changeLanguage } from './langUtils';
 import { CDSE_GITHUB_PAGE_LINK } from '../const';
 import './LanguageSelector.scss';
+import { SUPPORTED_LANGUAGES } from './const';
 
 const flagCodes = SUPPORTED_LANGUAGES.map((l) => l.flagCode);
 

@@ -12,7 +12,7 @@ export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
 export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
 
 const keycloakInstance = new Keycloak({
-  url: import.meta.env.VITE_AUTH_BASEURL + 'auth',
+  url: window.API_ENDPOINT_CONFIG.AUTH_BASEURL + '/auth',
   realm: import.meta.env.VITE_REALM,
   clientId: import.meta.env.VITE_CLIENTID,
 });

@@ -5163,7 +5163,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
 
     description: () =>
-      t`# Discrete Classification Map\n\n\n\nThis layer visualises Global Land Cover discrete classification map with 23 classes defined using the UN-FAO Land Cover Classification System (LCCS) and with color scheme defined in the Product User Manual. More info [here](https://collections.sentinel-hub.com/global-land-cover/readme.html).`,
+      t`# Discrete Classification Map\n\n\n\nThis layer visualises Global Land Cover discrete classification map with 23 classes defined using the UN-FAO Land Cover Classification System (LCCS) and with color scheme defined in the Product User Manual. More info [here](https://land.copernicus.eu/en/products/global-dynamic-land-cover).`,
   },
   {
     match: [{ datasourceId: CDSE_GLC_COLLECTION, layerId: 'FOREST-TYPE-LAYER' }],
@@ -5198,6 +5198,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
 
     description: () =>
-      t`# Forest Types\n\n\n\nVisualized forest types based on 6 classes, as defined in the UN-FAO Land Cover Classification System (LCCS). More info [here](https://collections.sentinel-hub.com/global-land-cover/readme.html).`,
+      t`# Forest Types\n\n\n\nVisualized forest types based on 6 classes, as defined in the UN-FAO Land Cover Classification System (LCCS). More info [here](https://land.copernicus.eu/en/products/global-dynamic-land-cover).`,
   },
 ];

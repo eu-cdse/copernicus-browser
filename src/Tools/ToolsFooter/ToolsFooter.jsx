@@ -23,7 +23,7 @@ class ToolsFooter extends Component {
           {/* {!this.props.user && (
             <div className="free-signup">
               <ExternalLink
-                href={`${import.meta.env.VITE_AUTH_BASEURL}oauth/subscription?origin=EOBrowser&param_client_id=${import.meta.env.VITE_CLIENTID}`}
+                href={`${window.API_ENDPOINT_CONFIG.AUTH_BASEURL}/oauth/subscription?origin=EOBrowser&param_client_id=${import.meta.env.VITE_CLIENTID}`}
               >
                 {t`Free sign up`}
               </ExternalLink>
@@ -73,9 +73,6 @@ class ToolsFooter extends Component {
                 </div>
               ) : (
                 <div>Local build</div>
-              )}
-              {import.meta.env.VITE_REPLACE_SERVICES_HOSTNAME && (
-                <div>{import.meta.env.VITE_REPLACE_SERVICES_HOSTNAME}</div>
               )}
             </div>
           </div>

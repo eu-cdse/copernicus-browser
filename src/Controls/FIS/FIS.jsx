@@ -203,10 +203,9 @@ class FIS extends Component {
     // try to extract a meaningful error message from response body:
     if (err.response) {
       try {
-        const xmlDoc = new DOMParser().parseFromString(err.response.data, 'text/xml');
-        const serverErrorMessages = xmlDoc.getElementsByTagName('ServiceException');
-        const errorMsg =
-          serverErrorMessages.length > 0 ? `Error: ${serverErrorMessages[0].textContent}` : err.message;
+        const errorMsg = err.response.data.error.errors[0].violation
+          ? `Error: ${err.response.data.error.errors[0].violation}`
+          : `Error: ${err.response?.data?.error?.message}`;
         this.setState({
           fetchingInProgress: false,
           errorMsg,

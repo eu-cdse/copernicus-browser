@@ -2,8 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import util from 'util';
 import { exit } from 'process';
-
-import { SUPPORTED_LANGUAGES } from '../src/LanguageSelector/langUtils';
+import { SUPPORTED_LANGUAGES } from '../src/LanguageSelector/const';
 
 const exec = util.promisify(require('child_process').exec);
 const readdir = util.promisify(fs.readdir);

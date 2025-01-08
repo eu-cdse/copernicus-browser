@@ -321,7 +321,7 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
   getResolutionLimits(datasetId) {
     switch (datasetId) {
       case S2_L1C_CDAS:
-        return { resolution: 10 };
+        return { resolution: 10, fisResolutionCeiling: 200 };
       case S2_L2A_CDAS:
         return { resolution: 10, fisResolutionCeiling: 1400 };
       default:
