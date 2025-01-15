@@ -53,7 +53,7 @@
     {
         "id": "2_HIGHLIGHT-OPTIMIZED-NATURAL-COLOR",
         "title": "Highlight Optimized Natural Color",
-        "description": "Enhanced natural color visualization",
+        "description": "Enhanced natural color visualisation",
         "styles": [
             {
                 "name": "default",
@@ -63,7 +63,7 @@
         ],
         "orderHint": 0,
         "instanceId": "25444d-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2023-10-23T11:41:49.167302Z",
+        "lastUpdated": "2025-01-09T16:13:17.295216Z",
         "collectionType": "S2L2A",
         "datasetSourceId": 2,
         "defaultStyleName": "default",

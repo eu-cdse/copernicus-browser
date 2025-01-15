@@ -26,7 +26,7 @@ class TerrainViewerButton extends Component {
     if (!is3D && (selectedTabIndex !== TABS.VISUALIZE_TAB || showComparePanel)) {
       return {
         isDisabled: true,
-        errorMessage: t`You can only view data in 3D while visualizing a collection.`,
+        errorMessage: t`You can only view data in 3D while visualising a collection.`,
       };
     }
     if (!is3D && !(visualizationUrl && datasetId && layerId) && !customSelected) {
@@ -58,7 +58,7 @@ class TerrainViewerButton extends Component {
         className={`terrain-viewer-button ${isDisabled ? 'disabled' : ''} ${is3D ? 'is3d' : ''}`}
         onClick={this.handleTerrainViewerButtonClick}
         title={
-          is3D ? t`2D map view` : t`Visualize terrain in 3D` + (errorMessage ? ` \n(${errorMessage})` : '')
+          is3D ? t`2D map view` : t`Visualise terrain in 3D` + (errorMessage ? ` \n(${errorMessage})` : '')
         }
       >
         {is3D ? (

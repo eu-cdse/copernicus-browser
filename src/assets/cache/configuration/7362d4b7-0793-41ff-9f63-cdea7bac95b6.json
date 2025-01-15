@@ -27,7 +27,7 @@
     {
         "id": "2_TONEMAPPED_NATURAL_COLOR",
         "title": "Highlight Optimized Natural Color",
-        "description": "Enhanced natural color visualization",
+        "description": "Enhanced natural color visualisation",
         "styles": [
             {
                 "name": "default",
@@ -37,7 +37,7 @@
         ],
         "orderHint": 0,
         "instanceId": "7362d4-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2023-10-23T14:12:22.777741Z",
+        "lastUpdated": "2025-01-09T16:21:24.726447Z",
         "collectionType": "S2L1C",
         "datasetSourceId": 1,
         "defaultStyleName": "default",

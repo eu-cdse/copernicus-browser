@@ -119,7 +119,7 @@ const pageSize = {
 
 const getCommercialHelpText = (quotas) => t`
 **General**  
-The "Commercial data" tab allows you to search, purchase, and visualize Commercial Third-Party data.
+The "Commercial data" tab allows you to search, purchase, and visualise Commercial Third-Party data.
 
 **Available constellations**  
 We currently offer data from 3 different commercial data providers offering data from 5 different constellations:

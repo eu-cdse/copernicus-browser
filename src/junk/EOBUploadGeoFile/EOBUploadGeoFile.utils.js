@@ -6,6 +6,8 @@ import union from '@turf/union';
 import { coordEach } from '@turf/meta';
 import JSZip from 'jszip';
 import shp from 'shpjs';
+import { getMgrsBounds } from '../../utils/mgrs';
+import { getGeoRefBounds } from '../../utils/georef';
 
 const uploadGeoFileErrorMessages = {
   UNSUPORTED_FILE_TYPE: () => t`File type not supported`,
@@ -186,6 +188,8 @@ const conversionFunctions = {
 
   // kmz is an archive, we only take kml file from it and try to convert it to geoJson
   kmz: (input) => convertKmlToGeoJson(input),
+  mgrs: (input) => getMgrsBounds(input),
+  geoRef: (input) => getGeoRefBounds(input),
 };
 
 const isFileTypeSupported = (format) => !!conversionFunctions[format];

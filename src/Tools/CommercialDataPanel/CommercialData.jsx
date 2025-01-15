@@ -21,7 +21,7 @@ const highResImgUrl = `${import.meta.env.VITE_ROOT_URL}commercial-data-previews/
 
 const getCommercialDataDescription = () => t`
 	
-Browse, visualise and analyze Very High Resolution (VHR) data directly in Browser, tapping into global archives of Planet [PlanetScope](${links.planetScope}) and [SkySat](${links.planetSkySat}), Airbus [Pleiades](${links.airbusPleiades}) and [SPOT](${links.airbusSpot}) as well as [Maxar WorldView](${links.maxarWorldView}).  
+Browse, visualise and analyse Very High Resolution (VHR) data directly in Browser, tapping into global archives of Planet [PlanetScope](${links.planetScope}) and [SkySat](${links.planetSkySat}), Airbus [Pleiades](${links.airbusPleiades}) and [SPOT](${links.airbusSpot}) as well as [Maxar WorldView](${links.maxarWorldView}).  
 
 Observe the planet at resolutions starting at 3 meters and all the way up to 0.5 meters for a cost down to 0.9 EUR per km².
 

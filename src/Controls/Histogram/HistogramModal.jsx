@@ -71,7 +71,7 @@ class HistogramModal extends Component {
     if (!isOnVisualizationPanel) {
       this.setState({
         refreshEnabled: false,
-        refreshTooltip: t`Histogram can be displayed only while visualizing`,
+        refreshTooltip: t`Histogram can be displayed only while visualising`,
       });
       return;
     }

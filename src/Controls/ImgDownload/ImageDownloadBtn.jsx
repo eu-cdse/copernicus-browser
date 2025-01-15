@@ -39,7 +39,7 @@ class ImageDownloadBtn extends Component {
     if (!isOnVisualizationPanel && !isOnComparePanel) {
       return {
         enabled: false,
-        errorMessage: t`you can only download an image while visualizing or comparing`,
+        errorMessage: t`you can only download an image while visualising or comparing`,
       };
     }
 

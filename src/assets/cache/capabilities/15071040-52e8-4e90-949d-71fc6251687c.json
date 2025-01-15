@@ -11,7 +11,7 @@
         {
             "id": "2_TONEMAPPED_NATURAL_COLOR",
             "name": "Highlight Optimized Natural Color",
-            "description": "Enhanced natural color visualization",
+            "description": "Enhanced natural color visualisation",
             "dataset": "S2L2A",
             "legendUrl": null
         },

@@ -87,7 +87,7 @@ Sentinel-2 Global Mosaics in one place.
 
 const overviewMd = () => t`#### Quick overview of Copernicus Browser features
 
-Copernicus Browser serves as a central hub for accessing, exploring and utilizing the wealth of Earth observation and environmental 
+Copernicus Browser serves as a central hub for accessing, exploring and utilising the wealth of Earth observation and environmental 
 data provided by the Sentinel-1, Sentinel-2, Sentinel-3, Sentinel-5P, Sentinel-6, Copernicus Contributing Missions (Optical, SAR and DEM), 
 and Sentinel-1 and Sentinel-2 Global Mosaics (see details [here](https://documentation.dataspace.copernicus.eu/Data.html)). You simply 
 go to your area of interest, select data sources, time range and cloud coverage, and inspect the resulting data.
@@ -103,11 +103,11 @@ Anonymous use of the Browser gives you access with limited functionality. To be 
 `;
 
 const visualizationTabMd = () => t`
-In the **Visualize tab** you can:
+In the **Visualise tab** you can:
 - Search for a **Date**.
 - Select a **Theme**.
 - Choose a **Collection**.
-- Select a **Visualization Layer**.
+- Select a **Visualisation Layer**.
 
 You can change the **Date** (type in or select it from the calendar) and set the cloud coverage. You can choose between 
 single date, mosaic and time range: ![Single](${Single}) ![Mosaic](${Mosaic}) ![Time Range](${TimeRange}).
@@ -121,7 +121,7 @@ on the information icon next to the name of the data collection. Here you can al
 `;
 
 const layersPanelMd = () => t`
-You can select different pre-installed or custom spectral band combinations to visualize data for the selected result.
+You can select different pre-installed or custom spectral band combinations to visualise data for the selected result.
 
 Some of the common options:
 - **True Color** - Visual interpretation of land cover
@@ -132,19 +132,19 @@ Some of the common options:
 - **NDWI** - Normalized Difference Water Index
 - **NDSI** - Normalized Difference Snow Index
 
-Most visualizations are given a description and a legend, which you can view by clicking on the expand sign ![expand](${DoubleChevronDownWhite}).
+Most visualisations are given a description and a legend, which you can view by clicking on the expand sign ![expand](${DoubleChevronDownWhite}).
 Each of the layers offers an option to add a layer to Compare or Pins by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span>. 
 Based on your action the Compare and Pins panels will include added layers ![compare-with-badge](${CompareWithBadge}) ![pins-with-badge](${PinsWithBadge}) 
-which you can further organize and analyze under each tab.
+which you can further organize and analyse under each tab.
 
-Click on **Custom visualization** option to select custom band combinations, index combinations or write your own classification script for the
-visualization of data. You can also use custom scripts, which are stored elsewhere, either on Google Drive, GitHub or in our 
+Click on **Custom visualisation** option to select custom band combinations, index combinations or write your own classification script for the
+visualisation of data. You can also use custom scripts, which are stored elsewhere, either on Google Drive, GitHub or in our 
 [Custom script repository](https://custom-scripts.sentinel-hub.com/). Paste the URL of the script into a text box in advanced script editing panel 
 and click Refresh. The custom script of preconfigured layers can be edited by choosing the code icon ![code-icon](${CodeWhiteIcon}).
 
 You can select <span class="icon"><i class="fa fa-sliders"></i></span> **Show effects and advanced options** like the sampling method, advanced RGB effects or apply 
-contrast (gain) and luminance (gamma). To return to preconfigured layers, click <span class="icon"><i class="fa fa-paint-brush"></i></span> **Show visualizations**.
-**Share** your visualization on social media by clicking on the share icon <span class="icon"><i class="fas fa-share-alt"></i></span>.
+contrast (gain) and luminance (gamma). To return to preconfigured layers, click <span class="icon"><i class="fa fa-paint-brush"></i></span> **Show visualisations**.
+**Share** your visualisation on social media by clicking on the share icon <span class="icon"><i class="fas fa-share-alt"></i></span>.
 `;
 
 const highlightsPanelMd = () => t`
@@ -154,7 +154,7 @@ Each highlight has a description accessible under the dropdown icon ![expand-des
 `;
 
 const comparePanelMd = () => t`
-Here you will find all visualizations that you added by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span> on 
+Here you will find all visualisations that you added by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span> on 
 the layers under the Layers panel.
 
 There are two modes of comparing:
@@ -196,7 +196,7 @@ For **product info** and **zooming to product** click on the <span class="icon">
 If you are logged in, you can click on ![workspace-add](${WorkspacePlus}) to **add a product to your Copernicus Data Space Ecosystem Workspace**
 to easily collect and process your satellite data. You can also **download the product** by clicking on the download icon <span class="icon"><i class="fa fa-download"></i></span>.
 
-Clicking on the Visualize button will open the **Visualize** tab for the selected result.
+Clicking on the Visualise button will open the **Visualise** tab for the selected result.
 `;
 
 const searchPlacesMd = () => t`
@@ -253,7 +253,7 @@ You can remove the measurement by clicking the remove icon <span class="icon"><i
 `;
 
 const downloadImageMd = () => t`
-With this tool, you can download an image of visualized data for the displayed location. You can choose to show 
+With this tool, you can download an image of visualised data for the displayed location. You can choose to show 
 captions and you can add your own description. By enabling Analytical mode, you can choose between various image formats, 
 image resolutions and coordinate systems. You can also select multiple layers and download them as a <code>.zip</code> file.
 
@@ -284,7 +284,7 @@ When you are satisfied with the result, click the download button and the timela
 const visualize3dMd = () => t`
 This tool allows you to navigate and fly through terrain effortlessly.
 
-You can make use of the 3D Feature by utilizing the following tools:
+You can make use of the 3D Feature by utilising the following tools:
   - Use **Vertical Terrain Scaling** to make flatter areas appear more dynamic
   - Stimulate the Sun movements and its projected shadows at any time of the day
   - Manipulate the **Shadow Parameters**
@@ -376,7 +376,7 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: t`Visualize Tab`,
+    title: t`Visualise Tab`,
     content: (
       <div className="content-div-style">
         <ReactMarkdown
@@ -623,7 +623,7 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: t`Visualize Terrain in 3D`,
+    title: t`Visualise Terrain in 3D`,
     content: (
       <div className="content-div-style">
         <ReactMarkdown
@@ -677,7 +677,7 @@ export const TUTORIAL_STEPS = () => [
 
 export const TUTORIAL_STEPS_MOBILE = () => [
   {
-    title: t`Welcome To EO Browser!`,
+    title: t`Welcome To Copernicus Browser!`,
     content: (
       <div className="content-div-style">
         <ReactMarkdown

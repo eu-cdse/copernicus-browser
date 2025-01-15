@@ -27,7 +27,7 @@ const Visualizations = (props) => {
             </div>
             <div className="title">
               {t`Custom`}
-              <small>{t`Create custom visualization`}</small>
+              <small>{t`Create custom visualisation`}</small>
             </div>
           </div>
         </div>

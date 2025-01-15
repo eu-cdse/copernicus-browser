@@ -125,7 +125,7 @@ class ThemesProvider extends React.Component {
     const { access_token } = this.props.user;
     try {
       const response = await axios.get(
-        `${window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/api/v2/configuration/instances`,
+        `${global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/api/v2/configuration/instances`,
         {
           responseType: 'json',
           headers: {
@@ -140,7 +140,7 @@ class ThemesProvider extends React.Component {
         content: [
           {
             service: 'WMS',
-            url: `${window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/ogc/wms/${inst.id}`,
+            url: `${global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/ogc/wms/${inst.id}`,
           },
         ],
       }));

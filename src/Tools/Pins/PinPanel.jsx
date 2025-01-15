@@ -757,7 +757,7 @@ class PinPanel extends Component {
     }
 
     const loggedIn = this.props.user ? true : false;
-    const noPinMsg = t`No pins. Go to the Visualize tab to save a pin or upload a JSON file with saved pins.`;
+    const noPinMsg = t`No pins. Go to the Visualise tab to save a pin or upload a JSON file with saved pins.`;
     const NOT_LOGGED_IN_AND_TEMP_PIN_MSG = t`Note that the pins will be saved only if you log in. Otherwise, the pins will be lost once the application is closed.`;
     return (
       <div className="pin-panel">

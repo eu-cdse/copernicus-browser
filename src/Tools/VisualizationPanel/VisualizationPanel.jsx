@@ -31,7 +31,7 @@ import { getAppropriateAuthToken } from '../../App';
 
 const showEffectsText = () => t`Show effects and advanced options`;
 const appliedEffectsText = () => t`Effects and advanced options applied`;
-const showVisualizationsText = () => t`Show visualizations`;
+const showVisualizationsText = () => t`Show visualisations`;
 
 //number of ms to delay notification reset (to avoid notification reset on double click)
 export const NOTIFICATION_BADGE_RESET_TIMEOUT = 300;

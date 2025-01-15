@@ -9,8 +9,8 @@ const defaultRequestOptions = {
 
 const ODataEndpoints = {
   search: 'https://catalogue.dataspace.copernicus.eu/odata/v1/',
-  download: 'https://zipper.dataspace.copernicus.eu/odata/v1/',
-  listNodes: 'https://zipper.dataspace.copernicus.eu/odata/v1/',
+  download: 'https://download.dataspace.copernicus.eu/odata/v1/',
+  listNodes: 'https://download.dataspace.copernicus.eu/odata/v1/',
 };
 
 const extractResponseErrorMessage = async (error) => {

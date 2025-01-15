@@ -208,7 +208,7 @@ export default class AnalyticalForm extends React.PureComponent {
           <label>{t`Layers`}:</label>
           <div className="download-layers">
             <div className="column">
-              <span className="layer-title">{t`Visualized`}</span>
+              <span className="layer-title">{t`Visualised`}</span>
               <CheckboxGroup name="layers" value={selectedLayers} onChange={updateSelectedLayers}>
                 {isCurrentLayerCustom && (
                   <label key={CUSTOM_TAG}>

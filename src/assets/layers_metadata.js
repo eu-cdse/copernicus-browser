@@ -871,7 +871,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# False Color Urban composite\n\nThis composite is used to visualize urbanized areas more clearly. Vegetation is visible in shades of green, while urbanized areas are represented by white, grey, or purple. Soils, sand, and minerals are shown in a variety of colors. Snow and ice appear as dark blue, and water as black or blue. Flooded areas are very dark blue and almost black. The composite is useful for detecting wildfires and calderas of volcanoes, as they are displayed in shades of red and yellow.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false-color-urban-rgb/) and [here.](https://eos.com/false-color/)`,
+      t`# False Color Urban composite\n\nThis composite is used to visualise urbanized areas more clearly. Vegetation is visible in shades of green, while urbanized areas are represented by white, grey, or purple. Soils, sand, and minerals are shown in a variety of colors. Snow and ice appear as dark blue, and water as black or blue. Flooded areas are very dark blue and almost black. The composite is useful for detecting wildfires and calderas of volcanoes, as they are displayed in shades of red and yellow.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false-color-urban-rgb/) and [here.](https://eos.com/false-color/)`,
   },
 
   {
@@ -915,7 +915,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# Ulyssys Water Quality Viewer (UWQV)\n\nThe script aims to dynamically visualize the chlorophyll and sediment conditions of water bodies, which are primary indicators of water quality. The chlorophyll content ranges in colors from dark blue (low chlorophyll content) through green to red (high chlorophyll content). Sediment concentrations are colored brown; opaque brown indicates high sediment content.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ulyssys_water_quality_viewer/)`,
+      t`# Ulyssys Water Quality Viewer (UWQV)\n\nThe script aims to dynamically visualise the chlorophyll and sediment conditions of water bodies, which are primary indicators of water quality. The chlorophyll content ranges in colors from dark blue (low chlorophyll content) through green to red (high chlorophyll content). Sediment concentrations are colored brown; opaque brown indicates high sediment content.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ulyssys_water_quality_viewer/)`,
   },
 
   {
@@ -2176,7 +2176,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       },
     ],
     description: () =>
-      t`# Global Surface Water - Occurrence Change Intensity\n\n\n\nThe layer visualises changes in water occurrence between two different epochs, the first ranging from March 1984 to December 1999, and the other covering the period from January 2000 to December 2021. Areas with increase in water occurrence are visualized in different shades of green, areas with no change are colored black and areas with decrease are shown in shades of red. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_change/).`,
+      t`# Global Surface Water - Occurrence Change Intensity\n\n\n\nThe layer visualises changes in water occurrence between two different epochs, the first ranging from March 1984 to December 1999, and the other covering the period from January 2000 to December 2021. Areas with increase in water occurrence are visualised in different shades of green, areas with no change are colored black and areas with decrease are shown in shades of red. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_change/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '3_SEASONALITY' }],
@@ -5035,7 +5035,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Aerosol Angstrom exponent\n\nThe Aerosol Angstrom exponent is a parameter that describes how the optical thickness of aerosols in the atmosphere varies with wavelength. It provides information about the size distribution of aerosol particles, with higher values indicating smaller particles and lower values indicating larger particles. This exponent is often used in atmospheric research and climatology to analyze the properties of aerosols and their effects on climate and air quality.\n\nMore info [here](https://earth.gsfc.nasa.gov/climate/data/deep-blue/science).`,
+      t`# Aerosol Angstrom exponent\n\nThe Aerosol Angstrom exponent is a parameter that describes how the optical thickness of aerosols in the atmosphere varies with wavelength. It provides information about the size distribution of aerosol particles, with higher values indicating smaller particles and lower values indicating larger particles. This exponent is often used in atmospheric research and climatology to analyse the properties of aerosols and their effects on climate and air quality.\n\nMore info [here](https://earth.gsfc.nasa.gov/climate/data/deep-blue/science).`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '5_LAND_RC865' }],

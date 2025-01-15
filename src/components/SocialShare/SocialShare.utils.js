@@ -4,11 +4,7 @@ import store, { notificationSlice } from '../../store';
 
 import { getDataSourceHashtags } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
-const API_KEY = `${import.meta.env.VITE_REBRANDLY_API_KEY}`;
 const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
-const DOMAIN_TYPE = {
-  CUSTOM_DOMAIN: 'USER',
-};
 const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
 
 const savedSharedLinksToLocalStorage = (destination, shortUrl) => {
@@ -41,20 +37,16 @@ const handleErrorMessages = (errors) =>
   store.dispatch(notificationSlice.actions.displayError(...handleStructureErrorMessages(errors)));
 
 export async function getCustomDomainFullName() {
-  const urlRequest = 'https://api.rebrandly.com/v1/domains';
+  const urlRequest = `${import.meta.env.VITE_CDSE_BACKEND}getcustomdomainfullname`;
 
   return axios({
     method: 'get',
     url: urlRequest,
     headers: {
       'Content-Type': 'application/json',
-      apiKey: API_KEY,
     },
   })
-    .then(
-      (response) =>
-        response.data.find((d) => d.type === DOMAIN_TYPE.CUSTOM_DOMAIN && d.active === true)?.fullName,
-    )
+    .then((response) => response.data)
     .catch((err) => {
       console.error(err);
     });
@@ -64,7 +56,7 @@ export async function getShortUrl(urlLocation) {
   const sharedLinks = getSharedLinks();
 
   if (!sharedLinks[urlLocation]) {
-    const urlRequest = 'https://api.rebrandly.com/v1/links';
+    const urlRequest = `${import.meta.env.VITE_CDSE_BACKEND}generateshorturl`;
     const fullName = await getCustomDomainFullName();
     const data = {
       ...(fullName && { domain: { fullName: fullName } }),
@@ -76,7 +68,6 @@ export async function getShortUrl(urlLocation) {
       url: urlRequest,
       headers: {
         'Content-Type': 'application/json',
-        apiKey: API_KEY,
       },
       data: data,
     })

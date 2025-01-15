@@ -1,4 +1,7 @@
 import { TextDecoder, TextEncoder } from 'util';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: './.env' });
 
 global.TextDecoder = TextDecoder;
 global.TextEncoder = TextEncoder;

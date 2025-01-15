@@ -837,4 +837,4 @@ export function getDataSourceHashtags(datasetId) {
   }
 }
 
-export const getSHServiceRootUrl = () => `${window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/`;
+export const getSHServiceRootUrl = () => `${global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/`;

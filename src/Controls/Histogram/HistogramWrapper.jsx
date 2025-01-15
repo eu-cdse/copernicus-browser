@@ -75,7 +75,7 @@ class HistogramWrapper extends Component {
     if (!isOnVisualizationPanel) {
       this.setState({
         histogramEnabled: false,
-        errorMessage: t`Histogram can be displayed only while visualizing`,
+        errorMessage: t`Histogram can be displayed only while visualising`,
       });
       return;
     }

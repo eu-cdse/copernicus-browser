@@ -181,7 +181,7 @@ export function ImageDownloadForms(props) {
       return (
         <div className="image-download-warning">
           <i className="fa fa-exclamation-circle" />
-          {t`Error: You can only download visualization with effects in JPEG or PNG formats.`}
+          {t`Error: You can only download visualisation with effects in JPEG or PNG formats.`}
         </div>
       );
     }

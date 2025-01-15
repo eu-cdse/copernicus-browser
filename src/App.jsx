@@ -61,8 +61,8 @@ class App extends Component {
     }
 
     // this allows using an alternative hostname for SH services, which is useful for testing purposes:
-    if (window.API_ENDPOINT_CONFIG.SH_SERVICES_URL) {
-      const newHostname = window.API_ENDPOINT_CONFIG.SH_SERVICES_URL.replace('https://', '');
+    if (global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL) {
+      const newHostname = global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL.replace('https://', '');
       registerHostnameReplacing('sh.dataspace.copernicus.eu', newHostname);
       registerHostnameReplacing('services.sentinel-hub.com', newHostname);
     }

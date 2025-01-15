@@ -213,7 +213,7 @@ class Tools extends Component {
             onErrorMessage={(msg) => store.dispatch(notificationSlice.actions.displayError(msg))}
             onSelect={this.setActiveTabIndex}
           >
-            <Tab id="visualization-tab" title={t`Visualize`} renderKey={TABS.VISUALIZE_TAB}>
+            <Tab id="visualization-tab" title={t`Visualise`} renderKey={TABS.VISUALIZE_TAB}>
               <VisualizationPanel
                 savePin={this.savePin}
                 showLayerPanel={showLayerPanel}
