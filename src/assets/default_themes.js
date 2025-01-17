@@ -1,6 +1,6 @@
 import { t } from 'ttag';
 
-const FALLBACK_SH_SERVICES_URL = 'sh.dataspace.copernicus.eu';
+const FALLBACK_SH_SERVICES_URL = 'https://sh.dataspace.copernicus.eu';
 
 export const S2QuarterlyCloudlessMosaicsInstance = {
   name: 'S2 Quarterly Cloudless Mosaics',

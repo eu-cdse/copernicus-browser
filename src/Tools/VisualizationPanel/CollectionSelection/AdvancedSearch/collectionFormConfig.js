@@ -66,6 +66,20 @@ export const collections = [
         ],
       },
       {
+        id: 'AIS',
+        label: 'AIS',
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S1C_COMMISSIONING),
+        productTypes: [
+          { id: 'RAW', name: 'RAW', label: 'Level-0 RAW' },
+          {
+            id: 'AISAUX',
+            name: 'AISAUX',
+            label: 'AISAUX',
+            supportsGeometry: false,
+          },
+        ],
+      },
+      {
         id: 'S1AuxiliaryFiles',
         label: 'Auxiliary Data File',
         supportsInstrumentName: false,
