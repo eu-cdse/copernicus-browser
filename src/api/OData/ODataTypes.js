@@ -48,6 +48,8 @@ const ODataProductTypeExtension = {
   AUX_RESORB: ODataProductFileExtension.EOF,
   AUX_POEORB: ODataProductFileExtension.EOF,
   AUX_PREORB: ODataProductFileExtension.EOF,
+  AUX_PREORB_PRIVATE: ODataProductFileExtension.EOF,
+  AUX_RESORB_PRIVATE: ODataProductFileExtension.EOF,
   AUX_GNSSRD: ODataProductFileExtension.TGZ,
   AUX_PROQUA: ODataProductFileExtension.TGZ,
   AUX_MOEORB: ODataProductFileExtension.EOF,

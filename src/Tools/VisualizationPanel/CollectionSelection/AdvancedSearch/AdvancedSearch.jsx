@@ -18,6 +18,7 @@ import {
   DEFAULT_MODE,
   DATE_MODES,
   DEFAULT_THEME_ID,
+  ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
 } from '../../../../const';
 import { getBoundsAndLatLng } from '../../../CommercialDataPanel/commercialData.utils';
 import { isDatasetIdGIBS } from '../../SmartPanel/LatestDataAction.utils';
@@ -72,6 +73,26 @@ class AdvancedSearch extends Component {
 
   calendarHolder = React.createRef();
 
+  componentDidMount() {
+    const searchConfigFromSession = JSON.parse(
+      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+    );
+    if (searchConfigFromSession) {
+      if (searchConfigFromSession.searchFormData) {
+        this.setState({
+          fromMoment: searchConfigFromSession.searchFormData.fromMoment,
+          toMoment: searchConfigFromSession.searchFormData.toMoment,
+          collectionForm: searchConfigFromSession.searchFormData.collectionForm,
+          searchCriteria: searchConfigFromSession.searchFormData.searchCriteria,
+        });
+        store.dispatch(searchResultsSlice.actions.setSearchFormData(searchConfigFromSession.searchFormData));
+      }
+      if (searchConfigFromSession.searchResult) {
+        store.dispatch(searchResultsSlice.actions.setSearchResult(searchConfigFromSession.searchResult));
+      }
+    }
+  }
+
   componentWillUnmount() {
     store.dispatch(searchResultsSlice.actions.reset());
   }
@@ -85,13 +106,23 @@ class AdvancedSearch extends Component {
     }
 
     if (this.props.oDataSearchResult !== prevProps?.oDataSearchResult) {
+      const newSearchFormData = {
+        fromMoment: this.state.fromMoment,
+        toMoment: this.state.toMoment,
+        collectionForm: this.state.collectionForm,
+        searchCriteria: this.state.searchCriteria,
+      };
+
       store.dispatch(searchResultsSlice.actions.setSearchResult(this.props.oDataSearchResult));
-      store.dispatch(
-        searchResultsSlice.actions.setSearchFormData({
-          fromMoment: this.state.fromMoment,
-          toMoment: this.state.toMoment,
-          collectionForm: this.state.collectionForm,
-          searchCriteria: this.state.searchCriteria,
+      store.dispatch(searchResultsSlice.actions.setSearchFormData(newSearchFormData));
+      sessionStorage.setItem(
+        ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+        JSON.stringify({
+          searchResult: this.props.oDataSearchResult,
+          searchFormData: newSearchFormData,
+          resultsAvailable: true,
+          resultsPanelSelected: true,
+          shouldShowAdvancedSearchTab: true,
         }),
       );
     }
@@ -327,6 +358,21 @@ class AdvancedSearch extends Component {
 
   backToSearch = () => {
     this.resetSearch();
+    const searchConfigFromSession = JSON.parse(
+      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+    );
+
+    if (searchConfigFromSession) {
+      sessionStorage.setItem(
+        ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+        JSON.stringify({
+          ...searchConfigFromSession,
+          searchResult: null,
+          resultsAvailable: false,
+          resultsPanelSelected: false,
+        }),
+      );
+    }
   };
 
   getNextNResults = async () => {

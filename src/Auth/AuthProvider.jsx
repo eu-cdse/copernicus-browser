@@ -18,6 +18,7 @@ import store, { authSlice } from '../store';
 const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => {
   const [userAuthCompleted, setUserAuthCompleted] = useState(false);
   const [, setAnonAuthCompleted] = useState(false);
+
   const { saveAndDispatchToken, getAnonymousToken, captchaRef, clearAnonTokenRefresh } =
     useAnonymousAuthRecaptcha();
 
@@ -61,11 +62,6 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
 
   return (
     <>
-      {!userAuthCompleted && (
-        <div className="initial-loader">
-          <i className="fa fa-cog fa-spin fa-3x fa-fw" />
-        </div>
-      )}
       <Captcha
         ref={captchaRef}
         onExecute={async (siteResponse) => {
@@ -93,7 +89,13 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
           captchaRef.current.executeCaptcha();
         }}
       ></EnsureAuth>
-      <UserTokenRefresh>{children}</UserTokenRefresh>
+      {userAuthCompleted ? (
+        <UserTokenRefresh>{children}</UserTokenRefresh>
+      ) : (
+        <div className="initial-loader">
+          <i className="fa fa-cog fa-spin fa-3x fa-fw" />
+        </div>
+      )}
     </>
   );
 };

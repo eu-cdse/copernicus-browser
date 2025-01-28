@@ -23,7 +23,7 @@ import {
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
-import { reqConfigMemoryCache } from '../../const';
+import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
 
@@ -200,7 +200,19 @@ const ResultItem = ({
           disabled={!!visualizeButtonDisabled}
           text={t`Visualise`}
           className="small ellipsis"
-          onClick={() => visualize({ onResultSelected, tile, currentZoom: zoom })}
+          onClick={() => {
+            const searchConfigFromSession = JSON.parse(
+              sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+            );
+            sessionStorage.setItem(
+              ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+              JSON.stringify({
+                ...searchConfigFromSession,
+                shouldShowAdvancedSearchTab: false,
+              }),
+            );
+            visualize({ onResultSelected, tile, currentZoom: zoom });
+          }}
           title={
             visualizeButtonDisabled
               ? visualizeButtonDisabled

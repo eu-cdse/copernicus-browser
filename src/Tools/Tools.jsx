@@ -13,7 +13,10 @@ import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice } fr
 import { savePinsToServer, savePinsToSessionStorage, constructPinFromProps } from './Pins/Pin.utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel/VisualizationPanel.utils';
 import { checkIfCustom } from './SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG } from '../const';
+import {
+  ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+  FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG,
+} from '../const';
 
 import './Tools.scss';
 import { TABS } from '../const';
@@ -66,6 +69,13 @@ class Tools extends Component {
         store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
       }
     }
+
+    const searchConfigFromSession = JSON.parse(
+      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+    );
+    if (searchConfigFromSession?.shouldShowAdvancedSearchTab) {
+      store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
+    }
   }
 
   onSearchFinished = (query) => {
@@ -97,6 +107,17 @@ class Tools extends Component {
 
   setActiveTabIndex = (index) => {
     store.dispatch(tabsSlice.actions.setTabIndex(index));
+
+    const searchConfigFromSession = JSON.parse(
+      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+    );
+    sessionStorage.setItem(
+      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+      JSON.stringify({
+        ...searchConfigFromSession,
+        shouldShowAdvancedSearchTab: index === TABS.SEARCH_TAB,
+      }),
+    );
   };
 
   savePin = async () => {

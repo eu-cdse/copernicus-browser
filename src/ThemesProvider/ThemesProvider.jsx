@@ -37,6 +37,7 @@ class ThemesProvider extends React.Component {
         store.dispatch(themesSlice.actions.setUrlThemesList(themesFromThemesUrl));
       }
     }
+    await this.setThemes();
   }
 
   async privateConfigurationAlert(selectedMode, loginAsDifferentUser = false, currentThemeId) {
@@ -71,24 +72,7 @@ class ThemesProvider extends React.Component {
       (!prevProps.anonToken && this.props.anonToken) ||
       (this.props.user !== prevProps.user && this.props.user.access_token)
     ) {
-      let userInstances = [];
-
-      if (this.props.user.access_token) {
-        userInstances = await this.fetchUserInstances();
-      }
-
-      const currentThemeId = this.props.selectedThemeId || this.props.themeIdFromUrlParams;
-      const selectedMode = this.guessMode(currentThemeId);
-      this.setMode(selectedMode);
-      this.setSelectedThemeIdFromMode(selectedMode, currentThemeId);
-
-      const allThemes = [...userInstances, ...selectedMode.themes];
-
-      const isThemeIdInModeThemesList = !!allThemes.find((t) => t.id === currentThemeId);
-
-      if (selectedMode.themes.length > 0 && !isThemeIdInModeThemesList && currentThemeId) {
-        await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token, currentThemeId);
-      }
+      await this.setThemes();
     }
 
     if (this.props.user !== prevProps.user && !this.props.user.access_token) {
@@ -119,6 +103,30 @@ class ThemesProvider extends React.Component {
     store.dispatch(themesSlice.actions.setUserInstancesThemesList([]));
     store.dispatch(notificationSlice.actions.displayPanelError(null));
     await this.updateDataSourceHandlers(themeId);
+  };
+
+  setThemes = async () => {
+    const { themeIdFromUrlParams, anonToken, user } = this.props;
+    if (anonToken || (user && user.access_token)) {
+      let userInstances = [];
+
+      if (user.access_token) {
+        userInstances = await this.fetchUserInstances();
+      }
+
+      const currentThemeId = this.props.selectedThemeId || themeIdFromUrlParams;
+      const selectedMode = this.guessMode(currentThemeId);
+      this.setMode(selectedMode);
+      this.setSelectedThemeIdFromMode(selectedMode, currentThemeId);
+
+      const allThemes = [...userInstances, ...selectedMode.themes];
+
+      const isThemeIdInModeThemesList = !!allThemes.find((t) => t.id === currentThemeId);
+
+      if (selectedMode.themes.length > 0 && !isThemeIdInModeThemesList && currentThemeId) {
+        await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token, currentThemeId);
+      }
+    }
   };
 
   async fetchUserInstances() {

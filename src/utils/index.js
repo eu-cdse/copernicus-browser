@@ -117,6 +117,11 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     orbitDirection,
     cloudCoverage,
     dateMode,
+    compareShare,
+    compareMode,
+    compareSharedPinsId,
+    comparedClipping,
+    comparedOpacity,
   } = props;
   currentLat = Math.round(100000 * currentLat) / 100000;
   currentLng = Math.round(100000 * currentLng) / 100000;
@@ -227,6 +232,22 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
 
   if (modalId === ModalId.TIMELAPSE) {
     params.timelapse = JSON.stringify(timelapse);
+  }
+
+  if (compareShare) {
+    params.compareShare = compareShare;
+  }
+  if (compareMode) {
+    params.compareMode = compareMode;
+  }
+  if (compareSharedPinsId) {
+    params.compareSharedPinsId = compareSharedPinsId;
+  }
+  if (comparedOpacity) {
+    params.comparedOpacity = comparedOpacity;
+  }
+  if (comparedClipping) {
+    params.comparedClipping = comparedClipping;
   }
 
   const escapedParams = Object.keys(params)

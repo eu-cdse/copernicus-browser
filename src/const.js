@@ -288,3 +288,4 @@ export const SH_PAYING_ACCOUNT_TYPES = [
 ];
 
 export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
+export const ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY = 'cdsebrowser_search_config';
