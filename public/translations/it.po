@@ -593,15 +593,6 @@ msgstr "Collegamento dello SciHub"
 msgid "Back to search"
 msgstr "Torna alla finestra di ricerca"
 
-#. Translations have to be added with their Plural forms as we otherwise lose the Plurals when updating the terms which crashes the app.
-#, javascript-format
-msgid "Showing ${ this.state.results.length } result"
-msgid_plural "Showing ${ this.state.results.length } results"
-msgstr[0] ""
-"Mostra ${ this.state.results.length } il risultato\n"
-"Plurale: Mostra ${ this.state.results.length } i risultati"
-msgstr[1] ""
-
 msgid "Load more"
 msgstr "Carica piú"
 
@@ -610,11 +601,6 @@ msgstr "Caricamento di piú risultati in corso..."
 
 msgid "Results"
 msgstr "Risultati"
-
-msgid "Showing ${ this.state.selectedTiles.length } result."
-msgid_plural "Showing ${ this.state.selectedTiles.length } results."
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "Reject changes"
 msgstr "Annulla le modifiche"
@@ -3048,6 +3034,7 @@ msgid ""
 "closer to the earth, the minus button will move the camera further away."
 msgstr ""
 
+#, javascript-format
 msgid ""
 "The **Copernicus DEM** represents the surface of the Earth including "
 "buildings, infrastructure and vegetation. Similar to the Mapzen DEM, it is "
@@ -4248,6 +4235,7 @@ msgstr "Tutti i parametri di input"
 msgid "Hide ${ property } values"
 msgstr "Nascondi ${ property } valori"
 
+#, javascript-format
 msgid "Show ${ property } values"
 msgstr "Mostra i valori di ${ property }"
 
@@ -5985,12 +5973,6 @@ msgid "Start time from ascending node"
 msgstr ""
 
 msgid "Completion time from ascending node"
-msgstr ""
-
-msgid ""
-"The available Sentinel-1 data includes products from the Sentinel-1 "
-"satellite constellation, including Sentinel-1A (operational since 2014) and "
-"Sentinel-1B (operational from 2016 to 2022)."
 msgstr ""
 
 msgid ""
@@ -7906,20 +7888,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"# Fraction of Absorbed Photosynthetically Active Radiation\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"FAPAR corresponds to the fraction of photosynthetically active radiation "
-"absorbed by the canopy. The index describes only the green parts of the "
-"canopy and is very useful for assessing the primary productivity of "
-"canopies. Find more information "
-"[here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-"
-"fapar/)."
-msgstr ""
-
-msgid ""
 "# Leaf Area Index\n"
 "\n"
 "\n"
@@ -8092,6 +8060,7 @@ msgid ""
 "fa-crosshairs\"></i></span> centers the map to the drawn polygon."
 msgstr ""
 
+#, javascript-format
 msgid ""
 "If you choose one of the preconfigured themes under **Configurations**, you "
 "will be able to select from a highlights list under the Highlights panel.\n"
@@ -8758,4 +8727,24 @@ msgid ""
 "Visualized forest types based on 6 classes, as defined in the UN-FAO Land "
 "Cover Classification System (LCCS). More info "
 "[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover)."
+msgstr ""
+
+msgid ""
+"# Fraction of Absorbed Photosynthetically Active Radiation\n"
+"      \n"
+"\n"
+"\n"
+"\n"
+"FAPAR corresponds to the fraction of photosynthetically active radiation "
+"absorbed by the canopy. The index describes only the green parts of the "
+"canopy and is very useful for assessing the primary productivity of "
+"canopies. Find more information "
+"[here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-"
+"fapar/)."
+msgstr ""
+
+msgid ""
+"The available Sentinel-1 data includes products from the Sentinel-1 "
+"satellite constellation, including Sentinel-1A (operational since 2014), "
+"Sentinel-1B (operational from 2016 to 2022) and Sentinel-1C (sample)."
 msgstr ""

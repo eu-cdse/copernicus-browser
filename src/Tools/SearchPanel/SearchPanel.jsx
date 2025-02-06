@@ -30,7 +30,7 @@ import Results from '../Results/Results';
 import Highlights from './Highlights/Highlights';
 import { getThemeName } from '../../utils';
 import CommercialData from '../CommercialDataPanel/CommercialData';
-import { withRouter } from 'react-router-dom';
+import withRouter from '../../hoc/withRouter';
 
 const NO_THEME = 'no-theme-selected';
 
@@ -58,9 +58,9 @@ class SearchPanel extends Component {
       this.setSelectedTab(SEARCH_PANEL_TABS.SEARCH_TAB);
     }
 
-    if (this.props.location.hash) {
+    if (this.props.router.location.hash) {
       const selectedTabIndex = Object.keys(SEARCH_PANEL_TABS_HASH).find(
-        (key) => SEARCH_PANEL_TABS_HASH[key] === this.props.location.hash,
+        (key) => SEARCH_PANEL_TABS_HASH[key] === this.props.router.location.hash,
       );
       if (selectedTabIndex) {
         this.setSelectedTab(parseInt(selectedTabIndex));

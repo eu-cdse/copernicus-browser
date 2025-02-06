@@ -580,14 +580,6 @@ msgstr "SciHub saite"
 msgid "Back to search"
 msgstr "Atpakaļ uz meklētāju"
 
-#. Translations have to be added with their Plural forms as we otherwise lose the Plurals when updating the terms which crashes the app.
-#, javascript-format
-msgid "Showing ${ this.state.results.length } result"
-msgid_plural "Showing ${ this.state.results.length } results"
-msgstr[0] "Redzami ${ this.state.results.length } rezultāti"
-msgstr[1] "Redzams ${ this.state.results.length } rezultāts"
-msgstr[2] "Redzami ${ this.state.results.length } rezultāti"
-
 msgid "Load more"
 msgstr "Ielādēt vēl"
 
@@ -596,12 +588,6 @@ msgstr "Ielādē vēl rezultātus..."
 
 msgid "Results"
 msgstr "Rezultāti"
-
-msgid "Showing ${ this.state.selectedTiles.length } result."
-msgid_plural "Showing ${ this.state.selectedTiles.length } results."
-msgstr[0] "Redzami ${ this.state.selectedTiles.length } rezultāti."
-msgstr[1] "Redzams ${ this.state.selectedTiles.length } rezultāts."
-msgstr[2] "Redzami ${ this.state.selectedTiles.length } rezultāti."
 
 msgid "Reject changes"
 msgstr "Atcelt izmaiņas"
@@ -3744,6 +3730,7 @@ msgstr ""
 "Klikšķinot tos tiks mainīts kameras augstums. \"+\" taustiņš kustinās "
 "kameru tuvāk zemes virsmai, bet \"-\" taustiņš kameru attālinās."
 
+#, javascript-format
 msgid ""
 "The **Copernicus DEM** represents the surface of the Earth including "
 "buildings, infrastructure and vegetation. Similar to the Mapzen DEM, it is "
@@ -5448,6 +5435,7 @@ msgstr "Visi ievades parametri"
 msgid "Hide ${ property } values"
 msgstr "Slēpt ${property} vērtības"
 
+#, javascript-format
 msgid "Show ${ property } values"
 msgstr "Rādīt ${property} vērtības"
 
@@ -7334,12 +7322,6 @@ msgstr "Start time from ascending node"
 
 msgid "Completion time from ascending node"
 msgstr "Completion time from ascending node"
-
-msgid ""
-"The available Sentinel-1 data includes products from the Sentinel-1 "
-"satellite constellation, including Sentinel-1A (operational since 2014) and "
-"Sentinel-1B (operational from 2016 to 2022)."
-msgstr ""
 
 msgid ""
 "Determines whether the data was recorded during a descending orbit (flight "
@@ -9291,20 +9273,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"# Fraction of Absorbed Photosynthetically Active Radiation\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"FAPAR corresponds to the fraction of photosynthetically active radiation "
-"absorbed by the canopy. The index describes only the green parts of the "
-"canopy and is very useful for assessing the primary productivity of "
-"canopies. Find more information "
-"[here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-"
-"fapar/)."
-msgstr ""
-
-msgid ""
 "# Leaf Area Index\n"
 "\n"
 "\n"
@@ -9477,6 +9445,7 @@ msgid ""
 "fa-crosshairs\"></i></span> centers the map to the drawn polygon."
 msgstr ""
 
+#, javascript-format
 msgid ""
 "If you choose one of the preconfigured themes under **Configurations**, you "
 "will be able to select from a highlights list under the Highlights panel.\n"
@@ -10143,4 +10112,24 @@ msgid ""
 "Visualized forest types based on 6 classes, as defined in the UN-FAO Land "
 "Cover Classification System (LCCS). More info "
 "[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover)."
+msgstr ""
+
+msgid ""
+"# Fraction of Absorbed Photosynthetically Active Radiation\n"
+"      \n"
+"\n"
+"\n"
+"\n"
+"FAPAR corresponds to the fraction of photosynthetically active radiation "
+"absorbed by the canopy. The index describes only the green parts of the "
+"canopy and is very useful for assessing the primary productivity of "
+"canopies. Find more information "
+"[here](https://custom-scripts.sentinel-hub.com/copernicus_services/hrvpp/vi-"
+"fapar/)."
+msgstr ""
+
+msgid ""
+"The available Sentinel-1 data includes products from the Sentinel-1 "
+"satellite constellation, including Sentinel-1A (operational since 2014), "
+"Sentinel-1B (operational from 2016 to 2022) and Sentinel-1C (sample)."
 msgstr ""

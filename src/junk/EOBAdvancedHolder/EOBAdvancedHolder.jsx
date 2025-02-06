@@ -6,7 +6,7 @@ import { GroupedBandsToRGB } from '../BandsToRGB/GroupedBandsToRGB';
 import { EvalScriptInput } from './EvalScriptInput';
 import DataFusion from './DataFusion';
 import { IndexBands } from '../BandsToRGB/IndexBands';
-import { withRouter } from 'react-router-dom';
+import withRouter from '../../hoc/withRouter';
 
 import './EOBAdvancedHolder.scss';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
@@ -37,7 +37,7 @@ class EOBAdvancedHolder extends React.Component {
 
   initTabs = () => {
     const hashIndex = CUSTOM_VISUALIZATION_URL_ROUTES.findIndex((hash) =>
-      this.props.location.hash.includes(hash),
+      this.props.router.location.hash.includes(hash),
     );
     if (hashIndex !== -1) {
       this.setState({ selectedTab: hashIndex });
@@ -45,13 +45,13 @@ class EOBAdvancedHolder extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.location.hash) {
+    if (this.props.router.location.hash) {
       this.initTabs();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.hash !== prevProps.location.hash) {
+    if (this.props.router.location.hash !== prevProps.router.location.hash) {
       this.initTabs();
     }
   }

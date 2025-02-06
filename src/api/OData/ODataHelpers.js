@@ -42,7 +42,6 @@ import {
   AttributeOnlineValues,
   AttributeOperationalModeValues,
   AttributeOrbitDirectionValues,
-  AttributePlatformSerialIdentifierValues,
   AttributePolarisationChannelsValues,
   FormatedAttributeNames,
   ODataAttributes,
@@ -91,16 +90,6 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     const polarisationChannels = attributes.filter(
       (attribute) => attribute?.Name === AttributeNames.polarisationChannels,
     );
-
-    const platformSerialIdentifier = attributes.find(
-      (attribute) => attribute?.Name === AttributeNames.platformSerialIdentifier,
-    );
-    if (
-      platformSerialIdentifier &&
-      platformSerialIdentifier.Value === AttributePlatformSerialIdentifierValues.S1C.value
-    ) {
-      return null;
-    }
 
     if (/^IW_GRDH_1S/.test(productType)) {
       switch (polarisationChannels[0]?.Value) {
