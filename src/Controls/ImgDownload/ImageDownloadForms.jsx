@@ -307,6 +307,7 @@ export function ImageDownloadForms(props) {
           disabledDownload={disabledImagePreviewDownload}
           drawGeoToImg={selectedTab === TABS.BASIC ? basicFormState.drawGeoToImg : false}
           showComparePanel={showComparePanel}
+          selectedCrs={CRS_EPSG4326.authId}
         />
       )}
 

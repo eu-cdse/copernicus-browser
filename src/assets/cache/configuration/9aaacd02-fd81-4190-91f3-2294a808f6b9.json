@@ -7,12 +7,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.GIFAPAR;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"GIFAPAR\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"GIFAPAR\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 2\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.GIFAPAR);\n    return {\n        default: [val, samples.dataMask],\n        eobrowserStats: [samples.GIFAPAR],\n        index: [samples.GIFAPAR],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-16T11:31:01.152736Z",
+        "lastUpdated": "2025-02-10T13:09:34.398173Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -31,12 +31,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 1.0;\nlet rangeMax = 70.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"IWV_W\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.IWV_W), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = 1.0;\nlet rangeMax = 70.0;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"IWV_W\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n\n    let val = viz.process(samples.IWV_W);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.IWV_W],\n        index: [samples.IWV_W],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-16T11:30:54.991230Z",
+        "lastUpdated": "2025-02-10T12:32:14.675761Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -55,12 +55,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nlet minVal = 1.0;\nlet maxVal = 70.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.IWV_L;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"IWV_L\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+                "evalScript": "//VERSION=3\nlet minVal = 1.0;\nlet maxVal = 70.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"IWV_L\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 2\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.IWV_L);\n    return {\n        default: [val, samples.dataMask],\n        eobrowserStats: [samples.IWV_L],\n        index: [samples.IWV_L],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-08T08:55:47.091190Z",
+        "lastUpdated": "2025-02-10T12:15:35.298760Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -79,12 +79,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -1.8;\nlet rangeMax = 2.2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_OC4ME\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_OC4ME), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -1.8;\nlet rangeMax = 2.2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"CHL_OC4ME\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.CHL_OC4ME);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.CHL_OC4ME],\n        index: [samples.CHL_OC4ME],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:30:27.046316Z",
+        "lastUpdated": "2025-02-10T12:30:13.004144Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -103,12 +103,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3 \nconst map = [\n    [0.0, 0x00007d],\n    [0.8, 0x004ccc],\n    [1.44, 0xff3333],\n    [2.0, 0xffe500],\n    [3.2, 0x00cc19],\n    [3.6, 0x00cc19],\n    [4.0, 0xffffff]\n];\n\nconst visualizer = new ColorRampVisualizer(map);\nfunction setup() {\n    return {\n        input: [\"OTCI\", \"dataMask\"],\n        output: [{ id: \"default\", bands: 4 }]\n    };\n}\n\nfunction evaluatePixel(samples) {\n    return { default: [...visualizer.process(samples.OTCI), samples.dataMask] };\n}\n"
+                "evalScript": "//VERSION=3 \nconst map = [\n    [0.0, 0x00007d],\n    [0.8, 0x004ccc],\n    [1.44, 0xff3333],\n    [2.0, 0xffe500],\n    [3.2, 0x00cc19],\n    [3.6, 0x00cc19],\n    [4.0, 0xffffff]\n];\n\nconst visualizer = new ColorRampVisualizer(map);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"OTCI\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = visualizer.process(samples.OTCI);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.OTCI],\n        index: [samples.OTCI],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-08T10:57:42.749590Z",
+        "lastUpdated": "2025-02-10T12:20:05.440225Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -127,12 +127,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.5;\nlet rangeMax = 3;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"TSM_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.TSM_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.5;\nlet rangeMax = 3;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"TSM_NN\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.TSM_NN);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.TSM_NN],\n        index: [samples.TSM_NN],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:30:58.349168Z",
+        "lastUpdated": "2025-02-10T12:33:39.760024Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -151,12 +151,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.RC681;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"RC681\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"RC681\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 2\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.RC681);\n\n    return {\n        default: [val, samples.dataMask],\n        eobrowserStats: [samples.RC681],\n        index: [samples.RC681],\n        dataMask: [samples.dataMask],\n    };\n}\n"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-08T08:56:30.049216Z",
+        "lastUpdated": "2025-02-10T12:23:37.026344Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -175,12 +175,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = 300;\nlet rangeMax = 2100;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"PAR\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.PAR), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = 300;\nlet rangeMax = 2100;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"PAR\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.PAR);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.PAR],\n        index: [samples.PAR],\n        dataMask: [samples.dataMask],\n    };\n}\n"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:31:16.082169Z",
+        "lastUpdated": "2025-02-10T12:33:04.937886Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -199,12 +199,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.RC865;\n    val = viz.process(val);\n    return [val, samples.dataMask];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"RC865\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 1.0;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"RC865\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 2\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.RC865);\n\n    return {\n        default: [val, samples.dataMask],\n        eobrowserStats: [samples.RC865],\n        index: [samples.RC865],\n        dataMask: [samples.dataMask],\n    };\n}\n"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-08T08:57:04.159232Z",
+        "lastUpdated": "2025-02-10T12:25:11.794668Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -223,12 +223,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.0;\nlet rangeMax = 1.5;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"KD490_M07\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.KD490_M07), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2.0;\nlet rangeMax = 1.5;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"KD490_M07\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.KD490_M07);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.KD490_M07],\n        index: [samples.KD490_M07],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:32:07.206692Z",
+        "lastUpdated": "2025-02-10T12:31:29.304716Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -247,12 +247,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax)\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"A865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.A865), samples.dataMask];\n}"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax)\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"A865\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.A865);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.A865],\n        index: [samples.A865],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:32:32.438079Z",
+        "lastUpdated": "2025-02-10T12:26:26.194306Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -271,12 +271,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 1;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"T865\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.T865), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -0.1;\nlet rangeMax = 1;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax)\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"T865\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.T865);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.T865],\n        index: [samples.T865],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:32:47.625302Z",
+        "lastUpdated": "2025-02-10T12:27:03.759204Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -295,12 +295,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -2;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"CHL_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.CHL_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -2;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"CHL_NN\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.CHL_NN);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.CHL_NN],\n        index: [samples.CHL_NN],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:33:01.700289Z",
+        "lastUpdated": "2025-02-10T12:29:12.439288Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",
@@ -319,12 +319,12 @@
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\n\nlet rangeMin = -3;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"ADG443_NN\", \"dataMask\"]\n    }],\n    output: { bands: 4 }\n  }\n}\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask === 0) {\n    return [0, 0, 0, samples.dataMask];\n  }\n  return [...viz.process(samples.ADG443_NN), samples.dataMask];\n}\n"
+                "evalScript": "//VERSION=3\n\nlet rangeMin = -3;\nlet rangeMax = 2;\nlet viz = ColorRampVisualizer.createOceanColor(rangeMin, rangeMax);\n\nfunction setup() {\n    return {\n        input: [{\n            bands: [\"ADG443_NN\", \"dataMask\"]\n        }],\n        output: [{\n                id: \"default\",\n                bands: 4\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1\n            },\n            {\n                id: \"index\",\n                bands: 1,\n                sampleType: \"FLOAT32\"\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            },\n        ],\n    }\n}\n\nfunction evaluatePixel(samples) {\n    let val = viz.process(samples.ADG443_NN);\n    val.push(samples.dataMask);\n\n    return {\n        default: val,\n        eobrowserStats: [samples.ADG443_NN],\n        index: [samples.ADG443_NN],\n        dataMask: [samples.dataMask],\n    };\n}"
             }
         ],
         "orderHint": 0,
         "instanceId": "9aaacd-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2024-08-19T11:33:14.356621Z",
+        "lastUpdated": "2025-02-10T12:30:50.454815Z",
         "collectionType": "S3OLCIL2",
         "datasetSourceId": 22,
         "defaultStyleName": "default",

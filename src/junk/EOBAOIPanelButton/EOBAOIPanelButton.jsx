@@ -63,18 +63,13 @@ export class EOBAOIPanelButton extends React.Component {
   );
 
   renderAioInfo = () => {
-    const area = (
-      parseFloat(
-        geo_area.geometry(this.props.aoiBounds ? this.props.aoiBounds : this.props.mapGeometry.geometry),
-      ) / 1000000
-    ).toFixed(2);
-
+    const area = (parseFloat(geo_area.geometry(this.props.aoiBounds)) / 1000000).toFixed(2);
     return (
       <span className="aoiCords">
         <CopyToClipboardButton
           className={`copy-coord`}
           title={t`Copy geometry to clipboard`}
-          value={this.props.aoiBounds.geometry ?? this.props.aoiBounds}
+          value={this.props.aoiBounds}
         />
         {!isNaN(area) && (
           <span className="area-text">

@@ -10764,12 +10764,6 @@ msgstr ""
 msgid "The .zip file is missing content. The .prj and .shp files are required"
 msgstr ""
 
-msgid ""
-"Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file "
-"to create an area of interest. The area will be used for clipping when "
-"exporting an image."
-msgstr ""
-
 msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
 msgstr ""
 
@@ -11128,4 +11122,22 @@ msgid ""
 "The available Sentinel-1 data includes products from the Sentinel-1 "
 "satellite constellation, including Sentinel-1A (operational since 2014), "
 "Sentinel-1B (operational from 2016 to 2022) and Sentinel-1C (sample)."
+msgstr ""
+
+msgid ""
+"Upload a zipped file to create an area of interest. The area will be used "
+"for clipping when exporting an image."
+msgstr ""
+
+msgid ""
+"Paste your GEOJSON geometry or enter a GEOREF/MGRS reference to define your "
+"area of interest."
+msgstr ""
+
+msgid ""
+"Draw Open Street Map layer as image background. Image will be exported in "
+"PNG format."
+msgstr ""
+
+msgid "Add OSM background"
 msgstr ""

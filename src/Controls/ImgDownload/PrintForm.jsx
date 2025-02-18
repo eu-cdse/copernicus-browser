@@ -21,6 +21,7 @@ class PrintForm extends React.Component {
       onErrorMessage,
       heightToWidthRatio,
       isUserLoggedIn,
+      showOSMBackgroundLayer,
     } = this.props;
 
     const imageHeightInches = (imageWidthInches * heightToWidthRatio).toFixed(1);
@@ -37,6 +38,7 @@ class PrintForm extends React.Component {
           updateFormData={updateFormData}
           addingMapOverlaysPossible={false}
           isUserLoggedIn={isUserLoggedIn}
+          showOSMBackgroundLayer={showOSMBackgroundLayer}
         />
 
         <div className="form-field">

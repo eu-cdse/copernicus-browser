@@ -28,6 +28,7 @@ import {
   generateKmlFile,
   prepareKmzFile,
   getDimensionsInMeters,
+  adjustClippingForAoi,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
@@ -58,6 +59,7 @@ import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 import './ImageDownload.scss';
 import { DATASOURCES } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
+import { baseLayers } from '../../Map/Layers';
 
 function ImageDownload(props) {
   const [selectedTab, setSelectedTab] = useState(props.is3D ? TABS.TERRAIN_VIEWER : TABS.BASIC);
@@ -96,6 +98,7 @@ function ImageDownload(props) {
     showCaptions: true,
     showLegend: false,
     userDescription: '',
+    showOSMBackgroundLayer: false,
     imageFormat: IMAGE_FORMATS.JPG,
     resolutionDpi: 300,
     imageWidthInches: 33.1,
@@ -237,6 +240,11 @@ function ImageDownload(props) {
     const { imageFormat, cropToAoi } = formData;
     const bounds = cropToAoi ? props.aoiBounds : props.mapBounds;
     const correctProjection = !formData.addMapOverlays ? CRS_EPSG4326.authId : CRS_EPSG3857.authId;
+    const { comparedClipping, aoiBounds, mapBounds } = props;
+
+    const adjustedClipping = cropToAoi
+      ? adjustClippingForAoi(comparedClipping, aoiBounds, mapBounds)
+      : comparedClipping;
 
     const { finalImage, finalFileName } = await fetchAndPatchImagesFromParams(
       {
@@ -244,6 +252,7 @@ function ImageDownload(props) {
         ...formData,
         ...baseParams,
         bounds,
+        comparedClipping: adjustedClipping,
         comparedLayers: props.comparedLayers.map((cLayer) => {
           let newCLayer = Object.assign({}, cLayer);
           newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
@@ -266,16 +275,18 @@ function ImageDownload(props) {
 
   async function executeDownloadBasicVisualization(props, formData, baseParams) {
     let blob;
-    const { imageFormat, cropToAoi } = formData;
+    const { imageFormat, cropToAoi, showOSMBackgroundLayer } = formData;
     const bounds = cropToAoi ? props.aoiBounds : props.mapBounds;
     const correctProjection = !formData.addMapOverlays ? CRS_EPSG4326.authId : CRS_EPSG3857.authId;
 
     try {
+      const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
       blob = await fetchImageFromParams(
         {
           ...props,
           ...formData,
           ...baseParams,
+          baseLayerUrl: showOSMBackgroundLayer ? defaultBaseLayer.url : null,
           bounds,
           selectedCrs: correctProjection,
           aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
@@ -528,8 +539,15 @@ function ImageDownload(props) {
 
   async function downloadPrint(formData) {
     const { aoiGeometry } = props;
-    const { imageWidthInches, resolutionDpi, imageFormat, showCaptions, showLegend, userDescription } =
-      formData;
+    const {
+      imageWidthInches,
+      resolutionDpi,
+      imageFormat,
+      showCaptions,
+      showLegend,
+      userDescription,
+      showOSMBackgroundLayer,
+    } = formData;
     const bounds = props.aoiGeometry ? props.aoiBounds : props.mapBounds;
 
     setError(null);
@@ -558,7 +576,11 @@ function ImageDownload(props) {
 
     let image;
     try {
-      image = await fetchImageFromParams({ ...props, ...params }, setWarnings);
+      const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
+      image = await fetchImageFromParams(
+        { ...props, ...params, baseLayerUrl: showOSMBackgroundLayer ? defaultBaseLayer.url : null },
+        setWarnings,
+      );
     } catch (err) {
       setError(err);
       setLoadingImages(false);

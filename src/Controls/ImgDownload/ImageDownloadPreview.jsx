@@ -5,6 +5,7 @@ import { t } from 'ttag';
 import moment from 'moment';
 import { IMAGE_FORMATS } from './consts';
 import {
+  adjustClippingForAoi,
   fetchAndPatchImagesFromParams,
   fetchImageFromParams,
   getImageDimensionFromBoundsWithCap,
@@ -42,6 +43,7 @@ const ImageDownloadPreview = (props) => {
     layerId,
     is3D,
     showComparePanel,
+    comparedClipping,
   } = props;
 
   const fetchPreviewImg = async (layerId = null) => {
@@ -88,9 +90,14 @@ const ImageDownloadPreview = (props) => {
     let blob;
 
     if (showComparePanel) {
+      const adjustedClipping = cropToAoi
+        ? adjustClippingForAoi(comparedClipping, aoiBounds, mapBounds)
+        : comparedClipping;
+
       const response = await fetchAndPatchImagesFromParams(
         {
           ...params,
+          comparedClipping: adjustedClipping,
           comparedLayers: comparedLayers.map((cLayer) => {
             let newCLayer = Object.assign({}, cLayer);
             newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;

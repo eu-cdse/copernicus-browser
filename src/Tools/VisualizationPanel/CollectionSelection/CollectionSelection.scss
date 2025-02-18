@@ -121,16 +121,14 @@
     .collection-buttons-wrapper {
       width: 100%;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       flex-wrap: wrap;
       justify-content: space-between;
-      padding-left: 7px;
 
       .single-collection-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 97%;
 
         .eob-btn {
           width: 100%;

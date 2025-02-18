@@ -24,7 +24,7 @@ const getFileUploadText = (fileUploadType) => {
       fileUploadText = t`Upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file.`;
       break;
     default:
-      fileUploadText = t`Upload a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file to create an area of interest. The area will be used for clipping when exporting an image.`;
+      fileUploadText = t`Upload a zipped file to create an area of interest. The area will be used for clipping when exporting an image.`;
   }
 
   return fileUploadText;
@@ -80,6 +80,7 @@ export class EOBUploadGeoFile extends Component {
     const fileUploadTitle = t`File upload`;
     const fileUploadText = getFileUploadText(this.props.type);
     const dropAFileString = t`Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file.`;
+    const placeHolderText = t`Paste your GEOJSON geometry or enter a GEOREF/MGRS reference to define your area of interest.`;
 
     const { inputGeometry } = this.state;
     return ReactDOM.createPortal(
@@ -112,7 +113,7 @@ export class EOBUploadGeoFile extends Component {
 
           <div className="geometryInput">
             <textarea
-              placeholder="... or paste geometry here "
+              placeholder={placeHolderText}
               rows="12"
               defaultValue={inputGeometry}
               onChange={(e) => this.setState({ inputGeometry: e.target.value })}

@@ -15,11 +15,7 @@ import {
   datasetHasAnyFISLayer,
   getDatasetLabel,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import {
-  appendPolygon,
-  getGeoJSONFromLeafletBounds,
-  getLeafletBoundsFromGeoJSON,
-} from '../../utils/geojson.utils';
+import { appendPolygon, boundsToPolygon, getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
 
 class AOI extends Component {
@@ -234,7 +230,7 @@ class AOI extends Component {
       (this.props.mapBounds && this.state.drawingInProgress) || this.props.aoiBounds
         ? this.props.aoiGeometry
           ? this.props.aoiGeometry
-          : getGeoJSONFromLeafletBounds(this.props.mapBounds)
+          : boundsToPolygon(this.props.mapBounds)
         : null;
     return (
       <div

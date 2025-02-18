@@ -400,6 +400,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     aoiWidthInMeters,
     mapWidthInMeters,
     selectedCrs,
+    baseLayerUrl,
   } = params;
 
   const layer = await getLayerFromParams(params, cancelToken);
@@ -591,8 +592,32 @@ export async function fetchImageFromParams(params, raiseWarning) {
   }
 
   async function getReturnValueSingleBlob() {
+    let finalBlob = blob;
+
+    if (baseLayerUrl) {
+      const mergeCanvas = document.createElement('canvas');
+      mergeCanvas.width = width;
+      mergeCanvas.height = height;
+      const mergeCtx = mergeCanvas.getContext('2d');
+
+      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, lat, lng, zoom, width, height);
+      mergeCtx.drawImage(baseCanvas, 0, 0, width, height);
+
+      const sentinelUrl = URL.createObjectURL(blob);
+      const sentinelImg = await new Promise((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = reject;
+        i.src = sentinelUrl;
+      });
+      mergeCtx.drawImage(sentinelImg, 0, 0, width, height);
+      URL.revokeObjectURL(sentinelUrl);
+
+      finalBlob = await canvasToBlob(mergeCanvas, mimeType);
+    }
+
     const imageWithOverlays = await addImageOverlays(
-      blob,
+      finalBlob,
       width,
       height,
       mimeType,
@@ -1997,3 +2022,31 @@ export async function mergeFetchedImages(blobArray) {
     });
   }
 }
+
+/**
+ * Adjusts clipping coordinates proportionally to the Area of Interest (AOI).
+ */
+
+export const adjustClippingForAoi = (clipping, aoiBounds, mapBounds) => {
+  const { _southWest: aoiSW, _northEast: aoiNE } = aoiBounds;
+  const { _southWest: mapSW, _northEast: mapNE } = mapBounds;
+
+  const mapWidth = mapNE.lng - mapSW.lng;
+
+  const aoiStartX = (aoiSW.lng - mapSW.lng) / mapWidth;
+  const aoiEndX = (aoiNE.lng - mapSW.lng) / mapWidth;
+
+  const adjustedClipping = clipping.map(([start, end]) => {
+    let startAdjustedX = (start - aoiStartX) / (aoiEndX - aoiStartX);
+    let endAdjustedX = (end - aoiStartX) / (aoiEndX - aoiStartX);
+
+    startAdjustedX = Math.max(0, Math.min(1, startAdjustedX));
+    endAdjustedX = Math.max(0, Math.min(1, endAdjustedX));
+
+    startAdjustedX = parseFloat(startAdjustedX.toFixed(2));
+    endAdjustedX = parseFloat(endAdjustedX.toFixed(2));
+    return [startAdjustedX, endAdjustedX];
+  });
+
+  return adjustedClipping;
+};

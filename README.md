@@ -23,6 +23,8 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualization ([li
 
 ## Development
 
+Contact us to get help about deploying the Browser on your infrastructure.
+
 * copy the file `.env.example` and rename the copied file to `.env`, fill out the needed values
 * use your instance ids in `*_themes.js`
 * Run `npm install`
@@ -34,9 +36,6 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualization ([li
 * Run `npm run debug-translations` to replace all translation strings with "XXXXXX"
 * Run `npm run update-previews` to create layer preview images
 * Run `npm run update-metadata-cache` to create getCapabilities and configuration cache
-
-Please note that source code is provided "as is". Deployment might be complicated due to dependency on numerous services.  
-We can unfortunately not provide step-by-step support for setting the application. For specific questions, do use [CDSE Forum](https://forum.dataspace.copernicus.eu/)
 
 ### Environment variables in the .env file
 

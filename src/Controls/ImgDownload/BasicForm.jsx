@@ -17,6 +17,7 @@ export default class BasicForm extends React.Component {
   CROP_TO_AOI_DISABLED_TITLE = t`To use Crop to AOI, area of interest needs to be selected first.`;
   DRAW_GEOMETRY_ON_IMAGE_TITLE = t`Draw an area of interest or line geometry on the exported image.`;
   DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE = t`To use Draw AOI or Line geometry on image, an area or line needs to be selected first.`;
+  ADD_OSM_BACKGROUND_TITLE = t`Draw Open Street Map layer as image background. Image will be exported in PNG format.`;
 
   componentDidMount() {
     const { updateFormData, addingMapOverlaysPossible } = this.props;
@@ -31,6 +32,14 @@ export default class BasicForm extends React.Component {
       updateFormData('addMapOverlays', false);
     }
   }
+
+  handleBackgroundLayerChange = () => {
+    const { updateFormData, showOSMBackgroundLayer, imageFormat } = this.props;
+    const newShowOSMBackgroundLayer = !showOSMBackgroundLayer;
+    const newImageFormat = newShowOSMBackgroundLayer ? IMAGE_FORMATS.PNG : imageFormat;
+    updateFormData('showOSMBackgroundLayer', newShowOSMBackgroundLayer);
+    updateFormData('imageFormat', newImageFormat);
+  };
 
   render() {
     const {
@@ -48,6 +57,7 @@ export default class BasicForm extends React.Component {
       hasLoi,
       cropToAoi,
       drawGeoToImg,
+      showOSMBackgroundLayer,
     } = this.props;
 
     const drawingGeometryOnImageEnabled = hasAoi || hasLoi;
@@ -94,6 +104,24 @@ export default class BasicForm extends React.Component {
             </div>
           </div>
         )}
+        <div className={`form-field`}>
+          <label title={this.ADD_OSM_BACKGROUND_TITLE}>
+            <div>{t`Add OSM background`}</div>
+            <i
+              className="fa fa-info-circle"
+              onClick={() => {
+                onErrorMessage(this.ADD_OSM_BACKGROUND_TITLE);
+              }}
+            />
+          </label>
+          <div className="form-input">
+            <Toggle
+              checked={showOSMBackgroundLayer}
+              icons={false}
+              onChange={this.handleBackgroundLayerChange}
+            />
+          </div>
+        </div>
         <div className={`form-field ${hasLegendData ? '' : 'disabled'}`}>
           <label title={hasLegendData ? this.LEGEND_TITLE : this.LEGEND_DISABLED_TITLE}>
             <div>{t`Show legend`}</div>
@@ -191,6 +219,7 @@ export default class BasicForm extends React.Component {
             <select
               className="dropdown"
               value={imageFormat}
+              disabled={showOSMBackgroundLayer}
               onChange={(e) => updateFormData('imageFormat', e.target.value)}
             >
               <option value={IMAGE_FORMATS.JPG}>{IMAGE_FORMATS_INFO[IMAGE_FORMATS.JPG].text}</option>

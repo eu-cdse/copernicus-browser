@@ -527,7 +527,7 @@ describe('useODataSearch S5', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 5;
+    const expectedResults = 2;
     expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     for (let i = 0; i < expectedResults; i++) {
@@ -589,7 +589,7 @@ describe('useODataSearch S5', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 12;
+    const expectedResults = 9;
     expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S5');

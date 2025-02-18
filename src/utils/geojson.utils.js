@@ -50,7 +50,7 @@ export const isRectangle = (geometry) => {
   }
 
   const geometryArea = area(geometry);
-  const boundsArea = area(getGeoJSONFromLeafletBounds(getLeafletBoundsFromBBox(bbox(geometry))).geometry);
+  const boundsArea = area(boundsToPolygon(getLeafletBoundsFromBBox(bbox(geometry))));
 
   return Math.round(geometryArea) === Math.round(boundsArea);
 };
@@ -82,23 +82,6 @@ const getLeafletBoundsFromBBox = (bbox) => {
 export const getLeafletBoundsFromGeoJSON = (geometry) => {
   const bb = bbox(geometry);
   return getLeafletBoundsFromBBox(bb);
-};
-
-export const getGeoJSONFromLeafletBounds = (bounds) => {
-  return {
-    geometry: {
-      type: 'Polygon',
-      coordinates: [
-        [
-          [bounds._southWest.lng, bounds._southWest.lat],
-          [bounds._northEast.lng, bounds._southWest.lat],
-          [bounds._northEast.lng, bounds._northEast.lat],
-          [bounds._southWest.lng, bounds._northEast.lat],
-          [bounds._southWest.lng, bounds._southWest.lat],
-        ],
-      ],
-    },
-  };
 };
 
 /*
