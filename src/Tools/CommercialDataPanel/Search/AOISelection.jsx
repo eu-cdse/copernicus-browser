@@ -39,6 +39,16 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
     }
   };
 
+  const formatArea = (geometry) => {
+    const areaKm2 = parseFloat(geo_area.geometry(geometry)) / 1000000;
+    if (areaKm2 < 0.01) {
+      const areaM2 = areaKm2 * 1000000;
+      return `${areaM2.toFixed(2)} ${t`m`}`;
+    } else {
+      return `${areaKm2.toFixed(2)} ${t`km`}`;
+    }
+  };
+
   return (
     <div className="row">
       <label title={t`Area of interest`}>{t`Area of interest`}</label>
@@ -46,7 +56,7 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
         <div className="aoi-text">
           {!!aoiGeometry ? (
             <span className="area-text">
-              {(parseFloat(geo_area.geometry(aoiGeometry)) / 1000000).toFixed(2)} {`km`}
+              {formatArea(aoiGeometry)}
               <sup>2</sup>
             </span>
           ) : (

@@ -1,8 +1,10 @@
 import axios from 'axios';
+import jwt_dec from 'jwt-decode';
 import { HTTPS, MAX_CHARACTER_LIMIT_ERROR } from '../../const';
 import store, { notificationSlice } from '../../store';
 
 import { getDataSourceHashtags } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { getAccessToken } from '../../Auth/authHelpers';
 
 const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
 const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
@@ -54,6 +56,7 @@ export async function getCustomDomainFullName() {
 
 export async function getShortUrl(urlLocation) {
   const sharedLinks = getSharedLinks();
+  const token = getAccessToken();
 
   if (!sharedLinks[urlLocation]) {
     const urlRequest = `${import.meta.env.VITE_CDSE_BACKEND}generateshorturl`;
@@ -61,7 +64,15 @@ export async function getShortUrl(urlLocation) {
     const data = {
       ...(fullName && { domain: { fullName: fullName } }),
       destination: urlLocation,
+      description: { userId: 'anonymous user' },
     };
+
+    if (token !== undefined) {
+      const decodedToken = jwt_dec(token);
+      data.description.userId = decodedToken.user_context_id;
+    }
+
+    data.description = JSON.stringify(data.description);
 
     return axios({
       method: 'post',
