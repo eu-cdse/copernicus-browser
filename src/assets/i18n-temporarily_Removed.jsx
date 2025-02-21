@@ -130,6 +130,10 @@ t`Title`;
 t`No layers found for date`;
 t`Based on: `;
 t`Based on the last band of the custom script.`;
+t`Roads`;
+t`Contour`;
+t`Water Bodies`;
+t`Borders`;
 // eslint-disable-next-line
 const fisLayerNotAvailableErrorMsg = (props) =>
   t`not available for "${props.presetLayerName}" (layer with value is not set up)`;

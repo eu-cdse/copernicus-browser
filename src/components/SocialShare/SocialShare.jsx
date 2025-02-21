@@ -1,17 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { t } from 'ttag';
 
+import store, { notificationSlice } from '../../store';
 import { getShortUrl, getAppropriateHashtags, getSharedLinks } from './SocialShare.utils';
 import CopyToClipboardButton from '../CopyToClipboardButton/CopyToClipboardButton';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FacebookShare, TwitterShare, LinkedInShare } from './SocialPlatforms';
+import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
 
 import './social.scss';
 
-const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, extraParams }) => {
+const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, extraParams, user }) => {
   const ref = useRef();
   const sharedLinks = getSharedLinks();
   const [shortUrl, setShortUrl] = useState('');
+  const isLoggedIn = !!user.userdata;
 
   let currentUrl = window.location.href;
   if (extraParams) {
@@ -27,6 +31,12 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
   }, [sharedLinks, currentUrl]);
 
   const shortenUrl = async () => {
+    if (!isLoggedIn) {
+      store.dispatch(
+        notificationSlice.actions.displayError(t`Generate short URL` + `\n(${getLoggedInErrorMsg()})`),
+      );
+      return;
+    }
     setShortUrl(await getShortUrl(currentUrl));
   };
 
@@ -56,7 +66,12 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
         </div>
 
         <div className="create-short-url-wrapper">
-          <button className={`create-short-url ${shortUrl ? 'disabled' : ''}`} onClick={() => shortenUrl()}>
+          <button
+            className={`create-short-url ${shortUrl ? 'disabled' : ''} ${
+              isLoggedIn ? '' : 'visualy-disabled'
+            }`}
+            onClick={() => shortenUrl()}
+          >
             {t`Generate`}
           </button>
         </div>
@@ -70,4 +85,8 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
   );
 };
 
-export default SocialShare;
+const mapStoreToProps = (store) => ({
+  user: store.auth.user,
+});
+
+export default connect(mapStoreToProps, null)(SocialShare);

@@ -6,7 +6,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import { generateS3PreSignedPost, getS3FileUrl, isImageApplicable, uploadFileToS3 } from './Timelapse.utils';
-import SocialShare from '../../components/SocialShare/SocialShare';
+// import SocialShare from '../../components/SocialShare/SocialShare';
 import FileSaver from 'file-saver';
 import { TRANSITION, FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG } from '../../const';
 import TimelapseSettings from './TimelapseSettings';
@@ -149,7 +149,8 @@ export class TimelapsePreview extends Component {
       is3D,
     } = this.props;
 
-    const { previewFileUrlPassThrough, displayDownloadPanel, show3DDownloadWarning } = this.state;
+    // const { previewFileUrlPassThrough, displayDownloadPanel, show3DDownloadWarning } = this.state;
+    const { displayDownloadPanel, show3DDownloadWarning } = this.state;
 
     let image, applicableImageIndexes, applicableImageActiveIndex;
 
@@ -237,7 +238,7 @@ export class TimelapsePreview extends Component {
           </div>
         )}
 
-        <SocialShare
+        {/* <SocialShare
           extraParams={{
             timelapseSharePreviewMode: true,
             ...(previewFileUrlPassThrough && { previewFileUrl: previewFileUrlPassThrough }),
@@ -245,7 +246,7 @@ export class TimelapsePreview extends Component {
           displaySocialShareOptions={this.state.displaySocialShareOptions}
           toggleSocialSharePanel={this.toggleSocialSharePanel}
           datasetId={null}
-        />
+        /> */}
 
         <div className="preview-controls">
           {this.shouldDisplayPreviewFile() ? (

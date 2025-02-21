@@ -95,8 +95,6 @@ export class TimelapseImages extends Component {
       maxCCPercentAllowed,
       minCoverageAllowed,
       isSelectAllChecked,
-      enableBorders,
-      showBorders,
       is3D,
     } = this.props;
 
@@ -132,21 +130,6 @@ export class TimelapseImages extends Component {
                 />
               </div>
             ) : null}
-          </div>
-
-          <div className="overlays">
-            <div className="checkbox">
-              <label className="label">
-                <input
-                  type="checkbox"
-                  checked={showBorders}
-                  value={showBorders}
-                  disabled={!enableBorders || loadingImages}
-                  onChange={this.props.toggleShowBorders}
-                />
-                {t`Borders`}
-              </label>
-            </div>
           </div>
 
           <div className="select-all">

@@ -10455,3 +10455,6 @@ msgstr ""
 
 msgid "Add OSM background"
 msgstr ""
+
+msgid "Generate short URL"
+msgstr ""

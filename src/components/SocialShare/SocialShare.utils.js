@@ -78,6 +78,7 @@ export async function getShortUrl(urlLocation) {
       method: 'post',
       url: urlRequest,
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data: data,

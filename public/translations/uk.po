@@ -11170,3 +11170,6 @@ msgstr ""
 
 msgid "An error has occurred during login process"
 msgstr ""
+
+msgid "Generate short URL"
+msgstr ""

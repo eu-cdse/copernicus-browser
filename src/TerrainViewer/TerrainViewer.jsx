@@ -16,7 +16,7 @@ import {
   getZoomFromEyeHeight,
   getEyeHeightFromZoom,
   getHeightFromZoom,
-  getMaptilerUrl,
+  getBackgroundTileUrl,
   getTileCoord,
   getTileXAndTileY,
   is3DDemSourceCustom,
@@ -213,14 +213,14 @@ function TerrainViewer(props) {
       func(minX, minY, maxX, maxY, width, height, callback);
     } else {
       const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
-      const mapTilerUrl = getMaptilerUrl({ tileX, tileY, zoomLevel });
+      const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
       callback(mapTilerUrl);
     }
   }
 
   function getTerrainViewerMapTileUrl(minX, minY, maxX, maxY, width, height, callback) {
     const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
-    const mapTilerUrl = getMaptilerUrl({ tileX, tileY, zoomLevel });
+    const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
 
     if (!layer || zoomLevel <= minZoom) {
       callback(mapTilerUrl);

@@ -440,7 +440,7 @@ async function getImageFromTerrainViewer({
       minZoom = getDataSourceHandler(datasetId).getLeafletZoomConfig(datasetId).min;
     }
     const tileCoord = getTileCoord(minX, minY, maxX, maxY);
-    const mapTilerUrl = getMaptilerUrl(tileCoord);
+    const mapTilerUrl = getBackgroundTileUrl(tileCoord);
 
     let scaling = 1;
     const minZoomDiff = getZoomAdjustmentForLatitude(minX, minY, maxX, maxY);
@@ -506,10 +506,8 @@ export function getTileCoord(minX, minY, maxX, maxY) {
   return { tileX, tileY, zoomLevel };
 }
 
-export function getMaptilerUrl({ tileX, tileY, zoomLevel }) {
-  return `https://api.maptiler.com/maps/streets-v2/256/${zoomLevel}/${tileX}/${tileY}.png?key=${
-    import.meta.env.VITE_MAPTILER_KEY
-  }`;
+export function getBackgroundTileUrl({ tileX, tileY, zoomLevel }) {
+  return `https://gisco-services.ec.europa.eu/maps/tiles/OSMCartoBackground/EPSG3857/${zoomLevel}/${tileX}/${tileY}.png`;
 }
 
 function getEarthCircumferenceAtLat(lat) {

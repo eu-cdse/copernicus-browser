@@ -171,13 +171,7 @@ export async function fetchTimelapseImage(params) {
 
   if (showBorders) {
     const bbox = constructBBoxFromBounds(bounds);
-    blob = await addOverlays(
-      blob,
-      [bbox.minX, bbox.minY, bbox.maxX, bbox.maxY],
-      [timelapseBorders],
-      width,
-      height,
-    );
+    blob = await addOverlays(blob, [bbox.minX, bbox.minY, bbox.maxX, bbox.maxY], [], width, height);
   }
 
   const dsh = getDataSourceHandler(datasetId);
@@ -335,18 +329,6 @@ function getMorKm(distance) {
 function getRoundingFactor(imageWidthInMeters) {
   const fact = Math.round(Math.log10(imageWidthInMeters)); // 1876 -> log10(1000) = 3
   return Math.pow(10, fact) / 2; // 1000 / 2 = 500;
-}
-
-function timelapseBorders(width, height, bbox) {
-  return {
-    sortIndex: 1,
-    url: `https://api.maptiler.com/maps/${import.meta.env.VITE_MAPTILER_MAP_ID_BORDERS}/static/${bbox[0]},${
-      bbox[1]
-    },${bbox[2]},${bbox[3]}/${width}x${height}.png?key=${
-      import.meta.env.VITE_MAPTILER_KEY
-    }&attribution=false&padding=0`,
-    params: {},
-  };
 }
 
 export const findDefaultActiveImageIndex = (

@@ -51,7 +51,6 @@ describe('TimelapseImages', () => {
   it('should render timelapse images', () => {
     render(<TimelapseImages images={[]} />);
     expect(screen.queryByText('Visualisations')).toBeInTheDocument();
-    expect(screen.queryByText('Borders')).toBeInTheDocument();
     expect(screen.queryByText('Select All')).toBeInTheDocument();
   });
 

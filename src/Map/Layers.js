@@ -9,14 +9,6 @@ export const LAYER_ACCESS = {
 
 const MAPS_LABELS_DISCLAIMER = t`The designations employed and the presentation of material on this map do not imply the expression of any opinion whatsoever on the part of the European Union concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Kosovo*: This designation is without prejudice to positions on status, and is in line with UNSCR 1244/1999 and the ICJ Opinion on the Kosovo declaration of independence. Palestine*: This designation shall not be construed as recognition of a State of Palestine and is without prejudice to the individual positions of the Member States on this issue.`;
 
-const MAPTILER_MAP_ID_VOYAGER = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_VOYAGER;
-const MAPTILER_KEY = import.meta.env && import.meta.env.VITE_MAPTILER_KEY;
-const MAPTILER_MAP_ID_LIGHT = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_LIGHT;
-const MAPTILER_MAP_ID_BORDERS = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_BORDERS;
-const MAPTILER_MAP_ID_CONTOUR = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_CONTOUR;
-const MAPTILER_MAP_ID_ROADS = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_ROADS;
-const MAPTILER_MAP_ID_WATER = import.meta.env && import.meta.env.VITE_MAPTILER_MAP_ID_WATER;
-
 export const baseLayers = [
   {
     id: 'osm-background',
@@ -26,24 +18,6 @@ export const baseLayers = [
     urlType: 'WMTS',
     access: LAYER_ACCESS.PUBLIC,
     checked: !S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0],
-  },
-  {
-    id: 'voyager',
-    name: 'Voyager',
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_VOYAGER}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    access: LAYER_ACCESS.PUBLIC,
-  },
-  {
-    id: 'light',
-    name: 'Light',
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_LIGHT}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    access: LAYER_ACCESS.PUBLIC,
   },
   {
     id: 'google-satellite',
@@ -76,50 +50,6 @@ export const overlayTileLayers = () => [
     urlType: 'WMTS',
     zIndex: 22,
     pane: 'labels',
-    preserveDrawingBuffer: true,
-  },
-  {
-    id: 'borders',
-    name: t`Borders`,
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_BORDERS}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    zIndex: 21,
-    pane: 'borders',
-    preserveDrawingBuffer: true,
-  },
-  {
-    id: 'contour',
-    name: t`Contour`,
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_CONTOUR}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    zIndex: 19,
-    pane: 'contour',
-    preserveDrawingBuffer: true,
-  },
-  {
-    id: 'roads',
-    name: t`Roads`,
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_ROADS}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    zIndex: 20,
-    pane: 'roads',
-    preserveDrawingBuffer: true,
-  },
-  {
-    id: 'water',
-    name: t`Water Bodies`,
-    url: `https://api.maptiler.com/maps/${MAPTILER_MAP_ID_WATER}/style.json?key=${MAPTILER_KEY}`,
-    attribution:
-      '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-    urlType: 'VECTOR', // Indicates that this will be drawn on the map with Mapbox-gl
-    zIndex: 19,
-    pane: 'water',
     preserveDrawingBuffer: true,
   },
 ];
