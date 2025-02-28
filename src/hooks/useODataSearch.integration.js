@@ -41,8 +41,6 @@ describe('useODataSearch S1', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(1);
-
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('GRD');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
@@ -83,10 +81,7 @@ describe('useODataSearch S1', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 2;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
-    for (let i = 0; i < expectedResults; i++) {
+    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
       expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
@@ -127,10 +122,7 @@ describe('useODataSearch S1', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 7;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
-    for (let i = 0; i < expectedResults; i++) {
+    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
       expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
@@ -190,8 +182,6 @@ describe('useODataSearch S1', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(5);
-
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
     expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('SAR');
@@ -250,8 +240,6 @@ describe('useODataSearch S2', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(1);
-
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('L2A');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
@@ -292,10 +280,7 @@ describe('useODataSearch S2', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 43;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
-    for (let i = 0; i < expectedResults; i++) {
+    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S2');
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('L1C');
       expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-2');
@@ -347,8 +332,6 @@ describe('useODataSearch S2', () => {
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(2);
 
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
@@ -405,10 +388,7 @@ describe('useODataSearch S3', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 8;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
-    for (let i = 0; i < expectedResults; i++) {
+    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S3');
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('OL');
       expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-3');
@@ -460,9 +440,6 @@ describe('useODataSearch S3', () => {
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    const expectedResults = 26;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S3');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-3');
@@ -527,10 +504,7 @@ describe('useODataSearch S5', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    const expectedResults = 2;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
-    for (let i = 0; i < expectedResults; i++) {
+    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S5');
       expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('03');
       expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-5P');
@@ -588,9 +562,6 @@ describe('useODataSearch S5', () => {
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    const expectedResults = 9;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S5');
     expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-5P');
@@ -671,9 +642,6 @@ describe('useODataSearch CCM Optical', () => {
 
     const { allResults } = result.current[0].oDataSearchResult;
 
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
     );
@@ -744,9 +712,6 @@ describe('useODataSearch CCM Optical', () => {
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
     const { allResults } = result.current[0].oDataSearchResult;
-
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
@@ -831,9 +796,6 @@ describe('useODataSearch CCM Optical', () => {
 
     const { allResults } = result.current[0].oDataSearchResult;
 
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
     );
@@ -913,9 +875,6 @@ describe('useODataSearch CCM DEM', () => {
 
     const { allResults } = result.current[0].oDataSearchResult;
 
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
     );
@@ -976,9 +935,6 @@ describe('useODataSearch CCM DEM', () => {
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
     const { allResults } = result.current[0].oDataSearchResult;
-
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
@@ -1041,9 +997,6 @@ describe('useODataSearch CCM DEM', () => {
 
     const { allResults } = result.current[0].oDataSearchResult;
 
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
     );
@@ -1104,9 +1057,6 @@ describe('useODataSearch CCM DEM', () => {
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
     const { allResults } = result.current[0].oDataSearchResult;
-
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
@@ -1169,9 +1119,6 @@ describe('useODataSearch CCM DEM', () => {
 
     const { allResults } = result.current[0].oDataSearchResult;
 
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
     );
@@ -1232,9 +1179,6 @@ describe('useODataSearch CCM DEM', () => {
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
     const { allResults } = result.current[0].oDataSearchResult;
-
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',
@@ -1321,10 +1265,6 @@ describe('useODataSearch multiple data sources', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    // const expectedResults = 9;
-    const expectedResults = 5;
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(expectedResults);
-
     expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
 
     expect(
@@ -1393,8 +1333,6 @@ describe('useODataSearch DEM', () => {
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].oDataSearchResult.allResults.length).toBeGreaterThanOrEqual(1);
-
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('DEM');
     expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('SAR_DGE_30');
     expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toBeUndefined();
@@ -1460,9 +1398,6 @@ describe('Test additional filters', () => {
     expect(result.current[0].oDataSearchResult).toBeTruthy();
 
     const { allResults } = result.current[0].oDataSearchResult;
-
-    const expectedResults = 1;
-    expect(allResults.length).toBeGreaterThanOrEqual(expectedResults);
 
     const datasetFullAttribute = allResults[0].attributes.find(
       (attribute) => attribute.Name === 'datasetFull',

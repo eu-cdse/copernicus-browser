@@ -1,5 +1,4 @@
 import axios from 'axios';
-import jwt_dec from 'jwt-decode';
 import { HTTPS, MAX_CHARACTER_LIMIT_ERROR } from '../../const';
 import store, { notificationSlice } from '../../store';
 
@@ -40,11 +39,13 @@ const handleErrorMessages = (errors) =>
 
 export async function getCustomDomainFullName() {
   const urlRequest = `${import.meta.env.VITE_CDSE_BACKEND}getcustomdomainfullname`;
+  const token = getAccessToken();
 
   return axios({
     method: 'get',
     url: urlRequest,
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   })
@@ -64,15 +65,18 @@ export async function getShortUrl(urlLocation) {
     const data = {
       ...(fullName && { domain: { fullName: fullName } }),
       destination: urlLocation,
-      description: { userId: 'anonymous user' },
+      // Uncomment if you want to add back tracking user's id
+      // description: { userId: 'anonymous user' },
     };
 
-    if (token !== undefined) {
-      const decodedToken = jwt_dec(token);
-      data.description.userId = decodedToken.user_context_id;
-    }
+    // Uncomment if you want to add back tracking user's id
+    // if (token !== undefined) {
+    //   const decodedToken = jwt_dec(token);
+    //   data.description.userId = decodedToken.user_context_id;
+    // }
 
-    data.description = JSON.stringify(data.description);
+    // Uncomment if you want to add back tracking user's id
+    // data.description = JSON.stringify(data.description);
 
     return axios({
       method: 'post',
