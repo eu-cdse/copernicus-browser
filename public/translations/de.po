@@ -9744,3 +9744,9 @@ msgid ""
 "\n"
 "**Spatial Resolution:** ~20 meters."
 msgstr ""
+
+msgid "Show less"
+msgstr ""
+
+msgid "Show more"
+msgstr ""

@@ -9,8 +9,13 @@ import ExternalLink from '../../ExternalLink/ExternalLink';
 import Loader from '../../Loader/Loader';
 
 export const CUSTOM_TAG = ' Custom';
+const maxLayersToShow = 10;
 
-export default class AnalyticalForm extends React.PureComponent {
+export default class AnalyticalForm extends React.Component {
+  state = {
+    showMore: false,
+  };
+
   CAPTIONS_TITLE = t`File will have logo attached.`;
   DATAMASK_TITLE = t`A dataMask-band will be included in the downloaded raw bands as second band.`;
   TIFF_BANDS_SELECTION = t`The Tagged Image File Format (TIFF) can hold a large number of bands, however many common image viewers (e.g. Windows Photo Viewer) can't display TIFF images with more than 3 bands.\nIf this option is enabled, only the first 3 bands will be included in the image.\nIf this option is disabled, all bands will be included in the image, but you will have to use an application which supports more than 3 bands (e.g. QGIS) to display the TIFF image.`;
@@ -101,7 +106,7 @@ export default class AnalyticalForm extends React.PureComponent {
         </div>
         <div className="row">
           <label>{t`Image resolution`}:</label>
-          <div>
+          <div className="max-width">
             <select
               className="dropdown"
               value={selectedResolution}
@@ -148,7 +153,7 @@ export default class AnalyticalForm extends React.PureComponent {
         <div className="row">
           <label>{t`Coordinate system` + ':'}</label>
 
-          <div>
+          <div className="max-width">
             <select
               className="dropdown"
               value={selectedCrs}
@@ -207,32 +212,42 @@ export default class AnalyticalForm extends React.PureComponent {
         <div className="row">
           <label>{t`Layers`}:</label>
           <div className="download-layers">
-            <div className="column">
-              <span className="layer-title">{t`Visualised`}</span>
-              <CheckboxGroup name="layers" value={selectedLayers} onChange={updateSelectedLayers}>
-                {isCurrentLayerCustom && (
-                  <label key={CUSTOM_TAG}>
-                    <Checkbox value={CUSTOM_TAG} checked={customSelected} />
-                    {CUSTOM_TAG}
-                  </label>
-                )}
-                {allLayers.map((l) => (
-                  <label key={l.layerId}>
-                    <Checkbox value={l.layerId} /> {l.title}
-                  </label>
-                ))}
-              </CheckboxGroup>
+            <div className="download-layers-columns">
+              <div className="column">
+                <span className="layer-title">{t`Visualised`}</span>
+                <CheckboxGroup name="layers" value={selectedLayers} onChange={updateSelectedLayers}>
+                  {isCurrentLayerCustom && (
+                    <label key={CUSTOM_TAG}>
+                      <Checkbox value={CUSTOM_TAG} checked={customSelected} />
+                      {CUSTOM_TAG}
+                    </label>
+                  )}
+                  {allLayers.slice(0, this.state.showMore ? allLayers.length : maxLayersToShow).map((l) => (
+                    <label key={l.layerId}>
+                      <Checkbox value={l.layerId} /> {l.title}
+                    </label>
+                  ))}
+                </CheckboxGroup>
+              </div>
+              <div className="column">
+                <span className="layer-title">{t`Raw`}</span>
+                <CheckboxGroup value={selectedBands} onChange={updateSelectedBands}>
+                  {allBands.slice(0, this.state.showMore ? allBands.length : maxLayersToShow).map((l) => (
+                    <label key={l.name}>
+                      <Checkbox value={l.name} /> {l.name}
+                    </label>
+                  ))}
+                </CheckboxGroup>
+              </div>
             </div>
-            <div className="column">
-              <span className="layer-title">{t`Raw`}</span>
-              <CheckboxGroup value={selectedBands} onChange={updateSelectedBands}>
-                {allBands.map((l) => (
-                  <label key={l.name}>
-                    <Checkbox value={l.name} /> {l.name}
-                  </label>
-                ))}
-              </CheckboxGroup>
-            </div>
+            {(allLayers.length > maxLayersToShow || allBands.length > maxLayersToShow) && (
+              <button
+                className="download-layers-show-more-btn"
+                onClick={() => this.setState({ showMore: !this.state.showMore })}
+              >
+                {this.state.showMore ? t`Show less` : t`Show more`}
+              </button>
+            )}
           </div>
         </div>
       </div>

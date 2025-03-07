@@ -2050,3 +2050,11 @@ export const adjustClippingForAoi = (clipping, aoiBounds, mapBounds) => {
 
   return adjustedClipping;
 };
+
+export function isKMZ(imageFormat) {
+  return imageFormat === IMAGE_FORMATS.KMZ_JPG || imageFormat === IMAGE_FORMATS.KMZ_PNG;
+}
+
+export function isJPGorPNG(imageFormat) {
+  return imageFormat === IMAGE_FORMATS.JPG || imageFormat === IMAGE_FORMATS.PNG;
+}

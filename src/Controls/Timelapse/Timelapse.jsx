@@ -49,6 +49,7 @@ import {
   getTimelapsePreviewsFromTerrainViewer,
 } from '../../TerrainViewer/TerrainViewer.utils';
 import { md5 } from 'js-md5';
+import { IMAGE_FORMATS } from '../ImgDownload/consts';
 
 const TIME_UNITS = {
   SECONDS: 'seconds',
@@ -448,8 +449,20 @@ class Timelapse extends Component {
   };
 
   fetchImages = async ({ flyoversToFetch, setDeferredImages = false }) => {
-    const { auth, showBorders, aoi, mapBounds, pixelBounds, is3D, maxCCPercentAllowed, minCoverageAllowed } =
-      this.props;
+    const {
+      auth,
+      showBorders,
+      aoi,
+      mapBounds,
+      pixelBounds,
+      is3D,
+      maxCCPercentAllowed,
+      minCoverageAllowed,
+      visualizationUrl,
+      lat,
+      lng,
+      zoom,
+    } = this.props;
     const { canWeFilterByClouds, canWeFilterByCoverage } = this.state;
 
     const size = is3D ? determineDefaultImageSize3D(pixelBounds) : determineDefaultImageSize(mapBounds, aoi);
@@ -528,6 +541,7 @@ class Timelapse extends Component {
       await Promise.all(
         flyoversToFetch.map((flyover) =>
           fetchTimelapseImage({
+            ...this.props,
             layer: flyover.visualization.layer,
             datasetId: flyover.visualization.datasetId,
             bounds: getTimelapseBounds(mapBounds, aoi),
@@ -535,12 +549,16 @@ class Timelapse extends Component {
             toTime: flyover.toTime,
             width: size.width,
             height: size.height,
-            imageFormat: MimeTypes.JPEG,
+            imageFormat: IMAGE_FORMATS.PNG,
             cancelToken: this.cancelToken,
             geometry: aoi.geometry,
             effects: flyover.visualization.effects,
             getMapAuthToken: getGetMapAuthToken(auth),
             showBorders: showBorders && !(aoi && aoi.bounds),
+            visualizationUrl: visualizationUrl,
+            lat: lat,
+            lng: lng,
+            zoom: zoom,
           })
             .then((image) => {
               return this.onImageLoad({ img: image.url, flyover: flyover });
@@ -872,7 +890,7 @@ class Timelapse extends Component {
   };
 
   refetchImages = async (images, size) => {
-    const { mapBounds, aoi, auth, showBorders } = this.props;
+    const { mapBounds, aoi, auth, showBorders, visualizationUrl, lat, lng, zoom } = this.props;
     let resolvedCounter = 0;
 
     const imageUrls = await Promise.all(
@@ -890,12 +908,16 @@ class Timelapse extends Component {
           toTime: image.toTime,
           width: size.width,
           height: size.height,
-          imageFormat: MimeTypes.JPEG,
+          imageFormat: IMAGE_FORMATS.PNG,
           cancelToken: this.cancelToken,
           geometry: aoi.geometry,
           effects: image.effects,
           getMapAuthToken: getGetMapAuthToken(auth),
           showBorders: showBorders && !(aoi && aoi.bounds),
+          visualizationUrl: visualizationUrl,
+          lat: lat,
+          lng: lng,
+          zoom: zoom,
         }).catch((err) => {
           console.warn('Unable to refetch timelapse image', err);
           throw err;
@@ -1208,6 +1230,8 @@ class Timelapse extends Component {
 
 const mapStoreToProps = (store) => ({
   zoom: store.mainMap.zoom,
+  lat: store.mainMap.lat,
+  lng: store.mainMap.lng,
   visualizationFromTime: store.visualization.fromTime,
   visualizationToTime: store.visualization.toTime,
   visualizationMaxCloudCoverage: store.visualization.cloudCoverage,

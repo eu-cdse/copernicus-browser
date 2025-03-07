@@ -4,11 +4,11 @@ import axios from 'axios';
 import gifshot from 'gifshot';
 
 import {
-  fetchImage,
   getAppropriateApiType,
   constructBBoxFromBounds,
   getDimensionsInMeters,
   getMapDimensions,
+  fetchImageFromParams,
 } from '../ImgDownload/ImageDownload.utils';
 import {
   getDataSourceHandler,
@@ -22,6 +22,7 @@ import { DATASOURCES, TRANSITION } from '../../const';
 import planetUtils from '../../Tools/SearchPanel/dataSourceHandlers/planetNicfi.utils';
 import { drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
 import store, { timelapseSlice } from '../../store';
+import { baseLayers } from '../../Map/Layers';
 
 export const DEFAULT_IMAGE_DIMENSION = 512;
 
@@ -159,12 +160,14 @@ export async function fetchTimelapseImage(params) {
 
   const apiType = await getAppropriateApiType(layer, imageFormat);
   const options = {
+    ...layer,
     ...params,
     bounds,
     apiType,
+    baseLayerUrl: baseLayers.find((layer) => layer.id === 'osm-background')?.url,
   };
 
-  let blob = await fetchImage(layer, options).catch((err) => {
+  let { blob } = await fetchImageFromParams(options).catch((err) => {
     console.warn('Unable to fetch image', err);
     throw err;
   });

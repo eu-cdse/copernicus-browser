@@ -4,25 +4,69 @@
   color: $textColor;
   background-color: $mainLight;
   font-size: 14px;
-  padding: 15px;
 
-  .image-download-mode-selection {
+  &-header {
+    padding: 15px 23px 20px 23px;
+    background-color: $primaryColor;
     display: flex;
+    justify-content: space-between;
+    width: inherit;
+
+    &-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      width: max-content;
+
+      .eob-btn {
+        padding-inline: 23px;
+      }
+
+      .rodal-close {
+        position: relative;
+        width: 18px;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+
+        &::before,
+        &::after {
+          border-radius: 0;
+          background-color: $mainLight;
+        }
+
+        &:hover {
+          &::before,
+          &::after {
+            background-color: $dropdownHoverBackground;
+          }
+        }
+      }
+    }
+  }
+
+  &-mode-selection {
+    display: flex;
+    background-color: inherit;
 
     .eob-btn {
       margin-right: 20px;
-      background-color: $mainLight;
       border-radius: 0;
-      border-bottom: 3px solid $mainLight;
-      color: $textColor;
+      background-color: inherit;
+      border-bottom: 3px solid $primaryColor;
+      color: $mainLight;
+      padding-bottom: 5px;
 
       &.selected {
-        border-bottom: 3px solid $primaryColor;
+        border-bottom: 3px solid $secondaryColor;
       }
 
       &:hover {
         box-shadow: none;
-        color: $primaryColor;
+        color: $mainDark;
       }
 
       &.disabled {
@@ -30,6 +74,13 @@
         cursor: pointer;
       }
     }
+  }
+
+  &-content {
+    overflow: auto;
+    overflow-y: scroll;
+    max-height: 70vh;
+    padding-inline: 25px;
   }
 
   .image-download-warning-panel {
@@ -52,8 +103,6 @@
   }
 
   .image-download-forms {
-    overflow: auto;
-
     .image-download-warning {
       margin: 10px 0 10px auto;
       padding: 0 10px;
@@ -64,6 +113,29 @@
 
       .fa {
         margin-right: 6px;
+      }
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 6px;
+
+      label {
+        flex: 0 0 200px;
+      }
+
+      .max-width {
+        width: 100%;
+      }
+
+      .dropdown {
+        flex: 1 1;
+      }
+
+      .wgs84-resolution {
+        .lat-lng {
+          padding-left: 15px;
+        }
       }
     }
 
@@ -96,6 +168,10 @@
 
         input {
           background: $mainMedium;
+
+          &[type='number'] {
+            width: 60px;
+          }
         }
       }
 
@@ -104,6 +180,12 @@
         .form-input {
           pointer-events: none;
           opacity: 0.5;
+        }
+      }
+
+      &:hover {
+        label {
+          color: $primaryColor;
         }
       }
     }
@@ -122,48 +204,57 @@
       opacity: 1;
     }
 
-    .row {
-      display: flex;
-      margin-bottom: 6px;
-
-      label {
-        flex: 0 0 200px;
-      }
-
-      .dropdown {
-        flex: 1 1;
-      }
-
-      .wgs84-resolution {
-        .lat-lng {
-          padding-left: 15px;
-        }
-      }
-    }
-
     .analytical-mode {
-      max-height: 650px;
       margin-bottom: 10px;
       overflow: hidden;
       transition: all 0.5s;
       transition-property: max-height, padding-bottom;
-      padding: 0 10px 0 30px;
+      padding: 0 10px 0 0;
+
+      .row label {
+        flex: 0 0 150px;
+      }
 
       .download-layers {
-        flex: 1 1;
+        display: flex;
+        flex-direction: column;
+        width: max-content;
+        gap: 10px;
 
-        .column {
-          float: left;
-          width: 50%;
+        &-columns {
+          display: flex;
+          flex: 1 1;
+          gap: 10px;
 
-          .layer-title {
-            text-decoration: underline;
-            line-height: 20px;
+          .column {
+            float: left;
+            width: max-content;
+
+            .layer-title {
+              text-decoration: underline;
+              line-height: 20px;
+            }
+
+            label {
+              display: block;
+              font-size: 12px;
+              white-space: nowrap;
+            }
           }
+        }
 
-          label {
-            display: block;
-            font-size: 12px;
+        &-show-more-btn {
+          width: max-content;
+          align-self: center;
+          position: 'relative';
+          background-color: $primaryColor;
+          color: $mainLight;
+          padding: 5px 10px;
+          border: none;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $hoverPrimaryColor;
           }
         }
       }

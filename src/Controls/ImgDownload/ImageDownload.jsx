@@ -29,6 +29,8 @@ import {
   prepareKmzFile,
   getDimensionsInMeters,
   adjustClippingForAoi,
+  isJPGorPNG,
+  isKMZ,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
@@ -57,9 +59,23 @@ import { getGetMapAuthToken } from '../../App';
 import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 
 import './ImageDownload.scss';
-import { DATASOURCES } from '../../const';
+import { DATASOURCES, MAX_SH_IMAGE_SIZE } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import { baseLayers } from '../../Map/Layers';
+
+function checkZoomLevel(datasetId, zoom) {
+  const dsh = getDataSourceHandler(datasetId);
+  if (dsh) {
+    const leafletZoomConfig = dsh.getLeafletZoomConfig(datasetId);
+    return (
+      leafletZoomConfig &&
+      leafletZoomConfig.min !== null &&
+      leafletZoomConfig.min !== undefined &&
+      zoom >= leafletZoomConfig.min
+    );
+  }
+  return false;
+}
 
 function ImageDownload(props) {
   const [selectedTab, setSelectedTab] = useState(props.is3D ? TABS.TERRAIN_VIEWER : TABS.BASIC);
@@ -578,7 +594,12 @@ function ImageDownload(props) {
     try {
       const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
       image = await fetchImageFromParams(
-        { ...props, ...params, baseLayerUrl: showOSMBackgroundLayer ? defaultBaseLayer.url : null },
+        {
+          ...props,
+          ...params,
+          baseLayerUrl: showOSMBackgroundLayer ? defaultBaseLayer.url : null,
+          selectedCrs: CRS_EPSG4326.authId,
+        },
         setWarnings,
       );
     } catch (err) {
@@ -662,6 +683,70 @@ function ImageDownload(props) {
     });
   }
 
+  const bounds = hasAoi ? props.aoiBounds : props.mapBounds;
+  const { width: imageWidth, height: imageHeight } = getImageSize();
+
+  function getImageSize() {
+    const { selectedCrs, customResolution, selectedResolution } = analyticalFormState;
+
+    if (selectedResolution === RESOLUTION_OPTIONS.CUSTOM) {
+      return getImageDimensions(bounds, customResolution, selectedCrs);
+    }
+
+    const resolutionDivisor = RESOLUTION_DIVISORS[selectedResolution].value;
+    return {
+      width: Math.floor(defaultWidth / resolutionDivisor),
+      height: Math.floor(defaultHeight / resolutionDivisor),
+    };
+  }
+
+  function onDownloadImage(selectedTab) {
+    if (selectedTab === TABS.BASIC) {
+      downloadBasic(basicFormState);
+    }
+    if (selectedTab === TABS.ANALYTICAL) {
+      downloadAnalytical(analyticalFormState);
+    }
+    if (selectedTab === TABS.PRINT) {
+      downloadPrint(printFormState);
+    }
+    if (selectedTab === TABS.TERRAIN_VIEWER) {
+      download3D(terrainViewerFormState);
+    }
+  }
+
+  const isAnalyticalModeAndNothingSelected =
+    selectedTab === TABS.ANALYTICAL &&
+    !analyticalFormState.customSelected &&
+    analyticalFormState.selectedLayers.length === 0 &&
+    analyticalFormState.selectedBands.length === 0;
+
+  const isAnalyticalModeAndLayersNotLoaded = selectedTab === TABS.ANALYTICAL && allLayers.length === 0;
+
+  const isAnalyticalModeAndOnlyRawBands =
+    analyticalFormState.selectedLayers.length === 0 &&
+    analyticalFormState.selectedBands.length > 0 &&
+    selectedTab === TABS.ANALYTICAL &&
+    !analyticalFormState.customSelected;
+
+  const isDataFusionAndKMZSelected =
+    selectedTab === TABS.ANALYTICAL &&
+    isDataFusionEnabled &&
+    analyticalFormState.customSelected &&
+    isKMZ(analyticalFormState.imageFormat);
+
+  const areEffectsSetAndFormatNotJpgPng =
+    selectedTab === TABS.ANALYTICAL && !!effects && !isJPGorPNG(analyticalFormState.imageFormat);
+
+  const areImageDimensionsValid =
+    selectedTab !== TABS.ANALYTICAL ||
+    (imageWidth <= MAX_SH_IMAGE_SIZE &&
+      imageHeight <= MAX_SH_IMAGE_SIZE &&
+      imageWidth >= 1 &&
+      imageHeight >= 1);
+
+  const isZoomLevelOK = checkZoomLevel(props.datasetId, props.zoom) || selectedTab === TABS.PRINT;
+
   const hasLegendData = checkIfCurrentLayerHasLegend();
   const isUserLoggedIn = props.user && props.user.userdata;
   const isGIBS = datasourceForDatasetId(props.datasetId) === DATASOURCES.GIBS;
@@ -675,100 +760,125 @@ function ImageDownload(props) {
         height: 'auto',
         maxHeight: '80vh',
         bottom: 'auto',
-        width: '800px',
+        width: '650px',
         maxWidth: '90vw',
         top: '5vh',
-        overflow: 'auto',
+        padding: 0,
       }}
+      showCloseButton={false}
       visible={true}
       onClose={() => store.dispatch(modalSlice.actions.removeModal())}
       closeOnEsc={true}
     >
       <div className="image-download">
-        <div className="image-download-mode-selection">
-          {!props.is3D && (
-            <>
+        <div className="image-download-header">
+          <div className="image-download-mode-selection">
+            {!props.is3D && (
+              <>
+                <EOBButton
+                  text={t`Basic`}
+                  className={selectedTab === TABS.BASIC ? 'selected' : ''}
+                  onClick={() => setSelectedTab(TABS.BASIC)}
+                />
+
+                <EOBButton
+                  text={t`Analytical`}
+                  className={selectedTab === TABS.ANALYTICAL ? 'selected' : ''}
+                  onClick={() => setSelectedTab(TABS.ANALYTICAL)}
+                  disabled={!isUserLoggedIn || isOnCompareTab || !supportsAnalyticalImgExport}
+                  onDisabledClick={
+                    isOnCompareTab
+                      ? displayOnlyBasicDownloadPossibleMessage
+                      : !supportsAnalyticalImgExport
+                      ? displayAnalyticalModeNotSupportedByDatasource
+                      : displayLogInToAccessMessage
+                  }
+                />
+
+                <EOBButton
+                  text={t`High-res print`}
+                  className={selectedTab === TABS.PRINT ? 'selected' : ''}
+                  onClick={() => setSelectedTab(TABS.PRINT)}
+                  disabled={!isUserLoggedIn || isOnCompareTab}
+                  onDisabledClick={
+                    isOnCompareTab ? displayOnlyBasicDownloadPossibleMessage : displayLogInToAccessMessage
+                  }
+                />
+              </>
+            )}
+            {props.is3D && (
               <EOBButton
                 text={t`Basic`}
-                className={selectedTab === TABS.BASIC ? 'selected' : ''}
-                onClick={() => setSelectedTab(TABS.BASIC)}
+                className={selectedTab === TABS.TERRAIN_VIEWER ? 'selected' : ''}
+                onClick={() => setSelectedTab(TABS.TERRAIN_VIEWER)}
               />
-
-              <EOBButton
-                text={t`Analytical`}
-                className={selectedTab === TABS.ANALYTICAL ? 'selected' : ''}
-                onClick={() => setSelectedTab(TABS.ANALYTICAL)}
-                disabled={!isUserLoggedIn || isOnCompareTab || !supportsAnalyticalImgExport}
-                onDisabledClick={
-                  isOnCompareTab
-                    ? displayOnlyBasicDownloadPossibleMessage
-                    : !supportsAnalyticalImgExport
-                    ? displayAnalyticalModeNotSupportedByDatasource
-                    : displayLogInToAccessMessage
-                }
-              />
-
-              <EOBButton
-                text={t`High-res print`}
-                className={selectedTab === TABS.PRINT ? 'selected' : ''}
-                onClick={() => setSelectedTab(TABS.PRINT)}
-                disabled={!isUserLoggedIn || isOnCompareTab}
-                onDisabledClick={
-                  isOnCompareTab ? displayOnlyBasicDownloadPossibleMessage : displayLogInToAccessMessage
-                }
-              />
-            </>
-          )}
-          {props.is3D && (
+            )}
+          </div>
+          <div className="image-download-header-buttons">
             <EOBButton
-              text={t`Basic`}
-              className={selectedTab === TABS.TERRAIN_VIEWER ? 'selected' : ''}
-              onClick={() => setSelectedTab(TABS.TERRAIN_VIEWER)}
+              fluid
+              loading={loadingImages}
+              disabled={
+                loadingImages ||
+                !areImageDimensionsValid ||
+                isAnalyticalModeAndNothingSelected ||
+                isDataFusionAndKMZSelected ||
+                isAnalyticalModeAndLayersNotLoaded ||
+                areEffectsSetAndFormatNotJpgPng ||
+                !isZoomLevelOK
+              }
+              onClick={() => onDownloadImage(selectedTab)}
+              icon="download"
+              text={t`Download`}
             />
-          )}
+            <span className="rodal-close" onClick={() => store.dispatch(modalSlice.actions.removeModal())} />
+          </div>
         </div>
-        <ImageDownloadWarningPanel warnings={warnings} />
-        <ImageDownloadForms
-          selectedTab={selectedTab}
-          hasLegendData={hasLegendData}
-          onDownloadBasic={downloadBasic}
-          onDownloadAnalytical={downloadAnalytical}
-          onDownloadPrint={downloadPrint}
-          onDownload3D={download3D}
-          loading={loadingImages}
-          allLayers={allLayers}
-          allBands={allBands}
-          currentLayerId={props.layerId}
-          isCurrentLayerCustom={props.customSelected}
-          defaultWidth={defaultWidth}
-          defaultHeight={defaultHeight}
-          supportedImageFormats={supportedImageFormats}
-          addingMapOverlaysPossible={!props.aoiGeometry} // applying map overlays currently relies on lat, lng and zoom, which aren't used when geometry is present
-          aoiBounds={props.aoiBounds}
-          mapBounds={props.mapBounds}
-          zoom={props.zoom}
-          datasetId={props.datasetId}
-          isDataFusionEnabled={isDataFusionEnabled(props.dataFusion)}
-          allowShowLogoAnalytical={!isGIBS}
-          areEffectsSet={!!effects}
-          hasAoi={!!props.aoiGeometry}
-          hasLoi={!!props.loiGeometry}
-          is3D={props.is3D}
-          isUserLoggedIn={isUserLoggedIn}
-          updateSelectedLayers={updateSelectedLayers}
-          updateFormData={updateFormData}
-          updateSelectedBands={updateSelectedBands}
-          basicFormState={basicFormState}
-          analyticalFormState={analyticalFormState}
-          printFormState={printFormState}
-          terrainViewerFormState={terrainViewerFormState}
-          setBasicFormState={setBasicFormState}
-          setAnalyticalFormState={setAnalyticalFormState}
-          setPrintFormState={setPrintFormState}
-          setTerrainViewerFormState={setTerrainViewerFormState}
-          showComparePanel={props.showComparePanel}
-        />
-        <ImageDownloadErrorPanel error={error} />
+        <div className="image-download-content">
+          <ImageDownloadWarningPanel warnings={warnings} />
+          <ImageDownloadForms
+            selectedTab={selectedTab}
+            hasLegendData={hasLegendData}
+            onDownloadBasic={downloadBasic}
+            onDownloadAnalytical={downloadAnalytical}
+            onDownloadPrint={downloadPrint}
+            onDownload3D={download3D}
+            allLayers={allLayers}
+            allBands={allBands}
+            currentLayerId={props.layerId}
+            isCurrentLayerCustom={props.customSelected}
+            defaultWidth={defaultWidth}
+            defaultHeight={defaultHeight}
+            supportedImageFormats={supportedImageFormats}
+            addingMapOverlaysPossible={!props.aoiGeometry} // applying map overlays currently relies on lat, lng and zoom, which aren't used when geometry is present
+            aoiBounds={props.aoiBounds}
+            mapBounds={props.mapBounds}
+            allowShowLogoAnalytical={!isGIBS}
+            hasAoi={!!props.aoiGeometry}
+            hasLoi={!!props.loiGeometry}
+            is3D={props.is3D}
+            isUserLoggedIn={isUserLoggedIn}
+            updateSelectedLayers={updateSelectedLayers}
+            updateFormData={updateFormData}
+            updateSelectedBands={updateSelectedBands}
+            basicFormState={basicFormState}
+            analyticalFormState={analyticalFormState}
+            printFormState={printFormState}
+            terrainViewerFormState={terrainViewerFormState}
+            setBasicFormState={setBasicFormState}
+            setAnalyticalFormState={setAnalyticalFormState}
+            setPrintFormState={setPrintFormState}
+            setTerrainViewerFormState={setTerrainViewerFormState}
+            showComparePanel={props.showComparePanel}
+            isAnalyticalModeAndNothingSelected={isAnalyticalModeAndNothingSelected}
+            isAnalyticalModeAndLayersNotLoaded={isAnalyticalModeAndLayersNotLoaded}
+            isAnalyticalModeAndOnlyRawBands={isAnalyticalModeAndOnlyRawBands}
+            isDataFusionAndKMZSelected={isDataFusionAndKMZSelected}
+            isZoomLevelOK={isZoomLevelOK}
+            areImageDimensionsValid={areImageDimensionsValid}
+          />
+          <ImageDownloadErrorPanel error={error} />
+        </div>
       </div>
     </Rodal>
   );

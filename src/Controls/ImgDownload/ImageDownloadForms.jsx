@@ -6,14 +6,17 @@ import BasicForm from './BasicForm';
 import AnalyticalForm from './AnalyticalForm';
 import PrintForm from './PrintForm';
 import TerrainViewerForm from './TerrainViewerForm';
-import { IMAGE_FORMATS, RESOLUTION_OPTIONS, RESOLUTION_DIVISORS, AVAILABLE_CRS } from './consts';
-import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
-import { constructBBoxFromBounds, getDimensionsInMeters, getImageDimensions } from './ImageDownload.utils';
+import { RESOLUTION_OPTIONS, RESOLUTION_DIVISORS, AVAILABLE_CRS } from './consts';
+import {
+  constructBBoxFromBounds,
+  getDimensionsInMeters,
+  getImageDimensions,
+  isJPGorPNG,
+  isKMZ,
+} from './ImageDownload.utils';
 import store, { notificationSlice } from '../../store';
-import { MAX_SH_IMAGE_SIZE } from '../../const';
 import { getUtmCrsFromBbox } from '../../utils/utm';
 import ImageDownloadPreview from './ImageDownloadPreview';
-import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 export const TABS = {
   BASIC: 'basic',
@@ -22,25 +25,10 @@ export const TABS = {
   TERRAIN_VIEWER: '3d',
 };
 
-function checkZoomLevel(datasetId, zoom) {
-  const dsh = getDataSourceHandler(datasetId);
-  if (dsh) {
-    const leafletZoomConfig = dsh.getLeafletZoomConfig(datasetId);
-    return (
-      leafletZoomConfig &&
-      leafletZoomConfig.min !== null &&
-      leafletZoomConfig.min !== undefined &&
-      zoom >= leafletZoomConfig.min
-    );
-  }
-  return false;
-}
-
 export function ImageDownloadForms(props) {
   const {
     selectedTab,
     hasLegendData,
-    loading,
     allLayers,
     allBands,
     isCurrentLayerCustom,
@@ -48,9 +36,7 @@ export function ImageDownloadForms(props) {
     addingMapOverlaysPossible,
     defaultWidth,
     defaultHeight,
-    isDataFusionEnabled,
     allowShowLogoAnalytical,
-    areEffectsSet,
     hasAoi,
     hasLoi,
     aoiBounds,
@@ -67,9 +53,14 @@ export function ImageDownloadForms(props) {
     setAnalyticalFormState,
     setPrintFormState,
     setTerrainViewerFormState,
-    datasetId,
-    zoom,
     showComparePanel,
+    isAnalyticalModeAndLayersNotLoaded,
+    isAnalyticalModeAndNothingSelected,
+    isDataFusionAndKMZSelected,
+    areEffectsSetAndFormatNotJpgPng,
+    isZoomLevelOK,
+    isAnalyticalModeAndOnlyRawBands,
+    areImageDimensionsValid,
   } = props;
 
   const bounds = hasAoi ? aoiBounds : mapBounds;
@@ -132,29 +123,6 @@ export function ImageDownloadForms(props) {
     return t`Projected resolution: ${formattedResolution} m/px`;
   }
 
-  function onDownloadImage(selectedTab) {
-    if (selectedTab === TABS.BASIC) {
-      props.onDownloadBasic(basicFormState);
-    }
-    if (selectedTab === TABS.ANALYTICAL) {
-      props.onDownloadAnalytical(analyticalFormState);
-    }
-    if (selectedTab === TABS.PRINT) {
-      props.onDownloadPrint(printFormState);
-    }
-    if (selectedTab === TABS.TERRAIN_VIEWER) {
-      props.onDownload3D(terrainViewerFormState);
-    }
-  }
-
-  function isKMZ(imageFormat) {
-    return imageFormat === IMAGE_FORMATS.KMZ_JPG || imageFormat === IMAGE_FORMATS.KMZ_PNG;
-  }
-
-  function isJPGorPNG(imageFormat) {
-    return imageFormat === IMAGE_FORMATS.JPG || imageFormat === IMAGE_FORMATS.PNG;
-  }
-
   function displayDataFusionWarning() {
     const { customSelected, imageFormat } = analyticalFormState;
     if (
@@ -197,38 +165,6 @@ export function ImageDownloadForms(props) {
     ];
     return availableCrs;
   }
-
-  const isAnalyticalModeAndNothingSelected =
-    selectedTab === TABS.ANALYTICAL &&
-    !analyticalFormState.customSelected &&
-    analyticalFormState.selectedLayers.length === 0 &&
-    analyticalFormState.selectedBands.length === 0;
-
-  const isAnalyticalModeAndLayersNotLoaded = selectedTab === TABS.ANALYTICAL && allLayers.length === 0;
-
-  const isAnalyticalModeAndOnlyRawBands =
-    analyticalFormState.selectedLayers.length === 0 &&
-    analyticalFormState.selectedBands.length > 0 &&
-    selectedTab === TABS.ANALYTICAL &&
-    !analyticalFormState.customSelected;
-
-  const isDataFusionAndKMZSelected =
-    selectedTab === TABS.ANALYTICAL &&
-    isDataFusionEnabled &&
-    analyticalFormState.customSelected &&
-    isKMZ(analyticalFormState.imageFormat);
-
-  const areEffectsSetAndFormatNotJpgPng =
-    selectedTab === TABS.ANALYTICAL && areEffectsSet && !isJPGorPNG(analyticalFormState.imageFormat);
-
-  const areImageDimensionsValid =
-    selectedTab !== TABS.ANALYTICAL ||
-    (imageWidth <= MAX_SH_IMAGE_SIZE &&
-      imageHeight <= MAX_SH_IMAGE_SIZE &&
-      imageWidth >= 1 &&
-      imageHeight >= 1);
-
-  const isZoomLevelOK = checkZoomLevel(datasetId, zoom) || selectedTab === TABS.PRINT;
 
   const disabledImagePreviewDownload =
     isAnalyticalModeAndNothingSelected ||
@@ -310,23 +246,6 @@ export function ImageDownloadForms(props) {
           selectedCrs={CRS_EPSG4326.authId}
         />
       )}
-
-      <EOBButton
-        fluid
-        loading={loading}
-        disabled={
-          loading ||
-          !areImageDimensionsValid ||
-          isAnalyticalModeAndNothingSelected ||
-          isDataFusionAndKMZSelected ||
-          isAnalyticalModeAndLayersNotLoaded ||
-          areEffectsSetAndFormatNotJpgPng ||
-          !isZoomLevelOK
-        }
-        onClick={() => onDownloadImage(selectedTab)}
-        icon="download"
-        text={t`Download`}
-      />
     </div>
   );
 }
