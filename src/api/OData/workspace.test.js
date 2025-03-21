@@ -53,7 +53,7 @@ describe('include thumbnail link in workspace metadata', () => {
       {
         '@odata.type': '#OData.CSC.DateTimeOffsetAttribute',
         Name: 'processingDate',
-        Value: '2023-08-15T13:32:04+00:00',
+        Value: '2023-08-15T13:32:04Z',
         ValueType: 'DateTimeOffset',
       },
       {

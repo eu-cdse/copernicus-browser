@@ -15,8 +15,13 @@
     width: 165px;
     cursor: pointer;
 
-    .cls-1 { fill: $whiteColor; }
-    .cls-2 { fill: $tertiaryColor; }
+    .cls-1 {
+      fill: $whiteColor;
+    }
+
+    .cls-2 {
+      fill: $tertiaryColor;
+    }
   }
 
   .left {
@@ -68,6 +73,18 @@
 
   .user-panel {
     margin-left: 10px;
+
+    @media screen and (max-width: 430px) {
+      max-width: 120px;
+    }
+
+    @media screen and (max-width: 400px) {
+      max-width: 80px;
+    }
+
+    @media screen and (max-width: 360px) {
+      max-width: 50px;
+    }
 
     .user-menu-button {
       position: relative;
