@@ -751,7 +751,7 @@ export const roundGeometryValues = (sourceGeometry) => {
       geometry[key] = roundGeometryValues(geometry[key]);
     }
     if (typeof geometry[key] === 'number') {
-      geometry[key] = Math.round(geometry[key] * 100) / 100;
+      geometry[key] = Math.round(geometry[key] * 1000) / 1000;
     }
   });
 
