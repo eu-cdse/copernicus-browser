@@ -14,6 +14,9 @@ import './Highlight.scss';
 
 import DoubleChevronDown from '../../../icons/double-chevron-down.svg?react';
 import DoubleChevronUp from '../../../icons/double-chevron-up.svg?react';
+import { ActionItem } from '../../../components/ActionBar/ActionBar';
+import { createLayerActions } from '../../VisualizationPanel/VisualizationLayer/createLayerActions';
+import cloneDeep from 'lodash.clonedeep';
 
 class Highlight extends Component {
   state = {
@@ -54,13 +57,16 @@ class Highlight extends Component {
   };
 
   render() {
-    const { pin, index, isSelected } = this.props;
+    const { pin, index, isSelected, savePin } = this.props;
     const { description, title } = pin;
     const { showDescription } = this.state;
 
     const effects = constructEffectsFromPinOrHighlight(pin);
     const highlight = { ...pin, ...effects };
 
+    const actionItem = createLayerActions(cloneDeep({ savePin: () => savePin(pin) })).find(
+      (action) => action.id === 'savePin',
+    );
     return (
       <div
         className={`highlight-item highlight-item-${isSelected ? 'selected' : ''} normal-mode`}
@@ -70,6 +76,9 @@ class Highlight extends Component {
           <PinPreviewImage pin={highlight} />
           <div className="highlight-info">
             <span className="highlight-info-row">{title}</span>
+            <div onClick={(e) => e.stopPropagation()}>
+              <ActionItem action={actionItem} className={isSelected ? 'selected' : ''} />
+            </div>
             <div>
               <label>{t`Date`}:</label> <span className="highlight-date">{constructTimespanString(pin)}</span>
             </div>

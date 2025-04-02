@@ -3,17 +3,42 @@ import moment from 'moment';
 import { t } from 'ttag';
 
 import Highlight from './Highlight';
-import store, { visualizationSlice, mainMapSlice } from '../../../store';
+import store, { visualizationSlice, mainMapSlice, pinsSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { parsePosition } from '../../../utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
+import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from '../../Pins/PinPanel';
+import { getPinsFromSessionStorage, savePinsToServer, savePinsToSessionStorage } from '../../Pins/Pin.utils';
+import { connect } from 'react-redux';
 
 class Highlights extends Component {
   state = {
     selectedPinIndex: null,
+  };
+
+  componentDidMount() {
+    if (USE_PINS_BACKEND && this.props.user) {
+      this.fetchUserPins()
+        .then((pins) => {
+          this.setPinsInArray(pins, SAVED_PINS);
+        })
+        .catch(() => {});
+    } else {
+      let pins = getPinsFromSessionStorage();
+      this.setPinsInArray(pins, UNSAVED_PINS);
+    }
+  }
+
+  setPinsInArray = (pins, pinType) => {
+    store.dispatch(
+      pinsSlice.actions.updatePinsByType({
+        pins: pins,
+        pinType: pinType,
+      }),
+    );
   };
 
   onPinSelect = async (pin, comparingPins, sharePins) => {
@@ -95,6 +120,18 @@ class Highlights extends Component {
     this.setState({ selectedPin: pin });
   };
 
+  savePin = async (pin) => {
+    const { newPinsCount, userdata } = this.props;
+
+    if (USE_PINS_BACKEND && userdata) {
+      await savePinsToServer([{ ...pin }]);
+    } else {
+      savePinsToSessionStorage([{ ...pin }]);
+    }
+
+    store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + 1));
+  };
+
   setHighlightsSection = () => {
     const { highlights, is3D } = this.props;
     return (
@@ -111,6 +148,7 @@ class Highlights extends Component {
               }}
               isSelected={this.state.selectedPinIndex === index}
               canAddToCompare={!is3D}
+              savePin={this.savePin}
             />
           ))}
         </div>
@@ -128,4 +166,8 @@ class Highlights extends Component {
   }
 }
 
-export default Highlights;
+const mapStoreToProps = (store) => ({
+  newPinsCount: store.pins.newPinsCount,
+});
+
+export default connect(mapStoreToProps, null)(Highlights);

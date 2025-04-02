@@ -388,6 +388,7 @@ class SearchPanel extends Component {
               setSelectedHighlight={this.props.setSelectedHighlight}
               terrainViewerId={terrainViewerId}
               is3D={is3D}
+              userdata={this.props.user}
             />
           </div>
           <div className={`discover-tab ${isCommercialDataSelected ? '' : 'hidden'}`}>
