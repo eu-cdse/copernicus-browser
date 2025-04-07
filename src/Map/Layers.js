@@ -52,4 +52,40 @@ export const overlayTileLayers = () => [
     pane: 'labels',
     preserveDrawingBuffer: true,
   },
+  {
+    id: 'countryBorders',
+    name: t`Country Borders`,
+    attribution: `<a href="https://ec.europa.eu/eurostat/web/gisco" target="_blank">© GISCO</a>`,
+    urlType: 'VECTOR',
+    subType: 'GISCO_BORDERS',
+    zIndex: 20,
+    pane: 'countryBorders',
+    preserveDrawingBuffer: true,
+
+    style: {
+      version: 8,
+      sources: {
+        countryBorders: {
+          type: 'vector',
+          tiles: ['https://gisco-services.ec.europa.eu/vectortiles/gisco.countries_bn_2024/{z}/{x}/{y}.pbf'],
+          maxzoom: 18,
+        },
+      },
+      layers: [
+        {
+          id: 'country-borders',
+          type: 'line',
+          source: 'countryBorders',
+          'source-layer': 'gisco.countries_bn_2024',
+          layout: { visibility: 'visible' },
+          paint: {
+            'line-color': '#000000',
+            'line-width': 1,
+            'line-opacity': 0.4,
+          },
+          minzoom: 2,
+        },
+      ],
+    },
+  },
 ];

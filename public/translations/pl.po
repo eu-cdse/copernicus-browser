@@ -10464,3 +10464,6 @@ msgstr ""
 
 msgid "Show more"
 msgstr ""
+
+msgid "Country Borders"
+msgstr ""

@@ -355,7 +355,7 @@ class Map extends React.Component {
     return (
       <LeafletMap
         ref={(el) => (this.mapRef = el)}
-        minZoom={2}
+        minZoom={3}
         onViewportChanged={this.updateViewport}
         center={[this.props.lat, this.props.lng]}
         zoom={this.props.zoom}
@@ -605,7 +605,7 @@ class Map extends React.Component {
               <Pane name={overlayTileLayer.pane} style={{ zIndex: overlayTileLayer.zIndex }}>
                 {overlayTileLayer.urlType === 'VECTOR' ? (
                   <GlTileLayer
-                    style={overlayTileLayer.url}
+                    style={overlayTileLayer.style || overlayTileLayer.url}
                     attribution={overlayTileLayer.attribution}
                     overlayTileLayerId={overlayTileLayer.id}
                     pane={overlayTileLayer.pane}
