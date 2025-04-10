@@ -233,6 +233,7 @@ class Tools extends Component {
             activeIndex={this.props.selectedTabIndex}
             onErrorMessage={(msg) => store.dispatch(notificationSlice.actions.displayError(msg))}
             onSelect={this.setActiveTabIndex}
+            isLoggedIn={!!this.props.user?.userdata}
           >
             <Tab id="visualization-tab" title={t`Visualise`} renderKey={TABS.VISUALIZE_TAB}>
               <VisualizationPanel

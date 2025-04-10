@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { t } from 'ttag';
 import onClickOutside from 'react-onclickoutside';
 
-import ExternalLink from '../ExternalLink/ExternalLink';
-
 import ChevronUp from '../icons/chevron-up.svg?react';
 import ChevronDown from '../icons/chevron-down.svg?react';
 
@@ -38,20 +36,6 @@ class LogoutButton extends Component {
         <div className="user-menu-username-button">{userName}</div>
         {isUserDropdownOpen && (
           <div className="user-menu-button-dropdown">
-            <ExternalLink
-              className={'user-menu-button-dropdown-item'}
-              title={t`Sentinel Hub Dashboard`}
-              href={'https://shapps.dataspace.copernicus.eu/dashboard/'}
-            >
-              {t`SH Dashboard`}
-            </ExternalLink>
-            <ExternalLink
-              className={'user-menu-button-dropdown-item'}
-              title={t`Data Workspace`}
-              href={'https://dataspace.copernicus.eu/workspace/'}
-            >
-              {t`Workspace`}
-            </ExternalLink>
             <div
               className="user-menu-button-dropdown-item"
               onClick={onLogOut}

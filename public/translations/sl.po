@@ -7915,9 +7915,6 @@ msgstr "Delovni prostor"
 msgid "Add to workspace"
 msgstr "Dodaj v delovni prostor"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr "Izdelek je bil uspešno dodan v delovni prostor!"
-
 msgid "Something went wrong!"
 msgstr "Med obnavljanjem datotek je šlo nekaj narobe, postopek se je prekinil!"
 
@@ -9485,9 +9482,6 @@ msgstr ""
 msgid "Sentinel Hub Dashboard"
 msgstr "Sentinel Hub nadzorna plošča"
 
-msgid "SH Dashboard"
-msgstr "SH nadzorna plošča"
-
 msgid "Data Workspace"
 msgstr ""
 
@@ -10989,4 +10983,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

@@ -7795,9 +7795,6 @@ msgstr "Obszar roboczy"
 msgid "Add to workspace"
 msgstr "Dodać do obszaru roboczego"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr ""
-
 msgid "Something went wrong!"
 msgstr ""
 
@@ -8961,9 +8958,6 @@ msgstr ""
 
 msgid "Sentinel Hub Dashboard"
 msgstr "Sentinel Hub kokpit"
-
-msgid "SH Dashboard"
-msgstr "SH kokpit"
 
 msgid "Data Workspace"
 msgstr ""
@@ -10466,4 +10460,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

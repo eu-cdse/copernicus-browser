@@ -791,6 +791,12 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
 
   if (layerId) {
     layer = await LayersFactory.makeLayer(visualizationUrl, layerId, null, reqConfig);
+    if (evalscript) {
+      layer.evalscript = evalscript;
+    }
+    if (evalscripturl) {
+      layer.evalscriptUrl = evalscripturl;
+    }
     await layer.updateLayerFromServiceIfNeeded(reqConfig);
   } else if (isDataFusionEnabled(dataFusion)) {
     layer = await constructDataFusionLayer(dataFusion, evalscript, evalscripturl, fromTime, toTime);

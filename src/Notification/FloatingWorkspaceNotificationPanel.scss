@@ -16,6 +16,10 @@
 
   .notification-panel-text {
     margin: 10px 0;
+
+    a {
+      color: inherit;
+    }
   }
 
   .success {

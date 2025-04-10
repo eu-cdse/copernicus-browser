@@ -8581,9 +8581,6 @@ msgstr "Робочий простір"
 msgid "Add to workspace"
 msgstr "Додати до робочого простору"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr "Продукт успішно додано до Робочого простору!"
-
 msgid "Something went wrong!"
 msgstr "Щось пішло не так!"
 
@@ -9143,9 +9140,6 @@ msgstr "Згенерувати"
 
 msgid "Short URL ..."
 msgstr "Коротка URL-адреса ..."
-
-msgid "SH Dashboard"
-msgstr "Панель керування SH"
 
 msgid "Data Workspace"
 msgstr "Робочий простір даних"
@@ -11181,4 +11175,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

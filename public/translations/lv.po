@@ -7453,9 +7453,6 @@ msgstr "Darbvirsma"
 msgid "Add to workspace"
 msgstr "Pievienot darba virsmai"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr "Produkts ir veiksmīgi pievienots darba virsmai!"
-
 msgid "Something went wrong!"
 msgstr "Ir notikusi kļūda!"
 
@@ -8651,9 +8648,6 @@ msgstr ""
 
 msgid "Sentinel Hub Dashboard"
 msgstr "Sentinel Hub panelis"
-
-msgid "SH Dashboard"
-msgstr "SH panelis"
 
 msgid "Data Workspace"
 msgstr ""
@@ -10156,4 +10150,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

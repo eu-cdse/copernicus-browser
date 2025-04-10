@@ -739,6 +739,7 @@ export const tabsSlice = createSlice({
   name: 'tabs',
   initialState: {
     selectedTabIndex: TABS.VISUALIZE_TAB,
+    workspacesCount: null,
     scrollTop: null,
   },
   reducers: {
@@ -747,6 +748,12 @@ export const tabsSlice = createSlice({
     },
     setScrollTop: (state, action) => {
       state.scrollTop = action.payload;
+    },
+    setWorkspacesCount: (state, action) => {
+      state.workspacesCount = action.payload;
+    },
+    incrementWorkspacesCount: (state) => {
+      state.workspacesCount = state.workspacesCount + 1;
     },
     reset: (state) => {
       state.selectedTabIndex = TABS.VISUALIZE_TAB;

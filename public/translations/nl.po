@@ -6012,9 +6012,6 @@ msgstr "Werkruimte"
 msgid "Add to workspace"
 msgstr "Voeg toe aan werkruimte"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr ""
-
 msgid "Something went wrong!"
 msgstr ""
 
@@ -6634,9 +6631,6 @@ msgid "Generate"
 msgstr ""
 
 msgid "Short URL ..."
-msgstr ""
-
-msgid "SH Dashboard"
 msgstr ""
 
 msgid "Data Workspace"
@@ -8608,4 +8602,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

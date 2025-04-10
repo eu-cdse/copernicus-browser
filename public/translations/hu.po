@@ -5999,9 +5999,6 @@ msgstr "Workspace"
 msgid "Add to workspace"
 msgstr "Add hozzá a Workspace-hez"
 
-msgid "Product was successfully added to the Workspace!"
-msgstr "A termék sikeresen hozzáadásra került a \"Workspace\"-hez!"
-
 msgid "Something went wrong!"
 msgstr "Hiba lépett fel!"
 
@@ -6625,9 +6622,6 @@ msgid "Generate"
 msgstr ""
 
 msgid "Short URL ..."
-msgstr ""
-
-msgid "SH Dashboard"
 msgstr ""
 
 msgid "Data Workspace"
@@ -8599,4 +8593,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

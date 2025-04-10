@@ -6311,9 +6311,6 @@ msgid ""
 "of oil contamination or wake detection."
 msgstr ""
 
-msgid "Product was successfully added to the Workspace!"
-msgstr ""
-
 msgid "Something went wrong!"
 msgstr ""
 
@@ -7070,9 +7067,6 @@ msgid ""
 msgstr ""
 
 msgid "Sentinel Hub Dashboard"
-msgstr ""
-
-msgid "SH Dashboard"
 msgstr ""
 
 msgid "Data Workspace"
@@ -8576,4 +8570,7 @@ msgid "Show more"
 msgstr ""
 
 msgid "Country Borders"
+msgstr ""
+
+msgid "Product was successfully added to the "
 msgstr ""

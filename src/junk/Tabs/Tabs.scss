@@ -14,6 +14,43 @@
   }
 }
 
+.tabs-wrapper-workspace {
+  display: flex;
+  align-items: center;
+  box-shadow: $boxShadow;
+  z-index: 1;
+
+  &-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+    font-size: 12px;
+    padding: 10px;
+    color: $primaryColor;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $dropdownHoverBackground;
+    }
+
+    .counter-badge {
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: $primaryColor;
+      color: $whiteColor;
+      font-size: 10px;
+    }
+  }
+}
+
 .tabs-wrapper {
   background-color: $primaryColor;
 

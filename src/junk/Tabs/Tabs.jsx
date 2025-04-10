@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -14,8 +14,16 @@ import { t } from 'ttag';
 import { TABS } from '../../const';
 import store, { tabsSlice } from '../../store';
 import { connect } from 'react-redux';
+import { getWorkspaceProductsCount } from '../../api/OData/workspace';
 
 const Tabs = (props) => {
+  useEffect(() => {
+    (async () => {
+      const workspacesCount = await getWorkspaceProductsCount();
+      store.dispatch(tabsSlice.actions.setWorkspacesCount(workspacesCount));
+    })();
+  }, []);
+
   const handleScrollOnSidePanel = (e) => {
     store.dispatch(tabsSlice.actions.setScrollTop(e.currentTarget.scrollTop));
   };
@@ -30,9 +38,8 @@ const Tabs = (props) => {
 
   const renderTabButtons = () => {
     const defaultErrorMsg = t`Search for data first.`;
-    const { scrollTop } = props;
     return (
-      <div className={`tabs-wrapper ${scrollTop > 0 ? 'box-shadow-divider' : ''}`}>
+      <div className={`tabs-wrapper `}>
         <ul className="tab-list">
           {props.children
             .filter((t) => t)
@@ -90,6 +97,37 @@ const Tabs = (props) => {
     );
   };
 
+  const renderWorksSpaceButtons = () => {
+    const { scrollTop, workspacesCount } = props;
+    return (
+      <div className={`tabs-wrapper-workspace ${scrollTop > 0 ? 'box-shadow-divider' : ''}`}>
+        <a
+          href="https://shapps.dataspace.copernicus.eu/dashboard/"
+          target="_blank"
+          rel="noreferrer"
+          className="tabs-wrapper-workspace-button"
+          title={t`Sentinel Hub Dashboard`}
+        >
+          <i class="fas fa-external-link-alt"></i>
+          SH DASHBOARD
+        </a>
+        <a
+          href="https://workspace.dataspace.copernicus.eu/workspace/my-products"
+          target="_blank"
+          rel="noreferrer"
+          className="tabs-wrapper-workspace-button"
+          title={t`Data Workspace`}
+        >
+          <i class="fas fa-external-link-alt"></i>
+          WORKSPACE
+          {workspacesCount !== null && workspacesCount > 0 ? (
+            <span className="counter-badge">{Math.min(workspacesCount, 99)}</span>
+          ) : null}
+        </a>
+      </div>
+    );
+  };
+
   const renderContent = () => {
     return props.children
       .filter((t) => t)
@@ -123,6 +161,7 @@ const Tabs = (props) => {
   return (
     <div className="tabs-container">
       {renderTabButtons()}
+      {props.isLoggedIn && renderWorksSpaceButtons()}
       {renderContent()}
       {showBannerBasedOnTab()}
     </div>
@@ -131,6 +170,7 @@ const Tabs = (props) => {
 
 const mapStoreToProps = (store) => ({
   scrollTop: store.tabs.scrollTop,
+  workspacesCount: store.tabs.workspacesCount,
 });
 
 const ConnectedTabs = connect(mapStoreToProps)(Tabs);
