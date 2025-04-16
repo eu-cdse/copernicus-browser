@@ -21,6 +21,7 @@ import {
   COPERNICUS_HRSI_RLIE_S1,
   COPERNICUS_HRSI_RLIE_S2,
   COPERNICUS_HRSI_RLIE_S1_S2,
+  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -228,4 +229,16 @@ export const credits = {
     },
   ],
   [DATASOURCES.GLOBAL_LAND_COVER]: [copernicus],
+  [DATASOURCES.CCM]: [
+    {
+      ...copernicus,
+      link: 'https://www.copernicus.eu/en/contributing-missions',
+    },
+  ],
+  [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: [
+    {
+      ...copernicus,
+      link: 'https://www.copernicus.eu/en/contributing-missions',
+    },
+  ],
 };

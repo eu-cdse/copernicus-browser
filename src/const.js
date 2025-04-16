@@ -48,7 +48,7 @@ export const EDUCATION_MODE = {
 export const DEFAULT_MODE = {
   id: 'default',
   label: () => t`Normal`,
-  themes: DEFAULT_THEMES,
+  themes: DEFAULT_THEMES, // TO-DO: do not show CCM for people without access
 };
 
 export const DEFAULT_THEME_ID = 'DEFAULT-THEME';
@@ -193,6 +193,7 @@ export const DATASOURCES = {
   MOSAIC: 'MOSAIC',
   S1_MOSAIC: 'Sentinel-1 Mosaic',
   GLOBAL_LAND_COVER: 'Global Land Cover',
+  CCM: 'CCM',
 };
 
 export const defaultEffects = {

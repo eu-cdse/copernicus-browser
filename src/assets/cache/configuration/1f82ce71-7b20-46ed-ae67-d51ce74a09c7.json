@@ -1,0 +1,77 @@
+[
+    {
+        "id": "1_TRUE_COLOR",
+        "title": "True color",
+        "description": "Based on bands 3,2,1",
+        "styles": [
+            {
+                "name": "RGB",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0;\nlet maxVal = 300;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B1, samples.B2, samples.B3];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B3\",\n        \"B2\",\n        \"B1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "1f82ce-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-10T11:54:00.108351Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "4ab2c8-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "2_FALSE_COLOR",
+        "title": "False color",
+        "description": "Based on bands 4,3,2",
+        "styles": [
+            {
+                "name": "RGB",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0;\nlet maxVal = 500;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B4, samples.B1, samples.B2];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B4\",\n        \"B1\",\n        \"B2\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n\n"
+            }
+        ],
+        "orderHint": 1,
+        "instanceId": "1f82ce-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-10T11:56:02.837190Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "4ab2c8-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "3_NDVI",
+        "title": "NDVI",
+        "description": "Based on combination of bands (B4 - B3)/(B4 + B3)",
+        "styles": [
+            {
+                "name": "VIZ",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask == 0) return [0,0,0,0];\n  \n  var ndvi = index(samples.B4, samples.B1);\n  \n  if (ndvi<-0.2) return [0.75,0.75,0.75,1];\n  else if (ndvi<-0.1) return [0.86,0.86,0.86,1];\n  else if (ndvi<0) return [1,1,0.88,1];\n  else if (ndvi<0.025) return [1,0.98,0.8,1];\n  else if (ndvi<0.05) return [0.93,0.91,0.71,1];\n  else if (ndvi<0.075) return [0.87,0.85,0.61,1];\n  else if (ndvi<0.1) return [0.8,0.78,0.51,1];\n  else if (ndvi<0.125) return [0.74,0.72,0.42,1];\n  else if (ndvi<0.15) return [0.69,0.76,0.38,1];\n  else if (ndvi<0.175) return [0.64,0.8,0.35,1];\n  else if (ndvi<0.2) return [0.57,0.75,0.32,1];\n  else if (ndvi<0.25) return [0.5,0.7,0.28,1];\n  else if (ndvi<0.3) return [0.44,0.64,0.25,1];\n  else if (ndvi<0.35) return [0.38,0.59,0.21,1];\n  else if (ndvi<0.4) return [0.31,0.54,0.18,1];\n  else if (ndvi<0.45) return [0.25,0.49,0.14,1];\n  else if (ndvi<0.5) return [0.19,0.43,0.11,1];\n  else if (ndvi<0.55) return [0.13,0.38,0.07,1];\n  else if (ndvi<0.6) return [0.06,0.33,0.04,1];\n  else return [0,0.27,0,1];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B4\",\n        \"B1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 2,
+        "instanceId": "1f82ce-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-10T11:55:41.577055Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "4ab2c8-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

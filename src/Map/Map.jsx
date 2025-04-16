@@ -459,7 +459,7 @@ class Map extends React.Component {
                 layers={visualizationLayerId}
                 format="PNG"
                 fromTime={fromTime ? fromTime.toDate() : null}
-                toTime={toTime.toDate()}
+                toTime={toTime ? toTime.toDate() : null}
                 customSelected={customSelected}
                 evalscript={evalscript}
                 evalscripturl={evalscripturl}

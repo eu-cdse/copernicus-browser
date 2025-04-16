@@ -1,0 +1,27 @@
+{
+    "title": "CCM VHR 2018",
+    "layers": [
+        {
+            "id": "1_TRUE_COLOR",
+            "name": "True color",
+            "description": "Based on bands 3,2,1",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "2_FALSE_COLOR",
+            "name": "False color",
+            "description": "Based on bands 4,3,2",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "3_NDVI",
+            "name": "NDVI",
+            "description": "Based on combination of bands (B4 - B3)/(B4 + B3)",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

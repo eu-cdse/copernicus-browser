@@ -1,6 +1,6 @@
 export const COPERNICUS_CONTRIBUTING_MISSIONS = 'CCM';
 
-const CCM_ROLES = {
+export const CCM_ROLES = {
   COPERNICUS_SERVICES_CCM: 'copernicus-services-ccm',
   UNION_INST_CCM: 'union-inst-ccm',
   UNION_RESEARCH_PROJECTS_SPACE_CCM: 'union-research-projects-space-ccm',

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { t } from 'ttag';
+import jwt_dec from 'jwt-decode';
 
 import store, { productDownloadSlice, notificationSlice, visualizationSlice } from '../../store';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
@@ -19,6 +20,7 @@ import {
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HH,
   S1_CDAS_IW_HHHV,
+  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
@@ -26,6 +28,7 @@ import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
+import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -39,7 +42,7 @@ export const ErrorMessage = {
     t`You are not eligible to use this feature. More info [here](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/ccm-how-to-register).`,
 };
 
-const visualizationButtonDisabled = (tile) => {
+const visualizationButtonDisabled = (tile, user) => {
   const datasetId = getDatasetIdFromProductType(tile?.productType, tile?.attributes);
   if (!datasetId) {
     return ErrorMessage.visualizationNotSupported();
@@ -47,6 +50,14 @@ const visualizationButtonDisabled = (tile) => {
 
   if (!tile.online) {
     return ErrorMessage.visualizeOfflineProduct();
+  }
+
+  const isUserCopernicusServicesUser =
+    user.access_token !== null
+      ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+      : false;
+  if ([CDSE_CCM_VHR_IMAGE_2018_COLLECTION].includes(datasetId) && !isUserCopernicusServicesUser) {
+    return ErrorMessage.CCMAccessRoleNotEligible();
   }
 
   return false;
@@ -105,6 +116,7 @@ const ResultItem = ({
   productDownloadProgress,
   productDownloadCancelTokens,
   searchFormData,
+  user,
 }) => {
   const { sensingTime, name, platformShortName, instrumentShortName, productType, size, contentLength } =
     tile;
@@ -160,7 +172,7 @@ const ResultItem = ({
   const downloadInProgress =
     productDownloadProgress[tile.id] !== null && productDownloadProgress[tile.id] !== undefined;
 
-  const visualizeButtonDisabled = visualizationButtonDisabled(tile);
+  const visualizeButtonDisabled = visualizationButtonDisabled(tile, user);
   return (
     <div onMouseEnter={(e) => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
       <div className="container">
@@ -250,6 +262,7 @@ const mapStoreToProps = (store) => ({
   productDownloadProgress: store.productDownload.progress,
   productDownloadCancelTokens: store.productDownload.cancelTokens,
   searchFormData: store.searchResults.searchFormData,
+  user: store.auth.user,
 });
 
 export default connect(mapStoreToProps, null)(ResultItem);

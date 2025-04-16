@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import jwt_dec from 'jwt-decode';
 
 import { getUrlParams, parsePosition, parseDataFusion, fetchEvalscriptFromEvalscripturl } from '../utils';
 import {
@@ -27,6 +29,11 @@ import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins } from '../Tools/Pins/Pin.utils';
 import { decrypt } from '../utils/encrypt';
+import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import {
+  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  S2_L2A_CDAS,
+} from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -45,6 +52,16 @@ class URLParamsParser extends React.Component {
     }
 
     params = await this.parseEvalscriptFromEvalscriptUrl(params);
+
+    const isUserCopernicusServicesUser =
+      this.props.user.access_token !== null
+        ? jwt_dec(this.props.user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+        : false;
+
+    if ([CDSE_CCM_VHR_IMAGE_2018_COLLECTION].includes(params.datasetId) && !isUserCopernicusServicesUser) {
+      params.datasetId = S2_L2A_CDAS;
+      params.layerId = '1_TRUE_COLOR';
+    }
 
     this.checkAndDisplayTutorial(params);
     this.setStore(params);
@@ -334,4 +351,8 @@ class URLParamsParser extends React.Component {
   }
 }
 
-export default URLParamsParser;
+const mapStoreToProps = (store) => ({
+  user: store.auth.user,
+});
+
+export default connect(mapStoreToProps, null)(URLParamsParser);

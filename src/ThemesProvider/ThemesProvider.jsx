@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { t } from 'ttag';
 import AlertProvider, { confirm } from 'react-alert-async';
-import { ModalId } from '../const';
+import { DEFAULT_THEME_ID, ModalId } from '../const';
 
 import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
@@ -245,8 +245,14 @@ class ThemesProvider extends React.Component {
       initializeDataSourceHandlers();
       return;
     }
-    const { modeThemesList, userInstancesThemesList, urlThemesList, themesLists, selectedThemesListId } =
-      this.props;
+    const {
+      modeThemesList,
+      userInstancesThemesList,
+      urlThemesList,
+      themesLists,
+      selectedThemesListId,
+      user,
+    } = this.props;
     // ah yes not sure how to do elegantly this to handle duplicate ids...
     let selectedTheme;
 
@@ -266,6 +272,14 @@ class ThemesProvider extends React.Component {
     }
     // We still set selected theme for layerInclude/layersExclude etc in Visualization Panel
     store.dispatch(themesSlice.actions.setDataSourcesInitialized(false));
+
+    // Ignore CCM collections for anonymous users
+    if (user.access_token === null && selectedTheme.id === DEFAULT_THEME_ID) {
+      selectedTheme = {
+        ...selectedTheme,
+        content: selectedTheme.content.filter((t) => !['CCM VHR Europe 2018'].includes(t.name)),
+      };
+    }
     const failedThemeParts = await prepareDataSourceHandlers(selectedTheme);
     store.dispatch(themesSlice.actions.setFailedThemeParts(failedThemeParts));
   };

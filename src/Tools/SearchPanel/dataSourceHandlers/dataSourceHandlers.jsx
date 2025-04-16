@@ -135,6 +135,7 @@ import {
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
   CDSE_GLC_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -149,6 +150,7 @@ import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
 import GLCDataSourceHandler from './GLCDataSourceHandler';
+import CCMDataSourceHandler from './CCMDataSourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -180,6 +182,7 @@ export function initializeDataSourceHandlers() {
     new PlanetBasemapDataSourceHandler(),
     new OthersDataSourceHandler(),
     new GLCDataSourceHandler(),
+    new CCMDataSourceHandler(),
   ];
 }
 
@@ -532,6 +535,8 @@ export function datasourceForDatasetId(datasetId) {
       return DATASOURCES.S3_CDAS;
     case CDSE_GLC_COLLECTION:
       return DATASOURCES.GLOBAL_LAND_COVER;
+    case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
+      return DATASOURCES.CCM;
     default:
       return null;
   }
@@ -663,6 +668,7 @@ export const datasetLabels = {
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
   [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',
   [CDSE_GLC_COLLECTION]: 'Global Land Cover',
+  [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: 'VHR Europe 2018',
 };
 
 export function getDatasetLabel(datasetId) {

@@ -50,6 +50,7 @@ const interestingBBoxes = [
   new BBox(CRS_EPSG4326, 123, 10.5, 123 + BBOX_SIZE, 10.5 + BBOX_SIZE), // S-1 GRD IW VV
   new BBox(CRS_EPSG4326, 145.75, 18.1, 145.75 + BBOX_SIZE, 18.1 + BBOX_SIZE), // S-1 GRD SM VV/VV+VH
   new BBox(CRS_EPSG4326, -88.75, 41.9, -88.75 + BBOX_SIZE, 41.9 + BBOX_SIZE), // S-1 GRD SM HH
+  new BBox(CRS_EPSG4326, 13.7, 46.24, 13.7 + BBOX_SIZE, 46.24 + BBOX_SIZE), // CCM
 ];
 const forceBBoxForDataset = {
   [DATASET_S5PL2.id]: new BBox(CRS_EPSG4326, 4, 47.5, 4.4, 47.9), // CH4

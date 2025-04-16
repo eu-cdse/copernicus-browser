@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { usePrevious } from '../../../hooks/usePrevious';
+import jwt_dec from 'jwt-decode';
 
 import { connect } from 'react-redux';
 import Select, { components } from 'react-select';
@@ -34,6 +35,7 @@ import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
 import { HLSConstellationSelection } from './HLSConstellationSelection';
+import { CCM_ROLES } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 
 const DropdownIndicator = (props) => {
   return (
@@ -42,6 +44,16 @@ const DropdownIndicator = (props) => {
         <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
       </components.DropdownIndicator>
     )
+  );
+};
+
+const CustomOption = (props) => {
+  const { data } = props;
+
+  return (
+    <div title={data.label}>
+      <components.Option {...props}>{data.label}</components.Option>
+    </div>
   );
 };
 
@@ -102,7 +114,7 @@ const renderCollectionsList = ({ collections, selectedCollection, onSelect }) =>
   </>
 );
 
-const renderCollections = (collectionGroups, selectedCollection, onSelect, isExpanded) => {
+const renderCollections = (collectionGroups, selectedCollection, onSelect, isExpanded, user) => {
   if (isExpanded) {
     const selectedCollectionGroup = collectionGroups.find(
       (d) => d.datasource === selectedCollection.datasource,
@@ -113,6 +125,11 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
         g.collections.map((c) => ({ label: c.title, value: c.dataset })),
       ]),
     );
+
+    const isUserCopernicusServicesUser =
+      user.access_token !== null
+        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+        : false;
     const options = [
       ...collectionGroups
         .map((g) =>
@@ -126,7 +143,16 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
           ),
         )
         .flat(),
-    ];
+    ].filter((opt) => {
+      if (isUserCopernicusServicesUser) {
+        return true;
+      }
+
+      if (opt.value === DATASOURCES.CCM || opt.parentDataset === DATASOURCES.CCM) {
+        return false;
+      }
+      return true;
+    });
 
     const filterOption = (option, string) => {
       if (string.length < 3 && option.data.type === 'dataset') {
@@ -177,7 +203,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
             className="collection-select-dropdown"
             classNamePrefix="collection-select"
             filterOption={filterOption}
-            components={{ DropdownIndicator }}
+            components={{ DropdownIndicator, Option: CustomOption }}
           ></Select>
 
           {!!selectedCollectionGroup?.getDescription && (
@@ -220,6 +246,7 @@ const CollectionSelection = ({
   collectionPanelExpanded,
   pixelBounds,
   maxCloudCover,
+  user,
 }) => {
   const [advanced] = useState(false);
   const [selectedCollection, setSelected] = useState({});
@@ -305,7 +332,7 @@ const CollectionSelection = ({
       return isExpanded && <Loader />;
     }
 
-    return <>{renderCollections(collectionGroups, selectedCollection, onSelect, isExpanded)}</>;
+    return <>{renderCollections(collectionGroups, selectedCollection, onSelect, isExpanded, user)}</>;
   };
 
   const renderCollectionSelectionTitle = (collectionGroups, selectedCollection, onSelect) => {
@@ -464,6 +491,7 @@ const mapStoreToProps = (store) => ({
   pixelBounds: store.mainMap.pixelBounds,
   collectionPanelExpanded: store.collapsiblePanel.collectionPanelExpanded,
   maxCloudCover: store.visualization.cloudCoverage,
+  user: store.auth.user,
 });
 
 export default connect(mapStoreToProps, null)(CollectionSelection);

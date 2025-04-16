@@ -35,6 +35,7 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
+  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -79,6 +80,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S2MSI_L3__MCQ: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   S1SAR_L3_IW_MCM: S1_MONTHLY_MOSAIC_IW,
   S1SAR_L3_DH_MCM: S1_MONTHLY_MOSAIC_DH,
+  VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 };
 
 export const getDatasetIdFromProductType = (productType, attributes) => {
@@ -138,6 +140,27 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     }
     if (/DGE_90/.test(productType)) {
       return PRODUCT_TYPE_TO_DATASETID['COP-DEM_GLO-90-DGED'];
+    }
+  }
+
+  if (
+    [
+      'NAO_MS4__3_E1F0-COG',
+      'PHR_MS___3_E1F0-COG',
+      'DOV_MS_L3A_E1F0-COG',
+      'OPT_MS4_1C_E1F0-COG',
+      'VHI_MS4_1C_E1F0-COG',
+      'AIS_MSP_1G_E1F0-COG',
+      'HRS_MS4_1C_E1F0-COG',
+      'PHR_MS___3_B34B-COG',
+      'AIS_MSP_1G_B34B-COG',
+      'OPT_MS4_1C_B34B-COG',
+      'NAO_MS4__3_B34B-COG',
+    ].includes(productType)
+  ) {
+    const datasetFullAttr = attributes.find((att) => att.Name === AttributeNames.datasetFull);
+    if (datasetFullAttr && !datasetFullAttr.Value.includes('ENHANCED')) {
+      return PRODUCT_TYPE_TO_DATASETID['VHR_IMAGE_2018'];
     }
   }
 
@@ -241,8 +264,16 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   if (/^DEM/.test(datasetId)) {
     return {
-      id: 'DEM',
+      id: ODataCollections.DEM.id,
       instrument: 'open',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+
+  if (datasetId === CDSE_CCM_VHR_IMAGE_2018_COLLECTION) {
+    return {
+      id: ODataCollections.OPTICAL.id,
+      instrument: 'VHR_EUROPE',
       productType: getProductTypeFromDatasetId(datasetId),
     };
   }
