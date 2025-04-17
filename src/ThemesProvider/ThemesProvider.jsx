@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import jwt_dec from 'jwt-decode';
 import axios from 'axios';
 import { t } from 'ttag';
 import AlertProvider, { confirm } from 'react-alert-async';
@@ -22,6 +23,7 @@ import { logoutUser, openLogin } from '../Auth/authHelpers';
 
 import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
+import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 
 const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
@@ -273,8 +275,12 @@ class ThemesProvider extends React.Component {
     // We still set selected theme for layerInclude/layersExclude etc in Visualization Panel
     store.dispatch(themesSlice.actions.setDataSourcesInitialized(false));
 
-    // Ignore CCM collections for anonymous users
-    if (user.access_token === null && selectedTheme.id === DEFAULT_THEME_ID) {
+    // Ignore CCM collections for non copernicus services users
+    const isUserCopernicusServicesUser =
+      user.access_token !== null
+        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+        : false;
+    if (!isUserCopernicusServicesUser && selectedTheme.id === DEFAULT_THEME_ID) {
       selectedTheme = {
         ...selectedTheme,
         content: selectedTheme.content.filter((t) => !['CCM VHR Europe 2018'].includes(t.name)),
