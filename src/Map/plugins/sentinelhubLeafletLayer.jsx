@@ -31,6 +31,12 @@ import {
   Interpolator,
   S2L1CCDASLayer,
   S2L2ACDASLayer,
+  S3OLCICDASLayer,
+  S3SLSTRCDASLayer,
+  S3SYNL2CDASLayer,
+  S5PL2CDASLayer,
+  S1GRDCDASLayer,
+  DEMCDASLayer,
 } from '@sentinel-hub/sentinelhub-js';
 
 import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
@@ -122,6 +128,11 @@ import {
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
   CDSE_GLC_COLLECTION,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_AOD,
+  S3SYNERGY_L2_VGP,
+  S3SYNERGY_L2_VG1,
+  S3SYNERGY_L2_V10,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
@@ -134,11 +145,6 @@ import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import { reqConfigMemoryCache, reqConfigGetMap, DISABLED_ORTHORECTIFICATION } from '../../const';
-import { S3OLCICDASLayer } from '@sentinel-hub/sentinelhub-js';
-import { S3SLSTRCDASLayer } from '@sentinel-hub/sentinelhub-js';
-import { S5PL2CDASLayer } from '@sentinel-hub/sentinelhub-js';
-import { S1GRDCDASLayer } from '@sentinel-hub/sentinelhub-js';
-import { DEMCDASLayer } from '@sentinel-hub/sentinelhub-js';
 
 class SentinelHubLayer extends L.TileLayer {
   constructor(options) {
@@ -663,6 +669,35 @@ class SentinelHubLayer extends L.TileLayer {
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
+        });
+      case S3SYNERGY_L2_AOD:
+      case S3SYNERGY_L2_VGP:
+      case S3SYNERGY_L2_SYN:
+        return await new S3SYNL2CDASLayer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscripturl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+          s3Type: 'SY_2_SYN',
+        });
+      case S3SYNERGY_L2_V10:
+        return await new S3SYNL2CDASLayer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscripturl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+          s3Type: 'SY_2_V10',
+        });
+      case S3SYNERGY_L2_VG1:
+        return await new S3SYNL2CDASLayer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscripturl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+          s3Type: 'SY_2_VG1',
         });
       case S3OLCIL2_WATER:
       case S3OLCIL2_LAND:

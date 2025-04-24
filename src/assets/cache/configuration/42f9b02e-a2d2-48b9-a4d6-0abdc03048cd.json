@@ -1,0 +1,818 @@
+[
+    {
+        "id": "B0_V10",
+        "title": "B0_V10",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.6;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B0_V10;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B0_V10\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:15:21.511827Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B0_VG1",
+        "title": "B0_VG1",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.2;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B0_VG1;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B0_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:16:48.642112Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B01",
+        "title": "B01",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 61
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:00:18.217Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B02",
+        "title": "B02",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 60
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:00:34.048Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B03",
+        "title": "B03",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 62
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:00:49.713Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B04",
+        "title": "B04",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 80
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:01:05.909Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B05",
+        "title": "B05",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 79
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:01:20.537Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B06",
+        "title": "B06",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 78
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:01:37.556Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B07",
+        "title": "B07",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 77
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:01:51.670Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B08",
+        "title": "B08",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 76
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:09.426Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B09",
+        "title": "B09",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 75
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:24.506Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B10",
+        "title": "B10",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 74
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:40.749Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B11",
+        "title": "B11",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 73
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:56.524Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B12",
+        "title": "B12",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 72
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:03:11.570Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B16",
+        "title": "B16",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 68
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:04:12.022Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B17",
+        "title": "B17",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 67
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:04:57.808Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B18",
+        "title": "B18",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 66
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:05:15.977Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B2_V10",
+        "title": "B2_V10",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.6;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B2_V10;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B2_V10\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:18:50.379310Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B2_VG1",
+        "title": "B2_VG1",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B2_VG1;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B2_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:14:27.792538Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B21",
+        "title": "B21",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 63
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:05:59.172Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B3_V10",
+        "title": "B3_V10",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.8;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B3_V10;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B3_V10\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:20:30.911788Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "B3_VG1",
+        "title": "B3_VG1",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.8;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.B3_VG1;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B3_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:21:32.005736Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "FALSE-COLOR",
+        "title": "False Color",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 97
+            }
+        ],
+        "orderHint": 10,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-31T16:58:39.042321Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "MIR_V10",
+        "title": "MIR_V10",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.8;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.MIR_V10;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"MIR_V10\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:23:00.907373Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "MIR_VG1",
+        "title": "MIR_VG1",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.8;\n\nlet viz = new HighlightCompressVisualizerSingle(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples.MIR_VG1;\n    val = viz.process(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"MIR_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 2\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-03-11T10:25:52.662913Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "NDVI_V10",
+        "title": "NDVI, 10 Day Maximum",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n\tif (samples.dataMask == 0) return [0,0,0,0];\n\t\n    var val = samples.NDVI_V10;\n\tif (val<-1.1) return [0,0,0,1];\nelse if (val<-0.2) return [0.75,0.75,0.75,1];\nelse if (val<-0.1) return [0.86,0.86,0.86,1];\nelse if (val<0) return [1,1,0.88,1];\nelse if (val<0.025) return [1,0.98,0.8,1];\nelse if (val<0.05) return [0.93,0.91,0.71,1];\nelse if (val<0.075) return [0.87,0.85,0.61,1];\nelse if (val<0.1) return [0.8,0.78,0.51,1];\nelse if (val<0.125) return [0.74,0.72,0.42,1];\nelse if (val<0.15) return [0.69,0.76,0.38,1];\nelse if (val<0.175) return [0.64,0.8,0.35,1];\nelse if (val<0.2) return [0.57,0.75,0.32,1];\nelse if (val<0.25) return [0.5,0.7,0.28,1];\nelse if (val<0.3) return [0.44,0.64,0.25,1];\nelse if (val<0.35) return [0.38,0.59,0.21,1];\nelse if (val<0.4) return [0.31,0.54,0.18,1];\nelse if (val<0.45) return [0.25,0.49,0.14,1];\nelse if (val<0.5) return [0.19,0.43,0.11,1];\nelse if (val<0.55) return [0.13,0.38,0.07,1];\nelse if (val<0.6) return [0.06,0.33,0.04,1];\nelse return [0,0.27,0,1];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"NDVI_V10\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-23T10:01:29.153870Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "NDVI_VG1",
+        "title": "NDVI (Surface Reflectance), 1 Day Maximum",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n\tif (samples.dataMask == 0) return [0,0,0,0];\n\t\n    var val = samples.NDVI_VG1;\n\tif (val<-1.1) return [0,0,0,1];\nelse if (val<-0.2) return [0.75,0.75,0.75,1];\nelse if (val<-0.1) return [0.86,0.86,0.86,1];\nelse if (val<0) return [1,1,0.88,1];\nelse if (val<0.025) return [1,0.98,0.8,1];\nelse if (val<0.05) return [0.93,0.91,0.71,1];\nelse if (val<0.075) return [0.87,0.85,0.61,1];\nelse if (val<0.1) return [0.8,0.78,0.51,1];\nelse if (val<0.125) return [0.74,0.72,0.42,1];\nelse if (val<0.15) return [0.69,0.76,0.38,1];\nelse if (val<0.175) return [0.64,0.8,0.35,1];\nelse if (val<0.2) return [0.57,0.75,0.32,1];\nelse if (val<0.25) return [0.5,0.7,0.28,1];\nelse if (val<0.3) return [0.44,0.64,0.25,1];\nelse if (val<0.35) return [0.38,0.59,0.21,1];\nelse if (val<0.4) return [0.31,0.54,0.18,1];\nelse if (val<0.45) return [0.25,0.49,0.14,1];\nelse if (val<0.5) return [0.19,0.43,0.11,1];\nelse if (val<0.55) return [0.13,0.38,0.07,1];\nelse if (val<0.6) return [0.06,0.33,0.04,1];\nelse return [0,0.27,0,1];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"NDVI_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-23T10:01:11.820550Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "S1",
+        "title": "S1",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 95
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:40.749Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "S2",
+        "title": "S2",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 90
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:40.749Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "S3",
+        "title": "S3",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 91
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:40.749Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "S5",
+        "title": "S5",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 93
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T15:02:40.749Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "S6",
+        "title": "S6 Reflectance",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 94
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-04T08:55:50.722519Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "TOA_NDVI_VG1",
+        "title": "NDVI (Top of Atmosphere), 1 Day Maximum",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n\tif (samples.dataMask == 0) return [0,0,0,0];\n\t\n    var val = samples.TOA_NDVI_VG1;\n\tif (val<-1.1) return [0,0,0,1];\n\telse if (val<-0.2) return [0.75,0.75,0.75,1];\n\telse if (val<-0.1) return [0.86,0.86,0.86,1];\n\telse if (val<0) return [1,1,0.88,1];\n\telse if (val<0.025) return [1,0.98,0.8,1];\n\telse if (val<0.05) return [0.93,0.91,0.71,1];\n\telse if (val<0.075) return [0.87,0.85,0.61,1];\n\telse if (val<0.1) return [0.8,0.78,0.51,1];\n\telse if (val<0.125) return [0.74,0.72,0.42,1];\n\telse if (val<0.15) return [0.69,0.76,0.38,1];\n\telse if (val<0.175) return [0.64,0.8,0.35,1];\n\telse if (val<0.2) return [0.57,0.75,0.32,1];\n\telse if (val<0.25) return [0.5,0.7,0.28,1];\n\telse if (val<0.3) return [0.44,0.64,0.25,1];\n\telse if (val<0.35) return [0.38,0.59,0.21,1];\n\telse if (val<0.4) return [0.31,0.54,0.18,1];\n\telse if (val<0.45) return [0.25,0.49,0.14,1];\n\telse if (val<0.5) return [0.19,0.43,0.11,1];\n\telse if (val<0.55) return [0.13,0.38,0.07,1];\n\telse if (val<0.6) return [0.06,0.33,0.04,1];\n\telse return [0,0.27,0,1];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"TOA_NDVI_VG1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-23T10:00:55.276601Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 23,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    },
+    {
+        "id": "TRUE-COLOR",
+        "title": "True color",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "dataProductId": 82
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "42f9b0-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2019-10-04T14:58:30.042Z",
+        "collectionType": "S3SYNL2",
+        "datasetSourceId": 8,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "maxCloudCoverage": 100,
+            "type": "S3SYNL2"
+        }
+    }
+]

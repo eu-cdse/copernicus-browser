@@ -1,0 +1,244 @@
+{
+    "title": "Sentinel-3 SYNERGY L2 SYN template",
+    "layers": [
+        {
+            "id": "B0_V10",
+            "name": "B0_V10",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B0_VG1",
+            "name": "B0_VG1",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B01",
+            "name": "B01",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B02",
+            "name": "B02",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B03",
+            "name": "B03",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B04",
+            "name": "B04",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B05",
+            "name": "B05",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B06",
+            "name": "B06",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B07",
+            "name": "B07",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B08",
+            "name": "B08",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B09",
+            "name": "B09",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B10",
+            "name": "B10",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B11",
+            "name": "B11",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B12",
+            "name": "B12",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B16",
+            "name": "B16",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B17",
+            "name": "B17",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B18",
+            "name": "B18",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B2_V10",
+            "name": "B2_V10",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B2_VG1",
+            "name": "B2_VG1",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B21",
+            "name": "B21",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B3_V10",
+            "name": "B3_V10",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "B3_VG1",
+            "name": "B3_VG1",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "FALSE-COLOR",
+            "name": "False Color",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "MIR_V10",
+            "name": "MIR_V10",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "MIR_VG1",
+            "name": "MIR_VG1",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "NDVI_V10",
+            "name": "NDVI, 10 Day Maximum",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "NDVI_VG1",
+            "name": "NDVI (Surface Reflectance), 1 Day Maximum",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "S1",
+            "name": "S1",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "S2",
+            "name": "S2",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "S3",
+            "name": "S3",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "S5",
+            "name": "S5",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "S6",
+            "name": "S6 Reflectance",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "TOA_NDVI_VG1",
+            "name": "NDVI (Top of Atmosphere), 1 Day Maximum",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        },
+        {
+            "id": "TRUE-COLOR",
+            "name": "True color",
+            "description": "",
+            "dataset": "S3SYNL2",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

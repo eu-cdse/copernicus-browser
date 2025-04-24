@@ -3,9 +3,11 @@ import {
   DATASET_CDAS_S3OLCI,
   DATASET_CDAS_S3OLCIL2,
   DATASET_CDAS_S3SLSTR,
+  DATASET_CDAS_S3SYNERGYL2,
   S3OLCICDASLayer,
   S3OLCIL2CDASLayer,
   S3SLSTRCDASLayer,
+  S3SYNL2CDASLayer,
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 
@@ -16,11 +18,31 @@ import {
   S3OLCITooltip,
   getS3OLCIMarkdown,
   getS3SLSTRMarkdown,
+  S3SynL2Tooltip,
+  getS3SynL2Markdown,
+  S3V10L2Tooltip,
+  S3VG1L2Tooltip,
+  getS3VG1L2Markdown,
+  getS3V10L2Markdown,
+  //S3AODL2Tooltip,
+  //S3VGPL2Tooltip,
+  //getS3AODL2Markdown,
+  //getS3VGPL2Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel3Tooltip';
 import Sentinel3SLSTRFilters from './DatasourceRenderingComponents/searchGroups/Sentinel3SLSTRFilters';
 import HelpTooltip from './DatasourceRenderingComponents/HelpTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
-import { S3SLSTR_CDAS, S3OLCI_CDAS, S3OLCIL2_WATER, S3OLCIL2_LAND } from './dataSourceConstants';
+import {
+  S3SLSTR_CDAS,
+  S3OLCI_CDAS,
+  S3OLCIL2_WATER,
+  S3OLCIL2_LAND,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_AOD,
+  S3SYNERGY_L2_VGP,
+  S3SYNERGY_L2_VG1,
+  S3SYNERGY_L2_V10,
+} from './dataSourceConstants';
 import { BAND_UNIT } from './dataSourceConstants';
 import Sentinel3DataSourceHandler from './Sentinel3DataSourceHandler';
 import { DATASOURCES } from '../../../const';
@@ -32,15 +54,35 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
     [S3OLCIL2_WATER]: `Sentinel-3 OLCI L2 Water`,
     [S3OLCIL2_LAND]: `Sentinel-3 OLCI L2 Land`,
     [S3SLSTR_CDAS]: 'Sentinel-3 SLSTR L1B',
+    [S3SYNERGY_L2_AOD]: 'Sentinel-3 SYNERGY L2 AOD',
+    [S3SYNERGY_L2_SYN]: 'Sentinel-3 SYNERGY L2 SYN',
+    [S3SYNERGY_L2_VGP]: 'Sentinel-3 SYNERGY L2 VGP',
+    [S3SYNERGY_L2_VG1]: 'Sentinel-3 SYNERGY L2 VG1',
+    [S3SYNERGY_L2_V10]: 'Sentinel-3 SYNERGY L2 V10',
   };
   datasetSearchIds = {
     [S3OLCI_CDAS]: 'OLCI',
     [S3SLSTR_CDAS]: 'SLSTR',
     [S3OLCIL2_WATER]: 'OLCI',
     [S3OLCIL2_LAND]: 'OLCI',
+    [S3SYNERGY_L2_AOD]: 'SYNERGY',
+    [S3SYNERGY_L2_SYN]: 'SYNERGY',
+    [S3SYNERGY_L2_VGP]: 'SYNERGY',
+    [S3SYNERGY_L2_VG1]: 'SYNERGY',
+    [S3SYNERGY_L2_V10]: 'SYNERGY',
   };
 
-  urls = { [S3OLCI_CDAS]: [], [S3SLSTR_CDAS]: [], [S3OLCIL2_WATER]: [], [S3OLCIL2_LAND]: [] };
+  urls = {
+    [S3OLCI_CDAS]: [],
+    [S3SLSTR_CDAS]: [],
+    [S3OLCIL2_WATER]: [],
+    [S3OLCIL2_LAND]: [],
+    [S3SYNERGY_L2_SYN]: [],
+    [S3SYNERGY_L2_VG1]: [],
+    [S3SYNERGY_L2_V10]: [],
+    [S3SYNERGY_L2_AOD]: [],
+    [S3SYNERGY_L2_VGP]: [],
+  };
   defaultPreselectedDataset = S3OLCI_CDAS;
   datasource = DATASOURCES.S3_CDAS;
 
@@ -65,6 +107,22 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
     { name: 'RC865' },
   ];
 
+  S3SYNERGY_DEFAULT_BANDS = [
+    ...this.OLCI_BANDS.filter((b) => !['B13', 'B14', 'B15', 'B19', 'B20'].includes(b.name)),
+    ...this.SLSTR_BANDS.filter((b) => !['F1', 'F2', 'S4', 'S7', 'S8', 'S9'].includes(b.name)),
+  ];
+  S3SYNERGY_VG1_BANDS = [{ name: 'B0_VG1' }, { name: 'B2_VG1' }, { name: 'B3_VG1' }, { name: 'MIR_VG1' }];
+  S3SYNERGY_V10_BANDS = [{ name: 'B0_V10' }, { name: 'B2_V10' }, { name: 'B3_V10' }, { name: 'MIR_V10' }];
+
+  S3SYNERGY_SYN_LAYERS = [{ id: 'TRUE-COLOR' }, { id: 'FALSE-COLOR' }, { id: 'S6' }];
+  S3SYNERGY_VG1_LAYERS = [
+    { id: 'NDVI_VG1', name: 'NDVI' },
+    { id: 'TOA_NDVI_VG1', name: 'TOA_NDVI_VG1' },
+  ];
+  S3SYNERGY_V10_LAYERS = [{ id: 'NDVI_V10', name: 'NDVI' }];
+  //S3SYNERGY_VGP_LAYERS = [{ id: 'TRUE-COLOR', name: 'NDVI' }];
+  //S3SYNERGY_AOD_LAYERS = [{ id: 'TRUE-COLOR', name: 'NDVI' }];
+
   leafletZoomConfig = {
     [S3SLSTR_CDAS]: {
       min: 6,
@@ -82,14 +140,37 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       min: 6,
       max: 18,
     },
+    [S3SYNERGY_L2_SYN]: {
+      min: 6,
+      max: 18,
+    },
+    [S3SYNERGY_L2_VG1]: {
+      min: 6,
+      max: 18,
+    },
+    [S3SYNERGY_L2_V10]: {
+      min: 6,
+      max: 18,
+    },
+    [S3SYNERGY_L2_AOD]: {
+      min: 6,
+      max: 18,
+    },
+    [S3SYNERGY_L2_VGP]: {
+      min: 6,
+      max: 18,
+    },
   };
 
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesS3SLSTRDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S3SLSTR.id);
     const usesS3OLCIDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S3OLCI.id);
     const usesS3OLCIL2Dataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S3OLCIL2.id);
+    const usesS3SYNL2Dataset = !!layers.find(
+      (l) => l.dataset && l.dataset.id === DATASET_CDAS_S3SYNERGYL2.id,
+    );
 
-    if (!usesS3SLSTRDataset && !usesS3OLCIDataset && !usesS3OLCIL2Dataset) {
+    if (!usesS3SLSTRDataset && !usesS3OLCIDataset && !usesS3OLCIL2Dataset && !usesS3SYNL2Dataset) {
       return false;
     }
 
@@ -109,6 +190,43 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       this.urls[S3OLCIL2_LAND].push(url);
       this.datasets.push(S3OLCIL2_LAND);
     }
+    const hasS3SYNL2SYNLayers = layers.find((l) =>
+      this.S3SYNERGY_SYN_LAYERS.find(({ id }) => l.layerId === id),
+    );
+    if (usesS3SYNL2Dataset && !this.datasets.includes(S3SYNERGY_L2_SYN) && hasS3SYNL2SYNLayers) {
+      this.urls[S3SYNERGY_L2_SYN].push(url);
+      this.datasets.push(S3SYNERGY_L2_SYN);
+    }
+    const hasS3SYNL2VG1Layers = layers.find((l) =>
+      this.S3SYNERGY_VG1_LAYERS.find(({ id }) => l.layerId === id),
+    );
+    if (usesS3SYNL2Dataset && !this.datasets.includes(S3SYNERGY_L2_VG1) && hasS3SYNL2VG1Layers) {
+      this.urls[S3SYNERGY_L2_VG1].push(url);
+      this.datasets.push(S3SYNERGY_L2_VG1);
+    }
+
+    const hasS3SYNL2V10Layers = layers.find((l) =>
+      this.S3SYNERGY_V10_LAYERS.find(({ id }) => l.layerId === id),
+    );
+    if (usesS3SYNL2Dataset && !this.datasets.includes(S3SYNERGY_L2_V10) && hasS3SYNL2V10Layers) {
+      this.urls[S3SYNERGY_L2_V10].push(url);
+      this.datasets.push(S3SYNERGY_L2_V10);
+    }
+    /*
+       const hasS3SYNL2AODLayers = layers.find((l) =>
+      this.S3SYNERGY_AOD_LAYERS.find(({ id }) => l.layerId === id),
+    );
+        if (usesS3SYN2Dataset && !this.datasets.includes(S3SYNERGY_L2_AOD) && hasS3SYNL2AODLayers) {
+      this.urls[S3SYNERGY_L2_AOD].push(url);
+      this.datasets.push(S3SYNERGY_L2_AOD);
+    }
+      const hasS3SYNL2VGPLayers = layers.find((l) =>
+      this.S3SYNERGY_VGP_LAYERS.find(({ id }) => l.layerId === id),
+    );
+    if (usesS3SYN2Dataset && !this.datasets.includes(S3SYNERGY_L2_VGP) && hasS3SYNL2VGPLayers) {
+      this.urls[S3SYNERGY_L2_VGP].push(url);
+      this.datasets.push(S3SYNERGY_L2_VGP);
+    } */
 
     if (preselected) {
       if (usesS3SLSTRDataset) {
@@ -119,6 +237,12 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       }
       if (usesS3OLCIL2Dataset) {
         this.preselectedDatasets.add(S3OLCIL2_WATER);
+      }
+      if (usesS3OLCIL2Dataset) {
+        this.preselectedDatasets.add(S3OLCIL2_LAND);
+      }
+      if (usesS3SYNL2Dataset) {
+        this.preselectedDatasets.add(S3SYNERGY_L2_SYN);
       }
     }
     this.saveFISLayers(url, layers);
@@ -151,6 +275,38 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
             <S3OLCITooltip />
           </HelpTooltip>
         );
+      case [S3SYNERGY_L2_V10]:
+        return (
+          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+            <S3V10L2Tooltip />
+          </HelpTooltip>
+        );
+
+      case [S3SYNERGY_L2_SYN]:
+        return (
+          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+            <S3SynL2Tooltip />
+          </HelpTooltip>
+        );
+
+      case [S3SYNERGY_L2_VG1]:
+        return (
+          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+            <S3VG1L2Tooltip />
+          </HelpTooltip>
+        );
+      /*    case [S3SYNERGY_L2_AOD]:
+          return (
+            <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+              <S3AODL2Tooltip />
+            </HelpTooltip>
+          );
+          case [S3SYNERGY_L2_VGP]:
+            return (
+              <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+                <S3VGPL2Tooltip />
+              </HelpTooltip>
+            ); */
       default:
         return null;
     }
@@ -219,6 +375,19 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       if (dataset === S3OLCIL2_WATER || dataset === S3OLCIL2_LAND) {
         searchLayer = new S3OLCIL2CDASLayer({ instanceId: true, layerId: true, maxCloudCoverPercent: maxCC });
       }
+      if (
+        dataset === S3SYNERGY_L2_SYN ||
+        dataset === S3SYNERGY_L2_VG1 ||
+        dataset === S3SYNERGY_L2_V10
+        // TODO: || dataset === S3SYNERGY_L2_AOD || dataset === S3SYNERGY_L2_VGP
+      ) {
+        searchLayer = new S3SYNL2CDASLayer({
+          instanceId: true,
+          layerId: true,
+          maxCloudCoverPercent: maxCC,
+          s3Type: this.getS3Type(dataset),
+        });
+      }
 
       const ff = new FetchingFunction(
         dataset,
@@ -243,6 +412,16 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
         return getS3OLCIMarkdown();
       case S3OLCIL2_WATER:
         return getS3OLCIMarkdown();
+      case S3SYNERGY_L2_SYN:
+        return getS3SynL2Markdown();
+      case S3SYNERGY_L2_VG1:
+        return getS3VG1L2Markdown();
+      case S3SYNERGY_L2_V10:
+        return getS3V10L2Markdown();
+      //case S3SYNERGY_L2_AOD:
+      //  return getS3AODL2Markdown();
+      //case S3SYNERGY_L2_VGP:
+      //  return getS3VGPL2Markdown();
       default:
         return null;
     }
@@ -258,6 +437,14 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
         return this.S3OLCIL2_WATER_BANDS;
       case S3SLSTR_CDAS:
         return this.SLSTR_BANDS;
+      case S3SYNERGY_L2_V10:
+        return this.S3SYNERGY_V10_BANDS;
+      case S3SYNERGY_L2_VG1:
+        return this.S3SYNERGY_VG1_BANDS;
+      case S3SYNERGY_L2_SYN:
+        // case S3SYNERGY_L2_AOD:
+        // case S3SYNERGY_L2_VGP:
+        return this.S3SYNERGY_DEFAULT_BANDS;
       default:
         return [];
     }
@@ -272,6 +459,12 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
       case S3OLCIL2_LAND:
       case S3OLCIL2_WATER:
         return DATASET_CDAS_S3OLCIL2;
+      case S3SYNERGY_L2_SYN:
+      case S3SYNERGY_L2_VG1:
+      case S3SYNERGY_L2_V10:
+        // case S3SYNERGY_L2_AOD:
+        // case S3SYNERGY_L2_VGP:
+        return DATASET_CDAS_S3SYNERGYL2;
       default:
         return null;
     }
@@ -319,6 +512,16 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
           maxCloudCoverPercent,
           evalscript: true,
         });
+      case S3SYNERGY_L2_SYN:
+      case S3SYNERGY_L2_VG1:
+      case S3SYNERGY_L2_V10:
+        //  case S3SYNERGY_L2_AOD:
+        //  case S3SYNERGY_L2_VGP:
+        return new S3SYNL2CDASLayer({
+          maxCloudCoverPercent,
+          evalscript: true,
+          s3Type: this.getS3Type(datasetId),
+        });
       default:
         return null;
     }
@@ -342,6 +545,21 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
     if (datasetId === S3OLCIL2_WATER || datasetId === S3OLCIL2_LAND) {
       layers = layers.filter((layer) => this.filterLayersBasedOnEvalscriptBands(datasetId, layer.evalscript));
     }
+    if (datasetId === S3SYNERGY_L2_SYN) {
+      layers = layers.filter((layer) => this.S3SYNERGY_SYN_LAYERS.find(({ id }) => layer.layerId === id));
+    }
+    if (datasetId === S3SYNERGY_L2_VG1) {
+      layers = layers.filter((layer) => this.S3SYNERGY_VG1_LAYERS.find(({ id }) => layer.layerId === id));
+    }
+    if (datasetId === S3SYNERGY_L2_V10) {
+      layers = layers.filter((layer) => this.S3SYNERGY_V10_LAYERS.find(({ id }) => layer.layerId === id));
+    }
+    /*  if(datasetId === S3SYNERGY_L2_AOD || datasetId === S3SYNERGY_L2_VGP){
+      layers = layers.filter((layer) => this.S3SYNERGY_AOD_LAYERS.find(({ name }) => layer.layerId === name));
+    }
+    if(datasetId === S3SYNERGY_L2_VGP){
+      layers = layers.filter((layer) => this.S3SYNERGY_VGP_LAYERS.find(({ name }) => layer.layerId === name));
+    } */
 
     return layers;
   };
@@ -350,5 +568,24 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
 
   isSpectralExplorerSupported = (datasetId) => {
     return datasetId === S3OLCI_CDAS;
+  };
+
+  getSearchLayerParams = (datasetId) => {
+    return {
+      s3Type: this.getS3Type(datasetId),
+    };
+  };
+
+  getS3Type = (datasetId) => {
+    switch (datasetId) {
+      case S3SYNERGY_L2_SYN:
+        return 'SY_2_SYN';
+      case S3SYNERGY_L2_VG1:
+        return 'SY_2_VG1';
+      case S3SYNERGY_L2_V10:
+        return 'SY_2_V10';
+      default:
+        return null;
+    }
   };
 }

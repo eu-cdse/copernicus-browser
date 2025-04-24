@@ -135,6 +135,11 @@ import {
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
   CDSE_GLC_COLLECTION,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_V10,
+  S3SYNERGY_L2_VG1,
+  S3SYNERGY_L2_VGP,
+  S3SYNERGY_L2_AOD,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
@@ -440,6 +445,13 @@ export function datasourceForDatasetId(datasetId) {
       return DATASOURCES.S3;
     case S3SLSTR_CDAS:
     case S3OLCI_CDAS:
+    case S3OLCIL2_LAND:
+    case S3OLCIL2_WATER:
+    case S3SYNERGY_L2_SYN:
+    case S3SYNERGY_L2_AOD:
+    case S3SYNERGY_L2_VGP:
+    case S3SYNERGY_L2_VG1:
+    case S3SYNERGY_L2_V10:
       return DATASOURCES.S3_CDAS;
     case S5_O3:
     case S5_NO2:
@@ -530,9 +542,6 @@ export function datasourceForDatasetId(datasetId) {
     case S1_MONTHLY_MOSAIC_DH:
     case S1_MONTHLY_MOSAIC_IW:
       return DATASOURCES.S1_MOSAIC;
-    case S3OLCIL2_LAND:
-    case S3OLCIL2_WATER:
-      return DATASOURCES.S3_CDAS;
     case CDSE_GLC_COLLECTION:
       return DATASOURCES.GLOBAL_LAND_COVER;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
@@ -591,6 +600,11 @@ export const datasetLabels = {
   [S3OLCI_CDAS]: 'Sentinel-3 OLCI',
   [S3OLCIL2_LAND]: 'Sentinel-3 OLCI L2 Land',
   [S3OLCIL2_WATER]: 'Sentinel-3 OLCI L2 Water',
+  [S3SYNERGY_L2_SYN]: 'Sentinel-3 Synergy L2 SYN',
+  [S3SYNERGY_L2_AOD]: 'Sentinel-3 Synergy L2 AOD',
+  [S3SYNERGY_L2_VGP]: 'Sentinel-3 Synergy L2 VGP',
+  [S3SYNERGY_L2_VG1]: 'Sentinel-3 Synergy L2 VG1',
+  [S3SYNERGY_L2_V10]: 'Sentinel-3 Synergy L2 V10',
   [S5_O3]: 'Sentinel-5P O3',
   [S5_NO2]: 'Sentinel-5P NO2',
   [S5_SO2]: 'Sentinel-5P SO2',
@@ -789,6 +803,11 @@ export function getDataSourceHashtags(datasetId) {
     case S3OLCI_CDAS:
     case S3OLCIL2_LAND:
     case S3OLCIL2_WATER:
+    case S3SYNERGY_L2_SYN:
+    case S3SYNERGY_L2_V10:
+    case S3SYNERGY_L2_VG1:
+    case S3SYNERGY_L2_VGP:
+    case S3SYNERGY_L2_AOD:
       return 'Sentinel-3,Copernicus';
     case S5_O3:
     case S5_NO2:

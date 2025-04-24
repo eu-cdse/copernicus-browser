@@ -137,7 +137,7 @@ class PinsStoryBuilder extends React.Component {
       dimensions: { imageWidth, imageHeight },
       imagesOptions: { showCaptions, addMapOverlays, showSlideTitle, showLegend },
     } = this.state;
-    const { lat, lng, zoom, enabledOverlaysId } = this.props;
+    const { zoom, enabledOverlaysId, mapBounds } = this.props;
 
     const canvas = document.createElement('canvas');
     canvas.width = imageWidth;
@@ -145,7 +145,7 @@ class PinsStoryBuilder extends React.Component {
     const ctx = canvas.getContext('2d');
 
     if (addMapOverlays) {
-      await drawMapOverlaysOnCanvas(ctx, lat, lng, zoom, imageWidth, enabledOverlaysId);
+      await drawMapOverlaysOnCanvas(ctx, mapBounds, zoom, imageWidth, enabledOverlaysId);
     }
 
     if (showCaptions) {

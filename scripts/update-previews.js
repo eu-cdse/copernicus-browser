@@ -11,6 +11,7 @@ import {
   DATASET_CDAS_S5PL2,
   DATASET_CDAS_S3OLCIL2,
   CRS_EPSG3857,
+  DATASET_CDAS_S3SYNERGYL2,
 } from '@sentinel-hub/sentinelhub-js';
 import { exit } from 'process';
 import fs from 'fs';
@@ -63,6 +64,8 @@ const forceBBoxForDataset = {
     5792092.255337515,
   ), // Some proba-v layers return an error when using EPSG4326
   [DATASET_CDAS_S3OLCIL2.id]: new BBox(CRS_EPSG4326, 22.615356, 59.407355, 24.55719, 60.356847), // WATER layers
+  //[DATASET_CDAS_S3SYNERGYL2.id]: new BBox(CRS_EPSG4326, 28.115356, 62.107355, 30.05719, 63.056847),
+  [DATASET_CDAS_S3SYNERGYL2.id]: new BBox(CRS_EPSG4326, 19, 44.5, 19 + 1, 44.5 + 1),
 };
 const globalMinDate = new Date(Date.UTC(1980, 1 - 1, 1));
 const now = new Date();
@@ -233,7 +236,7 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
           );
 
           if (fs.existsSync(fullFileName)) {
-            if (!instances) {
+            if (!instances.length) {
               previews.push(fileName);
             }
             console.log('  ...exists, skipping.');

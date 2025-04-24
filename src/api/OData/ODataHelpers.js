@@ -35,6 +35,9 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
+  S3SYNERGY_L2_V10,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_VG1,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -66,6 +69,10 @@ const PRODUCT_TYPE_TO_DATASETID = {
   SL_1_RBT___: S3SLSTR_CDAS,
   OL_2_LFR___: S3OLCIL2_LAND,
   OL_2_WFR___: S3OLCIL2_WATER,
+  SY_2_V10___: S3SYNERGY_L2_V10,
+  SY_2_SYN___: S3SYNERGY_L2_SYN,
+  SY_2_VG1___: S3SYNERGY_L2_VG1,
+
   L2__AER_AI: S5_AER_AI_CDAS,
   //L2__AER_LH
   L2__CH4___: S5_CH4_CDAS,

@@ -87,8 +87,8 @@ function Calendar(props) {
         onDayClick={handleDayClick}
         disabledDays={[
           {
-            after: momentToDateWithUTCValues(maxDate),
-            before: momentToDateWithUTCValues(minDate),
+            after: maxDate ? momentToDateWithUTCValues(maxDate) : undefined,
+            before: minDate ? momentToDateWithUTCValues(minDate) : undefined,
           },
         ]}
         navbarElement={
@@ -100,8 +100,8 @@ function Calendar(props) {
         }
         captionElement={({ locale }) => (
           <YearMonthForm
-            minFromDate={minDate}
-            maxToDate={maxDate}
+            minFromDate={minDate ?? moment.utc()}
+            maxToDate={maxDate ?? moment.utc()}
             onChange={onMonthOrYearDropdownChange}
             locale={locale}
             selectedDay={displayedDayMonth ? moment(displayedDayMonth) : selectedDay}

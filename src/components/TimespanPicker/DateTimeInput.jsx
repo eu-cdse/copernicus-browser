@@ -33,7 +33,7 @@ export const DateTimeInput = (props) => {
 
   const setDay = (day) => {
     const newSelectedDateTime = selectedTime
-      .clone()
+      ?.clone()
       .set({ date: day.get('date'), month: day.get('month'), year: day.get('year') });
 
     if (isWithinAvailableTimeRange(newSelectedDateTime)) {

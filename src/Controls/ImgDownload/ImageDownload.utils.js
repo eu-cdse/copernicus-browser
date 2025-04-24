@@ -600,7 +600,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
       mergeCanvas.height = height;
       const mergeCtx = mergeCanvas.getContext('2d');
 
-      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, lat, lng, zoom, width, height);
+      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, bounds, zoom, width, height);
       mergeCtx.drawImage(baseCanvas, 0, 0, width, height);
 
       const sentinelUrl = URL.createObjectURL(blob);
@@ -954,7 +954,7 @@ export async function addImageOverlays(
   await drawBlobOnCanvas(ctx, blob, 0, 0);
 
   if (addMapOverlays) {
-    await drawMapOverlaysOnCanvas(ctx, lat, lng, zoom, width, enabledOverlaysId);
+    await drawMapOverlaysOnCanvas(ctx, bounds, zoom, width, enabledOverlaysId);
   }
   if (showCaptions) {
     let scalebar;
@@ -1097,7 +1097,7 @@ export function isTiff(imageFormat) {
 
 */
 
-export const drawMapOverlaysOnCanvas = async (ctx, lat, lng, zoom, width, enabledOverlaysId) => {
+export const drawMapOverlaysOnCanvas = async (ctx, bounds, zoom, width, enabledOverlaysId) => {
   const enabledOverlays = overlayTileLayers().filter((overlayTileLayer) =>
     enabledOverlaysId.includes(overlayTileLayer.id),
   );
@@ -1114,8 +1114,7 @@ export const drawMapOverlaysOnCanvas = async (ctx, lat, lng, zoom, width, enable
     } else {
       overlayCanvas = await getMapOverlayXYZ(
         overlay.url,
-        lat,
-        lng,
+        bounds,
         zoom,
         canvasWidth,
         canvasHeight,

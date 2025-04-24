@@ -40,6 +40,42 @@ and with more wavelengths covered. The Sentinel-3 OLCI instrument continues the 
 **Common usage:** Surface topography, ocean and land surface colour observations and monitoring.
 `;
 
+const getS3SynL2Markdown = () => t`
+**The Sentinel-3 SYNERGY** is a combination of the OLCI and SLSTR acquisitions with original objective to provide surface vegetation products. [The Level-2 SYN](https://sentiwiki.copernicus.eu/web/synergy-products) product provides surface reflectances for all SYN channels and aerosol parameters over land.
+
+**Spatial resolution**: 300 m  
+
+**Temporal resolution**: < 2 days  
+
+**Data availability**: Global since October 2018  
+
+**Common usage**: Land Monitoring and Security, Climate Change Monitoring  
+`;
+const getS3VG1L2Markdown = () => t`
+**The Sentinel-3 SYNERGY** is a combination of the OLCI and SLSTR acquisitions with original objective to provide surface vegetation products. [The Level-2 VG1](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-L2VG1andV10ProductsS3-Synergy-Products-L2-VG1-and-V10-Products) product contains 1 km VEGETATION-like product, 1 day synthesis surface reflectances and NDVI.
+
+**Spatial resolution**: 1 km
+
+**Temporal resolution**: Daily
+
+**Data availability**: Global since October 2018
+
+**Common usage**: Land Monitoring and Security, Climate Change Monitoring
+`;
+const getS3V10L2Markdown = () => t`
+**The Sentinel-3 SYNERGY** is a combination of the OLCI and SLSTR acquisitions with original objective to provide surface vegetation products. [The Level-2 V10](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-L2VG1andV10ProductsS3-Synergy-Products-L2-VG1-and-V10-Products) product contains 1 km VEGETATION-like product, 10 day synthesis surface reflectances and NDVI.
+
+**Spatial resolution**: 1 km
+
+**Temporal resolution**: 10-days composite
+
+**Data availability**: Global since October 2018
+
+**Common usage**: Land Monitoring and Security, Climate Change Monitoring
+`;
+// const getS3AODL2Markdown = () => t`Global Aerosol parameter over land and sea on super pixel resolution (4.5 km x 4.5 km)`;
+// const getS3VGPL2Markdown = () => t`1 km VEGETATION-Like product (~VGT-P) - TOA Reflectance`;
+
 const Sentinel3Tooltip = () =>
   DataSourceTooltip({
     source: getS3Markdown(),
@@ -47,14 +83,28 @@ const Sentinel3Tooltip = () =>
   });
 
 const S3SLSTRTooltip = () => <ReactMarkdown children={getS3SLSTRMarkdown()} />;
-
 const S3OLCITooltip = () => <ReactMarkdown children={getS3OLCIMarkdown()} />;
+const S3SynL2Tooltip = () => <ReactMarkdown children={getS3SynL2Markdown()} />;
+const S3VG1L2Tooltip = () => <ReactMarkdown children={getS3VG1L2Markdown()} />;
+const S3V10L2Tooltip = () => <ReactMarkdown children={getS3V10L2Markdown()} />;
+//const S3AODL2Tooltip = () => <ReactMarkdown children={getS3AODL2Markdown()} />;
+//const S3VGPL2Tooltip = () => <ReactMarkdown children={getS3VGPL2Markdown()} />;
 
 export {
   Sentinel3Tooltip,
   S3SLSTRTooltip,
   S3OLCITooltip,
+  S3SynL2Tooltip,
+  S3VG1L2Tooltip,
+  S3V10L2Tooltip,
+  // S3AODL2Tooltip,
+  // S3VGPL2Tooltip,
   getS3Markdown,
   getS3SLSTRMarkdown,
   getS3OLCIMarkdown,
+  getS3SynL2Markdown,
+  getS3VG1L2Markdown,
+  getS3V10L2Markdown,
+  // getS3AODL2Markdown,
+  // getS3VGPL2Markdown,
 };

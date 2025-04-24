@@ -155,6 +155,14 @@ export const DEFAULT_THEMES = [
         preselected: true,
       },
       {
+        name: 'Sentinel-3 SYNERGY',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/42f9b0-YOUR-INSTANCEID-HERE`,
+        preselected: true,
+      },
+      {
         name: 'Sentinel-3 SLSTR',
         service: 'WMS',
         url: `${
