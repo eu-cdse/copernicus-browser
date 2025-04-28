@@ -6,3 +6,7 @@ export const EXPERT_ROLES = {
   S3_EXPERT: 's3-expert',
   S5P_EXPERT: 's5p-expert',
 };
+
+export const ACCESS_ROLES = {
+  COPERNICUS_SERVICES: 'copernicus-services',
+};

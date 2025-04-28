@@ -576,6 +576,12 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
     };
   };
 
+  getAdditionalParamsForGetMap = (datasetId) => {
+    return {
+      s3Type: this.getS3Type(datasetId),
+    };
+  };
+
   getS3Type = (datasetId) => {
     switch (datasetId) {
       case S3SYNERGY_L2_SYN:

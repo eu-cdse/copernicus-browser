@@ -24,6 +24,7 @@ import { logoutUser, openLogin } from '../Auth/authHelpers';
 import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
 import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import { ACCESS_ROLES } from '../api/OData/assets/accessRoles';
 
 const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
@@ -278,7 +279,8 @@ class ThemesProvider extends React.Component {
     // Ignore CCM collections for non copernicus services users
     const isUserCopernicusServicesUser =
       user.access_token !== null
-        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
+          jwt_dec(user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
         : false;
     if (!isUserCopernicusServicesUser && selectedTheme.id === DEFAULT_THEME_ID) {
       selectedTheme = {

@@ -29,6 +29,7 @@ import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, reqConfigMemoryCache } from
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
 import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -54,7 +55,8 @@ const visualizationButtonDisabled = (tile, user) => {
 
   const isUserCopernicusServicesUser =
     user.access_token !== null
-      ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM)
+      ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
+        jwt_dec(user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
       : false;
   if ([CDSE_CCM_VHR_IMAGE_2018_COLLECTION].includes(datasetId) && !isUserCopernicusServicesUser) {
     return ErrorMessage.CCMAccessRoleNotEligible();
