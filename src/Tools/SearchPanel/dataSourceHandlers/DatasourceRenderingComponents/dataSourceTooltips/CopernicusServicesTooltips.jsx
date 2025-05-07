@@ -8,10 +8,6 @@ import {
   COPERNICUS_GLOBAL_LAND_COVER,
   COPERNICUS_WATER_BODIES,
   COPERNICUS_GLOBAL_SURFACE_WATER,
-  COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES,
-  COPERNICUS_HR_VPP_VEGETATION_INDICES,
-  COPERNICUS_HR_VPP_VPP_S1,
-  COPERNICUS_HR_VPP_VPP_S2,
   COPERNICUS_CLC_ACCOUNTING,
 } from '../../dataSourceConstants';
 import { credits } from './credits';
@@ -79,54 +75,6 @@ The **Global Surface Water** collection is derived from Landsat 5, 7 and 8 image
 **Spatial resolution**: 30 meters.
 
 **Common Usage**: Monitoring of water bodies for water resource management, climate modelling, biodiversity conservation and food security.
-`;
-
-const getHRVPPSeasonalTrajectoriesMarkdown = () => t`
-The **Seasonal Trajectories** product is a filtered time series of Plant Phenology Index (PPI) provided yearly on a 10-daily basis. It is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The Seasonal Trajectories PPI is derived through fitting a smoothing and gap filling function to the yearly time-series raw PPI values generated from Sentinel-2 satellite observations.
-
-**Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
-
-**Data Availability**: Since January 2017, updated every 10 days.
-
-**Spatial resolution**: 10 meters.
-
-**Common Usage**: Plant phenology monitoring, such as tracking green canopy foliage dynamics through time. 
-`;
-
-const getHRVPPVegetationIndicesMarkdown = () => t`
-The **Vegetation Indices** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The product is comprised of 4 raw Vegetation Indices generated near real-time (NRT) from Sentinel-2 satellite observations.
-
-**Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
-
-**Data Availability**: Since October 2016, updated daily. 
-
-**Spatial resolution**: 10 meters.
-
-**Common Usage**: Plant phenology assessment and monitoring, including vegetation cover, density, productivity and health.
-`;
-
-const getHRVPPVPPS1Markdown = () => t`
-The **Vegetation Phenology and Productivity Parameters** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The VPP product is comprised of 13 parameters that describe specific stages of the seasonal vegetation growth cycle. These parameters are extracted from Seasonal Trajectories of the Plant Phenology Index (PPI) derived from Sentinel-2 satellite observations.
-
-**Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
-
-**Data Availability**: Since January 2017, updated annually.
-
-**Spatial resolution**: 10 meters.
-
-**Common Usage**: Detailed assessment of the impacts of human or climate change on the ecosystem through monitoring of vegetation responses to disturbances, e.g. droughts, storms, insect infestations, and to human influence from global to local levels.
-`;
-
-const getHRVPPVPPS2Markdown = () => t`
-The **Vegetation Phenology and Productivity Parameters** product is part of the Copernicus Land Monitoring Service (CLMS), pan-European High Resolution Vegetation Phenology and Productivity (HR-VPP) product suite. The VPP product is comprised of 13 parameters that describe specific stages of the seasonal vegetation growth cycle. These parameters are extracted from Seasonal Trajectories of the Plant Phenology Index (PPI) derived from Sentinel-2 satellite observations.
-
-**Coverage**: Europe (EEA39 region) from longitude from 25°W to 45°E and latitude 26°N to 72°N.
-
-**Data Availability**: Since January 2017, updated annually.
-
-**Spatial resolution**: 10 meters.
-
-**Common Usage**: Detailed assessment of the impacts of human or climate change on the ecosystem through monitoring of vegetation responses to disturbances, e.g. droughts, storms, insect infestations, and to human influence from global to local levels.
 `;
 
 const getCLCAccountingMarkdown = () => t`
@@ -275,24 +223,6 @@ const GlobalSurfaceWaterTooltip = () =>
     credits: credits[COPERNICUS_GLOBAL_SURFACE_WATER],
   });
 
-const HRVPPSeasonalTrajectoriesTooltip = () =>
-  DataSourceTooltip({
-    source: getHRVPPSeasonalTrajectoriesMarkdown(),
-    credits: credits[COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES],
-  });
-
-const HRVPPVegetationIndicesTooltip = () =>
-  DataSourceTooltip({
-    source: getHRVPPVegetationIndicesMarkdown(),
-    credits: credits[COPERNICUS_HR_VPP_VEGETATION_INDICES],
-  });
-
-const HRVPPVPPS1Tooltip = () =>
-  DataSourceTooltip({ source: getHRVPPVPPS1Markdown(), credits: credits[COPERNICUS_HR_VPP_VPP_S1] });
-
-const HRVPPVPPS2Tooltip = () =>
-  DataSourceTooltip({ source: getHRVPPVPPS2Markdown(), credits: credits[COPERNICUS_HR_VPP_VPP_S2] });
-
 const CLCAccountingTooltip = () =>
   DataSourceTooltip({ source: getCLCAccountingMarkdown(), credits: credits[COPERNICUS_CLC_ACCOUNTING] });
 
@@ -350,10 +280,6 @@ export {
   GlobalLandCoverTooltip,
   WaterBodiesTooltip,
   GlobalSurfaceWaterTooltip,
-  HRVPPSeasonalTrajectoriesTooltip,
-  HRVPPVegetationIndicesTooltip,
-  HRVPPVPPS1Tooltip,
-  HRVPPVPPS2Tooltip,
   CLCAccountingTooltip,
   getCopernicusServicesMarkdown,
   getCopernicusSnowAndIceMarkdown,
@@ -362,10 +288,6 @@ export {
   getGlobalLandCoverMarkdown,
   getWaterBodiesMarkdown,
   getGlobalSurfaceWaterMarkdown,
-  getHRVPPSeasonalTrajectoriesMarkdown,
-  getHRVPPVegetationIndicesMarkdown,
-  getHRVPPVPPS1Markdown,
-  getHRVPPVPPS2Markdown,
   getCLCAccountingMarkdown,
   HRSIPSATooltip,
   HRSIWDSTooltip,

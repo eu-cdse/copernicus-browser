@@ -45,9 +45,42 @@
     }
   }
 
+  &.text {
+    display: inline-flex;
+    background: transparent;
+    color: $primaryColor;
+
+    .svg-icon {
+      fill: $primaryColor;
+    }
+
+    &:hover {
+      color: $secondaryColor;
+
+      .svg-icon {
+        fill: $secondaryColor;
+      }
+    }
+
+    &.inactive {
+      color: $primaryColor;
+      background: transparent;
+      opacity: $disabled;
+
+      .svg-icon {
+        fill: $primaryColor;
+      }
+    }
+  }
+
   &.small {
     padding: 6px 10px;
     font-size: 15px;
+  }
+
+  &.tiny {
+    padding: 2px 4px;
+    font-size: 14px;
   }
 
   &.ellipsis {

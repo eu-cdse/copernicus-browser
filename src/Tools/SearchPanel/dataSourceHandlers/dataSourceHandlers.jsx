@@ -58,18 +58,6 @@ import {
   COPERNICUS_CORINE_LAND_COVER,
   COPERNICUS_GLOBAL_LAND_COVER,
   COPERNICUS_WATER_BODIES,
-  COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES,
-  COPERNICUS_HR_VPP_VEGETATION_INDICES,
-  COPERNICUS_HR_VPP_VPP_S1,
-  COPERNICUS_HR_VPP_VPP_S2,
-  COPERNICUS_HRSI_PSA,
-  COPERNICUS_HRSI_WDS,
-  COPERNICUS_HRSI_SWS,
-  COPERNICUS_HRSI_FSC,
-  COPERNICUS_HRSI_GFSC,
-  COPERNICUS_HRSI_RLIE_S1,
-  COPERNICUS_HRSI_RLIE_S2,
-  COPERNICUS_HRSI_RLIE_S1_S2,
   COPERNICUS_CLC_ACCOUNTING,
   CNES_LAND_COVER,
   GLOBAL_HUMAN_SETTLEMENT,
@@ -141,6 +129,7 @@ import {
   S3SYNERGY_L2_VGP,
   S3SYNERGY_L2_AOD,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
 } from './dataSourceConstants';
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -149,8 +138,6 @@ import Sentinel5PCDASDataSourceHandler from './Sentinel5PCDASDataSourceHandler';
 import { DEMCDASLayer } from '@sentinel-hub/sentinelhub-js';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
-import CopernicusHRVPPDataSourceHandler from './CopernicusHRVPPDataSourceHandler';
-import CopernicusHRSIDataSourceHandler from './CopernicusHRSIDataSourceHandler';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
@@ -179,8 +166,6 @@ export function initializeDataSourceHandlers() {
     new ModisDataSourceHandler(),
     new DEMDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
-    new CopernicusHRSIDataSourceHandler(),
-    new CopernicusHRVPPDataSourceHandler(),
     new ProbaVDataSourceHandler(),
     new GibsDataSourceHandler(),
     new BYOCDataSourceHandler(),
@@ -318,11 +303,7 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
 
 // try to get collection name from datasource handler for known collections (Copernicus&friends)
 const checkKnownCollections = (collectionId) => {
-  const datasourceHandlers = [
-    new CopernicusHRSIDataSourceHandler(),
-    new CopernicusHRVPPDataSourceHandler(),
-    new OthersDataSourceHandler(),
-  ];
+  const datasourceHandlers = [new OthersDataSourceHandler()];
 
   let collectionTitle;
 
@@ -514,20 +495,6 @@ export function datasourceForDatasetId(datasetId) {
     case DEM_COPERNICUS_30_CDAS:
     case DEM_COPERNICUS_90_CDAS:
       return DATASOURCES.DEM_CDAS;
-    case COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES:
-    case COPERNICUS_HR_VPP_VEGETATION_INDICES:
-    case COPERNICUS_HR_VPP_VPP_S1:
-    case COPERNICUS_HR_VPP_VPP_S2:
-      return DATASOURCES.COPERNICUS_HRVPP;
-    case COPERNICUS_HRSI_PSA:
-    case COPERNICUS_HRSI_WDS:
-    case COPERNICUS_HRSI_SWS:
-    case COPERNICUS_HRSI_FSC:
-    case COPERNICUS_HRSI_GFSC:
-    case COPERNICUS_HRSI_RLIE_S1:
-    case COPERNICUS_HRSI_RLIE_S2:
-    case COPERNICUS_HRSI_RLIE_S1_S2:
-      return DATASOURCES.COPERNICUS_HRSI;
     case PLANET_NICFI:
       return DATASOURCES.PLANET_NICFI;
     case CNES_LAND_COVER:
@@ -545,6 +512,7 @@ export function datasourceForDatasetId(datasetId) {
     case CDSE_GLC_COLLECTION:
       return DATASOURCES.GLOBAL_LAND_COVER;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
+    case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       return DATASOURCES.CCM;
     default:
       return null;
@@ -662,18 +630,6 @@ export const datasetLabels = {
   [COPERNICUS_GLOBAL_SURFACE_WATER]: 'Global Surface Water',
   [IO_LULC_10M_ANNUAL]: 'IO Land Use Land Cover Map',
   [COPERNICUS_WATER_BODIES]: 'Water Bodies',
-  [COPERNICUS_HR_VPP_SEASONAL_TRAJECTORIES]: 'Seasonal Trajectories',
-  [COPERNICUS_HR_VPP_VEGETATION_INDICES]: 'Vegetation Indices',
-  [COPERNICUS_HR_VPP_VPP_S1]: 'Vegetation Phenology and Productivity Season 1',
-  [COPERNICUS_HR_VPP_VPP_S2]: 'Vegetation Phenology and Productivity Season 2',
-  [COPERNICUS_HRSI_PSA]: 'Persistent Snow Area',
-  [COPERNICUS_HRSI_WDS]: 'Wet/Dry Snow',
-  [COPERNICUS_HRSI_SWS]: 'SAR Wet Snow',
-  [COPERNICUS_HRSI_FSC]: 'Fractional Snow Cover',
-  [COPERNICUS_HRSI_GFSC]: 'Fractional Snow Cover (Gap-filled)',
-  [COPERNICUS_HRSI_RLIE_S1]: 'River and Lake Ice Extent - Sentinel-1',
-  [COPERNICUS_HRSI_RLIE_S2]: 'River and Lake Ice Extent - Sentinel-2',
-  [COPERNICUS_HRSI_RLIE_S1_S2]: 'River and Lake Ice Extent S1+S2',
   [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
   [GLOBAL_HUMAN_SETTLEMENT]: 'Global Human Settlement',
   [PLANET_NICFI]: 'Planet NICFI Basemaps',
@@ -683,6 +639,7 @@ export const datasetLabels = {
   [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',
   [CDSE_GLC_COLLECTION]: 'Global Land Cover',
   [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: 'VHR Europe 2018',
+  [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: 'VHR Europe 2021',
 };
 
 export function getDatasetLabel(datasetId) {

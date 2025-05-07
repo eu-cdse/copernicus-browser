@@ -1,4 +1,4 @@
-import { createAddProductToWorkspacePayload } from './workspace';
+import { createAddProductsToWorkspacePayload } from './workspace';
 
 describe('include thumbnail link in workspace metadata', () => {
   const product = {
@@ -135,7 +135,7 @@ describe('include thumbnail link in workspace metadata', () => {
     [{ ...product, previewUrl: null }, undefined],
     [{ ...product, previewUrl: '' }, undefined],
   ])('add thumbnailDownloadLink', (product, expected) => {
-    const payload = createAddProductToWorkspacePayload(product);
+    const payload = createAddProductsToWorkspacePayload([product]);
     expect(payload).toBeDefined();
     expect(Array.isArray(payload)).toBe(true);
     expect(payload.length).toBe(1);

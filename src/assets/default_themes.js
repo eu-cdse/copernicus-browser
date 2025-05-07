@@ -214,78 +214,6 @@ export const DEFAULT_THEMES = [
         preselected: true,
       },
       {
-        name: 'HR-VPP Seasonal Trajectories',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/279b6a-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'HR-VPP Vegetation Indices',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/6cb658-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'HR-VPP Vegetation Phenology and Productivity Parameters Season 1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/b54da6-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'HR-VPP Vegetation Phenology and Productivity Parameters Season 2',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/b851e1-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'Persistent Snow Area',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/65f9eb-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'Wet/Dry Snow',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/a9217e-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'SAR Wet Snow',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/d9e828-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'Fractional Snow Cover',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/2025fa-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'Fractional Snow Cover (Gap-filled)',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/b8b6e9-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'River and Lake Ice Extent - Sentinel-1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/9a86a8-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'River and Lake Ice Extent - Sentinel-2',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/96e44e-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'River and Lake Ice Extent S1+S2',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/8cf23f-YOUR-INSTANCEID-HERE`,
-      },
-      {
         name: 'Global Land Cover',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -296,6 +224,12 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/1f82ce-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'CCM VHR Europe 2021',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/5ead11-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

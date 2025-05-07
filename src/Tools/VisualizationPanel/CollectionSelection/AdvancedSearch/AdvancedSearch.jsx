@@ -513,6 +513,7 @@ class AdvancedSearch extends Component {
       searchResult,
       resultsPanelSelected,
       resultsAvailable,
+      userToken,
     } = this.props;
     const minDateRange = moment.utc(minDate ? minDate : MIN_SEARCH_DATE).startOf('day');
     const maxDateRange = moment.utc(maxDate).endOf('day');
@@ -543,6 +544,7 @@ class AdvancedSearch extends Component {
       <>
         {displayingResults && (
           <Results
+            userToken={userToken}
             results={searchResult?.allResults}
             hasMore={searchResult?.hasMore}
             totalCount={searchResult?.totalCount}
@@ -551,6 +553,7 @@ class AdvancedSearch extends Component {
             setHighlightedTile={this.setHighlightedTile}
             selectedTiles={selectedTiles}
             backToSearch={this.backToSearch}
+            isAuthenticated={!!this.props.user}
           />
         )}
 

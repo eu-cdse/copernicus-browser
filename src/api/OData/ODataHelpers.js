@@ -39,6 +39,7 @@ import {
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_VG1,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -88,6 +89,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S1SAR_L3_IW_MCM: S1_MONTHLY_MOSAIC_IW,
   S1SAR_L3_DH_MCM: S1_MONTHLY_MOSAIC_DH,
   VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  VHR_IMAGE_2021: CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
 };
 
 export const getDatasetIdFromProductType = (productType, attributes) => {
@@ -169,6 +171,23 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     if (datasetFullAttr && !datasetFullAttr.Value.includes('ENHANCED')) {
       return PRODUCT_TYPE_TO_DATASETID['VHR_IMAGE_2018'];
     }
+  }
+
+  if (
+    [
+      'GIS_MS4_OR_07B6-COG',
+      'AIS_MSP_1G_07B6-COG',
+      'WV3_MS4_OR_07B6-COG',
+      'WV1_MS4_OR_07B6-COG',
+      'PHR_MS___3_07B6-COG',
+      'NAO_MS4__3_07B6-COG',
+      'OPT_MS4_1C_07B6-COG',
+      'HRS_MS4_1C_07B6-COG',
+      'VHI_MS4_1C_07B6-COG',
+      'S14_MS4__3_07B6-COG',
+    ].includes(productType)
+  ) {
+    return PRODUCT_TYPE_TO_DATASETID['VHR_IMAGE_2021'];
   }
 
   return PRODUCT_TYPE_TO_DATASETID[productType];
@@ -278,6 +297,14 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
   }
 
   if (datasetId === CDSE_CCM_VHR_IMAGE_2018_COLLECTION) {
+    return {
+      id: ODataCollections.OPTICAL.id,
+      instrument: 'VHR_EUROPE',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+
+  if (datasetId === CDSE_CCM_VHR_IMAGE_2021_COLLECTION) {
     return {
       id: ODataCollections.OPTICAL.id,
       instrument: 'VHR_EUROPE',

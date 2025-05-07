@@ -21,6 +21,7 @@ import {
   S1_CDAS_IW_HH,
   S1_CDAS_IW_HHHV,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
 } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
@@ -28,6 +29,7 @@ import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
+import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
 
@@ -41,6 +43,7 @@ export const ErrorMessage = {
     t`This product is currently unavailable and can not be downloaded. Add it to Workspace to order it.`,
   CCMAccessRoleNotEligible: () =>
     t`You are not eligible to use this feature. More info [here](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/ccm-how-to-register).`,
+  atleastOneProduct: () => t`At least one product needs to be selected.`,
 };
 
 const visualizationButtonDisabled = (tile, user) => {
@@ -58,7 +61,10 @@ const visualizationButtonDisabled = (tile, user) => {
       ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
         jwt_dec(user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
       : false;
-  if ([CDSE_CCM_VHR_IMAGE_2018_COLLECTION].includes(datasetId) && !isUserCopernicusServicesUser) {
+  if (
+    [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(datasetId) &&
+    !isUserCopernicusServicesUser
+  ) {
     return ErrorMessage.CCMAccessRoleNotEligible();
   }
 
@@ -118,6 +124,9 @@ const ResultItem = ({
   productDownloadProgress,
   productDownloadCancelTokens,
   searchFormData,
+  isResultChecked,
+  onResultCheck,
+  isAuthenticated,
   user,
 }) => {
   const { sensingTime, name, platformShortName, instrumentShortName, productType, size, contentLength } =
@@ -178,6 +187,14 @@ const ResultItem = ({
   return (
     <div onMouseEnter={(e) => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
       <div className="container">
+        {onResultCheck && (
+          <CustomCheckbox
+            className="tile-checkbox"
+            inputClassName="white"
+            checked={isResultChecked}
+            onChange={() => onResultCheck(tile)}
+          />
+        )}
         <ProductPreview product={tile} validate={true} />
         <div className="details">
           <div className="title" title={oDataHelpers.formatAttributesNames('name')}>
@@ -241,7 +258,8 @@ const ResultItem = ({
           downloadInProgress={downloadInProgress}
           downloadProduct={downloadProduct}
           cancelToken={productDownloadCancelTokens[tile.id]}
-        ></ResultItemFooter>
+          isAuthenticated={isAuthenticated}
+        />
       </div>
       {downloadInProgress && (
         <ProgressBar

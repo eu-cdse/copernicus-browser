@@ -30,6 +30,8 @@ const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
   : DEFAULT_MODE;
 
+const EXCLUDED_CONFIG_NAMES_FOR_NON_COP_SERVICES_USERS = ['CCM VHR Europe 2018', 'CCM VHR Europe 2021'];
+
 class ThemesProvider extends React.Component {
   async componentDidMount() {
     const { themesUrl } = this.props;
@@ -285,7 +287,9 @@ class ThemesProvider extends React.Component {
     if (!isUserCopernicusServicesUser && selectedTheme.id === DEFAULT_THEME_ID) {
       selectedTheme = {
         ...selectedTheme,
-        content: selectedTheme.content.filter((t) => !['CCM VHR Europe 2018'].includes(t.name)),
+        content: selectedTheme.content.filter(
+          (t) => !EXCLUDED_CONFIG_NAMES_FOR_NON_COP_SERVICES_USERS.includes(t.name),
+        ),
       };
     }
     const failedThemeParts = await prepareDataSourceHandlers(selectedTheme);

@@ -12,14 +12,31 @@ $headerPadding: 10px;
   .results-heading {
     padding: $headerPadding;
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    flex-direction: column;
     font-size: 14px;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     background-color: $mainLight;
     box-shadow: $boxShadow;
+
+    &-top,
+    &-bottom {
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    &-bottom {
+      margin-top: 10px;
+    }
+
+    .showing-n-results {
+      font-size: 14px;
+      color: $textColor;
+      padding: 2px 0;
+    }
   }
 
   .rodal {
@@ -71,6 +88,14 @@ $headerPadding: 10px;
       display: grid;
       grid-template-columns: 64px auto;
       grid-gap: 5px 10px;
+
+      .tile-checkbox {
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        margin: 0;
+        z-index: 1;
+      }
     }
 
     .eob-btn {

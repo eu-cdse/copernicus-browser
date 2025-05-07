@@ -33,6 +33,7 @@ import { decrypt } from '../utils/encrypt';
 import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   S2_L2A_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
@@ -62,7 +63,10 @@ class URLParamsParser extends React.Component {
           jwt_dec(this.props.user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
         : false;
 
-    if ([CDSE_CCM_VHR_IMAGE_2018_COLLECTION].includes(params.datasetId) && !isUserCopernicusServicesUser) {
+    if (
+      [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(params.datasetId) &&
+      !isUserCopernicusServicesUser
+    ) {
       params.datasetId = S2_L2A_CDAS;
       params.layerId = '1_TRUE_COLOR';
     }

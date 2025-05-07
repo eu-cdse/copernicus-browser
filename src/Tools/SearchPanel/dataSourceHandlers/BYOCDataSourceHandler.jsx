@@ -3,8 +3,6 @@ import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-h
 import { t } from 'ttag';
 
 import DataSourceHandler from './DataSourceHandler';
-import CopernicusHRSIDataSourceHandler from './CopernicusHRSIDataSourceHandler';
-import CopernicusHRVPPDataSourceHandler from './CopernicusHRVPPDataSourceHandler';
 import OthersDataSourceHandler from './OthersDataSourceHandler';
 import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
@@ -37,8 +35,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
     CUSTOM: { min: 0, max: 25 },
   };
 
-  COPERNICUS_HRSI_KNOWN_COLLECTIONS = new CopernicusHRSIDataSourceHandler().getKnownCollectionsList();
-  COPERNICUS_HRVPP_KNOWN_COLLECTIONS = new CopernicusHRVPPDataSourceHandler().getKnownCollectionsList();
   OTHER_KNOWN_COLLECTIONS = new OthersDataSourceHandler().getKnownCollectionsList();
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
   MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
@@ -51,8 +47,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
       (l) =>
         l instanceof BYOCLayer &&
         l.collectionId &&
-        !this.COPERNICUS_HRSI_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.COPERNICUS_HRVPP_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.OTHER_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId) &&

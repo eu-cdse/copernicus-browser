@@ -14,13 +14,13 @@ import { t } from 'ttag';
 import { TABS } from '../../const';
 import store, { tabsSlice } from '../../store';
 import { connect } from 'react-redux';
-import { getWorkspaceProductsCount } from '../../api/OData/workspace';
+import { getSavedWorkspaces } from '../../api/OData/workspace';
 
 const Tabs = (props) => {
   useEffect(() => {
     (async () => {
-      const workspacesCount = await getWorkspaceProductsCount();
-      store.dispatch(tabsSlice.actions.setWorkspacesCount(workspacesCount));
+      const savedWorkspaces = await getSavedWorkspaces();
+      store.dispatch(tabsSlice.actions.setSavedWorkspaces(savedWorkspaces));
     })();
   }, []);
 
@@ -98,7 +98,8 @@ const Tabs = (props) => {
   };
 
   const renderWorksSpaceButtons = () => {
-    const { scrollTop, workspacesCount } = props;
+    const { scrollTop, savedWorkspaces } = props;
+    const workspacesCount = savedWorkspaces ? savedWorkspaces.length : null;
     return (
       <div className={`tabs-wrapper-workspace ${scrollTop > 0 ? 'box-shadow-divider' : ''}`}>
         <a
@@ -170,7 +171,7 @@ const Tabs = (props) => {
 
 const mapStoreToProps = (store) => ({
   scrollTop: store.tabs.scrollTop,
-  workspacesCount: store.tabs.workspacesCount,
+  savedWorkspaces: store.tabs.savedWorkspaces,
 });
 
 const ConnectedTabs = connect(mapStoreToProps)(Tabs);

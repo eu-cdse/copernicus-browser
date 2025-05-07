@@ -10,25 +10,23 @@ import { AttributeNames } from './assets/attributes';
 
 const getAttributes = (attributes, name) => attributes.find((attribute) => attribute.Name === name);
 
-export function createAddProductToWorkspacePayload(product) {
-  return [
-    {
-      name: product.name,
-      productId: product.id,
-      cloudCover: getAttributes(product.attributes, AttributeNames.cloudCover)?.Value ?? 100,
-      platformShortName: product.platformShortName,
-      platformSerialIdentifier:
-        getAttributes(product.attributes, AttributeNames.platformSerialIdentifier)?.Value ?? 'N/A',
-      startDate: moment.utc(product.sensingTime).format(),
-      online: product.online,
-      size: product.contentLength < 0 ? 0 : product.contentLength,
-      productType: product.productType,
-      ...(product?.previewUrl ? { thumbnailDownloadLink: product.previewUrl } : {}),
-    },
-  ];
+export function createAddProductsToWorkspacePayload(products) {
+  return products.map((product) => ({
+    name: product.name,
+    productId: product.id,
+    cloudCover: getAttributes(product.attributes, AttributeNames.cloudCover)?.Value ?? 100,
+    platformShortName: product.platformShortName,
+    platformSerialIdentifier:
+      getAttributes(product.attributes, AttributeNames.platformSerialIdentifier)?.Value ?? 'N/A',
+    startDate: moment.utc(product.sensingTime).format(),
+    online: product.online,
+    size: product.contentLength < 0 ? 0 : product.contentLength,
+    productType: product.productType,
+    ...(product?.previewUrl ? { thumbnailDownloadLink: product.previewUrl } : {}),
+  }));
 }
 
-export async function addProductToWorkspace(product) {
+export async function addProductsToWorkspace(products) {
   const token = getAccessToken();
   const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace/OData.CSC.Create`;
   const headers = {
@@ -36,7 +34,7 @@ export async function addProductToWorkspace(product) {
     'Content-Type': 'application/json',
   };
 
-  const payload = createAddProductToWorkspacePayload(product);
+  const payload = createAddProductsToWorkspacePayload(products);
 
   const extractErrorMsg = (error) => {
     if (Array.isArray(error?.response?.data?.detail)) {
@@ -50,7 +48,7 @@ export async function addProductToWorkspace(product) {
     .post(url, payload, {
       headers: headers,
     })
-    .then((response) => {
+    .then(async (response) => {
       if (response?.status === 200 || response?.status === 201) {
         store.dispatch(
           floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
@@ -68,7 +66,8 @@ export async function addProductToWorkspace(product) {
             ],
           }),
         );
-        store.dispatch(tabsSlice.actions.incrementWorkspacesCount());
+        const savedWorkspaces = await getSavedWorkspaces();
+        store.dispatch(tabsSlice.actions.setSavedWorkspaces(savedWorkspaces));
       }
     })
     .catch((error) => {
@@ -84,7 +83,7 @@ export async function addProductToWorkspace(product) {
     });
 }
 
-export async function getWorkspaceProductsCount() {
+export async function getSavedWorkspaces() {
   const token = getAccessToken();
   const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace?$count=true`;
   const headers = {
@@ -98,7 +97,7 @@ export async function getWorkspaceProductsCount() {
     })
     .then((response) => {
       if (response?.status === 200 || response?.status === 201) {
-        return response.data.value.length;
+        return response.data.value;
       }
       return null;
     })

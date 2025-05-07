@@ -16,11 +16,15 @@
       width: 18px;
       height: 18px;
       margin: 0;
-      margin-right: 5px;
       background-color: $customCheckboxBackgroundColor;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+
+      &.white {
+        background-color: $whiteColor;
+        box-shadow: $boxShadow;
+      }
 
       &:active {
         border: 1px solid $activePrimaryColor;
@@ -50,6 +54,7 @@
 
     .custom-checkbox-text {
       font-weight: $fontWeightNormal;
+      margin-left: 5px;
     }
   }
 }

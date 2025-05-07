@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { t } from 'ttag';
 
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
-import { addProductToWorkspace } from '../../../api/OData/workspace';
+import { addProductsToWorkspace } from '../../../api/OData/workspace';
 
 import WorkspacePlusIcon from '../../../icons/workspace-plus.svg?react';
 
@@ -114,7 +114,7 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
             text={t`Workspace`}
             title={ResultItemLabels.addToWorkspace()}
             onClick={() => {
-              addProductToWorkspace(product);
+              addProductsToWorkspace([product]);
               onClose();
             }}
             onDisabledClick={() => {

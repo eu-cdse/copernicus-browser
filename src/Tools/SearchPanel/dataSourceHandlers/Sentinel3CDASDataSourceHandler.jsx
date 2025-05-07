@@ -275,33 +275,33 @@ export default class Sentinel3CDASDataSourceHandler extends Sentinel3DataSourceH
             <S3OLCITooltip />
           </HelpTooltip>
         );
-      case [S3SYNERGY_L2_V10]:
+      case S3SYNERGY_L2_V10:
         return (
           <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
             <S3V10L2Tooltip />
           </HelpTooltip>
         );
 
-      case [S3SYNERGY_L2_SYN]:
+      case S3SYNERGY_L2_SYN:
         return (
           <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
             <S3SynL2Tooltip />
           </HelpTooltip>
         );
 
-      case [S3SYNERGY_L2_VG1]:
+      case S3SYNERGY_L2_VG1:
         return (
           <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
             <S3VG1L2Tooltip />
           </HelpTooltip>
         );
-      /*    case [S3SYNERGY_L2_AOD]:
+      /*    case S3SYNERGY_L2_AOD:
           return (
             <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
               <S3AODL2Tooltip />
             </HelpTooltip>
           );
-          case [S3SYNERGY_L2_VGP]:
+          case S3SYNERGY_L2_VGP:
             return (
               <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
                 <S3VGPL2Tooltip />

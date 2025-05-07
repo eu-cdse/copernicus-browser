@@ -11,9 +11,6 @@ import store, {
   searchResultsSlice,
 } from '../../store';
 import { usePrevious } from '../../hooks/usePrevious';
-import { addProductToWorkspace } from '../../api/OData/workspace';
-
-import WorkspacePlus from '../../icons/workspace-plus.svg?react';
 
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
 import {
@@ -27,6 +24,7 @@ export const ResultItemLabels = {
   productInfo: () => t`Product info`,
   zoomToProduct: () => t`Zoom to product`,
   addToWorkspace: () => t`Add to workspace`,
+  loginToAddToWorkspace: () => t`You need to be logged in to add products to your workspace.`,
   downloadProductLabel: () => t`Download product`,
 };
 
@@ -84,6 +82,7 @@ export const ResultItemFooter = ({
   downloadInProgress,
   downloadProduct,
   cancelToken,
+  isAuthenticated,
 }) => {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const accessValidation = {
@@ -93,11 +92,6 @@ export const ResultItemFooter = ({
 
   const downloadProductErrorMessage = getProductErrorMessage(
     ResultItemLabels.downloadProductLabel(),
-    accessValidation,
-  );
-
-  const workspaceProductErrorMessage = getProductErrorMessage(
-    ResultItemLabels.addToWorkspace(),
     accessValidation,
   );
 
@@ -136,15 +130,6 @@ export const ResultItemFooter = ({
     }
   }, [detailsOpen, downloadInProgress, previousValueDownloadInProgress, onDownload, tile, userToken]);
 
-  const handleAddToWorkspace = () => {
-    if (workspaceProductErrorMessage) {
-      store.dispatch(notificationSlice.actions.displayError(workspaceProductErrorMessage));
-      return null;
-    }
-
-    addProductToWorkspace(tile);
-  };
-
   const downloadDisabled = downloadInProgress || !!downloadProductErrorMessage;
 
   return (
@@ -174,9 +159,6 @@ export const ResultItemFooter = ({
             title={ResultItemLabels.zoomToProduct()}
           ></i>
         )}
-        <i title={ResultItemLabels.addToWorkspace()} onClick={handleAddToWorkspace}>
-          <WorkspacePlus className={`workspace-plus ${workspaceProductErrorMessage ? 'disabled' : ''}`} />
-        </i>
         <i
           className={`fa fa-download ${
             downloadInProgress ? 'active disabled' : downloadDisabled ? 'disabled' : ''
