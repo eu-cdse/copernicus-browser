@@ -13,7 +13,6 @@ import { reprojectGeometry } from '../../../utils/reproject';
 import { getSHServiceRootUrl } from './dataSourceHandlers';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
-import GLCDataSourceHandler from './GLCDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 
 const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
@@ -38,7 +37,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   OTHER_KNOWN_COLLECTIONS = new OthersDataSourceHandler().getKnownCollectionsList();
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
   MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
-  CDSE_GLC_KNOWN_COLLECTIONS = new GLCDataSourceHandler().getKnownCollectionsList();
   CDSE_CCM_KNOWN_COLLECTIONS = new CCMDataSourceHandler().getKnownCollectionsList();
 
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
@@ -50,7 +48,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
         !this.OTHER_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.CDSE_GLC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.CDSE_CCM_KNOWN_COLLECTIONS.includes(l.collectionId),
     );
     if (customLayers.length === 0) {

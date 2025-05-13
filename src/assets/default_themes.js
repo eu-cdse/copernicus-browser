@@ -214,12 +214,6 @@ export const DEFAULT_THEMES = [
         preselected: true,
       },
       {
-        name: 'Global Land Cover',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/f44fbd-YOUR-INSTANCEID-HERE`,
-      },
-      {
         name: 'CCM VHR Europe 2018',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

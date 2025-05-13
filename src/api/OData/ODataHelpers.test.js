@@ -152,6 +152,11 @@ describe('findProductTypeConfigById', () => {
     expect(productType.id).toEqual('VHR_IMAGE_2021');
     expect(productType.label).toBeDefined();
   });
+  test('VHR_IMAGE_2024', () => {
+    const productType = findProductTypeConfigById('VHR_IMAGE_2024');
+    expect(productType.id).toEqual('VHR_IMAGE_2024');
+    expect(productType.label).toBeDefined();
+  });
 
   test('DAP_MG2-3_01', () => {
     const productType = findProductTypeConfigById('DAP_MG2-3_01');
@@ -310,6 +315,7 @@ describe('checkProductsSupport ', () => {
     'VHR_IMAGE_2015',
     'VHR_IMAGE_2018',
     'VHR_IMAGE_2021',
+    'VHR_IMAGE_2024',
     'DAP_MG2-3_01',
     'DWH_MG2_CORE_01',
     'HR_IMAGE_2015',
@@ -346,6 +352,10 @@ describe('checkProductTypeSupports', () => {
 
   test('VHR_IMAGE_2021 Geometry', () => {
     const sg = checkProductTypeSupports('VHR_IMAGE_2021', SUPPORTED_PROPERTIES.Geometry);
+    expect(sg).toBeTruthy();
+  });
+  test('VHR_IMAGE_2024 Geometry', () => {
+    const sg = checkProductTypeSupports('VHR_IMAGE_2024', SUPPORTED_PROPERTIES.Geometry);
     expect(sg).toBeTruthy();
   });
 
@@ -1069,6 +1079,53 @@ describe('createAdvancedSearchQuery for CCM data', () => {
       `((Collection/Name eq 'CCM' and ((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2015') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2021') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
+    );
+  });
+
+  test('two collections part 2', () => {
+    const collectionCCM = {
+      id: 'OPTICAL',
+      label: 'CCM Optical',
+      collectionName: 'CCM',
+      instruments: [
+        {
+          id: 'VHR_EUROPE',
+          label: 'Very High Resolution (VHR)',
+          selected: true,
+          supportsInstrumentName: false,
+          productTypes: [
+            {
+              id: 'VHR_IMAGE_2015',
+              label: 'VHR Europe (2014–2016)',
+              customFilterQueryByDatasetFull: true,
+            },
+            {
+              id: 'VHR_IMAGE_2024',
+              label: 'VHR Europe (2023–2025)',
+              customFilterQueryByDatasetFull: true,
+            },
+          ],
+        },
+      ],
+      supportsCloudCover: true,
+    };
+    const params = {
+      collections: [collectionCCM],
+      fromTime: moment.utc(fromTime).toDate().toISOString(),
+      toTime: moment.utc(toTime).toDate().toISOString(),
+      geometry: geometry,
+    };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
+    expect(oqb?.options).not.toBeNull();
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toEqual(
+      `((Collection/Name eq 'CCM' and ((Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2015') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
+        geometry,
+      )}')) or (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetFull' and att/OData.CSC.StringAttribute/Value eq 'VHR_IMAGE_2024') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
     );

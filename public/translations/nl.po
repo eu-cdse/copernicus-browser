@@ -2973,64 +2973,6 @@ msgstr ""
 msgid "Band 11 - Thermal Infrared (TIRS) - 12005 nm"
 msgstr ""
 
-msgid "Main discrete land cover classification according to FAO LCCS scheme"
-msgstr ""
-
-msgid ""
-"Classification probability, a quality indicator for the discrete "
-"classification"
-msgstr ""
-
-msgid "Forest type for all pixels where tree cover fraction is bigger than 1 %"
-msgstr ""
-
-msgid "Fractional cover (%) for the bare and sparse vegetation class"
-msgstr ""
-
-msgid "Fractional cover (%) for the cropland class"
-msgstr ""
-
-msgid "Fractional cover (%) for the herbaceous vegetation class"
-msgstr ""
-
-msgid "Fractional cover (%) for the moss & lichen class"
-msgstr ""
-
-msgid "Fractional cover (%) for the shrubland class"
-msgstr ""
-
-msgid "Fractional cover (%) for the snow & ice class"
-msgstr ""
-
-msgid "Fractional cover (%) for the forest class"
-msgstr ""
-
-msgid "Fractional cover (%) for the built-up class"
-msgstr ""
-
-msgid "Fractional cover (%) for the permanent inland water bodies class"
-msgstr ""
-
-msgid "Fractional cover (%) for the seasonal inland water bodies class"
-msgstr ""
-
-msgid ""
-"Data density indicator showing quality of the EO input data (0 = bad, 100 = "
-"perfect data)"
-msgstr ""
-
-msgid ""
-"Quality layer regarding the change detection of the current mapped year to "
-"the previous mapped year. It is a 3 level confidence mask for all CONSO and "
-"NRT maps with value definitions as:\n"
-"0 = No change.\n"
-"1 - Potential confidence.\n"
-"2 - Medium confidence.\n"
-"3 = High confidence.\n"
-"NOTE: The values of Change_Confidence_layer band in 2015 data are not shown "
-"correctly, therefore this band in 2015 data should not be used."
-msgstr ""
-
 msgid "Drag classes onto RGB fields."
 msgstr ""
 
@@ -7529,29 +7471,6 @@ msgstr ""
 msgid "Wildfires"
 msgstr ""
 
-msgid "Global Land Cover"
-msgstr ""
-
-msgid ""
-"**Global Land Cover** products provide a discrete land cover classification "
-"map according to UN-FAO Land Cover Classification System. Additional "
-"continuous fractional layers for all basic land cover classes are included "
-"as bands, to provide more detailed information on each land cover class. "
-"More information "
-"[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover).\n"
-"\n"
-"**Coverage**: Global.\n"
-"\n"
-"**Data availability**: Updated on a yearly basis. In Copernicus Browser, "
-"data is available on the following dates: 01-01-2016, 01-01-2017, "
-"01-01-2018, 01-01-2019.\n"
-"\n"
-"**Common Usage**: Land use and land cover monitoring, used to aid policy "
-"decisions on various issues, including agriculture and food security, "
-"biodiversity, climate change, forest and water resources, land degradation "
-"& desertification and rural development."
-msgstr ""
-
 msgid "An error has occurred during login process"
 msgstr ""
 
@@ -7913,27 +7832,6 @@ msgid ""
 "\n"
 "More info "
 "[here](https://earth.gsfc.nasa.gov/climate/data/deep-blue/science)."
-msgstr ""
-
-msgid ""
-"# Discrete Classification Map\n"
-"\n"
-"\n"
-"\n"
-"This layer visualises Global Land Cover discrete classification map with 23 "
-"classes defined using the UN-FAO Land Cover Classification System (LCCS) "
-"and with color scheme defined in the Product User Manual. More info "
-"[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover)."
-msgstr ""
-
-msgid ""
-"# Forest Types\n"
-"\n"
-"\n"
-"\n"
-"Visualized forest types based on 6 classes, as defined in the UN-FAO Land "
-"Cover Classification System (LCCS). More info "
-"[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover)."
 msgstr ""
 
 msgid ""

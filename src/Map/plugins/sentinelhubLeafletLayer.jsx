@@ -115,13 +115,13 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
-  CDSE_GLC_COLLECTION,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_AOD,
   S3SYNERGY_L2_VGP,
   S3SYNERGY_L2_VG1,
   S3SYNERGY_L2_V10,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -848,8 +848,8 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_GLOBAL_SURFACE_WATER:
       case IO_LULC_10M_ANNUAL:
       case GLOBAL_HUMAN_SETTLEMENT:
-      case CDSE_GLC_COLLECTION:
-      case CDSE_CCM_VHR_IMAGE_2018_COLLECTION: {
+      case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
+      case CDSE_CCM_VHR_IMAGE_2021_COLLECTION: {
         const dsh = getDataSourceHandler(datasetId);
         return await this.createBYOCLayer(
           url,

@@ -122,7 +122,6 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
-  CDSE_GLC_COLLECTION,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_V10,
   S3SYNERGY_L2_VG1,
@@ -141,7 +140,6 @@ import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
-import GLCDataSourceHandler from './GLCDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 
 export let dataSourceHandlers;
@@ -171,7 +169,6 @@ export function initializeDataSourceHandlers() {
     new BYOCDataSourceHandler(),
     new PlanetBasemapDataSourceHandler(),
     new OthersDataSourceHandler(),
-    new GLCDataSourceHandler(),
     new CCMDataSourceHandler(),
   ];
 }
@@ -509,8 +506,6 @@ export function datasourceForDatasetId(datasetId) {
     case S1_MONTHLY_MOSAIC_DH:
     case S1_MONTHLY_MOSAIC_IW:
       return DATASOURCES.S1_MOSAIC;
-    case CDSE_GLC_COLLECTION:
-      return DATASOURCES.GLOBAL_LAND_COVER;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       return DATASOURCES.CCM;
@@ -637,7 +632,6 @@ export const datasetLabels = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
   [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',
-  [CDSE_GLC_COLLECTION]: 'Global Land Cover',
   [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: 'VHR Europe 2018',
   [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: 'VHR Europe 2021',
 };

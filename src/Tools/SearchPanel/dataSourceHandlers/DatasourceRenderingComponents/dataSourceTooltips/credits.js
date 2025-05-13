@@ -144,7 +144,6 @@ export const credits = {
       link: 'https://www.impactobservatory.com/',
     },
   ],
-  [DATASOURCES.GLOBAL_LAND_COVER]: [copernicus],
   [DATASOURCES.CCM]: [
     {
       ...copernicus,

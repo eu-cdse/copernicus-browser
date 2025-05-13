@@ -22,6 +22,7 @@ import {
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
 import { CCM_VHR_IMAGE_2018_BANDS, CCM_VHR_IMAGE_2021_BANDS } from './datasourceAssets/CCMBands';
+import { constructV3Evalscript } from '../../../utils';
 
 export default class CCMDataSourceHandler extends DataSourceHandler {
   getDatasetSearchLabels = () => ({
@@ -229,11 +230,11 @@ export default class CCMDataSourceHandler extends DataSourceHandler {
     return false;
   };
 
-  supportsIndex = () => {
-    return false;
-  };
-
   generateEvalscript = (bands, datasetId, config) => {
+    if (config) {
+      return constructV3Evalscript(bands, config);
+    }
+
     return this.defaultEvalscript(bands, 1 / 1000);
   };
 

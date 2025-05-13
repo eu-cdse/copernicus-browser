@@ -509,6 +509,11 @@ export const collections = [
             customFilterQueryByDatasetFull: true,
           },
           {
+            id: 'VHR_IMAGE_2024',
+            label: 'VHR Europe (2023–2025)',
+            customFilterQueryByDatasetFull: true,
+          },
+          {
             id: 'DEM_VHR_2018',
             label: 'VHR DEM (2018)',
             customFilterQueryByDatasetFull: true,
