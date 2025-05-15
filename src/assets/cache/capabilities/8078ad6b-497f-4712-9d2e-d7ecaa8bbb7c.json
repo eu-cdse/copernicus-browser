@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] ba_global_300m_daily_v3",
+    "layers": [
+        {
+            "id": "day_of_burn",
+            "name": "Burn Scar",
+            "description": "Burned area",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/8078ad-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=day_of_burn&style=default"
+        }
+    ],
+    "datasets": []
+}

@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] swe_northernhemisphere_5km_daily_v1",
+    "layers": [
+        {
+            "id": "SWE",
+            "name": "SWE",
+            "description": "Snow Water Equivalent",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/703ede-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWE&style=default"
+        }
+    ],
+    "datasets": []
+}

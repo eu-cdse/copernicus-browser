@@ -7,13 +7,15 @@ const CustomCheckbox = ({ className, inputClassName, checked, onChange, label })
   return (
     <div className={`custom-checkbox-container${className ? ` ${className}` : ''}`}>
       <label className="custom-checkbox-label">
-        <input
-          className={`custom-checkbox ${inputClassName ? inputClassName : ''}`}
-          type="checkbox"
-          checked={!!checked}
-          onChange={onChange}
-        />
-        {!!checked && <CheckMark className="check-mark" />}
+        <div className="custom-checkbox-inner-wrapper">
+          <input
+            className={`custom-checkbox ${inputClassName ? inputClassName : ''}`}
+            type="checkbox"
+            checked={!!checked}
+            onChange={onChange}
+          />
+          {!!checked && <CheckMark className="check-mark" />}
+        </div>
         {label && <span className="custom-checkbox-text">{label}</span>}
       </label>
     </div>

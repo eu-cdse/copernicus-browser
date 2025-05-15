@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] lst_global_5km_hourly_v1",
+    "layers": [
+        {
+            "id": "LST",
+            "name": "LST",
+            "description": "Land Surface Temperature",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ef904d-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST&style=default"
+        }
+    ],
+    "datasets": []
+}

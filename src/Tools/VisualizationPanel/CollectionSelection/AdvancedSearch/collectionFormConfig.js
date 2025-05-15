@@ -19,6 +19,7 @@ import {
   AttributeDEMDatasetVersions,
   AttributeDEMDatasetsMap,
   AttributeS2ProductTypeValues,
+  AttributeConsolidationPeriodValues,
 } from '../../../../api/OData/assets/attributes';
 import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
@@ -819,3 +820,1129 @@ export const collections = [
     ],
   },
 ];
+
+export const recursiveCollectionCLMS = [
+  {
+    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.label,
+    type: 'collection',
+    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.collection,
+    supportsGeometry: false,
+    supportsCloudCover: false,
+    items: [
+      {
+        id: 'DYNAMIC_LAND_COVER',
+        label: 'Dynamic Land Cover',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'dynamic_land_cover',
+        )})`,
+        items: [
+          {
+            id: 'lc_global_100m_yearly_v3',
+            label: 'Global, Yearly, 100m, (2015–2019), V3',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'lc_global_100m_yearly_v3',
+            )})`,
+          },
+        ],
+      },
+      // {
+      //   id: 'CORINE_LAND_COVER',
+      //   label: 'CORINE Land Cover',
+      //   type: 'instrument',
+      //   supportsCloudCover: false,
+      //   customFilterExpression: `(${FilterElement.Attribute(
+      //      ODataAttributes.productType,
+      //      ODataFilterOperator.eq,
+      //      'vegetation_phenology_and_productivity_parameters', // fix this
+      //   )})`,
+      //   items: [],
+      // },
+      // {
+      //   id: 'CLC+BACKBONE',
+      //   label: 'CLC + Backbone',
+      //   type: 'instrument',
+      //   supportsCloudCover: false,
+      //   customFilterExpression: `(${FilterElement.Attribute(
+      //      ODataAttributes.productType,
+      //      ODataFilterOperator.eq,
+      //      'vegetation_phenology_and_productivity_parameters', // fix this
+      //   )})`,
+      //   items: [],
+      // },
+      // {
+      //   id: 'HIGH_RESOLUTION_LAYER',
+      //   label: 'High Resolution Layer',
+      //   type: 'instrument',
+      //   supportsCloudCover: false,
+      //   customFilterExpression: `(${FilterElement.Attribute(
+      //      ODataAttributes.productType,
+      //      ODataFilterOperator.eq,
+      //      'vegetation_phenology_and_productivity_parameters', // fix this
+      //   )})`,
+      //   items: [],
+      // },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.fileFormat,
+        render: MultiSelectInput,
+        getOptions: () => [
+          { value: 'nc', label: 'NetCDF' },
+          { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
+        ],
+      },
+      {
+        id: AttributeNames.consolidationPeriod,
+        title: FormatedAttributeNames.consolidationPeriod(),
+        render: MultiSelectInput,
+        getOptions: () => [
+          AttributeConsolidationPeriodValues.RT0,
+          AttributeConsolidationPeriodValues.RT1,
+          AttributeConsolidationPeriodValues.RT2,
+          AttributeConsolidationPeriodValues.RT5,
+          AttributeConsolidationPeriodValues.RT6,
+        ],
+      },
+      {
+        id: AttributeNames.datasetIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.datasetIdentifier(),
+      },
+      {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
+      },
+    ],
+  },
+  // {
+  //   id: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.id,
+  //   label: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.label,
+  //   type: 'collection',
+  //   collectionName: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.collection,
+  //   supportsGeometry: false,
+  //   supportsCloudCover: false,
+  //   items: [
+  //     {
+  //       id: 'COASTAL_ZONES',
+  //       label: 'Coastal Zones',
+  //       type: 'instrument',
+  //       supportsCloudCover: false,
+  //       customFilterExpression: `(${FilterElement.Attribute(
+  //         ODataAttributes.productType,
+  //         ODataFilterOperator.eq,
+  //         'vegetation_phenology_and_productivity_parameters', // fix this
+  //       )})`,
+  //       items: [],
+  //     },
+  //     {
+  //       id: 'N2K',
+  //       label: 'N2K',
+  //       type: 'instrument',
+  //       supportsCloudCover: false,
+  //       customFilterExpression: `(${FilterElement.Attribute(
+  //         ODataAttributes.productType,
+  //         ODataFilterOperator.eq,
+  //         'vegetation_phenology_and_productivity_parameters', // fix this
+  //       )})`,
+  //       items: [],
+  //     },
+  //     {
+  //       id: 'RIPARIAN_ZONES',
+  //       label: 'Riparian Zones',
+  //       type: 'instrument',
+  //       supportsCloudCover: false,
+  //       customFilterExpression: `(${FilterElement.Attribute(
+  //         ODataAttributes.productType,
+  //         ODataFilterOperator.eq,
+  //         'vegetation_phenology_and_productivity_parameters', // fix this
+  //       )})`,
+  //       items: [],
+  //     },
+  //     {
+  //       id: 'URBAN_ATLAS',
+  //       label: 'Urban Atlas',
+  //       type: 'instrument',
+  //       supportsCloudCover: false,
+  //       customFilterExpression: `(${FilterElement.Attribute(
+  //         ODataAttributes.productType,
+  //         ODataFilterOperator.eq,
+  //         'vegetation_phenology_and_productivity_parameters', // fix this
+  //       )})`,
+  //       items: [],
+  //     },
+  //     {
+  //       id: 'REFERENCE_LAND_COVER_AND_LAND_COVER_CHANGE_IN_SELECTED_HOT_SPOTS',
+  //       label: 'Reference Land Cover and Land Cover Change in selected Hot Spots',
+  //       type: 'instrument',
+  //       supportsCloudCover: false,
+  //       customFilterExpression: `(${FilterElement.Attribute(
+  //         ODataAttributes.productType,
+  //         ODataFilterOperator.eq,
+  //         'vegetation_phenology_and_productivity_parameters', // fix this
+  //       )})`,
+  //       items: [],
+  //     },
+  //   ],
+  //   additionalFilters: [
+  //     {
+  //       id: AttributeNames.fileFormat,
+  //       render: MultiSelectInput,
+  //       getOptions: () => [
+  //         { value: 'nc', label: 'NetCDF' },
+  //         { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
+  //       ],
+  //     },
+  //     {
+  //       id: AttributeNames.consolidationPeriod,
+  //       title: FormatedAttributeNames.consolidationPeriod(),
+  //       render: MultiSelectInput,
+  //       getOptions: () => [
+  //         AttributeConsolidationPeriodValues.RT0,
+  //         AttributeConsolidationPeriodValues.RT1,
+  //         AttributeConsolidationPeriodValues.RT2,
+  //         AttributeConsolidationPeriodValues.RT5,
+  //         AttributeConsolidationPeriodValues.RT6,
+  //       ],
+  //     },
+  //     {
+  //       id: AttributeNames.datasetIdentifier,
+  //       render: DefaultInput,
+  //       type: 'text',
+  //       placeholder: FormatedAttributeNames.datasetIdentifier(),
+  //     },
+  //     {
+  //       id: AttributeNames.productType,
+  //       render: DefaultInput,
+  //       type: 'text',
+  //       placeholder: FormatedAttributeNames.productType(),
+  //     },
+  //   ],
+  // },
+  {
+    id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+    label: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.label,
+    type: 'collection',
+    collectionName: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.collection,
+    supportsGeometry: false,
+    supportsCloudCover: false,
+    items: [
+      {
+        id: 'SOIL_MOISTURE',
+        label: 'Soil Moisture',
+        type: 'group',
+        items: [
+          {
+            id: 'SURFACE_SOIL_MOISTURE',
+            label: 'Surface Soil Moisture',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'surface_soil_moisture',
+            )})`,
+            items: [
+              {
+                id: 'ssm_europe_1km_daily_v1',
+                label: 'Europe, Daily, 1km, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ssm_europe_1km_daily_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'SOIL_WATER_INDEX',
+            label: 'Soil Water Index',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'soil_water_index',
+            )})`,
+            items: [
+              {
+                id: 'swi_europe_1km_daily_v1',
+                label: 'Europe, Daily, 1km, (2015–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_europe_1km_daily_v1',
+                )})`,
+              },
+              {
+                id: 'swi_global_12.5km_daily_v3',
+                label: 'Global, Daily, 12.5km, (2007–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_global_12.5km_daily_v3',
+                )})`,
+              },
+              {
+                id: 'swi_global_12.5km_10daily_v3',
+                label: 'Global, 10-daily, 12.5km, (2007–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_global_12.5km_10daily_v3',
+                )})`,
+              },
+              {
+                id: 'swi-static_global_12.5km_daily_v3',
+                label: 'Static Layers, Global, Daily, 12.5km, V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi-static_global_12.5km_daily_v3',
+                )})`,
+              },
+              {
+                id: 'swi-timeseries_global_12.5km_daily_v3',
+                label: 'Time Series, Global, Daily, 12.5km, (2007–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi-timeseries_global_12.5km_daily_v3',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'SNOW',
+        label: 'Snow',
+        type: 'group',
+        items: [
+          {
+            id: 'SNOW_COVER_EXTENT',
+            label: 'Snow Cover Extent',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'snow_cover_extent',
+            )})`,
+            items: [
+              {
+                id: 'sce_europe_500m_daily_v1',
+                label: 'Europe, Daily, 500m, (2017–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'sce_europe_500m_daily_v1',
+                )})`,
+              },
+              {
+                id: 'sce_northernhemisphere_1km_daily_v1',
+                label: 'Northern Hemisphere, Daily, 1km, (2018–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'sce_northernhemisphere_1km_daily_v1',
+                )})`,
+              },
+            ],
+          },
+          // {
+          //   id: 'SNOW_STATE',
+          //   label: 'Snow State',
+          //   type: 'instrument',
+          //   supportsCloudCover: false,
+          //   customFilterExpression: `(${FilterElement.Attribute(
+          //     ODataAttributes.productType,
+          //     ODataFilterOperator.eq,
+          //     'snow_state',
+          //   )})`,
+          //   items: [],
+          // },
+          {
+            id: 'SNOW_WATER_EQUIVALENT',
+            label: 'Snow Water Equivalent',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'snow_water_equivalent',
+            )})`,
+            items: [
+              {
+                id: 'swe_northernhemisphere_5km_daily_v1',
+                label: 'Northern Hemisphere, Daily, 5km, (2006–2024), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swe_northernhemisphere_5km_daily_v1',
+                )})`,
+              },
+              {
+                id: 'swe_northernhemisphere_5km_daily_v2',
+                label: 'Northern Hemisphere, Daily, 5km, (2024–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swe_northernhemisphere_5km_daily_v2',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'TEMPERATURE_AND_REFLECTANCE',
+        label: 'Temperature and Reflectance',
+        type: 'group',
+        items: [
+          {
+            id: 'LAND_SURFACE_TEMPERATURE',
+            label: 'Land Surface Temperature',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'land_surface_temperature',
+            )})`,
+            items: [
+              {
+                id: 'lst_global_5km_hourly_v1',
+                label: 'Global, Hourly, 5km, (2010–2021), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst_global_5km_hourly_v1',
+                )})`,
+              },
+              {
+                id: 'lst_global_5km_hourly_v2',
+                label: 'Global, Hourly, 5km, (2021–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst_global_5km_hourly_v2',
+                )})`,
+              },
+              {
+                id: 'lst-tci_global_5km_10daily_v1',
+                label: 'Synthesis and Thermal Condition Index, Global, 5km, 10-daily, (2017–2021), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-tci_global_5km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lst-tci_global_5km_10daily_v2',
+                label: 'Synthesis and Thermal Condition Index, Global, 5km, 10-daily, (2021–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-tci_global_5km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'lst-daily-cycle_global_5km_10daily_v1',
+                label: 'Daily Cycle, Global, 10-daily, 5km, (2017–2021), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-daily-cycle_global_5km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lst-daily-cycle_global_5km_10daily_v2',
+                label: 'Daily Cycle, Global, 10-daily, 5km, (2021–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-daily-cycle_global_5km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'lswt-offline_global_1km_10daily_v1',
+                label: 'Lake Surface Water Temperature Offline, Global, 10-daily, 1km, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lswt-offline_global_1km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lswt-nrt_global_1km_10daily_v1',
+                label: 'Lake Surface Water Temperature NRT, Global, 10-daily, 1km, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lswt-nrt_global_1km_10daily_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'TOP_OF_CANOPY_REFLECTANCES',
+            label: 'Top of Canopy Reflectances',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'top-of-canopy_reflectances',
+            )})`,
+            items: [
+              {
+                id: 'toc_global_300m_daily_v2',
+                label: 'toc_global_300m_daily_v2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'toc_global_300m_daily_v2',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'VEGETATION',
+        label: 'Vegetation',
+        type: 'group',
+        items: [
+          {
+            id: 'BURNT_AREA',
+            label: 'Burnt Area',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'burnt_area',
+            )})`,
+            items: [
+              {
+                id: 'ba_global_300m_daily_v3',
+                label: 'Global, Daily, 300m, (2023–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ba_global_300m_daily_v3',
+                )})`,
+              },
+              {
+                id: 'ba_global_300m_monthly_v3',
+                label: 'Global, Monthly, 300m, (2019–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ba_global_300m_monthly_v3',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'VEGETATION_PROPERTIES',
+            label: 'Vegetation Properties',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'vegetation_properties',
+            )})`,
+            items: [
+              {
+                id: 'fcover_global_1km_10daily_v2',
+                label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fcover_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'fcover_global_300m_10daily_v1',
+                label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fcover_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'fapar_global_1km_10daily_v2',
+                label:
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fapar_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'fapar_global_300m_10daily_v1',
+                label:
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fapar_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lai_global_1km_10daily_v2',
+                label: 'Leaf Area Index, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lai_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'lai_global_300m_10daily_v1',
+                label: 'Leaf Area Index, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lai_global_300m_10daily_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'VEGETATION_INDICES',
+            label: 'Vegetation Indices',
+            type: 'instrument',
+            selected: true,
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'vegetation_indices',
+            )})`,
+            items: [
+              {
+                id: 'ndvi_global_1km_10daily_v3',
+                label: 'NDVI, Global, 10-daily, 1km, (1999–2020), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi_global_1km_10daily_v3',
+                )})`,
+              },
+              {
+                id: 'ndvi_global_1km_10daily_v2',
+                label: 'NDVI, Global, 10-daily, 1km, (1998–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'ndvi_global_300m_10daily_v2',
+                label: 'NDVI, Global, 10-daily, 300m, (2020–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi_global_300m_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'ndvi_global_300m_10daily_v1',
+                label: 'NDVI, Global, 10-daily, 300m, (2014–2020), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'ndvi-lts_global_1km_10daily_v3',
+                label: 'NDVI Long Term Statistics, Global, 10-daily, 1km, (1999–2019), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi-lts_global_1km_10daily_v3',
+                )})`,
+              },
+              {
+                id: 'ndvi-lts_global_1km_10daily_v2',
+                label: 'NDVI Long Term Statistics, Global, 10-daily, 1km, (1999–2017), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi-lts_global_1km_10daily_v2',
+                )})`,
+              },
+            ],
+          },
+          // {
+          //   id: 'VEGETATION_SEASONAL_TRAJECTORIES',
+          //   label: 'Vegetation Seasonal Trajectories',
+          //   type: 'instrument',
+          //   supportsInstrumentName: false,
+          //   supportsCloudCover: false,
+          //   customFilterExpression: `(${FilterElement.Attribute(
+          //      ODataAttributes.productType,
+          //      ODataFilterOperator.eq,
+          //      'vegetation_phenology_and_productivity_parameters', // fix this
+          //   )})`,
+          //   items: [],
+          // },
+          {
+            id: 'VEGETATION_PHENOLOGY_AND_PRODUCTIVITY_PARAMETERS',
+            label: 'Vegetation Phenology and Productivity Parameters',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'vegetation_phenology_and_productivity_parameters',
+            )})`,
+            items: [
+              {
+                id: 'lsp_global_300m_yearly_v1',
+                label: 'lsp_global_300m_yearly_v1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lsp_global_300m_yearly_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
+            label: 'Dry/Gross Dry Matter Productivity',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'dry-gross_dry_matter_productivity',
+            )})`,
+            items: [
+              {
+                id: 'dmp_global_300m_10daily_v1',
+                label: 'Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'dmp_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'dmp_global_1km_10daily_v2',
+                label: 'Dry Matter Productivity, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'dmp_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'gdmp_global_300m_10daily_v1',
+                label: 'Gross Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'gdmp_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'gdmp_global_1km_10daily_v2',
+                label: 'Gross Dry Matter Productivity, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'gdmp_global_1km_10daily_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'NET_GROSS_PRIMARY_PRODUCTION',
+            label: 'Net/Gross Primary Production',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'net-gross_primary_production',
+            )})`,
+            items: [
+              {
+                id: 'npp_global_300m_10daily_v1',
+                label: 'Net Primary Production, Global, 10-daily, 300m, (2023–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'npp_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'gpp_global_300m_10daily_v1',
+                label: 'Gross Primary Production, Global, 10-daily, 300m, (2023–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'gpp_global_300m_10daily_v1',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'WATER_BODIES',
+        label: 'Water Bodies',
+        type: 'group',
+        items: [
+          {
+            id: 'WATER_BODIES_1',
+            label: 'Water Bodies',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'water_bodies',
+            )})`,
+            items: [
+              {
+                id: 'wb_global_1km_10daily_v2',
+                label: 'Global, 10-daily, 1km, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_1km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'wb_global_300m_10daily_v1',
+                label: 'Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'wb_global_100m_monthly_v1',
+                label: 'Global, 10-daily, 100m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_100m_monthly_v1',
+                )})`,
+              },
+              {
+                id: 'wb_global_300m_monthly_v2',
+                label: 'Global, Monthly, 300m, (2020–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_300m_monthly_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'RIVER_AND_LAKE_WATER_LEVEL',
+            label: 'River and Lake Water Level',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'river_and_lake_water_level',
+            )})`,
+            items: [
+              {
+                id: 'wl-lakes_global_vector_daily_v2',
+                label: 'Lake Water Level NRT (vector), Daily, (1992–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wl-lakes_global_vector_daily_v2',
+                )})`,
+              },
+              {
+                id: 'wl-rivers_global_vector_daily_v2',
+                label: 'River Water Level NRT (vector), Daily, (2002–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wl-rivers_global_vector_daily_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'LAKE_WATER_QUALITY',
+            label: 'Lake Water Quality',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'lake_water_quality',
+            )})`,
+            items: [
+              {
+                id: 'lwq-reproc_global_1km_10daily_v1',
+                label: 'Global Reproc, 10-daily, 1km, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-reproc_global_1km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-reproc_global_300m_10daily_v1',
+                label: 'Global Reproc, 10-daily, 300m, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-reproc_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_1km_10daily_v1',
+                label: 'Global NRT, 10-daily, 1km, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_1km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_300m_10daily_v1',
+                label: 'Global NRT, 10-daily, 300m, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_100m_10daily_v1',
+                label: 'Global NRT, 10-daily, 100m, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_100m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_300m_10daily_v2',
+                label: 'Global NRT, 10-daily, 300m, (2024–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_300m_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_100m_10daily_v2',
+                label: 'Global NRT, 10-daily, 100m, (2024–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_100m_10daily_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'RIVER_AND_LAKE_ICE_EXTENT',
+            label: 'River and Lake Ice Extent',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'river_and_lake_ice_extent',
+            )})`,
+            items: [
+              {
+                id: 'lie_baltic_250m_daily_v1',
+                label: 'Baltic, Daily, 250m, (2017–2024), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lie_baltic_250m_daily_v1',
+                )})`,
+              },
+              {
+                id: 'lie_northernhemisphere_500m_daily_v1',
+                label: 'Northern Hemisphere, Daily, 500m, (2021–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lie_northernhemisphere_500m_daily_v1',
+                )})`,
+              },
+              {
+                id: 'lie_europe_250m_daily_v2',
+                label: 'Europe, Daily, 250m, (2024–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lie_europe_250m_daily_v2',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.fileFormat,
+        render: MultiSelectInput,
+        getOptions: () => [
+          { value: 'nc', label: 'NetCDF' },
+          { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
+        ],
+      },
+      {
+        id: AttributeNames.consolidationPeriod,
+        title: FormatedAttributeNames.consolidationPeriod(),
+        render: MultiSelectInput,
+        getOptions: () => [
+          AttributeConsolidationPeriodValues.RT0,
+          AttributeConsolidationPeriodValues.RT1,
+          AttributeConsolidationPeriodValues.RT2,
+          AttributeConsolidationPeriodValues.RT5,
+          AttributeConsolidationPeriodValues.RT6,
+        ],
+      },
+      {
+        id: AttributeNames.datasetIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.datasetIdentifier(),
+      },
+      {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
+      },
+    ],
+  },
+];
+
+function transformToRecursive(collections) {
+  return collections.map((collection) => {
+    const result = { ...collection };
+    result.type = 'collection';
+    result.items = [];
+
+    // Transform instruments to items
+    if (Array.isArray(collection.instruments)) {
+      collection.instruments.forEach((instrument) => {
+        const transformedInstrument = { ...instrument };
+        transformedInstrument.type = 'instrument';
+        transformedInstrument.items = [];
+
+        // Transform product types to items
+        if (Array.isArray(instrument.productTypes)) {
+          instrument.productTypes.forEach((productType) => {
+            const transformedProductType = { ...productType };
+            transformedProductType.type = 'productType';
+            transformedProductType.items = [];
+            transformedInstrument.items.push(transformedProductType);
+          });
+        }
+
+        // Remove original product types property
+        delete transformedInstrument.productTypes;
+
+        result.items.push(transformedInstrument);
+      });
+    }
+
+    // Remove original instruments property
+    delete result.instruments;
+
+    return result;
+  });
+}
+
+const recursiveCollections = transformToRecursive(collections);
+recursiveCollections.push(...recursiveCollectionCLMS);
+export { recursiveCollections };

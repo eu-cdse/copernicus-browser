@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] ndvi_global_300m_10daily_v1",
+    "layers": [
+        {
+            "id": "NDVI",
+            "name": "NDVI",
+            "description": "NDVI is an indicator of the greenness of the biomass.",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ca555d-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+        }
+    ],
+    "datasets": []
+}

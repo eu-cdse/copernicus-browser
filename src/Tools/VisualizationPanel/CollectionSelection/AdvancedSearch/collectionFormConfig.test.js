@@ -28,7 +28,7 @@ describe('checkFormElementAccess', () => {
 });
 
 describe('getCollectionFormConfig', () => {
-  const elem = (id) => ({ id: id });
+  const elem = (id, type = 'collection') => ({ id, type });
 
   test.each([
     [null, null, null],
@@ -46,18 +46,87 @@ describe('getCollectionFormConfig', () => {
     ],
 
     [
-      [{ ...elem(1), children: [elem(11), elem(12), elem(13)] }],
+      [{ ...elem(1), items: [elem(11, 'instrument'), elem(12, 'instrument'), elem(13, 'instrument')] }],
       null,
-      [{ ...elem(1), children: [elem(11), elem(12), elem(13)] }],
+      [{ ...elem(1), items: [elem(11, 'instrument'), elem(12, 'instrument'), elem(13, 'instrument')] }],
     ],
-    [[{ ...elem(1), children: [elem(11), elem(12), elem(13)], hasAccess: false }], null, []],
     [
-      [{ ...elem(1), children: [{ ...elem(11), hasAccess: false }, elem(12), elem(13)] }],
+      [
+        {
+          ...elem(1),
+          items: [elem(11, 'instrument'), elem(12, 'instrument'), elem(13, 'instrument')],
+          hasAccess: false,
+        },
+      ],
       null,
-      [{ ...elem(1), children: [elem(12), elem(13)] }],
+      [],
     ],
-    // children is an array of primitive values instead of objects
-    [[{ ...elem(1), children: [1, 2, 3] }], null, [{ ...elem(1), children: [1, 2, 3] }]],
+    [
+      [
+        {
+          ...elem(1),
+          items: [
+            { ...elem(11, 'instrument'), hasAccess: false },
+            elem(12, 'instrument'),
+            elem(13, 'instrument'),
+          ],
+        },
+      ],
+      null,
+      [{ ...elem(1), items: [elem(12, 'instrument'), elem(13, 'instrument')] }],
+    ],
+    // Test nested group structure
+    [
+      [
+        {
+          ...elem(1),
+          items: [
+            {
+              ...elem(11, 'group'),
+              items: [elem(111, 'instrument'), elem(112, 'instrument')],
+            },
+          ],
+        },
+      ],
+      null,
+      [
+        {
+          ...elem(1),
+          items: [
+            {
+              ...elem(11, 'group'),
+              items: [elem(111, 'instrument'), elem(112, 'instrument')],
+            },
+          ],
+        },
+      ],
+    ],
+    // Test access control on nested items
+    [
+      [
+        {
+          ...elem(1),
+          items: [
+            {
+              ...elem(11, 'group'),
+              items: [{ ...elem(111, 'instrument'), hasAccess: false }, elem(112, 'instrument')],
+            },
+          ],
+        },
+      ],
+      null,
+      [
+        {
+          ...elem(1),
+          items: [
+            {
+              ...elem(11, 'group'),
+              items: [elem(112, 'instrument')],
+            },
+          ],
+        },
+      ],
+    ],
   ])('getCollectionFormConfig %p %p %p', (formElement, props, expected) => {
     const collectionFormConfig = getCollectionFormConfig(formElement, props);
 
@@ -72,6 +141,11 @@ describe('getCollectionFormConfig', () => {
 });
 
 describe('getCollectionFormInitialState', () => {
+  const createCollection = (id) => ({ id, type: 'collection', items: [] });
+  const createInstrument = (id) => ({ id, type: 'instrument', items: [] });
+  const createProductType = (id) => ({ id, type: 'productType', items: [] });
+  const createGroup = (id, items = []) => ({ id, type: 'group', items });
+
   test.each([
     //empty form config, empty form state
     [null, null, undefined, CollectionFormInitialState],
@@ -86,50 +160,129 @@ describe('getCollectionFormInitialState', () => {
       CollectionFormInitialState,
     ],
     //form config not empty, form state empty
-    [[{ id: 'C1' }], null, undefined, CollectionFormInitialState],
-    [[{ id: 'C1' }], {}, undefined, CollectionFormInitialState],
+    [[createCollection('C1')], null, undefined, CollectionFormInitialState],
+    [[createCollection('C1')], {}, undefined, CollectionFormInitialState],
     [
-      [{ id: 'C1' }],
+      [createCollection('C1')],
       { selectedCollections: {}, maxCc: {}, selectedFilters: {} },
       undefined,
       CollectionFormInitialState,
     ],
     //form config not empty, form state not empty
     [
-      [{ id: 'C1' }],
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: {} },
+      [createCollection('C1')],
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {},
+      },
       undefined,
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: {} },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {},
+      },
     ],
     //form state with collection C2 which is not defined in config
     [
-      [{ id: 'C1' }],
+      [createCollection('C1')],
       {
-        selectedCollections: { C1: {}, C2: {} },
-        maxCc: { C1: 100, C2: {} },
-        selectedFilters: { C1: { f1: 1 }, C2: { f2: 2 } },
+        selectedCollections: {
+          C1: {},
+          C2: {},
+        },
+        maxCc: {
+          C1: 100,
+          C2: {},
+        },
+        selectedFilters: {
+          C1: { f1: 1 },
+          C2: { f2: 2 },
+        },
       },
       undefined,
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: { C1: {} } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {
+          C1: {},
+        },
+      },
     ],
     //form state with filter f1 which is not defined in config
     [
-      [{ id: 'C1' }],
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: { C1: { f1: 1 } } },
+      [createCollection('C1')],
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {
+          C1: { f1: 1 },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: { C1: {} } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {
+          C1: {},
+        },
+      },
     ],
     //form state with filter f1 which is defined in config
     [
-      [{ id: 'C1', additionalFilters: [{ id: 'f1' }] }],
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: { C1: { f1: 1 } } },
+      [
+        {
+          ...createCollection('C1'),
+          additionalFilters: [{ id: 'f1' }],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {
+          C1: { f1: 1 },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: {} }, maxCc: { C1: 100 }, selectedFilters: { C1: { f1: 1 } } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        maxCc: {
+          C1: 100,
+        },
+        selectedFilters: {
+          C1: { f1: 1 },
+        },
+      },
     ],
-
     //form state does not have all properties from config
     [
-      [{ id: 'C1' }, { id: 'C2' }],
+      [createCollection('C1'), createCollection('C2')],
       { selectedCollections: { C1: {} } },
       undefined,
       { selectedCollections: { C1: {} } },
@@ -138,73 +291,262 @@ describe('getCollectionFormInitialState', () => {
     [
       [
         {
-          id: 'C1',
+          ...createCollection('C1'),
           additionalFilters: [{ id: 'f1', defaultValue: 1 }, { id: 'f2' }],
         },
       ],
-      { selectedCollections: { C1: {}, C2: {} }, selectedFilters: { C1: { f2: 2, f3: 3 } } },
+      {
+        selectedCollections: {
+          C1: {},
+          C2: {},
+        },
+        selectedFilters: {
+          C1: { f2: 2, f3: 3 },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: {} }, selectedFilters: { C1: { f2: 2 } } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        selectedFilters: {
+          C1: { f2: 2 },
+        },
+      },
     ],
     //f1 has default value, setDefaultValues option is set to false
     [
       [
         {
-          id: 'C1',
+          ...createCollection('C1'),
           additionalFilters: [{ id: 'f1', defaultValue: 1 }, { id: 'f2' }],
         },
       ],
-      { selectedCollections: { C1: {}, C2: {} }, selectedFilters: { C1: { f2: 2 } } },
+      {
+        selectedCollections: {
+          C1: {},
+          C2: {},
+        },
+        selectedFilters: {
+          C1: { f2: 2 },
+        },
+      },
       { setDefaultValues: false },
-      { selectedCollections: { C1: {} }, selectedFilters: { C1: { f2: 2 } } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        selectedFilters: {
+          C1: { f2: 2 },
+        },
+      },
     ],
     //f1 has default value, setDefaultValues option is set to true
     [
       [
         {
-          id: 'C1',
+          ...createCollection('C1'),
           additionalFilters: [{ id: 'f1', defaultValue: 1 }, { id: 'f2' }],
         },
       ],
-      { selectedCollections: { C1: {}, C2: {} }, selectedFilters: { C1: { f2: 2 } } },
+      {
+        selectedCollections: {
+          C1: {},
+          C2: {},
+        },
+        selectedFilters: {
+          C1: { f2: 2 },
+        },
+      },
       { setDefaultValues: true },
-      { selectedCollections: { C1: {} }, selectedFilters: { C1: { f1: 1, f2: 2 } } },
+      {
+        selectedCollections: {
+          C1: {},
+        },
+        selectedFilters: {
+          C1: { f1: 1, f2: 2 },
+        },
+      },
     ],
-    //instrument is not defined in form config
+    // Recursive structure tests
+    // Instrument inside collection
     [
-      [{ id: 'C1', instruments: [{ id: 'I1' }] }],
-      { selectedCollections: { C1: { I1: {}, I2: {} } } },
+      [
+        {
+          ...createCollection('C1'),
+          items: [createInstrument('I1')],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {
+            I1: { type: 'instrument' },
+            I2: { type: 'instrument' },
+          },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: { I1: {} } } },
+      {
+        selectedCollections: {
+          C1: {
+            I1: { type: 'instrument' },
+          },
+        },
+      },
     ],
-    //instrument in config, but not in form state
+    // Instrument inside group
     [
-      [{ id: 'C1', instruments: [{ id: 'I1' }, { id: 'I2' }] }],
-      { selectedCollections: { C1: { I1: {} } } },
+      [
+        {
+          ...createCollection('C1'),
+          items: [
+            {
+              ...createGroup('G1', [createInstrument('I1')]),
+            },
+          ],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {
+            G1: {
+              type: 'group',
+              I1: { type: 'instrument' },
+            },
+          },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: { I1: {} } } },
+      {
+        selectedCollections: {
+          C1: {
+            G1: {
+              type: 'group',
+              I1: { type: 'instrument' },
+            },
+          },
+        },
+      },
     ],
-    //product type defined in form and config and form state
+    // Product type inside instrument
     [
-      [{ id: 'C1', instruments: [{ id: 'I1', productTypes: [{ id: 'P1' }] }] }],
-      { selectedCollections: { C1: { I1: { P1: {} }, I2: {} } } },
+      [
+        {
+          ...createCollection('C1'),
+          items: [
+            {
+              ...createInstrument('I1'),
+              items: [createProductType('P1')],
+            },
+          ],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {
+            I1: {
+              type: 'instrument',
+              P1: { type: 'productType' },
+              P2: { type: 'productType' },
+            },
+          },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: { I1: { P1: {} } } } },
+      {
+        selectedCollections: {
+          C1: {
+            I1: {
+              type: 'instrument',
+              P1: { type: 'productType' },
+            },
+          },
+        },
+      },
     ],
-    //product type not defined in form config
+    // Product type inside instrument inside group
     [
-      [{ id: 'C1', instruments: [{ id: 'I1', productTypes: [{ id: 'P1' }] }] }],
-      { selectedCollections: { C1: { I1: { P2: {} } } } },
+      [
+        {
+          ...createCollection('C1'),
+          items: [
+            {
+              ...createGroup('G1', [
+                {
+                  ...createInstrument('I1'),
+                  items: [createProductType('P1')],
+                },
+              ]),
+            },
+          ],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {
+            G1: {
+              type: 'group',
+              I1: {
+                type: 'instrument',
+                P1: { type: 'productType' },
+              },
+            },
+          },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: { I1: {} } } },
+      {
+        selectedCollections: {
+          C1: {
+            G1: {
+              type: 'group',
+              I1: {
+                type: 'instrument',
+                P1: { type: 'productType' },
+              },
+            },
+          },
+        },
+      },
     ],
-
-    //product type in config, but not in state
+    // Cloud cover values at different levels
     [
-      [{ id: 'C1', instruments: [{ id: 'I1', productTypes: [{ id: 'P1' }, { id: 'P2' }] }] }],
-      { selectedCollections: { C1: { I1: { P2: {} } } } },
+      [
+        {
+          ...createCollection('C1'),
+          items: [
+            {
+              ...createInstrument('I1'),
+              supportsCloudCover: true,
+            },
+          ],
+        },
+      ],
+      {
+        selectedCollections: {
+          C1: {
+            I1: { type: 'instrument' },
+          },
+        },
+        maxCc: {
+          C1: {
+            I1: 75,
+          },
+        },
+      },
       undefined,
-      { selectedCollections: { C1: { I1: { P2: {} } } } },
+      {
+        selectedCollections: {
+          C1: {
+            I1: { type: 'instrument' },
+          },
+        },
+        maxCc: {
+          C1: {
+            I1: 75,
+          },
+        },
+      },
     ],
   ])('getCollectionFormInitialState %p %p %p', (formConfig, defaultState, options, expected) => {
     expect(getCollectionFormInitialState(formConfig, defaultState, options)).toStrictEqual(expected);

@@ -69,6 +69,7 @@ export function VisualizationTimeSelect({
   setShowLayerPanel,
   dateMode,
   compareShare,
+  clmsSelection,
 }) {
   const [loading, setLoading] = useState(false);
   const calendarHolder = useRef(null);
@@ -248,7 +249,11 @@ export function VisualizationTimeSelect({
         )}
         {!datePanelExpanded && (
           <ShowLatestDateButton
-            enabled={isZoomLevelOk && !isTimeless}
+            enabled={
+              isZoomLevelOk &&
+              !isTimeless &&
+              ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
+            }
             datePanelExpanded={datePanelExpanded}
             onClick={getAndSetLatestDateWithData}
           />
@@ -303,7 +308,11 @@ export function VisualizationTimeSelect({
             )}
           </div>
           <ShowLatestDateButton
-            enabled={isZoomLevelOk && !isTimeless}
+            enabled={
+              isZoomLevelOk &&
+              !isTimeless &&
+              ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
+            }
             datePanelExpanded={datePanelExpanded}
             onClick={getAndSetLatestDateWithData}
           />
@@ -418,7 +427,11 @@ export function VisualizationTimeSelect({
               )}
             </div>
             <ShowLatestDateButton
-              enabled={isZoomLevelOk && !isTimeless}
+              enabled={
+                isZoomLevelOk &&
+                !isTimeless &&
+                ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
+              }
               datePanelExpanded={datePanelExpanded}
               onClick={getAndSetLatestDateWithData}
             />

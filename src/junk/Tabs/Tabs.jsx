@@ -109,7 +109,7 @@ const Tabs = (props) => {
           className="tabs-wrapper-workspace-button"
           title={t`Sentinel Hub Dashboard`}
         >
-          <i class="fas fa-external-link-alt"></i>
+          <i className="fas fa-external-link-alt"></i>
           SH DASHBOARD
         </a>
         <a
@@ -119,7 +119,7 @@ const Tabs = (props) => {
           className="tabs-wrapper-workspace-button"
           title={t`Data Workspace`}
         >
-          <i class="fas fa-external-link-alt"></i>
+          <i className="fas fa-external-link-alt"></i>
           WORKSPACE
           {workspacesCount !== null && workspacesCount > 0 ? (
             <span className="counter-badge">{Math.min(workspacesCount, 99)}</span>

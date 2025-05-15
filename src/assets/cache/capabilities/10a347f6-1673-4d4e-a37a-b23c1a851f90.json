@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] gdmp_global_300m_10daily_v1_RT0",
+    "layers": [
+        {
+            "id": "GDMP",
+            "name": "GDMP",
+            "description": "Gross Dry Matter Productivity",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/10a347-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+        }
+    ],
+    "datasets": []
+}

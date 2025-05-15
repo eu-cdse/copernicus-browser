@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] npp_global_300m_10daily_v1_RT1",
+    "layers": [
+        {
+            "id": "NPP",
+            "name": "Net Primary Production (NPP)",
+            "description": "Net Primary Production",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/652386-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+        }
+    ],
+    "datasets": []
+}

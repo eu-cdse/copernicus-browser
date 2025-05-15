@@ -9,8 +9,9 @@
 
   .collection {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
 
     .additional-filters-toggle {
@@ -53,34 +54,34 @@
         }
       }
     }
-  }
 
-  .instrument {
-    display: flex;
-    flex-direction: column;
-    padding-left: 16px;
-    row-gap: 7px;
-
-    .instrument-wrapper {
+    .item {
       display: flex;
-    }
-  }
+      flex-direction: column;
+      padding-left: 16px;
 
-  .product-type {
-    display: flex;
-    flex-direction: column;
-    padding-left: 16px;
-    row-gap: 7px;
+      &-nested {
+        padding-top: 7px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 7px;
 
-    .product-type-checkbox-tooltip-wrapper {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+        .product-type-checkbox-tooltip-wrapper {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
 
-      &:last-child {
-        margin-bottom: 7px;
+          &:last-child {
+            margin-bottom: 7px;
+          }
+        }
       }
     }
+  }
+
+  .item-wrapper {
+    display: flex;
+    gap: 5px;
   }
 
   .cloud-filter {
@@ -120,7 +121,8 @@
   .collection-tooltip-icon {
     width: 18px;
     height: 18px;
-    margin: 0 0 1px 5px;
+    margin: 0;
+    border-radius: 50%;
   }
 }
 

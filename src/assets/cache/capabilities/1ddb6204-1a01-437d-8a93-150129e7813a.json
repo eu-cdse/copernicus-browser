@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] wb_global_300m_10daily_v1",
+    "layers": [
+        {
+            "id": "WB",
+            "name": "Water Bodies (WB)",
+            "description": "Water Bodies detection layer",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/1ddb62-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=WB&style=default"
+        }
+    ],
+    "datasets": []
+}

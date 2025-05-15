@@ -24,9 +24,8 @@ import { getBoundsAndLatLng } from '../../../CommercialDataPanel/commercialData.
 import { isDatasetIdGIBS } from '../../SmartPanel/LatestDataAction.utils';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
-import CollectionForm from './CollectionForm';
 import { boundsToPolygon, getLeafletBoundsFromGeoJSON, appendPolygon } from '../../../../utils/geojson.utils';
-import oDataHelpers, { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
+import oDataHelpers, { findCollectionConfigById, MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 
 import { withODataSearchHOC } from './withODataSearchHOC';
 
@@ -40,7 +39,9 @@ import {
   getCollectionFormConfig,
   getCollectionFormInitialState,
 } from './collectionFormConfig.utils';
-import { collections } from './collectionFormConfig';
+import { recursiveCollections } from './collectionFormConfig';
+import RecursiveCollectionForm from './RecursiveCollectionForm';
+import { AttributeNames } from '../../../../api/OData/assets/attributes';
 
 const ErrorCode = {
   noProductsFound: 'noProductsFound',
@@ -128,7 +129,7 @@ class AdvancedSearch extends Component {
     }
     //populate search form with params used for last search when go to search is selected
     if (this.props.searchFormData && !this.props.resultsPanelSelected) {
-      const formConfig = getCollectionFormConfig(collections, { userToken: this.props.userToken });
+      const formConfig = getCollectionFormConfig(recursiveCollections, { userToken: this.props.userToken });
       this.setState((state) => ({
         ...state,
         fromMoment: this.props.searchFormData.fromMoment,
@@ -152,8 +153,13 @@ class AdvancedSearch extends Component {
   };
 
   onResultSelected = (tile) => {
-    const fromTime = moment(tile.sensingTime).utc().startOf('day');
-    const toTime = moment(tile.sensingTime).utc().endOf('day');
+    const nominalDate = tile?.attributes.find((attr) => attr.Name === AttributeNames.nominalDate)?.Value;
+    const fromTime = moment(nominalDate ?? tile.sensingTime)
+      .utc()
+      .startOf('day');
+    const toTime = moment(nominalDate ?? tile.sensingTime)
+      .utc()
+      .endOf('day');
 
     if (
       !(
@@ -399,29 +405,154 @@ class AdvancedSearch extends Component {
 
       //add instruments
       collections.forEach((collection) => {
-        const instruments = Object.keys(collectionForm.selectedCollections[collection.id]).map(
-          (instrumentId) => {
-            //check if instrument supports CC
-            const hasMaxCc =
-              collectionForm &&
-              collectionForm.maxCc &&
-              collectionForm.maxCc[collection.id] &&
-              collectionForm.maxCc[collection.id][instrumentId] !== undefined;
+        const instruments = [];
+        const selectedCollectionData = collectionForm.selectedCollections[collection.id];
 
-            //add product types
-            let productTypes = [];
-            if (collectionForm.selectedCollections[collection.id][instrumentId]) {
-              productTypes = Object.keys(collectionForm.selectedCollections[collection.id][instrumentId]).map(
-                (productType) => ({ id: productType }),
-              );
+        const getInstrumentCloudCover = (instrumentId) => {
+          if (!collectionForm.maxCc || !collectionForm.maxCc[collection.id]) {
+            return undefined;
+          }
+
+          // First try direct path (for instruments directly under collection)
+          if (typeof collectionForm.maxCc[collection.id][instrumentId] === 'number') {
+            return collectionForm.maxCc[collection.id][instrumentId];
+          }
+
+          // Search for the instrument in nested structures
+          const findCloudCoverInObj = (obj, currentPath = []) => {
+            if (!obj || typeof obj !== 'object') {
+              return undefined;
             }
-            return {
-              id: instrumentId,
-              ...(hasMaxCc ? { cloudCover: collectionForm.maxCc[collection.id][instrumentId] } : {}),
-              ...(productTypes.length ? { productTypes: productTypes } : {}),
-            };
-          },
-        );
+
+            // Check direct property
+            if (typeof obj[instrumentId] === 'number') {
+              return obj[instrumentId];
+            }
+
+            // Search in all nested objects
+            for (const key in obj) {
+              if (typeof obj[key] === 'object') {
+                const result = findCloudCoverInObj(obj[key], [...currentPath, key]);
+                if (result !== undefined) {
+                  return result;
+                }
+              }
+            }
+
+            return undefined;
+          };
+
+          return findCloudCoverInObj(collectionForm.maxCc[collection.id]);
+        };
+
+        // Recursively find and extract instruments and product types
+        const processNode = (obj, parentPath = [], instrumentParent = null) => {
+          if (!obj || typeof obj !== 'object') {
+            return;
+          }
+
+          // Check if this is a group with type property but no other selections
+          const isEmptySelectedGroup = obj.type === 'group' && Object.keys(obj).length === 1;
+
+          // If this is a selected group with no internal selections, we need to get
+          // all instruments from the collection config
+          if (isEmptySelectedGroup) {
+            // Get all instruments in this group from the configuration
+            const groupPath = [...parentPath];
+            const collectionConfig = findCollectionConfigById(collection.id);
+
+            if (collectionConfig) {
+              // Find the group in the config
+              let currentConfig = collectionConfig;
+              let groupConfig = null;
+
+              // Navigate through the path to find this group
+              for (let i = 0; i < groupPath.length; i++) {
+                const pathItem = groupPath[i];
+                if (currentConfig.items) {
+                  currentConfig = currentConfig.items.find((item) => item.id === pathItem);
+                  if (!currentConfig) {
+                    break;
+                  }
+
+                  if (i === groupPath.length - 1) {
+                    groupConfig = currentConfig;
+                  }
+                }
+              }
+
+              if (groupConfig && groupConfig.items) {
+                // Collect all instruments from a group config
+                const collectInstruments = (container) => {
+                  if (!container.items) {
+                    return;
+                  }
+
+                  container.items.forEach((item) => {
+                    if (item.type === 'instrument') {
+                      const instrumentId = item.id;
+                      const instrumentObj = { id: instrumentId };
+
+                      const cloudCoverValue = getInstrumentCloudCover(instrumentId);
+                      if (cloudCoverValue !== undefined) {
+                        instrumentObj.cloudCover = cloudCoverValue;
+                      }
+
+                      instruments.push(instrumentObj);
+                    } else if (item.type === 'group') {
+                      // Process nested groups
+                      collectInstruments(item);
+                    }
+                  });
+                };
+
+                collectInstruments(groupConfig);
+              }
+            }
+
+            return;
+          }
+
+          // Process all properties of this object
+          Object.entries(obj).forEach(([key, value]) => {
+            // Skip the type property
+            if (key === 'type') {
+              return;
+            }
+
+            if (value && typeof value === 'object') {
+              const currentPath = [...parentPath, key];
+
+              if (value.type === 'instrument') {
+                const instrumentId = key;
+                const instrumentObj = {
+                  id: instrumentId,
+                };
+
+                const cloudCoverValue = getInstrumentCloudCover(instrumentId);
+                if (cloudCoverValue !== undefined) {
+                  instrumentObj.cloudCover = cloudCoverValue;
+                }
+
+                instruments.push(instrumentObj);
+                processNode(value, currentPath, instrumentObj);
+              } else if (value.type === 'productType') {
+                if (instrumentParent) {
+                  if (!instrumentParent.productTypes) {
+                    instrumentParent.productTypes = [];
+                  }
+                  instrumentParent.productTypes.push({ id: key });
+                }
+              } else {
+                // If is a group or another container process recursively
+                processNode(value, currentPath, instrumentParent);
+              }
+            }
+          });
+        };
+
+        processNode(selectedCollectionData, []);
+
         collection.instruments = instruments;
         collection.additionalFilters = collectionForm.selectedFilters?.[collection.id];
       });
@@ -581,7 +712,7 @@ class AdvancedSearch extends Component {
 
             <div className="checkbox-group">
               <div className="column" key={selectedThemeId || ''}>
-                <CollectionForm
+                <RecursiveCollectionForm
                   selectedCollections={selectedCollections}
                   maxCc={maxCc}
                   setSelectedCollections={this.setSelectedCollections}

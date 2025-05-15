@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] fapar_global_1km_10daily_v2",
+    "layers": [
+        {
+            "id": "FAPAR",
+            "name": "FAPAR",
+            "description": "Fraction of Absorbed PAR",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/f6322b-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+        }
+    ],
+    "datasets": []
+}

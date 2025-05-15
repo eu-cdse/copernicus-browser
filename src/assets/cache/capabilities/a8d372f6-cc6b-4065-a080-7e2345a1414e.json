@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] lai_global_1km_10daily_v2_RT2",
+    "layers": [
+        {
+            "id": "LAI",
+            "name": "Leaf Area Index (LAI)",
+            "description": "Leaf Area Index",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a8d372-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
+        }
+    ],
+    "datasets": []
+}

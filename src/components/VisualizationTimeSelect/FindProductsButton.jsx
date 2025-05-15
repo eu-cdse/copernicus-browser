@@ -7,7 +7,7 @@ import { boundsToPolygon } from '../../utils/geojson.utils';
 import moment from 'moment';
 import store, { notificationSlice, searchResultsSlice, tabsSlice } from '../../store';
 import { DEFAULT_CLOUD_COVER_PERCENT, TABS } from '../../const';
-import { createCollectionFormFromDatasetId } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/CollectionForm';
+import { createCollectionFormFromDatasetId } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/RecursiveCollectionForm';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 const ErrorMessage = {

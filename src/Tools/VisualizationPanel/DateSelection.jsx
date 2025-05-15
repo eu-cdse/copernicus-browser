@@ -26,6 +26,7 @@ function DateSelection({
   setShowLayerPanel,
   dateMode,
   compareShare,
+  clmsSelection,
 }) {
   const [maxCloudCoverTemp, setMaxCloudCoverTemp] = useState(maxCloudCover);
   let minDateRange = moment.utc('1972-07-01');
@@ -205,6 +206,7 @@ function DateSelection({
       setShowLayerPanel={setShowLayerPanel}
       dateMode={dateMode}
       compareShare={compareShare}
+      clmsSelection={clmsSelection}
     />
   );
 }
@@ -222,6 +224,7 @@ const mapStoreToProps = (store) => ({
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   datePanelExpanded: store.collapsiblePanel.datePanelExpanded,
   maxCloudCover: store.visualization.cloudCoverage,
+  clmsSelection: store.clms,
 });
 
 export default connect(mapStoreToProps, null)(DateSelection);

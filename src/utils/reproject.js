@@ -65,10 +65,49 @@ const reprojectPoint = (point, fromProj, toProj) => {
 
 // coords [[[x,y],[x,y]]]
 const reprojectArrayOfCoordinates = (coords, fromProj, toProj) => {
+  if (isGlobalPolygon(coords[0], fromProj)) {
+    return createGlobalPolygonInWebMercator(coords[0], fromProj, toProj);
+  }
+
   return [
     coords[0]
       .map((coord) => proj4(fromProj, toProj, coord))
       .map((pair) => [round(pair[0], 6), round(pair[1], 6)]),
+  ];
+};
+
+const isGlobalPolygon = (ring, fromProj) => {
+  if (fromProj.getCode && fromProj.getCode() !== 'EPSG:4326') {
+    return false;
+  }
+
+  const longitudes = ring.map((p) => p[0]);
+  const minLon = Math.min(...longitudes);
+  const maxLon = Math.max(...longitudes);
+
+  // If the polygon spans more than 359°, it's a global polygon
+  return maxLon - minLon > 359;
+};
+
+const createGlobalPolygonInWebMercator = (ring, fromProj, toProj) => {
+  const latitudes = ring.map((p) => p[1]);
+  const minLat = Math.min(...latitudes);
+  const maxLat = Math.max(...latitudes);
+
+  const southWest = proj4(fromProj, toProj, [-180, minLat]);
+  const northWest = proj4(fromProj, toProj, [-180, maxLat]);
+
+  const EARTH_RADIUS = 6378137;
+  const MAX_MERCATOR_X = Math.PI * EARTH_RADIUS;
+
+  return [
+    [
+      [-MAX_MERCATOR_X, southWest[1]],
+      [-MAX_MERCATOR_X, northWest[1]],
+      [MAX_MERCATOR_X, northWest[1]],
+      [MAX_MERCATOR_X, southWest[1]],
+      [-MAX_MERCATOR_X, southWest[1]],
+    ],
   ];
 };
 

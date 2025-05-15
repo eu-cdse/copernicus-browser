@@ -20,7 +20,7 @@
       background-color: $mainLight;
       outline: none;
       box-shadow: none;
-      border-bottom: 1px solid #6f707b;
+      border-bottom: 1px solid $customBorderBottomColor;
 
       .collection-select__indicators {
         .collection-select__indicator {

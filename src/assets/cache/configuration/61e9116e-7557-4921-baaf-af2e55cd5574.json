@@ -1,0 +1,88 @@
+[
+    {
+        "id": "NDVI",
+        "title": "NDVI",
+        "description": "Normalized Difference Vegetation Index",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1 / 250;\nconst offset = -0.08;\n\nfunction setup() {\n  return {\n    input: [\"NDVI\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // Set no Data for Oceans\n  var noData = 1;\n  if (samples.NDVI == 254) {\n    noData = 0;\n  }\n  let dataMask = noData * samples.dataMask;\n\n  let val = samples.NDVI * factor + offset;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\nconst clmsColours = [\n  [-0.08, [140 / 255, 92 / 255, 8 / 255]],\n  [0, [142 / 255, 95 / 255, 8 / 255]],\n  [0.1, [197 / 255, 173 / 255, 19 / 255]],\n  [0.2, [255 / 255, 255 / 255, 30 / 255]],\n  [0.3, [218 / 255, 232 / 255, 25 / 255]],\n  [0.4, [182 / 255, 210 / 255, 21 / 255]],\n  [0.5, [145 / 255, 188 / 255, 17 / 255]],\n  [0.6, [109 / 255, 166 / 255, 12 / 255]],\n  [0.7, [72 / 255, 144 / 255, 8 / 255]],\n  [0.8, [36 / 255, 122 / 255, 4 / 255]],\n  [0.92, [0 / 255, 100 / 255, 0 / 255]],\n  [0.93, [221 / 255, 221 / 255, 221 / 255]],\n];\nconst visualizer = new ColorRampVisualizer(clmsColours);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "NDVI",
+                    "gradients": [
+                        {
+                            "color": "rgb(54.9%,36.08%,3.14%)",
+                            "label": -0.08,
+                            "position": -0.08
+                        },
+                        {
+                            "color": "rgb(55.69%,37.25%,3.14%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(77.25%,67.84%,7.45%)",
+                            "label": "",
+                            "position": 0.09999999999999999
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,11.76%)",
+                            "label": "",
+                            "position": 0.2
+                        },
+                        {
+                            "color": "rgb(85.49%,90.98%,9.8%)",
+                            "label": "",
+                            "position": 0.3
+                        },
+                        {
+                            "color": "rgb(71.37%,82.35%,8.24%)",
+                            "label": "",
+                            "position": 0.39999999999999997
+                        },
+                        {
+                            "color": "rgb(56.86%,73.73%,6.67%)",
+                            "label": "",
+                            "position": 0.49999999999999994
+                        },
+                        {
+                            "color": "rgb(42.75%,65.1%,4.71%)",
+                            "label": "",
+                            "position": 0.6000000000000001
+                        },
+                        {
+                            "color": "rgb(28.24%,56.47%,3.14%)",
+                            "label": "",
+                            "position": 0.7000000000000001
+                        },
+                        {
+                            "color": "rgb(14.12%,47.84%,1.57%)",
+                            "label": "",
+                            "position": 0.8
+                        },
+                        {
+                            "color": "rgb(0.0%,39.22%,0.0%)",
+                            "label": 0.92,
+                            "position": 0.92
+                        }
+                    ],
+                    "maxPosition": 0.92,
+                    "minPosition": -0.08
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "61e911-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-25T10:42:12.917218Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "93f449-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

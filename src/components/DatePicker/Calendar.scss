@@ -11,10 +11,21 @@
     text-align: center;
     margin-bottom: 10px;
 
-    select {
-      option {
-        color: $textColor;
+    .year-month-dropdown-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      // stylelint-disable
+      .month__control {
+        width: 115px;
       }
+
+      .year__control {
+        width: 80px;
+      }
+      // stylelint-enable
     }
   }
 
@@ -145,7 +156,7 @@
     background-color: #eee0;
     border: none;
     cursor: pointer;
-    padding: 19px 14px 14px 14px;
+    padding: 24px 14px 14px 14px;
     position: relative;
 
     i {

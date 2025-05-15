@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] gpp_global_300m_10daily_v1_RT0",
+    "layers": [
+        {
+            "id": "GPP",
+            "name": "Gross Primary Production (GPP)",
+            "description": "Gross Primary Production",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/354365-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+        }
+    ],
+    "datasets": []
+}

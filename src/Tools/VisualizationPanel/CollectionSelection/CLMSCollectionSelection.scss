@@ -1,0 +1,60 @@
+@import '../../../variables.module.scss';
+
+.breadcrumb-wrapper {
+  .breadcrumb-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding-left: 4px;
+    padding-top: 8px;
+    padding-bottom: 12px;
+
+    .item {
+      color: $primaryColor;
+      font-weight: $fontWeightBold;
+      max-width: 250px;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+
+      &.abbreviate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .breadcrumb-divider {
+      padding-left: 6px;
+      padding-right: 6px;
+      font-size: 0.8rem;
+      color: $primaryColor;
+    }
+  }
+
+  .collection-buttons-wrapper {
+    .consolidation-period-wrapper {
+      margin-left: 16px;
+      margin-right: 45px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .consolidation-period {
+        color: $textColor;
+        background-color: $mainMedium;
+        font-weight: $fontWeightNormal;
+        font-size: 12px;
+        width: 30px;
+        text-align: center;
+
+        &.active {
+          background-color: $mainDark;
+          font-weight: $fontWeightBold;
+        }
+      }
+    }
+  }
+}

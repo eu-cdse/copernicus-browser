@@ -1,0 +1,58 @@
+[
+    {
+        "id": "FCOVER",
+        "title": "Fraction of green vegetation cover (FCOVER)",
+        "description": "Fraction of green vegetation cover",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1 / 250; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"FCOVER\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.FCOVER;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [140, 92, 8]],\n  [0.332, [255, 255, 30]],\n  [1.0, [0, 100, 0]],\n  [1.004, [255, 255, 255]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "FCOVER",
+                    "gradients": [
+                        {
+                            "color": "rgb(54.9%,36.08%,3.14%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,11.76%)",
+                            "label": "",
+                            "position": 0.332
+                        },
+                        {
+                            "color": "rgb(0.0%,39.22%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": "",
+                            "position": 1.004
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": 1.02,
+                            "position": 1.02
+                        }
+                    ],
+                    "maxPosition": 1.02,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "9f5a5a-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-15T16:21:36.734544Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "42ded0-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

@@ -21,6 +21,7 @@ import store, {
   modalSlice,
   compareLayersSlice,
   tabsSlice,
+  clmsSlice,
 } from '../store';
 import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
@@ -234,6 +235,9 @@ class URLParamsParser extends React.Component {
       comparedOpacity,
       comparedClipping,
       dateMode,
+      clmsSelectedPath,
+      clmsSelectedCollection,
+      clmsSelectedConsolidationPeriodIndex,
     } = params;
     let { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
 
@@ -320,6 +324,18 @@ class URLParamsParser extends React.Component {
       if (previewFileUrl) {
         store.dispatch(timelapseSlice.actions.setPreviewFileUrl(previewFileUrl));
       }
+    }
+
+    if (clmsSelectedPath) {
+      store.dispatch(clmsSlice.actions.setSelectedPath(clmsSelectedPath));
+    }
+    if (clmsSelectedCollection) {
+      store.dispatch(clmsSlice.actions.setSelectedCollection(clmsSelectedCollection));
+    }
+    if (clmsSelectedConsolidationPeriodIndex) {
+      store.dispatch(
+        clmsSlice.actions.setSelectedConsolidationPeriodIndex(parseInt(clmsSelectedConsolidationPeriodIndex)),
+      );
     }
 
     if (compareShare) {

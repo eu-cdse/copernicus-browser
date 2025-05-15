@@ -1,0 +1,78 @@
+[
+    {
+        "id": "NPP",
+        "title": "Net Primary Production (NPP)",
+        "description": "Net Primary Production",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1 / 2000; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"NPP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.NPP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [255, 255, 255]],\n  [0.0005, [255, 0, 0]],\n  [1.5, [255, 165, 0]],\n  [3.0, [255, 215, 0]],\n  [4.5, [255, 255, 0]],\n  [6.0, [173, 255, 47]],\n  [7.5, [20, 255, 20]],\n  [9.0, [10, 200, 10]],\n  [10.5, [0, 136, 0]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "NPP",
+                    "gradients": [
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,0.0%)",
+                            "label": "",
+                            "position": 0.0005
+                        },
+                        {
+                            "color": "rgb(100.0%,64.71%,0.0%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(100.0%,84.31%,0.0%)",
+                            "label": "",
+                            "position": 3
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 4.5
+                        },
+                        {
+                            "color": "rgb(67.84%,100.0%,18.43%)",
+                            "label": "",
+                            "position": 6
+                        },
+                        {
+                            "color": "rgb(7.84%,100.0%,7.84%)",
+                            "label": "",
+                            "position": 7.5
+                        },
+                        {
+                            "color": "rgb(3.92%,78.43%,3.92%)",
+                            "label": "",
+                            "position": 9
+                        },
+                        {
+                            "color": "rgb(0.0%,53.33%,0.0%)",
+                            "label": 10.5,
+                            "position": 10.5
+                        }
+                    ],
+                    "maxPosition": 10.5,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "b36fef-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-14T15:00:46.575618Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "2785e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

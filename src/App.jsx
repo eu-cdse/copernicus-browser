@@ -311,6 +311,9 @@ const mapStoreToProps = (store) => ({
   termsPrivacyAccepted: store.auth.terms_privacy_accepted,
   tokenRefreshInProgress: store.auth.tokenRefreshInProgress,
   toolsOpen: store.tools.open,
+  clmsSelectedPath: store.clms.selectedPath,
+  clmsSelectedCollection: store.clms.selectedCollection,
+  clmsSelectedConsolidationPeriodIndex: store.clms.selectedConsolidationPeriodIndex,
 });
 
 export default connect(mapStoreToProps, null)(App);

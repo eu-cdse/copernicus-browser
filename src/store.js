@@ -20,6 +20,7 @@ import {
 import { DEMInstanceType } from '@sentinel-hub/sentinelhub-js';
 import { baseLayers } from './Map/Layers';
 import { isValidMosaickingOrder } from './utils/mosaickingOrder.utils';
+import { DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX } from './Tools/VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 
 export const aoiSlice = createSlice({
   name: 'aoi',
@@ -1252,6 +1253,36 @@ export const toolsSlice = createSlice({
   },
 });
 
+export const clmsSlice = createSlice({
+  name: 'clms',
+  initialState: {
+    selected: false,
+    selectedPath: null,
+    selectedCollection: null,
+    selectedConsolidationPeriodIndex: DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
+  },
+  reducers: {
+    setSelected: (state, action) => {
+      state.selected = action.payload;
+    },
+    setSelectedPath: (state, action) => {
+      state.selectedPath = action.payload;
+    },
+    setSelectedCollection: (state, action) => {
+      state.selectedCollection = action.payload;
+    },
+    setSelectedConsolidationPeriodIndex: (state, action) => {
+      state.selectedConsolidationPeriodIndex = action.payload;
+    },
+    reset: (state) => {
+      state.selected = false;
+      state.selectedPath = null;
+      state.selectedCollection = null;
+      state.selectedConsolidationPeriodIndex = DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX;
+    },
+  },
+});
+
 const reducers = combineReducers({
   aoi: aoiSlice.reducer,
   loi: loiSlice.reducer,
@@ -1278,6 +1309,7 @@ const reducers = combineReducers({
   spectralExplorer: spectralExplorerSlice.reducer,
   elevationProfile: elevationProfileSlice.reducer,
   tools: toolsSlice.reducer,
+  clms: clmsSlice.reducer,
 });
 
 const store = configureStore({

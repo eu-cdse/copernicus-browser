@@ -40,6 +40,92 @@ import {
   S3SYNERGY_L2_VG1,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_DMP_1KM_DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_LAI_1KM_DAILY,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_LAI_300M_10DAILY,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
+  COPERNICUS_CLMS_SWI_12_5KM_DAILY,
+  COPERNICUS_CLMS_SWI_1KM_DAILY,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT5,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
+  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
+  COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
+  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+  COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
+  COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
+  COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+  COPERNICUS_CLMS_WB_300M_10DAILY_V1,
+  COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
+  COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
+  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V1,
+  COPERNICUS_CLMS_LIE_250M_DAILY_V2,
+  COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -53,14 +139,14 @@ import {
 } from './assets/attributes';
 import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import { Polarization } from '@sentinel-hub/sentinelhub-js';
-import { collections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
+import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
 import { FilterElement } from './FilterElement';
 import moment from 'moment';
 import { isFunction } from '../../utils';
 
 export const PAGE_SIZE = 50;
 
-export const MIN_SEARCH_DATE = moment.utc('2000-01-01').startOf('day');
+export const MIN_SEARCH_DATE = moment.utc('1980-01-01').startOf('day');
 
 // S1 is not included as it's handled manually
 const PRODUCT_TYPE_TO_DATASETID = {
@@ -90,12 +176,63 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S1SAR_L3_DH_MCM: S1_MONTHLY_MOSAIC_DH,
   VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   VHR_IMAGE_2021: CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  ndvi_global_1km_10daily_v3: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
+  dmp_global_1km_10daily_v2: COPERNICUS_CLMS_DMP_1KM_DAILY,
+  lai_global_1km_10daily_v2: COPERNICUS_CLMS_LAI_1KM_DAILY,
+  fapar_global_1km_10daily_v2: COPERNICUS_CLMS_FAPAR_1KM_DAILY,
+  ba_global_300m_daily_v3: COPERNICUS_CLMS_BURNT_AREA_DAILY,
+  ba_global_300m_monthly_v3: COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+  fapar_global_300m_10daily_v1: COPERNICUS_CLMS_FAPAR_300M_10DAILY,
+  fcover_global_1km_10daily_v2: COPERNICUS_CLMS_FCOVER_1KM_10DAILY,
+  fcover_global_300m_10daily_v1: COPERNICUS_CLMS_FCOVER_300M_10DAILY,
+  gpp_global_300m_10daily_v1: COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
+  lai_global_300m_10daily_v1: COPERNICUS_CLMS_LAI_300M_10DAILY,
+  npp_global_300m_10daily_v1: COPERNICUS_CLMS_NPP_300M_10DAILY_RT0,
+  'swi_global_12.5km_10daily_v3': COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
+  'swi_global_12.5km_daily_v3': COPERNICUS_CLMS_SWI_12_5KM_DAILY,
+  swi_europe_1km_daily_v1: COPERNICUS_CLMS_SWI_1KM_DAILY,
+  dmp_global_300m_10daily_v1: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
+  'lst-tci_global_5km_10daily_v1': COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
+  'lst-tci_global_5km_10daily_v2': COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
+  'ndvi-lts_global_1km_10daily_v2': COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
+  'ndvi-lts_global_1km_10daily_v3': COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
+  ndvi_global_1km_10daily_v2: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
+  ndvi_global_300m_10daily_v1: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
+  ndvi_global_300m_10daily_v2: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+  ssm_europe_1km_daily_v1: COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
+  lsp_global_300m_yearly_v1: COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
+  lc_global_100m_yearly_v3: COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
+  lst_global_5km_hourly_v1: COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+  lst_global_5km_hourly_v2: COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  gdmp_global_1km_10daily_v2: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+  gdmp_global_300m_10daily_v1: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0,
+  wb_global_300m_10daily_v1: COPERNICUS_CLMS_WB_300M_10DAILY_V1,
+  wb_global_1km_10daily_v2: COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
+  swe_northernhemisphere_5km_daily_v1: COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
+  swe_northernhemisphere_5km_daily_v2: COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
+  sce_europe_500m_daily_v1: COPERNICUS_CLMS_SCE_500M_DAILY_V1,
+  sce_northernhemisphere_1km_daily_v1: COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  wb_global_300m_monthly_v2: COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
+  lie_northernhemisphere_500m_daily_v1: COPERNICUS_CLMS_LIE_500M_DAILY_V1,
+  lie_europe_250m_daily_v2: COPERNICUS_CLMS_LIE_250M_DAILY_V2,
+  wb_global_100m_monthly_v1: COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+};
+
+const attributeObjectWithValues = (attributes) => {
+  const attributesObject = {};
+  attributes.forEach((attribute) => {
+    if (attribute?.Name) {
+      attributesObject[attribute.Name] = attribute.Value;
+    }
+  });
+  return attributesObject;
 };
 
 export const getDatasetIdFromProductType = (productType, attributes) => {
   if (!productType) {
     return null;
   }
+  const attributesObject = attributeObjectWithValues(attributes) || {};
 
   if (/(1S|1S-COG)$/.test(productType)) {
     const polarisationChannels = attributes.filter(
@@ -152,6 +289,252 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     }
   }
 
+  if (productType === 'dynamic_land_cover' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (
+    productType === 'vegetation_phenology_and_productivity_parameters' &&
+    checkProductTypeFileFormat(attributes)
+  ) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'vegetation_indices' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'surface_soil_moisture' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'land_surface_temperature' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'soil_water_index' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'burnt_area' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'water_bodies' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'snow_water_equivalent' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'snow_cover_extent' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'river_and_lake_ice_extent' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'dry-gross_dry_matter_productivity' && checkProductTypeFileFormat(attributes)) {
+    const { consolidationPeriod, metricGridSpacing, datasetShortName } = attributesObject;
+    if (metricGridSpacing === 300 && datasetShortName === 'dmp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT2;
+        case 5:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT5;
+        case 6:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_DMP_300M_10DAILY_RT0;
+      }
+    }
+
+    if (metricGridSpacing === 1000 && datasetShortName === 'dmp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_DMP_1KM_DAILY;
+      }
+    }
+
+    if (metricGridSpacing === 300 && datasetShortName === 'gdmp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0;
+        case 1:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1;
+        case 2:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2;
+        case 5:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5;
+        case 6:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6;
+        default:
+          return COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0;
+      }
+    }
+
+    if (metricGridSpacing === 1000 && datasetShortName === 'gdmp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0;
+        case 1:
+          return COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1;
+        case 2:
+          return COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2;
+        case 6:
+          return COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6;
+        default:
+          return COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2;
+      }
+    }
+  }
+
+  if (productType === 'net-gross_primary_production' && checkProductTypeFileFormat(attributes)) {
+    const { consolidationPeriod, metricGridSpacing, datasetShortName } = attributesObject;
+    if (metricGridSpacing === 300 && datasetShortName === 'gpp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+        case 2:
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+        case 6:
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+        default:
+          return undefined;
+      }
+    }
+
+    if (metricGridSpacing === 300 && datasetShortName === 'npp') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+        case 2:
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+        case 6:
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+        default:
+          return undefined;
+      }
+    }
+  }
+
+  if (productType === 'vegetation_properties' && checkProductTypeFileFormat(attributes)) {
+    const { consolidationPeriod, metricGridSpacing, datasetShortName } = attributesObject;
+    if (metricGridSpacing === 1000 && datasetShortName === 'fgvc') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_FCOVER_1KM_10DAILY;
+      }
+    }
+    if (metricGridSpacing === 300 && datasetShortName === 'fgvc') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_FCOVER_300M_10DAILY;
+      }
+    }
+    if (metricGridSpacing === 1000 && datasetShortName === 'fapar') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_FAPAR_1KM_DAILY;
+      }
+    }
+    if (metricGridSpacing === 300 && datasetShortName === 'fapar') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_FAPAR_300M_10DAILY;
+      }
+    }
+    if (metricGridSpacing === 1000 && datasetShortName === 'lai') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_LAI_1KM_DAILY;
+      }
+    }
+    if (metricGridSpacing === 300 && datasetShortName === 'lai') {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_LAI_300M_10DAILY_RT0;
+        case 1:
+          return COPERNICUS_CLMS_LAI_300M_10DAILY_RT1;
+        case 2:
+          return COPERNICUS_CLMS_LAI_300M_10DAILY_RT2;
+        case 6:
+          return COPERNICUS_CLMS_LAI_300M_10DAILY_RT6;
+        default:
+          return COPERNICUS_CLMS_LAI_300M_10DAILY;
+      }
+    }
+  }
+
   if (
     [
       'NAO_MS4__3_E1F0-COG',
@@ -191,6 +574,14 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
   }
 
   return PRODUCT_TYPE_TO_DATASETID[productType];
+};
+
+const checkProductTypeFileFormat = (attributes) => {
+  const fileFormat = attributes.find((attribute) => attribute?.Name === AttributeNames.fileFormat)?.Value;
+  if (fileFormat === 'cog') {
+    return true;
+  }
+  return false;
 };
 
 const getProductTypeFromDatasetId = (datasetId) => {
@@ -296,6 +687,364 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     };
   }
 
+  if ([COPERNICUS_CLMS_LCC_100M_YEARLY_V3].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+      instrument: 'DYNAMIC_LAND_COVER',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
+      COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
+      COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+      COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+    ].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'LAND_SURFACE_TEMPERATURE',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if ([COPERNICUS_CLMS_LSP_300M_YEARLY_V1].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PHENOLOGY_AND_PRODUCTIVITY_PARAMETERS',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if ([COPERNICUS_CLMS_LIE_250M_DAILY_V2, COPERNICUS_CLMS_LIE_500M_DAILY_V1].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'RIVER_AND_LAKE_ICE_EXTENT',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if ([COPERNICUS_CLMS_SWE_5KM_DAILY_V1, COPERNICUS_CLMS_SWE_5KM_DAILY_V2].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'SNOW_WATER_EQUIVALENT',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if ([COPERNICUS_CLMS_SCE_1KM_DAILY_V1, COPERNICUS_CLMS_SCE_500M_DAILY_V1].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'SNOW_COVER_EXTENT',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
+      COPERNICUS_CLMS_WB_300M_10DAILY_V1,
+      COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
+      COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+    ].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'WATER_BODIES_1',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if ([COPERNICUS_CLMS_SSM_1KM_DAILY_V1].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'SURFACE_SOIL_MOISTURE',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
+      COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
+      COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
+      COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
+      COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
+      COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+    ].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_INDICES',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
+      COPERNICUS_CLMS_SWI_12_5KM_DAILY,
+      COPERNICUS_CLMS_SWI_1KM_DAILY,
+    ].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'SOIL_WATER_INDEX',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+
+  if ([COPERNICUS_CLMS_BURNT_AREA_DAILY, COPERNICUS_CLMS_BURNT_AREA_MONTHLY].includes(datasetId)) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'BURNT_AREA',
+      productType: getProductTypeFromDatasetId(datasetId),
+    };
+  }
+  if (
+    [
+      COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_DMP_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_DMP_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_DMP_300M_10DAILY_RT5,
+      COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_DMP_300M_10DAILY_RT0),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+  if (
+    [
+      COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0,
+      COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1,
+      COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2,
+      COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5,
+      COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+  if (
+    [
+      COPERNICUS_CLMS_DMP_1KM_DAILY,
+      COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
+      COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
+      COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
+      COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_DMP_1KM_DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+  if (
+    [
+      COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+      COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
+      COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
+      COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2,
+      COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+  if (
+    [
+      COPERNICUS_CLMS_LAI_1KM_DAILY,
+      COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
+      COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
+      COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
+      COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_LAI_1KM_DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_LAI_300M_10DAILY,
+      COPERNICUS_CLMS_LAI_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_LAI_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_LAI_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_LAI_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_LAI_300M_10DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_FAPAR_300M_10DAILY,
+      COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FAPAR_300M_10DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_FAPAR_1KM_DAILY,
+      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
+      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
+      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
+      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FAPAR_1KM_DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_FCOVER_1KM_10DAILY,
+      COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0,
+      COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1,
+      COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2,
+      COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FCOVER_1KM_10DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_FCOVER_300M_10DAILY,
+      COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'VEGETATION_PROPERTIES',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FCOVER_300M_10DAILY),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_GPP_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_GPP_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_GPP_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'NET_GROSS_PRIMARY_PRODUCTION',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_GPP_300M_10DAILY_RT0),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_NPP_300M_10DAILY_RT0,
+      COPERNICUS_CLMS_NPP_300M_10DAILY_RT1,
+      COPERNICUS_CLMS_NPP_300M_10DAILY_RT2,
+      COPERNICUS_CLMS_NPP_300M_10DAILY_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'NET_GROSS_PRIMARY_PRODUCTION',
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_NPP_300M_10DAILY_RT0),
+      selectedFilters: {
+        ...props,
+      },
+    };
+  }
+
   if (datasetId === CDSE_CCM_VHR_IMAGE_2018_COLLECTION) {
     return {
       id: ODataCollections.OPTICAL.id,
@@ -314,20 +1063,141 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   return null;
 };
+const getConsolidationPeriodProps = (datasetId) => {
+  const lastValue = datasetId.split('_').pop();
+  if (!lastValue.includes('RT')) {
+    return {};
+  }
+  const value = parseInt(lastValue[2]);
+  if (isNaN(value) || value < 0) {
+    return {};
+  }
+  return {
+    [AttributeNames.consolidationPeriod]: [{ value: value, label: lastValue }],
+  };
+};
 
-export const findCollectionConfigById = (id) => collections.find((collection) => collection.id === id);
+export const getCollectionInstruments = (collection) => {
+  if (collection.instruments) {
+    return collection.instruments;
+  }
+  if (!collection || !collection.items) {
+    return [];
+  }
 
-export const findInstrumentConfigById = (id) =>
-  collections.flatMap((collection) => collection.instruments).find((instrument) => instrument.id === id);
+  let instruments = [];
 
-export const findProductTypeConfigById = (id) =>
-  collections
-    .flatMap((collection) => collection.instruments)
-    .flatMap((instrument) => instrument.productTypes)
-    .find((productType) => productType.id === id);
+  // Process all items in the collection
+  collection.items.forEach((item) => {
+    if (item.type === 'instrument') {
+      instruments.push(item);
+    } else if (item.type === 'group' && item.items) {
+      // Get instruments from it
+      const groupInstruments = getGroupInstruments(item);
+      instruments = [...instruments, ...groupInstruments];
+    }
+  });
+
+  return instruments;
+};
+
+export const getGroupInstruments = (group) => {
+  if (!group || !group.items) {
+    return [];
+  }
+
+  let instruments = [];
+
+  // Process all items in the group
+  group.items.forEach((item) => {
+    if (item.type === 'instrument') {
+      instruments.push(item);
+    } else if (item.type === 'group' && item.items) {
+      // Get instruments from it
+      const subGroupInstruments = getGroupInstruments(item);
+      instruments = [...instruments, ...subGroupInstruments];
+    }
+  });
+
+  return instruments;
+};
+
+export const getInstrumentProductTypes = (instrument) => {
+  if (!instrument || !instrument.items) {
+    return [];
+  }
+  return instrument.items.filter((item) => item.type === 'productType');
+};
+
+export const getCollectionInstrumentProductTypes = (collection, instrumentId) => {
+  if (!collection || !instrumentId) {
+    return [];
+  }
+
+  const findInstrument = (items) => {
+    if (!items || !items.length) {
+      return null;
+    }
+
+    for (const item of items) {
+      if (item.type === 'instrument' && item.id === instrumentId) {
+        return item;
+      } else if (item.type === 'group' && item.items) {
+        const foundInstrument = findInstrument(item.items);
+        if (foundInstrument) {
+          return foundInstrument;
+        }
+      }
+    }
+
+    return null;
+  };
+
+  const instrument = findInstrument(collection.items);
+  return instrument ? getInstrumentProductTypes(instrument) : [];
+};
+
+export const findCollectionConfigById = (id) =>
+  recursiveCollections.find((collection) => collection.id === id);
+
+export const findInstrumentConfigById = (id) => {
+  const findInstruments = (items = []) => {
+    return items.flatMap((item) => {
+      if (item.type === 'instrument') {
+        return [item];
+      } else if (item.type === 'group' && Array.isArray(item.items)) {
+        return findInstruments(item.items);
+      }
+      return [];
+    });
+  };
+
+  // Find all instruments from all collections
+  return findInstruments(recursiveCollections.flatMap((c) => c.items)).find(
+    (instrument) => instrument.id === id,
+  );
+};
+
+export const findProductTypeConfigById = (id) => {
+  const findProductTypes = (items = []) => {
+    return items.flatMap((item) => {
+      if (item.type === 'productType') {
+        return [item];
+      } else if (item.type !== 'collection' && Array.isArray(item.items)) {
+        return findProductTypes(item.items);
+      }
+      return [];
+    });
+  };
+
+  // Find all product types from all collections
+  return findProductTypes(recursiveCollections.flatMap((c) => c.items)).find(
+    (productType) => productType.id === id,
+  );
+};
 
 export const findAdditionalFiltersConfigById = (collectionId, id) => {
-  const collection = collections.find((collection) => collection.id === collectionId);
+  const collection = recursiveCollections.find((collection) => collection.id === collectionId);
   if (!collection || !collection.additionalFilters) {
     return null;
   }
@@ -346,7 +1216,6 @@ export const checkCollectionSupports = (collectionId, supportedProperty) => {
 
 export const checkInstrumentSupports = (instrumentId, supportedProperty) => {
   const instrument = findInstrumentConfigById(instrumentId);
-
   if (!instrument) {
     throw new Error(`No instrument ${instrumentId} found`);
   }
@@ -357,10 +1226,8 @@ export const checkInstrumentSupports = (instrumentId, supportedProperty) => {
 
 export const checkAllInstrumentsInCollectionSupport = (collectionId, supportedProperty) => {
   const collection = findCollectionConfigById(collectionId);
-
-  return collection.instruments.every((instrument) =>
-    checkInstrumentSupports(instrument.id, supportedProperty),
-  );
+  const instruments = getCollectionInstruments(collection);
+  return instruments.every((instrument) => checkInstrumentSupports(instrument.id, supportedProperty));
 };
 
 export const checkProductTypeSupports = (productTypeId, supportedProperty) => {
@@ -376,16 +1243,14 @@ export const checkProductTypeSupports = (productTypeId, supportedProperty) => {
 
 export const checkAllProductsInInstrumentSupport = (instrumentId, supportedProperty) => {
   const instrument = findInstrumentConfigById(instrumentId);
-
-  return instrument.productTypes.every((productType) =>
-    checkProductTypeSupports(productType.id, supportedProperty),
-  );
+  const productTypes = getInstrumentProductTypes(instrument);
+  return productTypes.every((productType) => checkProductTypeSupports(productType.id, supportedProperty));
 };
 
 export const checkAllProductsInCollectionSupport = (collectionId, supportedProperty) => {
   const collection = findCollectionConfigById(collectionId);
-
-  return collection.instruments?.every((instrument) =>
+  const instruments = getCollectionInstruments(collection);
+  return instruments?.every((instrument) =>
     checkAllProductsInInstrumentSupport(instrument.id, supportedProperty),
   );
 };
@@ -447,7 +1312,9 @@ const createProductTypeFilter = ({ productTypeId, productTypeConfig, geometry })
 //creates productType filter
 // (productTypeFilter1 or productTypeFilter2 ... )
 const createProductTypesFilter = ({ instrument, geometry }) => {
-  const hasProductTypeFilter = instrument.productTypes && instrument.productTypes.length;
+  const hasProductTypeFilter = instrument.productTypes
+    ? instrument.productTypes.length > 0
+    : getInstrumentProductTypes(instrument).length > 0;
   const allProductsSupportGeometry = checkAllProductsInInstrumentSupport(
     instrument.id,
     SUPPORTED_PROPERTIES.Geometry,
@@ -464,10 +1331,10 @@ const createProductTypesFilter = ({ instrument, geometry }) => {
     geometryFilter.intersects(wkt);
     return geometryFilter.getTree();
   }
-
-  const productTypes = hasProductTypeFilter
-    ? instrument.productTypes
-    : findInstrumentConfigById(instrument.id).productTypes;
+  const productTypes =
+    hasProductTypeFilter && instrument.productTypes
+      ? instrument.productTypes
+      : getInstrumentProductTypes(findInstrumentConfigById(instrument.id));
 
   const productTypesFilter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
   productTypes.forEach((prodType) => {
@@ -526,7 +1393,9 @@ const createInstrumentFilter = ({ instrument, geometry }) => {
 //creates instruments filter
 //(instrumentFilter1 or instrumentFilter2...)
 const createInstrumentsFilter = ({ collection, geometry }) => {
-  const hasInstrumentFilter = collection.instruments && collection.instruments.length;
+  const hasInstrumentFilter = collection.instruments
+    ? collection.instruments.length > 0
+    : getCollectionInstruments(collection)?.length > 0;
   const allProductsSupportGeometry = checkAllProductsInCollectionSupport(
     collection.id,
     SUPPORTED_PROPERTIES.Geometry,
@@ -544,9 +1413,10 @@ const createInstrumentsFilter = ({ collection, geometry }) => {
     return geometryFilter.getTree();
   }
 
-  const instruments = hasInstrumentFilter
-    ? collection.instruments
-    : findCollectionConfigById(collection.id).instruments;
+  const instruments =
+    hasInstrumentFilter && collection.instruments
+      ? collection.instruments
+      : getCollectionInstruments(findCollectionConfigById(collection.id));
 
   const instrumentsFilter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
   instruments.forEach((instrument) => {

@@ -14,7 +14,7 @@ import {
   displayLatestDateOnSelect,
   getSelectedCollectionTitle,
 } from './CollectionSelection.utils';
-import store, { collapsiblePanelSlice, visualizationSlice } from '../../../store';
+import store, { clmsSlice, collapsiblePanelSlice, visualizationSlice } from '../../../store';
 import { DATASOURCES } from '../../../const';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
@@ -35,6 +35,7 @@ import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
 import { HLSConstellationSelection } from './HLSConstellationSelection';
+import CLMSCollectionSelection from './CLMSCollectionSelection';
 import { CCM_ROLES } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../../api/OData/assets/accessRoles';
 
@@ -71,6 +72,8 @@ const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollec
           onSelect={onSelect}
         />
       );
+    case DATASOURCES.CLMS:
+      return <CLMSCollectionSelection datasource={selectedCollectionGroup.datasource} onSelect={onSelect} />;
     default:
       return renderCollectionsList({
         collections: selectedCollectionGroup.collections,
@@ -180,6 +183,8 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
           datasource: value,
           dataset: collectionGroups.find((d) => d.datasource === value).preselectedDataset,
         });
+        store.dispatch(clmsSlice.actions.reset());
+        store.dispatch(clmsSlice.actions.setSelected(value === DATASOURCES.CLMS));
       }
       if (type === 'dataset') {
         onSelect({
@@ -318,6 +323,7 @@ const CollectionSelection = ({
       });
       if (!!preSelected) {
         setSelected({ datasource: preSelected.datasource, dataset: datasetId });
+        store.dispatch(clmsSlice.actions.setSelected(preSelected.datasource === DATASOURCES.CLMS));
       }
     }
   }, [filter, selectedThemeId, dataSourcesInitialized, datasetId]);

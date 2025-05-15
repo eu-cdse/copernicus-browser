@@ -122,6 +122,9 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     compareSharedPinsId,
     comparedClipping,
     comparedOpacity,
+    clmsSelectedPath,
+    clmsSelectedCollection,
+    clmsSelectedConsolidationPeriodIndex,
   } = props;
   currentLat = Math.round(100000 * currentLat) / 100000;
   currentLng = Math.round(100000 * currentLng) / 100000;
@@ -248,6 +251,15 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
   }
   if (comparedClipping) {
     params.comparedClipping = comparedClipping;
+  }
+  if (clmsSelectedPath) {
+    params.clmsSelectedPath = clmsSelectedPath;
+  }
+  if (clmsSelectedCollection) {
+    params.clmsSelectedCollection = clmsSelectedCollection;
+  }
+  if (clmsSelectedConsolidationPeriodIndex) {
+    params.clmsSelectedConsolidationPeriodIndex = clmsSelectedConsolidationPeriodIndex;
   }
 
   const escapedParams = Object.keys(params)

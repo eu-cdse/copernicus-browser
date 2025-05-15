@@ -1,0 +1,69 @@
+{
+    "title": "[NEW] swi_europe_1km_daily_v1",
+    "layers": [
+        {
+            "id": "SSF",
+            "name": "SWI-SSF",
+            "description": "Surface State Flag",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SSF&style=default"
+        },
+        {
+            "id": "SWI002",
+            "name": "SWI-SWI002",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI002&style=default"
+        },
+        {
+            "id": "SWI005",
+            "name": "SWI-SWI005",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI005&style=default"
+        },
+        {
+            "id": "SWI010",
+            "name": "SWI-SWI010",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI010&style=default"
+        },
+        {
+            "id": "SWI015",
+            "name": "SWI-SWI015",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI015&style=default"
+        },
+        {
+            "id": "SWI020",
+            "name": "SWI-SWI020",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI020&style=default"
+        },
+        {
+            "id": "SWI040",
+            "name": "SWI-SWI040",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI040&style=default"
+        },
+        {
+            "id": "SWI060",
+            "name": "SWI-SWI060",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI060&style=default"
+        },
+        {
+            "id": "SWI100",
+            "name": "SWI-SWI100",
+            "description": "Soil Water Index at different time lengths",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/058c10-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWI100&style=default"
+        }
+    ],
+    "datasets": []
+}

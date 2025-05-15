@@ -31,7 +31,7 @@ export const getAvailableMonths = (allMonths, minDate, maxDate, selectedDay) => 
 
   let months = [];
   for (let i = minDate.get('month'); i <= maxDate.get('month'); i++) {
-    months.push({ name: allMonths[i], index: i });
+    months.push({ label: allMonths[i], value: i });
   }
   return months;
 };

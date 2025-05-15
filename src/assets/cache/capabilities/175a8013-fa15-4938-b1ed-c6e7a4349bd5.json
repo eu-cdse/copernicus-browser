@@ -1,0 +1,111 @@
+{
+    "title": "[NEW] lc_global_100m_yearly_v3",
+    "layers": [
+        {
+            "id": "Bare_Cover_Fraction",
+            "name": "Fractional Cover: Bare",
+            "description": "Percentage of 100m pixel that is covered by bare ground",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Bare_Cover_Fraction&style=default"
+        },
+        {
+            "id": "BuiltUp_Cover_Fraction",
+            "name": "Fractional Cover: Urban / Built-up",
+            "description": "Percentage of 100m pixel that is covered by urban or built-up areas",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=BuiltUp_Cover_Fraction&style=default"
+        },
+        {
+            "id": "Change_Confidence",
+            "name": "Change Confidence Indicator",
+            "description": "Reliability of the change in the discrete class and hence implicitly also in the fractional covers",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Change_Confidence&style=default"
+        },
+        {
+            "id": "Crops_Cover_Fraction",
+            "name": "Fractional Cover: Crops",
+            "description": "Percentage of 100m pixel that is covered by crops",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Crops_Cover_Fraction&style=default"
+        },
+        {
+            "id": "Data_Density_Indicator",
+            "name": "Data Density Indicator",
+            "description": "Availability of input PROBA-V UTM data at 100m and 300m resolutions",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Data_Density_Indicator&style=default"
+        },
+        {
+            "id": "Discrete_Classification",
+            "name": "Discrete classification",
+            "description": "Main discrete land cover classification, according to UN-FAO LCCS",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Discrete_Classification&style=default"
+        },
+        {
+            "id": "Discrete_Classification_Probability",
+            "name": "Discrete classification probability",
+            "description": "Probability (quality indicator) of the discrete classification",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Discrete_Classification_Probability&style=default"
+        },
+        {
+            "id": "Forest_Type",
+            "name": "Forest type",
+            "description": "Type of forest for all pixels where forest cover fraction exceeds 1%",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Forest_Type&style=default"
+        },
+        {
+            "id": "Grass_Cover_Fraction",
+            "name": "Fractional Cover: Grass",
+            "description": "Percentage of 100m pixel that is covered by grass",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grass_Cover_Fraction&style=default"
+        },
+        {
+            "id": "MossLichen_Cover_Fraction",
+            "name": "Fractional Cover: Moss / Lichen",
+            "description": "Percentage of 100m pixel that is covered by moss or lichen",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MossLichen_Cover_Fraction&style=default"
+        },
+        {
+            "id": "PermanentWater_Cover_Fraction",
+            "name": "Fractional Cover: Permanent Water",
+            "description": "Percentage of 100m pixel that is covered by permanent water",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=PermanentWater_Cover_Fraction&style=default"
+        },
+        {
+            "id": "SeasonalWater_Cover_fraction",
+            "name": "Fractional Cover: Seasonal Water",
+            "description": "Percentage of 100m pixel that is covered by seasonal water",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SeasonalWater_Cover_fraction&style=default"
+        },
+        {
+            "id": "Shrub_Cover_Fraction",
+            "name": "Fractional Cover: Shrub",
+            "description": "Percentage of 100m pixel that is covered by shrubs",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Shrub_Cover_Fraction&style=default"
+        },
+        {
+            "id": "Snow_Cover_Fraction",
+            "name": "Fractional Cover: Snow",
+            "description": "Percentage of 100m pixel that is covered by snow",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Snow_Cover_Fraction&style=default"
+        },
+        {
+            "id": "Tree_Cover_Fraction",
+            "name": "Fractional Cover: Forest / Tree",
+            "description": "Percentage of 100m pixel that is covered by forests or trees",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/175a80-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree_Cover_Fraction&style=default"
+        }
+    ],
+    "datasets": []
+}

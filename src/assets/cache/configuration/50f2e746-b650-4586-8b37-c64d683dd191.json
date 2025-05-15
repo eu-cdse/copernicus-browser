@@ -1,0 +1,58 @@
+[
+    {
+        "id": "LIE",
+        "title": "LIE",
+        "description": "Classification of lake ice extent",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"LIE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.LIE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [\n  [0.0, [100, 100, 100]],\n  [10.0, [255, 255, 255]],\n  [30.0, [0, 153, 255]],\n  [40.0, [224, 222, 103]],\n  [50.0, [132, 132, 124]],\n  [60.0, [0, 102, 101]],\n  [70.0, [173, 153, 128]],\n];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(39.22%,39.22%,39.22%)",
+                            "label": "No data"
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": "Ice"
+                        },
+                        {
+                            "color": "rgb(0.0%,60.0%,100.0%)",
+                            "label": "Water"
+                        },
+                        {
+                            "color": "rgb(87.84%,87.06%,40.39%)",
+                            "label": "Cloud"
+                        },
+                        {
+                            "color": "rgb(51.76%,51.76%,48.63%)",
+                            "label": "Not interpreted"
+                        },
+                        {
+                            "color": "rgb(0.0%,40.0%,39.61%)",
+                            "label": "Sea"
+                        },
+                        {
+                            "color": "rgb(67.84%,60.0%,50.2%)",
+                            "label": "Land"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "50f2e7-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-05-09T10:31:26.089481Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "ee9f16-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

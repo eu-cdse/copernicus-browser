@@ -1,0 +1,20 @@
+{
+    "title": "[NEW] dmp_global_1km_10daily_v2_RT6",
+    "layers": [
+        {
+            "id": "DMP",
+            "name": "Dry matter productivity",
+            "description": "Dry Matter Productivity",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/084715-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+        },
+        {
+            "id": "QFLAG",
+            "name": "Quality Flag",
+            "description": "Bitwise quality flag",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/084715-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=QFLAG&style=default"
+        }
+    ],
+    "datasets": []
+}

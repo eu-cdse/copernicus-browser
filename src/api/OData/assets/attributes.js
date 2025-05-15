@@ -32,6 +32,17 @@ export const AttributeNames = {
   deliveryId: 'deliveryId',
   platformName: 'platformName',
   gridId: 'gridId',
+  temporalRepeatRate: 'temporalRepeatRate',
+  datasetVersion: 'datasetVersion',
+  fileFormat: 'fileFormat',
+  areaOfInterest: 'areaOfInterest',
+  datasetIdentifier: 'datasetIdentifier',
+  component: 'component',
+  gridLabel: 'gridLabel',
+  metricGridSpacing: 'metricGridSpacing',
+  datasetShortName: 'datasetShortName',
+  consolidationPeriod: 'consolidationPeriod',
+  nominalDate: 'nominalDate',
 };
 
 export const FormatedAttributeNames = {
@@ -110,6 +121,14 @@ export const FormatedAttributeNames = {
   resolutionClass: () => t`Resolution class`,
   platformName: () => t`Platform name`,
   gridId: () => t`Grid id`,
+  temporalRepeatRate: () => t`Temporal repeat rate`,
+  datasetVersion: () => t`Dataset version`,
+  fileFormat: () => t`File format`,
+  areaOfInterest: () => t`Area of interest`,
+  datasetIdentifier: () => t`Dataset identifier`,
+  component: () => t`Component`,
+  gridLabel: () => t`Grid label`,
+  consolidationPeriod: () => t`Consolidation period`,
 };
 
 export const ODataAttributes = {
@@ -137,6 +156,14 @@ export const ODataAttributes = {
   platformShortName: new ODataStringAttribute(AttributeNames.platformShortName),
   platformName: new ODataStringAttribute(AttributeNames.platformName),
   gridId: new ODataStringAttribute(AttributeNames.gridId),
+  temporalRepeatRate: new ODataStringAttribute(AttributeNames.temporalRepeatRate),
+  datasetVersion: new ODataIntegerAttribute(AttributeNames.datasetVersion),
+  fileFormat: new ODataStringAttribute(AttributeNames.fileFormat),
+  areaOfInterest: new ODataStringAttribute(AttributeNames.areaOfInterest),
+  datasetIdentifier: new ODataStringAttribute(AttributeNames.datasetIdentifier),
+  component: new ODataStringAttribute(AttributeNames.component),
+  gridLabel: new ODataStringAttribute(AttributeNames.gridLabel),
+  consolidationPeriod: new ODataIntegerAttribute(AttributeNames.consolidationPeriod),
 };
 
 export const AttributeOriginValues = {
@@ -168,6 +195,14 @@ export const AttributeProcessorVersionValues = {
 export const AttributeOnlineValues = {
   online: { value: true, label: 'Immediate' },
   offline: { value: false, label: 'To order' },
+};
+
+export const AttributeConsolidationPeriodValues = {
+  RT0: { value: 0, label: 'RT0' },
+  RT1: { value: 1, label: 'RT1' },
+  RT2: { value: 2, label: 'RT2' },
+  RT5: { value: 5, label: 'RT5' },
+  RT6: { value: 6, label: 'RT6' },
 };
 
 export const AttributeProcessingModeValues = {
@@ -252,3 +287,28 @@ export const AttributeDEMDatasetsMap = [
   },
   { id: 'restricted', productTypes: [{ id: 'COP-DEM_EEA-10-DGED' }, { id: 'COP-DEM_EEA-10-INSP' }] },
 ];
+
+export const AttributeTemporalRepeatRateValues = {
+  DAILY: { value: 'daily', label: 'Daily' },
+  TENDAY: { value: '10daily', label: '10-Day' },
+  MONTHLY: { value: 'monthly', label: 'Monthly' },
+};
+
+export const AttributeFileFormatValues = {
+  COG: { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
+  NC: { value: 'nc', label: 'NetCDF' },
+};
+
+export const AttributeGridLabelValues = {
+  KM1: { value: '1km', label: '1 km' },
+  KM3: { value: '3km', label: '3 km' },
+};
+
+export const AttributeAreaOfInterestValues = {
+  GLOBAL: { value: 'global', label: 'Global' },
+  EUROPE: { value: 'europe', label: 'Europe' },
+};
+
+export const AttributeComponentValues = {
+  BIOGEOPHYSICAL: { value: 'bio-geophysical', label: 'Bio-geophysical' },
+};

@@ -27,43 +27,49 @@ describe('findCollectionConfigById', () => {
   test('S1', () => {
     const collection = findCollectionConfigById('S1');
     expect(collection.id).toEqual('S1');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 
   test('S2', () => {
     const collection = findCollectionConfigById('S2');
     expect(collection.id).toEqual('S2');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 
   test('S3', () => {
     const collection = findCollectionConfigById('S3');
     expect(collection.id).toEqual('S3');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 
   test('OPTICAL', () => {
     const collection = findCollectionConfigById('OPTICAL');
     expect(collection.id).toEqual('OPTICAL');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 
   test('DEM', () => {
     const collection = findCollectionConfigById('DEM');
     expect(collection.id).toEqual('DEM');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 
   test('CCM_SAR', () => {
     const collection = findCollectionConfigById('CCM_SAR');
     expect(collection.id).toEqual('CCM_SAR');
-    expect(collection.instruments).toBeDefined();
-    expect(collection.instruments.length).toBeGreaterThan(0);
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
   });
 });
 
@@ -71,36 +77,41 @@ describe('findInstrumentConfigById', () => {
   test('SAR', () => {
     const instrument = findInstrumentConfigById('SAR');
     expect(instrument.id).toEqual('SAR');
-    expect(instrument.productTypes).toBeDefined();
-    expect(instrument.productTypes.length).toBeGreaterThan(0);
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
   });
 
   test('MSI', () => {
     const instrument = findInstrumentConfigById('MSI');
     expect(instrument.id).toEqual('MSI');
-    expect(instrument.productTypes).toBeDefined();
-    expect(instrument.productTypes.length).toBeGreaterThan(0);
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
   });
 
   test('VHR Europe', () => {
     const instrument = findInstrumentConfigById('VHR_EUROPE');
     expect(instrument.id).toEqual('VHR_EUROPE');
-    expect(instrument.productTypes).toBeDefined();
-    expect(instrument.productTypes.length).toBeGreaterThan(0);
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
   });
 
   test('VHR Urban Atlas', () => {
     const instrument = findInstrumentConfigById('VHR_URBAN_ATLAS');
     expect(instrument.id).toEqual('VHR_URBAN_ATLAS');
-    expect(instrument.productTypes).toBeDefined();
-    expect(instrument.productTypes.length).toBeGreaterThan(0);
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
   });
 
   test('HR-MR', () => {
     const instrument = findInstrumentConfigById('HR-MR');
     expect(instrument.id).toEqual('HR-MR');
-    expect(instrument.productTypes).toBeDefined();
-    expect(instrument.productTypes.length).toBeGreaterThan(0);
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
   });
 });
 
@@ -108,48 +119,56 @@ describe('findProductTypeConfigById', () => {
   test('GRD', () => {
     const productType = findProductTypeConfigById('GRD');
     expect(productType.id).toEqual('GRD');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('RAW', () => {
     const productType = findProductTypeConfigById('RAW');
     expect(productType.id).toEqual('RAW');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('L1B_RA_BD1', () => {
     const productType = findProductTypeConfigById('L1B_RA_BD1');
     expect(productType.id).toEqual('L1B_RA_BD1');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('L1B_IR_SIR', () => {
     const productType = findProductTypeConfigById('L1B_IR_SIR');
     expect(productType.id).toEqual('L1B_IR_SIR');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('SR_2_LAN___', () => {
     const productType = findProductTypeConfigById('SR_2_LAN___');
     expect(productType.id).toEqual('SR_2_LAN___');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('DAP_MG2b_01', () => {
     const productType = findProductTypeConfigById('DAP_MG2b_01');
     expect(productType.id).toEqual('DAP_MG2b_01');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('VHR_IMAGE_2018', () => {
     const productType = findProductTypeConfigById('VHR_IMAGE_2018');
     expect(productType.id).toEqual('VHR_IMAGE_2018');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('VHR_IMAGE_2021', () => {
     const productType = findProductTypeConfigById('VHR_IMAGE_2021');
     expect(productType.id).toEqual('VHR_IMAGE_2021');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
   test('VHR_IMAGE_2024', () => {
@@ -161,42 +180,49 @@ describe('findProductTypeConfigById', () => {
   test('DAP_MG2-3_01', () => {
     const productType = findProductTypeConfigById('DAP_MG2-3_01');
     expect(productType.id).toEqual('DAP_MG2-3_01');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('DWH_MG2_CORE_01', () => {
     const productType = findProductTypeConfigById('DWH_MG2_CORE_01');
     expect(productType.id).toEqual('DWH_MG2_CORE_01');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('HR_IMAGE_2015', () => {
     const productType = findProductTypeConfigById('HR_IMAGE_2015');
     expect(productType.id).toEqual('HR_IMAGE_2015');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('EUR_HR2_MULTITEMP', () => {
     const productType = findProductTypeConfigById('EUR_HR2_MULTITEMP');
     expect(productType.id).toEqual('EUR_HR2_MULTITEMP');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('MR_IMAGE_2015', () => {
     const productType = findProductTypeConfigById('MR_IMAGE_2015');
     expect(productType.id).toEqual('MR_IMAGE_2015');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('DWH_MG2-3_CORE_08', () => {
     const productType = findProductTypeConfigById('DWH_MG2-3_CORE_08');
     expect(productType.id).toEqual('DWH_MG2-3_CORE_08');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 
   test('DWH_MG1_CORE_11', () => {
     const productType = findProductTypeConfigById('DWH_MG1_CORE_11');
     expect(productType.id).toEqual('DWH_MG1_CORE_11');
+    expect(productType.type).toEqual('productType');
     expect(productType.label).toBeDefined();
   });
 

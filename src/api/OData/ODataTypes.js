@@ -68,6 +68,21 @@ const ODataCollections = {
   OPTICAL: { id: 'OPTICAL', label: 'CCM Optical', collection: 'CCM' },
   DEM: { id: 'DEM', label: 'CCM DEM', collection: 'CCM' },
   CCM_SAR: { id: 'CCM_SAR', label: 'CCM SAR', collection: 'CCM' },
+  CLMS_BIOGEOPHYSICAL_PARAMETERS: {
+    id: 'CLMS_BIOGEOPHYSICAL_PARAMETERS',
+    label: 'CLMS Bio-geophysical parameters',
+    collection: 'CLMS',
+  },
+  CLMS_LAND_COVER_AND_LAND_USE_MAPPING: {
+    id: 'CLMS_LAND_COVER_AND_LAND_USE_MAPPING',
+    label: 'CLMS Land Cover and Land Use Mapping',
+    collection: 'CLMS',
+  },
+  CLMS_PRIORITY_AREA_MONITORING: {
+    id: 'CLMS_PRIORITY_AREA_MONITORING',
+    label: 'CLMS Priority Area Monitoring',
+    collection: 'CLMS',
+  },
 };
 
 export {

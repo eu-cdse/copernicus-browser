@@ -1,0 +1,90 @@
+[
+    {
+        "id": "SCE",
+        "title": "SCE",
+        "description": "Snow Cover Extent",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"SCE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.SCE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [\n  [0.0, [0, 0, 0]],\n  [20.0, [0, 0, 110]],\n  [21.0, [0, 0, 110]],\n  [22.0, [0, 0, 110]],\n  [30.0, [157, 157, 157]],\n  [100.0, [44, 128, 45]],\n  [101.0, [204, 255, 255]],\n  [102.0, [194, 255, 255]],\n  [103.0, [184, 255, 255]],\n  [104.0, [173, 255, 255]],\n  [105.0, [163, 255, 255]],\n  [106.0, [153, 255, 255]],\n  [107.0, [148, 250, 255]],\n  [108.0, [142, 245, 255]],\n  [109.0, [137, 240, 255]],\n  [110.0, [132, 235, 255]],\n  [111.0, [127, 229, 255]],\n  [112.0, [122, 224, 255]],\n  [113.0, [117, 219, 255]],\n  [114.0, [111, 214, 255]],\n  [115.0, [106, 209, 255]],\n  [116.0, [101, 203, 255]],\n  [117.0, [94, 198, 255]],\n  [118.0, [88, 192, 255]],\n  [119.0, [81, 186, 255]],\n  [120.0, [75, 180, 255]],\n  [121.0, [68, 174, 255]],\n  [122.0, [62, 168, 255]],\n  [123.0, [55, 163, 255]],\n  [124.0, [49, 157, 255]],\n  [125.0, [43, 151, 255]],\n  [126.0, [38, 145, 255]],\n  [127.0, [37, 141, 252]],\n  [128.0, [37, 136, 250]],\n  [129.0, [36, 131, 247]],\n  [130.0, [36, 126, 245]],\n  [131.0, [36, 121, 242]],\n  [132.0, [35, 116, 240]],\n  [133.0, [35, 112, 237]],\n  [134.0, [34, 107, 235]],\n  [135.0, [34, 102, 232]],\n  [136.0, [34, 98, 231]],\n  [137.0, [36, 96, 232]],\n  [138.0, [37, 94, 233]],\n  [139.0, [38, 92, 234]],\n  [140.0, [40, 91, 236]],\n  [141.0, [41, 89, 237]],\n  [142.0, [43, 87, 238]],\n  [143.0, [44, 85, 239]],\n  [144.0, [45, 83, 241]],\n  [145.0, [47, 81, 242]],\n  [146.0, [47, 77, 242]],\n  [147.0, [44, 72, 242]],\n  [148.0, [42, 66, 242]],\n  [149.0, [39, 60, 242]],\n  [150.0, [37, 55, 242]],\n  [151.0, [34, 49, 242]],\n  [152.0, [32, 43, 242]],\n  [153.0, [29, 37, 242]],\n  [154.0, [27, 32, 242]],\n  [155.0, [25, 26, 242]],\n  [156.0, [25, 23, 240]],\n  [157.0, [27, 23, 237]],\n  [158.0, [30, 22, 233]],\n  [159.0, [33, 22, 229]],\n  [160.0, [35, 21, 225]],\n  [161.0, [38, 21, 221]],\n  [162.0, [41, 21, 217]],\n  [163.0, [44, 20, 213]],\n  [164.0, [47, 20, 210]],\n  [165.0, [49, 20, 206]],\n  [166.0, [53, 20, 204]],\n  [167.0, [57, 21, 204]],\n  [168.0, [60, 22, 204]],\n  [169.0, [64, 23, 204]],\n  [170.0, [68, 24, 204]],\n  [171.0, [72, 25, 204]],\n  [172.0, [75, 26, 204]],\n  [173.0, [79, 27, 204]],\n  [174.0, [83, 28, 204]],\n  [175.0, [87, 29, 204]],\n  [176.0, [91, 29, 206]],\n  [177.0, [94, 28, 209]],\n  [178.0, [98, 27, 212]],\n  [179.0, [102, 27, 214]],\n  [180.0, [106, 26, 217]],\n  [181.0, [110, 25, 219]],\n  [182.0, [114, 24, 222]],\n  [183.0, [118, 23, 227]],\n  [184.0, [122, 23, 227]],\n  [185.0, [126, 22, 230]],\n  [186.0, [128, 21, 229]],\n  [187.0, [130, 20, 228]],\n  [188.0, [132, 19, 226]],\n  [189.0, [135, 17, 225]],\n  [190.0, [137, 16, 224]],\n  [191.0, [139, 15, 223]],\n  [192.0, [141, 14, 221]],\n  [193.0, [144, 12, 220]],\n  [194.0, [146, 11, 219]],\n  [195.0, [148, 10, 217]],\n  [196.0, [155, 10, 217]],\n  [197.0, [162, 10, 217]],\n  [198.0, [169, 10, 217]],\n  [199.0, [176, 10, 217]],\n  [200.0, [183, 11, 217]],\n  [251.0, [38, 38, 38]],\n  [254.0, [0, 0, 0]],\n  [255.0, [0, 0, 0]],\n];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(0.0%,0.0%,0.0%)",
+                            "label": "Outside area of interest"
+                        },
+                        {
+                            "color": "rgb(0.0%,0.0%,43.14%)",
+                            "label": "Water"
+                        },
+                        {
+                            "color": "rgb(0.0%,0.0%,43.14%)",
+                            "label": "Sea"
+                        },
+                        {
+                            "color": "rgb(0.0%,0.0%,43.14%)",
+                            "label": "Lake or river"
+                        },
+                        {
+                            "color": "rgb(61.57%,61.57%,61.57%)",
+                            "label": "Cloud"
+                        },
+                        {
+                            "color": "rgb(17.25%,50.2%,17.65%)",
+                            "label": "0 % snow cover (snow free)"
+                        },
+                        {
+                            "color": "rgb(29.41%,70.59%,100.0%)",
+                            "label": "20 % snow cover"
+                        },
+                        {
+                            "color": "rgb(15.69%,35.69%,92.55%)",
+                            "label": "40 % snow cover"
+                        },
+                        {
+                            "color": "rgb(14.51%,21.57%,94.9%)",
+                            "label": "50 % snow cover"
+                        },
+                        {
+                            "color": "rgb(13.73%,8.24%,88.24%)",
+                            "label": "60 % snow cover"
+                        },
+                        {
+                            "color": "rgb(41.57%,10.2%,85.1%)",
+                            "label": "80 % snow cover"
+                        },
+                        {
+                            "color": "rgb(71.76%,4.31%,85.1%)",
+                            "label": "100 % snow cover (fully snow covered)"
+                        },
+                        {
+                            "color": "rgb(14.9%,14.9%,14.9%)",
+                            "label": "Polar Night"
+                        },
+                        {
+                            "color": "rgb(0.0%,0.0%,0.0%)",
+                            "label": "Input Data Error"
+                        },
+                        {
+                            "color": "rgb(0.0%,0.0%,0.0%)",
+                            "label": "No data"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "51f9c7-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-05-10T07:16:31.012052Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "4b3fe9-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

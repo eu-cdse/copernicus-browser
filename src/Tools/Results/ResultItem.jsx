@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { t } from 'ttag';
 import jwt_dec from 'jwt-decode';
 
-import store, { productDownloadSlice, notificationSlice, visualizationSlice } from '../../store';
+import store, { productDownloadSlice, notificationSlice, visualizationSlice, clmsSlice } from '../../store';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import { connect } from 'react-redux';
 import oDataHelpers, { getDatasetIdFromProductType } from '../../api/OData/ODataHelpers';
@@ -26,9 +26,15 @@ import {
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
-import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, reqConfigMemoryCache } from '../../const';
+import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, DATASOURCES, reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
+import { AttributeNames } from '../../api/OData/assets/attributes';
+import {
+  CLMS_OPTIONS,
+  DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
+  flattenCLMSOptionsWithParent,
+} from '../VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
@@ -71,15 +77,23 @@ const visualizationButtonDisabled = (tile, user) => {
   return false;
 };
 
-const checkProductVisualization = async (datasetId, { geometry, sensingTime }) => {
+const checkProductVisualization = async (datasetId, { geometry, sensingTime, attributes }) => {
   const dsh = getDataSourceHandler(datasetId);
 
   if (!(datasetId && dsh && geometry && sensingTime)) {
     return ErrorMessage.visualizationNotSupported();
   }
 
-  const fromTime = moment(sensingTime).utc().startOf('day').toDate();
-  const toTime = moment(sensingTime).utc().endOf('day').toDate();
+  const nominalDate = attributes.find((attr) => attr.Name === AttributeNames.nominalDate)?.Value;
+  const fromTime = moment(nominalDate ?? sensingTime)
+    .utc()
+    .startOf('day')
+    .toDate();
+  const toTime = moment(nominalDate ?? sensingTime)
+    .utc()
+    .endOf('day')
+    .toDate();
+
   const bbox = constructBBoxFromBounds(getLeafletBoundsFromGeoJSON(geometry));
 
   const { tiles } = await dsh.findTiles({
@@ -129,10 +143,22 @@ const ResultItem = ({
   isAuthenticated,
   user,
 }) => {
-  const { sensingTime, name, platformShortName, instrumentShortName, productType, size, contentLength } =
-    tile;
+  const {
+    sensingTime,
+    name,
+    platformShortName,
+    instrumentShortName,
+    productType,
+    size,
+    contentLength,
+    attributes,
+  } = tile;
 
   const [{ downloadError }, downloadProduct] = useODataDownload();
+  const fileFormat = useMemo(
+    () => attributes.find((attr) => attr.Name === 'fileFormat')?.Value,
+    [attributes],
+  );
 
   useEffect(() => {
     if (downloadError) {
@@ -148,6 +174,28 @@ const ResultItem = ({
 
   const visualize = async ({ onResultSelected, tile, currentZoom }) => {
     const datasetId = getDatasetIdFromProductType(tile?.productType, tile?.attributes);
+
+    const collectionName = tile?.attributes.find((att) => att.Name === 'collectionName');
+    if (collectionName?.Value === DATASOURCES.CLMS) {
+      const clmsOptionsWithParent = flattenCLMSOptionsWithParent(CLMS_OPTIONS, DATASOURCES.CLMS);
+      let clmsDataset = null;
+      const consolidationPeriod = datasetId.split('_').pop();
+      if (consolidationPeriod.includes('RT')) {
+        clmsDataset = clmsOptionsWithParent.find((opt) =>
+          opt.consolidationPeriods?.map((cp) => cp.id).includes(datasetId),
+        );
+        const idx = clmsDataset?.consolidationPeriods.findIndex((cp) => cp.id === datasetId);
+        store.dispatch(
+          clmsSlice.actions.setSelectedConsolidationPeriodIndex(
+            idx > -1 ? idx : DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
+          ),
+        );
+      } else {
+        clmsDataset = clmsOptionsWithParent.find((opt) => opt.id === datasetId);
+      }
+      store.dispatch(clmsSlice.actions.setSelectedPath(clmsDataset.parentPath));
+      store.dispatch(clmsSlice.actions.setSelectedCollection(clmsDataset.id));
+    }
 
     const productVisualizationError = await checkProductVisualization(datasetId, tile);
     if (productVisualizationError) {
@@ -253,7 +301,7 @@ const ResultItem = ({
         <ResultItemFooter
           userToken={userToken}
           tile={tile}
-          tags={[platformShortName, instrumentShortName, productType]}
+          tags={[platformShortName, instrumentShortName, productType, fileFormat]}
           modalId={modalId}
           downloadInProgress={downloadInProgress}
           downloadProduct={downloadProduct}

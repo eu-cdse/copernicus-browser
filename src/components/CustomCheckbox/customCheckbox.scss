@@ -11,45 +11,52 @@
     align-items: center;
     font-size: 0.9rem;
 
-    .custom-checkbox[type='checkbox'] {
-      cursor: pointer;
+    .custom-checkbox-inner-wrapper {
+      position: relative;
       width: 18px;
       height: 18px;
-      margin: 0;
-      background-color: $customCheckboxBackgroundColor;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
 
-      &.white {
-        background-color: $whiteColor;
-        box-shadow: $boxShadow;
+      .custom-checkbox[type='checkbox'] {
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        background-color: $customCheckboxBackgroundColor;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        &.white {
+          background-color: $whiteColor;
+          box-shadow: $boxShadow;
+        }
+
+        &:active {
+          border: 1px solid $activePrimaryColor;
+        }
+
+        &:checked {
+          background-color: $primaryColor;
+        }
+
+        &:hover:checked {
+          background-color: $hoverPrimaryColor;
+        }
+
+        &:hover:active:checked {
+          border: 1px solid $activePrimaryColor;
+          background-color: $activePrimaryColor;
+        }
       }
 
-      &:active {
-        border: 1px solid $activePrimaryColor;
+      .check-mark {
+        fill: none;
+        stroke: $whiteColor;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
-
-      &:checked {
-        background-color: $primaryColor;
-      }
-
-      &:hover:checked {
-        background-color: $hoverPrimaryColor;
-      }
-
-      &:hover:active:checked {
-        border: 1px solid $activePrimaryColor;
-        background-color: $activePrimaryColor;
-      }
-    }
-
-    .check-mark {
-      fill: none;
-      stroke: $whiteColor;
-      position: absolute;
-      left: 4px;
-      top: 3px;
     }
 
     .custom-checkbox-text {

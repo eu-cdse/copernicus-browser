@@ -59,6 +59,92 @@ import {
   S3OLCIL2_LAND,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+  COPERNICUS_CLMS_DMP_1KM_DAILY,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_LAI_1KM_DAILY,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
+  COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_GPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_LAI_300M_10DAILY,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_LAI_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_NPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
+  COPERNICUS_CLMS_SWI_12_5KM_DAILY,
+  COPERNICUS_CLMS_SWI_1KM_DAILY,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT1,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT2,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT5,
+  COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
+  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
+  COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
+  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+  COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
+  COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
+  COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5,
+  COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+  COPERNICUS_CLMS_WB_300M_10DAILY_V1,
+  COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
+  COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
+  COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
+  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V1,
+  COPERNICUS_CLMS_LIE_250M_DAILY_V2,
+  COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -3977,6 +4063,360 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
   },
   {
+    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NDVI' }],
+    description: () =>
+      t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The CGLS NDVI V3 product is a 10-day synthesis product derived from SPOT/VEGETATION or PROBA-V top-of-atmosphere orbital segments.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NOBS' }],
+    description: () =>
+      t`The NOBS variable contains the number of observations used in the inversion procedure.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'QFLAGS' }],
+    description: () =>
+      t`The QFLAG (quality flag) of the NDVI V3 describes the BRDF inversion quality in both RED and NIR bands.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'TIMEGRID' }],
+    description: () =>
+      t`The TIMEGRID (Time Grid) variable indicates the median date of the observations used in the BRDF modelling. It provides an indication of the most representative date of the observations used to compute the BRDF corrected NDVI. Hence, it is recommended to use this layer for time series analyses. Time is measured in minutes passed since the start time of the synthesis, hence day 01, 11 or 21 of the 10-day period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'UNC' }],
+    description: () => t`"The UNC variable contains the uncertainty associated to the angular normalized NDVI
+estimation. The uncertainties of the normalized reflectances are estimated by propagating the
+uncertainties associated to the BRDF model parameters found via the inversion."`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_BURNT_AREA_DAILY, layerId: 'day_of_burn' }],
+    description: () => t`The Burn Scar layer indicates detected burn scars for a given day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_BURNT_AREA_MONTHLY, layerId: 'day_of_burn' }],
+    description: () => t`The Burn Scar layer indicates detected burn scars for a given month.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT0, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT1, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT2, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT6, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT1, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT2, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT5, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT6, layerId: 'DMP' },
+    ],
+    description: () =>
+      t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT0, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT1, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT2, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT6, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT1, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT2, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT5, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT6, layerId: 'QFLAG' },
+    ],
+    description: () =>
+      t`Quality flag of the product. For more information, refer to the Product User Manual.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6, layerId: 'FAPAR' }],
+    description: () =>
+      t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6, layerId: 'FCOVER' },
+    ],
+    description: () =>
+      t`FCover is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction. It is used to separate vegetation and soil in energy balance processes, including temperature and evapotranspiration. It is computed from the leaf area index and other canopy structural variables and does not depend on variables such as the geometry of illumination as compared to FAPAR. For this reason, it is a very good candidate for the replacement of classical vegetation indices for the monitoring of green vegetation. Because of the linear relationship with radiometric signal, FCover will be only marginally scale dependent. Note that similarly to LAI and FAPAR, only the green elements will be considered, either belonging both to the overstory and understory.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6, layerId: 'DMP' },
+    ],
+    description: () =>
+      t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
+  },
+
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2, layerId: 'FCOVER' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6, layerId: 'FCOVER' },
+    ],
+    description: () =>
+      t`FCover is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction. It is used to separate vegetation and soil in energy balance processes, including temperature and evapotranspiration. It is computed from the leaf area index and other canopy structural variables and does not depend on variables such as the geometry of illumination as compared to FAPAR. For this reason, it is a very good candidate for the replacement of classical vegetation indices for the monitoring of green vegetation. Because of the linear relationship with radiometric signal, FCover will be only marginally scale dependent. Note that similarly to LAI and FAPAR, only the green elements will be considered, either belonging both to the overstory and understory.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6, layerId: 'DMP' },
+    ],
+    description: () =>
+      t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT0, layerId: 'GPP' }],
+    description: () =>
+      t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT1, layerId: 'GPP' }],
+    description: () =>
+      t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT2, layerId: 'GPP' }],
+    description: () =>
+      t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT6, layerId: 'GPP' }],
+    description: () =>
+      t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_300M_10DAILY, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_300M_10DAILY_RT0, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_300M_10DAILY_RT1, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_300M_10DAILY_RT2, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_300M_10DAILY_RT6, layerId: 'LAI' },
+    ],
+    description: () =>
+      t`LAI is defined as half the developed area of photosynthetically active elements of the vegetation per unit horizontal ground area. It determines the size of the interface for exchange of energy (including radiation) and mass between the canopy and the atmosphere. This is an intrinsic canopy primary variable that should not depend on observation conditions. LAI is strongly non-linearly related to reflectance. Therefore, its estimation from remote sensing observations is scale dependent.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT0, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT1, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT2, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT6, layerId: 'LAI' },
+    ],
+    description: () =>
+      t`LAI is defined as half the developed area of photosynthetically active elements of the vegetation per unit horizontal ground area. It determines the size of the interface for exchange of energy (including radiation) and mass between the canopy and the atmosphere. This is an intrinsic canopy primary variable that should not depend on observation conditions. LAI is strongly non-linearly related to reflectance.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT0, layerId: 'NPP' }],
+    description: () =>
+      t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT1, layerId: 'NPP' }],
+    description: () =>
+      t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT2, layerId: 'NPP' }],
+    description: () =>
+      t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT6, layerId: 'NPP' }],
+    description: () =>
+      t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI001' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 1 day. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI005' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI010' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI015' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI020' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI040' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI060' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI100' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SSF' }],
+    description: () =>
+      t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI001' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 1 day. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI005' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI010' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI015' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI020' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI040' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI060' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI100' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SSF' }],
+    description: () =>
+      t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI002' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 2 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI005' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI010' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI015' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI020' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI040' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI060' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI100' }],
+    description: () =>
+      t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
     match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '1_TRUE_COLOR' }],
     description: () =>
       t`# True color optimized\n\nThis optimized True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a product with natural colours that represents the Earth as humans would naturally see it. The visualisation uses highlight compression and improves the contrast and color vividness through minor contrast and saturation enhancement.`,
@@ -4103,5 +4543,452 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
     description: () =>
       t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V1, layerId: 'TCI' }],
+    description: () => t`TBD`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V2, layerId: 'TCI' }],
+    description: () => t`TBD`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MAX_LTS' }],
+    description: () =>
+      t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEAN_LTS' }],
+    description: () =>
+      t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEDIAN_LTS' }],
+    description: () =>
+      t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MIN_LTS' }],
+    description: () =>
+      t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MAX_LTS' }],
+    description: () =>
+      t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEAN_LTS' }],
+    description: () =>
+      t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEDIAN_LTS' }],
+    description: () =>
+      t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MIN_LTS' }],
+    description: () =>
+      t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2, layerId: 'NDVI' }],
+    description: () =>
+      t`The Normalized Difference Vegetation Index (NDVI) can be related to the vegetation photosynthetic activity. It is computed from the RED and NIR reflectances only: NDVI = (NIR - RED) / (NIR+RED) = (B3 - B2) / (B3 + B2), where B2 and B3 are the atmospherically corrected surface reflectances in the RED and NIR bands from the SPOT/VEGETATION and PROBA-V 10-daily synthesis dataset.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1, layerId: 'NDVI' }],
+    description: () =>
+      t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The Global Land NDVI Collection 300m product is a 10-day synthesis product derived from Top of Canopy PROBA-V 300m data.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2, layerId: 'NDVI' }],
+    description: () =>
+      t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The Global Land NDVI Collection 300m product is a 10-day synthesis product derived from Top of Canopy PROBA-V 300m data.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SSM_1KM_DAILY_V1, layerId: 'SSM' }],
+    description: () =>
+      t`SSM (Surface Soil Moisture) describes soil moisture of the soil’s topmost 5cm on a 1km (1°/112) spatial sampling. It is derived from microwave radar data observed by the Sentinel-1 SAR satellite sensors.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSD_S1' }],
+    description: () =>
+      t`Season 1: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSD_S2' }],
+    description: () =>
+      t`Season 2: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSV_S1' }],
+    description: () =>
+      t`Season 1: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSV_S2' }],
+    description: () =>
+      t`Season 2: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'QA_S1' }],
+    description: () =>
+      t`Season 1: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'QA_S2' }],
+    description: () =>
+      t`Season 2: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'AMPL_S1' }],
+    description: () =>
+      t`Season 1: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'AMPL_S2' }],
+    description: () =>
+      t`Season 2: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LENGTH_S1' }],
+    description: () =>
+      t`Season 1: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LENGTH_S2' }],
+    description: () =>
+      t`Season 2: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXD_S1' }],
+    description: () =>
+      t`Season 1: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXD_S2' }],
+    description: () =>
+      t`Season 2: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXV_S1' }],
+    description: () =>
+      t`Season 1: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXV_S2' }],
+    description: () =>
+      t`Season 2: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MINV_S1' }],
+    description: () =>
+      t`Season 1: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MINV_S2' }],
+    description: () =>
+      t`Season 2: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SPROD_S1' }],
+    description: () =>
+      t`Season 1: the growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SPROD_S2' }],
+    description: () =>
+      t`Season 2: he growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'RSLOPE_S1' }],
+    description: () =>
+      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'RSLOPE_S2' }],
+    description: () =>
+      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LSLOPE_S1' }],
+    description: () =>
+      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LSLOPE_S2' }],
+    description: () =>
+      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSD_S1' }],
+    description: () =>
+      t`Season 1: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSD_S2' }],
+    description: () =>
+      t`Season 2: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSV_S1' }],
+    description: () =>
+      t`Season 1: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSV_S2' }],
+    description: () =>
+      t`Season 2: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'TPROD_S1' }],
+    description: () =>
+      t`Season 1: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'TPROD_S2' }],
+    description: () =>
+      t`Season 2: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Change_Confidence' }],
+    description: () =>
+      t`Quality layer regarding the change detection between 0-3 (0 = no change, 3 = high confidence). Note: this layer is only available for products produced in production mode conso or nrt.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Data_Density_Indicator' }],
+    description: () =>
+      t`Data density indicator showing quality of the EO input data between 0 – 100 (0 = bad, 100 = perfect data).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification' }],
+    description: () => t`Main discrete classification according to FAO LCCS scheme.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification_Probability' },
+    ],
+    description: () => t`Classification probability, a quality indicator for the discrete classification.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Forest_Type' }],
+    description: () => t`Forest type for all pixels where tree cover fraction is bigger than 1%.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Bare_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the bare and sparse vegetation class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Crops_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the cropland class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Tree_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the forest class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Grass_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the herbaceous vegetation class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'MossLichen_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the moss & lichen class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'PermanentWater_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the permanent inland water bodies class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'SeasonalWater_Cover_fraction' }],
+    description: () => t`Fractional cover (%) for the seasonal inland water bodies class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Shrub_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the shrubland class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Snow_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the snow & ice class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'BuiltUp_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the built-up class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V1, layerId: 'LST' }],
+    description: () => t`Land Surface Temperature (LST) is estimated from Top-of-Atmosphere (TOA) brightness
+temperatures of atmospheric window channels within the infrared range. LST describes processes such as the exchange of energy and water between the land surface and atmosphere, and influences the rate and timing of plant growth.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V2, layerId: 'LST' }],
+    description: () => t`Land Surface Temperature (LST) is estimated from Top-of-Atmosphere (TOA) brightness
+temperatures of atmospheric window channels within the infrared range. LST describes processes such as the exchange of energy and water between the land surface and atmosphere, and influences the rate and timing of plant growth.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6, layerId: 'GDMP' },
+    ],
+    description: () =>
+      t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6, layerId: 'GDMP' },
+    ],
+    description: () =>
+      t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Change_Confidence' }],
+    description: () =>
+      t`Quality layer regarding the change detection between 0-3 (0 = no change, 3 = high confidence). Note: this layer is only available for products produced in production mode conso or nrt.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Data_Density_Indicator' }],
+    description: () =>
+      t`Data density indicator showing quality of the EO input data between 0 – 100 (0 = bad, 100 = perfect data).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification' }],
+    description: () => t`Main discrete classification according to FAO LCCS scheme.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification_Probability' },
+    ],
+    description: () => t`Classification probability, a quality indicator for the discrete classification.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Forest_Type' }],
+    description: () => t`Forest type for all pixels where tree cover fraction is bigger than 1%.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Bare_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the bare and sparse vegetation class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Crops_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the cropland class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Tree_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the forest class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Grass_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the herbaceous vegetation class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'MossLichen_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the moss & lichen class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'PermanentWater_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the permanent inland water bodies class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'SeasonalWater_Cover_fraction' }],
+    description: () => t`Fractional cover (%) for the seasonal inland water bodies class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Shrub_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the shrubland class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Snow_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the snow & ice class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'BuiltUp_Cover_Fraction' }],
+    description: () => t`Fractional cover (%) for the built-up class.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V1, layerId: 'LST' }],
+    description: () => t`TBD`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V2, layerId: 'LST' }],
+    description: () => t`TBD`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6, layerId: 'GDMP' },
+    ],
+    description: () =>
+      t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5, layerId: 'GDMP' },
+      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6, layerId: 'GDMP' },
+    ],
+    description: () =>
+      t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_WB_300M_10DAILY_V1, layerId: 'WB' }],
+    description: () =>
+      t`This product is a 10-daily synthesis product derived from Top of Canopy (TOC) PROVA-V 333 m data. The basic Water Bodies (WB) layer which tells which pixels contain water and which not, defined as permanent and seasonal water bodies, natural and man-made, independently of their size. Include but are not restricted to the lakes of the Global terrestrial Network for lakes.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_WB_1KM_10DAILY_V2, layerId: 'WB' }],
+    description: () => t`TBD`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWE_5KM_DAILY_V1, layerId: 'SWE' }],
+    description: () =>
+      t`Snow Water Equivalent (SWE) is the measure of the amount of water frozen within the snow pack per unit area. In principle, it gives the height of the water column that would form, if the snow pack would melt completely. It is measured and indicated in millimetres [mm]. The retrieval algorithm used here combines information from satellite-based microwave radiometer and optical spectrometer observations with ground based weather station snow depth measurements and produces daily hemispherical scale SWE estimates. `,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWE_5KM_DAILY_V2, layerId: 'SWE' }],
+    description: () =>
+      t`Snow Water Equivalent (SWE) is the measure of the amount of water frozen within the snow pack per unit area. In principle, it gives the height of the water column that would form, if the snow pack would melt completely. It is measured and indicated in millimetres [mm]. The retrieval algorithm used here combines information from satellite-based microwave radiometer and optical spectrometer observations with ground based weather station snow depth measurements and produces daily hemispherical scale SWE estimates. `,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_500M_DAILY_V1, layerId: 'SCE' }],
+    description: () =>
+      t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_1KM_DAILY_V1, layerId: 'SCE' }],
+    description: () =>
+      t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_WB_300M_MONTHLY_V2, layerId: 'WB' }],
+    description: () =>
+      t`The main Water Bodies detection layer (WB) uses the following values: Sea (0), Water (70), No data (251), No water (255). From the Sentinel-2 L1C input reflectances, Water Bodies are detected using the Modified Normalized Difference Water Index (MNDWI), for each input tile`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LIE_500M_DAILY_V1, layerId: 'LIE' }],
+    description: () =>
+      t`The LIE variable is a classification of lake ice state, with the following classes: Ice cover (10), Open water (30), Cloud (40). Some specific flag values are used: Not interpreted / no satellite input data (50), Sea pixel (60), Land pixel (70).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LIE_250M_DAILY_V2, layerId: 'LIE' }],
+    description: () =>
+      t`The LIE variable is a classification of lake ice state, with the following classes: Fully snow covered ice (1), Partially snow covered or  snow free ice (2), Open water (3). Some specific flag values are also used for LIE: 0 for missing data, 4 for sea pixels, 5 for cloudy pixels, 6 for land area. LIE 250m uses thresholds on Top-of-Atmosphere (TOA) reflectances for full snow cover, partially snow covered ice/clear ice, and open water.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_WB_100M_MONTHLY_V1, layerId: 'WB' }],
+    description: () =>
+      t`The main Water Bodies detection layer (WB) uses the following values: Sea (0), Water (70), No data (251), No water (255). From the Sentinel-2 L1C input reflectances, Water Bodies are detected using the Modified Normalized Difference Water Index (MNDWI), for each input tile`,
   },
 ];

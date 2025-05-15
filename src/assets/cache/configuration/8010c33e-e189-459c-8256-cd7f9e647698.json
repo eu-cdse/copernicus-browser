@@ -1,0 +1,78 @@
+[
+    {
+        "id": "DMP",
+        "title": "Dry matter productivity (DMP)",
+        "description": "Dry Matter Productivity",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1 / 100; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"DMP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.DMP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0, [1, 1, 1]], // White\n  [1, [1, 0, 0, 1]], // Red\n  [3000, [1, 0.647, 0, 1]], // Orange\n  [6000, [1, 0.843, 0, 1]], // Gold\n  [9000, [1, 1, 0, 1]], // Yellow\n  [12000, [0.678, 1, 0.184, 1]], // Green-Yellow\n  [15000, [0.078, 1, 0.078, 1]], // Green\n  [18000, [0.039, 0.784, 0.039, 1]], // Dark Green\n  [21000, [0, 0.533, 0, 1]], // Darker Green\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "DMP",
+                    "gradients": [
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(100.0%,64.71%,0.0%)",
+                            "label": "",
+                            "position": 3000
+                        },
+                        {
+                            "color": "rgb(100.0%,84.31%,0.0%)",
+                            "label": "",
+                            "position": 6000
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 9000
+                        },
+                        {
+                            "color": "rgb(67.84%,100.0%,18.43%)",
+                            "label": "",
+                            "position": 12000
+                        },
+                        {
+                            "color": "rgb(7.84%,100.0%,7.84%)",
+                            "label": "",
+                            "position": 15000
+                        },
+                        {
+                            "color": "rgb(3.92%,78.43%,3.92%)",
+                            "label": "",
+                            "position": 18000
+                        },
+                        {
+                            "color": "rgb(0.0%,53.33%,0.0%)",
+                            "label": 21000,
+                            "position": 21000
+                        }
+                    ],
+                    "maxPosition": 21000,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "8010c3-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-17T12:38:15.272549Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "d7c77d-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]
