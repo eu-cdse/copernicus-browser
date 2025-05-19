@@ -1,7 +1,7 @@
 [
     {
         "id": "DMP",
-        "title": "Dry matter productivity",
+        "title": "DMP",
         "description": "Dry Matter Productivity",
         "styles": [
             {
@@ -13,121 +13,62 @@
                     "title": "DMP",
                     "gradients": [
                         {
-                            "color": "rgb(25500%,25500%,25500%)",
+                            "color": "rgb(100.000%,100.000%,100.000%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(25500%,0%,0%)",
+                            "color": "rgb(100.000%,0.000%,0.000%)",
                             "label": "",
-                            "position": 1
+                            "position": 0.01
                         },
                         {
-                            "color": "rgb(25500%,16500%,0%)",
+                            "color": "rgb(100.000%,64.706%,0.000%)",
                             "label": "",
-                            "position": 3000
+                            "position": 30
                         },
                         {
-                            "color": "rgb(25500%,21500%,0%)",
+                            "color": "rgb(100.000%,84.314%,0.000%)",
                             "label": "",
-                            "position": 6000
+                            "position": 60
                         },
                         {
-                            "color": "rgb(25500%,25500%,0%)",
+                            "color": "rgb(100.000%,100.000%,0.000%)",
                             "label": "",
-                            "position": 9000
+                            "position": 90
                         },
                         {
-                            "color": "rgb(17300%,25500%,4700%)",
+                            "color": "rgb(67.843%,100.000%,18.431%)",
                             "label": "",
-                            "position": 12000
+                            "position": 120
                         },
                         {
-                            "color": "rgb(2000%,25500%,2000%)",
+                            "color": "rgb(7.843%,100.000%,7.843%)",
                             "label": "",
-                            "position": 15000
+                            "position": 150
                         },
                         {
-                            "color": "rgb(1000%,20000%,1000%)",
+                            "color": "rgb(3.922%,78.431%,3.922%)",
                             "label": "",
-                            "position": 18000
+                            "position": 180
                         },
                         {
-                            "color": "rgb(0%,13600%,0%)",
-                            "label": 21000,
-                            "position": 21000
+                            "color": "rgb(0.000%,53.333%,0.000%)",
+                            "label": 210,
+                            "position": 210
                         }
                     ],
-                    "maxPosition": 21000,
+                    "maxPosition": 210,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "ba2928-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-08T13:42:01.734357Z",
+        "lastUpdated": "2025-05-16T11:38:13.024856Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3f2a6a-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "QFLAG",
-        "title": "Quality Flag",
-        "description": "Bitwise quality flag",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"QFLAG\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.QFLAG;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst exactColorMap = [\n  [1, [255, 0, 0]],\n  [2, [255, 165, 0]],\n  [4, [255, 255, 0]],\n  [8, [0, 128, 0]],\n  [16, [139, 69, 19]],\n  [32, [128, 128, 128]],\n  [64, [0, 0, 255]],\n  [128, [75, 0, 130]],\n];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  const entry = exactColorMap.find(([v, _]) => v === Math.floor(value));\n  if (entry) {\n    const [_, color] = entry;\n    return [color[0], color[1], color[2]];\n  } else {\n    return [0, 0, 0];\n  }\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(100.0%,0.0%,0.0%)",
-                            "label": "1"
-                        },
-                        {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
-                            "label": "2"
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,0.0%)",
-                            "label": "4"
-                        },
-                        {
-                            "color": "rgb(0.0%,50.2%,0.0%)",
-                            "label": "8"
-                        },
-                        {
-                            "color": "rgb(54.51%,27.06%,7.45%)",
-                            "label": "16"
-                        },
-                        {
-                            "color": "rgb(50.2%,50.2%,50.2%)",
-                            "label": "32"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,100.0%)",
-                            "label": "64"
-                        },
-                        {
-                            "color": "rgb(29.41%,0.0%,50.98%)",
-                            "label": "128"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "ba2928-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-08T13:42:01.837099Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

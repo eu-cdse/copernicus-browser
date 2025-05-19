@@ -38,6 +38,7 @@ import {
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
+import { getTagsFromAttributes } from '../../api/OData/OData.utils';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -143,22 +144,11 @@ const ResultItem = ({
   isAuthenticated,
   user,
 }) => {
-  const {
-    sensingTime,
-    name,
-    platformShortName,
-    instrumentShortName,
-    productType,
-    size,
-    contentLength,
-    attributes,
-  } = tile;
+  const { sensingTime, name, platformShortName, instrumentShortName, size, contentLength } = tile;
 
   const [{ downloadError }, downloadProduct] = useODataDownload();
-  const fileFormat = useMemo(
-    () => attributes.find((attr) => attr.Name === 'fileFormat')?.Value,
-    [attributes],
-  );
+
+  const tileTags = useMemo(() => getTagsFromAttributes(tile), [tile]);
 
   useEffect(() => {
     if (downloadError) {
@@ -301,7 +291,7 @@ const ResultItem = ({
         <ResultItemFooter
           userToken={userToken}
           tile={tile}
-          tags={[platformShortName, instrumentShortName, productType, fileFormat]}
+          tags={tileTags}
           modalId={modalId}
           downloadInProgress={downloadInProgress}
           downloadProduct={downloadProduct}

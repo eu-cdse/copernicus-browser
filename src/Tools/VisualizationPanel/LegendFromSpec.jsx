@@ -45,19 +45,25 @@ export default class LegendFromSpec extends React.Component {
           ))}
         </div>
         <div className="ticks">
-          {gradientsWithLabels.map((g, index) => (
-            <label
-              key={index}
-              className={`tick ${index === 0 ? 'min' : ''} ${
-                index === gradientsWithLabels.length - 1 ? 'max' : ''
-              }`}
-              style={{
-                bottom: `${(((g.position - minPosition) / (maxPosition - minPosition)) * 100).toFixed(1)}%`,
-              }}
-            >
-              {g.label}
-            </label>
-          ))}
+          {gradientsWithLabels.map((g, index) => {
+            if (index > 0 && index < gradientsWithLabels.length - 1 && g.label === '') {
+              return null;
+            }
+
+            return (
+              <label
+                key={index}
+                className={`tick ${index === 0 ? 'min' : ''} ${
+                  index === gradientsWithLabels.length - 1 ? 'max' : ''
+                }`}
+                style={{
+                  bottom: `${(((g.position - minPosition) / (maxPosition - minPosition)) * 100).toFixed(1)}%`,
+                }}
+              >
+                {g.label}
+              </label>
+            );
+          })}
           {/*
             Labels are positioned absolutely, so they don't have width, which causes problems
             with positioning the layer description next to the legend. To solve this, we render

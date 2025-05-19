@@ -94,7 +94,7 @@ export async function getShortUrl(urlLocation) {
         return shortUrl;
       })
       .catch((err) => {
-        handleErrorMessages(err?.response?.data?.errors, urlLocation);
+        handleErrorMessages(err?.response?.data?.detail?.errors, urlLocation);
         console.error(err);
         return '';
       });

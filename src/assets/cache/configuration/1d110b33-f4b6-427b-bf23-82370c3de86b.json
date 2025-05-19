@@ -29,25 +29,21 @@
                         },
                         {
                             "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": "",
-                            "position": 1.004
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": 1.02,
-                            "position": 1.02
+                            "label": 1,
+                            "position": 1
                         }
                     ],
-                    "maxPosition": 1.02,
+                    "maxPosition": 1,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "1d110b-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-15T16:21:37.223794Z",
+        "lastUpdated": "2025-05-16T11:24:15.925659Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

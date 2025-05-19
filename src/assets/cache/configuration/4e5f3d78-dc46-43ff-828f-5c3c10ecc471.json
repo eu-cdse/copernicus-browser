@@ -1,7 +1,7 @@
 [
     {
         "id": "DMP",
-        "title": "Dry matter productivity (DMP)",
+        "title": "DMP",
         "description": "Dry Matter Productivity",
         "styles": [
             {
@@ -13,61 +13,62 @@
                     "title": "DMP",
                     "gradients": [
                         {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "color": "rgb(100.000%,100.000%,100.000%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(100.0%,0.0%,0.0%)",
+                            "color": "rgb(100.000%,0.000%,0.000%)",
                             "label": "",
-                            "position": 1
+                            "position": 0.01
                         },
                         {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
+                            "color": "rgb(100.000%,64.706%,0.000%)",
                             "label": "",
-                            "position": 3000
+                            "position": 30
                         },
                         {
-                            "color": "rgb(100.0%,84.31%,0.0%)",
+                            "color": "rgb(100.000%,84.314%,0.000%)",
                             "label": "",
-                            "position": 6000
+                            "position": 60
                         },
                         {
-                            "color": "rgb(100.0%,100.0%,0.0%)",
+                            "color": "rgb(100.000%,100.000%,0.000%)",
                             "label": "",
-                            "position": 9000
+                            "position": 90
                         },
                         {
-                            "color": "rgb(67.84%,100.0%,18.43%)",
+                            "color": "rgb(67.843%,100.000%,18.431%)",
                             "label": "",
-                            "position": 12000
+                            "position": 120
                         },
                         {
-                            "color": "rgb(7.84%,100.0%,7.84%)",
+                            "color": "rgb(7.843%,100.000%,7.843%)",
                             "label": "",
-                            "position": 15000
+                            "position": 150
                         },
                         {
-                            "color": "rgb(3.92%,78.43%,3.92%)",
+                            "color": "rgb(3.922%,78.431%,3.922%)",
                             "label": "",
-                            "position": 18000
+                            "position": 180
                         },
                         {
-                            "color": "rgb(0.0%,53.33%,0.0%)",
-                            "label": 21000,
-                            "position": 21000
+                            "color": "rgb(0.000%,53.333%,0.000%)",
+                            "label": 210,
+                            "position": 210
                         }
                     ],
-                    "maxPosition": 21000,
+                    "maxPosition": 210,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "4e5f3d-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-17T12:38:17.105329Z",
+        "lastUpdated": "2025-05-16T11:32:19.354425Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

@@ -126,6 +126,12 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -216,6 +222,12 @@ const PRODUCT_TYPE_TO_DATASETID = {
   lie_northernhemisphere_500m_daily_v1: COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   lie_europe_250m_daily_v2: COPERNICUS_CLMS_LIE_250M_DAILY_V2,
   wb_global_100m_monthly_v1: COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+  'lst-daily-cycle_global_5km_10daily_v1': COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+  'lst-daily-cycle_global_5km_10daily_v2': COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  'lwq-nrt_global_300m_10daily_v2': COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+  'lwq-reproc_global_300m_10daily_v1': COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+  'lwq-nrt_global_300m_10daily_v1': COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+  'lwq-nrt_global_100m_10daily_v1': COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -338,6 +350,11 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
   }
 
   if (productType === 'snow_cover_extent' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'lake_water_quality' && checkProductTypeFileFormat(attributes)) {
     const { datasetIdentifier } = attributesObject;
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
   }
@@ -702,6 +719,8 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
       COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
       COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+      COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+      COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
     ].includes(datasetId)
   ) {
     return {
@@ -734,6 +753,22 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'SNOW_WATER_EQUIVALENT',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+      COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+      COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+      COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+    ].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'LAKE_WATER_QUALITY',
       productType: getProductTypeFromDatasetId(datasetId),
       selectedFilters: {},
     };

@@ -3,17 +3,10 @@
     "layers": [
         {
             "id": "DMP",
-            "name": "Dry matter productivity",
+            "name": "DMP",
             "description": "Dry Matter Productivity",
             "dataset": "CUSTOM",
             "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7a20b5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
-        },
-        {
-            "id": "QFLAG",
-            "name": "Quality Flag",
-            "description": "Bitwise quality flag",
-            "dataset": "CUSTOM",
-            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7a20b5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=QFLAG&style=default"
         }
     ],
     "datasets": []

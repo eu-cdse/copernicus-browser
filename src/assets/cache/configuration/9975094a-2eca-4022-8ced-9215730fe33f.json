@@ -12,20 +12,8 @@
                     "type": "discrete",
                     "items": [
                         {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "Sea"
-                        },
-                        {
                             "color": "rgb(12.16%,44.31%,86.27%)",
                             "label": "Inland water"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "No data"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "No water"
                         }
                     ]
                 }
@@ -33,9 +21,10 @@
         ],
         "orderHint": 0,
         "instanceId": "997509-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-14T11:21:17.737342Z",
+        "lastUpdated": "2025-05-19T12:03:33.235626Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

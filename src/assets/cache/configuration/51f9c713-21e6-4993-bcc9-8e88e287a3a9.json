@@ -12,20 +12,8 @@
                     "type": "discrete",
                     "items": [
                         {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "Outside area of interest"
-                        },
-                        {
                             "color": "rgb(0.0%,0.0%,43.14%)",
                             "label": "Water"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,43.14%)",
-                            "label": "Sea"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,43.14%)",
-                            "label": "Lake or river"
                         },
                         {
                             "color": "rgb(61.57%,61.57%,61.57%)",
@@ -62,14 +50,6 @@
                         {
                             "color": "rgb(14.9%,14.9%,14.9%)",
                             "label": "Polar Night"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "Input Data Error"
-                        },
-                        {
-                            "color": "rgb(0.0%,0.0%,0.0%)",
-                            "label": "No data"
                         }
                     ]
                 }
@@ -77,9 +57,10 @@
         ],
         "orderHint": 0,
         "instanceId": "51f9c7-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-10T07:16:31.012052Z",
+        "lastUpdated": "2025-05-19T12:04:01.667382Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

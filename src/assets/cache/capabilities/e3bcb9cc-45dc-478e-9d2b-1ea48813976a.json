@@ -1,0 +1,34 @@
+{
+    "title": "[NEW] lst-daily-cycle_global_5km_10daily_v1",
+    "layers": [
+        {
+            "id": "FOBS",
+            "name": "FOBS",
+            "description": "Fraction of valid observations",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e3bcb9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FOBS&style=default"
+        },
+        {
+            "id": "MAX",
+            "name": "MAX",
+            "description": "Maximum LST values observed during the 10-day compositing period",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e3bcb9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MAX&style=default"
+        },
+        {
+            "id": "MEDIAN",
+            "name": "MEDIAN",
+            "description": "Median LST values observed during the 10-day compositing period",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e3bcb9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MEDIAN&style=default"
+        },
+        {
+            "id": "MIN",
+            "name": "MIN",
+            "description": "Minimum LST values observed during the 10-day compositing period",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e3bcb9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MIN&style=default"
+        }
+    ],
+    "datasets": []
+}

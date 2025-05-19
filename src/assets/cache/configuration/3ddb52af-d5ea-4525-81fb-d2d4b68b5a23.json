@@ -3201,7 +3201,7 @@
     },
     {
         "id": "LSLOPE_S1",
-        "title": "Slope of the Green-up Period - S2",
+        "title": "Slope of the Green-up Period - S1",
         "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
         "styles": [
             {
@@ -3239,7 +3239,7 @@
                         },
                         {
                             "color": "rgb(99.22%,90.59%,14.51%)",
-                            "label": "",
+                            "label": "70",
                             "position": 70
                         },
                         {
@@ -3255,9 +3255,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.429562Z",
+        "lastUpdated": "2025-05-16T11:19:43.407967Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -3305,7 +3306,7 @@
                         },
                         {
                             "color": "rgb(99.22%,90.59%,14.51%)",
-                            "label": "",
+                            "label": "70",
                             "position": 70
                         },
                         {
@@ -3321,9 +3322,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.043294Z",
+        "lastUpdated": "2025-05-16T11:19:57.375276Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -3860,58 +3862,79 @@
     },
     {
         "id": "MINV_S2",
-        "title": "Season Minimum Value - S2",
-        "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
+        "title": "Seasonal Productivity - S1",
+        "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MINV_S2 NAME\n    input: [\"MINV_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MINV_S2 NAME\n  var originalValue = samples.MINV_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT SPROD_S1 NAME\n    input: [\"SPROD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT SPROD_S1 NAME\n  var originalValue = samples.SPROD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "MINV_S2",
+                    "title": "SPROD_S1",
                     "gradients": [
                         {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "color": "rgb(45.1%,0.0%,0.0%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "color": "rgb(64.71%,45.1%,0.0%)",
                             "label": "",
-                            "position": 0.5
+                            "position": 35
                         },
                         {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "color": "rgb(100.0%,64.71%,0.0%)",
                             "label": "",
-                            "position": 1
+                            "position": 70
                         },
                         {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "color": "rgb(100.0%,74.51%,72.55%)",
                             "label": "",
-                            "position": 1.5
+                            "position": 105
                         },
                         {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "color": "rgb(100.0%,92.16%,72.55%)",
                             "label": "",
-                            "position": 2
+                            "position": 120
                         },
                         {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
+                            "color": "rgb(90.2%,100.0%,76.47%)",
+                            "label": "",
+                            "position": 135
+                        },
+                        {
+                            "color": "rgb(62.75%,100.0%,43.14%)",
+                            "label": "",
+                            "position": 170
+                        },
+                        {
+                            "color": "rgb(45.1%,64.71%,1.96%)",
+                            "label": "",
+                            "position": 205
+                        },
+                        {
+                            "color": "rgb(7.84%,43.14%,54.9%)",
+                            "label": "",
+                            "position": 275
+                        },
+                        {
+                            "color": "rgb(3.92%,17.65%,49.02%)",
+                            "label": 500,
+                            "position": 500
                         }
                     ],
-                    "maxPosition": 3,
+                    "maxPosition": 500,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.897677Z",
+        "lastUpdated": "2025-05-16T11:18:47.449616Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4039,7 +4062,7 @@
                         },
                         {
                             "color": "rgb(99.22%,90.59%,14.51%)",
-                            "label": "",
+                            "label": "70",
                             "position": 70
                         },
                         {
@@ -4055,9 +4078,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:10.795139Z",
+        "lastUpdated": "2025-05-16T11:19:15.457585Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4105,7 +4129,7 @@
                         },
                         {
                             "color": "rgb(99.22%,90.59%,14.51%)",
-                            "label": "",
+                            "label": "70",
                             "position": 70
                         },
                         {
@@ -4121,9 +4145,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.370666Z",
+        "lastUpdated": "2025-05-16T11:19:29.949310Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

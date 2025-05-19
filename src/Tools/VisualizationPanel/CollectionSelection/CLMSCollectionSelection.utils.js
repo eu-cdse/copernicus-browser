@@ -86,6 +86,12 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -122,8 +128,8 @@ export const CLMS_OPTIONS = [
   //   ],
   // },
   {
-    label: 'CLMS Bio-geophysical parameters',
-    id: 'CLMS Bio-geophysical parameters',
+    label: 'CLMS Bio-geophysical Parameters',
+    id: 'CLMS Bio-geophysical Parameters',
     options: [
       {
         label: 'Soil Moisture',
@@ -140,9 +146,9 @@ export const CLMS_OPTIONS = [
             options: [
               // { label: 'swi-timeseries_global_12.5km_daily', id: 'swi-timeseries_global_12.5km_daily' },
               // { label: 'swi-static_global_12.5km_daily', id: 'swi-static_global_12.5km_daily' },
-              { label: 'clms_global_swi_12.5km_v3_10daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_10DAILY },
-              { label: 'clms_global_swi_12.5km_v3_daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_DAILY },
               { label: 'clms_europe_swi_1km_v3_daily_geotiff', id: COPERNICUS_CLMS_SWI_1KM_DAILY },
+              { label: 'clms_global_swi_12.5km_v3_daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_DAILY },
+              { label: 'clms_global_swi_12.5km_v3_10daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_10DAILY },
             ],
           },
         ],
@@ -181,10 +187,16 @@ export const CLMS_OPTIONS = [
             options: [
               { label: 'clms_global_lst_5km_v1_hourly_geotiff', id: COPERNICUS_CLMS_LST_5KM_HOURLY_V1 },
               { label: 'clms_global_lst_5km_v2_hourly_geotiff', id: COPERNICUS_CLMS_LST_5KM_HOURLY_V2 },
-              // { label: 'lst-daily-cycle_global_5km_10daily', id: 'lst-daily-cycle_global_5km_10daily 1' },
-              // { label: 'lst-daily-cycle_global_5km_10daily', id: 'lst-daily-cycle_global_5km_10daily 2' },
               { label: 'lst-tci_global_5km_10daily_v1', id: COPERNICUS_CLMS_LST_5KM_10DAILY_V1 },
               { label: 'lst-tci_global_5km_10daily_v2', id: COPERNICUS_CLMS_LST_5KM_10DAILY_V2 },
+              {
+                label: 'clms_global_lst_5km_v1_10daily-daily-cycle_geotiff',
+                id: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+              },
+              {
+                label: 'clms_global_lst_5km_v2_10daily-daily-cycle_geotiff',
+                id: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+              },
               // { label: 'lswt-nrt_global_1km_10daily', id: 'lswt-nrt_global_1km_10daily' },
               // { label: 'lswt-offline_global_1km_10daily', id: 'lswt-offline_global_1km_10daily' },
             ],
@@ -269,32 +281,6 @@ export const CLMS_OPTIONS = [
                 ],
               },
               {
-                label: 'clms_global_lai_1km_v2_10daily_geotiff',
-                id: COPERNICUS_CLMS_LAI_1KM_DAILY,
-                consolidationPeriods: [
-                  {
-                    label: 'None',
-                    id: COPERNICUS_CLMS_LAI_1KM_DAILY,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT0.label,
-                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT1.label,
-                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT2.label,
-                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT6.label,
-                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
-                  },
-                ],
-              },
-              {
                 label: 'clms_global_lai_300m_v1_10daily_geotiff',
                 id: COPERNICUS_CLMS_LAI_300M_10DAILY,
                 consolidationPeriods: [
@@ -317,6 +303,32 @@ export const CLMS_OPTIONS = [
                   {
                     label: AttributeConsolidationPeriodValues.RT6.label,
                     id: COPERNICUS_CLMS_LAI_300M_10DAILY_RT6,
+                  },
+                ],
+              },
+              {
+                label: 'clms_global_lai_1km_v2_10daily_geotiff',
+                id: COPERNICUS_CLMS_LAI_1KM_DAILY,
+                consolidationPeriods: [
+                  {
+                    label: 'None',
+                    id: COPERNICUS_CLMS_LAI_1KM_DAILY,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
                   },
                 ],
               },
@@ -379,20 +391,20 @@ export const CLMS_OPTIONS = [
             id: 'Vegetation Indices',
             options: [
               {
+                label: 'ndvi_global_300m_10daily_v1',
+                id: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
+              },
+              {
+                label: 'ndvi_global_300m_10daily_v2',
+                id: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+              },
+              {
                 label: 'ndvi_global_1km_10daily_v2',
                 id: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
               },
               {
                 label: 'ndvi_global_1km_10daily_v3',
                 id: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
-              },
-              {
-                label: 'ndvi_global_300m_10daily_v2',
-                id: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
-              },
-              {
-                label: 'ndvi_global_300m_10daily_v3',
-                id: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
               },
               {
                 label: 'ndvi_global_lst_1km_v2',
@@ -479,32 +491,6 @@ export const CLMS_OPTIONS = [
                 ],
               },
               {
-                label: 'clms_global_gdmp_1km_v2_10daily_geotiff',
-                id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
-                consolidationPeriods: [
-                  {
-                    label: 'None',
-                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT0.label,
-                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT1.label,
-                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT2.label,
-                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2,
-                  },
-                  {
-                    label: AttributeConsolidationPeriodValues.RT6.label,
-                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6,
-                  },
-                ],
-              },
-              {
                 label: 'clms_global_gdmp_300m_v1_10daily_geotiff_RT0',
                 id: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0,
                 consolidationPeriods: [
@@ -527,6 +513,32 @@ export const CLMS_OPTIONS = [
                   {
                     label: AttributeConsolidationPeriodValues.RT6.label,
                     id: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+                  },
+                ],
+              },
+              {
+                label: 'clms_global_gdmp_1km_v2_10daily_geotiff',
+                id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+                consolidationPeriods: [
+                  {
+                    label: 'None',
+                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6,
                   },
                 ],
               },
@@ -593,9 +605,9 @@ export const CLMS_OPTIONS = [
             id: 'Water Bodies 2',
             options: [
               { label: 'clms_global_wb_100m_v1_monthly_geotiff', id: COPERNICUS_CLMS_WB_100M_MONTHLY_V1 },
-              { label: 'clms_global_wb_1km_v2_10daily_geotiff', id: COPERNICUS_CLMS_WB_1KM_10DAILY_V2 },
-              { label: 'clms_global_wb_300m_v1_10daily_geotiff', id: COPERNICUS_CLMS_WB_300M_10DAILY_V1 },
               { label: 'clms_global_wb_300m_v2_monthly_geotiff', id: COPERNICUS_CLMS_WB_300M_MONTHLY_V2 },
+              { label: 'clms_global_wb_300m_v1_10daily_geotiff', id: COPERNICUS_CLMS_WB_300M_10DAILY_V1 },
+              { label: 'clms_global_wb_1km_v2_10daily_geotiff', id: COPERNICUS_CLMS_WB_1KM_10DAILY_V2 },
             ],
           },
           // {
@@ -615,29 +627,35 @@ export const CLMS_OPTIONS = [
           //     { label: 'wl-rivers_global_vector_daily', id: 'wl-rivers_global_vector_daily' },
           //   ],
           // },
-          // {
-          //   label: 'Lake Water Quality',
-          //   id: 'Lake Water Quality 1',
-          //   options: [
-          //     { label: 'lwq-nrt_global_100m_10daily', id: 'lwq-nrt_global_100m_10daily 1' },
-          //     { label: 'lwq-reproc_global_300m_10daily', id: 'lwq-reproc_global_300m_10daily 1' },
-          //     { label: 'lwq-nrt_global_300m_10daily', id: 'lwq-nrt_global_300m_10daily 1' },
-          //     { label: 'lwq-nrt_global_100m_10daily', id: 'lwq-nrt_global_100m_10daily 2' },
-          //     { label: 'lwq-nrt_global_300m_10daily', id: 'lwq-nrt_global_300m_10daily 2' },
-          //     { label: 'lwq-nrt_global_100m_10daily', id: 'lwq-nrt_global_100m_10daily 3' },
-          //     { label: 'lwq-reproc_global_300m_10daily', id: 'lwq-reproc_global_300m_10daily 2' },
-          //     { label: 'lwq-nrt_global_300m_10daily', id: 'lwq-nrt_global_300m_10daily 3' },
-          //     { label: 'lwq-nrt_global_100m_10daily', id: 'lwq-nrt_global_100m_10daily 4' },
-          //     { label: 'lwq-nrt_global_300m_10daily', id: 'lwq-nrt_global_300m_10daily 4' },
-          //   ],
-          // },
+          {
+            label: 'Lake Water Quality',
+            id: 'Lake Water Quality',
+            options: [
+              {
+                label: 'clms_global_lwq_100m_v1_10daily-nrt_geotiff',
+                id: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+              },
+              {
+                label: 'clms_global_lwq_300m_v1_10daily-nrt_geotiff',
+                id: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+              },
+              {
+                label: 'clms_global_lwq_300m_v2_10daily-nrt_geotiff',
+                id: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+              },
+              {
+                label: 'clms_global_lwq_300m_v1_10daily-reproc_geotiff',
+                id: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+              },
+            ],
+          },
           {
             label: 'River and Lake Ice Extent',
             id: 'River and Lake Ice Extent',
             options: [
               // { label: 'lie-agg_europe_vector_daily', id: 'lie-agg_europe_vector_daily' },
-              { label: 'clms_global_lie_500m_v1_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V1 },
               { label: 'clms_global_lie_250m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_250M_DAILY_V2 },
+              { label: 'clms_global_lie_500m_v1_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V1 },
             ],
           },
         ],

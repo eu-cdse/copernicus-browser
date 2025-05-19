@@ -145,6 +145,12 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
+  COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
+  COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -4191,18 +4197,6 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
   },
   {
     match: [
-      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6, layerId: 'DMP' },
-    ],
-    description: () =>
-      t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
-  },
-
-  {
-    match: [
       { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY, layerId: 'FCOVER' },
       { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0, layerId: 'FCOVER' },
       { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1, layerId: 'FCOVER' },
@@ -4211,17 +4205,6 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`FCover is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction. It is used to separate vegetation and soil in energy balance processes, including temperature and evapotranspiration. It is computed from the leaf area index and other canopy structural variables and does not depend on variables such as the geometry of illumination as compared to FAPAR. For this reason, it is a very good candidate for the replacement of classical vegetation indices for the monitoring of green vegetation. Because of the linear relationship with radiometric signal, FCover will be only marginally scale dependent. Note that similarly to LAI and FAPAR, only the green elements will be considered, either belonging both to the overstory and understory.`,
-  },
-  {
-    match: [
-      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6, layerId: 'DMP' },
-    ],
-    description: () =>
-      t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT0, layerId: 'GPP' }],
@@ -4546,11 +4529,13 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V1, layerId: 'TCI' }],
-    description: () => t`TBD`,
+    description: () =>
+      t`TCI, long used as a suitable indicator of vegetation health, characterises how hot any given land pixel is with respect to its maximum temperature range. Since over vegetated surfaces, temperature is strongly controlled by energy fluxes (sensible and latent heat), the TCI indirectly characterizes the moisture availability through the near-surface radiation and aerodynamic conditions.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V2, layerId: 'TCI' }],
-    description: () => t`TBD`,
+    description: () =>
+      t`TCI, long used as a suitable indicator of vegetation health, characterises how hot any given land pixel is with respect to its maximum temperature range. Since over vegetated surfaces, temperature is strongly controlled by energy fluxes (sensible and latent heat), the TCI indirectly characterizes the moisture availability through the near-surface radiation and aerodynamic conditions.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MAX_LTS' }],
@@ -4949,7 +4934,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_WB_1KM_10DAILY_V2, layerId: 'WB' }],
-    description: () => t`TBD`,
+    description: () => t`Information not currently available.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWE_5KM_DAILY_V1, layerId: 'SWE' }],
@@ -4990,5 +4975,416 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_WB_100M_MONTHLY_V1, layerId: 'WB' }],
     description: () =>
       t`The main Water Bodies detection layer (WB) uses the following values: Sea (0), Water (70), No data (251), No water (255). From the Sentinel-2 L1C input reflectances, Water Bodies are detected using the Modified Normalized Difference Water Index (MNDWI), for each input tile`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1, layerId: 'FOBS' },
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2, layerId: 'FOBS' },
+    ],
+    description: () =>
+      t`Fraction of valid LST values (used to calculate statistics) in the compositing period. In this context, a valid LST value corresponds to a clear-sky retrieval, after outlier removal.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1, layerId: 'MAX' },
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2, layerId: 'MAX' },
+    ],
+    description: () =>
+      t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the maximum LST values retrieved during the 10-days composite period.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1, layerId: 'MEDIAN' },
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2, layerId: 'MEDIAN' },
+    ],
+    description: () =>
+      t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the median LST values retrieved during the 10-days composite period.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1, layerId: 'MIN' },
+      { datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2, layerId: 'MIN' },
+    ],
+    description: () =>
+      t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the minimum LST values retrieved during the 10-days composite period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'CHLAMEAN' }],
+    description: () => t`Chlorophyll-a (Chla) in mg/m³, commonly used as a proxy to phytoplankton biomass.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'FCBPROB' }],
+    description: () =>
+      t`Floating Cyanobacteria probability, indicating the probability of cyanobacteria surface blooms present in the water body.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW1020' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 1020nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW400' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 400nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW412' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW443' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW490' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW510' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW560' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW620' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW665' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW674' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 674nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW681' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW709' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW754' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW779' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW885' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW900' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TMEAN' }],
+    description: () =>
+      t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TSI' }],
+    description: () =>
+      t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TSMMEAN' }],
+    description: () =>
+      t`Total suspended matter (TSM) in g/m³, used to quantify the concentration of suspended particles in the water body.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW412' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW443' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW490' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW510' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW560' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW620' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW665' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW681' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW709' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW754' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW760' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 760nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW779' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW865' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW885' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW900' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'TMEAN' }],
+    description: () =>
+      t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'TSI' }],
+    description: () =>
+      t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW1020' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 1020nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW400' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 400nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW412' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW443' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW490' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW510' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW560' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW620' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW665' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW674' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 674nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW681' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW709' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW754' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW760' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 760nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW764' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 764nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW767' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 767nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW779' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW865' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW885' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW900' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW940' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 940nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'TMEAN' }],
+    description: () =>
+      t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'TSI' }],
+    description: () =>
+      t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW1375' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 1375, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW1610' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 1610, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW2190' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 2190, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW443' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 443, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW490' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 490, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW560' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 560, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW665' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 665, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW705' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 705, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW740' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 740, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW783' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 783, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW842' }],
+    description: () =>
+      t`Fully normalized water-leaving reflectance at the waveband 842, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW865' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW945' }],
+    description: () =>
+      t`Fully normalized water leaving reflectances at the waveband 945nm, using most representative spectrum within the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'TMEAN' }],
+    description: () =>
+      t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'TSI' }],
+    description: () =>
+      t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
   },
 ];

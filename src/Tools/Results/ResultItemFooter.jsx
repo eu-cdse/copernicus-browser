@@ -138,8 +138,8 @@ export const ResultItemFooter = ({
         {tags
           .filter((tag) => tag)
           .map((tag, index) => (
-            <div className="tag" key={index}>
-              {tag}
+            <div className="tag" key={index} title={tag.description}>
+              {tag?.value}
             </div>
           ))}
       </div>

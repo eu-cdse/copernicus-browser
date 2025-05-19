@@ -1,17 +1,8 @@
 import { t } from 'ttag';
 import DataSourceTooltip from './DataSourceTooltip';
 
-const getCLMSNDVIGlobal1KM10DailyV3Markdown = () => t`
-**CLMS test NDVI tooltip**
-`;
-
-const CLMSNDVIGlobal1KM10DailyV3Tooltip = () =>
-  DataSourceTooltip({
-    source: getCLMSNDVIGlobal1KM10DailyV3Markdown(),
-  });
-
 const getCLMSCollectionMarkdown = () => t`
-Geographical information on land cover and its changes, land use, ground motion, vegetation state, water cycle and earth surface energy variables for both Europe and the entire globe. More info [here](https://land.copernicus.eu/en).
+Geographical information on land cover and its changes, land use, ground motion, vegetation state, water cycle and earth surface energy variables for both Europe and the entire globe. Visit the [CLMS website](https://land.copernicus.eu/en) for more information.
 `;
 
 const CLMSCollectionTooltip = () =>
@@ -20,7 +11,7 @@ const CLMSCollectionTooltip = () =>
   });
 
 const getClmsGlobalLcc100mV3YearlyMarkdown = () => t`
-  Provides at global level spatial information on different types (classes) of physical coverage of the Earth's surface, e.g. forests, grasslands, croplands, lakes, wetlands for the 2019 base year. The data are updated annually and are available for the 2015-2019 years.`;
+  Provides at global level spatial information on different types (classes) of physical coverage of the Earth's surface, e.g. forests, grasslands, croplands, lakes, wetlands for the 2019 base year. The data are updated annually and are available for the 2015-2019 years. More information [here](https://land.copernicus.eu/en/products/global-dynamic-land-cover).`;
 
 const ClmsGlobalLcc100mV3YearlyTooltip = () =>
   DataSourceTooltip({
@@ -28,15 +19,20 @@ const ClmsGlobalLcc100mV3YearlyTooltip = () =>
   });
 
 const getClmsGlobalLst5kmV110dailytciMarkdown = () => t`
-  Provides a statistical overview of the land surface temperature over each 10-day compositing period regardless of any specific hour and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2017 to January 2021.`;
+  Provides a statistical overview of the land surface temperature over each 10-day compositing period regardless of any specific hour and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2017 to January 2021. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10-daily-land-surface-temperature-thermal-condition-index-global-v1-0-5km).`;
 
 const ClmsGlobalLst5kmV110dailytciTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalLst5kmV110dailytciMarkdown(),
   });
 
+const getClmsGlobalLst5kmV110DailyDailyCycleMarkdown = () =>
+  t`Provides a statistical overview of the land surface temperature daily cycle for each 10-day compositing period and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2017 to January 2021. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10-daily-land-surface-temperature-daily-cycle-global-v1-0-5km).`;
+const ClmsGlobalLst5kmV110DailyDailyCycleTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLst5kmV110DailyDailyCycleMarkdown() });
+
 const getClmsGlobalLst5kmV1HourlyMarkdown = () => t`
-  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from July 2010 to January 2021.`;
+  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from July 2010 to January 2021. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v1-0-5km).`;
 
 const ClmsGlobalLst5kmV1HourlyTooltip = () =>
   DataSourceTooltip({
@@ -44,7 +40,7 @@ const ClmsGlobalLst5kmV1HourlyTooltip = () =>
   });
 
 const getClmsGlobalLst5kmV210dailytciMarkdown = () => t`
-  Provides a statistical overview of the land surface temperature over each 10-day compositing period regardless of any specific hour and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1.`;
+  Provides a statistical overview of the land surface temperature over each 10-day compositing period regardless of any specific hour and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10-daily-land-surface-temperature-thermal-condition-index-global-v2-0-5km).`;
 
 const ClmsGlobalLst5kmV210dailytciTooltip = () =>
   DataSourceTooltip({
@@ -52,15 +48,20 @@ const ClmsGlobalLst5kmV210dailytciTooltip = () =>
   });
 
 const getClmsGlobalLst5kmV2HourlyMarkdown = () => t`
-  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1.`;
+  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v2-0-5km).`;
 
 const ClmsGlobalLst5kmV2HourlyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalLst5kmV2HourlyMarkdown(),
   });
 
+const getClmsGlobalLst5kmV210DailyDailyCycleMarkdown = () =>
+  t`Provides a statistical overview of the land surface temperature daily cycle for each 10-day compositing period and every geostationary sensor image pixel. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10-daily-land-surface-temperature-daily-cycle-global-v2-0-5km).`;
+const ClmsGlobalLst5kmV210DailyDailyCycleTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLst5kmV210DailyDailyCycleMarkdown() });
+
 const getClmsGlobalFapar1kmV210dailyMarkdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-1km).`;
 
 const ClmsGlobalFapar1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -68,7 +69,7 @@ const ClmsGlobalFapar1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalFapar1kmV210dailyRt0Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-1km).`;
 
 const ClmsGlobalFapar1kmV210dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -76,7 +77,7 @@ const ClmsGlobalFapar1kmV210dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalFapar1kmV210dailyRt1Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-1km).`;
 
 const ClmsGlobalFapar1kmV210dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -84,7 +85,7 @@ const ClmsGlobalFapar1kmV210dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalFapar1kmV210dailyRt2Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-1km).`;
 
 const ClmsGlobalFapar1kmV210dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -92,7 +93,7 @@ const ClmsGlobalFapar1kmV210dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalFapar1kmV210dailyRt6Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-1km).`;
 
 const ClmsGlobalFapar1kmV210dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -100,7 +101,7 @@ const ClmsGlobalFapar1kmV210dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalFapar300mV110dailyMarkdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v1-0-300m).
   `;
 
 const ClmsGlobalFapar300mV110dailyTooltip = () =>
@@ -109,7 +110,7 @@ const ClmsGlobalFapar300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalFapar300mV110dailyRt0Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v1-0-300m).
   `;
 
 const ClmsGlobalFapar300mV110dailyRt0Tooltip = () =>
@@ -118,7 +119,7 @@ const ClmsGlobalFapar300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalFapar300mV110dailyRt1Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v1-0-300m).
   `;
 
 const ClmsGlobalFapar300mV110dailyRt1Tooltip = () =>
@@ -127,7 +128,7 @@ const ClmsGlobalFapar300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalFapar300mV110dailyRt2Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v1-0-300m).
   `;
 
 const ClmsGlobalFapar300mV110dailyRt2Tooltip = () =>
@@ -136,7 +137,7 @@ const ClmsGlobalFapar300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalFapar300mV110dailyRt6Markdown = () => t`
-  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.
+  Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v1-0-300m).
   `;
 
 const ClmsGlobalFapar300mV110dailyRt6Tooltip = () =>
@@ -145,7 +146,7 @@ const ClmsGlobalFapar300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalLai1kmV210dailyMarkdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km).`;
 
 const ClmsGlobalLai1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -153,7 +154,7 @@ const ClmsGlobalLai1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalLai1kmV210dailyRt0Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km).`;
 
 const ClmsGlobalLai1kmV210dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -161,7 +162,7 @@ const ClmsGlobalLai1kmV210dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalLai1kmV210dailyRt1Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km).`;
 
 const ClmsGlobalLai1kmV210dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -169,7 +170,7 @@ const ClmsGlobalLai1kmV210dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalLai1kmV210dailyRt2Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km).`;
 
 const ClmsGlobalLai1kmV210dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -177,7 +178,7 @@ const ClmsGlobalLai1kmV210dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalLai1kmV210dailyRt6Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km).`;
 
 const ClmsGlobalLai1kmV210dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -185,7 +186,7 @@ const ClmsGlobalLai1kmV210dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalDmp1kmV210dailyMarkdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalDmp1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -193,7 +194,7 @@ const ClmsGlobalDmp1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalDmp1kmV210dailyRt1Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalDmp1kmV210dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -201,7 +202,7 @@ const ClmsGlobalDmp1kmV210dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalDmp1kmV210dailyRt6Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalDmp1kmV210dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -209,7 +210,7 @@ const ClmsGlobalDmp1kmV210dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalDmp300mV110dailyRt1Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalDmp300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -217,7 +218,7 @@ const ClmsGlobalDmp300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalDmp300mV110dailyRt5Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalDmp300mV110dailyRt5Tooltip = () =>
   DataSourceTooltip({
@@ -225,7 +226,7 @@ const ClmsGlobalDmp300mV110dailyRt5Tooltip = () =>
   });
 
 const getClmsGlobalFcover1kmV210dailyMarkdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-1km).`;
 
 const ClmsGlobalFcover1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -233,7 +234,7 @@ const ClmsGlobalFcover1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalFcover1kmV210dailyRt0Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-1km).`;
 
 const ClmsGlobalFcover1kmV210dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -241,7 +242,7 @@ const ClmsGlobalFcover1kmV210dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalFcover1kmV210dailyRt1Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-1km).`;
 
 const ClmsGlobalFcover1kmV210dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -249,7 +250,7 @@ const ClmsGlobalFcover1kmV210dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalFcover1kmV210dailyRt2Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-1km).`;
 
 const ClmsGlobalFcover1kmV210dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -257,7 +258,7 @@ const ClmsGlobalFcover1kmV210dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalFcover1kmV210dailyRt6Markdown = () => t`
-  Represents the overall growth rate or dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Production (NPP), however with units customized for agro-statistical purposes (kg/ha/day). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-1km).`;
 
 const ClmsGlobalFcover1kmV210dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -265,7 +266,7 @@ const ClmsGlobalFcover1kmV210dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalFcover300mV110dailyMarkdown = () => t`
-  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v1-0-300m).`;
 
 const ClmsGlobalFcover300mV110dailyTooltip = () =>
   DataSourceTooltip({
@@ -273,7 +274,7 @@ const ClmsGlobalFcover300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalFcover300mV110dailyRt0Markdown = () => t`
-  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v1-0-300m).`;
 
 const ClmsGlobalFcover300mV110dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -281,7 +282,7 @@ const ClmsGlobalFcover300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalFcover300mV110dailyRt1Markdown = () => t`
-  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v1-0-300m).`;
 
 const ClmsGlobalFcover300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -289,7 +290,7 @@ const ClmsGlobalFcover300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalFcover300mV110dailyRt2Markdown = () => t`
-  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v1-0-300m).`;
 
 const ClmsGlobalFcover300mV110dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -297,7 +298,7 @@ const ClmsGlobalFcover300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalFcover300mV110dailyRt6Markdown = () => t`
-  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V data.`;
+  Corresponds to the fraction of ground covered by green vegetation. It quantifies the spatial extent of the vegetation. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v1-0-300m).`;
 
 const ClmsGlobalFcover300mV110dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -305,7 +306,7 @@ const ClmsGlobalFcover300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalGdmp1kmV210dailyMarkdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalGdmp1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -313,7 +314,7 @@ const ClmsGlobalGdmp1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalGdmp1kmV210dailyRt0Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalGdmp1kmV210dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -321,7 +322,7 @@ const ClmsGlobalGdmp1kmV210dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalGdmp1kmV210dailyRt1Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalGdmp1kmV210dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -329,7 +330,7 @@ const ClmsGlobalGdmp1kmV210dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalGdmp1kmV210dailyRt2Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalGdmp1kmV210dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -337,7 +338,7 @@ const ClmsGlobalGdmp1kmV210dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalGdmp1kmV210dailyRt6Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-1km).`;
 
 const ClmsGlobalGdmp1kmV210dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -345,7 +346,7 @@ const ClmsGlobalGdmp1kmV210dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalGdmp300mV110dailyRt0Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalGdmp300mV110dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -353,7 +354,7 @@ const ClmsGlobalGdmp300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalGdmp300mV110dailyRt1Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalGdmp300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -361,7 +362,7 @@ const ClmsGlobalGdmp300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalGdmp300mV110dailyRt2Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalGdmp300mV110dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -369,7 +370,7 @@ const ClmsGlobalGdmp300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalGdmp300mV110dailyRt5Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalGdmp300mV110dailyRt5Tooltip = () =>
   DataSourceTooltip({
@@ -377,7 +378,7 @@ const ClmsGlobalGdmp300mV110dailyRt5Tooltip = () =>
   });
 
 const getClmsGlobalGdmp300mV110dailyRt6Markdown = () => t`
-  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available at global scale in the spatial resolution of about 1km and with the temporal extent from 1999 to June 2020.`;
+  Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const ClmsGlobalGdmp300mV110dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -385,7 +386,7 @@ const ClmsGlobalGdmp300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalNdvi1kmV2StatisticsMarkdown = () => t`
-  Based upon SPOT/VEGETATION and PROBA-V NDVI 1km version 2, long-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 19-years period 1999-2017.`;
+  Based upon SPOT/VEGETATION and PROBA-V NDVI 1km version 2, long-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 19-years period 1999-2017. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-long-term-statistics-v2-0-1km).`;
 
 const ClmsGlobalNdvi1kmV2StatisticsTooltip = () =>
   DataSourceTooltip({
@@ -393,7 +394,7 @@ const ClmsGlobalNdvi1kmV2StatisticsTooltip = () =>
   });
 
 const getClmsGlobalNdvi1kmV3StatisticsMarkdown = () => t`
-  Based upon PROBA-V NDVI 1km version 3, short-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 5-years period 2015-2019.`;
+  Based upon PROBA-V NDVI 1km version 3, short-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 5-years period 2015-2019. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
 
 const ClmsGlobalNdvi1kmV3StatisticsTooltip = () =>
   DataSourceTooltip({
@@ -401,7 +402,7 @@ const ClmsGlobalNdvi1kmV3StatisticsTooltip = () =>
   });
 
 const getClmsGlobalNdvi1kmV210dailyMarkdown = () => t`
-  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from April 1998 to 2013 based upon SPOT/VEGETATION data and from 2014 to 2020 based upon PROBA-V data.`;
+  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from April 1998 to 2013 based upon SPOT/VEGETATION data and from 2014 to 2020 based upon PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
 
 const ClmsGlobalNdvi1kmV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -409,7 +410,7 @@ const ClmsGlobalNdvi1kmV210dailyTooltip = () =>
   });
 
 const getClmsGlobalNdvi300mV110dailyMarkdown = () => t`
-  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020.`;
+  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalized-difference-vegetation-index-300m-v1.0).`;
 
 const ClmsGlobalNdvi300mV110dailyTooltip = () =>
   DataSourceTooltip({
@@ -417,7 +418,7 @@ const ClmsGlobalNdvi300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalNdvi300mV210dailyMarkdown = () => t`
-  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020.`;
+  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v2-0-300m).`;
 
 const ClmsGlobalNdvi300mV210dailyTooltip = () =>
   DataSourceTooltip({
@@ -425,7 +426,7 @@ const ClmsGlobalNdvi300mV210dailyTooltip = () =>
   });
 
 const getClmsGlobalSsm1kmV1DailyMarkdown = () => t`
-  Provides information on the relative water content of the top few centimeters soil, describing how wet or dry the soil is in its topmost layer, expressed in percent saturation. Daily observations are available for the continental Europe in the spatial resolution of 1 km and with the temporal extent from October 2014 to present.`;
+  Provides information on the relative water content of the top few centimeters soil, describing how wet or dry the soil is in its topmost layer, expressed in percent saturation. Daily observations are available for the continental Europe in the spatial resolution of 1 km and with the temporal extent from October 2014 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-surface-soil-moisture-v1.0).`;
 
 const ClmsGlobalSsm1kmV1DailyTooltip = () =>
   DataSourceTooltip({
@@ -433,7 +434,7 @@ const ClmsGlobalSsm1kmV1DailyTooltip = () =>
   });
 
 const getClmsGlobalBa300mV3MonthlyMarkdown = () => t`
-  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Monthly datasets are available at global scale, in the spatial resolution of 300 m, and with a time lag of two months. They cover the period from 2019 to present.`;
+  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Monthly datasets are available at global scale, in the spatial resolution of 300 m, and with a time lag of two months. They cover the period from 2019 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/burnt-area-v3-1-monthly-300m).`;
 
 const ClmsGlobalBa300mV3MonthlyTooltip = () =>
   DataSourceTooltip({
@@ -441,7 +442,7 @@ const ClmsGlobalBa300mV3MonthlyTooltip = () =>
   });
 
 const getClmsGlobalBa300mV3DailyMarkdown = () => t`
-  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Daily datasets are available at global scale, in the spatial resolution of 300 m, and within 24 hours after the satellite acquisition. They cover the period from July 2023 to present.`;
+  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Daily datasets are available at global scale, in the spatial resolution of 300 m, and within 24 hours after the satellite acquisition. They cover the period from July 2023 to present. More info [here](https://land.copernicus.eu/en/products/vegetation/burnt-area-v3-1-daily-300m).`;
 
 const ClmsGlobalBa300mV3DailyTooltip = () =>
   DataSourceTooltip({
@@ -449,7 +450,7 @@ const ClmsGlobalBa300mV3DailyTooltip = () =>
   });
 
 const getClmsGlobalLsp300mV1YearlyMarkdown = () => t`
-  Provide at global scale and for Europe information on vegetation phenology and productivity gathering 13 parameters  for two growing seasons.`;
+  Provide at global scale and for Europe information on vegetation phenology and productivity gathering 13 parameters  for two growing seasons. More information [here](https://land.copernicus.eu/en/products/vegetation?tab=vegetation_phenology_and_productivity_parameters).`;
 
 const ClmsGlobalLsp300mV1YearlyTooltip = () =>
   DataSourceTooltip({
@@ -457,7 +458,7 @@ const ClmsGlobalLsp300mV1YearlyTooltip = () =>
   });
 
 const getClmsGlobalGpp300mV110dailyRt0Markdown = () => t`
-  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m).`;
 
 const ClmsGlobalGpp300mV110dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -465,7 +466,7 @@ const ClmsGlobalGpp300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalGpp300mV110dailyRt1Markdown = () => t`
-  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m).`;
 
 const ClmsGlobalGpp300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -473,7 +474,7 @@ const ClmsGlobalGpp300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalGpp300mV110dailyRt2Markdown = () => t`
-  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m).`;
 
 const ClmsGlobalGpp300mV110dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -481,7 +482,7 @@ const ClmsGlobalGpp300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalGpp300mV110dailyRt6Markdown = () => t`
-  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m).`;
 
 const ClmsGlobalGpp300mV110dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -489,7 +490,7 @@ const ClmsGlobalGpp300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalLai300mV110dailyMarkdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0).`;
 
 const ClmsGlobalLai300mV110dailyTooltip = () =>
   DataSourceTooltip({
@@ -497,7 +498,7 @@ const ClmsGlobalLai300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalLai300mV110dailyRt0Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0).`;
 
 const ClmsGlobalLai300mV110dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -505,7 +506,7 @@ const ClmsGlobalLai300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalLai300mV110dailyRt1Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0).`;
 
 const ClmsGlobalLai300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -513,7 +514,7 @@ const ClmsGlobalLai300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalLai300mV110dailyRt2Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0).`;
 
 const ClmsGlobalLai300mV110dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -521,7 +522,7 @@ const ClmsGlobalLai300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalLai300mV110dailyRt6Markdown = () => t`
-  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1.`;
+  Defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0).`;
 
 const ClmsGlobalLai300mV110dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -529,7 +530,7 @@ const ClmsGlobalLai300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalNpp300mV110dailyRt0Markdown = () => t`
-  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v1-0-300m).`;
 
 const ClmsGlobalNpp300mV110dailyRt0Tooltip = () =>
   DataSourceTooltip({
@@ -537,7 +538,7 @@ const ClmsGlobalNpp300mV110dailyRt0Tooltip = () =>
   });
 
 const getClmsGlobalNpp300mV110dailyRt1Markdown = () => t`
-  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v1-0-300m).`;
 
 const ClmsGlobalNpp300mV110dailyRt1Tooltip = () =>
   DataSourceTooltip({
@@ -545,7 +546,7 @@ const ClmsGlobalNpp300mV110dailyRt1Tooltip = () =>
   });
 
 const getClmsGlobalNpp300mV110dailyRt2Markdown = () => t`
-  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v1-0-300m).`;
 
 const ClmsGlobalNpp300mV110dailyRt2Tooltip = () =>
   DataSourceTooltip({
@@ -553,7 +554,7 @@ const ClmsGlobalNpp300mV110dailyRt2Tooltip = () =>
   });
 
 const getClmsGlobalNpp300mV110dailyRt6Markdown = () => t`
-  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present.`;
+  Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v1-0-300m).`;
 
 const ClmsGlobalNpp300mV110dailyRt6Tooltip = () =>
   DataSourceTooltip({
@@ -561,7 +562,7 @@ const ClmsGlobalNpp300mV110dailyRt6Tooltip = () =>
   });
 
 const getClmsGlobalNdvi1kmV310dailyMarkdown = () => t`
-  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from 1999 to 2013 based upon SPOT/VEGETATION data and from 2014 to June 2020 based upon PROBA-V data.`;
+  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from 1999 to 2013 based upon SPOT/VEGETATION data and from 2014 to June 2020 based upon PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v3-0-1km).`;
 
 const ClmsGlobalNdvi1kmV310dailyTooltip = () =>
   DataSourceTooltip({
@@ -569,7 +570,7 @@ const ClmsGlobalNdvi1kmV310dailyTooltip = () =>
   });
 
 const getClmsGlobalSwi125kmV310dailyMarkdown = () => t`
-  Averages the daily Soil Water Index product over 10 days. The data are produced every 10 days over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present.`;
+  Averages the daily Soil Water Index product over 10 days. The data are produced every 10 days over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/10-daily-soil-water-index-global-v3-0-12-5-km).`;
 
 const ClmsGlobalSwi125kmV310dailyTooltip = () =>
   DataSourceTooltip({
@@ -577,7 +578,7 @@ const ClmsGlobalSwi125kmV310dailyTooltip = () =>
   });
 
 const getClmsGlobalSwi125kmV3DailyMarkdown = () => t`
-  Provides daily updates on the moisture conditions in different soil layers. The data are available over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present.`;
+  Provides daily updates on the moisture conditions in different soil layers. The data are available over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-water-index-global-v3-0-12-5km).`;
 
 const ClmsGlobalSwi125kmV3DailyTooltip = () =>
   DataSourceTooltip({
@@ -585,7 +586,7 @@ const ClmsGlobalSwi125kmV3DailyTooltip = () =>
   });
 
 const getClmsGlobalSwi1kmV1DailyMarkdown = () => t`
-  Provides daily updates on the moisture conditions in different soil layers. The data are available over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present.`;
+  Quantifies the moisture condition at various depths in the soil. Daily observations are available for the continental Europe in the spatial resolution of 1 km and with the temporal extent from January 2015 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-water-index-europe-v1-0-1km).`;
 
 const ClmsGlobalSwi1kmV1DailyTooltip = () =>
   DataSourceTooltip({
@@ -595,7 +596,7 @@ const ClmsGlobalSwi1kmV1DailyTooltip = () =>
 // LOT2
 
 const getClmsGlobalWb300mV110dailyMarkdown = () =>
-  t`Detects the areas covered by inland water providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. 10-daly data are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2014 to 2020.`;
+  t`Detects the areas covered by inland water providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. 10-daly data are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2014 to 2020. More information [here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-global-v1-0-300m).`;
 
 const ClmsGlobalWb300mV110dailyTooltip = () =>
   DataSourceTooltip({
@@ -603,21 +604,21 @@ const ClmsGlobalWb300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalWb300mV2MonthlyMarkdown = () =>
-  t`Detects the areas covered by inland water providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. Monthly updates are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2020 to present.`;
+  t`Detects the areas covered by inland water providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. Monthly updates are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2020 to present More information [here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-global-v2-0-300m).`;
 
 const ClmsGlobalWb300mV2MonthlyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalWb300mV2MonthlyMarkdown(),
   });
 
-const getClmsGlobalWb1kmV210dailyMarkdown = () => ``;
+const getClmsGlobalWb1kmV210dailyMarkdown = () => t`Information not currently available.`;
 const ClmsGlobalWb1kmV210dailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalWb1kmV210dailyMarkdown(),
   });
 
 const getClmsGlobalSwe5kmV1DailyMarkdown = () =>
-  t`Provides for the Northern Hemisphere daily updates of the equivalent amount of liquid water stored in the snow pack. The data is available in the spatial resolution of 5 km and with the temporal extent from January 2006 to June 2024.`;
+  t`Provides for the Northern Hemisphere daily updates of the equivalent amount of liquid water stored in the snow pack. The data is available in the spatial resolution of 5 km and with the temporal extent from January 2006 to June 2024. More information [here](https://land.copernicus.eu/en/products/snow/snow-water-equivalent-v1-0-5km).`;
 
 const ClmsGlobalSwe5kmV1DailyTooltip = () =>
   DataSourceTooltip({
@@ -625,52 +626,70 @@ const ClmsGlobalSwe5kmV1DailyTooltip = () =>
   });
 
 const getClmsGlobalSwe5kmV2DailyMarkdown = () =>
-  t`Provides for the Northern Hemisphere daily updates of the equivalent amount of liquid water stored in the snow pack. The data is available in near real time in the spatial resolution of 5 km and with the temporal extent from July 2024 to present.`;
+  t`Provides for the Northern Hemisphere daily updates of the equivalent amount of liquid water stored in the snow pack. The data is available in near real time in the spatial resolution of 5 km and with the temporal extent from July 2024 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-water-equivalent-v2-0-5km).`;
 const ClmsGlobalSwe5kmV2DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalSwe5kmV2DailyMarkdown(),
   });
 
 const getClmsGlobalSce500mV1DailyMarkdown = () =>
-  t`Provides for Europe daily updates of the fraction of snow cover on the ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time in the spatial resolution of 500 m and with the temporal extent from March 2017 to present.`;
+  t`Provides for Europe daily updates of the fraction of snow cover on the ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time in the spatial resolution of 500 m and with the temporal extent from March 2017 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-europe-v1-0-500m).`;
 const ClmsGlobalSce500mV1DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalSce500mV1DailyMarkdown(),
   });
 
 const getClmsGlobalSce1kmV1DailyMarkdown = () =>
-  t`Provides for Northern Hemisphere daily maps of the fraction of snow cover on ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from January 2018 to present.`;
+  t`Provides for Northern Hemisphere daily maps of the fraction of snow cover on ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from January 2018 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-northern-hemisphere-v1-0-1km).`;
 const ClmsGlobalSce1kmV1DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalSce1kmV1DailyMarkdown(),
   });
 
 const getClmsGlobalLie500mV1DailyMarkdown = () =>
-  t`On a daily basis classifies pixels in Northern Hemisphere freshwater bodies into 1) Ice, 2) Open water, and 3) Cloud. The class “Ice” includes various types of ice, also snow-covered ice. The data is updated in near real-time with the spatial resolution of 500 m and with has a temporal extent from April 2021 to present.`;
+  t`On a daily basis classifies pixels in Northern Hemisphere freshwater bodies into 1) Ice, 2) Open water, and 3) Cloud. The class “Ice” includes various types of ice, also snow-covered ice. The data is updated in near real-time with the spatial resolution of 500 m and with has a temporal extent from April 2021 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-northern-hemisphere-500m).`;
 const ClmsGlobalLie500mV1DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalLie500mV1DailyMarkdown(),
   });
 
 const getClmsGlobalLie250mV2DailyMarkdown = () =>
-  t`On a daily basis, classifies pixels of Continental Europe freshwater bodies as 1) Fully snow-covered ice, 2) Partially snow-covered or snow-free ice, and 3) Open water. The data is available in near real time in a spatial resolution of 250 m and with the temporal extent from July the 1st, onwards. In June 2024, the data input sensor was transferred from Terra MODIS (VERSION 1.2.1) to NOAA-20 VIIRS (VERSION 2.2.1), and the area was extended from the Baltic region to cover Continental Europe.`;
+  t`On a daily basis, classifies pixels of Continental Europe freshwater bodies as 1) Fully snow-covered ice, 2) Partially snow-covered or snow-free ice, and 3) Open water. The data is available in near real time in a spatial resolution of 250 m and with the temporal extent from July the 1st, onwards. In June 2024, the data input sensor was transferred from Terra MODIS (VERSION 1.2.1) to NOAA-20 VIIRS (VERSION 2.2.1), and the area was extended from the Baltic region to cover Continental Europe. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-europe-v2-250m).`;
 const ClmsGlobalLie250mV2DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalLie250mV2DailyMarkdown(),
   });
 
 const getClmsGlobalWb100mV1MonthlyMarkdown = () => t`
-  Detects the areas covered by inland water along the year providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. Monthly updates are available at global scale in the spatial resolution of 100 m and with the temporal extent from 2020 to present.`;
+  Detects the areas covered by inland water along the year providing the maximum and the minimum extent of the water surface as well as the seasonal dynamics. Monthly updates are available at global scale in the spatial resolution of 100 m and with the temporal extent from 2020 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-global-v1-0-100m).`;
 const ClmsGlobalWb100mV1MonthlyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalWb100mV1MonthlyMarkdown(),
   });
 
+const getClmsGlobalLwq300mV210DailyNrtMarkdown = () =>
+  t`Provides semi-continuous observations for a large number of medium and large-sized lakes. 10-daily observations are available in near real time at 300 m spatial resolution from September 2024 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-water-quality-near-real-time-v2-0-300m).`;
+const ClmsGlobalLwq300mV210DailyNrtTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLwq300mV210DailyNrtMarkdown() });
+
+const getClmsGlobalLwq300mV110DailyReprocMarkdown = () =>
+  t`Provides semi-continuous observations for a large number of medium and large-sized lakes, according to the Global Lakes and Wetlands Database (GLWD) or otherwise of specific environmental monitoring interest. 10-daily observations are available in the spatial resolution of 300 m and with the temporal extent from 2002 to 2012. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-water-quality-offline-v1-0-300m).`;
+const ClmsGlobalLwq300mV110DailyReprocTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLwq300mV110DailyReprocMarkdown() });
+
+const getClmsGlobalLwq300mV110DailyNrtMarkdown = () =>
+  t`Provides semi-continuous observations for a large number of medium and large-sized lakes, according to the Global Lakes and Wetlands Database (GLWD) or otherwise of specific environmental monitoring interest. 10-daily observations are available in the spatial resolution of 300 m and with the temporal extent from 2016 to 2024. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-water-quality-offline-v1-0-300m).`;
+const ClmsGlobalLwq300mV110DailyNrtTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLwq300mV110DailyNrtMarkdown() });
+
+const getClmsGlobalLwq100mV110DailyNrtMarkdown = () =>
+  t`Provides semi-continuous observations for a large number of medium and large-sized lakes, according to the Global Lakes and Wetlands Database (GLWD) or otherwise of specific environmental monitoring interest. 10-daily observations are available in near real time in the spatial resolution of 100 m and with the temporal extent from 2019 to 2024. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-water-quality-v1-0-100m).`;
+const ClmsGlobalLwq100mV110DailyNrtTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLwq100mV110DailyNrtMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
-  getCLMSNDVIGlobal1KM10DailyV3Markdown,
-  CLMSNDVIGlobal1KM10DailyV3Tooltip,
   getClmsGlobalLcc100mV3YearlyMarkdown,
   ClmsGlobalLcc100mV3YearlyTooltip,
   getClmsGlobalLst5kmV110dailytciMarkdown,
@@ -833,4 +852,16 @@ export {
   ClmsGlobalLie250mV2DailyTooltip,
   getClmsGlobalWb100mV1MonthlyMarkdown,
   ClmsGlobalWb100mV1MonthlyTooltip,
+  getClmsGlobalLst5kmV110DailyDailyCycleMarkdown,
+  ClmsGlobalLst5kmV110DailyDailyCycleTooltip,
+  getClmsGlobalLst5kmV210DailyDailyCycleMarkdown,
+  ClmsGlobalLst5kmV210DailyDailyCycleTooltip,
+  getClmsGlobalLwq300mV210DailyNrtMarkdown,
+  ClmsGlobalLwq300mV210DailyNrtTooltip,
+  getClmsGlobalLwq300mV110DailyReprocMarkdown,
+  ClmsGlobalLwq300mV110DailyReprocTooltip,
+  getClmsGlobalLwq300mV110DailyNrtMarkdown,
+  ClmsGlobalLwq300mV110DailyNrtTooltip,
+  getClmsGlobalLwq100mV110DailyNrtMarkdown,
+  ClmsGlobalLwq100mV110DailyNrtTooltip,
 };

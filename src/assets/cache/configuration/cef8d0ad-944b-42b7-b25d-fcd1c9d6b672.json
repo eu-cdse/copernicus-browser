@@ -260,23 +260,23 @@
                     "items": [
                         {
                             "color": "rgb(5.49%,21.57%,14.12%)",
-                            "label": "0"
+                            "label": "BRDF inversion not performed, no clear observations are available during the accumulation period, i.e. NOBS=0"
                         },
                         {
                             "color": "rgb(97.65%,52.16%,9.02%)",
-                            "label": "1"
+                            "label": "BRDF inversion failed in one or both spectral bands"
                         },
                         {
                             "color": "rgb(20.0%,72.55%,51.37%)",
-                            "label": "3"
+                            "label": "BRDF OK, successful inversion in both bands, i.e. optimal quality"
                         },
                         {
                             "color": "rgb(60.0%,46.27%,0.0%)",
-                            "label": "8"
+                            "label": "BRDF OK with warning, inversion successful but with suspiciously low normalized RED reflectance value"
                         },
                         {
                             "color": "rgb(60.78%,32.94%,95.29%)",
-                            "label": "16"
+                            "label": "Sea pixel, BRDF inversion not performed"
                         }
                     ]
                 }
@@ -284,9 +284,10 @@
         ],
         "orderHint": 0,
         "instanceId": "cef8d0-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-03-18T12:52:54.938243Z",
+        "lastUpdated": "2025-05-16T11:04:51.101732Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

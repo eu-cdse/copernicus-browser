@@ -8151,171 +8151,6 @@ msgstr ""
 msgid "Consolidation period"
 msgstr ""
 
-msgid "Burnt Area Daily"
-msgstr ""
-
-msgid "Burnt Area Monthly"
-msgstr ""
-
-msgid "DMP 1km Daily"
-msgstr ""
-
-msgid "DMP 1km Daily RT0"
-msgstr ""
-
-msgid "DMP 1km Daily RT1"
-msgstr ""
-
-msgid "DMP 1km Daily RT2"
-msgstr ""
-
-msgid "DMP 1km Daily RT6"
-msgstr ""
-
-msgid "FAPAR 1km Daily"
-msgstr ""
-
-msgid "FAPAR 1km Daily RT0"
-msgstr ""
-
-msgid "FAPAR 1km Daily RT1"
-msgstr ""
-
-msgid "FAPAR 1km Daily RT2"
-msgstr ""
-
-msgid "FAPAR 1km Daily RT6"
-msgstr ""
-
-msgid "LAI 1km Daily"
-msgstr ""
-
-msgid "LAI 1km Daily RT0"
-msgstr ""
-
-msgid "LAI 1km Daily RT1"
-msgstr ""
-
-msgid "LAI 1km Daily RT2"
-msgstr ""
-
-msgid "LAI 1km Daily RT6"
-msgstr ""
-
-msgid "FAPAR 300m 10-daily"
-msgstr ""
-
-msgid "FAPAR 300m 10-daily RT0"
-msgstr ""
-
-msgid "FAPAR 300m 10-daily RT1"
-msgstr ""
-
-msgid "FAPAR 300m 10-daily RT2"
-msgstr ""
-
-msgid "FAPAR 300m 10-daily RT6"
-msgstr ""
-
-msgid "FCOVER 1km 10-daily"
-msgstr ""
-
-msgid "FCOVER 1km 10-daily RT0"
-msgstr ""
-
-msgid "FCOVER 1km 10-daily RT1"
-msgstr ""
-
-msgid "FCOVER 1km 10-daily RT2"
-msgstr ""
-
-msgid "FCOVER 1km 10-daily RT6"
-msgstr ""
-
-msgid "FCOVER 300m 10-daily"
-msgstr ""
-
-msgid "FCOVER 300m 10-daily RT0"
-msgstr ""
-
-msgid "FCOVER 300m 10-daily RT1"
-msgstr ""
-
-msgid "FCOVER 300m 10-daily RT2"
-msgstr ""
-
-msgid "FCOVER 300m 10-daily RT6"
-msgstr ""
-
-msgid "GPP 300m 10-daily"
-msgstr ""
-
-msgid "GPP 300m 10-daily RT1"
-msgstr ""
-
-msgid "GPP 300m 10-daily RT2"
-msgstr ""
-
-msgid "GPP 300m 10-daily RT6"
-msgstr ""
-
-msgid "LAI 300m 10-daily"
-msgstr ""
-
-msgid "LAI 300m 10-daily RT0"
-msgstr ""
-
-msgid "LAI 300m 10-daily RT1"
-msgstr ""
-
-msgid "LAI 300m 10-daily RT2"
-msgstr ""
-
-msgid "LAI 300m 10-daily RT6"
-msgstr ""
-
-msgid "NPP 300m 10-daily"
-msgstr ""
-
-msgid "NPP 300m 10-daily RT1"
-msgstr ""
-
-msgid "NPP 300m 10-daily RT2"
-msgstr ""
-
-msgid "NPP 300m 10-daily RT6"
-msgstr ""
-
-msgid "SWI 12.5km 10-daily"
-msgstr ""
-
-msgid "SWI 12.5km Daily"
-msgstr ""
-
-msgid "SWI 1km Daily"
-msgstr ""
-
-msgid "DMP 300m 10-daily"
-msgstr ""
-
-msgid "DMP 300m 10-daily RT1"
-msgstr ""
-
-msgid "DMP 300m 10-daily RT2"
-msgstr ""
-
-msgid "DMP 300m 10-daily RT5"
-msgstr ""
-
-msgid "DMP 300m 10-daily RT6"
-msgstr ""
-
-msgid "LST SaTCI 5km 10-daily V1"
-msgstr ""
-
-msgid "LST SaTCI 5km 10-daily V2"
-msgstr ""
-
 msgid "NDVI LTS 1km V2"
 msgstr ""
 
@@ -8404,9 +8239,6 @@ msgid "LIE 500m Daily V1"
 msgstr ""
 
 msgid "LIE 250m Daily V2"
-msgstr ""
-
-msgid "**CLMS test NDVI tooltip**"
 msgstr ""
 
 msgid ""
@@ -8900,205 +8732,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Provides at global level spatial information on different types (classes) "
-"of physical coverage of the Earth's surface, e.g. forests, grasslands, "
-"croplands, lakes, wetlands for the 2019 base year. The data are updated "
-"annually and are available for the 2015-2019 years."
-msgstr ""
-
-msgid ""
-"Provides a statistical overview of the land surface temperature over each "
-"10-day compositing period regardless of any specific hour and every "
-"geostationary sensor image pixel. The data are available at global scale in "
-"the spatial resolution of about 5 km and covers the period from January "
-"2017 to January 2021."
-msgstr ""
-
-msgid ""
-"Provides hourly land surface temperature from geostationary sensors "
-"observations. The data are available at global scale in the spatial "
-"resolution of about 5 km and covers the period from July 2010 to January "
-"2021."
-msgstr ""
-
-msgid ""
-"Provides a statistical overview of the land surface temperature over each "
-"10-day compositing period regardless of any specific hour and every "
-"geostationary sensor image pixel. The data are available at global scale in "
-"the spatial resolution of about 5 km and covers the period from January "
-"2021 to January 2023 with version 2.0 and from January 2023 onwards with "
-"version 2.1."
-msgstr ""
-
-msgid ""
-"Provides hourly land surface temperature from geostationary sensors "
-"observations. The data are available at global scale in the spatial "
-"resolution of about 5 km and covers the period from January 2021 to January "
-"2023 with version 2.0 and from January 2023 onwards with version 2.1."
-msgstr ""
-
-msgid ""
-"Quantifies the fraction of the solar radiation absorbed by live plants for "
-"photosynthesis. Every 10-days estimates are available at global scale in "
-"the spatial resolution of about 1 km covering the period from 1999 to June "
-"2020 from SPOT/VEGETATION and PROBA-V data."
-msgstr ""
-
-msgid ""
-"Quantifies the fraction of the solar radiation absorbed by live plants for "
-"photosynthesis. Every 10-days estimates are available in near real time at "
-"global scale in the spatial resolution of about 300 m from January 2014 to "
-"June 2020 based upon PROBA-V data with version 1.0 and from July 2020 "
-"onwards based upon Sentinel-3/OLCI data with version 1.1."
-msgstr ""
-
-msgid ""
-"Defined as half the total area of green elements of the canopy per unit "
-"horizontal ground area. Every 10-days estimates are available at global "
-"scale in the spatial resolution of about 1 km covering the period from 1999 "
-"to June 2020 from SPOT/VEGETATION and PROBA-V data."
-msgstr ""
-
-msgid ""
-"Represents the overall growth rate or dry biomass increase of the "
-"vegetation and is directly related to ecosystem Net Primary Production "
-"(NPP), however with units customized for agro-statistical purposes "
-"(kg/ha/day). Every 10-days estimates are available at global scale in the "
-"spatial resolution of about 1km and with the temporal extent from 1999 to "
-"June 2020."
-msgstr ""
-
-msgid ""
-"Represents the overall growth rate or dry biomass increase of the "
-"vegetation and is directly related to ecosystem Net Primary Production "
-"(NPP), however with units customized for agro-statistical purposes "
-"(kg/ha/day). Every 10-days estimates are available in near real time at "
-"global scale in the spatial resolution of about 300 m from January 2014 to "
-"June 2020 based upon PROBA-V data with version 1.0 and from July 2020 "
-"onwards based upon Sentinel-3/OLCI data with version 1.1."
-msgstr ""
-
-msgid ""
-"Corresponds to the fraction of ground covered by green vegetation. It "
-"quantifies the spatial extent of the vegetation. Every 10-days estimates "
-"are available at global scale in the spatial resolution of about 1 km "
-"covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V "
-"data."
-msgstr ""
-
-msgid ""
-"Equivalent to Gross Primary Production (GPP). Every 10-days estimates are "
-"available at global scale in the spatial resolution of about 1km and with "
-"the temporal extent from 1999 to June 2020."
-msgstr ""
-
-msgid ""
-"Based upon SPOT/VEGETATION and PROBA-V NDVI 1km version 2, long-term "
-"statistics include the minimum, median, maximum, mean, standard deviation "
-"and the number of observations over the 19-years period 1999-2017."
-msgstr ""
-
-msgid ""
-"Based upon PROBA-V NDVI 1km version 3, short-term statistics include the "
-"minimum, median, maximum, mean, standard deviation and the number of "
-"observations over the 5-years period 2015-2019."
-msgstr ""
-
-msgid ""
-"NDVI is an indicator of the greenness of the biomes. Every 10-days "
-"estimates are available at global scale in the spatial resolution of about "
-"1 km from April 1998 to 2013 based upon SPOT/VEGETATION data and from 2014 "
-"to 2020 based upon PROBA-V data."
-msgstr ""
-
-msgid ""
-"NDVI is an indicator of the greenness of the biomes. Every 10-days "
-"estimates are available at global scale in the spatial resolution of about "
-"300 m from 2014 to June 2020."
-msgstr ""
-
-msgid ""
-"Provides information on the relative water content of the top few "
-"centimeters soil, describing how wet or dry the soil is in its topmost "
-"layer, expressed in percent saturation. Daily observations are available "
-"for the continental Europe in the spatial resolution of 1 km and with the "
-"temporal extent from October 2014 to present."
-msgstr ""
-
-msgid ""
-"Maps burn scars, surfaces which have been sufficiently affected by fire to "
-"display significant changes in the vegetation cover (destruction of dry "
-"material, reduction or loss of green material) and in the ground surface "
-"(temporarily darker because of ash). Monthly datasets are available at "
-"global scale, in the spatial resolution of 300 m, and with a time lag of "
-"two months. They cover the period from 2019 to present."
-msgstr ""
-
-msgid ""
-"Maps burn scars, surfaces which have been sufficiently affected by fire to "
-"display significant changes in the vegetation cover (destruction of dry "
-"material, reduction or loss of green material) and in the ground surface "
-"(temporarily darker because of ash). Daily datasets are available at global "
-"scale, in the spatial resolution of 300 m, and within 24 hours after the "
-"satellite acquisition. They cover the period from July 2023 to present."
-msgstr ""
-
-msgid ""
-"Provide at global scale and for Europe information on vegetation phenology "
-"and productivity gathering 13 parameters  for two growing seasons."
-msgstr ""
-
-msgid ""
-"Provides the total amount of carbon compounds produced by photosynthesis of "
-"plants in an ecosystem in a given period of time. 10-daily observations are "
-"available at global scale in the spatial resolution of 300 m and with the "
-"temporal extent from 2023 to present."
-msgstr ""
-
-msgid ""
-"Defined as half the total area of green elements of the canopy per unit "
-"horizontal ground area. Every 10-days estimates are available in near real "
-"time at global scale in the spatial resolution of about 300 m from January "
-"2014 to June 2020 based upon PROBA-V data with version 1.0 and from July "
-"2020 onwards based upon Sentinel-3/OLCI data with version 1.1."
-msgstr ""
-
-msgid ""
-"Provides the amount of carbon retained in an ecosystem (increase in "
-"biomass); it is equal to the difference between the amount of carbon "
-"produced through photosynthesis (GPP) and the amount of energy that is used "
-"for respiration (R). 10-daily observations are available at global scale in "
-"the spatial resolution of 300 m and with the temporal extent from 2023 to "
-"present."
-msgstr ""
-
-msgid ""
-"NDVI is an indicator of the greenness of the biomes. Every 10-days "
-"estimates are available at global scale in the spatial resolution of about "
-"1 km from 1999 to 2013 based upon SPOT/VEGETATION data and from 2014 to "
-"June 2020 based upon PROBA-V data."
-msgstr ""
-
-msgid ""
-"Averages the daily Soil Water Index product over 10 days. The data are "
-"produced every 10 days over the globe at the spatial resolution of 0.1° and "
-"with the temporal extent from January 2007 to present."
-msgstr ""
-
-msgid ""
-"Provides daily updates on the moisture conditions in different soil layers. "
-"The data are available over the globe at the spatial resolution of 0.1° and "
-"with the temporal extent from January 2007 to present."
-msgstr ""
-
-msgid ""
-"Geographical information on land cover and its changes, land use, ground "
-"motion, vegetation state, water cycle and earth surface energy variables "
-"for both Europe and the entire globe. More info "
-"[here](https://land.copernicus.eu/en)."
-msgstr ""
-
-msgid ""
 "This product is a 10-daily synthesis product derived from Top of Canopy "
 "(TOC) PROVA-V 333 m data. The basic Water Bodies (WB) layer which tells "
 "which pixels contain water and which not, defined as permanent and seasonal "
@@ -9151,47 +8784,884 @@ msgid ""
 "snow cover, partially snow covered ice/clear ice, and open water."
 msgstr ""
 
+msgid "WB 100m Monthly V1"
+msgstr ""
+
+msgid "Name of the data collection or series."
+msgstr ""
+
+msgid "Estimated percentage of cloud coverage in the scene."
+msgstr ""
+
+msgid "Short name of the instrument used to capture the data (e.g., SAR, MSI)."
+msgstr ""
+
+msgid "Identifier of the dataset within a collection."
+msgstr ""
+
+msgid "Full name or path of the dataset."
+msgstr ""
+
+msgid "Type of product generated, indicating processing level and acquisition mode."
+msgstr ""
+
+msgid "Start time of the satellite sensing or data acquisition."
+msgstr ""
+
+msgid "Unique name or identifier of the product."
+msgstr ""
+
+msgid "Short name of the satellite platform (e.g., SENTINEL-1, SENTINEL-2)."
+msgstr ""
+
+msgid "Identifier for the platform variant (e.g., A or B for Sentinel satellites)."
+msgstr ""
+
+msgid "Orbit number relative to a fixed reference cycle."
+msgstr ""
+
+msgid "Processing timeliness category (e.g., Near Real-Time, Offline)."
+msgstr ""
+
+msgid ""
+"Direction of the satellite orbit during acquisition (e.g., ASCENDING, "
+"DESCENDING)."
+msgstr ""
+
+msgid "Acquisition mode used by the instrument (e.g., IW, SM)."
+msgstr ""
+
+msgid "Radar polarisation modes used (e.g., VV, VH)."
+msgstr ""
+
+msgid "Absolute orbit number at time of acquisition."
+msgstr ""
+
+msgid "Mode used for processing the product, if applicable."
+msgstr ""
+
+msgid "Identifiers of the swath(s) used in the acquisition (e.g., IW1, IW2, IW3)."
+msgstr ""
+
+msgid "Indicates whether the product is currently available for download."
+msgstr ""
+
+msgid "Source organization or system that produced the data."
+msgstr ""
+
+msgid "Version of the processing software used to generate the product."
+msgstr ""
+
+msgid "Identifier for Sentinel-2 collection (e.g., S2_MSI_L1C)."
+msgstr ""
+
+msgid "Class of the product, indicating type or access constraints."
+msgstr ""
+
+msgid "Spatial resolution of the dataset in meters."
+msgstr ""
+
+msgid "Identifier conforming to Earth Observation Product standards."
+msgstr ""
+
+msgid "Incidence angle across the track of the satellite, typically in degrees."
+msgstr ""
+
+msgid "Classification of the resolution level (e.g., High, Medium)."
+msgstr ""
+
+msgid "Identifier for the delivery package or transfer bundle."
+msgstr ""
+
+msgid "Full name of the satellite platform."
+msgstr ""
+
+msgid "Identifier of the spatial grid cell containing the product."
+msgstr ""
+
+msgid "Time interval between repeat acquisitions over the same location."
+msgstr ""
+
+msgid "Version number of the dataset definition."
+msgstr ""
+
+msgid "File format used for the data product (e.g., SAFE, GeoTIFF)."
+msgstr ""
+
+msgid "Geographic area the data product covers or is relevant to."
+msgstr ""
+
+msgid "Globally unique identifier for the dataset."
+msgstr ""
+
+msgid "Subsystem or data component involved in the acquisition or processing."
+msgstr ""
+
+msgid "Human-readable label for the grid cell or tile."
+msgstr ""
+
+msgid "Spacing of the grid in meters used for spatial referencing."
+msgstr ""
+
+msgid "Short, human-friendly name of the dataset."
+msgstr ""
+
+msgid "Time period over which data is consolidated for processing or delivery."
+msgstr ""
+
+msgid ""
+"The reference date for the data, often representing when it is intended to "
+"be used."
+msgstr ""
+
+msgid ""
+"Fraction of valid LST values (used to calculate statistics) in the "
+"compositing period. In this context, a valid LST value corresponds to a "
+"clear-sky retrieval, after outlier removal."
+msgstr ""
+
+msgid ""
+"The aim of 10-day Land Surface Temperature (LST) product is to provide a "
+"complete overview of the LST daily cycle over each 10-day compositing for "
+"every image pixel. This layer represents the maximum LST values retrieved "
+"during the 10-days composite period."
+msgstr ""
+
+msgid ""
+"The aim of 10-day Land Surface Temperature (LST) product is to provide a "
+"complete overview of the LST daily cycle over each 10-day compositing for "
+"every image pixel. This layer represents the median LST values retrieved "
+"during the 10-days composite period."
+msgstr ""
+
+msgid ""
+"The aim of 10-day Land Surface Temperature (LST) product is to provide a "
+"complete overview of the LST daily cycle over each 10-day compositing for "
+"every image pixel. This layer represents the minimum LST values retrieved "
+"during the 10-days composite period."
+msgstr ""
+
+msgid "LST Daily-cycle 5km 10-daily V1"
+msgstr ""
+
+msgid "LST Daily-cycle 5km 10-daily V2"
+msgstr ""
+
+msgid "LWQ NRT 300m 10-daily V2"
+msgstr ""
+
+msgid "BA 300m Daily V3"
+msgstr ""
+
+msgid "BA 300m Monthly V3"
+msgstr ""
+
+msgid "DMP 1km 10-daily V2"
+msgstr ""
+
+msgid "DMP 1km 10-daily V2 RT0"
+msgstr ""
+
+msgid "DMP 1km 10-daily V2 RT1"
+msgstr ""
+
+msgid "DMP 1km 10-daily V2 RT2"
+msgstr ""
+
+msgid "DMP 1km 10-daily V2 RT6"
+msgstr ""
+
+msgid "FAPAR 1km 10-daily V2"
+msgstr ""
+
+msgid "FAPAR 1km 10-daily V2 RT0"
+msgstr ""
+
+msgid "FAPAR 1km 10-daily V2 RT1"
+msgstr ""
+
+msgid "FAPAR 1km 10-daily V2 RT2"
+msgstr ""
+
+msgid "FAPAR 1km 10-daily V2 RT6"
+msgstr ""
+
+msgid "LAI 1km 10-daily V2"
+msgstr ""
+
+msgid "LAI 1km 10-daily V2 RT0"
+msgstr ""
+
+msgid "LAI 1km 10-daily V2 RT1"
+msgstr ""
+
+msgid "LAI 1km 10-daily V2 RT2"
+msgstr ""
+
+msgid "LAI 1km 10-daily V2 RT6"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V1"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V1 RT0"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "FCOVER 1km 10-daily V2"
+msgstr ""
+
+msgid "FCOVER 1km 10-daily V2 RT0"
+msgstr ""
+
+msgid "FCOVER 1km 10-daily V2 RT1"
+msgstr ""
+
+msgid "FCOVER 1km 10-daily V2 RT2"
+msgstr ""
+
+msgid "FCOVER 1km 10-daily V2 RT6"
+msgstr ""
+
+msgid "FCOVER 300m 10-daily V1"
+msgstr ""
+
+msgid "FCOVER 300m 10-daily V1 RT0"
+msgstr ""
+
+msgid "FCOVER 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "FCOVER 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "FCOVER 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "GPP 300m 10-daily V1"
+msgstr ""
+
+msgid "GPP 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "GPP 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "GPP 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "LAI 300m 10-daily V1"
+msgstr ""
+
+msgid "LAI 300m 10-daily V1 RT0"
+msgstr ""
+
+msgid "LAI 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "LAI 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "LAI 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "NPP 300m 10-daily V1"
+msgstr ""
+
+msgid "NPP 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "NPP 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "NPP 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "SWI 12.5km 10-daily V3"
+msgstr ""
+
+msgid "SWI 12.5km Daily V3"
+msgstr ""
+
+msgid "SWI 1km Daily V3"
+msgstr ""
+
+msgid "DMP 300m 10-daily V1"
+msgstr ""
+
+msgid "DMP 300m 10-daily V1 RT1"
+msgstr ""
+
+msgid "DMP 300m 10-daily V1 RT2"
+msgstr ""
+
+msgid "DMP 300m 10-daily V1 RT5"
+msgstr ""
+
+msgid "DMP 300m 10-daily V1 RT6"
+msgstr ""
+
+msgid "Information not currently available."
+msgstr ""
+
+msgid ""
+"Chlorophyll-a (Chla) in mg/m³, commonly used as a proxy to phytoplankton "
+"biomass."
+msgstr ""
+
+msgid ""
+"Floating Cyanobacteria probability, indicating the probability of "
+"cyanobacteria surface blooms present in the water body."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 1020nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 400nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 412nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 443nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 490nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 510nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 560nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 620nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 665nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 674nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 681nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 709nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 754nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 779nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 885nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 900nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Mean turbidity, which is a key indicator of water clarity, quantifying the "
+"haziness of the water and acting as an indicator of underwater light "
+"availability. Here TMEAN is derived from total suspended matter (TSM) "
+"estimates."
+msgstr ""
+
+msgid ""
+"Trophic State Index, referring to the degree at which organic matter "
+"accumulates in the water body and is most commonly used in relation to "
+"monitoring eutrophication. Here TSI is derived from phytoplankton biomass "
+"by proxy of chlorophyll-a."
+msgstr ""
+
+msgid ""
+"Total suspended matter (TSM) in g/m³, used to quantify the concentration of "
+"suspended particles in the water body."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 760nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 865nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 764nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 767nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 940nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 1375, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 1610, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 2190, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 443, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 490, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 560, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 665, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 705, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 740, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 783, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water-leaving reflectance at the waveband 842, using most "
+"representative spectrum within the aggregation period."
+msgstr ""
+
+msgid ""
+"Fully normalized water leaving reflectances at the waveband 945nm, using "
+"most representative spectrum within the aggregation period."
+msgstr ""
+
+msgid "LWQ REPROC 300m 10-daily V1"
+msgstr ""
+
+msgid "LWQ NRT 300m 10-daily V1"
+msgstr ""
+
+msgid "LWQ NRT 100m 10-daily V1"
+msgstr ""
+
+msgid ""
+"Geographical information on land cover and its changes, land use, ground "
+"motion, vegetation state, water cycle and earth surface energy variables "
+"for both Europe and the entire globe. Visit the [CLMS "
+"website](https://land.copernicus.eu/en) for more information."
+msgstr ""
+
+msgid ""
+"Provides at global level spatial information on different types (classes) "
+"of physical coverage of the Earth's surface, e.g. forests, grasslands, "
+"croplands, lakes, wetlands for the 2019 base year. The data are updated "
+"annually and are available for the 2015-2019 years. More information "
+"[here](https://land.copernicus.eu/en/products/global-dynamic-land-cover)."
+msgstr ""
+
+msgid ""
+"Provides a statistical overview of the land surface temperature over each "
+"10-day compositing period regardless of any specific hour and every "
+"geostationary sensor image pixel. The data are available at global scale in "
+"the spatial resolution of about 5 km and covers the period from January "
+"2017 to January 2021. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10"
+"-daily-land-surface-temperature-thermal-condition-index-global-v1-0-5km)."
+msgstr ""
+
+msgid ""
+"Provides a statistical overview of the land surface temperature daily cycle "
+"for each 10-day compositing period and every geostationary sensor image "
+"pixel. The data are available at global scale in the spatial resolution of "
+"about 5 km and covers the period from January 2017 to January 2021. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10"
+"-daily-land-surface-temperature-daily-cycle-global-v1-0-5km)."
+msgstr ""
+
+msgid ""
+"Provides hourly land surface temperature from geostationary sensors "
+"observations. The data are available at global scale in the spatial "
+"resolution of about 5 km and covers the period from July 2010 to January "
+"2021. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/"
+"hourly-land-surface-temperature-global-v1-0-5km)."
+msgstr ""
+
+msgid ""
+"Provides a statistical overview of the land surface temperature over each "
+"10-day compositing period regardless of any specific hour and every "
+"geostationary sensor image pixel. The data are available at global scale in "
+"the spatial resolution of about 5 km and covers the period from January "
+"2021 to January 2023 with version 2.0 and from January 2023 onwards with "
+"version 2.1. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10"
+"-daily-land-surface-temperature-thermal-condition-index-global-v2-0-5km)."
+msgstr ""
+
+msgid ""
+"Provides hourly land surface temperature from geostationary sensors "
+"observations. The data are available at global scale in the spatial "
+"resolution of about 5 km and covers the period from January 2021 to January "
+"2023 with version 2.0 and from January 2023 onwards with version 2.1. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/"
+"hourly-land-surface-temperature-global-v2-0-5km)."
+msgstr ""
+
+msgid ""
+"Provides a statistical overview of the land surface temperature daily cycle "
+"for each 10-day compositing period and every geostationary sensor image "
+"pixel. The data are available at global scale in the spatial resolution of "
+"about 5 km and covers the period from January 2021 to January 2023 with "
+"version 2.0 and from January 2023 onwards with version 2.1. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10"
+"-daily-land-surface-temperature-daily-cycle-global-v2-0-5km)."
+msgstr ""
+
+msgid ""
+"Quantifies the fraction of the solar radiation absorbed by live plants for "
+"photosynthesis. Every 10-days estimates are available at global scale in "
+"the spatial resolution of about 1 km covering the period from 1999 to June "
+"2020 from SPOT/VEGETATION and PROBA-V data. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/fraction-of-"
+"absorbed-photosynthetically-active-radiation-v2-0-1km)."
+msgstr ""
+
+msgid ""
+"Quantifies the fraction of the solar radiation absorbed by live plants for "
+"photosynthesis. Every 10-days estimates are available in near real time at "
+"global scale in the spatial resolution of about 300 m from January 2014 to "
+"June 2020 based upon PROBA-V data with version 1.0 and from July 2020 "
+"onwards based upon Sentinel-3/OLCI data with version 1.1. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/fraction-of-"
+"absorbed-photosynthetically-active-radiation-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Defined as half the total area of green elements of the canopy per unit "
+"horizontal ground area. Every 10-days estimates are available at global "
+"scale in the spatial resolution of about 1 km covering the period from 1999 "
+"to June 2020 from SPOT/VEGETATION and PROBA-V data. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-"
+"0-1km)."
+msgstr ""
+
+msgid ""
+"Represents the overall growth rate or dry biomass increase of the "
+"vegetation and is directly related to ecosystem Net Primary Production "
+"(NPP), however with units customized for agro-statistical purposes "
+"(kg/ha/day). Every 10-days estimates are available at global scale in the "
+"spatial resolution of about 1km and with the temporal extent from 1999 to "
+"June 2020. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/dry-matter-"
+"productivity-v2-0-1km)."
+msgstr ""
+
+msgid ""
+"Represents the overall growth rate or dry biomass increase of the "
+"vegetation and is directly related to ecosystem Net Primary Production "
+"(NPP), however with units customized for agro-statistical purposes "
+"(kg/ha/day). Every 10-days estimates are available in near real time at "
+"global scale in the spatial resolution of about 300 m from January 2014 to "
+"June 2020 based upon PROBA-V data with version 1.0 and from July 2020 "
+"onwards based upon Sentinel-3/OLCI data with version 1.1. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/dry-matter-"
+"productivity-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Corresponds to the fraction of ground covered by green vegetation. It "
+"quantifies the spatial extent of the vegetation. Every 10-days estimates "
+"are available at global scale in the spatial resolution of about 1 km "
+"covering the period from 1999 to June 2020 from SPOT/VEGETATION and PROBA-V "
+"data. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-"
+"vegetation-cover-v2-0-1km)."
+msgstr ""
+
+msgid ""
+"Equivalent to Gross Primary Production (GPP). Every 10-days estimates are "
+"available at global scale in the spatial resolution of about 1km and with "
+"the temporal extent from 1999 to June 2020. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-"
+"productivity-v2-0-1km)."
+msgstr ""
+
+msgid ""
+"Equivalent to Gross Primary Production (GPP). Every 10-days estimates are "
+"available in near real time at global scale in the spatial resolution of "
+"about 300 m from January 2014 to June 2020 based upon PROBA-V data with "
+"version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with "
+"version 1.1. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-"
+"productivity-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Based upon SPOT/VEGETATION and PROBA-V NDVI 1km version 2, long-term "
+"statistics include the minimum, median, maximum, mean, standard deviation "
+"and the number of observations over the 19-years period 1999-2017. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-index-long-term-statistics-v2-0-1km)."
+msgstr ""
+
+msgid ""
+"Based upon PROBA-V NDVI 1km version 3, short-term statistics include the "
+"minimum, median, maximum, mean, standard deviation and the number of "
+"observations over the 5-years period 2015-2019. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-long-term-statistics-v3-0-1km)."
+msgstr ""
+
+msgid ""
+"NDVI is an indicator of the greenness of the biomes. Every 10-days "
+"estimates are available at global scale in the spatial resolution of about "
+"1 km from April 1998 to 2013 based upon SPOT/VEGETATION data and from 2014 "
+"to 2020 based upon PROBA-V data. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-long-term-statistics-v3-0-1km)."
+msgstr ""
+
+msgid ""
+"NDVI is an indicator of the greenness of the biomes. Every 10-days "
+"estimates are available at global scale in the spatial resolution of about "
+"300 m from 2014 to June 2020. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalized-"
+"difference-vegetation-index-300m-v1.0)."
+msgstr ""
+
+msgid ""
+"NDVI is an indicator of the greenness of the biomes. Every 10-days "
+"estimates are available at global scale in the spatial resolution of about "
+"300 m from 2014 to June 2020. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-index-v2-0-300m)."
+msgstr ""
+
+msgid ""
+"Provides information on the relative water content of the top few "
+"centimeters soil, describing how wet or dry the soil is in its topmost "
+"layer, expressed in percent saturation. Daily observations are available "
+"for the continental Europe in the spatial resolution of 1 km and with the "
+"temporal extent from October 2014 to present. More information "
+"[here](https://land.copernicus.eu/en/products/soil-moisture/daily-surface-"
+"soil-moisture-v1.0)."
+msgstr ""
+
+msgid ""
+"Maps burn scars, surfaces which have been sufficiently affected by fire to "
+"display significant changes in the vegetation cover (destruction of dry "
+"material, reduction or loss of green material) and in the ground surface "
+"(temporarily darker because of ash). Monthly datasets are available at "
+"global scale, in the spatial resolution of 300 m, and with a time lag of "
+"two months. They cover the period from 2019 to present. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/burnt-area-v3-1-"
+"monthly-300m)."
+msgstr ""
+
+msgid ""
+"Maps burn scars, surfaces which have been sufficiently affected by fire to "
+"display significant changes in the vegetation cover (destruction of dry "
+"material, reduction or loss of green material) and in the ground surface "
+"(temporarily darker because of ash). Daily datasets are available at global "
+"scale, in the spatial resolution of 300 m, and within 24 hours after the "
+"satellite acquisition. They cover the period from July 2023 to present. "
+"More info "
+"[here](https://land.copernicus.eu/en/products/vegetation/burnt-area-v3-1-"
+"daily-300m)."
+msgstr ""
+
+msgid ""
+"Provide at global scale and for Europe information on vegetation phenology "
+"and productivity gathering 13 parameters  for two growing seasons. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/vegetation?tab=vegetation_"
+"phenology_and_productivity_parameters)."
+msgstr ""
+
+msgid ""
+"Provides the total amount of carbon compounds produced by photosynthesis of "
+"plants in an ecosystem in a given period of time. 10-daily observations are "
+"available at global scale in the spatial resolution of 300 m and with the "
+"temporal extent from 2023 to present. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/gross-primary-"
+"production-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Defined as half the total area of green elements of the canopy per unit "
+"horizontal ground area. Every 10-days estimates are available in near real "
+"time at global scale in the spatial resolution of about 300 m from January "
+"2014 to June 2020 based upon PROBA-V data with version 1.0 and from July "
+"2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300"
+"m-v1.0)."
+msgstr ""
+
+msgid ""
+"Provides the amount of carbon retained in an ecosystem (increase in "
+"biomass); it is equal to the difference between the amount of carbon "
+"produced through photosynthesis (GPP) and the amount of energy that is used "
+"for respiration (R). 10-daily observations are available at global scale in "
+"the spatial resolution of 300 m and with the temporal extent from 2023 to "
+"present. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/net-primary-"
+"production-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"NDVI is an indicator of the greenness of the biomes. Every 10-days "
+"estimates are available at global scale in the spatial resolution of about "
+"1 km from 1999 to 2013 based upon SPOT/VEGETATION data and from 2014 to "
+"June 2020 based upon PROBA-V data. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-index-v3-0-1km)."
+msgstr ""
+
+msgid ""
+"Averages the daily Soil Water Index product over 10 days. The data are "
+"produced every 10 days over the globe at the spatial resolution of 0.1° and "
+"with the temporal extent from January 2007 to present. More information "
+"[here](https://land.copernicus.eu/en/products/soil-moisture/10-daily-soil-"
+"water-index-global-v3-0-12-5-km)."
+msgstr ""
+
+msgid ""
+"Provides daily updates on the moisture conditions in different soil layers. "
+"The data are available over the globe at the spatial resolution of 0.1° and "
+"with the temporal extent from January 2007 to present. More information "
+"[here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-"
+"water-index-global-v3-0-12-5km)."
+msgstr ""
+
 #. LOT2
 msgid ""
 "Detects the areas covered by inland water providing the maximum and the "
 "minimum extent of the water surface as well as the seasonal dynamics. "
 "10-daly data are available at global scale in the spatial resolution of 300 "
-"m and with the temporal extent from 2014 to 2020."
+"m and with the temporal extent from 2014 to 2020. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-"
+"global-v1-0-300m)."
 msgstr ""
 
 msgid ""
 "Detects the areas covered by inland water providing the maximum and the "
 "minimum extent of the water surface as well as the seasonal dynamics. "
 "Monthly updates are available at global scale in the spatial resolution of "
-"300 m and with the temporal extent from 2020 to present."
+"300 m and with the temporal extent from 2020 to present More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-"
+"global-v2-0-300m)."
 msgstr ""
 
 msgid ""
 "Provides for the Northern Hemisphere daily updates of the equivalent amount "
 "of liquid water stored in the snow pack. The data is available in the "
 "spatial resolution of 5 km and with the temporal extent from January 2006 "
-"to June 2024."
+"to June 2024. More information "
+"[here](https://land.copernicus.eu/en/products/snow/snow-water-equivalent-v1-"
+"0-5km)."
 msgstr ""
 
 msgid ""
 "Provides for the Northern Hemisphere daily updates of the equivalent amount "
 "of liquid water stored in the snow pack. The data is available in near real "
 "time in the spatial resolution of 5 km and with the temporal extent from "
-"July 2024 to present."
+"July 2024 to present. More information "
+"[here](https://land.copernicus.eu/en/products/snow/snow-water-equivalent-v2-"
+"0-5km)."
 msgstr ""
 
 msgid ""
 "Provides for Europe daily updates of the fraction of snow cover on the "
 "ground (also in forested areas) per pixel in percentage (0% – 100%). The "
 "data is available in near real time in the spatial resolution of 500 m and "
-"with the temporal extent from March 2017 to present."
+"with the temporal extent from March 2017 to present. More information "
+"[here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-europe-"
+"v1-0-500m)."
 msgstr ""
 
 msgid ""
 "Provides for Northern Hemisphere daily maps of the fraction of snow cover "
 "on ground (also in forested areas) per pixel in percentage (0% – 100%). The "
 "data is available in near real time with a pixel spacing of about 1 km and "
-"with the temporal extent from January 2018 to present."
+"with the temporal extent from January 2018 to present. More information "
+"[here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-"
+"northern-hemisphere-v1-0-1km)."
 msgstr ""
 
 msgid ""
@@ -9199,7 +9669,9 @@ msgid ""
 "into 1) Ice, 2) Open water, and 3) Cloud. The class “Ice” includes various "
 "types of ice, also snow-covered ice. The data is updated in near real-time "
 "with the spatial resolution of 500 m and with has a temporal extent from "
-"April 2021 to present."
+"April 2021 to present. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-"
+"northern-hemisphere-500m)."
 msgstr ""
 
 msgid ""
@@ -9209,15 +9681,91 @@ msgid ""
 "resolution of 250 m and with the temporal extent from July the 1st, "
 "onwards. In June 2024, the data input sensor was transferred from Terra "
 "MODIS (VERSION 1.2.1) to NOAA-20 VIIRS (VERSION 2.2.1), and the area was "
-"extended from the Baltic region to cover Continental Europe."
-msgstr ""
-
-msgid "WB 100m Monthly V1"
+"extended from the Baltic region to cover Continental Europe. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-"
+"europe-v2-250m)."
 msgstr ""
 
 msgid ""
 "Detects the areas covered by inland water along the year providing the "
 "maximum and the minimum extent of the water surface as well as the seasonal "
 "dynamics. Monthly updates are available at global scale in the spatial "
-"resolution of 100 m and with the temporal extent from 2020 to present."
+"resolution of 100 m and with the temporal extent from 2020 to present. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/water-bodies-"
+"global-v1-0-100m)."
+msgstr ""
+
+msgid ""
+"Provides semi-continuous observations for a large number of medium and "
+"large-sized lakes. 10-daily observations are available in near real time at "
+"300 m spatial resolution from September 2024 to present. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
+"quality-near-real-time-v2-0-300m)."
+msgstr ""
+
+msgid ""
+"Provides semi-continuous observations for a large number of medium and "
+"large-sized lakes, according to the Global Lakes and Wetlands Database "
+"(GLWD) or otherwise of specific environmental monitoring interest. 10-daily "
+"observations are available in the spatial resolution of 300 m and with the "
+"temporal extent from 2002 to 2012. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
+"quality-offline-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Provides semi-continuous observations for a large number of medium and "
+"large-sized lakes, according to the Global Lakes and Wetlands Database "
+"(GLWD) or otherwise of specific environmental monitoring interest. 10-daily "
+"observations are available in the spatial resolution of 300 m and with the "
+"temporal extent from 2016 to 2024. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
+"quality-offline-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Provides semi-continuous observations for a large number of medium and "
+"large-sized lakes, according to the Global Lakes and Wetlands Database "
+"(GLWD) or otherwise of specific environmental monitoring interest. 10-daily "
+"observations are available in near real time in the spatial resolution of "
+"100 m and with the temporal extent from 2019 to 2024. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
+"quality-v1-0-100m)."
+msgstr ""
+
+msgid ""
+"TCI, long used as a suitable indicator of vegetation health, characterises "
+"how hot any given land pixel is with respect to its maximum temperature "
+"range. Since over vegetated surfaces, temperature is strongly controlled by "
+"energy fluxes (sensible and latent heat), the TCI indirectly characterizes "
+"the moisture availability through the near-surface radiation and "
+"aerodynamic conditions."
+msgstr ""
+
+msgid "LST TCI 5km 10-daily V1"
+msgstr ""
+
+msgid "LST TCI 5km 10-daily V2"
+msgstr ""
+
+msgid ""
+"Corresponds to the fraction of ground covered by green vegetation. It "
+"quantifies the spatial extent of the vegetation. Every 10-days estimates "
+"are available in near real time at global scale in the spatial resolution "
+"of about 300 m from January 2014 to June 2020 based upon PROBA-V data with "
+"version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with "
+"version 1.1. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-"
+"vegetation-cover-v1-0-300m)."
+msgstr ""
+
+msgid ""
+"Quantifies the moisture condition at various depths in the soil. Daily "
+"observations are available for the continental Europe in the spatial "
+"resolution of 1 km and with the temporal extent from January 2015 to "
+"present. More information "
+"[here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-"
+"water-index-europe-v1-0-1km)."
 msgstr ""

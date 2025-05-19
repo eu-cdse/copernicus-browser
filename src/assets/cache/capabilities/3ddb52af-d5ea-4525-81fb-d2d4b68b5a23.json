@@ -59,7 +59,7 @@
         },
         {
             "id": "LSLOPE_S1",
-            "name": "Slope of the Green-up Period - S2",
+            "name": "Slope of the Green-up Period - S1",
             "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
             "dataset": "CUSTOM",
             "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3ddb52-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LSLOPE_S1&style=default"
@@ -108,8 +108,8 @@
         },
         {
             "id": "MINV_S2",
-            "name": "Season Minimum Value - S2",
-            "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
+            "name": "Seasonal Productivity - S1",
+            "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
             "dataset": "CUSTOM",
             "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3ddb52-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MINV_S2&style=default"
         },

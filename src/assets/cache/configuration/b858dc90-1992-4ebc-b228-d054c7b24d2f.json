@@ -1,7 +1,7 @@
 [
     {
         "id": "LAI",
-        "title": "Leaf Area Index (LAI)",
+        "title": "LAI",
         "description": "Leaf Area Index",
         "styles": [
             {
@@ -1069,30 +1069,21 @@
                         },
                         {
                             "color": "rgb(0.0%,39.22%,0.0%)",
-                            "label": "",
+                            "label": "7",
                             "position": 7
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": "",
-                            "position": 7.033333333333333
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": 8.5,
-                            "position": 8.5
                         }
                     ],
-                    "maxPosition": 8.5,
+                    "maxPosition": 7,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "b858dc-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-10T18:14:20.208951Z",
+        "lastUpdated": "2025-05-16T11:49:26.182430Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

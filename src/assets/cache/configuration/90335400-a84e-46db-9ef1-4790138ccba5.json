@@ -13,21 +13,6 @@
                     "title": "SWE",
                     "gradients": [
                         {
-                            "color": "rgb(89.02%,69.8%,97.65%)",
-                            "label": -30,
-                            "position": -30
-                        },
-                        {
-                            "color": "rgb(61.57%,10.98%,3.14%)",
-                            "label": "",
-                            "position": -20
-                        },
-                        {
-                            "color": "rgb(0.0%,32.55%,100.0%)",
-                            "label": "",
-                            "position": -10
-                        },
-                        {
                             "color": "rgb(3.14%,100.0%,43.92%)",
                             "label": 0,
                             "position": 0
@@ -74,15 +59,16 @@
                         }
                     ],
                     "maxPosition": 250,
-                    "minPosition": -30
+                    "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "903354-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-08T16:04:26.929519Z",
+        "lastUpdated": "2025-05-19T12:05:13.822993Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

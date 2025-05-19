@@ -872,3 +872,467 @@ export const COPERNICUS_CLMS_WB_100M_MONTHLY_V1_BANDS = [
     getDescription: () => t`TBD`,
   },
 ];
+export const COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1_BANDS = [
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MAX',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MEDIAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MIN',
+    getDescription: () => t`TBD`,
+  },
+];
+export const COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2_BANDS = [
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MAX',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MEDIAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'MIN',
+    getDescription: () => t`TBD`,
+  },
+];
+export const COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2_BANDS = [
+  {
+    name: 'CHLAMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'CHLAUNC',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'FCBPROB',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'LOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW1020',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW400',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW412',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW443',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW490',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW510',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW560',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW620',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW665',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW674',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW681',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW709',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW754',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW779',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW885',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW900',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSI',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSMMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSMUNC',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'UNC',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'UNCUB',
+    getDescription: () => t`TBD`,
+  },
+];
+export const COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1_BANDS = [
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'LOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOSBQRS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW412',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW443',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW490',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW510',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW560',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW620',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW665',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW681',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW709',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW754',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW760',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW779',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW865',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW885',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW900',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TNOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSI',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSINOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSTDEV',
+    getDescription: () => t`TBD`,
+  },
+];
+export const COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1_BANDS = [
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'LOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOSBQRS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW1020',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW400',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW412',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW443',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW490',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW510',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW560',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW620',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW665',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW674',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW681',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW709',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW754',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW760',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW764',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW767',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW779',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW865',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW885',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW900',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW940',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TNOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSI',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSINOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSTDEV',
+    getDescription: () => t`TBD`,
+  },
+];
+export const COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1_BANDS = [
+  {
+    name: 'FOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'LOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW1375',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW1610',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW2190',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW443',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW490',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW560',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW665',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW705',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW740',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW783',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW842',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW865',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'RW945',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TMEAN',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => t`TBD`,
+  },
+  {
+    name: 'TSI',
+    getDescription: () => t`TBD`,
+  },
+];

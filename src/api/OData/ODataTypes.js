@@ -70,7 +70,7 @@ const ODataCollections = {
   CCM_SAR: { id: 'CCM_SAR', label: 'CCM SAR', collection: 'CCM' },
   CLMS_BIOGEOPHYSICAL_PARAMETERS: {
     id: 'CLMS_BIOGEOPHYSICAL_PARAMETERS',
-    label: 'CLMS Bio-geophysical parameters',
+    label: 'CLMS Bio-geophysical Parameters',
     collection: 'CLMS',
   },
   CLMS_LAND_COVER_AND_LAND_USE_MAPPING: {

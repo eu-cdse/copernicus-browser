@@ -3,7 +3,7 @@
     "layers": [
         {
             "id": "LAI",
-            "name": "Leaf Area Index (LAI)",
+            "name": "LAI",
             "description": "Leaf Area Index",
             "dataset": "CUSTOM",
             "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/6d09d4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
