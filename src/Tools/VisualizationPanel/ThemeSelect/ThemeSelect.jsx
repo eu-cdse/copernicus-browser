@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { t } from 'ttag';
 
 import store, {
@@ -26,19 +26,7 @@ import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/C
 
 import './ThemeSelect.scss';
 
-import MagnifierSvg from '../../../icons/magnifier.svg?react';
-import ChevronDown from '../../../icons/chevron-down.svg?react';
 import useLoginLogout from '../../../Auth/loginLogout/useLoginLogout';
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} magnifier={MagnifierSvg} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
-};
 
 const createSelectOptions = (options = []) =>
   options.map((option) => ({ value: option, label: getThemeName(option) }));
@@ -183,7 +171,8 @@ function ThemeSelect({
             menuShouldBlockScroll={true}
             className="theme-select-dropdown"
             classNamePrefix="theme-select"
-            components={{ DropdownIndicator }}
+            components={{ DropdownIndicator: CustomDropdownIndicator }}
+            isSearchable={true}
           />
         </div>
       </div>

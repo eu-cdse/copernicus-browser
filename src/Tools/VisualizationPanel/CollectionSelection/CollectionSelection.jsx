@@ -3,7 +3,7 @@ import { usePrevious } from '../../../hooks/usePrevious';
 import jwt_dec from 'jwt-decode';
 
 import { connect } from 'react-redux';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { t } from 'ttag';
 
 import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
@@ -25,11 +25,9 @@ import Loader from '../../../Loader/Loader';
 import CheckmarkSvg from './checkmark.svg?react';
 
 import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
+import { CustomOption } from '../../../components/CustomOption/CustomOption';
 
 // import checkmarkSvg from './checkmark.svg';
-
-import ChevronUp from '../../../icons/chevron-up.svg?react';
-import ChevronDown from '../../../icons/chevron-down.svg?react';
 
 import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
@@ -38,26 +36,6 @@ import { HLSConstellationSelection } from './HLSConstellationSelection';
 import CLMSCollectionSelection from './CLMSCollectionSelection';
 import { CCM_ROLES } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../../api/OData/assets/accessRoles';
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
-};
-
-const CustomOption = (props) => {
-  const { data } = props;
-
-  return (
-    <div title={data.label}>
-      <components.Option {...props}>{data.label}</components.Option>
-    </div>
-  );
-};
 
 const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollection, onSelect }) => {
   const { datasource } = selectedCollectionGroup;
@@ -210,7 +188,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
             className="collection-select-dropdown"
             classNamePrefix="collection-select"
             filterOption={filterOption}
-            components={{ DropdownIndicator, Option: CustomOption }}
+            components={{ DropdownIndicator: CustomDropdownIndicator, Option: CustomOption }}
           ></Select>
 
           {!!selectedCollectionGroup?.getDescription && (
@@ -427,7 +405,7 @@ const CollectionSelection = ({
               className="collection-select-dropdown"
               classNamePrefix="collection-select"
               filterOption={filterOption}
-              components={{ DropdownIndicator }}
+              components={{ DropdownIndicator: CustomDropdownIndicator }}
             ></Select> */}
             {selectedCollectionGroup?.getDescription && (
               <CollectionTooltip

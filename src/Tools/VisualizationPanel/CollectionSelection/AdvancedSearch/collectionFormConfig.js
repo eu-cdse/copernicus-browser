@@ -90,6 +90,7 @@ export const collections = [
           { id: 'AUX_PREORB', name: 'AUX_PREORB', label: 'AUX_PREORB', supportsGeometry: false },
           { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
           { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
+          { id: 'AUX_MOEORB', name: 'AUX_MOEORB', label: 'AUX_MOEORB', supportsGeometry: false },
         ],
       },
     ],
@@ -288,7 +289,6 @@ export const collections = [
         productTypes: [
           { id: 'SR_1_SRA___', name: 'SR_1_SRA___', label: 'Level-1 SRA' },
           { id: 'SR_1_SRA_A_', name: 'SR_1_SRA_A_', label: 'Level-1 SRA_A' },
-          { id: 'SR_1_SRA_BS', name: 'SR_1_SRA_BS', label: 'Level-1 SRA_BS' },
           { id: 'SR_2_LAN___', name: 'SR_2_LAN___', label: 'Level-2 LAN' },
           { id: 'SR_2_WAT___', name: 'SR_2_WAT___', label: 'Level-2 WAT' },
           { id: 'SR_2_LAN_HY', name: 'SR_2_LAN_HY', label: 'Level-2 LAN_HY' },

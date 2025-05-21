@@ -237,21 +237,24 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     params.timelapse = JSON.stringify(timelapse);
   }
 
+  // If compareShare is enabled add all compare parameters
   if (compareShare) {
     params.compareShare = compareShare;
+
+    if (comparedOpacity) {
+      params.comparedOpacity = JSON.stringify(comparedOpacity);
+    }
+    if (comparedClipping) {
+      params.comparedClipping = JSON.stringify(comparedClipping);
+    }
+    if (compareMode?.value) {
+      params.compareMode = compareMode.value;
+    }
+    if (compareSharedPinsId) {
+      params.compareSharedPinsId = compareSharedPinsId;
+    }
   }
-  if (compareMode) {
-    params.compareMode = compareMode;
-  }
-  if (compareSharedPinsId) {
-    params.compareSharedPinsId = compareSharedPinsId;
-  }
-  if (comparedOpacity) {
-    params.comparedOpacity = comparedOpacity;
-  }
-  if (comparedClipping) {
-    params.comparedClipping = comparedClipping;
-  }
+
   if (clmsSelectedPath) {
     params.clmsSelectedPath = clmsSelectedPath;
   }

@@ -1,25 +1,13 @@
 import React from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { t } from 'ttag';
 
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
-import ChevronUp from '../../icons/chevron-up.svg?react';
-import ChevronDown from '../../icons/chevron-down.svg?react';
 import { getValueOrExecute } from '../../utils/effectsUtils';
 
 const LAYER_DEFAULT = { value: null, label: () => t`Layer default` };
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
-};
 
 const getLabelForValue = (value, options) => {
   //find value among all provided options
@@ -83,9 +71,9 @@ const EffectDropdown = ({
           menuShouldBlockScroll={true}
           className="effect-dropdown-select-dropdown"
           classNamePrefix="effect-dropdown-select"
-          components={{ DropdownIndicator }}
-          isOptionDisabled={(option) => option.disabled}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
           isSearchable={false}
+          isOptionDisabled={(option) => option.disabled}
           menuPlacement="auto"
         />
       </div>

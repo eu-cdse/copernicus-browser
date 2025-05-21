@@ -286,10 +286,24 @@ class PinsStoryBuilder extends React.Component {
       }
     } catch (ex) {
       if (!isCancelled(ex)) {
-        console.error(ex);
-        this.setState({
-          error: ex.toString(),
-        });
+        let error = ex.toString();
+        try {
+          // Check if response.data is a Blob
+          if (ex.response?.data instanceof Blob) {
+            const textData = await ex.response.data.text();
+
+            if (textData && typeof textData === 'string') {
+              const jsonData = JSON.parse(textData);
+              error = jsonData.error?.message || JSON.stringify(jsonData);
+            }
+          } else if (ex.response?.data) {
+            error = ex.response.data.error?.message || JSON.stringify(ex.response.data);
+          }
+        } catch (processingError) {
+          console.error('Error while processing the error response:', processingError);
+        }
+
+        this.setState({ error });
       }
     }
   }

@@ -348,6 +348,8 @@ class URLParamsParser extends React.Component {
 
         store.dispatch(
           compareLayersSlice.actions.restoreComparedLayers({
+            compareShare: params.compareShare,
+            compareSharedPinsId: params.compareSharedPinsId,
             layers: pins.items,
             compareMode: compareModeOption
               ? COMPARE_OPTIONS[compareModeOption]

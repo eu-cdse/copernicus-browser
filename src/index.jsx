@@ -38,7 +38,7 @@ ReactDOM.render(
                               themeIdFromUrlParams={themeId}
                               sharedPinsListIdFromUrlParams={sharedPinsListId}
                               googleAPI={googleAPI}
-                              compareShare={compareShare}
+                              compareShareInit={compareShare}
                             />
                           )}
                         </GoogleAPIProvider>

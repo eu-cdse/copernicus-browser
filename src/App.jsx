@@ -39,7 +39,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const { sharedPinsListIdFromUrlParams, compareShare } = this.props;
+    const { sharedPinsListIdFromUrlParams, compareShareInit } = this.props;
     if (sharedPinsListIdFromUrlParams) {
       if (import.meta.env.VITE_CDSE_BACKEND) {
         const pins = await importSharedPins(sharedPinsListIdFromUrlParams);
@@ -56,7 +56,7 @@ class App extends Component {
       this.setState({ showPinPanel: true });
     }
 
-    if (compareShare) {
+    if (compareShareInit) {
       this.setShowComparePanel(true);
     }
 
@@ -314,6 +314,11 @@ const mapStoreToProps = (store) => ({
   clmsSelectedPath: store.clms.selectedPath,
   clmsSelectedCollection: store.clms.selectedCollection,
   clmsSelectedConsolidationPeriodIndex: store.clms.selectedConsolidationPeriodIndex,
+  compareShare: store.compare.compareShare,
+  compareMode: store.compare.compareMode,
+  compareSharedPinsId: store.compare.compareSharedPinsId,
+  comparedOpacity: store.compare.comparedOpacity,
+  comparedClipping: store.compare.comparedClipping,
 });
 
 export default connect(mapStoreToProps, null)(App);

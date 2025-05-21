@@ -7651,9 +7651,6 @@ msgstr "Фільтрувати за місяцями"
 msgid "Land cover"
 msgstr "Земний покрив"
 
-msgid "Processed by"
-msgstr "Оброблено"
-
 msgid "Bright cover"
 msgstr "Яскраве покриття"
 
@@ -7686,15 +7683,6 @@ msgstr "Покрив зони припливів/відпливів"
 
 msgid "Fresh inland water cover"
 msgstr "Покрив прісних внутрішніх вод"
-
-msgid "Satellite platform"
-msgstr "Супутникова платформа"
-
-msgid "Polarisation"
-msgstr "Поляризація"
-
-msgid "Beam id"
-msgstr "id променю"
 
 msgid "Continental ice cover"
 msgstr "Континентальний льодовий покрив"
@@ -7938,9 +7926,6 @@ msgstr "Завантажити окремі файли"
 msgid "Download full product"
 msgstr "Завантажити увесь продукт"
 
-msgid "Product availability"
-msgstr "Доступність продукту"
-
 msgid "Visualization for offline products is not supported"
 msgstr "Візуалізація для офлайн-продуктів не підтримується"
 
@@ -8022,9 +8007,6 @@ msgid ""
 msgstr ""
 "Візуалізація для цього продукту поки що неможлива через затримку обробки "
 "інформації. Будь ласка, спробуйте пізніше"
-
-msgid "Collection"
-msgstr "Збірка"
 
 msgid "Based on bands B4, B3, B2"
 msgstr "На основі діапазонів B4, B3, B2"
@@ -8605,9 +8587,6 @@ msgstr "Композиція продуктів"
 
 msgid "Total slices"
 msgstr "Загальна кількість зрізів"
-
-msgid "Eop Identifier"
-msgstr "Ідентифікатор EOP (продукту спостереження Землі)"
 
 msgid "Sub-dataset"
 msgstr "Підмножина даних"
@@ -9332,9 +9311,6 @@ msgid ""
 msgstr ""
 
 msgid "Data take id"
-msgstr ""
-
-msgid "Delivery ID"
 msgstr ""
 
 msgid "Off nadir angle"
@@ -12071,4 +12047,70 @@ msgid ""
 "present. More information "
 "[here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-"
 "water-index-europe-v1-0-1km)."
+msgstr ""
+
+msgid "Product version"
+msgstr ""
+
+msgid "Platform acronym"
+msgstr ""
+
+msgid "Dataset alias"
+msgstr ""
+
+msgid "Mission short name"
+msgstr ""
+
+msgid "Datastrip id"
+msgstr ""
+
+msgid "Granule id"
+msgstr ""
+
+msgid "Source product"
+msgstr ""
+
+msgid "Source product origin date"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "S2 collection"
+msgstr ""
+
+msgid "Platform serial identifier"
+msgstr ""
+
+msgid "Operational mode"
+msgstr ""
+
+msgid "Polarisation channels"
+msgstr ""
+
+msgid "Processing mode"
+msgstr ""
+
+msgid "Swath identifier"
+msgstr ""
+
+msgid "Origin"
+msgstr ""
+
+msgid "Eop identifier"
+msgstr ""
+
+msgid "Delivery id"
+msgstr ""
+
+msgid "Collection name"
+msgstr ""
+
+msgid "Metric grid spacing"
+msgstr ""
+
+msgid "Dataset Short name"
+msgstr ""
+
+msgid "Nominal date"
 msgstr ""

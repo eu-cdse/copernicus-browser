@@ -1,5 +1,5 @@
 import React from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { t } from 'ttag';
 
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
@@ -10,19 +10,6 @@ import { customSelectStyle } from '../../components/CustomSelectInput/CustomSele
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
 import './SpeckleFilter.scss';
-
-import ChevronUp from '../../icons/chevron-up.svg?react';
-import ChevronDown from '../../icons/chevron-down.svg?react';
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
-};
 
 const SpeckleFilter = ({
   speckleFilter,
@@ -72,7 +59,7 @@ const SpeckleFilter = ({
           menuShouldBlockScroll={true}
           className="speckleFilter-select-dropdown"
           classNamePrefix="speckleFilter-select"
-          components={{ DropdownIndicator }}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
           isSearchable={false}
           menuPlacement="auto"
         />

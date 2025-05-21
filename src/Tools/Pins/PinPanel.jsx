@@ -1,9 +1,9 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
 import distance from '@turf/distance';
-import React, { Component } from 'react';
 import { t, ngettext, msgid } from 'ttag';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
@@ -50,8 +50,6 @@ import {
 import { ModalId } from '../../const';
 
 import ArrowSvg from '../../icons/arrow.svg?react';
-import ChevronUp from '../../icons/chevron-up.svg?react';
-import ChevronDown from '../../icons/chevron-down.svg?react';
 
 const PINS_LC_NAME = 'eob-pins';
 export const UNSAVED_PINS = 'unsaved-pins';
@@ -64,16 +62,6 @@ const ORDERING_MODE = {
   DATE: 'date',
   LOCATION: 'location',
   DATASET_ID: 'datasetId',
-};
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
 };
 
 class PinPanel extends Component {
@@ -776,7 +764,7 @@ class PinPanel extends Component {
                 menuShouldBlockScroll={true}
                 className="order-by-select-dropdown"
                 classNamePrefix="order-by-select"
-                components={{ DropdownIndicator }}
+                components={{ DropdownIndicator: CustomDropdownIndicator }}
                 isSearchable={false}
                 menuPlacement="auto"
                 isDisabled={pinItems.length < 2}

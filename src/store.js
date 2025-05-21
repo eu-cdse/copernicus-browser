@@ -759,6 +759,8 @@ export const tabsSlice = createSlice({
 export const compareLayersSlice = createSlice({
   name: 'compare',
   initialState: {
+    compareShare: null,
+    compareSharedPinsId: null,
     compareMode: COMPARE_OPTIONS.COMPARE_SPLIT,
     comparedLayers: [],
     comparedOpacity: [],
@@ -772,6 +774,12 @@ export const compareLayersSlice = createSlice({
       state.newCompareLayersCount = state.newCompareLayersCount + 1;
       state.comparedOpacity = [1.0, ...state.comparedOpacity];
       state.comparedClipping = [[0, 1], ...state.comparedClipping];
+    },
+    setCompareShare: (state, action) => {
+      state.compareShare = action.payload;
+    },
+    setCompareSharedPinsId: (state, action) => {
+      state.compareSharedPinsId = action.payload;
     },
     setCompareMode: (state, action) => {
       state.compareMode = action.payload;
@@ -846,6 +854,8 @@ export const compareLayersSlice = createSlice({
       state.newCompareLayersCount = 0;
     },
     restoreComparedLayers: (state, action) => {
+      state.compareShare = action.payload.compareShare;
+      state.compareSharedPinsId = action.payload.compareSharedPinsId;
       state.comparedLayers = action.payload.layers.map((l) => ({ id: uuid(), ...l }));
       state.compareMode = action.payload.compareMode;
       state.comparedOpacity = action.payload.comparedOpacity;

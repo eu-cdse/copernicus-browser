@@ -7425,9 +7425,6 @@ msgstr "Filtruj według miesięcy"
 msgid "Land cover"
 msgstr ""
 
-msgid "Processed by"
-msgstr ""
-
 msgid "Bright cover"
 msgstr ""
 
@@ -7459,15 +7456,6 @@ msgid "Tidal region cover"
 msgstr ""
 
 msgid "Fresh inland water cover"
-msgstr ""
-
-msgid "Satellite platform"
-msgstr ""
-
-msgid "Polarisation"
-msgstr ""
-
-msgid "Beam id"
 msgstr ""
 
 msgid "Continental ice cover"
@@ -7636,9 +7624,6 @@ msgid "Download single files"
 msgstr "Pobrać pojedyncze pliki"
 
 msgid "Download full product"
-msgstr ""
-
-msgid "Product availability"
 msgstr ""
 
 msgid "Visualization for offline products is not supported"
@@ -7896,9 +7881,6 @@ msgstr ""
 msgid ""
 "Visualisation for this product is not possible yet due to ingestion delay. "
 "Please try again later"
-msgstr ""
-
-msgid "Collection"
 msgstr ""
 
 msgid "Based on bands B4, B3, B2"
@@ -8675,9 +8657,6 @@ msgid ""
 "copernicus-contributing-missions/ccm-how-to-register)."
 msgstr ""
 
-msgid "Eop Identifier"
-msgstr ""
-
 msgid "Sub-dataset"
 msgstr ""
 
@@ -9200,9 +9179,6 @@ msgid ""
 "html)  \n"
 "[Available data "
 "collections](https://dataspace.copernicus.eu/explore-data/data-collections)"
-msgstr ""
-
-msgid "Delivery ID"
 msgstr ""
 
 msgid "Off nadir angle"
@@ -11613,4 +11589,70 @@ msgid ""
 "present. More information "
 "[here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-"
 "water-index-europe-v1-0-1km)."
+msgstr ""
+
+msgid "Product version"
+msgstr ""
+
+msgid "Platform acronym"
+msgstr ""
+
+msgid "Dataset alias"
+msgstr ""
+
+msgid "Mission short name"
+msgstr ""
+
+msgid "Datastrip id"
+msgstr ""
+
+msgid "Granule id"
+msgstr ""
+
+msgid "Source product"
+msgstr ""
+
+msgid "Source product origin date"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "S2 collection"
+msgstr ""
+
+msgid "Platform serial identifier"
+msgstr ""
+
+msgid "Operational mode"
+msgstr ""
+
+msgid "Polarisation channels"
+msgstr ""
+
+msgid "Processing mode"
+msgstr ""
+
+msgid "Swath identifier"
+msgstr ""
+
+msgid "Origin"
+msgstr ""
+
+msgid "Eop identifier"
+msgstr ""
+
+msgid "Delivery id"
+msgstr ""
+
+msgid "Collection name"
+msgstr ""
+
+msgid "Metric grid spacing"
+msgstr ""
+
+msgid "Dataset Short name"
+msgstr ""
+
+msgid "Nominal date"
 msgstr ""

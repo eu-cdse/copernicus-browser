@@ -1,9 +1,24 @@
 import React from 'react';
+import { components } from 'react-select';
+
+import ChevronDown from '../../icons/chevron-down.svg?react';
+import ChevronUp from '../../icons/chevron-up.svg?react';
+import Magnifier from '../../icons/magnifier.svg?react';
 
 export const CustomDropdownIndicator = (props) => {
-  const Magnifier = props.magnifier;
-  const ChevronUp = props.chevronUp;
-  const ChevronDown = props.chevronDown;
-
-  return props.selectProps.menuIsOpen ? props.magnifier ? <Magnifier /> : <ChevronUp /> : <ChevronDown />;
+  return (
+    components.DropdownIndicator && (
+      <components.DropdownIndicator {...props}>
+        {props.selectProps.menuIsOpen ? (
+          props.selectProps.isSearchable ? (
+            <Magnifier />
+          ) : (
+            <ChevronUp />
+          )
+        ) : (
+          <ChevronDown />
+        )}
+      </components.DropdownIndicator>
+    )
+  );
 };

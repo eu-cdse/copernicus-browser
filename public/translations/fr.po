@@ -8293,9 +8293,6 @@ msgstr "Filtrer par mois"
 msgid "Land cover"
 msgstr "Occupation des sols"
 
-msgid "Processed by"
-msgstr "Traité par"
-
 msgid "Bright cover"
 msgstr "Couverture lumineuse"
 
@@ -8328,15 +8325,6 @@ msgstr "Couverture de zone tidale"
 
 msgid "Fresh inland water cover"
 msgstr "Couverture des eaux douces intérieures"
-
-msgid "Satellite platform"
-msgstr "Plateforme satellite"
-
-msgid "Polarisation"
-msgstr "Polarisation"
-
-msgid "Beam id"
-msgstr "Identifiant de rayon"
 
 msgid "Continental ice cover"
 msgstr "Couverture de glace continentale"
@@ -8590,9 +8578,6 @@ msgstr "Télécharger des fichiers uniques"
 
 msgid "Download full product"
 msgstr "Télécharger le produit entier"
-
-msgid "Product availability"
-msgstr "Disponibilité du produit"
 
 msgid "Visualization for offline products is not supported"
 msgstr "La visualisation des produits hors ligne n'est pas prise en charge"
@@ -9094,9 +9079,6 @@ msgstr ""
 "La visualisation de ce produit n'est pas encore possible en raison du délai "
 "d'ingestion. Veuillez réessayer plus tard"
 
-msgid "Collection"
-msgstr "Collection"
-
 msgid "Based on bands B4, B3, B2"
 msgstr "Repose sur les bandes B4, B3, B2"
 
@@ -9508,9 +9490,6 @@ msgid ""
 "You are not eligible to use this feature. More info "
 "[here](https://dataspace.copernicus.eu/explore-data/data-collections/"
 "copernicus-contributing-missions/ccm-how-to-register)."
-msgstr ""
-
-msgid "Eop Identifier"
 msgstr ""
 
 msgid "Sub-dataset"
@@ -10035,9 +10014,6 @@ msgid ""
 "html)  \n"
 "[Available data "
 "collections](https://dataspace.copernicus.eu/explore-data/data-collections)"
-msgstr ""
-
-msgid "Delivery ID"
 msgstr ""
 
 msgid "Off nadir angle"
@@ -12448,4 +12424,70 @@ msgid ""
 "present. More information "
 "[here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-"
 "water-index-europe-v1-0-1km)."
+msgstr ""
+
+msgid "Product version"
+msgstr ""
+
+msgid "Platform acronym"
+msgstr ""
+
+msgid "Dataset alias"
+msgstr ""
+
+msgid "Mission short name"
+msgstr ""
+
+msgid "Datastrip id"
+msgstr ""
+
+msgid "Granule id"
+msgstr ""
+
+msgid "Source product"
+msgstr ""
+
+msgid "Source product origin date"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "S2 collection"
+msgstr ""
+
+msgid "Platform serial identifier"
+msgstr ""
+
+msgid "Operational mode"
+msgstr ""
+
+msgid "Polarisation channels"
+msgstr ""
+
+msgid "Processing mode"
+msgstr ""
+
+msgid "Swath identifier"
+msgstr ""
+
+msgid "Origin"
+msgstr ""
+
+msgid "Eop identifier"
+msgstr ""
+
+msgid "Delivery id"
+msgstr ""
+
+msgid "Collection name"
+msgstr ""
+
+msgid "Metric grid spacing"
+msgstr ""
+
+msgid "Dataset Short name"
+msgstr ""
+
+msgid "Nominal date"
 msgstr ""

@@ -11,20 +11,13 @@ import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
 
 import './social.scss';
 
-const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, extraParams, user }) => {
+const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, user }) => {
   const ref = useRef();
   const sharedLinks = getSharedLinks();
   const [shortUrl, setShortUrl] = useState('');
   const isLoggedIn = !!user.userdata;
 
   let currentUrl = window.location.href;
-  if (extraParams) {
-    currentUrl +=
-      '&' +
-      Object.keys(extraParams)
-        .map((k) => `${k}=${encodeURIComponent(extraParams[k])}`)
-        .join('&');
-  }
 
   useEffect(() => {
     sharedLinks[currentUrl] ? setShortUrl(sharedLinks[currentUrl]) : setShortUrl('');

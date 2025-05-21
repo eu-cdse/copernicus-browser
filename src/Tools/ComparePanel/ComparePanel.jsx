@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'ttag';
 import { connect } from 'react-redux';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import store, { compareLayersSlice } from '../../store';
 
 import ComparedLayer from './ComparedLayer';
@@ -13,30 +13,27 @@ import { saveSharedPinsToServer } from '../Pins/Pin.utils';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 
-import ChevronUp from '../../icons/chevron-up.svg?react';
-import ChevronDown from '../../icons/chevron-down.svg?react';
-
 import { COMPARE_OPTIONS } from '../../const';
 
 import './ComparePanel.scss';
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronUp={ChevronUp} chevronDown={ChevronDown} />
-      </components.DropdownIndicator>
-    )
-  );
-};
 
 const NO_COMPARE_LAYERS_MESSAGE = () => t`No layers to compare.`;
 
 const ComparePanel = (props) => {
   const [displaySocialShareOptions, setDisplaySocialShareOptions] = useState(null);
-  const [compareSharedPinsId, setCompareSharedPinsId] = useState(null);
 
-  const { compareMode, comparedLayers, comparedOpacity, comparedClipping, pins } = props;
+  const { compareMode, comparedLayers, comparedOpacity, comparedClipping, pins, compareShare } = props;
+
+  // Enable compare share to add params
+  useEffect(() => {
+    if (!compareShare) {
+      store.dispatch(compareLayersSlice.actions.setCompareShare(true));
+    }
+    return () => {
+      store.dispatch(compareLayersSlice.actions.setCompareShare(false));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChangeCompareMode = (e) => {
     const compareMode =
@@ -69,8 +66,8 @@ const ComparePanel = (props) => {
       try {
         const sharedPinsId = await saveSharedPinsToServer(comparedLayers);
 
-        setCompareSharedPinsId(sharedPinsId);
         setDisplaySocialShareOptions(true);
+        store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(sharedPinsId));
       } catch (e) {}
     })();
   };
@@ -103,7 +100,7 @@ const ComparePanel = (props) => {
               menuShouldBlockScroll={true}
               className="compare-mode-select-dropdown"
               classNamePrefix="compare-mode-select"
-              components={{ DropdownIndicator }}
+              components={{ DropdownIndicator: CustomDropdownIndicator }}
               isSearchable={false}
               menuPlacement="auto"
             />
@@ -127,13 +124,6 @@ const ComparePanel = (props) => {
       </div>
 
       <SocialShare
-        extraParams={{
-          compareShare: true,
-          compareMode: compareMode?.value,
-          compareSharedPinsId: compareSharedPinsId,
-          comparedOpacity: JSON.stringify(comparedOpacity),
-          comparedClipping: JSON.stringify(comparedClipping),
-        }}
         displaySocialShareOptions={displaySocialShareOptions}
         toggleSocialSharePanel={toggleSocialSharePanel}
       />
@@ -159,6 +149,7 @@ const ComparePanel = (props) => {
 };
 
 const mapStoreToProps = (store) => ({
+  compareShare: store.compare.compareShare,
   compareMode: store.compare.compareMode,
   comparedLayers: store.compare.comparedLayers,
   comparedOpacity: store.compare.comparedOpacity,

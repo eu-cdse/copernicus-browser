@@ -1,24 +1,12 @@
 import React from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 
 import { getAvailableYears, getAvailableMonths } from './Datepicker.utils';
 import { getMonths } from './MomentLocaleUtils';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
-import ChevronDown from '../../icons/chevron-down.svg?react';
-import ChevronUp from '../../icons/chevron-up.svg?react';
 import { customSelectStyle } from '../CustomSelectInput/CustomSelectStyle';
 import { primaryColor } from '../../variables.module.scss';
-
-const DropdownIndicator = (props) => {
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <CustomDropdownIndicator {...props} chevronDown={ChevronDown} chevronUp={ChevronUp} />
-      </components.DropdownIndicator>
-    )
-  );
-};
 
 const YearMonthForm = ({ minFromDate, maxToDate, onChange, locale, selectedDay }) => {
   const allMonths = getMonths(locale);
@@ -33,7 +21,8 @@ const YearMonthForm = ({ minFromDate, maxToDate, onChange, locale, selectedDay }
           options={months}
           menuPosition="fixed"
           onChange={(v) => onChange(v.value, selectedDay?.get('year'))}
-          components={{ DropdownIndicator }}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+          isSearchable={false}
           menuShouldBlockScroll={true}
           menuShouldScrollIntoView={true}
           menuPlacement="auto"
@@ -54,7 +43,8 @@ const YearMonthForm = ({ minFromDate, maxToDate, onChange, locale, selectedDay }
           options={years}
           menuPosition="fixed"
           onChange={(v) => onChange(selectedDay?.get('month'), v.value)}
-          components={{ DropdownIndicator }}
+          components={{ DropdownIndicator: CustomDropdownIndicator }}
+          isSearchable={false}
           menuShouldBlockScroll={true}
           menuShouldScrollIntoView={true}
           menuPlacement="auto"
