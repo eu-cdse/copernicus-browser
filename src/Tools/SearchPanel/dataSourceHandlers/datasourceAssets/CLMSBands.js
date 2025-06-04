@@ -1,1338 +1,1334 @@
-// import { t } from 'ttag';
-
-import { t } from 'ttag';
-
 export const COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL_BANDS = [
   {
     name: 'NDVI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TIMEGRID',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'UNC',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 
 export const COPERNICUS_CLMS_BURNT_AREA_DAILY_BANDS = [
   {
     name: 'day_of_burn',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 
 export const COPERNICUS_CLMS_BURNT_AREA_MONTHLY_BANDS = [
   {
     name: 'day_of_burn',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_DMP_BANDS = [
   {
     name: 'DMP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_FAPAR_BANDS = [
   {
     name: 'FAPAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_AFTER',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_BEFORE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RMSE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LAI_BANDS = [
   {
     name: 'LAI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_AFTER',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_BEFORE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RMSE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_FAPAR_300M_10DAILY_BANDS = [
   {
     name: 'FAPAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_FCOVER_1KM_10DAILY_BANDS = [
   {
     name: 'FCOVER',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_FCOVER_300M_10DAILY_BANDS = [
   {
     name: 'FCOVER',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_GPP_300M_10DAILY_BANDS = [
   {
     name: 'GPP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LAI_300M_10DAILY_BANDS = [
   {
     name: 'LENGTH_AFTER',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LAI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_BEFORE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RMSE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NPP_300M_10DAILY_BANDS = [
   {
     name: 'NPP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SWI_12_5KM_10DAILY_BANDS = [
   {
     name: 'QFLAG001',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI001',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS001',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VOBS100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SWI_12_5KM_DAILY_BANDS = [
   {
     name: 'QFLAG001',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI001',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SWI_1KM_DAILY_BANDS = [
   {
     name: 'QFLAG002',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SSF',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI002',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI005',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI010',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI015',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI040',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI060',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SWI100',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_DMP_300M_10DAILY_BANDS = [
   {
     name: 'DMP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_10DAILY_V1_BANDS = [
   {
     name: 'FRAC_VALID_OBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAX',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MEDIAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MIN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TCI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_10DAILY_V2_BANDS = [
   {
     name: 'FRAC_VALID_OBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAX',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MEDIAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MIN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TCI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NDVI_1KM_STATS_V2_BANDS = [
   {
     name: 'NDVI_MAX_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MEAN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MEDIAN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MIN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_NOBS_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_STDEV_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NDVI_1KM_STATS_V3_BANDS = [
   {
     name: 'NDVI_MAX_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MEAN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MEDIAN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_MIN_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_NOBS_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NDVI_STDEV_LTS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2_BANDS = [
   {
     name: 'NDVI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TIMEGRID',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NDVI_300M_10DAILY_V1_BANDS = [
   {
     name: 'NDVI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_NDVI_300M_10DAILY_V2_BANDS = [
   {
     name: 'NDVI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'UNC',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SSM_1KM_DAILY_V1_BANDS = [
   {
     name: 'SSM_NOISE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SSM',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LSP_300M_YEARLY_V1_BANDS = [
   {
     name: 'AMPL_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'AMPL_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'EOSD_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'EOSD_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'EOSV_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'EOSV_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LENGTH_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LSLOPE_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LSLOPE_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAXD_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAXD_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAXV_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAXV_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MINV_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MINV_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QA_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QA_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RSLOPE_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RSLOPE_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SOSD_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SOSD_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SOSV_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SOSV_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SPROD_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SPROD_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TPROD_S1',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TPROD_S2',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LCC_100M_YEARLY_V3_BANDS = [
   {
     name: 'Bare_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'BuiltUp_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Change_Confidence',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Crops_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Data_Density_Indicator',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Discrete_Classification',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Discrete_Classification_Probability',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Forest_Type',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Grass_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MossLichen_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'PermanentWater_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'SeasonalWater_Cover_fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Snow_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'Tree_Cover_Fraction',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_HOURLY_V1_BANDS = [
   {
     name: 'ERRORBAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LST',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'PPP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TDELTA',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_HOURLY_V2_BANDS = [
   {
     name: 'ERRORBAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LST',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'PPP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TDELTA',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_BANDS = [
   {
     name: 'GDMP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_BANDS = [
   {
     name: 'GDMP',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WB_300M_10DAILY_V1_BANDS = [
   {
     name: 'QUAL',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'WB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WB_1KM_10DAILY_V2_BANDS = [
   {
     name: 'QUAL',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'WB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SWE_5KM_DAILY_V1_BANDS = [
   {
     name: 'SWE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SWE_5KM_DAILY_V2_BANDS = [
   {
     name: 'SWE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'VAR',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SCE_500M_DAILY_V1_BANDS = [
   {
     name: 'SCE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_SCE_1KM_DAILY_V1_BANDS = [
   {
     name: 'SCE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WB_300M_MONTHLY_V2_BANDS = [
   {
     name: 'QUAL',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'WB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LIE_500M_DAILY_V1_BANDS = [
   {
     name: 'LIE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'P',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LIE_250M_DAILY_V2_BANDS = [
   {
     name: 'LIE',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WB_100M_MONTHLY_V1_BANDS = [
   {
     name: 'QUAL',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'WB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1_BANDS = [
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAX',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MEDIAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MIN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2_BANDS = [
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MAX',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MEDIAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'MIN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2_BANDS = [
   {
     name: 'CHLAMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'CHLAUNC',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'FCBPROB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'QFLAG',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW1020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW400',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW412',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW443',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW490',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW510',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW560',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW620',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW665',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW674',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW681',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW709',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW754',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW779',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW885',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW900',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSMMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSMUNC',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'UNC',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'UNCUB',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1_BANDS = [
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOSBQRS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW412',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW443',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW490',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW510',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW560',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW620',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW665',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW681',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW709',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW754',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW760',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW779',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW865',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW885',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW900',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TNOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSINOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSTDEV',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1_BANDS = [
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOSBQRS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW1020',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW400',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW412',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW443',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW490',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW510',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW560',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW620',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW665',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW674',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW681',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW709',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW754',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW760',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW764',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW767',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW779',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW865',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW885',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW900',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW940',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TNOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSINOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSTDEV',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1_BANDS = [
   {
     name: 'FOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'LOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'NOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW1375',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW1610',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW2190',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW443',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW490',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW560',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW665',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW705',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW740',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW783',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW842',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW865',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'RW945',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TMEAN',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TOBS',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
   {
     name: 'TSI',
-    getDescription: () => t`TBD`,
+    getDescription: () => ``,
   },
 ];

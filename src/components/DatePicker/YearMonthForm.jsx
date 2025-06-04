@@ -10,7 +10,9 @@ import { primaryColor } from '../../variables.module.scss';
 
 const YearMonthForm = ({ minFromDate, maxToDate, onChange, locale, selectedDay }) => {
   const allMonths = getMonths(locale);
-  const years = getAvailableYears(minFromDate, maxToDate).map((y) => ({ label: y, value: y }));
+  const years = getAvailableYears(minFromDate, maxToDate)
+    .map((y) => ({ label: y, value: y }))
+    .reverse();
   const months = getAvailableMonths(allMonths, minFromDate, maxToDate, selectedDay);
 
   return (

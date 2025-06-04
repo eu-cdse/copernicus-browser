@@ -14,13 +14,13 @@ import { t } from 'ttag';
 import { TABS } from '../../const';
 import store, { tabsSlice } from '../../store';
 import { connect } from 'react-redux';
-import { getSavedWorkspaces } from '../../api/OData/workspace';
+import { getSavedWorkspaceProducts } from '../../api/OData/workspace';
 
 const Tabs = (props) => {
   useEffect(() => {
     (async () => {
-      const savedWorkspaces = await getSavedWorkspaces();
-      store.dispatch(tabsSlice.actions.setSavedWorkspaces(savedWorkspaces));
+      const savedWorkspaceProducts = await getSavedWorkspaceProducts();
+      store.dispatch(tabsSlice.actions.setSavedWorkspaceProducts(savedWorkspaceProducts));
     })();
   }, []);
 
@@ -98,8 +98,8 @@ const Tabs = (props) => {
   };
 
   const renderWorksSpaceButtons = () => {
-    const { scrollTop, savedWorkspaces } = props;
-    const workspacesCount = savedWorkspaces ? savedWorkspaces.length : null;
+    const { scrollTop, savedWorkspaceProducts } = props;
+    const workspacesCount = savedWorkspaceProducts ? savedWorkspaceProducts.length : null;
     return (
       <div className={`tabs-wrapper-workspace ${scrollTop > 0 ? 'box-shadow-divider' : ''}`}>
         <a
@@ -171,7 +171,7 @@ const Tabs = (props) => {
 
 const mapStoreToProps = (store) => ({
   scrollTop: store.tabs.scrollTop,
-  savedWorkspaces: store.tabs.savedWorkspaces,
+  savedWorkspaceProducts: store.tabs.savedWorkspaceProducts,
 });
 
 const ConnectedTabs = connect(mapStoreToProps)(Tabs);

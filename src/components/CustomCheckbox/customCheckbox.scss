@@ -47,6 +47,12 @@
           border: 1px solid $activePrimaryColor;
           background-color: $activePrimaryColor;
         }
+
+        &.disabled {
+          cursor: not-allowed;
+          background-color: $sliderRailGray;
+          opacity: 0.9;
+        }
       }
 
       .check-mark {

@@ -9481,14 +9481,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"NDVI is an indicator of the greenness of the biomes. Every 10-days "
-"estimates are available at global scale in the spatial resolution of about "
-"300 m from 2014 to June 2020. More information "
-"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
-"difference-vegetation-index-v2-0-300m)."
-msgstr ""
-
-msgid ""
 "Provides information on the relative water content of the top few "
 "centimeters soil, describing how wet or dry the soil is in its topmost "
 "layer, expressed in percent saturation. Daily observations are available "
@@ -9810,4 +9802,45 @@ msgid "Dataset Short name"
 msgstr ""
 
 msgid "Nominal date"
+msgstr ""
+
+msgid "This product has already been saved to the workspace."
+msgstr ""
+
+msgid "Add products to workspace"
+msgstr ""
+
+msgid ""
+"NDVI is an indicator of the greenness of the biomes. Every 10-days "
+"estimates are available in near real time at global scale in the spatial "
+"resolution of about 300 m from July 2020 to the present. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
+"difference-vegetation-index-v2-0-300m)."
+msgstr ""
+
+msgid "Go to Workspace to order processing"
+msgstr ""
+
+msgid "No workflows selected"
+msgstr ""
+
+msgid "No available processors for this product."
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
+
+msgid "Order Processing"
+msgstr ""
+
+msgid "Select workflow"
+msgstr ""
+
+msgid "Order processing"
+msgstr ""
+
+msgid ""
+"For downloading products you need an authorization token. Learn more "
+"[here](https://documentation.dataspace.copernicus.eu/APIs/OData.html#"
+"product-download)."
 msgstr ""

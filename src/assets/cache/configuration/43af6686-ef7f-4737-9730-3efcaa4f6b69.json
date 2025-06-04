@@ -75,9 +75,10 @@
         ],
         "orderHint": 0,
         "instanceId": "43af66-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-11T11:36:31.422837Z",
+        "lastUpdated": "2025-06-03T10:35:34.168316Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,

@@ -13,19 +13,46 @@ import { addProductsToWorkspace } from '../../api/OData/workspace';
 import { ResultItemLabels } from './ResultItemFooter';
 import store, { notificationSlice } from '../../store';
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
+import isEqual from 'lodash/isEqual';
 
 class Results extends Component {
   state = {
     loadingMore: false,
     displayModal: false,
     checkedResults: [],
+    savedWorkspaceProductsMap: new Map(),
   };
+
+  loadWorkspaceProductsMap = () => {
+    const allSavedWorkspaceProductsMap = new Map(
+      this.props.savedWorkspaceProducts?.map((workspace) => [workspace.name, true]),
+    );
+
+    return new Map(
+      this.props.results.filter((r) => allSavedWorkspaceProductsMap.has(r.name)).map((r) => [r.name, true]),
+    );
+  };
+
+  componentDidMount() {
+    // Initialize savedWorkspacesMap on mount
+    this.setState({
+      savedWorkspaceProductsMap: this.loadWorkspaceProductsMap(),
+    });
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedTiles && prevProps.selectedTiles !== this.props.selectedTiles) {
       this.setState((prevState) => ({
         displayModal: true,
       }));
+    }
+
+    if (
+      !isEqual(prevProps.savedWorkspaceProducts, this.props.savedWorkspaceProducts) ||
+      prevProps.results !== this.props.results
+    ) {
+      const savedWorkspaceProductsMap = this.loadWorkspaceProductsMap();
+      this.setState({ savedWorkspaceProductsMap });
     }
   }
 
@@ -73,7 +100,7 @@ class Results extends Component {
     return showingNResultsString;
   }
 
-  addResultsToWorkspace = () => {
+  addSelectedProductsToWorkspace = async () => {
     const accessValidation = {
       userToken: this.props.userToken,
       product: null,
@@ -82,7 +109,7 @@ class Results extends Component {
 
     if (checkedResults.length === 0) {
       const workspaceProductErrorMessage = getProductErrorMessage(
-        ResultItemLabels.addToWorkspace(),
+        ResultItemLabels.addProductsToWorkspace(),
         accessValidation,
       );
       store.dispatch(notificationSlice.actions.displayError(workspaceProductErrorMessage));
@@ -94,7 +121,7 @@ class Results extends Component {
       accessValidation.product = tile;
 
       const workspaceProductErrorMessage = getProductErrorMessage(
-        ResultItemLabels.addToWorkspace(),
+        ResultItemLabels.addProductsToWorkspace(),
         accessValidation,
       );
 
@@ -104,13 +131,15 @@ class Results extends Component {
       }
     }
 
-    addProductsToWorkspace(checkedResults);
+    await addProductsToWorkspace(checkedResults);
+    this.setState({ checkedResults: [] });
   };
 
   render() {
-    const { results, hasMore, selectedTiles, totalCount, isAuthenticated } = this.props;
+    const { results: products, hasMore, selectedTiles, totalCount, isAuthenticated } = this.props;
+    const { savedWorkspaceProductsMap, checkedResults, loadingMore, displayModal } = this.state;
     return (
-      results && (
+      products && (
         <div className="results">
           <div className="results-heading">
             <div className="results-heading-top">
@@ -123,7 +152,7 @@ class Results extends Component {
                 />
               </div>
               <div className="showing-n-results">
-                {this.getNResultsString(results.length, hasMore, totalCount)}
+                {this.getNResultsString(products.length, hasMore, totalCount)}
               </div>
             </div>
 
@@ -131,27 +160,28 @@ class Results extends Component {
               <CustomCheckbox
                 inputClassName="white"
                 label={t`Select all`}
-                checked={this.state.checkedResults.length === results.length}
+                checked={checkedResults.length === products.length - savedWorkspaceProductsMap.size}
                 onChange={() => {
-                  if (this.state.checkedResults.length === results.length) {
+                  if (checkedResults.length === products.length - savedWorkspaceProductsMap.size) {
                     this.setState({ checkedResults: [] });
                   } else {
-                    this.setState({ checkedResults: results });
+                    const nonSavedWorkspaceProducts = products.filter(
+                      (r) => !savedWorkspaceProductsMap.get(r.name),
+                    );
+                    this.setState({ checkedResults: nonSavedWorkspaceProducts });
                   }
                 }}
               />
               <EOBButton
-                className={`tiny text ${
-                  !isAuthenticated || !this.state.checkedResults.length ? 'inactive' : ''
-                }`}
+                className={`tiny text ${!isAuthenticated || !checkedResults.length ? 'inactive' : ''}`}
                 svgIcon={WorkspacePlus}
                 text={t`Add to workspace`}
-                onClick={this.addResultsToWorkspace}
+                onClick={this.addSelectedProductsToWorkspace}
                 title={
                   isAuthenticated
-                    ? this.state.checkedResults.length <= 0
-                      ? ErrorMessage.atleastOneProduct()
-                      : ResultItemLabels.addToWorkspace()
+                    ? checkedResults.length <= 0
+                      ? ErrorMessage.atleastOneProductSelected()
+                      : ResultItemLabels.addProductsToWorkspace()
                     : ResultItemLabels.loginToAddToWorkspace()
                 }
               />
@@ -159,28 +189,29 @@ class Results extends Component {
           </div>
           <div className="results-panel">
             <div className="results-list">
-              {results &&
-                results.map((r, i) => (
+              {products &&
+                products.map((p, i) => (
                   <ResultItem
                     key={i}
                     onHover={this.onResultHover}
                     onStopHover={this.onResultStopHover}
-                    tile={r}
+                    tile={p}
                     onResultSelected={this.props.onResultSelected}
                     onResultCheck={this.onResultCheck}
-                    isResultChecked={this.state.checkedResults.find((t) => t.id === r.id)}
+                    isResultChecked={checkedResults.find((t) => t.id === p.id)}
                     isAuthenticated={isAuthenticated}
+                    isProductAlreadySavedToWorkspace={savedWorkspaceProductsMap.get(p.name)}
                   />
                 ))}
             </div>
-            {hasMore && !this.state.loadingMore ? (
+            {hasMore && !loadingMore ? (
               <div className="eob-btn" onClick={this.loadMore}>
                 {t`Load more`}
               </div>
             ) : null}
-            {this.state.loadingMore && <NotificationPanel msg={t`Loading more results ...`} type="loading" />}
+            {loadingMore && <NotificationPanel msg={t`Loading more results ...`} type="loading" />}
 
-            {this.state.displayModal ? (
+            {displayModal ? (
               <Rodal
                 animation="slideUp"
                 visible={true}

@@ -66,8 +66,8 @@ export async function addProductsToWorkspace(products) {
             ],
           }),
         );
-        const savedWorkspaces = await getSavedWorkspaces();
-        store.dispatch(tabsSlice.actions.setSavedWorkspaces(savedWorkspaces));
+        const savedWorkspaceProducts = await getSavedWorkspaceProducts();
+        store.dispatch(tabsSlice.actions.setSavedWorkspaceProducts(savedWorkspaceProducts));
       }
     })
     .catch((error) => {
@@ -83,7 +83,7 @@ export async function addProductsToWorkspace(products) {
     });
 }
 
-export async function getSavedWorkspaces() {
+export async function getSavedWorkspaceProducts() {
   const token = getAccessToken();
   const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace?$count=true`;
   const headers = {
@@ -100,6 +100,29 @@ export async function getSavedWorkspaces() {
         return response.data.value;
       }
       return null;
+    })
+    .catch(() => []);
+}
+
+export async function getAvailableProcesorsForProducts(productIds) {
+  const token = getAccessToken();
+  const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workflows/CompatibleWithProducts`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  const payload = {
+    ProductIDs: productIds,
+  };
+
+  return axios
+    .post(url, payload, { headers })
+    .then((response) => {
+      if (response?.status === 200 || response?.status === 201) {
+        return response.data.value;
+      }
+      return [];
     })
     .catch(() => []);
 }

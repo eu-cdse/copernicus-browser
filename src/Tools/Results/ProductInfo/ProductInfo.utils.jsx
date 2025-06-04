@@ -127,7 +127,7 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
   if (!userToken) {
     errorMessage = getLoggedInErrorMsg();
   } else if (product === null) {
-    errorMessage = ErrorMessage.atleastOneProduct();
+    errorMessage = ErrorMessage.atleastOneProductSelected();
   } else if (!product.online) {
     errorMessage = ErrorMessage.downloadOfflineProduct();
   } else if (shouldShowCCMAccessError(userToken, product)) {

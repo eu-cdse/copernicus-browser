@@ -184,11 +184,10 @@ export default class CCMDataSourceHandler extends DataSourceHandler {
   }
 
   getMinMaxDates(datasetId) {
-    const collectionId = this.getCollectionByDatasetId(datasetId);
-    if (!collectionId) {
+    if (this.MIN_MAX_DATES[datasetId] == null) {
       return { minDate: null, maxDate: null };
     }
-    return this.MIN_MAX_DATES[collectionId];
+    return this.MIN_MAX_DATES[datasetId];
   }
 
   getLayers = (data, datasetId, url, layersExclude, layersInclude) => {

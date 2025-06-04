@@ -685,6 +685,7 @@ class AdvancedSearch extends Component {
             selectedTiles={selectedTiles}
             backToSearch={this.backToSearch}
             isAuthenticated={!!this.props.user}
+            savedWorkspaceProducts={this.props.savedWorkspaceProducts}
           />
         )}
 
@@ -800,6 +801,7 @@ const mapStoreToProps = (store) => ({
   selectedTab: store.tabs.selectedTabSearchPanelIndex,
   terrainViewerId: store.terrainViewer.id,
   userToken: store.auth.user.access_token,
+  savedWorkspaceProducts: store.tabs.savedWorkspaceProducts,
 });
 
 export default connect(mapStoreToProps, null)(withODataSearchHOC(AdvancedSearch));

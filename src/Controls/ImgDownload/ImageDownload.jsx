@@ -253,9 +253,10 @@ function ImageDownload(props) {
   }
 
   async function executeDownloadBasicCompared(props, formData, baseParams) {
-    const { imageFormat, cropToAoi } = formData;
+    const { imageFormat, cropToAoi, addMapOverlays, showOSMBackgroundLayer } = formData;
     const bounds = cropToAoi ? props.aoiBounds : props.mapBounds;
-    const correctProjection = !formData.addMapOverlays ? CRS_EPSG4326.authId : CRS_EPSG3857.authId;
+    const correctProjection =
+      addMapOverlays || showOSMBackgroundLayer ? CRS_EPSG3857.authId : CRS_EPSG4326.authId;
     const { comparedClipping, aoiBounds, mapBounds } = props;
 
     const adjustedClipping = cropToAoi
@@ -291,9 +292,10 @@ function ImageDownload(props) {
 
   async function executeDownloadBasicVisualization(props, formData, baseParams) {
     let blob;
-    const { imageFormat, cropToAoi, showOSMBackgroundLayer } = formData;
+    const { imageFormat, cropToAoi, showOSMBackgroundLayer, addMapOverlays } = formData;
     const bounds = cropToAoi ? props.aoiBounds : props.mapBounds;
-    const correctProjection = !formData.addMapOverlays ? CRS_EPSG4326.authId : CRS_EPSG3857.authId;
+    const correctProjection =
+      addMapOverlays || showOSMBackgroundLayer ? CRS_EPSG3857.authId : CRS_EPSG4326.authId;
 
     try {
       const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
@@ -563,9 +565,11 @@ function ImageDownload(props) {
       showLegend,
       userDescription,
       showOSMBackgroundLayer,
+      addMapOverlays,
     } = formData;
     const bounds = props.aoiGeometry ? props.aoiBounds : props.mapBounds;
-
+    const correctProjection =
+      addMapOverlays || showOSMBackgroundLayer ? CRS_EPSG3857.authId : CRS_EPSG4326.authId;
     setError(null);
     setWarnings(null);
     setLoadingImages(true);
@@ -598,7 +602,7 @@ function ImageDownload(props) {
           ...props,
           ...params,
           baseLayerUrl: showOSMBackgroundLayer ? defaultBaseLayer.url : null,
-          selectedCrs: CRS_EPSG4326.authId,
+          selectedCrs: correctProjection,
         },
         setWarnings,
       );

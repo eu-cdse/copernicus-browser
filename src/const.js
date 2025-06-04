@@ -93,7 +93,7 @@ export const S1_DEFAULT_PARAMS = {
   polarization: Polarization.DV,
   acquisitionMode: AcquisitionMode.IW,
   resolution: Resolution.HIGH,
-  orthorectification: '',
+  orthorectification: DEMInstanceTypeOrthorectification.COPERNICUS,
   speckleFilter: { type: SpeckleFilterType.NONE },
   backscatterCoeff: BackscatterCoeff.GAMMA0_ELLIPSOID,
 };

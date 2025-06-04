@@ -61,6 +61,7 @@ $breakpoint-700: 700px;
 $breakpoint-720: 720px;
 $breakpoint-740: 740px;
 $breakpoint-768: 768px;
+$smallScreenBreakpoint: 768;
 $breakpoint-890: 890px;
 $breakpoint-900: 900px;
 $breakpoint-940: 940px;
@@ -90,5 +91,6 @@ $breakpoint-1300: 1300px;
   successColor: $successColor;
   warningColor: $warningColor;
   dropdownHoverBackground: $dropdownHoverBackground;
+  smallScreenBreakpoint: $smallScreenBreakpoint;
 }
 /* stylelint-enable */

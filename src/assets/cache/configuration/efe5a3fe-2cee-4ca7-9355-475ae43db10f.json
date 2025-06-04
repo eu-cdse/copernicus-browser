@@ -12,12 +12,12 @@
                     "type": "discrete",
                     "items": [
                         {
-                            "color": "rgb(0.2%,0.2%,0.2%)",
-                            "label": "0.0"
+                            "color": "rgb(50.2%,50.2%,50.2%)",
+                            "label": "No burn"
                         },
                         {
-                            "color": "rgb(0.39%,0.0%,0.0%)",
-                            "label": "366.0"
+                            "color": "rgb(100%,0.0%,0.0%)",
+                            "label": "Burn scar"
                         }
                     ]
                 }
@@ -25,7 +25,7 @@
         ],
         "orderHint": 0,
         "instanceId": "efe5a3-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-07T15:05:20.407377Z",
+        "lastUpdated": "2025-06-03T09:07:11.950709Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "defaultStyleName": "default",

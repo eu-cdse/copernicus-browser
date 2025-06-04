@@ -740,7 +740,7 @@ export const tabsSlice = createSlice({
   name: 'tabs',
   initialState: {
     selectedTabIndex: TABS.VISUALIZE_TAB,
-    savedWorkspaces: [],
+    savedWorkspaceProducts: [],
     scrollTop: null,
   },
   reducers: {
@@ -750,8 +750,8 @@ export const tabsSlice = createSlice({
     setScrollTop: (state, action) => {
       state.scrollTop = action.payload;
     },
-    setSavedWorkspaces: (state, action) => {
-      state.savedWorkspaces = action.payload;
+    setSavedWorkspaceProducts: (state, action) => {
+      state.savedWorkspaceProducts = action.payload;
     },
   },
 });

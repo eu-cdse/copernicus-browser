@@ -38,21 +38,25 @@
 
   .main {
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .product-info-content {
       display: flex;
       flex-direction: row;
+      gap: 10px;
 
-      .column {
+      &.workflow {
         margin-right: 10px;
       }
 
       .section-group {
         display: flex;
         flex-direction: column;
-        flex: 1;
         padding: 10px;
         background-color: $mainMedium;
+        position: relative;
 
         h3 {
           color: $primaryColor;
@@ -109,19 +113,21 @@
           }
         }
 
-        &.preview {
-          margin-bottom: 10px;
+        &.footprint {
+          display: flex;
+          padding-bottom: 13px;
         }
 
-        &.footprint {
-          flex: 1;
-          display: flex;
+        &.preview {
+          padding-bottom: 14px;
         }
       }
 
-      .attributes {
+      .attributes-workflows {
         width: 67%;
-        background-color: $mainMedium;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
 
         .row {
           display: flex;
@@ -142,10 +148,17 @@
         .attribute {
           padding: 5px;
         }
+
+        .attributes {
+          background-color: $mainMedium;
+        }
       }
 
       .previews {
         width: 33%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
 
         .preview-image {
           flex: 1;
@@ -160,15 +173,57 @@
           }
         }
       }
+
+      .workflow-section {
+        .workflows {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+
+          .workflow-details {
+            flex: 1;
+            background-color: $mainDark;
+            width: calc(100% - 20px);
+            padding: 10px;
+
+            h4,
+            p {
+              margin: 0 0 5px 0;
+
+              span {
+                font-weight: $fontWeightBold;
+              }
+            }
+
+            h4 {
+              font-size: 14px;
+            }
+
+            p:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .process-btn {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+
+          &.disabled {
+            cursor: pointer;
+          }
+        }
+      }
     }
 
     @media screen and (max-width: $breakpoint-768) {
       .product-info-content {
         flex-direction: column;
 
-        .attributes {
+        .attributes-workflows {
           width: unset;
-          margin-bottom: 10px;
         }
 
         .previews {
@@ -186,25 +241,55 @@
     padding: 15px 0 0 0;
 
     .product-link {
-      padding: 5px 0;
-      display: flex;
-      color: $primaryColor;
-      align-items: center;
-      cursor: default;
+      padding: 8px 0;
 
       label {
         font-weight: $fontWeightBold;
         color: $textColor;
-        white-space: nowrap;
+        font-size: 13px;
+        display: block;
       }
 
-      div {
-        padding: 5px;
-        word-wrap: anywhere;
+      &-title {
+        display: flex;
+        align-items: center;
+        height: 24px;
+      }
+
+      &-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        @media (max-width: $breakpoint-500) {
+          flex-wrap: wrap;
+        }
+      }
+
+      &-url {
+        flex: 1;
+        padding: 2px 4px;
+        font-size: 12px;
+        word-break: break-all;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+
+        @media (max-width: $breakpoint-500) {
+          display: block;
+          max-width: 300px;
+          height: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       i {
         cursor: pointer;
+        color: $primaryColor;
       }
     }
 
@@ -244,5 +329,15 @@
         justify-content: center;
       }
     }
+  }
+}
+
+.product-tooltip {
+  .help-tooltip-icon {
+    opacity: 0.8;
+  }
+
+  .react-tooltip-lite {
+    box-shadow: $boxShadow;
   }
 }

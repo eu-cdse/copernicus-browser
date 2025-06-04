@@ -6,7 +6,7 @@ const DataSourceTooltip = ({ source, credits }) => {
   return (
     <div className="data-source-group-tooltip">
       <div className="tooltip-description">
-        <ReactMarkdown children={source} />
+        <ReactMarkdown children={source} linkTarget="_blank" />
       </div>
       <CreditsList credits={credits} />
     </div>

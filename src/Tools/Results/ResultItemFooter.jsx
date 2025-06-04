@@ -23,9 +23,12 @@ import { AttributeNames } from '../../api/OData/assets/attributes';
 export const ResultItemLabels = {
   productInfo: () => t`Product info`,
   zoomToProduct: () => t`Zoom to product`,
-  addToWorkspace: () => t`Add to workspace`,
+  addProductsToWorkspace: () => t`Add products to workspace`,
   loginToAddToWorkspace: () => t`You need to be logged in to add products to your workspace.`,
   downloadProductLabel: () => t`Download product`,
+  orderProcessing: () => t`Go to Workspace to order processing`,
+  noWorkspaceSelected: () => t`No workflows selected`,
+  noAvailableProcessors: () => t`No available processors for this product.`,
 };
 
 const zoomToProduct = ({ geometry }) => {

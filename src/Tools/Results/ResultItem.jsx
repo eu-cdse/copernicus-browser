@@ -50,7 +50,8 @@ export const ErrorMessage = {
     t`This product is currently unavailable and can not be downloaded. Add it to Workspace to order it.`,
   CCMAccessRoleNotEligible: () =>
     t`You are not eligible to use this feature. More info [here](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/ccm-how-to-register).`,
-  atleastOneProduct: () => t`At least one product needs to be selected.`,
+  atleastOneProductSelected: () => t`At least one product needs to be selected.`,
+  productAlreadySavedToWorkspace: () => t`This product has already been saved to the workspace.`,
 };
 
 const visualizationButtonDisabled = (tile, user) => {
@@ -143,6 +144,7 @@ const ResultItem = ({
   onResultCheck,
   isAuthenticated,
   user,
+  isProductAlreadySavedToWorkspace,
 }) => {
   const { sensingTime, name, platformShortName, instrumentShortName, size, contentLength } = tile;
 
@@ -227,10 +229,12 @@ const ResultItem = ({
       <div className="container">
         {onResultCheck && (
           <CustomCheckbox
-            className="tile-checkbox"
+            className={'tile-checkbox'}
             inputClassName="white"
             checked={isResultChecked}
             onChange={() => onResultCheck(tile)}
+            disabled={isProductAlreadySavedToWorkspace}
+            disabledTitle={ErrorMessage.productAlreadySavedToWorkspace()}
           />
         )}
         <ProductPreview product={tile} validate={true} />

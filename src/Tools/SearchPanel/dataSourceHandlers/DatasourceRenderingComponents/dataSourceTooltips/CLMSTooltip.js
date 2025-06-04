@@ -418,7 +418,7 @@ const ClmsGlobalNdvi300mV110dailyTooltip = () =>
   });
 
 const getClmsGlobalNdvi300mV210dailyMarkdown = () => t`
-  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v2-0-300m).`;
+  NDVI is an indicator of the greenness of the biomes. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from July 2020 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v2-0-300m).`;
 
 const ClmsGlobalNdvi300mV210dailyTooltip = () =>
   DataSourceTooltip({
