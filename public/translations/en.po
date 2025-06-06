@@ -15,9 +15,6 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-msgid "Close and don't show again"
-msgstr ""
-
 msgid "Previous"
 msgstr ""
 
@@ -27,16 +24,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-msgid "Continue with tutorial"
-msgstr ""
-
 msgid "Don't show again"
-msgstr ""
-
-msgid "Show info"
-msgstr ""
-
-msgid "Discover"
 msgstr ""
 
 msgid "Visualise"
@@ -51,28 +39,13 @@ msgstr ""
 msgid "An error has occurred while fetching images:"
 msgstr ""
 
-msgid "No tile found"
-msgstr ""
-
 msgid "Dataset"
-msgstr ""
-
-msgid "Show"
 msgstr ""
 
 msgid "Show effects and advanced options"
 msgstr ""
 
-msgid "Show visualization"
-msgstr ""
-
 msgid "Add to Pins"
-msgstr ""
-
-msgid "Add to compare"
-msgstr ""
-
-msgid "Zoom to tile"
 msgstr ""
 
 msgid "Hide layer"
@@ -88,21 +61,6 @@ msgid "Custom"
 msgstr ""
 
 msgid "Create custom visualisation"
-msgstr ""
-
-msgid "Zoom in to view data"
-msgstr ""
-
-msgid "Free sign up"
-msgstr ""
-
-msgid "for all features"
-msgstr ""
-
-msgid "Powered by"
-msgstr ""
-
-msgid "with contributions by"
 msgstr ""
 
 msgid "Please select data source(s)!"
@@ -298,27 +256,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"**Sentinel-2** provides high-resolution images in the visible and infrared "
-"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
-"and coastal areas. .\n"
-"\n"
-"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
-"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
-"info "
-"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Revisit time:** maximum 5 days to revisit the same area, using both "
-"satellites.\n"
-"\n"
-"**Data availability:** Since June 2015. Full global coverage since March "
-"2017.\n"
-"\n"
-"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
-"monitoring, monitoring of burnt areas."
-msgstr ""
-
-msgid ""
 "Level 1C data are data of sufficient quality for most investigations, where "
 "all image corrections were done except for the atmospheric correction. Data "
 "are available globally since June 2015 onwards."
@@ -389,34 +326,7 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
-msgid "Data source name"
-msgstr ""
-
 msgid "Sensing time"
-msgstr ""
-
-msgid "Cloud coverage"
-msgstr ""
-
-msgid "Sun elevation"
-msgstr ""
-
-msgid "MGRS location"
-msgstr ""
-
-msgid "AWS path"
-msgstr ""
-
-msgid "EO Cloud path"
-msgstr ""
-
-msgid "CreoDIAS path"
-msgstr ""
-
-msgid "SciHub link"
-msgstr ""
-
-msgid "Back to search"
 msgstr ""
 
 msgid "Load more"
@@ -553,12 +463,6 @@ msgstr ""
 msgid "Split position"
 msgstr ""
 
-msgid "split"
-msgstr ""
-
-msgid "opacity"
-msgstr ""
-
 msgid "No layers to compare."
 msgstr ""
 
@@ -584,12 +488,6 @@ msgid "Go to Place"
 msgstr ""
 
 msgid "Labels"
-msgstr ""
-
-msgid "Borders"
-msgstr ""
-
-msgid "Roads"
 msgstr ""
 
 msgid "Zoom in"
@@ -626,13 +524,6 @@ msgid "please select a layer"
 msgstr ""
 
 msgid "not available for "
-msgstr ""
-
-#. eslint-disable-next-line
-#, javascript-format
-msgid ""
-"not available for \"${ props.presetLayerName }\" (layer with value is not "
-"set up)"
 msgstr ""
 
 msgid "Search for data first."
@@ -695,9 +586,6 @@ msgstr ""
 #. jsx-a11y/anchor-is-valid
 #. eslint-disable-next-line
 msgid "Cancel edit."
-msgstr ""
-
-msgid "Draw area of interest"
 msgstr ""
 
 msgid "Least cloud coverage"
@@ -982,22 +870,10 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-msgid "Timespan:"
-msgstr ""
-
 msgid "Date:"
 msgstr ""
 
 msgid "Single date"
-msgstr ""
-
-msgid "Timespan"
-msgstr ""
-
-msgid "hh"
-msgstr ""
-
-msgid "mm"
 msgstr ""
 
 msgid "From:"
@@ -1062,98 +938,7 @@ msgstr ""
 msgid "Volcanoes"
 msgstr ""
 
-msgid ""
-"In the **Discover** tab you can:\n"
-"\n"
-"- Select a **Theme.**\n"
-"- **Search** for data.\n"
-"- View theme **Highlights.**\n"
-"\n"
-"The **Theme** dropdown offers you different preconfigured themes as well as "
-"your own custom configured instances if you are Logged-in. To create an "
-"instance, click on\n"
-"the settings icon <i className=\"fa fa-cog\" /> and log in with the same "
-"credentials as you used for EO Browser.\n"
-"\n"
-"Under **Search** you can set search criteria:\n"
-" - Choose from which satellites you want to receive the data by selecting "
-"checkboxes.\n"
-" - Select additional options where applicable, for example, cloud coverage "
-"with the slider.\n"
-" - Select the time range by either typing the date or select the date from "
-"the calendar.\n"
-"\n"
-"You can read explanations of satellites by clicking on the question icon\n"
-"<i className=\"fa fa-question-circle\" /> next to the data source name.\n"
-"\n"
-"Once you hit <span class=\"btn\" style=\"font-size: 12px; padding: 4px 6px "
-"4px 6px\">Search</span> you get a list of results. Each result is presented "
-"\n"
-"with a preview image, and relevant data specific to the datasource. For "
-"some data sources, the link icon <i class=\"fa fa-link\" /> is also visible "
-"for each result.\n"
-"Clicking on it reveals direct links to the raw image of the result on EO "
-"Cloud or SciHub. Clicking on the <span class=\"btn\" style=\"font-size: "
-"12px; padding: 4px 6px 4px 6px\">Visualize</span> button will open the "
-"**Visualize** tab for the selected result.\n"
-"\n"
-"Under **Highlight**, you find preselected interesting locations connected "
-"to the selected theme."
-msgstr ""
-
-msgid ""
-"In the <b>Visualize</b> tab you can select different pre-installed or "
-"custom spectral band combinations to visualise data for the selected "
-"result.\n"
-"\n"
-"Some of the common options:\n"
-"- **True Color** - Visual interpretation of land cover.\n"
-"- **False Color** - Visual interpretation of vegetation.\n"
-"- **NDVI** - Vegetation index.\n"
-"- **Moisture index** - Moisture index\n"
-"- **SWIR** - Shortwave-infrared index.\n"
-"- **NDWI** - Normalized Difference Water Index.\n"
-"- **NDSI** - Normalized Difference Snow Index.\n"
-"\n"
-"Most visualizations are given a description and a legend, which you can "
-"view by clicking on the expand\n"
-"icon <i className=\"fa fa-angle-double-down \" />.\n"
-" \n"
-"For most data sources the **Custom Script** option is available. Click on "
-"it to select custom\n"
-"band combinations, index combinations or write your own classification "
-"script for the visualisation of data. You can also\n"
-"use custom scripts, which are stored elsewhere, either on Google drive, "
-"GitHub or in our [Custom script "
-"repository](https://custom-scripts.sentinel-hub.com/). \n"
-"Paste the URL of the script into a text box in the advanced script editing "
-"panel and click Refresh.\n"
-" \n"
-"You can change the date directly in the <b>Visualize</b> tab, without going "
-"back to the **Discover** tab. Type in or select it from the calendar <i "
-"className=\"fa fa-calendar cal-icon-cal\" />.\n"
-"\n"
-"Above the visualizations you have on line of additional tools. Note that "
-"their avalibilty depends on the data source.\n"
-"- **Pin layer** to save it in the application for future use - by clicking "
-"on the pin icon <i className=\"fa fa-thumb-tack\" />.\n"
-"- Select **advanced options** like the sampling method or apply different "
-"**effects** such as contrast (gain) and luminance (gamma) - by clicking on "
-"the effect sliders icon <i className=\"fa fa-sliders\" />.\n"
-"- Add a layer to the **Compare** tab for later comparison - by clicking on "
-"the compare icon <i ClassName=\"fas fa-exchange-alt\" />.\n"
-"- **Zoom** to the centre of the tile - by clicking on the crosshair <i "
-"className=\"fa fa-crosshairs\" />.\n"
-"- Toggle **layer visibility** - by clicking on the visibility icon <i "
-"className=\"fa fa-eye-slash\" />.\n"
-"- **Share** your visualization on social media - by clicking on the share "
-"icon <i className=\"fas fa-share-alt\" />."
-msgstr ""
-
 msgid "User Account"
-msgstr ""
-
-msgid "Discover Tab"
 msgstr ""
 
 msgid "Search Places"
@@ -2288,25 +2073,6 @@ msgid ""
 "meris/)"
 msgstr ""
 
-#. If the following translation is added again, the second link must be updated
-msgid ""
-"# True color composite\n"
-"\n"
-"Sensors carried by satellites can image Earth in different regions of the "
-"electromagnetic spectrum. Each region in the spectrum is referred to as a "
-"band. Sentinel-2 has 13 bands. True color composite uses visible light "
-"bands red, green and blue in the corresponding red, green and blue color "
-"channels, resulting in a natural colored product, that is a good "
-"representation of the Earth as humans would see it naturally.\n"
-"\n"
-"\n"
-"\n"
-"More info "
-"[here](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/) and "
-"[here.](http://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/"
-"remote-sensing-systems/spectroscopy)."
-msgstr ""
-
 msgid ""
 "# True color composite\n"
 "\n"
@@ -2598,9 +2364,6 @@ msgid ""
 "formats."
 msgstr ""
 
-msgid "Measure"
-msgstr ""
-
 msgid ""
 "# Enhanced True Color Visualization\n"
 "\n"
@@ -2637,12 +2400,6 @@ msgid "Creating link..."
 msgstr ""
 
 msgid "OK"
-msgstr ""
-
-msgid "Hello,"
-msgstr ""
-
-msgid "L2A (atmospherically corrected)"
 msgstr ""
 
 msgid "This pin currently has no description."
@@ -3583,12 +3340,6 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-msgid "DatasetId"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
 msgid "Show evalscript"
 msgstr ""
 
@@ -4072,9 +3823,6 @@ msgstr ""
 msgid "Your collections"
 msgstr ""
 
-msgid "Upload data"
-msgstr ""
-
 msgid ""
 "Enter a Planet API key, that you received via email after purchasing a "
 "Planet PlanetScope Sentinel Hub Package"
@@ -4293,9 +4041,6 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-msgid "No layers found for date"
-msgstr ""
-
 msgid "Creating and editing a timelapse is not supported on mobile."
 msgstr ""
 
@@ -4321,9 +4066,6 @@ msgid "Fade"
 msgstr ""
 
 msgid "None"
-msgstr ""
-
-msgid "Currently only collections on services.sentinel-hub are supported."
 msgstr ""
 
 msgid "Built-up probability [0 - 100 %] at 10 m spatial resolution"
@@ -4513,12 +4255,6 @@ msgid ""
 "Find more information "
 "[here](https://custom-scripts.sentinel-hub.com/other_collections/cnes_land_"
 "cover_validity/)."
-msgstr ""
-
-msgid "Refresh Evalscript"
-msgstr ""
-
-msgid "Refreshing Evalscript"
 msgstr ""
 
 msgid ""
@@ -4779,9 +4515,6 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-msgid "Sensing date"
-msgstr ""
-
 msgid "My orders and subscriptions"
 msgstr ""
 
@@ -4873,9 +4606,6 @@ msgstr ""
 msgid "Show products on map"
 msgstr ""
 
-msgid "Contour"
-msgstr ""
-
 msgid "Show tutorial"
 msgstr ""
 
@@ -4910,18 +4640,7 @@ msgstr ""
 msgid "To use Crop to AOI, area of interest needs to be selected first."
 msgstr ""
 
-msgid "Draw the area of interest's geometry on the exported image."
-msgstr ""
-
-msgid ""
-"To use Draw AOI geometry on Image, area of interest needs to be selected "
-"first."
-msgstr ""
-
 msgid "Crop to AOI"
-msgstr ""
-
-msgid "Draw AOI geometry on Image"
 msgstr ""
 
 msgid "Preview"
@@ -5091,9 +4810,6 @@ msgstr ""
 msgid "Resolution Y (m/px)"
 msgstr ""
 
-msgid "Water Bodies"
-msgstr ""
-
 msgid ""
 "# ESA WorldCover Map\n"
 "\n"
@@ -5187,16 +4903,6 @@ msgid ""
 "Find more information "
 "[here](https://custom-scripts.sentinel-hub.com/other_collections/impact-"
 "observatory-lulc/)."
-msgstr ""
-
-msgid ""
-"The **HR-S&I** product is part of the Copernicus Land Monitoring Service "
-"(CLMS) Biophysical Parameters product suite. The product is comprised of 7 "
-"parameters that describe the state of snow in near real time. These "
-"parameters are extracted from high-resolution spatial observations from the "
-"Sentinel-1 (Radar) and Sentinel-2 (Optical) constellations. Because it is "
-"time critical for several applications, every effort is made to provide NRT "
-"HR-S&I products between 6 and 12 hours after the data sensing time."
 msgstr ""
 
 msgid ""
@@ -5574,9 +5280,6 @@ msgstr ""
 msgid "Unable to get elevation data"
 msgstr ""
 
-msgid "Highlights of the Month"
-msgstr ""
-
 msgid "Composite"
 msgstr ""
 
@@ -5853,12 +5556,6 @@ msgid "Based on bands B17, B6, B3"
 msgstr ""
 
 msgid "Based on bands S3, S2, S1"
-msgstr ""
-
-msgid "Commercial Data"
-msgstr ""
-
-msgid "Advanced"
 msgstr ""
 
 msgid ""
@@ -6338,9 +6035,6 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-msgid "Powered by Sentinel Hub"
-msgstr ""
-
 msgid "Band 1 - Yellow substance and detrital pigments - 412.5 nm"
 msgstr ""
 
@@ -6464,12 +6158,6 @@ msgid ""
 "\n"
 "**Common usage:** Land-cover maps, land-change detection maps, vegetation "
 "monitoring, monitoring of burnt areas."
-msgstr ""
-
-msgid "This configuration has no highlights."
-msgstr ""
-
-msgid "Please select a configuration."
 msgstr ""
 
 msgid "Visualization for this product type is not supported yet"
@@ -9795,6 +9483,16 @@ msgid ""
 "difference-vegetation-index-v2-0-300m)."
 msgstr ""
 
+msgid "Roads"
+msgstr ""
+
+msgid "Contour"
+msgstr ""
+
+msgid "Water Bodies"
+msgstr ""
+
+msgid "Borders"
 msgid "Go to Workspace to order processing"
 msgstr ""
 

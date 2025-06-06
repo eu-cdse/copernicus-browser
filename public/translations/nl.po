@@ -21,9 +21,6 @@ msgstr "Normaal"
 msgid "Close"
 msgstr "Afsluiten"
 
-msgid "Close and don't show again"
-msgstr "Afsluiten en niet opnieuw tonen"
-
 msgid "Previous"
 msgstr "Vorige"
 
@@ -33,17 +30,8 @@ msgstr "Beëindig de tutorial"
 msgid "Next"
 msgstr "Volgende"
 
-msgid "Continue with tutorial"
-msgstr "Ga verder met de tutorial"
-
 msgid "Don't show again"
 msgstr "Niet opnieuw tonen"
-
-msgid "Show info"
-msgstr "Toon informatie"
-
-msgid "Discover"
-msgstr "Ontdek"
 
 msgid "Visualise"
 msgstr "Visualiseer"
@@ -57,29 +45,14 @@ msgstr "Pinnen"
 msgid "An error has occurred while fetching images:"
 msgstr "Er is een fout opgetreden bij het laden van de afbeeldingen:"
 
-msgid "No tile found"
-msgstr "Geen tegel gevonden"
-
 msgid "Dataset"
 msgstr "Dataset"
-
-msgid "Show"
-msgstr "Toon"
 
 msgid "Show effects and advanced options"
 msgstr "Toon effecten en geavanceerde opties"
 
-msgid "Show visualization"
-msgstr "Toon visualisatie"
-
 msgid "Add to Pins"
 msgstr "Toevoegen aan Pins"
-
-msgid "Add to compare"
-msgstr "Toevoegen aan vergelijking"
-
-msgid "Zoom to tile"
-msgstr "Zoomen naar tegel"
 
 msgid "Hide layer"
 msgstr "Laag verbergen"
@@ -95,21 +68,6 @@ msgstr "Aangepast"
 
 msgid "Create custom visualisation"
 msgstr "Maak een aangepaste visualizatie"
-
-msgid "Zoom in to view data"
-msgstr "Zoom in om data te bekijken"
-
-msgid "Free sign up"
-msgstr "Gratis inschrijven"
-
-msgid "for all features"
-msgstr "voor alle functies"
-
-msgid "Powered by"
-msgstr "Aangeboden door"
-
-msgid "with contributions by"
-msgstr "met bijdragen van"
 
 msgid "Please select data source(s)!"
 msgstr "Selecteer databron(nen)!"
@@ -331,27 +289,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"**Sentinel-2** provides high-resolution images in the visible and infrared "
-"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
-"and coastal areas. .\n"
-"\n"
-"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
-"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
-"info "
-"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Revisit time:** maximum 5 days to revisit the same area, using both "
-"satellites.\n"
-"\n"
-"**Data availability:** Since June 2015. Full global coverage since March "
-"2017.\n"
-"\n"
-"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
-"monitoring, monitoring of burnt areas."
-msgstr ""
-
-msgid ""
 "Level 1C data are data of sufficient quality for most investigations, where "
 "all image corrections were done except for the atmospheric correction. Data "
 "are available globally since June 2015 onwards."
@@ -422,35 +359,8 @@ msgstr "Gekopiëerd"
 msgid "Copy to clipboard"
 msgstr "Kopiëren naar klembord"
 
-msgid "Data source name"
-msgstr "Naam van de databron"
-
 msgid "Sensing time"
 msgstr "Opname tijd"
-
-msgid "Cloud coverage"
-msgstr "Bewolking"
-
-msgid "Sun elevation"
-msgstr "Zon elevatie"
-
-msgid "MGRS location"
-msgstr "MGRS locatie"
-
-msgid "AWS path"
-msgstr "AWS pad"
-
-msgid "EO Cloud path"
-msgstr "EO Cloud pad"
-
-msgid "CreoDIAS path"
-msgstr "CreoDIAS pad"
-
-msgid "SciHub link"
-msgstr "SciHub link"
-
-msgid "Back to search"
-msgstr "Terug naar zoeken"
 
 msgid "Load more"
 msgstr "Meer laden"
@@ -590,12 +500,6 @@ msgstr "Dekking"
 msgid "Split position"
 msgstr "Splits positie"
 
-msgid "split"
-msgstr "splits"
-
-msgid "opacity"
-msgstr "dekking"
-
 msgid "No layers to compare."
 msgstr "Geen lagen om te vergelijken."
 
@@ -622,12 +526,6 @@ msgstr "Go naar Plaats"
 
 msgid "Labels"
 msgstr "Labels"
-
-msgid "Borders"
-msgstr "Grenzen"
-
-msgid "Roads"
-msgstr "Wegen"
 
 msgid "Zoom in"
 msgstr "Zoom in"
@@ -664,13 +562,6 @@ msgstr "gelieve een laag te selecteren"
 
 msgid "not available for "
 msgstr "niet beschikbaar voor"
-
-#. eslint-disable-next-line
-#, javascript-format
-msgid ""
-"not available for \"${ props.presetLayerName }\" (layer with value is not "
-"set up)"
-msgstr ""
 
 msgid "Search for data first."
 msgstr "Zoek eerst data."
@@ -733,12 +624,6 @@ msgstr "Kopiëer geometrie naar klipbord"
 #. eslint-disable-next-line
 msgid "Cancel edit."
 msgstr "Annuleer edit."
-
-msgid "Draw area of interest"
-msgstr "Teken interessegebied"
-
-msgid "Upload data"
-msgstr "Upload data"
 
 msgid "Least cloud coverage"
 msgstr "Minste bewolking"
@@ -1030,23 +915,11 @@ msgstr "min / max"
 msgid "Export CSV"
 msgstr "Exporteer CSV"
 
-msgid "Timespan:"
-msgstr "Tijdspanne:"
-
 msgid "Date:"
 msgstr "Datum:"
 
 msgid "Single date"
 msgstr "Eendaags"
-
-msgid "Timespan"
-msgstr "Tijdspanne"
-
-msgid "hh"
-msgstr "uu"
-
-msgid "mm"
-msgstr "mm"
 
 msgid "From:"
 msgstr "Van:"
@@ -1113,99 +986,8 @@ msgstr "Vegetatie en Bosbouw"
 msgid "Volcanoes"
 msgstr "Vulkanen"
 
-msgid ""
-"In the **Discover** tab you can:\n"
-"\n"
-"- Select a **Theme.**\n"
-"- **Search** for data.\n"
-"- View theme **Highlights.**\n"
-"\n"
-"The **Theme** dropdown offers you different preconfigured themes as well as "
-"your own custom configured instances if you are Logged-in. To create an "
-"instance, click on\n"
-"the settings icon <i className=\"fa fa-cog\" /> and log in with the same "
-"credentials as you used for EO Browser.\n"
-"\n"
-"Under **Search** you can set search criteria:\n"
-" - Choose from which satellites you want to receive the data by selecting "
-"checkboxes.\n"
-" - Select additional options where applicable, for example, cloud coverage "
-"with the slider.\n"
-" - Select the time range by either typing the date or select the date from "
-"the calendar.\n"
-"\n"
-"You can read explanations of satellites by clicking on the question icon\n"
-"<i className=\"fa fa-question-circle\" /> next to the data source name.\n"
-"\n"
-"Once you hit <span class=\"btn\" style=\"font-size: 12px; padding: 4px 6px "
-"4px 6px\">Search</span> you get a list of results. Each result is presented "
-"\n"
-"with a preview image, and relevant data specific to the datasource. For "
-"some data sources, the link icon <i class=\"fa fa-link\" /> is also visible "
-"for each result.\n"
-"Clicking on it reveals direct links to the raw image of the result on EO "
-"Cloud or SciHub. Clicking on the <span class=\"btn\" style=\"font-size: "
-"12px; padding: 4px 6px 4px 6px\">Visualize</span> button will open the "
-"**Visualize** tab for the selected result.\n"
-"\n"
-"Under **Highlight**, you find preselected interesting locations connected "
-"to the selected theme."
-msgstr ""
-
-msgid ""
-"In the <b>Visualize</b> tab you can select different pre-installed or "
-"custom spectral band combinations to visualise data for the selected "
-"result.\n"
-"\n"
-"Some of the common options:\n"
-"- **True Color** - Visual interpretation of land cover.\n"
-"- **False Color** - Visual interpretation of vegetation.\n"
-"- **NDVI** - Vegetation index.\n"
-"- **Moisture index** - Moisture index\n"
-"- **SWIR** - Shortwave-infrared index.\n"
-"- **NDWI** - Normalized Difference Water Index.\n"
-"- **NDSI** - Normalized Difference Snow Index.\n"
-"\n"
-"Most visualizations are given a description and a legend, which you can "
-"view by clicking on the expand\n"
-"icon <i className=\"fa fa-angle-double-down \" />.\n"
-" \n"
-"For most data sources the **Custom Script** option is available. Click on "
-"it to select custom\n"
-"band combinations, index combinations or write your own classification "
-"script for the visualisation of data. You can also\n"
-"use custom scripts, which are stored elsewhere, either on Google drive, "
-"GitHub or in our [Custom script "
-"repository](https://custom-scripts.sentinel-hub.com/). \n"
-"Paste the URL of the script into a text box in the advanced script editing "
-"panel and click Refresh.\n"
-" \n"
-"You can change the date directly in the <b>Visualize</b> tab, without going "
-"back to the **Discover** tab. Type in or select it from the calendar <i "
-"className=\"fa fa-calendar cal-icon-cal\" />.\n"
-"\n"
-"Above the visualizations you have on line of additional tools. Note that "
-"their avalibilty depends on the data source.\n"
-"- **Pin layer** to save it in the application for future use - by clicking "
-"on the pin icon <i className=\"fa fa-thumb-tack\" />.\n"
-"- Select **advanced options** like the sampling method or apply different "
-"**effects** such as contrast (gain) and luminance (gamma) - by clicking on "
-"the effect sliders icon <i className=\"fa fa-sliders\" />.\n"
-"- Add a layer to the **Compare** tab for later comparison - by clicking on "
-"the compare icon <i ClassName=\"fas fa-exchange-alt\" />.\n"
-"- **Zoom** to the centre of the tile - by clicking on the crosshair <i "
-"className=\"fa fa-crosshairs\" />.\n"
-"- Toggle **layer visibility** - by clicking on the visibility icon <i "
-"className=\"fa fa-eye-slash\" />.\n"
-"- **Share** your visualization on social media - by clicking on the share "
-"icon <i className=\"fas fa-share-alt\" />."
-msgstr ""
-
 msgid "User Account"
 msgstr "Gebruikers Account"
-
-msgid "Discover Tab"
-msgstr "Tab Ontdekken"
 
 msgid "Search Places"
 msgstr "Zoek Plaasten"
@@ -2680,9 +2462,6 @@ msgid ""
 "formats."
 msgstr ""
 
-msgid "Measure"
-msgstr ""
-
 msgid ""
 "# Enhanced True Color Visualization\n"
 "\n"
@@ -2720,12 +2499,6 @@ msgstr ""
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Hello,"
-msgstr "Hallo,"
-
-msgid "L2A (atmospherically corrected)"
-msgstr "L2A (atmosferische gecorrigeerd)"
 
 msgid "This pin currently has no description."
 msgstr "Deze pin heeft momenteel geen beschrijving."
@@ -3502,25 +3275,6 @@ msgid ""
 "[here.](https://gisgeography.com/landsat-8-bands-combinations/)"
 msgstr ""
 
-#. If the following translation is added again, the second link must be updated
-msgid ""
-"# True color composite\n"
-"\n"
-"Sensors carried by satellites can image Earth in different regions of the "
-"electromagnetic spectrum. Each region in the spectrum is referred to as a "
-"band. Sentinel-2 has 13 bands. True color composite uses visible light "
-"bands red, green and blue in the corresponding red, green and blue color "
-"channels, resulting in a natural colored product, that is a good "
-"representation of the Earth as humans would see it naturally.\n"
-"\n"
-"\n"
-"\n"
-"More info "
-"[here](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/) and "
-"[here.](http://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/"
-"remote-sensing-systems/spectroscopy)."
-msgstr ""
-
 msgid ""
 "# Short wave infrared composite (SWIR)\n"
 "\n"
@@ -3584,12 +3338,6 @@ msgid "Order by:"
 msgstr "Sorteer volgens:"
 
 msgid "Location"
-msgstr ""
-
-msgid "DatasetId"
-msgstr ""
-
-msgid "Title"
 msgstr ""
 
 msgid "Show evalscript"
@@ -4283,9 +4031,6 @@ msgstr ""
 msgid "Image height [px]:"
 msgstr ""
 
-msgid "No layers found for date"
-msgstr ""
-
 msgid ""
 "The **Global Human Settlement** (GHS) framework produces global maps of "
 "built-up areas, population density and settlements to monitor human "
@@ -4333,9 +4078,6 @@ msgid "DEM instance"
 msgstr ""
 
 msgid "Type"
-msgstr ""
-
-msgid "Currently only collections on services.sentinel-hub are supported."
 msgstr ""
 
 msgid "Add layers from pins"
@@ -4410,12 +4152,6 @@ msgid ""
 "**Data Availability**: 2016 - ongoing\n"
 "\n"
 "**Spatial resolution**: 10 meters"
-msgstr ""
-
-msgid "Refresh Evalscript"
-msgstr "Vernieuw evalscript"
-
-msgid "Refreshing Evalscript"
 msgstr ""
 
 msgid ""
@@ -4616,9 +4352,6 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-msgid "Sensing date"
-msgstr ""
-
 msgid "My orders and subscriptions"
 msgstr ""
 
@@ -4724,9 +4457,6 @@ msgstr ""
 msgid "Create an area of interest"
 msgstr ""
 
-msgid "Contour"
-msgstr ""
-
 msgid "Zoom too low. Please zoom in."
 msgstr ""
 
@@ -4742,18 +4472,7 @@ msgstr ""
 msgid "To use Crop to AOI, area of interest needs to be selected first."
 msgstr ""
 
-msgid "Draw the area of interest's geometry on the exported image."
-msgstr ""
-
-msgid ""
-"To use Draw AOI geometry on Image, area of interest needs to be selected "
-"first."
-msgstr ""
-
 msgid "Crop to AOI"
-msgstr ""
-
-msgid "Draw AOI geometry on Image"
 msgstr ""
 
 msgid "Preview"
@@ -4923,9 +4642,6 @@ msgstr ""
 msgid "Resolution Y (m/px)"
 msgstr ""
 
-msgid "Water Bodies"
-msgstr ""
-
 msgid ""
 "Level 2A data are high quality data where the effects of the atmosphere on "
 "the light being reflected off of the surface of the Earth and reaching the "
@@ -4967,9 +4683,6 @@ msgstr "Effecten en geavanceerde opties"
 
 msgid "Show latest date"
 msgstr "Toon laatste datum"
-
-msgid "Commercial Data"
-msgstr ""
 
 msgid "Effects and advanced options applied"
 msgstr ""
@@ -5108,9 +4821,6 @@ msgstr ""
 msgid "Search criteria"
 msgstr "Zoekcriteria"
 
-msgid "Advanced"
-msgstr ""
-
 msgid "About"
 msgstr ""
 
@@ -5237,9 +4947,6 @@ msgstr "Data Collecties:"
 msgid "Time range"
 msgstr "Tijdsbereik"
 
-msgid "Powered by Sentinel Hub"
-msgstr ""
-
 msgid "Your authentication has expired"
 msgstr ""
 
@@ -5281,16 +4988,6 @@ msgid ""
 msgstr ""
 
 msgid "Land Use Land Cover"
-msgstr ""
-
-msgid ""
-"The **HR-S&I** product is part of the Copernicus Land Monitoring Service "
-"(CLMS) Biophysical Parameters product suite. The product is comprised of 7 "
-"parameters that describe the state of snow in near real time. These "
-"parameters are extracted from high-resolution spatial observations from the "
-"Sentinel-1 (Radar) and Sentinel-2 (Optical) constellations. Because it is "
-"time critical for several applications, every effort is made to provide NRT "
-"HR-S&I products between 6 and 12 hours after the data sensing time."
 msgstr ""
 
 msgid "Index value"
@@ -5502,9 +5199,6 @@ msgid "Unsupported GeoJSON geometry type! Only ${ supported } are supported."
 msgstr ""
 
 msgid "Unable to get elevation data"
-msgstr ""
-
-msgid "Highlights of the Month"
 msgstr ""
 
 msgid "Composite"
@@ -5821,12 +5515,6 @@ msgstr "Reset filters"
 
 msgid "Filters"
 msgstr "Filters"
-
-msgid "This configuration has no highlights."
-msgstr ""
-
-msgid "Please select a configuration."
-msgstr "Selecteer een configuratie."
 
 msgid "Workspace"
 msgstr "Werkruimte"
@@ -9826,6 +9514,18 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
 "difference-vegetation-index-v2-0-300m)."
 msgstr ""
+
+msgid "Roads"
+msgstr "Wegen"
+
+msgid "Contour"
+msgstr ""
+
+msgid "Water Bodies"
+msgstr ""
+
+msgid "Borders"
+msgstr "Grenzen"
 
 msgid "Go to Workspace to order processing"
 msgstr ""

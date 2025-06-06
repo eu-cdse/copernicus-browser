@@ -1,5 +1,6 @@
 import { hasDuplicateObjects } from './index';
 import L from 'leaflet';
+import { coordEach } from '@turf/meta';
 
 export function splitPolygonOnAntimeridian(ring) {
   const westPolygon = [];
@@ -65,23 +66,17 @@ function findCrossingPoint(lastPoint, currentPoint) {
   return { east: [180, crossingLat], west: [-180, crossingLat] };
 }
 
-export function doCoordinatesCrossAntimeridian(coordinates) {
+export function doCoordinatesCrossAntimeridian(geometry) {
   let hasPositive = false;
   let hasNegative = false;
-
-  coordinates.forEach(function (polygon) {
-    polygon.forEach(function (ring) {
-      ring.forEach(function (coordinate) {
-        if (coordinate[0] >= 180) {
-          hasPositive = true;
-        }
-        if (coordinate[0] <= -180) {
-          hasNegative = true;
-        }
-      });
-    });
+  coordEach(geometry, (currentCoord) => {
+    if (currentCoord[0] >= 180) {
+      hasPositive = true;
+    }
+    if (currentCoord[0] <= -180) {
+      hasNegative = true;
+    }
   });
-
   return hasPositive && hasNegative;
 }
 
@@ -234,10 +229,7 @@ export function manipulateODataSearchResultsWithAntimeridianDuplicates(prevSearc
     let dataCopy = { ...data };
     dataCopy.geometry = { ...data.geometry };
     //Checks for coordinates that are crossing antimeridian
-    if (
-      dataCopy.geometry?.type === 'MultiPolygon' &&
-      doCoordinatesCrossAntimeridian(dataCopy.geometry?.coordinates)
-    ) {
+    if (dataCopy.geometry?.type === 'MultiPolygon' && doCoordinatesCrossAntimeridian(dataCopy.geometry)) {
       dataCopy.geometry.coordinates = unNormalizeMultiPolygonCoordinates(dataCopy.geometry.coordinates);
     }
     return dataCopy;

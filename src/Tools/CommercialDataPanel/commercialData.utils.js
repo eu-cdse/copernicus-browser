@@ -192,7 +192,7 @@ export const checkUserAccount = async (user) => {
 
 export const getBoundsAndLatLng = (geometry) => {
   const geometryCopy = { ...geometry };
-  if (doCoordinatesCrossAntimeridian(geometryCopy.coordinates)) {
+  if (doCoordinatesCrossAntimeridian(geometryCopy)) {
     geometryCopy.coordinates = unNormalizeMultiPolygonCoordinates(geometryCopy.coordinates, true, true);
   }
   const layer = L.geoJSON(geometryCopy);

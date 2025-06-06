@@ -23,9 +23,6 @@ msgstr "Стандартний"
 msgid "Close"
 msgstr "Закрити"
 
-msgid "Close and don't show again"
-msgstr "Закрити і не показувати знову"
-
 msgid "Previous"
 msgstr "Назад"
 
@@ -35,17 +32,8 @@ msgstr "Вийти з Інструкції"
 msgid "Next"
 msgstr "Далі"
 
-msgid "Continue with tutorial"
-msgstr "Переглянути інструкцію"
-
 msgid "Don't show again"
 msgstr "Не показувати знову"
-
-msgid "Show info"
-msgstr "Показати інформацію"
-
-msgid "Discover"
-msgstr "Знайти"
 
 msgid "Visualise"
 msgstr "Візуалізувати"
@@ -59,29 +47,14 @@ msgstr "Закладки"
 msgid "An error has occurred while fetching images:"
 msgstr "Помилка при завантаженні зображень:"
 
-msgid "No tile found"
-msgstr "Сцена не знайдена"
-
 msgid "Dataset"
 msgstr "Набір даних"
-
-msgid "Show"
-msgstr "Показати"
 
 msgid "Show effects and advanced options"
 msgstr "Показати ефекти і додаткові опції"
 
-msgid "Show visualization"
-msgstr "Показати візуалізацію"
-
 msgid "Add to Pins"
 msgstr "Додати до Закладок"
-
-msgid "Add to compare"
-msgstr "Додати для порівняння"
-
-msgid "Zoom to tile"
-msgstr "Наблизити до сцени"
 
 msgid "Hide layer"
 msgstr "Приховати шар"
@@ -97,21 +70,6 @@ msgstr "Індивідуальні налаштування"
 
 msgid "Create custom visualisation"
 msgstr "Створити індивідуальну візуалізацію"
-
-msgid "Zoom in to view data"
-msgstr "Збільшити масштаб для перегляду даних"
-
-msgid "Free sign up"
-msgstr "Безкоштовна реєстрація"
-
-msgid "for all features"
-msgstr "для доступу до всіх функцій"
-
-msgid "Powered by"
-msgstr "За підтримки"
-
-msgid "with contributions by"
-msgstr "за участю"
 
 msgid "Please select data source(s)!"
 msgstr "Будь ласка, виберіть джерело(а) даних!"
@@ -393,45 +351,6 @@ msgstr ""
 "надзвичайних ситуаціях, вивчення змін клімату."
 
 msgid ""
-"**Sentinel-2** provides high-resolution images in the visible and infrared "
-"wavelengths, to monitor vegetation, soil and water cover, inland waterways "
-"and coastal areas. .\n"
-"\n"
-"**Spatial resolution:** 10m, 20m, and 60m, depending on the wavelength "
-"(that is, only details bigger than 10m, 20m, and 60m can be seen). More "
-"info "
-"[here](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Revisit time:** maximum 5 days to revisit the same area, using both "
-"satellites.\n"
-"\n"
-"**Data availability:** Since June 2015. Full global coverage since March "
-"2017.\n"
-"\n"
-"**Common usage:** Land-cover maps, land-change detection maps, vegetation "
-"monitoring, monitoring of burnt areas."
-msgstr ""
-"**Sentinel-2** надає знімки з високою розрізненністю у видимому та "
-"інфрачервоному діапазоні для моніторингу рослинності, ґрунту та водних "
-"поверхонь, внутрішніх водних шляхів і прибережних територій.\n"
-"\n"
-"**Просторова розрізненність:** 10м, 20м, і 60м, залежно від довжини хвилі "
-"(можна побачити тільки об'єкти розміром понад 10м, 20м, і 60м). Більше "
-"інформації "
-"[тут](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/"
-"resolutions/spatial). \n"
-"\n"
-"**Періодичність знімання:** максимум 5 днів, щоб зробити повторний знімок "
-"тієї самої місцевості використовуючи обидва супутники.\n"
-"\n"
-"**Наявність даних:** З Червня 2015 р. Повне глобальне покриття з березня "
-"2017 р.\n"
-"\n"
-"**Загальне використання:** Карти землекористування, зміни в "
-"землекористуванні, моніторинг рослинності, моніторинг вигорілих територій."
-
-msgid ""
 "Level 1C data are data of sufficient quality for most investigations, where "
 "all image corrections were done except for the atmospheric correction. Data "
 "are available globally since June 2015 onwards."
@@ -556,35 +475,8 @@ msgstr "Скопійовано"
 msgid "Copy to clipboard"
 msgstr "Скопіювати в буфер обміну"
 
-msgid "Data source name"
-msgstr "Назва джерела даних"
-
 msgid "Sensing time"
 msgstr "Час знімання"
-
-msgid "Cloud coverage"
-msgstr "Хмарність"
-
-msgid "Sun elevation"
-msgstr "Висота сонця"
-
-msgid "MGRS location"
-msgstr "Розташування MGRS"
-
-msgid "AWS path"
-msgstr "Шлях до AWS"
-
-msgid "EO Cloud path"
-msgstr "Шлях до EO Cloud"
-
-msgid "CreoDIAS path"
-msgstr "Шлях до CreoDIAS"
-
-msgid "SciHub link"
-msgstr "Посилання для переходу на SciHub"
-
-msgid "Back to search"
-msgstr "Повернутись до пошуку"
 
 msgid "Load more"
 msgstr "Завантажити ще"
@@ -728,12 +620,6 @@ msgstr "Проявлення"
 msgid "Split position"
 msgstr "Розділення позиції"
 
-msgid "split"
-msgstr "розділення"
-
-msgid "opacity"
-msgstr "прозорість"
-
 msgid "No layers to compare."
 msgstr "Немає шарів для порівняння."
 
@@ -760,12 +646,6 @@ msgstr "Перейти до місця"
 
 msgid "Labels"
 msgstr "Мітки"
-
-msgid "Borders"
-msgstr "Кордони"
-
-msgid "Roads"
-msgstr "Шляхи"
 
 msgid "Zoom in"
 msgstr "Наблизити"
@@ -799,13 +679,6 @@ msgstr "будь ласка, виберіть шар"
 
 msgid "not available for "
 msgstr "недоступно для "
-
-#. eslint-disable-next-line
-#, javascript-format
-msgid ""
-"not available for \"${ props.presetLayerName }\" (layer with value is not "
-"set up)"
-msgstr "недоступно для \"${ props.presetLayerName }\"(шар зі значенням не визначено)"
 
 msgid "Search for data first."
 msgstr "Спочатку знайдіть дані."
@@ -868,12 +741,6 @@ msgstr "Копіювати геометрію до буферу обміну"
 #. eslint-disable-next-line
 msgid "Cancel edit."
 msgstr "Скасувати правки."
-
-msgid "Draw area of interest"
-msgstr "Окреслити область інтересу"
-
-msgid "Upload data"
-msgstr "Завантажити дані"
 
 msgid "Least cloud coverage"
 msgstr "Найменша хмарність"
@@ -1174,23 +1041,11 @@ msgstr "мін / макс"
 msgid "Export CSV"
 msgstr "Експортувати CSV"
 
-msgid "Timespan:"
-msgstr "Часовий інтервал:"
-
 msgid "Date:"
 msgstr "Дата:"
 
 msgid "Single date"
 msgstr "За один день"
-
-msgid "Timespan"
-msgstr "Часовий інтервал"
-
-msgid "hh"
-msgstr "гг"
-
-msgid "mm"
-msgstr "хв"
 
 msgid "From:"
 msgstr "З:"
@@ -1262,107 +1117,8 @@ msgstr "Вулкани"
 msgid "Wildfires"
 msgstr "Стихійні пожежі"
 
-msgid ""
-"In the <b>Visualize</b> tab you can select different pre-installed or "
-"custom spectral band combinations to visualise data for the selected "
-"result.\n"
-"\n"
-"Some of the common options:\n"
-"- **True Color** - Visual interpretation of land cover.\n"
-"- **False Color** - Visual interpretation of vegetation.\n"
-"- **NDVI** - Vegetation index.\n"
-"- **Moisture index** - Moisture index\n"
-"- **SWIR** - Shortwave-infrared index.\n"
-"- **NDWI** - Normalized Difference Water Index.\n"
-"- **NDSI** - Normalized Difference Snow Index.\n"
-"\n"
-"Most visualizations are given a description and a legend, which you can "
-"view by clicking on the expand\n"
-"icon <i className=\"fa fa-angle-double-down \" />.\n"
-" \n"
-"For most data sources the **Custom Script** option is available. Click on "
-"it to select custom\n"
-"band combinations, index combinations or write your own classification "
-"script for the visualisation of data. You can also\n"
-"use custom scripts, which are stored elsewhere, either on Google drive, "
-"GitHub or in our [Custom script "
-"repository](https://custom-scripts.sentinel-hub.com/). \n"
-"Paste the URL of the script into a text box in the advanced script editing "
-"panel and click Refresh.\n"
-" \n"
-"You can change the date directly in the <b>Visualize</b> tab, without going "
-"back to the **Discover** tab. Type in or select it from the calendar <i "
-"className=\"fa fa-calendar cal-icon-cal\" />.\n"
-"\n"
-"Above the visualizations you have on line of additional tools. Note that "
-"their avalibilty depends on the data source.\n"
-"- **Pin layer** to save it in the application for future use - by clicking "
-"on the pin icon <i className=\"fa fa-thumb-tack\" />.\n"
-"- Select **advanced options** like the sampling method or apply different "
-"**effects** such as contrast (gain) and luminance (gamma) - by clicking on "
-"the effect sliders icon <i className=\"fa fa-sliders\" />.\n"
-"- Add a layer to the **Compare** tab for later comparison - by clicking on "
-"the compare icon <i ClassName=\"fas fa-exchange-alt\" />.\n"
-"- **Zoom** to the centre of the tile - by clicking on the crosshair <i "
-"className=\"fa fa-crosshairs\" />.\n"
-"- Toggle **layer visibility** - by clicking on the visibility icon <i "
-"className=\"fa fa-eye-slash\" />.\n"
-"- **Share** your visualization on social media - by clicking on the share "
-"icon <i className=\"fas fa-share-alt\" />."
-msgstr ""
-"У вкладці <b>Візуалізувати</b> ви можете вибрати різні попередньо "
-"налаштовані або стандартні користувацькі комбінації спектральних каналів "
-"для візуалізації даних щодо вибраного результату.\n"
-"\n"
-"Деякі з поширених варіантів:\n"
-"- **Природні кольори** - Візуальна інтерпретація поверхні Землі.\n"
-"- **Штучні кольори** - Візуальна інтерпретація рослинності.\n"
-"- **NDVI** - Вегетаційний індекс\n"
-"- **Індекс вологості** - Індекс, що відображає вміст вологи\n"
-"- **SWIR** - Короткохвильовий інфрачервоний індекс\n"
-"- **NDWI** - Нормалізований диференційний водний індекс\n"
-"- **NDSI** - Нормалізований диференційний індекс снігу\n"
-"\n"
-"Більшість візуалізацій мають опис і легенду, які ви можете переглянути, "
-"натиснувши на значок <i className=\"fa fa-angle-double-down \" />.\n"
-"\n"
-"Для більшості джерел даних доступна опція **Користувацький скрипт**. "
-"Клацніть по ньому, щоб вибрати власні комбінації діапазонів, комбінації "
-"індексів або напишіть свій власний скрипт класифікації для візуалізації "
-"даних. Ви також можете використовувати користувацькі скрипти, які "
-"зберігаються в будь-якому іншому місці - на диску Google, GitHub або в "
-"нашій [Бібліотеці користувацьких "
-"скриптів](https://custom-scripts.sentinel-hub.com/).\n"
-"Вставте URL-адресу скрипту в текстове поле на панелі розширеного "
-"редагування скрипту та натисніть Оновити.\n"
-" \n"
-"Ви можете змінити дату безпосередньо у вкладці <b>Візуалізація</b>, не "
-"повертаючись до вкладки **Знайти**. Введіть або виберіть дату у календарі "
-"<i className=\"fa fa-calendar cal-icon-cal\" />.\n"
-"\n"
-"Окрім візуалізацій у вас є додаткові інструменти. Зауважте, що їх "
-"доступність залежить від джерела даних.\n"
-"- **Закріпити шар**, щоб зберегти його в програмі для подальшого "
-"використання, натиснувши значок закладки <i className=\"fa fa-thumb-tack\" "
-"/>.\n"
-"- Виберіть **розширені параметри**, наприклад метод вибірки, або застосуйте "
-"різні **ефекти**, такі як контраст (підсилення) і яскравість (гама), "
-"натиснувши на відповідний повзунок <i className=\"fa fa-sliders\" />.\n"
-"- Додайте шар на вкладку **Порівняти** для подальшого порівняння, "
-"натиснувши на піктограму порівняння <i ClassName=\"fas fa-exchange-alt\" "
-"/>.\n"
-"- **Наблизитись** до центру зображення, натиснувши на хрестик <i "
-"className=\"fa fa-crosshairs\" />.\n"
-"- Увімкніть **видимість шару**, натиснувши піктограму видимості <i "
-"className=\"fa fa-eye-slash\" />.\n"
-"- **Поділитися** своєю візуалізацією в соціальних мережах, натиснувши "
-"значок \"Поділитися\" <i className=\"fas fa-share-alt\" />."
-
 msgid "User Account"
 msgstr "Обліковий запис користувача"
-
-msgid "Discover Tab"
-msgstr "Вкладка Знайти"
 
 msgid "Visualise Tab"
 msgstr "Вкладка Візуалізувати"
@@ -3564,9 +3320,6 @@ msgstr ""
 "Помилка: візуалізацію з ефектами можна завантажити лише у форматах JPEG або "
 "PNG."
 
-msgid "Measure"
-msgstr "Виміри"
-
 msgid ""
 "# Enhanced True Color Visualization\n"
 "\n"
@@ -3625,12 +3378,6 @@ msgstr "Створення посилання..."
 
 msgid "OK"
 msgstr "ОК"
-
-msgid "Hello,"
-msgstr "Привіт,"
-
-msgid "L2A (atmospherically corrected)"
-msgstr "L2A (з атмосферною корекцією)"
 
 msgid "This pin currently has no description."
 msgstr "Для цієї закладки наразі немає опису."
@@ -4733,39 +4480,6 @@ msgstr ""
 "(https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/) "
 "та [тут.](https://gisgeography.com/landsat-8-bands-combinations/)"
 
-#. If the following translation is added again, the second link must be updated
-msgid ""
-"# True color composite\n"
-"\n"
-"Sensors carried by satellites can image Earth in different regions of the "
-"electromagnetic spectrum. Each region in the spectrum is referred to as a "
-"band. Sentinel-2 has 13 bands. True color composite uses visible light "
-"bands red, green and blue in the corresponding red, green and blue color "
-"channels, resulting in a natural colored product, that is a good "
-"representation of the Earth as humans would see it naturally.\n"
-"\n"
-"\n"
-"\n"
-"More info "
-"[here](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/) and "
-"[here.](http://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/"
-"remote-sensing-systems/spectroscopy)."
-msgstr ""
-"# Композит природніх кольорів\n"
-"\n"
-"Сенсори на борту супутника можуть робити зображення Землі в різних "
-"діапазонах електромагнітного спектра. Кожен діапазон спектра відповідає "
-"певному каналу. Sentinel-2 має 13 каналів. У композиті природніх кольорів "
-"використовуються видимі червоний, зелений та синій канали у відповідних "
-"червоному, зеленому та синьому діапазоні спектра. У результаті отримується "
-"зображення поверхні Землі у природних кольорах, які звичні для людини. \n"
-"\n"
-"\n"
-"Більше інформації [тут] "
-"(https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/) та "
-"[тут.](http://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/"
-"remote-sensing-systems/spectroscopy)."
-
 msgid ""
 "# False Color Urban composite\n"
 "\n"
@@ -4906,12 +4620,6 @@ msgstr "Сортувати за:"
 
 msgid "Location"
 msgstr "Розташування"
-
-msgid "DatasetId"
-msgstr "Ідентифікатор набору даних"
-
-msgid "Title"
-msgstr "Назва"
 
 msgid "Show evalscript"
 msgstr "Показати користувацький скрипт (evalscript)"
@@ -5828,9 +5536,6 @@ msgstr "Ширина зображення [px]:"
 msgid "Image height [px]:"
 msgstr "Висота зображення [px]:"
 
-msgid "No layers found for date"
-msgstr "Не знайдено жодного шару на вибрану дату"
-
 msgid ""
 "The **Global Human Settlement** (GHS) framework produces global maps of "
 "built-up areas, population density and settlements to monitor human "
@@ -5900,9 +5605,6 @@ msgstr "Приклад DEM"
 
 msgid "Type"
 msgstr "Тип"
-
-msgid "Currently only collections on services.sentinel-hub are supported."
-msgstr "Наразі підтримуються лише колекції на services.sentinel-hub."
 
 msgid "Add layers from pins"
 msgstr "Додати шари із закладок"
@@ -5996,12 +5698,6 @@ msgstr ""
 "**Доступність даних**: 2016 – триває\n"
 "\n"
 "**Просторова розрізненість**: 10 метрів"
-
-msgid "Refresh Evalscript"
-msgstr "Оновити користувацький скрипт (Evalscript)"
-
-msgid "Refreshing Evalscript"
-msgstr "Оновлення користувацького скрипту (Evalscript)"
 
 msgid ""
 "We use third-party cookies to provide secure authentication with Sentinel "
@@ -6226,9 +5922,6 @@ msgstr "Виникла проблема з аналізом вхідних ге�
 msgid "Upload"
 msgstr "Завантажити"
 
-msgid "Sensing date"
-msgstr "Дата зондування"
-
 msgid "My orders and subscriptions"
 msgstr "Мої замовлення та передплата"
 
@@ -6353,9 +6046,6 @@ msgstr "Завантажити файл, щоб створити область 
 msgid "Create an area of interest"
 msgstr "Створити область інтересу"
 
-msgid "Contour"
-msgstr "Контур"
-
 msgid "Zoom too low. Please zoom in."
 msgstr "Масштаб замалий. Будь ласка, наблизьте зображення."
 
@@ -6375,19 +6065,8 @@ msgstr "Обрізати зображення до меж області інт�
 msgid "To use Crop to AOI, area of interest needs to be selected first."
 msgstr "Щоб застосувати Обрізання до ОІ, потрібно обрати область інтересу."
 
-msgid "Draw the area of interest's geometry on the exported image."
-msgstr "Накреслити геометрію області інтересу на експортованому зображенні."
-
-msgid ""
-"To use Draw AOI geometry on Image, area of interest needs to be selected "
-"first."
-msgstr "Щоб Накреслити геометрію ОІ на зображенні, потрібно обрати область інтересу."
-
 msgid "Crop to AOI"
 msgstr "Обрізати до ОІ"
-
-msgid "Draw AOI geometry on Image"
-msgstr "Накреслити геометрію OI на зображенні"
 
 msgid "Preview"
 msgstr "Попередній огляд"
@@ -6639,9 +6318,6 @@ msgstr "Роздільна здатність X (м/піксель)"
 msgid "Resolution Y (m/px)"
 msgstr "Роздільна здатність Y (м/піксель) "
 
-msgid "Water Bodies"
-msgstr "Водні об'єкти"
-
 msgid ""
 "Level 2A data are high quality data where the effects of the atmosphere on "
 "the light being reflected off of the surface of the Earth and reaching the "
@@ -6704,9 +6380,6 @@ msgstr "Ефекти і розширені опції"
 
 msgid "Show latest date"
 msgstr "Показати останню дату"
-
-msgid "Commercial Data"
-msgstr "Комерційні дані"
 
 msgid "Effects and advanced options applied"
 msgstr "Застосовано ефекти та розширені параметри"
@@ -6871,9 +6544,6 @@ msgstr "Sentinel-2 L2A"
 msgid "Search criteria"
 msgstr "Критерії пошуку"
 
-msgid "Advanced"
-msgstr "Просунутий"
-
 msgid "About"
 msgstr "Про"
 
@@ -7000,9 +6670,6 @@ msgstr "Колекції даних:"
 msgid "Time range"
 msgstr "Часовий проміжок"
 
-msgid "Powered by Sentinel Hub"
-msgstr "На базі Sentinel Hub"
-
 msgid "Your authentication has expired"
 msgstr "Термін вашої автентифікації закінчився"
 
@@ -7072,23 +6739,6 @@ msgstr ""
 
 msgid "Land Use Land Cover"
 msgstr "Землекористування та земне покриття"
-
-msgid ""
-"The **HR-S&I** product is part of the Copernicus Land Monitoring Service "
-"(CLMS) Biophysical Parameters product suite. The product is comprised of 7 "
-"parameters that describe the state of snow in near real time. These "
-"parameters are extracted from high-resolution spatial observations from the "
-"Sentinel-1 (Radar) and Sentinel-2 (Optical) constellations. Because it is "
-"time critical for several applications, every effort is made to provide NRT "
-"HR-S&I products between 6 and 12 hours after the data sensing time."
-msgstr ""
-"Продукт **HR-S&I** є частиною набору біофізичних параметрів Служби "
-"моніторингу землі Copernicus (CLMS). Продукт складається з 7 параметрів, "
-"які описують стан снігу майже в реальному часі. Ці параметри отримуються з "
-"просторових спостережень із високою роздільною здатністю з супутників "
-"Sentinel-1 (Радар) і Sentinel-2 (Optical). Оскільки час критично важливий "
-"для деяких застосувань, докладається все можливе, щоб надати продукти NRT "
-"HR-S&I між 6 і 12 годинами після часу вимірювання даних."
 
 msgid "Index value"
 msgstr "Значення індексу"
@@ -7388,9 +7038,6 @@ msgstr "Невідомий тип геометрії GeoJSON! Підтримую
 
 msgid "Unable to get elevation data"
 msgstr "Не вдалося отримати дані про висоту"
-
-msgid "Highlights of the Month"
-msgstr "Огляд місяця"
 
 msgid "Composite"
 msgstr "Композит"
@@ -7874,12 +7521,6 @@ msgstr "Скинути фільтри"
 
 msgid "Filters"
 msgstr "Параметри"
-
-msgid "This configuration has no highlights."
-msgstr "Ця конфігурація не має основних моментів."
-
-msgid "Please select a configuration."
-msgstr "Будь ласка, виберіть конфігурацію."
 
 msgid "Workspace"
 msgstr "Робочий простір"
@@ -8674,45 +8315,6 @@ msgid "Invalid geodetic system detected"
 msgstr ""
 
 msgid "Applying"
-msgstr ""
-
-msgid ""
-"In the **Discover** tab you can:\n"
-"\n"
-"- Select a **Theme.**\n"
-"- **Search** for data.\n"
-"- View theme **Highlights.**\n"
-"\n"
-"The **Theme** dropdown offers you different preconfigured themes as well as "
-"your own custom configured instances if you are Logged-in. To create an "
-"instance, click on\n"
-"the settings icon <i className=\"fa fa-cog\" /> and log in with the same "
-"credentials as you used for EO Browser.\n"
-"\n"
-"Under **Search** you can set search criteria:\n"
-" - Choose from which satellites you want to receive the data by selecting "
-"checkboxes.\n"
-" - Select additional options where applicable, for example, cloud coverage "
-"with the slider.\n"
-" - Select the time range by either typing the date or select the date from "
-"the calendar.\n"
-"\n"
-"You can read explanations of satellites by clicking on the question icon\n"
-"<i className=\"fa fa-question-circle\" /> next to the data source name.\n"
-"\n"
-"Once you hit <span class=\"btn\" style=\"font-size: 12px; padding: 4px 6px "
-"4px 6px\">Search</span> you get a list of results. Each result is presented "
-"\n"
-"with a preview image, and relevant data specific to the datasource. For "
-"some data sources, the link icon <i class=\"fa fa-link\" /> is also visible "
-"for each result.\n"
-"Clicking on it reveals direct links to the raw image of the result on EO "
-"Cloud or SciHub. Clicking on the <span class=\"btn\" style=\"font-size: "
-"12px; padding: 4px 6px 4px 6px\">Visualize</span> button will open the "
-"**Visualize** tab for the selected result.\n"
-"\n"
-"Under **Highlight**, you find preselected interesting locations connected "
-"to the selected theme."
 msgstr ""
 
 msgid ""
@@ -12120,6 +11722,18 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/vegetation/normalised-"
 "difference-vegetation-index-v2-0-300m)."
 msgstr ""
+
+msgid "Roads"
+msgstr "Шляхи"
+
+msgid "Contour"
+msgstr "Контур"
+
+msgid "Water Bodies"
+msgstr "Водні об'єкти"
+
+msgid "Borders"
+msgstr "Кордони"
 
 msgid "Go to Workspace to order processing"
 msgstr ""
