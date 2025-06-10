@@ -885,7 +885,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: {
       minDate: moment.utc('2019-01-01'),
-      maxDate: moment.utc(''),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_1KM_DAILY]: {
       minDate: moment.utc('1999-01-01'),
@@ -904,123 +904,123 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc('2020-12-31'),
     },
     [COPERNICUS_CLMS_DMP_1KM_DAILY_RT6]: {
-      minDate: moment.utc('2017-01-01'),
-      maxDate: moment.utc('2020-12-31'),
+      minDate: moment.utc('2014-01-10'),
+      maxDate: moment.utc('2020-03-30'),
     },
     [COPERNICUS_CLMS_FAPAR_1KM_DAILY]: {
-      minDate: moment.utc('1999-01-01'),
+      minDate: moment.utc('1999-10-01'),
       maxDate: moment.utc('2013-12-31'),
     },
     [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_LAI_1KM_DAILY]: {
       minDate: moment.utc('1999-01-01'),
       maxDate: moment.utc('2013-12-31'),
     },
     [COPERNICUS_CLMS_LAI_1KM_DAILY_RT0]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-07-10'),
+      maxDate: moment.utc('2020-07-30'),
     },
     [COPERNICUS_CLMS_LAI_1KM_DAILY_RT1]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-07-10'),
+      maxDate: moment.utc('2020-07-20'),
     },
     [COPERNICUS_CLMS_LAI_1KM_DAILY_RT2]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-07-10'),
+      maxDate: moment.utc('2020-07-10'),
     },
     [COPERNICUS_CLMS_LAI_1KM_DAILY_RT6]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2014-01-10'),
+      maxDate: moment.utc('2020-04-30'),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY]: {
       minDate: moment.utc('2014-01-01'),
       maxDate: moment.utc('2020-08-31'),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2020-07-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FCOVER_1KM_10DAILY]: {
       minDate: moment.utc('1999-01-01'),
       maxDate: moment.utc('2013-12-31'),
     },
     [COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT0]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT1]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT2]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FCOVER_1KM_10DAILY_RT6]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('2013-12-31'),
+      minDate: moment.utc('2017-06-10'),
+      maxDate: moment.utc('2020-06-30'),
     },
     [COPERNICUS_CLMS_FCOVER_300M_10DAILY]: {
       minDate: moment.utc('2014-01-01'),
       maxDate: moment.utc('2020-08-31'),
     },
     [COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT0]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-01'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-01'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-01'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-01'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GPP_300M_10DAILY_RT0]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GPP_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GPP_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GPP_300M_10DAILY_RT6]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LAI_300M_10DAILY]: {
@@ -1028,63 +1028,63 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc('2020-08-31'),
     },
     [COPERNICUS_CLMS_LAI_300M_10DAILY_RT0]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LAI_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LAI_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LAI_300M_10DAILY_RT6]: {
-      minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-08-31'),
+      minDate: moment.utc('2016-09-10'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_NPP_300M_10DAILY_RT0]: {
       minDate: moment.utc('2023-08-31'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_NPP_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-20'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_NPP_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-08-10'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_NPP_300M_10DAILY_RT6]: {
-      minDate: moment.utc('2023-08-31'),
+      minDate: moment.utc('2023-07-30'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY]: {
       minDate: moment.utc('2007-01-01'),
-      maxDate: moment.utc(''),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY]: {
       minDate: moment.utc('2007-01-01'),
-      maxDate: moment.utc(''),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_1KM_DAILY]: {
       minDate: moment.utc('2015-01-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT0]: {
-      minDate: moment.utc('2017-12-01'),
+      minDate: moment.utc('2017-12-10'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT1]: {
-      minDate: moment.utc('2017-12-01'),
+      minDate: moment.utc('2017-12-10'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT2]: {
-      minDate: moment.utc('2017-12-01'),
+      minDate: moment.utc('2014-12-10'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT5]: {
-      minDate: moment.utc('2017-12-01'),
+      minDate: moment.utc('2014-12-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: {
@@ -1096,7 +1096,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc('2021-01-01'),
     },
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: {
-      minDate: moment.utc('2021-01-01'),
+      minDate: moment.utc('2021-01-11'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: {
@@ -1109,7 +1109,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: {
       minDate: moment.utc('1998-04-01'),
-      maxDate: moment.utc('2020-12-31'),
+      maxDate: moment.utc('2020-12-21'),
     },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: {
       minDate: moment.utc('2014-01-01'),
@@ -1120,8 +1120,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: {
-      minDate: moment.utc('2014-10-01'),
-      maxDate: moment.utc(''),
+      minDate: moment.utc('2014-10-03'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: {
       minDate: moment.utc('2023-01-01'),
@@ -1136,11 +1136,11 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc('2021-01-18'),
     },
     [COPERNICUS_CLMS_LST_5KM_HOURLY_V2]: {
-      minDate: moment.utc('2021-01-01'),
+      minDate: moment.utc('2021-01-18'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2]: {
-      minDate: moment.utc('1999-01-01'),
+      minDate: moment.utc('1999-01-10'),
       maxDate: moment.utc('2013-12-31'),
     },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0]: {
@@ -1149,15 +1149,15 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1]: {
       minDate: moment.utc('2017-11-30'),
-      maxDate: moment.utc('2020-06-30'),
+      maxDate: moment.utc('2020-06-20'),
     },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2]: {
       minDate: moment.utc('2017-11-30'),
-      maxDate: moment.utc('2020-06-30'),
+      maxDate: moment.utc('2020-06-10'),
     },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6]: {
-      minDate: moment.utc('2017-11-30'),
-      maxDate: moment.utc('2020-06-30'),
+      minDate: moment.utc('2014-01-10'),
+      maxDate: moment.utc('2020-04-30'),
     },
     [COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0]: {
       minDate: moment.utc('2017-12-10'),
@@ -1172,16 +1172,16 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5]: {
-      minDate: moment.utc('2017-12-10'),
-      maxDate: moment.utc(),
+      minDate: moment.utc('2014-12-10'),
+      maxDate: moment.utc('2020-08-31'),
     },
     [COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6]: {
-      minDate: moment.utc('2017-12-10'),
+      minDate: moment.utc('2020-07-10'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_WB_300M_10DAILY_V1]: {
       minDate: moment.utc('2014-01-01'),
-      maxDate: moment.utc('2020-12-31'),
+      maxDate: moment.utc('2020-12-21'),
     },
     [COPERNICUS_CLMS_WB_1KM_10DAILY_V2]: {
       minDate: moment.utc('1998-04-01'),
@@ -1211,16 +1211,16 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: {
-      minDate: moment.utc('2020-01-01'),
-      maxDate: moment.utc('2025-12-31'),
+      minDate: moment.utc('2002-05-11'),
+      maxDate: moment.utc('2012-04-01'),
     },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: {
-      minDate: moment.utc('2002-05-11'),
-      maxDate: moment.utc('2012-14-01'),
+      minDate: moment.utc('2016-04-21'),
+      maxDate: moment.utc('2024-10-21'),
     },
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: {
       minDate: moment.utc('2021-07-01'),
-      maxDate: moment.utc('2024-11-31'),
+      maxDate: moment.utc('2024-11-21'),
     },
   };
 
