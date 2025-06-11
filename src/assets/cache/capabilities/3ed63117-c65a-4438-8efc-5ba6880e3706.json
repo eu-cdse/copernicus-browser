@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_WV1_PSH_OR",
+    "layers": [
+        {
+            "id": "TRUE-COLOR",
+            "name": "TRUE COLOR",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

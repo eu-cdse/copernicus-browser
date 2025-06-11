@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_RADARSAT_SGF_HV",
+    "layers": [
+        {
+            "id": "HV",
+            "name": "HV",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

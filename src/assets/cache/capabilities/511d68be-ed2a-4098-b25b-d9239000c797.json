@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_WV3_PM4_SO_PAN",
+    "layers": [
+        {
+            "id": "PANCHROMATIC",
+            "name": "Panchromatic",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

@@ -44,6 +44,10 @@
     }
 
     /***  month and year select  ***/ //
+    i.fas {
+      display: flex;
+      justify-content: center;
+    }
 
     i.fas.fa-chevron-left {
       color: $primaryColor;

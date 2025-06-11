@@ -3,6 +3,7 @@ import { t } from 'ttag';
 
 import './ProductPreview.scss';
 import { AttributeNames, AttributeOrbitDirectionValues } from '../../../api/OData/assets/attributes';
+import Loader from '../../../Loader/Loader';
 
 const getTransformationClass = (product) => {
   //previews for SENTINEL-1 are flipped
@@ -31,7 +32,7 @@ const shouldShowPreview = ({ previewUrl, product, previewError, validate }) => {
   return true;
 };
 
-const ProductPreview = ({ product = {}, validate = false }) => {
+const ProductPreview = ({ product = {}, validate = false, isLoading = false }) => {
   const { name, previewUrl, className } = product;
   const [previewError, setPreviewError] = useState(false);
 
@@ -44,7 +45,9 @@ const ProductPreview = ({ product = {}, validate = false }) => {
 
   return (
     <div className={`product-preview ${className ? className : ''}`}>
-      {showPreview ? (
+      {isLoading ? (
+        <Loader />
+      ) : showPreview ? (
         <div className="preview-image">
           <img
             src={previewUrl}

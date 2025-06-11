@@ -130,6 +130,9 @@ function LayerSelection({
 
   async function getAllLayers() {
     setLayers([]);
+    if (!datasourceHandler) {
+      return;
+    }
     setLoadingLayersInProgress(true);
     const selectedTheme = themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId);
     const urls = datasourceHandler.getUrlsForDataset(datasetId);

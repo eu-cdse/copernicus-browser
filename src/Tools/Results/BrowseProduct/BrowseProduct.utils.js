@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ODataEndpoints, extractResponseErrorMessage, oDataApi } from '../../../api/OData/ODataApi';
+import { ODataEndpoints, oDataApi } from '../../../api/OData/ODataApi';
 import { ODataEntity } from '../../../api/OData/ODataTypes';
 import store, { notificationSlice } from '../../../store';
 import { ODataQueryBuilder } from '../../../api/OData/ODataQueryBuilder';
+import { extractResponseErrorMessage } from '../../../api/responseErrorMessageExtractor';
 
 export const getNodeValueUri = (node) => node.Nodes.uri.replace(/\/Nodes$/, '/$value');
 

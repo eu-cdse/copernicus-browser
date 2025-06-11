@@ -6,6 +6,9 @@ import LanguageSelector from '../../LanguageSelector/LanguageSelector';
 import ChevronCollapse from './chevron-collapse.svg?react';
 import './Header.scss';
 import MainLogo from './main-logo.svg?react';
+import RRDLogo from './rrd-logo.svg?react';
+import { isInGroup } from '../../Auth/authHelpers';
+import { RRD_GROUP } from '../../api/RRD/assets/rrd.utils';
 
 class HeaderWithLogin extends Component {
   state = {
@@ -23,7 +26,11 @@ class HeaderWithLogin extends Component {
     return (
       <header id="header">
         <div className="left">
-          <MainLogo className="main-logo" onClick={setDefaultStateLandingPage} />
+          {isInGroup(RRD_GROUP) ? (
+            <RRDLogo className="rrd-logo" onClick={setDefaultStateLandingPage} />
+          ) : (
+            <MainLogo className="main-logo" onClick={setDefaultStateLandingPage} />
+          )}
         </div>
 
         <div className="right">

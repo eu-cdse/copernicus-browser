@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DatePicker from '../DatePicker/DatePicker';
-import { NumericInput } from './NumericInput';
+import { NUMERIC_INPUT_LIMITATIONS, NumericInput } from './NumericInput';
 
 export const DateTimeInput = (props) => {
   const {
@@ -29,6 +29,7 @@ export const DateTimeInput = (props) => {
     isTimeRange,
     isDisabled,
     setSelectedTime,
+    datePickerInputStyle,
   } = props;
 
   const setDay = (day) => {
@@ -65,6 +66,30 @@ export const DateTimeInput = (props) => {
     return newSelectedDateTime >= minDate && newSelectedDateTime <= maxDate;
   };
 
+  const disableHourButtons = (value) => {
+    const newSelectedDateTime = selectedTime.clone();
+    newSelectedDateTime.hours(value);
+    if (newSelectedDateTime.isAfter(maxDate)) {
+      return NUMERIC_INPUT_LIMITATIONS.INCREMENT;
+    } else if (newSelectedDateTime.isBefore(minDate)) {
+      return NUMERIC_INPUT_LIMITATIONS.DECREMENT;
+    } else {
+      return null;
+    }
+  };
+
+  const disableMinuteButtons = (value) => {
+    const newSelectedDateTime = selectedTime.clone();
+    newSelectedDateTime.minutes(value);
+    if (newSelectedDateTime.isAfter(maxDate)) {
+      return NUMERIC_INPUT_LIMITATIONS.INCREMENT;
+    } else if (newSelectedDateTime.isBefore(minDate)) {
+      return NUMERIC_INPUT_LIMITATIONS.DECREMENT;
+    } else {
+      return null;
+    }
+  };
+
   const hours = selectedTime?.clone().utc().format('HH');
   const minutes = selectedTime?.clone().utc().format('mm');
 
@@ -96,15 +121,30 @@ export const DateTimeInput = (props) => {
           isZoomLevelOk={isZoomLevelOk}
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
+          datePickerInputStyle={datePickerInputStyle}
         />
       </div>
       <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>
         <div className="time-input-hours-minutes">
-          <NumericInput label="hh" min="0" max="23" value={hours} setValue={setHours} />
+          <NumericInput
+            label="hh"
+            min="0"
+            max="23"
+            value={hours}
+            disableSpecificButtonFunction={disableHourButtons}
+            setValue={setHours}
+          />
         </div>
         <div className="time-input-hours-minutes no-full-width">:</div>
         <div className="time-input-hours-minutes no-right-margin">
-          <NumericInput label="mm" min="0" max="59" value={minutes} setValue={setMinutes} />
+          <NumericInput
+            label="mm"
+            min="0"
+            max="59"
+            value={minutes}
+            disableSpecificButtonFunction={disableMinuteButtons}
+            setValue={setMinutes}
+          />
         </div>
       </div>
     </div>

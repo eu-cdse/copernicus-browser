@@ -1,0 +1,69 @@
+@import '../../../../../variables.module';
+
+.providers-and-missions-container {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+
+  & > * {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .data-source-advanced-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .data-source-advanced-title-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2px;
+
+      .data-source-advanced-title {
+        padding: 4px 0;
+      }
+
+      .data-source-advanced-title-subtitle {
+        color: #c0c0cb;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .checkbox-providers-missions {
+    padding: 0 0 0 10.5px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+
+    .provider-content {
+      display: flex;
+      flex-direction: column;
+      row-gap: 7px;
+      padding-bottom: 10px;
+
+      .checkbox-missions {
+        display: flex;
+        flex-direction: column;
+        row-gap: 7px;
+        padding: 0 0 0 20px;
+
+        .mission {
+          display: flex;
+          align-items: center;
+
+          .collection-tooltip-icon {
+            width: 15px;
+            height: 15px;
+
+            i {
+              transform: scale(0.8);
+            }
+          }
+        }
+      }
+    }
+  }
+}

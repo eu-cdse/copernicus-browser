@@ -28,6 +28,7 @@ import { EXPIRED_ACCOUNT, MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL } from
 import './VisualizationPanel.scss';
 import { getVisualizationEffectsFromStore } from '../../utils/effectsUtils';
 import { getAppropriateAuthToken } from '../../App';
+import { resetMessagePanel } from '../../utils';
 
 const showEffectsText = () => t`Show effects and advanced options`;
 const appliedEffectsText = () => t`Effects and advanced options applied`;
@@ -115,6 +116,7 @@ function VisualizationPanel({
   authToken,
   dataSourcesInitialized,
   compareShare,
+  selectedTabIndex,
 }) {
   const selectedTheme = selectedThemesListId
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
@@ -219,6 +221,10 @@ function VisualizationPanel({
     displayLayer: visibleOnMap,
     toggleLayer: toggleLayer,
   });
+
+  useEffect(() => {
+    resetMessagePanel();
+  }, [selectedTabIndex]);
 
   useEffect(() => {
     const shouldCollapse = windowHeight >= MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL;
@@ -349,6 +355,7 @@ const mapStoreToProps = (store) => ({
   newPinsCount: store.pins.newPinsCount,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
+  selectedTabIndex: store.tabs.selectedTabIndex,
 });
 
 export default connect(mapStoreToProps, null)(VisualizationPanel);

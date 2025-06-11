@@ -31,11 +31,13 @@ export const ModalId = {
   PRODUCT_DETAILS: 'ProductDetails',
   SPECTRAL_EXPLORER: 'SpectralExplorer',
   BROWSE_PRODUCT: 'BrowseProduct',
+  RRD_PRODUCT_DETAILS: 'RRDProductDetails',
 };
 
 export const MODE_THEMES_LIST = 'mode';
 export const URL_THEMES_LIST = 'url';
 export const USER_INSTANCES_THEMES_LIST = 'user_instances';
+export const RRD_INSTANCES_THEMES_LIST = 'RRD';
 
 export const NO_THEME = 'no-theme-selected';
 
@@ -116,7 +118,8 @@ export const MAX_SH_IMAGE_SIZE = 2500; // SH services have a limit for a max ima
 export const TABS = {
   VISUALIZE_TAB: 1,
   SEARCH_TAB: 2,
-  COMMERCIAL_TAB: 3,
+  RAPID_RESPONSE_DESK: 3,
+  COMMERCIAL_TAB: 4,
 };
 
 export const DISABLED_ORTHORECTIFICATION = 'DISABLED';
@@ -192,6 +195,20 @@ export const DATASOURCES = {
   OTHER: 'OTHER',
   MOSAIC: 'MOSAIC',
   S1_MOSAIC: 'Sentinel-1 Mosaic',
+  GLOBAL_LAND_COVER: 'Global Land Cover',
+  RRD_EUSI: 'EUSI',
+  RRD_AIRBUS_DE: 'Airbus DE',
+  RRD_AIRBUS_FE_SPOT: 'Airbus FE Spot',
+  RRD_AIRBUS_FE_PLEIADAS: 'Airbus FE Pleiades 1A/B',
+  RRD_AIRBUS_FE_PLEIADAS_NEO: 'Airbus FE Pleiades NEO',
+  RRD_GEOSAT: 'GEOSAT',
+  RRD_SKYMED_1: 'SkyMed Gen 1',
+  RRD_SKYMED_2: 'SkyMed Gen 2',
+  RRD_PLANET_SCOPE: 'PlanetScope',
+  RRD_SKYSAT: 'SkySat',
+  RRD_RADARSAT2: 'RADARSAT-2',
+  RRD_PAZ: 'PAZ',
+  RRD_ICEYE: 'ICEYE',
   CLMS: 'CLMS',
   CCM: 'CCM',
 };

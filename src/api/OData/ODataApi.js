@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ODataQueryBuilder } from './ODataQueryBuilder';
-import { delay, readBlob } from '../../utils';
+import { executeRequest } from '../httpRequestResolver';
 
 const defaultRequestOptions = {
   retriesLeft: 3,
@@ -11,29 +11,6 @@ const ODataEndpoints = {
   search: 'https://catalogue.dataspace.copernicus.eu/odata/v1/',
   download: 'https://download.dataspace.copernicus.eu/odata/v1/',
   listNodes: 'https://download.dataspace.copernicus.eu/odata/v1/',
-};
-
-const extractResponseErrorMessage = async (error) => {
-  let errorMsg;
-
-  if (error?.response?.data) {
-    let errorResponseData = error.response.data;
-
-    if (error.response.data instanceof Blob) {
-      errorResponseData = await readBlob(error.response.data);
-    }
-
-    if (errorResponseData?.detail) {
-      if (typeof errorResponseData.detail === 'string') {
-        errorMsg = errorResponseData.detail;
-      } else {
-        errorMsg = JSON.stringify(errorResponseData.detail);
-      }
-    } else {
-      errorMsg = JSON.stringify(errorResponseData);
-    }
-  }
-  return errorMsg;
 };
 
 const HttpClients = () => {
@@ -61,45 +38,6 @@ const HttpClients = () => {
 const ODataApi = () => {
   const httpClients = HttpClients();
 
-  const executeRequest = async (
-    client,
-    method,
-    queryString,
-    requestConfig,
-    options = defaultRequestOptions,
-  ) => {
-    try {
-      const { data } = await client[method](queryString, requestConfig);
-      return data;
-    } catch (e) {
-      if (axios.isCancel(e)) {
-        console.log(e.message);
-        return;
-      }
-      const { retriesLeft, delayBetweenRetries, updateProgress } = options;
-      if (retriesLeft) {
-        console.log(`Retrying in ${delayBetweenRetries}ms...`);
-        if (updateProgress) {
-          updateProgress(0);
-        }
-        await delay(delayBetweenRetries);
-        return executeRequest(client, method, queryString, requestConfig, {
-          ...options,
-          retriesLeft: retriesLeft - 1,
-          delayBetweenRetries: delayBetweenRetries * 2,
-        });
-      }
-      const responseErrorMessage = await extractResponseErrorMessage(e);
-      let errorMessage = e.message;
-      if (responseErrorMessage) {
-        errorMessage = `${errorMessage}:\n${responseErrorMessage}`;
-      }
-      console.error('executeRequest %s failed with %s', queryString, errorMessage);
-
-      throw new Error(errorMessage);
-    }
-  };
-
   const search = async (entity, queryBuilder, authToken) => {
     if (!entity) {
       throw new Error('Entity is not defined');
@@ -122,7 +60,12 @@ const ODataApi = () => {
         : {}),
     };
 
-    return await executeRequest(httpClients.getSearchClient(), 'get', queryString, requestConfig);
+    return await executeRequest(
+      httpClients.getSearchClient(),
+      'get',
+      { queryPathString: queryString },
+      requestConfig,
+    );
   };
 
   const download = async (
@@ -164,10 +107,16 @@ const ODataApi = () => {
         }
       },
     };
-    return await executeRequest(httpClients.getDownloadClient(), 'get', downloadUrl, requestConfig, {
-      ...defaultRequestOptions,
-      updateProgress: updateProgress,
-    });
+    return await executeRequest(
+      httpClients.getDownloadClient(),
+      'get',
+      { queryPathString: downloadUrl },
+      requestConfig,
+      {
+        ...defaultRequestOptions,
+        updateProgress: updateProgress,
+      },
+    );
   };
 
   const listNodes = async (token, nodesUri, cancelToken = null) => {
@@ -209,4 +158,4 @@ const ODataApi = () => {
 
 const oDataApi = ODataApi();
 
-export { oDataApi, extractResponseErrorMessage, ODataEndpoints };
+export { oDataApi, ODataEndpoints };

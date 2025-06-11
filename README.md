@@ -41,6 +41,7 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualisation ([li
 - Run `npm run debug-translations` to replace all translation strings with "XXXXXX"
 - Run `npm run update-previews` to create layer preview images
 - Run `npm run update-metadata-cache` to create getCapabilities and configuration cache
+- Run `npm run update-rrd-configurations` to create getCapabilities and configuration cache for the RRD collections
 
 ### Building the application
 

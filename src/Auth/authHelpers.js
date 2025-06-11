@@ -201,3 +201,14 @@ export const hasRole = (userToken, role) => {
   const pattern = new RegExp(role);
   return !!roles.find((r) => pattern.test(r));
 };
+
+export const isInGroup = (group) => {
+  if (!(keycloakInstance.token && group)) {
+    return false;
+  }
+
+  const groups = keycloakInstance.tokenParsed.context_groups ?? [];
+  return !!groups.find((r) => {
+    return r.includes(group);
+  });
+};

@@ -1,0 +1,20 @@
+@import '../../variables.module';
+
+.tags-outer-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+
+  .tags-inner-container {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 3px;
+    row-gap: 2px;
+  }
+
+  .tag {
+    flex-shrink: 0;
+    margin: unset;
+  }
+}

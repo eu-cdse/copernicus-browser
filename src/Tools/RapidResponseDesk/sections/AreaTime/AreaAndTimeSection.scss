@@ -1,0 +1,121 @@
+@import '../../../../variables.module';
+
+.area-time-body {
+  .area-interest-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .row {
+      margin-bottom: 12px;
+    }
+  }
+
+  .coverage-slider-container {
+    display: flex;
+    align-items: center;
+
+    & > * {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .aoi-label-text {
+      padding-right: 22px;
+    }
+
+    .aoi-current-value-text {
+      padding-left: 22px;
+      color: $primaryColor;
+    }
+  }
+
+  .date-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .radio-buttons-container {
+      color: #0a4393;
+      font-weight: 700;
+
+      .radio-button-group label {
+        font-size: 14px;
+      }
+    }
+
+    .date-picker-container-task-toggle {
+      gap: 4px;
+
+      .action-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+        border: 1px solid #0a4393;
+        color: white;
+      }
+
+      .action-button-enabled {
+        background-color: #0a4393;
+        color: white;
+      }
+
+      .action-button-disabled {
+        background-color: white;
+        color: #9e9e9e;
+        border: 1px solid #9e9e9e;
+      }
+
+      .action-button-disabled:hover {
+        color: #0a4393;
+        border: 1px solid #0a4393;
+      }
+    }
+
+    .remove-button-container,
+    .add-button-container {
+      padding-left: 15px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .date-picker-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+
+      &:has(.remove-button-container) {
+        align-items: start;
+
+        .remove-button-container {
+          position: absolute;
+          top: 0;
+          right: 0;
+          transform: translateY(5px);
+          padding-left: 15px;
+        }
+      }
+
+      &:has(.add-button-container) {
+        align-items: center;
+
+        .add-button-container {
+          position: absolute;
+          right: 0;
+          align-items: center;
+          transform: translateY(19px);
+        }
+      }
+
+      &.bottom-border {
+        border-bottom: 1px solid black;
+        padding-bottom: 15px;
+      }
+    }
+  }
+}

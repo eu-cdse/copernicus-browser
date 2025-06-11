@@ -1,0 +1,61 @@
+@import '../../../../variables.module';
+
+.advanced-section-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  row-gap: 20px;
+  padding-bottom: 12px;
+
+  .slider-checkbox-container {
+    display: flex;
+
+    .slider-container {
+      display: inline-grid;
+      grid-template-columns: 170px 170px 60px;
+      align-items: center;
+
+      & > * {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .label-text {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        display: flex;
+        padding-right: 10px;
+        flex: 1 0 auto;
+      }
+
+      .current-value-text {
+        color: $primaryColor;
+        padding-left: 15px;
+      }
+
+      div.rc-slider {
+        width: 100%;
+      }
+    }
+
+    .custom-checkbox-text {
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+
+  .rc-slider-mark {
+    top: -12px;
+    font-size: 11px;
+
+    .rc-slider-mark-text,
+    .rc-slider-mark-text-active {
+      color: $sliderColor;
+    }
+  }
+
+  .rc-slider-dot {
+    visibility: hidden;
+  }
+}

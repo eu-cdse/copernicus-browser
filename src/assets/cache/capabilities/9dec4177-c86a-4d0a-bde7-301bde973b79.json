@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_TERRASAR-X/TANDEM-X_EEC_RE_VV",
+    "layers": [
+        {
+            "id": "VV",
+            "name": "VV",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

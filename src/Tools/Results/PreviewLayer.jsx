@@ -13,11 +13,11 @@ const defaultStyle = () => {
 
 const hoverStyle = () => {
   return {
-    weight: 2,
+    weight: 3,
     color: '#57de71',
     opacity: 1,
     fillColor: '#57de71',
-    fillOpacity: 0.3,
+    fillOpacity: 0.7,
   };
 };
 
@@ -58,14 +58,17 @@ class PreviewLayer extends React.Component {
     if (this.props.tile.geometry === undefined || Object.keys(this.props.tile.geometry).length === 0) {
       return null;
     }
-
     return (
-      <GeoJSON
-        data={this.props.tile.geometry}
-        onMouseOver={this.onMouseOver}
-        onMouseOut={this.onMouseOut}
-        style={this.state.style}
-      />
+      <>
+        <GeoJSON
+          key={`preview-layer-${this.props.tile?.id}-${this.props.isHighlighted}`}
+          data={this.props.tile.geometry}
+          onMouseOver={this.onMouseOver}
+          onMouseOut={this.onMouseOut}
+          style={this.props.isHighlighted ? hoverStyle : this.state.style}
+          pane={this.props.pane}
+        />
+      </>
     );
   }
 }

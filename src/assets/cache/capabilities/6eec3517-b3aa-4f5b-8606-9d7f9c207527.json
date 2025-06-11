@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_WORLDVIEW_4MS",
+    "layers": [
+        {
+            "id": "TRUE-COLOR",
+            "name": "TRUE COLOR",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

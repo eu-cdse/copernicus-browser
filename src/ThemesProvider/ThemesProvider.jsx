@@ -4,7 +4,6 @@ import jwt_dec from 'jwt-decode';
 import axios from 'axios';
 import { t } from 'ttag';
 import AlertProvider, { confirm } from 'react-alert-async';
-import { DEFAULT_THEME_ID, ModalId } from '../const';
 
 import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
@@ -12,25 +11,51 @@ import {
   initializeDataSourceHandlers,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
+  DEFAULT_THEME_ID,
   MODE_THEMES_LIST,
   URL_THEMES_LIST,
   USER_INSTANCES_THEMES_LIST,
   DEFAULT_MODE,
   MODES,
   EXPIRED_ACCOUNT,
+  ModalId,
+  RRD_INSTANCES_THEMES_LIST,
 } from '../const';
-import { logoutUser, openLogin } from '../Auth/authHelpers';
+import { isInGroup, logoutUser, openLogin } from '../Auth/authHelpers';
 
 import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
+import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
+import { RRD_THEMES } from '../assets/cache/rrdThemes';
 import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../api/OData/assets/accessRoles';
+import { rrdApi } from '../api/RRD/RRDApi';
 
 const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
   : DEFAULT_MODE;
 
 const EXCLUDED_CONFIG_NAMES_FOR_NON_COP_SERVICES_USERS = ['CCM VHR Europe 2018', 'CCM VHR Europe 2021'];
+
+function getAllowedIdentifiersForProject(identifier) {
+  const allowed = ['GENERAL'];
+  if (identifier === 'FRTX') {
+    allowed.push('FRTX');
+  } else if (identifier === 'CSESA') {
+    allowed.push('CSESA');
+  }
+  return allowed;
+}
+
+function filterRrdThemesByIdentifier(themes, identifier) {
+  const allowed = getAllowedIdentifiersForProject(identifier);
+  return themes
+    .map((theme) => ({
+      ...theme,
+      content: theme.content.filter((item) => allowed.some((key) => item.name.includes(key))),
+    }))
+    .filter((theme) => theme.content.length > 0);
+}
 
 class ThemesProvider extends React.Component {
   async componentDidMount() {
@@ -114,9 +139,11 @@ class ThemesProvider extends React.Component {
     const { themeIdFromUrlParams, anonToken, user } = this.props;
     if (anonToken || (user && user.access_token)) {
       let userInstances = [];
+      let rrdInstances = [];
 
       if (user.access_token) {
         userInstances = await this.fetchUserInstances();
+        rrdInstances = await this.getRRDInstances(user.access_token);
       }
 
       const currentThemeId = this.props.selectedThemeId || themeIdFromUrlParams;
@@ -124,7 +151,7 @@ class ThemesProvider extends React.Component {
       this.setMode(selectedMode);
       this.setSelectedThemeIdFromMode(selectedMode, currentThemeId);
 
-      const allThemes = [...userInstances, ...selectedMode.themes];
+      const allThemes = [...userInstances, ...selectedMode.themes, ...rrdInstances];
 
       const isThemeIdInModeThemesList = !!allThemes.find((t) => t.id === currentThemeId);
 
@@ -181,6 +208,26 @@ class ThemesProvider extends React.Component {
     return [];
   }
 
+  getRRDInstances = async (access_token) => {
+    if (!isInGroup(RRD_GROUP) || !access_token) {
+      store.dispatch(themesSlice.actions.setRRDThemesList([]));
+      return [];
+    }
+
+    try {
+      const userProfile = await rrdApi.getProfile(access_token);
+      const identifier = userProfile?.profile?.current_project?.identifier;
+      const filteredThemes = filterRrdThemesByIdentifier(RRD_THEMES, identifier);
+      store.dispatch(themesSlice.actions.setRRDThemesList(filteredThemes));
+      return filteredThemes;
+    } catch (error) {
+      const errorMessage = t`There was a problem retrieving user profile`;
+      store.dispatch(notificationSlice.actions.displayPanelError({ message: errorMessage, link: null }));
+      store.dispatch(themesSlice.actions.setRRDThemesList([]));
+      return [];
+    }
+  };
+
   fetchThemesFromUrl = (themesUrl) => {
     return axios
       .get(themesUrl, { responseType: 'json', timeout: 30000 })
@@ -205,7 +252,8 @@ class ThemesProvider extends React.Component {
       return DEFAULT_SELECTED_MODE;
     }
     const isThemeFromUrl = !!this.props.urlThemesList.find((t) => t.id === themeId);
-    if (isThemeFromUrl) {
+    const isThemeFromRRD = !!this.props.rrdThemesList.find((t) => t.id === themeId);
+    if (isThemeFromUrl || isThemeFromRRD) {
       // themesUrl aren't supported in Education mode
       return DEFAULT_MODE;
     }
@@ -217,6 +265,25 @@ class ThemesProvider extends React.Component {
     return DEFAULT_SELECTED_MODE;
   };
 
+  getThemesListId = (themeId) => {
+    if (!themeId) {
+      return MODE_THEMES_LIST;
+    }
+    const isThemeUserInstance = !!this.props.userInstancesThemesList.find((t) => t.id === themeId);
+    if (isThemeUserInstance) {
+      return USER_INSTANCES_THEMES_LIST;
+    }
+    const isThemeFromRRD = !!this.props.rrdThemesList.find((t) => t.id === themeId);
+    if (isThemeFromRRD) {
+      return RRD_INSTANCES_THEMES_LIST;
+    }
+    const isThemeFromUrl = !!this.props.urlThemesList.find((t) => t.id === themeId);
+    if (isThemeFromUrl) {
+      return URL_THEMES_LIST;
+    }
+    return MODE_THEMES_LIST;
+  };
+
   setMode = (selectedMode) => {
     store.dispatch(themesSlice.actions.setSelectedModeId(selectedMode.id));
     store.dispatch(themesSlice.actions.setModeThemesList(selectedMode.themes));
@@ -225,7 +292,12 @@ class ThemesProvider extends React.Component {
   setSelectedThemeIdFromMode = (selectedMode, themeId) => {
     const { urlThemesList } = this.props;
     if (themeId) {
-      store.dispatch(themesSlice.actions.setSelectedThemeId({ selectedThemeId: themeId }));
+      store.dispatch(
+        themesSlice.actions.setSelectedThemeId({
+          selectedThemeId: themeId,
+          selectedThemesListId: this.getThemesListId(themeId),
+        }),
+      );
     } else {
       if (urlThemesList.length > 0) {
         store.dispatch(
@@ -260,7 +332,6 @@ class ThemesProvider extends React.Component {
     } = this.props;
     // ah yes not sure how to do elegantly this to handle duplicate ids...
     let selectedTheme;
-
     if (selectedThemesListId) {
       selectedTheme = themesLists[selectedThemesListId].find((t) => t.id === themeId);
     } else {
@@ -268,7 +339,6 @@ class ThemesProvider extends React.Component {
         (t) => t.id === themeId,
       );
     }
-
     if (!selectedTheme) {
       store.dispatch(notificationSlice.actions.displayError('Selected themeId does not exist!'));
       store.dispatch(themesSlice.actions.setSelectedThemeId({ selectedThemeId: null }));
@@ -281,8 +351,8 @@ class ThemesProvider extends React.Component {
     // Ignore CCM collections for non copernicus services users
     const isUserCopernicusServicesUser =
       user.access_token !== null
-        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
-          jwt_dec(user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
+        ? jwt_dec(user.access_token).realm_access?.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
+          jwt_dec(user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
         : false;
     if (!isUserCopernicusServicesUser && selectedTheme.id === DEFAULT_THEME_ID) {
       selectedTheme = {
@@ -317,6 +387,7 @@ const mapStoreToProps = (store) => ({
   modeThemesList: store.themes.themesLists[MODE_THEMES_LIST],
   userInstancesThemesList: store.themes.themesLists[USER_INSTANCES_THEMES_LIST],
   urlThemesList: store.themes.themesLists[URL_THEMES_LIST],
+  rrdThemesList: store.themes.themesLists[RRD_INSTANCES_THEMES_LIST],
   selectedModeId: store.themes.selectedModeId,
   selectedThemesListId: store.themes.selectedThemesListId,
   themesLists: store.themes.themesLists,

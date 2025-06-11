@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   getAnonTokenFromLocalStorage,
@@ -23,6 +23,12 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
     useAnonymousAuthRecaptcha();
 
   const prevUser = usePrevious(user);
+
+  const executeAnonAuth = useCallback(() => {
+    saveRecaptchaConsentToLocalStorage();
+    captchaRef.current.loadCaptchaScript();
+    captchaRef.current.executeCaptcha();
+  }, [captchaRef]);
 
   const initialAnonAuth = async () => {
     clearAnonTokenRefresh();
@@ -84,9 +90,7 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
         userAuthCompleted={userAuthCompleted}
         tokenRefreshInProgress={tokenRefreshInProgress}
         executeAnonAuth={() => {
-          saveRecaptchaConsentToLocalStorage();
-          captchaRef.current.loadCaptchaScript();
-          captchaRef.current.executeCaptcha();
+          executeAnonAuth();
         }}
       ></EnsureAuth>
       {userAuthCompleted ? (

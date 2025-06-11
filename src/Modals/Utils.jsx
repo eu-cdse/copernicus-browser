@@ -10,6 +10,7 @@ import { ModalId } from '../const';
 import SpectralExplorer from '../Controls/SpectralExplorer/SpectralExplorer';
 import ElevationProfile from '../Controls/ElevationProfile/ElevationProfile';
 import BrowseProductModal from '../Tools/Results/BrowseProduct/BrowseProductModal';
+import RRDProductInfoModal from '../Tools/RapidResponseDesk/sections/Results/RRDProductInfoModal';
 
 export const Modals = {
   [ModalId.IMG_DOWNLOAD]: ({ showComparePanel }) => <ImageDownload showComparePanel={showComparePanel} />,
@@ -23,6 +24,7 @@ export const Modals = {
   [ModalId.PRODUCT_DETAILS]: (params) => <ProductInfoModal params={params} />,
   [ModalId.SPECTRAL_EXPLORER]: ({ geometryType }) => <SpectralExplorer geometryType={geometryType} />,
   [ModalId.BROWSE_PRODUCT]: (params) => <BrowseProductModal params={params} />,
+  [ModalId.RRD_PRODUCT_DETAILS]: (params) => <RRDProductInfoModal params={params} />,
 };
 
 export function propsSufficientToRender(props) {

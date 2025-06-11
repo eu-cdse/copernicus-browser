@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_GIS_PM4_SO_MS",
+    "layers": [
+        {
+            "id": "TRUE-COLOR",
+            "name": "TRUE COLOR",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

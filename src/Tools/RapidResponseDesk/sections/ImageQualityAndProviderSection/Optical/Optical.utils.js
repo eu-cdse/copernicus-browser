@@ -1,0 +1,218 @@
+import { AirbusLogo, EUSILogo, GeosatLogo, PlanetLogo } from '../logos';
+
+const opticalProvidersCollection = [
+  {
+    id: 'geosat',
+    label: 'GEOSAT',
+    missions: [
+      {
+        id: 2,
+        name: 'Geosat-2',
+        stacConstellation: ['GEOSAT'],
+        stacPlatform: ['GEOSAT2'],
+        label: 'Geosat-2',
+        taskingSupported: true,
+        archiveSupported: true,
+        description: {
+          body: 'Geosat-2 is a high-resolution optical Earth observation satellite designed for a wide range of applications, including agriculture, forestry, urban planning, and disaster management. It provides detailed imagery to support decision-making and monitoring.',
+          footer: '',
+        },
+        logo: GeosatLogo,
+      },
+    ],
+    active: true,
+  },
+  {
+    id: 'eusi',
+    label: 'EUSI',
+    missions: [
+      {
+        id: 5,
+        name: 'GeoEye-1',
+        stacConstellation: ['Worldview'],
+        stacPlatform: ['GE01'],
+        taskingSupported: false,
+        archiveSupported: true,
+        label: 'GeoEye-1',
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 14,
+        name: 'EUSI Constellation',
+        stacConstellation: ['Worldview', 'Legion'],
+        stacPlatform: ['GE01', 'WV01', 'WV01', 'WV02', 'WV03', 'LG01', 'LG02'],
+        taskingSupported: true,
+        archiveSupported: false,
+        label: 'EUSI Constellation',
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 6,
+        name: 'WorldView-01',
+        stacConstellation: ['Worldview'],
+        stacPlatform: ['WV01'],
+        label: 'WorldView-01',
+        taskingSupported: false,
+        archiveSupported: true,
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 7,
+        name: 'WorldView-02',
+        stacConstellation: ['Worldview'],
+        stacPlatform: ['WV02'],
+        label: 'WorldView-02',
+        taskingSupported: false,
+        archiveSupported: true,
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 8,
+        name: 'WorldView-03',
+        label: 'WorldView-03',
+        stacConstellation: ['Worldview'],
+        stacPlatform: ['WV03'],
+        taskingSupported: false,
+        archiveSupported: true,
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 9,
+        name: 'WorldView-04',
+        label: 'WorldView-04',
+        stacConstellation: ['Worldview'],
+        stacPlatform: ['WV04'],
+        taskingSupported: false,
+        archiveSupported: true,
+        description: {
+          body: 'The overall objective of the WorldView satellites and GeoEye is to meet the growing demand for high-resolution satellite imagery for a variety of purposes, including but not limited to defence, disaster response, air and marine transportation, oil and gas exploration, mining production and exploration, mapping of remote regions, location-based services, insurance and risk management, agricultural crop management and more.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+      {
+        id: 20,
+        name: 'Legion',
+        stacConstellation: ['Legion'],
+        stacPlatform: ['LG01', 'LG02'],
+        taskingSupported: false,
+        archiveSupported: true,
+        label: 'Legion',
+        description: {
+          body: 'Legion satellites triple the capacity to collect 30 cm class imagery, with more than 5 million square kilometres collected per day. With a mix of sun-synchronous and mid-inclination orbits, Legion dramatically expands the ability to revisit high-interest areas to better inform critical, time-sensitive decisions.',
+          footer: '',
+        },
+        logo: EUSILogo,
+      },
+    ],
+    active: true,
+  },
+  {
+    id: 'planet',
+    label: 'Planet',
+    missions: [
+      {
+        id: 11,
+        name: 'PlanetScope',
+        stacConstellation: ['planetscope'],
+        stacPlatform: ['planetscope'],
+        label: 'PlanetScope',
+        taskingSupported: false,
+        archiveSupported: true,
+        description: {
+          body: "The PlanetScope constellation of 430+ Dove and SuperDove satellites is able to image nearly all Earth's land every day.",
+          footer: '',
+        },
+        logo: PlanetLogo,
+      },
+      {
+        id: 12,
+        name: 'SkySat',
+        label: 'SkySat',
+        stacConstellation: ['skysat'],
+        stacPlatform: ['skysat'],
+        taskingSupported: true,
+        archiveSupported: true,
+        description: {
+          body: 'The SkySat constellation of 21 high-resolution Earth imaging satellites collects thousands of square kilometres of imagery. Each satellite is three-axis stabilised and agile enough to slew between different targets of interest.',
+          footer: '',
+        },
+        logo: PlanetLogo,
+      },
+    ],
+    active: false,
+  },
+  {
+    id: 'airbus_fr',
+    label: 'Airbus FR',
+    missions: [
+      {
+        id: 16,
+        name: 'Spot',
+        stacConstellation: ['SPOT'],
+        stacPlatform: ['SPOT6', 'SPOT7'],
+        label: 'Spot',
+        taskingSupported: true,
+        archiveSupported: true,
+        description: {
+          body: "The goal of the SPOT series is to improve the knowledge and management of Earth by exploring the planet's resources, detecting and forecasting phenomena involving climatology and oceanography, and monitoring human activities and natural phenomena.",
+          footer: '',
+        },
+        logo: AirbusLogo,
+      },
+      {
+        id: 17,
+        name: 'Pléiades-1A/B',
+        label: 'Pléiades-1A/B',
+        stacConstellation: ['PHR'],
+        stacPlatform: ['PHR1A', 'PHR1B'],
+        taskingSupported: true,
+        archiveSupported: true,
+        description: {
+          body: 'The Pléiades system is designed for a range of very-high-resolution (VHR) remote sensing applications in the field of cartography, agriculture, forestry, hydrology, and geological prospecting.',
+          footer: '',
+        },
+        logo: AirbusLogo,
+      },
+      {
+        id: 18,
+        name: 'Pléiades Neo',
+        stacConstellation: ['PNEO'],
+        stacPlatform: ['PNE03', 'PNE04'],
+        label: 'Pléiades Neo',
+        taskingSupported: true,
+        archiveSupported: true,
+        description: {
+          body: 'The Pléiades Neo is designed for a range of very-high-resolution (VHR) remote sensing applications for defence, security and crisis management, urban planning (mapping, civil engineering, infrastructure, mobility), maritime, agriculture, forestry and environment.',
+          footer: '',
+        },
+        logo: AirbusLogo,
+      },
+    ],
+    active: false,
+  },
+];
+
+export const getActiveOpticalProviders = () => {
+  return opticalProvidersCollection.filter((provider) => provider.active);
+};

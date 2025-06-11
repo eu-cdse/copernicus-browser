@@ -1,5 +1,5 @@
-import axios from 'axios';
 import dotenv from 'dotenv';
+import { getAuthToken } from './utils/auth';
 
 dotenv.config({ path: './.env' });
 
@@ -23,16 +23,7 @@ export const getAuthTokens = async () =>
       const { tokenEndpointUrl, clientId, clientSecret } = credential;
 
       try {
-        const response = await axios({
-          method: 'post',
-          url: tokenEndpointUrl,
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          data: `grant_type=client_credentials&client_id=${encodeURIComponent(
-            clientId,
-          )}&client_secret=${encodeURIComponent(clientSecret)}`,
-        });
-
-        return response.data.access_token;
+        return await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
       } catch (error) {
         console.log(
           `${error.response.data.error_description}: provide credentials on instances-transfer.utils file`,

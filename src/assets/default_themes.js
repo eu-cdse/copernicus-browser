@@ -3777,6 +3777,5 @@ export const DEFAULT_THEMES = [
       },
     ],
   },
-
   ...educationThemesDefaultMode,
 ];

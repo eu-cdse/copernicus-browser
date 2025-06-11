@@ -1,0 +1,33 @@
+@import '../../variables.module';
+
+.tag {
+  width: fit-content;
+  text-align: center;
+  align-self: center;
+  padding: 2px 5px;
+  align-content: center;
+  border-radius: 10px;
+  margin: 1px 5px 1px 0;
+  font-size: 10px;
+  font-weight: bold;
+
+  &.primary {
+    background-color: $primaryColor;
+    color: $whiteColor;
+  }
+
+  &.success {
+    background-color: $successColor;
+    color: $whiteColor;
+  }
+
+  &.danger {
+    background-color: $errorCol;
+    color: $whiteColor;
+  }
+
+  &.light {
+    background-color: #dbdfe3;
+    color: #041223;
+  }
+}

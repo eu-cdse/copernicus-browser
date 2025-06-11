@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_SAR_HS_SSC_VV",
+    "layers": [
+        {
+            "id": "VV",
+            "name": "VV",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

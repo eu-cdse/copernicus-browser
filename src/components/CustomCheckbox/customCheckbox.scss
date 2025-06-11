@@ -11,6 +11,18 @@
     align-items: center;
     font-size: 0.9rem;
 
+    &.label-left {
+      flex-direction: row;
+    }
+
+    &.label-right {
+      flex-direction: row-reverse;
+
+      span {
+        padding-right: 15px;
+      }
+    }
+
     .custom-checkbox-inner-wrapper {
       position: relative;
       width: 18px;
@@ -68,6 +80,10 @@
     .custom-checkbox-text {
       font-weight: $fontWeightNormal;
       margin-left: 5px;
+    }
+
+    .custom-checkbox-input {
+      position: relative;
     }
   }
 }

@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_PAZ_GEC_RE_HH",
+    "layers": [
+        {
+            "id": "HH",
+            "name": "HH",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

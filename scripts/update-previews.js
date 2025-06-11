@@ -26,7 +26,7 @@ import {
   PROBAV_S5,
 } from '../src/Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { DATASOURCES } from '../src/const';
-import { getAuthToken } from './update-previews-utils';
+import { getAuthToken } from './utils/auth';
 import {
   createHttpClient,
   getArrayOfInstanceIds,
@@ -138,7 +138,14 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
 
   const httpClient = await createHttpClient(authBaseUrl);
 
-  const authToken = await getAuthToken(authBaseUrl);
+  if (!process.env.APP_ADMIN_CLIENT_ID || !process.env.APP_ADMIN_CLIENT_SECRET) {
+    throw new Error('Env vars APP_ADMIN_CLIENT_ID and APP_ADMIN_CLIENT_SECRET are not set');
+  }
+
+  const clientId = process.env.APP_ADMIN_CLIENT_ID;
+  const clientSecret = process.env.APP_ADMIN_CLIENT_SECRET;
+  const authToken = await getAuthToken(authBaseUrl, clientId, clientSecret);
+
   setAuthToken(authToken);
 
   if (!fs.existsSync(previewsDir)) {

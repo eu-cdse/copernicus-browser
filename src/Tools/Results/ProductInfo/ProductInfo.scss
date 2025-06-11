@@ -169,7 +169,9 @@
           img {
             width: 100%;
             max-width: 250px;
-            height: auto;
+            max-height: 300px;
+            height: 100%;
+            object-fit: contain;
           }
         }
       }

@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_SKYSAT_PAN",
+    "layers": [
+        {
+            "id": "PANCHROMATIC",
+            "name": "Panchromatic",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

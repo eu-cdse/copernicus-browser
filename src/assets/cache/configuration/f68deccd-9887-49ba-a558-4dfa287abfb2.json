@@ -1,0 +1,26 @@
+[
+    {
+        "id": "HH",
+        "title": "HH",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup(){\n  return{\n    input: [\"HH\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.HH * gain,\n          sample.dataMask];\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "f68dec-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-10T05:47:40.435190Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "f7e96e-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

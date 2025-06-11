@@ -1,0 +1,86 @@
+@import '../../../../../variables.module';
+
+.radio-type-container {
+  .orbit-direction-container,
+  .polarization-filters-container,
+  .instrument-filters-container,
+  .modes-container > * {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .polarization-filters-container,
+  .instrument-filters-container,
+  .orbit-direction-container {
+    display: flex;
+    align-items: start;
+    margin-bottom: 10px;
+    flex-direction: column;
+
+    .polarization-filters-title-wrapper,
+    .instrument-filters-title-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      padding: 4px;
+
+      .polarization-filters-label-text-wrapper,
+      .polarization-filters-select-all-wrapper,
+      .instrument-filters-label-text-wrapper,
+      .instrument-filters-select-all-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .instrument-filters-label-text-wrapper,
+      .polarization-filters-label-text-wrapper {
+        gap: 4px;
+      }
+    }
+
+    .instrument-filters-label-text-subtitle,
+    .polarization-filters-label-text-subtitle {
+      color: #c0c0cb;
+      font-size: 12px;
+    }
+
+    .instrument-filters-label-text,
+    .polarization-filters-label-text {
+      padding-bottom: 5px;
+    }
+  }
+
+  .modes-container {
+    .modes-label-text {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .sensor-and-processor-container {
+      font-size: 14px;
+      font-weight: unset;
+      display: flex;
+      flex-direction: row;
+
+      & > * {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        row-gap: 20px;
+      }
+
+      .dropdown-label {
+        padding-right: 20px;
+        height: 23px;
+        display: flex;
+        align-items: center;
+      }
+
+      .effect-container {
+        width: 120px;
+      }
+    }
+  }
+}

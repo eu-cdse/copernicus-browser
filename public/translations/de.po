@@ -4826,9 +4826,6 @@ msgid ""
 "review the requested quota and decide if you would like to proceed."
 msgstr ""
 
-msgid "Select"
-msgstr "Auswählen"
-
 msgid ""
 "Note that it is technically possible to order more PlanetScope data than "
 "your purchased quota. Make sure your order is in line with the Hectares "
@@ -5738,7 +5735,6 @@ msgstr ""
 msgid "Order"
 msgid_plural "Orders"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "Subscription"
 msgid_plural "Subscriptions"
@@ -7494,9 +7490,6 @@ msgid "Sentinel Hub Dashboard"
 msgstr "Sentinel Hub Dashboard"
 
 msgid "Data Workspace"
-msgstr ""
-
-msgid "Commercial"
 msgstr ""
 
 msgid "The data is still loading..."
@@ -10569,4 +10562,213 @@ msgid ""
 "For downloading products you need an authorization token. Learn more "
 "[here](https://documentation.dataspace.copernicus.eu/APIs/OData.html#"
 "product-download)."
+msgstr ""
+
+msgid "RRD configurations"
+msgstr ""
+
+#, javascript-format
+msgid "Selection limit: ${ selectionLimit } item."
+msgstr ""
+
+msgid "Overlapped ranges are not allowed"
+msgstr ""
+
+msgid "Please select at least one collection"
+msgstr ""
+
+msgid "Please select at least one polarization channel"
+msgstr ""
+
+msgid "Please select at least one instrument"
+msgstr ""
+
+msgid "View cart"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Any"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
+msgid "Sensing time descending"
+msgstr ""
+
+msgid "Sensing time ascending"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Rolling archive"
+msgstr ""
+
+msgid "CCMEs archive"
+msgstr ""
+
+msgid "Minimum AOI coverage"
+msgstr ""
+
+msgid "Azimuth"
+msgstr ""
+
+msgid "Sun azimuth"
+msgstr ""
+
+msgid "Sun elevation"
+msgstr ""
+
+msgid "Id"
+msgstr ""
+
+msgid "Sensing Start"
+msgstr ""
+
+msgid "Sensing End"
+msgstr ""
+
+msgid "Ground sampling distance"
+msgstr ""
+
+msgid "Providers"
+msgstr ""
+
+msgid "Instrument mode"
+msgstr ""
+
+msgid "Polarizations"
+msgstr ""
+
+msgid "AOI coverage"
+msgstr ""
+
+msgid "Instrument Mode"
+msgstr ""
+
+msgid "Metadata source"
+msgstr ""
+
+msgid "Pixel spacing range"
+msgstr ""
+
+msgid "Product Type"
+msgstr ""
+
+msgid "Satellite elevation"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
+msgid "Frequency band"
+msgstr ""
+
+msgid "Center frequency"
+msgstr ""
+
+msgid "Looks azimuth"
+msgstr ""
+
+msgid "Looks range"
+msgstr ""
+
+msgid "Observation direction"
+msgstr ""
+
+msgid "Resolution azimuth"
+msgstr ""
+
+msgid "Resolution range"
+msgstr ""
+
+msgid "Absolute orbit"
+msgstr ""
+
+msgid "Platform international designator"
+msgstr ""
+
+msgid "Relative orbit"
+msgstr ""
+
+msgid "Best product resolution"
+msgstr ""
+
+msgid "Spectral band"
+msgstr ""
+
+msgid "Pixel spacing azimuth"
+msgstr ""
+
+msgid "Archiving date"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid ""
+"No results found for selected filter parameters.\n"
+"\n"
+"To get more results, try modifying form fields (like the dates range, data "
+"providers, and advanced fields) and/or selecting a larger area on the map."
+msgstr ""
+
+msgid "Load More"
+msgstr ""
+
+msgid "Visualize"
+msgstr ""
+
+msgid "Remove from cart"
+msgstr ""
+
+msgid "Add to cart"
+msgstr ""
+
+msgid "Hide quicklook from map"
+msgstr ""
+
+msgid "Show quicklook on map"
+msgstr ""
+
+msgid "Optical"
+msgstr ""
+
+msgid "Radar"
+msgstr ""
+
+msgid "Data providers and missions"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid "Polarization channels"
+msgstr ""
+
+msgid "Cloud coverage"
+msgstr ""
+
+msgid "Area & Time"
+msgstr ""
+
+msgid "Please select non-overlapping time ranges."
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Tasking"
+msgstr ""
+
+msgid "Advanced"
+msgstr ""
+
+msgid "There was a problem retrieving user profile"
 msgstr ""

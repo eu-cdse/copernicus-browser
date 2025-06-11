@@ -16,10 +16,18 @@ import {
   COMPARE_OPTIONS,
   DEFAULT_THEME_ID,
   DATE_MODES,
+  RRD_INSTANCES_THEMES_LIST,
 } from './const';
 import { DEMInstanceType } from '@sentinel-hub/sentinelhub-js';
 import { baseLayers } from './Map/Layers';
 import { isValidMosaickingOrder } from './utils/mosaickingOrder.utils';
+import {
+  getResultsSectionFilterDefaultValue,
+  ProcessorModesProperties,
+  ProviderImageTypes,
+  SensorModesProperties,
+  ResultsSectionSortProperties,
+} from './Tools/RapidResponseDesk/rapidResponseProperties';
 import { DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX } from './Tools/VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 
 export const aoiSlice = createSlice({
@@ -108,6 +116,7 @@ export const mainMapSlice = createSlice({
     enabledOverlaysId: ['labels'],
     is3D: false,
     loadingMessage: null,
+    quicklookOverlay: null,
   },
   reducers: {
     setPosition: (state, action) => {
@@ -152,6 +161,12 @@ export const mainMapSlice = createSlice({
     setLoadingMessage: (state, action) => {
       state.loadingMessage = action.payload;
     },
+    setQuicklookOverlay: (state, action) => {
+      state.quicklookOverlay = action.payload;
+    },
+    clearQuicklookOverlay: (state) => {
+      state.quicklookOverlay = null;
+    },
     reset: (state) => {
       state.lat = DEFAULT_LAT_LNG.lat;
       state.lng = DEFAULT_LAT_LNG.lng;
@@ -159,6 +174,7 @@ export const mainMapSlice = createSlice({
       state.enabledOverlaysId = ['labels'];
       state.is3D = false;
       state.loadingMessage = null;
+      state.quicklookOverlay = null;
     },
   },
 });
@@ -270,6 +286,7 @@ export const themesSlice = createSlice({
       [MODE_THEMES_LIST]: [],
       [USER_INSTANCES_THEMES_LIST]: [],
       [URL_THEMES_LIST]: [],
+      [RRD_INSTANCES_THEMES_LIST]: [],
     },
     selectedThemesListId: null,
     dataSourcesInitialized: false,
@@ -313,6 +330,9 @@ export const themesSlice = createSlice({
     },
     setUrlThemesList: (state, action) => {
       state.themesLists[URL_THEMES_LIST] = action.payload;
+    },
+    setRRDThemesList: (state, action) => {
+      state.themesLists[RRD_INSTANCES_THEMES_LIST] = action.payload;
     },
     setSelectedThemeId: (state, action) => {
       // - if selectedThemesList is supplied, check the combination and set both selectedThemesList and selectedThemeId
@@ -1113,6 +1133,10 @@ export const collapsiblePanelSlice = createSlice({
     themePanelExpanded: true,
     collectionPanelExpanded: true,
     highlightsPanelExpanded: true,
+    areaTimeExpanded: true,
+    providerExpanded: true,
+    advancedExpanded: false,
+    resultsExpanded: true,
   },
   reducers: {
     setDatePanelExpanded: (state, action) => {
@@ -1127,11 +1151,211 @@ export const collapsiblePanelSlice = createSlice({
     setHighlightsPanelExpanded: (state, action) => {
       state.highlightsPanelExpanded = action.payload;
     },
+    setAreaTimeExpanded: (state, action) => {
+      state.areaTimeExpanded = action.payload;
+    },
+    setProviderExpanded: (state, action) => {
+      state.providerExpanded = action.payload;
+    },
+    setAdvancedExpanded: (state, action) => {
+      state.advancedExpanded = action.payload;
+    },
+    setResultsExpanded: (state, action) => {
+      state.resultsExpanded = action.payload;
+    },
+    setOrderPanels: (state, action) => {
+      state.areaTimeExpanded = action.payload;
+      state.providerExpanded = action.payload;
+      if (!action.payload) {
+        state.advancedExpanded = action.payload;
+      }
+    },
     reset: (state) => {
       state.datePanelExpanded = true;
       state.themePanelExpanded = true;
       state.collectionPanelExpanded = true;
       state.highlightsPanelExpanded = true;
+      state.areaTimeExpanded = true;
+      state.providerExpanded = true;
+      state.advancedExpanded = true;
+    },
+  },
+});
+
+export const areaAndTimeSectionSlice = createSlice({
+  name: 'areaAndTimeSection',
+  initialState: {
+    timespanArray: [],
+    overlappedRanges: [],
+    isTaskingEnabled: false,
+    isArchiveEnabled: true,
+  },
+  reducers: {
+    setTimespanArray: (state, action) => {
+      state.timespanArray = action.payload;
+    },
+
+    setRangesOverlapped: (state, action) => {
+      state.overlappedRanges = action.payload;
+    },
+
+    setIsTaskingEnabled: (state, action) => {
+      state.isTaskingEnabled = action.payload;
+    },
+
+    setIsArchiveEnabled: (state, action) => {
+      state.isArchiveEnabled = action.payload;
+    },
+  },
+});
+
+export const imageQualityAndProviderSectionSlice = createSlice({
+  name: 'imageQualityAndProviderSection',
+  initialState: {
+    imageType: ProviderImageTypes.optical,
+    imageResolution: [0, 20],
+    cloudCoverage: 0.3,
+    selectedOpticalProvidersAndMissions: [],
+    selectedRadarProvidersAndMissions: [],
+    radarPolarizationFilterArray: [],
+    radarInstrumentFilterArray: [],
+    radarOrbitDirectionArray: [],
+    radarSensorMode: SensorModesProperties[0].value,
+    radarProcessorMode: ProcessorModesProperties[0].value,
+  },
+  reducers: {
+    setImageType: (state, action) => {
+      state.imageType = action.payload;
+    },
+
+    setImageResolution: (state, action) => {
+      state.imageResolution = action.payload;
+    },
+
+    setCloudCoverage: (state, action) => {
+      state.cloudCoverage = action.payload;
+    },
+
+    setSelectedOpticalProvidersAndMissions: (state, action) => {
+      state.selectedOpticalProvidersAndMissions = action.payload;
+    },
+
+    resetOpticalSection: (state, action) => {
+      state.selectedOpticalProvidersAndMissions = [];
+      state.cloudCoverage = 0.3;
+    },
+
+    setSelectedRadarProvidersAndMissions: (state, action) => {
+      state.selectedRadarProvidersAndMissions = action.payload;
+    },
+
+    resetRadarSection: (state, action) => {
+      state.selectedRadarProvidersAndMissions = [];
+      state.radarPolarizationFilterArray = [];
+      state.radarInstrumentFilterArray = [];
+      state.radarOrbitDirectionArray = [];
+    },
+
+    setRadarPolarizationFilterArray: (state, action) => {
+      state.radarPolarizationFilterArray = action.payload;
+    },
+
+    setRadarInstrumentFilterArray: (state, action) => {
+      state.radarInstrumentFilterArray = action.payload;
+    },
+
+    setOrbitDirectionArray: (state, action) => {
+      state.radarOrbitDirectionArray = action.payload;
+    },
+
+    setRadarSensorMode: (state, action) => {
+      state.radarSensorMode = action.payload;
+    },
+
+    setRadarProcessorMode: (state, action) => {
+      state.radarProcessorMode = action.payload;
+    },
+
+    resetProvidersAndMissions: (state) => {
+      state.selectedOpticalProvidersAndMissions = [];
+      state.selectedRadarProvidersAndMissions = [];
+    },
+  },
+});
+
+export const advancedSectionSlice = createSlice({
+  name: 'advancedSection',
+  initialState: {
+    aoiCoverage: 1,
+    satelliteAzimuth: [0, 360],
+    azimuth: [0, 360],
+    sunAzimuth: [0, 360],
+    sunElevation: [0, 90],
+    productType: [],
+    incidenceAngle: [0, 90],
+  },
+  reducers: {
+    setAoiCoverage: (state, action) => {
+      state.aoiCoverage = action.payload;
+    },
+    setSatelliteAzimuth: (state, action) => {
+      state.satelliteAzimuth = action.payload;
+    },
+    setAzimuth: (state, action) => {
+      state.azimuth = action.payload;
+    },
+    setSunAzimuth: (state, action) => {
+      state.sunAzimuth = action.payload;
+    },
+    setSunElevation: (state, action) => {
+      state.sunElevation = action.payload;
+    },
+    setProductType: (state, action) => {
+      state.productType = action.payload;
+    },
+    setIncidenceAngle: (state, action) => {
+      state.incidenceAngle = action.payload;
+    },
+  },
+});
+
+export const resultsSectionSlice = createSlice({
+  name: 'resultsSection',
+  initialState: {
+    filtersForSearch: undefined,
+    sortState: ResultsSectionSortProperties[0].value,
+    filterState: getResultsSectionFilterDefaultValue(),
+    results: undefined,
+    highlightedResult: undefined,
+    cartResults: undefined,
+    currentPage: 1,
+    quicklookImages: {},
+  },
+  reducers: {
+    setFiltersForSearch: (state, action) => {
+      state.filtersForSearch = action.payload;
+    },
+    setSortState: (state, action) => {
+      state.sortState = action.payload;
+    },
+    setFilterState: (state, action) => {
+      state.filterState = action.payload;
+    },
+    setResults: (state, action) => {
+      state.results = action.payload;
+    },
+    setHighlightedResult: (state, action) => {
+      state.highlightedResult = action.payload;
+    },
+    setCartResults: (state, action) => {
+      state.cartResults = action.payload;
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setQuicklookImage: (state, action) => {
+      const { id, url } = action.payload;
+      state.quicklookImages[id] = url;
     },
   },
 });
@@ -1318,6 +1542,10 @@ const reducers = combineReducers({
   productDownload: productDownloadSlice.reducer,
   spectralExplorer: spectralExplorerSlice.reducer,
   elevationProfile: elevationProfileSlice.reducer,
+  areaAndTimeSection: areaAndTimeSectionSlice.reducer,
+  imageQualityAndProviderSection: imageQualityAndProviderSectionSlice.reducer,
+  advancedSection: advancedSectionSlice.reducer,
+  resultsSection: resultsSectionSlice.reducer,
   tools: toolsSlice.reducer,
   clms: clmsSlice.reducer,
 });

@@ -158,7 +158,7 @@ export const hasCCMDownloadAccess = (userToken, { productType }) => {
   }
 
   try {
-    const roles = jwt_dec(userToken).realm_access.roles;
+    const roles = jwt_dec(userToken).realm_access?.roles;
     const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
 
     return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));

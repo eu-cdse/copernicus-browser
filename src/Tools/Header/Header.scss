@@ -24,6 +24,16 @@
     }
   }
 
+  .rrd-logo {
+    width: 140px;
+    padding: 0 12.5px 0 12.5px;
+    cursor: pointer;
+
+    .cls-1 { fill: $whiteColor; }
+    .cls-2 { fill: $whiteColor; }
+    .cls-4 { fill: $primaryColor; }
+  }
+
   .left {
     display: flex;
     align-items: center;

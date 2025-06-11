@@ -1,12 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-export const NumericInput = ({ label, value, min, max, setValue, notValidDate }) => {
+export const NUMERIC_INPUT_LIMITATIONS = Object.freeze({
+  INCREMENT: 'INCREMENT',
+  DECREMENT: 'DECREMENT',
+});
+
+export const NumericInput = ({ label, value, min, max, disableSpecificButtonFunction, setValue }) => {
+  const [incrementDisabled, setIncrementDisabled] = useState(false);
+  const [decrementDisabled, setDecrementDisabled] = useState(false);
   const [currentValue, setCurrentValue] = useState(parseInt(value ?? 0));
   const timeOut = useRef(0);
 
   useEffect(() => {
-    setCurrentValue(value);
-  }, [value, notValidDate]);
+    if (value) {
+      setCurrentValue(value);
+    }
+  }, [value]);
+
+  const updateValue = (value) => {
+    if (!disableSpecificButtonFunction) {
+      setValue(value);
+      return;
+    }
+
+    let disabled = disableSpecificButtonFunction(value);
+    if (disabled === null) {
+      resetButtonStates();
+      setValue(value);
+    } else if (disabled === NUMERIC_INPUT_LIMITATIONS.INCREMENT) {
+      setIncrementDisabled(true);
+    } else if (disabled === NUMERIC_INPUT_LIMITATIONS.DECREMENT) {
+      setDecrementDisabled(true);
+    }
+  };
+
+  const resetButtonStates = () => {
+    setIncrementDisabled(false);
+    setDecrementDisabled(false);
+  };
 
   return (
     <div className="numeric-input">
@@ -26,6 +57,7 @@ export const NumericInput = ({ label, value, min, max, setValue, notValidDate })
           }, 500);
         }}
         onChange={(e) => {
+          resetButtonStates();
           if (parseInt(e.target.value) < min || parseInt(e.target.value) > max) {
             return;
           }
@@ -33,11 +65,33 @@ export const NumericInput = ({ label, value, min, max, setValue, notValidDate })
         }}
       />
       <div className="spinner">
-        <div className="up" onClick={() => setValue(parseInt(value) + 1)}>
-          <i className="fas fa-chevron-up" />
+        <div className="up" onClick={() => updateValue(parseInt(value) + 1)}>
+          <i
+            className="fas fa-chevron-up"
+            style={
+              incrementDisabled
+                ? {
+                    pointerEvents: 'none',
+                    cursor: 'default',
+                    opacity: 0.5,
+                  }
+                : null
+            }
+          />
         </div>
-        <div className="down" onClick={() => setValue(parseInt(value) - 1)}>
-          <i className="fas fa-chevron-down" />
+        <div className="down" onClick={() => updateValue(parseInt(value) - 1)}>
+          <i
+            className="fas fa-chevron-down"
+            style={
+              decrementDisabled
+                ? {
+                    pointerEvents: 'none',
+                    cursor: 'default',
+                    opacity: 0.5,
+                  }
+                : null
+            }
+          />
         </div>
       </div>
     </div>

@@ -27,6 +27,21 @@ export const getBboxFromCoords = (coords) => {
   return [actualCoords[0][0], actualCoords[0][1], actualCoords[1][0], actualCoords[2][1]];
 };
 
+export const convertLatLngBoundsToBBox = (bounds) => {
+  if (bounds) {
+    const sw = bounds.getSouthWest();
+    const ne = bounds.getNorthEast();
+
+    return [
+      sw.lng, // west
+      sw.lat, // south
+      ne.lng, // east
+      ne.lat, // north
+    ];
+  }
+  return null;
+};
+
 export const boundsToPolygon = (bounds) => {
   return {
     type: 'Polygon',

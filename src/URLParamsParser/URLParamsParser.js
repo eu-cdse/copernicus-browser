@@ -58,10 +58,10 @@ class URLParamsParser extends React.Component {
 
     const isUserCopernicusServicesUser =
       this.props.user.access_token !== null
-        ? jwt_dec(this.props.user.access_token).realm_access.roles.includes(
+        ? jwt_dec(this.props.user.access_token).realm_access?.roles.includes(
             CCM_ROLES.COPERNICUS_SERVICES_CCM,
           ) ||
-          jwt_dec(this.props.user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
+          jwt_dec(this.props.user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
         : false;
 
     if (

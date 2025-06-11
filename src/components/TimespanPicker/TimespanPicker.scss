@@ -12,9 +12,10 @@
     font-size: 14px;
     height: 25px;
     min-width: 40px;
-    margin: 10px 0 5px 0;
+    margin-bottom: 8px;
     text-align: left;
     align-items: center;
+    font-weight: 700;
 
     @media screen and (max-width: 450px) {
       padding-bottom: 3px;

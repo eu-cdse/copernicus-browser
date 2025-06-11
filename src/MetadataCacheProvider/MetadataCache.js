@@ -1,3 +1,4 @@
+import { RRD_THEMES } from '../assets/cache/rrdThemes';
 import { DEFAULT_THEMES } from '../assets/default_themes';
 
 const configurationCache = {};
@@ -15,7 +16,7 @@ export const cacheConfig = {
 };
 
 export const initMetadaCache = async (config) => {
-  const p1 = DEFAULT_THEMES.map(async (t) => {
+  const p1 = [...DEFAULT_THEMES, ...RRD_THEMES].map(async (t) => {
     const p2 = t.content.map(async (theme) => {
       const instanceId = theme.url.split('/').pop();
       try {

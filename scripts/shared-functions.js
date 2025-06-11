@@ -1,10 +1,10 @@
 import path from 'path';
 import fs from 'fs';
 import Papa from 'papaparse';
-import { getAuthToken } from './update-previews-utils';
 import axios from 'axios';
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
 import dotenv from 'dotenv';
+import { getAuthToken } from './utils/auth';
 
 dotenv.config({ path: './.env' });
 
@@ -39,11 +39,17 @@ export function getArrayOfInstanceIds(fullPath) {
 }
 
 export async function createHttpClient(authBaseUrl) {
-  const access_token = await getAuthToken(authBaseUrl);
+  if (!process.env.APP_ADMIN_CLIENT_ID || !process.env.APP_ADMIN_CLIENT_SECRET) {
+    throw new Error('Env vars APP_ADMIN_CLIENT_ID and APP_ADMIN_CLIENT_SECRET are not set');
+  }
+
+  const clientId = process.env.APP_ADMIN_CLIENT_ID;
+  const clientSecret = process.env.APP_ADMIN_CLIENT_SECRET;
+  const authToken = await getAuthToken(authBaseUrl, clientId, clientSecret);
 
   return axios.create({
     headers: {
-      Authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${authToken}`,
     },
   });
 }
@@ -120,4 +126,77 @@ export async function setOgcRequestsStates(csvFullPath, newState, client = null)
   await changeOgcRequestsState(client, instances, isOgcRequestsDisabled);
 
   return null;
+}
+
+// Root directory for cache files
+const rootDir = './src/assets/cache/';
+
+export function printOut(title, value) {
+  console.log(`\n${'='.repeat(10)}\n${title}`, JSON.stringify(value, null, 4));
+}
+
+export async function getConfigurationLayers(client, instanceId) {
+  const { data } = await client.get(
+    `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceId}/layers`,
+  );
+
+  if (data && data.length) {
+    data.sort((a, b) => a.id.localeCompare(b.id));
+  }
+
+  return data;
+}
+
+export async function getCapabilities(client, instanceId) {
+  const { data } = await client.get(
+    `${SH_SERVICE_BASE_URL}/ogc/wms/${instanceId}?request=GetCapabilities&format=application%2Fjson`,
+  );
+
+  if (data && data.layers && data.layers.length) {
+    data.layers.sort((a, b) => a.id.localeCompare(b.id));
+  }
+
+  return data;
+}
+
+export function save(projectSubDir, instanceId, backup) {
+  const dir = `${rootDir}${projectSubDir}`;
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  const outputFileName = `${dir}/${instanceId}.json`;
+  fs.writeFileSync(outputFileName, JSON.stringify(backup, null, 4));
+}
+
+export const cacheType = {
+  configuration: 'configuration',
+  capabilities: 'capabilities',
+};
+
+export function removeExisting(instances) {
+  //delete old files for list of instances
+  instances.forEach((instanceId) => {
+    Object.keys(cacheType).forEach((key) => {
+      if (fs.existsSync(`${rootDir}${cacheType[key]}/${instanceId}.json`)) {
+        fs.unlinkSync(`${rootDir}${cacheType[key]}/${instanceId}.json`);
+      }
+    });
+  });
+
+  // list of all instances in default theme
+  const knownInstances = [];
+  [...DEFAULT_THEMES].forEach((t) =>
+    knownInstances.push(...t.content.map((theme) => theme.url.split('/').pop())),
+  );
+  //remove unused files from cache
+  Object.keys(cacheType).forEach((key) => {
+    const dir = `${rootDir}${cacheType[key]}`;
+    if (fs.existsSync(dir)) {
+      fs.readdirSync(dir).forEach((file) => {
+        if (!knownInstances.some((instance) => new RegExp(instance).test(file))) {
+          fs.unlinkSync(`${dir}/${file}`);
+        }
+      });
+    }
+  });
 }

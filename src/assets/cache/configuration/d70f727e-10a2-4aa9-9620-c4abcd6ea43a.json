@@ -1,0 +1,26 @@
+[
+    {
+        "id": "VV",
+        "title": "VV",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nfunction setup(){\n  return{\n    input: [\"VV\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.VV * gain,\n          sample.dataMask];\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "d70f72-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-10T05:39:19.772667Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "e9a7b4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

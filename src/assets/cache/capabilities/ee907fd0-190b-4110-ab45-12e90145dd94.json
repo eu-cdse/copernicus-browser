@@ -1,0 +1,27 @@
+{
+    "title": "GENERAL_PLANETSCOPE_MS_8",
+    "layers": [
+        {
+            "id": "FALSE-COLOR",
+            "name": "FALSE COLOR",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "NDVI",
+            "name": "NDVI",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        },
+        {
+            "id": "TRUE-COLOR",
+            "name": "TRUE COLOR",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

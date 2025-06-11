@@ -95,6 +95,16 @@
       background-color: $mainMedium;
       color: $textColor;
       border-radius: 50px;
+      user-select: none;
+
+      // This will not change size of the button
+      &::before {
+        display: block;
+        content: attr(title);
+        font-weight: bold;
+        visibility: hidden;
+        height: 0;
+      }
 
       &.selected {
         background-color: $primaryColor;

@@ -119,7 +119,14 @@
     "instances-transfer": "node -r esm scripts/instances-transfer",
     "deploy:stage": "./scripts/deploy-cdse-stage.sh",
     "deploy:otc": "./scripts/deploy-cdse-otc.sh",
-    "deploy:production": "./scripts/deploy-cdse-production.sh"
+    "deploy:production": "./scripts/deploy-cdse-production.sh",
+    "update-rrd-configurations": "node -r esm scripts/update-rrd-configurations.js",
+    "update-rrd-collections": "node -r esm scripts/update-rrd-collections.js",
+    "staging-data-retriever": "node -r esm scripts/staging-data-retriever.js",
+    "delete-configurations": "node -r esm scripts/delete-configurations.js",
+    "generate-frtx-csesa-configs": "node -r esm scripts/manual/generate-frtx-csesa-configs.js",
+    "validate-config-collections": "node -r esm scripts/manual/validate-config-collections.js",
+    "check-collections-band-names": "node -r esm scripts/manual/check-collections-band-names.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,0 +1,26 @@
+[
+    {
+        "id": "PANCHROMATIC",
+        "title": "Panchromatic",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 800\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "6a6965-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-30T14:41:24.215678Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "885c71-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

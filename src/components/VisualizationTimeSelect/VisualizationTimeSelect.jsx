@@ -9,10 +9,10 @@ import CloudCoverageDisplay from '../CloudCoverageDisplay/CloudCoverageDisplay';
 import './VisualizationTimeSelect.scss';
 import Loader from '../../Loader/Loader';
 import CollapsiblePanel from '../CollapsiblePanel/CollapsiblePanel';
-import store, { collapsiblePanelSlice, notificationSlice, visualizationSlice } from '../../store';
+import store, { collapsiblePanelSlice, visualizationSlice } from '../../store';
 import FindProductsForCurrentView from './FindProductsButton';
 import ShowLatestDateButton from './ShowLatestDateButton';
-import { handleError } from '../../utils';
+import { handleError, resetMessagePanel } from '../../utils';
 import EffectDropdown from '../../junk/EOBEffectsPanel/EffectDropdown';
 import { getValueOrDefault } from '../../utils/effectsUtils';
 import { useSelector } from 'react-redux';
@@ -159,10 +159,10 @@ export function VisualizationTimeSelect({
       setLoading(true);
       const latestDateWithAvailableData = await getLatestAvailableDate();
       if (latestDateWithAvailableData) {
-        store.dispatch(notificationSlice.actions.displayPanelError(null));
+        resetMessagePanel();
         updateDate(latestDateWithAvailableData);
       } else {
-        store.dispatch(notificationSlice.actions.displayPanelError({ message: t`No results found` }));
+        handleError({ message: t`No results found` });
       }
     } catch (e) {
       await handleError(e, t`Unable to show latest date`);
@@ -459,7 +459,7 @@ export function VisualizationTimeSelect({
         {renderPanelContent}
       </CollapsiblePanel>
       <div className="visualization-calendar-holder" ref={calendarHolder} />
-      {(loading || dateLoading) && <Loader />}
+      {(loading || dateLoading) && <Loader className={'within-collapse-panel'} />}
     </div>
   );
 }

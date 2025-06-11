@@ -9,7 +9,7 @@ import VisualizationPanel from './VisualizationPanel/VisualizationPanel';
 import { Tabs, Tab } from '../junk/Tabs/Tabs';
 import ToolsFooter from './ToolsFooter/ToolsFooter';
 import AdvancedSearch from './VisualizationPanel/CollectionSelection/AdvancedSearch/AdvancedSearch';
-import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice } from '../store';
+import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice, mainMapSlice } from '../store';
 import { savePinsToServer, savePinsToSessionStorage, constructPinFromProps } from './Pins/Pin.utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel/VisualizationPanel.utils';
 import { checkIfCustom } from './SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -22,10 +22,12 @@ import './Tools.scss';
 import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { USE_PINS_BACKEND } from './Pins/PinPanel';
-import CommercialData from './CommercialDataPanel/CommercialData';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
+import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
+import { isInGroup } from '../Auth/authHelpers';
+import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
 
-const COMMERCIAL_DATA_ENABLED = false;
+// const COMMERCIAL_DATA_ENABLED = false;
 
 class Tools extends Component {
   state = {
@@ -44,14 +46,25 @@ class Tools extends Component {
     this.setState({ showEffects: showEffects });
   };
 
+  componentDidMount() {
+    if (this.props.user && isInGroup(RRD_GROUP) && !this.props.layerId) {
+      store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
+    }
+  }
+
   async componentDidUpdate(prevProps) {
+    if (prevProps.user !== this.props.user && !prevProps.user.access_token && isInGroup(RRD_GROUP)) {
+      if (!this.props.layerId) {
+        store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
+      }
+    }
+
     if (
       prevProps.selectedModeId !== this.props.selectedModeId ||
       prevProps.selectedThemeId !== this.props.selectedThemeId
     ) {
       this.resetSearch();
     }
-
     if (this.props?.user?.access_token && !prevProps.user?.access_token) {
       let userAccountInfo;
       try {
@@ -107,6 +120,7 @@ class Tools extends Component {
 
   setActiveTabIndex = (index) => {
     store.dispatch(tabsSlice.actions.setTabIndex(index));
+    store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
 
     const searchConfigFromSession = JSON.parse(
       sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
@@ -218,7 +232,7 @@ class Tools extends Component {
       setLastAddedPin,
       compareShare,
     } = this.props;
-    const { userAccountInfo } = this.state;
+
     return (
       <div className="tools-wrapper" style={{ width: toolsOpen ? '100%' : '0' }}>
         <div className="open-tools" onClick={toggleTools} style={{ display: toolsOpen ? 'none ' : 'block' }}>
@@ -259,19 +273,21 @@ class Tools extends Component {
                   isExpanded={true}
                 />
               </div>
-              {COMMERCIAL_DATA_ENABLED && userAccountInfo?.payingAccount && (
-                <Tab
-                  id="commercial-tab"
-                  title={t`Commercial`}
-                  enabled={userAccountInfo?.payingAccount}
-                  renderKey={TABS.COMMERCIAL_TAB}
-                >
-                  <div className="commercial-data-wrapper">
-                    <CommercialData userAccountInfo={userAccountInfo || {}} />
-                  </div>
-                </Tab>
-              )}
             </Tab>
+            {/*This check disabled for now. Waiting on role check response from API*/}
+            {isInGroup(RRD_GROUP) && (
+              <Tab
+                id="rapid-response-desk-tab"
+                title={t`Order`}
+                /*This check disabled for now. Waiting on role check response from API*/
+                // enabled={userAccountInfo?.payingAccount}
+                renderKey={TABS.RAPID_RESPONSE_DESK}
+              >
+                <div className="rapid-response-desk-wrapper">
+                  <RapidResponseDesk />
+                </div>
+              </Tab>
+            )}
           </Tabs>
           <ToolsFooter selectedLanguage={this.props.selectedLanguage} />
         </div>

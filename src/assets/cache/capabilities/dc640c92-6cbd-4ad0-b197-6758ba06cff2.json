@@ -1,0 +1,13 @@
+{
+    "title": "GENERAL_GEOSAT_PAN",
+    "layers": [
+        {
+            "id": "TRUE-COLOR",
+            "name": "Panchromatic",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

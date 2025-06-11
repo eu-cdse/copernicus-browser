@@ -26,6 +26,10 @@
       border-bottom: 3px dashed $mainLight;
     }
 
+    .message-content {
+      white-space: pre-line;
+    }
+
     .notification {
       color: $textColor;
 

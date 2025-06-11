@@ -22,7 +22,7 @@ import { TABS } from '../const';
 import { ModalId } from '../const';
 import { replaceDeprecatedDatasetWithNew } from './handleOldUrls';
 import { rgbToHex } from '../junk/BandsToRGB/utils';
-import store, { authSlice, notificationSlice } from '../store';
+import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
 import { encrypt } from './encrypt';
 
 export function getUrlParams() {
@@ -699,3 +699,9 @@ export function hasDuplicateObjects(array) {
 
   return false;
 }
+
+export const resetMessagePanel = () => {
+  store.dispatch(visualizationSlice.actions.setError(null));
+  store.dispatch(notificationSlice.actions.displayPanelError(null));
+  store.dispatch(themesSlice.actions.setFailedThemeParts([]));
+};

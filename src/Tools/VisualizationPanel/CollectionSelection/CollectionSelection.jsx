@@ -110,8 +110,8 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
 
     const isUserCopernicusServicesUser =
       user.access_token !== null
-        ? jwt_dec(user.access_token).realm_access.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
-          jwt_dec(user.access_token).realm_access.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
+        ? jwt_dec(user.access_token).realm_access?.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
+          jwt_dec(user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
         : false;
     const options = [
       ...collectionGroups

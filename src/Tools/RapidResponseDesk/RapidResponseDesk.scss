@@ -1,0 +1,65 @@
+@import '../../variables.module.scss';
+
+$footer-height: 53px;
+
+.rapid-response-desk {
+  height: 100%;
+  position: relative;
+  color: $textColor;
+
+  .rapid-response-desk-body {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    bottom: $footer-height;
+    overflow-y: scroll;
+
+    & > * {
+      margin: 0 1px 5px 5px;
+      background-color: $whiteColor;
+    }
+
+    .message-panel {
+      .notification {
+        min-height: 30px;
+      }
+
+      .close-message-panel {
+        transform: translateX(-11px);
+      }
+    }
+  }
+
+  .rapid-response-desk-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    font-size: 32px;
+    background: rgba(245, 245, 245, 0.75);
+    z-index: 3;
+  }
+
+  .rapid-response-desk-footer {
+    position: absolute;
+    bottom: 0;
+    height: $footer-height;
+    background-color: $whiteBackground;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+
+    & > * {
+      padding: 0 8px;
+    }
+
+    .wrapped-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

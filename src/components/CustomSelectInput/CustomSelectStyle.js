@@ -70,7 +70,7 @@ export const customSelectStyle = {
 
     return {
       ...css,
-      color: `${textColor}`,
+      color: `${primaryColor}`,
       fontSize: 14,
       fontWeight: `${fontWeightBold}`,
       opacity: menuIsOpen ? 0.5 : 1,

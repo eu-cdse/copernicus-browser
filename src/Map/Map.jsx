@@ -66,6 +66,8 @@ import {
   getQuarterlyInfo,
 } from '../Tools/VisualizationPanel/SmartPanel/LatestDataAction.utils';
 import { manipulateODataSearchResultsWithAntimeridianDuplicates } from '../utils/handelAntimeridianCoord.utils';
+import { processRRDResults } from '../hooks/useRRDProcessResults';
+import QuicklookOverlay from '../Map/plugins/QuicklookOverlay';
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
 
 const BASE_PANE_ID = 'baseMapPane';
@@ -106,6 +108,7 @@ class Map extends React.Component {
     },
     latestS2QMosaicDate: undefined,
     S2QMosaicZoom: { min: 8, max: 20 },
+    RRDProcessedResults: [],
   };
   mapInvalidateSizeTimer;
 
@@ -184,6 +187,23 @@ class Map extends React.Component {
         console.error(`Unable to get latest date for mosaic base layer:`, S2QuarterlyMosaicDatasetId);
       }
     }
+
+    if (
+      prevProps.RRDResults !== this.props.RRDResults ||
+      prevProps.RRDSortStateResultsSection !== this.props.RRDSortStateResultsSection ||
+      prevProps.RRDFilterStateResultsSection !== this.props.RRDFilterStateResultsSection ||
+      prevProps.currentPage !== this.props.currentPage
+    ) {
+      const { paginatedResults } = processRRDResults(
+        this.props.RRDResults,
+        this.props.RRDFilterStateResultsSection,
+        this.props.RRDSortStateResultsSection,
+        this.props.currentPage,
+      );
+      this.setState({
+        RRDProcessedResults: paginatedResults,
+      });
+    }
   }
 
   updateLeafletMapSize = () => {
@@ -216,6 +236,22 @@ class Map extends React.Component {
     };
 
     const selectedTiles = getIntersectingFeatures(clickedPoint, this.props.searchResults, {
+      zoom: this.props.zoom,
+    });
+
+    store.dispatch(searchResultsSlice.actions.setSelectedTiles(selectedTiles));
+  };
+
+  onPreviewRRDClick = (e) => {
+    const clickedPoint = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [e.latlng.lng, e.latlng.lat],
+      },
+    };
+
+    const selectedTiles = getIntersectingFeatures(clickedPoint, this.state.RRDProcessedResults, {
       zoom: this.props.zoom,
     });
 
@@ -262,6 +298,7 @@ class Map extends React.Component {
       displayingSearchResults,
       // eslint-disable-next-line no-unused-vars
       searchResults,
+      highlightedRRDResult,
       highlightedTile,
       comparedLayers,
       comparedOpacity,
@@ -290,6 +327,13 @@ class Map extends React.Component {
       // selectedModeId,
       elevationProfileHighlightedPoint,
       cloudCoverage,
+      // eslint-disable-next-line no-unused-vars
+      RRDResults,
+      // eslint-disable-next-line no-unused-vars
+      RRDSortStateResultsSection,
+      // eslint-disable-next-line no-unused-vars
+      RRDFilterStateResultsSection,
+      quicklookImages,
     } = this.props;
 
     const { evalscripturl } = getUrlParams();
@@ -635,13 +679,28 @@ class Map extends React.Component {
         )}
         {!this.props.poiPosition ? null : <Marker id="poi-layer" position={this.props.poiPosition} />}
 
+        <Pane name={'highlightPane'} style={{ zIndex: 500 }} />
         {this.state.searchResultsAreas && selectedTabIndex === TABS.SEARCH_TAB ? (
           <FeatureGroup onClick={this.onPreviewClick}>
             {this.state.searchResultsAreas.map((tile, i) => (
               <PreviewLayer
                 isHighlighted={tile.id === highlightedTile?.id}
                 tile={tile}
-                key={`preview-layer-search-results-${i}`}
+                pane={tile?.id === highlightedTile?.id ? 'highlightPane' : 'overlayPane'}
+                key={`search-result-${tile?.id}-${tile?.id === highlightedTile?.id}`}
+              />
+            ))}
+          </FeatureGroup>
+        ) : null}
+
+        {this.state.RRDProcessedResults && selectedTabIndex === TABS.RAPID_RESPONSE_DESK ? (
+          <FeatureGroup onClick={this.onPreviewRRDClick}>
+            {this.state.RRDProcessedResults.map((tile, i) => (
+              <PreviewLayer
+                isHighlighted={tile.id === highlightedRRDResult}
+                tile={tile}
+                pane={tile?.id === highlightedRRDResult ? 'highlightPane' : 'overlayPane'}
+                key={`rrd-result-${tile?.id}-${tile?.id === highlightedRRDResult}`}
               />
             ))}
           </FeatureGroup>
@@ -741,6 +800,14 @@ class Map extends React.Component {
             <img className="maptiler-logo" src={MaptilerLogo} alt="" />
           </a>
         ) : null}
+
+        {this.props.quicklookOverlay && (
+          <QuicklookOverlay
+            quicklookOverlay={this.props.quicklookOverlay}
+            quicklookImages={quicklookImages}
+            itemId={this.props.quicklookOverlay?.id}
+          />
+        )}
       </LeafletMap>
     );
   }
@@ -756,6 +823,11 @@ const mapStoreToProps = (store) => {
     enabledOverlaysId: store.mainMap.enabledOverlaysId,
     displayingSearchResults: store.searchResults.displayingSearchResults,
     searchResults: store.searchResults.searchResult?.allResults,
+    RRDResults: store.resultsSection.results,
+    currentPage: store.resultsSection.currentPage,
+    RRDSortStateResultsSection: store.resultsSection.sortState,
+    RRDFilterStateResultsSection: store.resultsSection.filterState,
+    highlightedRRDResult: store.resultsSection.highlightedResult,
     highlightedTile: store.searchResults.highlightedTile,
     aoiGeometry: store.aoi.geometry,
     aoiBounds: store.aoi.bounds,
@@ -794,6 +866,8 @@ const mapStoreToProps = (store) => {
     is3D: store.mainMap.is3D,
     selectedModeId: store.themes.selectedModeId,
     elevationProfileHighlightedPoint: store.elevationProfile.highlightedPoint,
+    quicklookOverlay: store.mainMap.quicklookOverlay,
+    quicklookImages: store.resultsSection.quicklookImages,
   };
 };
 

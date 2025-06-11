@@ -223,6 +223,7 @@ import {
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
 } from './dataSourceConstants';
+
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
 import Sentinel3CDASDataSourceHandler from './Sentinel3CDASDataSourceHandler';
@@ -233,6 +234,20 @@ import { QUOTA_ERROR_MESSAGE, isQuotaError } from '../../../utils';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
 
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../../../assets/default_themes';
+import AirbusDeDataSourceHandler from './RRDDataSources/AirbusDeDataSourceHandler';
+import EUSIDataSourceHandler from './RRDDataSources/EUSIDataSourceHandler';
+import GeosatDatasourceHandler from './RRDDataSources/GeosatDatasourceHandler';
+import SkymedGen1DatasourceHandler from './RRDDataSources/SkymedGen1DatasourceHandler';
+import SkymedGen2DatasourceHandler from './RRDDataSources/SkymedGen2DatasourceHandler';
+import PlanetScopeDataSourceHandler from './RRDDataSources/PlanetScopeDatasourceHandler';
+import SkySatDataSourceHandler from './RRDDataSources/SkySatDataSourceHandler';
+import RadarSatDatasourceHandler from './RRDDataSources/RadarsatDatasourceHandler';
+import PazDatasourceHandler from './RRDDataSources/PazDatasourceHandler';
+import IceyeDatasourceHandler from './RRDDataSources/IceyeDatasourceHandler';
+import AirbusFePleiades1DataSourceHandler from './RRDDataSources/AirbusFePleiades1DataSourceHandler';
+import AirbusFeSpotDataSourceHandler from './RRDDataSources/AirbusFeSpotDataSourceHandler';
+import AirbusFePleiadesNeoDataSourceHandler from './RRDDataSources/AirbusFePleiadesNeoDataSourceHandler';
+import { datasourceForRRDDatasetId } from './dataSourceRRDHandlers';
 import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 
@@ -263,6 +278,19 @@ export function initializeDataSourceHandlers() {
     new BYOCDataSourceHandler(),
     new PlanetBasemapDataSourceHandler(),
     new OthersDataSourceHandler(),
+    new AirbusDeDataSourceHandler(),
+    new EUSIDataSourceHandler(),
+    new GeosatDatasourceHandler(),
+    new SkymedGen1DatasourceHandler(),
+    new SkymedGen2DatasourceHandler(),
+    new PlanetScopeDataSourceHandler(),
+    new SkySatDataSourceHandler(),
+    new RadarSatDatasourceHandler(),
+    new PazDatasourceHandler(),
+    new AirbusFeSpotDataSourceHandler(),
+    new AirbusFePleiades1DataSourceHandler(),
+    new AirbusFePleiadesNeoDataSourceHandler(),
+    new IceyeDatasourceHandler(),
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
   ];
@@ -489,6 +517,10 @@ export async function prepareDataSourceHandlers(theme) {
 }
 
 export function datasourceForDatasetId(datasetId) {
+  const rrdDatasource = datasourceForRRDDatasetId(datasetId);
+  if (rrdDatasource) {
+    return rrdDatasource;
+  }
   switch (datasetId) {
     case S1_AWS_IW_VVVH:
     case S1_AWS_IW_VV:

@@ -1,0 +1,29 @@
+@import '../../../../../variables.module';
+
+.optical-type-container {
+  .cloud-coverage-slider-container,
+  .providers-and-missions-container > * {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .cloud-coverage-slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .cloud-slider {
+      width: 190px;
+    }
+
+    .cloud-label-text {
+      padding-right: 10px;
+      min-width: 125px;
+    }
+
+    .coverage-current-value-text {
+      padding-left: 20px;
+      color: $primaryColor;
+    }
+  }
+}

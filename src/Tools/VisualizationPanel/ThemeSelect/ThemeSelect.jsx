@@ -19,6 +19,7 @@ import {
   URL_THEMES_LIST,
   EXPIRED_ACCOUNT,
   NOT_LOGGED_IN,
+  RRD_INSTANCES_THEMES_LIST,
 } from '../../../const';
 import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
 
@@ -45,6 +46,7 @@ function ThemeSelect({
   user,
   modeThemesList,
   userInstancesThemesList,
+  rrdInstancesThemesList,
   urlThemesList,
   selectedThemeId,
   visualizationDate,
@@ -56,7 +58,6 @@ function ThemeSelect({
 }) {
   const previousVisualizationDate = usePrevious(visualizationDate);
   const { doLogin } = useLoginLogout();
-
   useEffect(() => {
     if (selectedThemeId === EXPIRED_ACCOUNT.instanceId) {
       store.dispatch(
@@ -89,6 +90,11 @@ function ThemeSelect({
     list: USER_INSTANCES_THEMES_LIST,
   }));
 
+  rrdInstancesThemesList = rrdInstancesThemesList.map((t) => ({
+    ...t,
+    list: RRD_INSTANCES_THEMES_LIST,
+  }));
+
   if (!user) {
     userInstancesThemesList.push({
       name: NOT_LOGGED_IN.errorMessage,
@@ -104,6 +110,7 @@ function ThemeSelect({
       options: createSelectOptions(!urlThemesList.length ? modeThemesList : urlThemesList),
     },
     { label: t`User configurations`, divider: true, options: createSelectOptions(userInstancesThemesList) },
+    { label: t`RRD configurations`, divider: true, options: createSelectOptions(rrdInstancesThemesList) },
   ];
 
   async function handleSelectTheme(selected) {
@@ -203,6 +210,7 @@ const mapStoreToProps = (store) => ({
   selectedThemeId: store.themes.selectedThemeId,
   modeThemesList: store.themes.themesLists[MODE_THEMES_LIST],
   userInstancesThemesList: store.themes.themesLists[USER_INSTANCES_THEMES_LIST],
+  rrdInstancesThemesList: store.themes.themesLists['RRD'],
   urlThemesList: store.themes.themesLists[URL_THEMES_LIST],
   themesLists: store.themes.themesLists,
   selectedLanguage: store.language.selectedLanguage,

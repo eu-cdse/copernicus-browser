@@ -1,0 +1,42 @@
+@import '../../variables.module.scss';
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+
+  .aoi-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+
+    .area-text {
+      line-height: 0;
+    }
+
+    i {
+      color: $primaryColor;
+      padding: 0 4px;
+      cursor: pointer;
+
+      &.disabled {
+        color: $textColor;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .react-toggle {
+    margin-left: 0;
+  }
+
+  a {
+    color: $primaryColor;
+  }
+}

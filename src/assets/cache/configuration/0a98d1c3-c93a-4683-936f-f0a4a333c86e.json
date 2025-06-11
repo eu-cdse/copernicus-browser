@@ -1,0 +1,26 @@
+[
+    {
+        "id": "TRUE-COLOR",
+        "title": "TRUE COLOR",
+        "description": "",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"blue\", \"green\", \"red\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "0a98d1-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-04-28T14:44:31.191665Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "8a93e9-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

@@ -154,6 +154,9 @@ const Tabs = (props) => {
       case 2:
         return <MultiSentinelBanner className="sentinels-banner-position" />;
 
+      case 3:
+        return <Sentinel2Banner className="sentinels-banner-position" />;
+
       default:
         break;
     }

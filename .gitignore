@@ -9,6 +9,8 @@
 .env*
 .npm
 .gitlab
+.DS_Store
+.idea
 
 scripts/*.csv
 

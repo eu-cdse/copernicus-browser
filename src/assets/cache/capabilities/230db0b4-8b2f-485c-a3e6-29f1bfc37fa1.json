@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_SAR_HIM_AU_HH",
+    "layers": [
+        {
+            "id": "HH",
+            "name": "HH",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

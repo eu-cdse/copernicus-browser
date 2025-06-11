@@ -161,7 +161,9 @@ function RecursiveCollectionForm({
             ...selectedCollections,
             [collectionId]: {
               ...selectedCollections?.[collectionId],
-              [instrument.id]: {},
+              [instrument.id]: {
+                type: instrument.type,
+              },
             },
           });
 

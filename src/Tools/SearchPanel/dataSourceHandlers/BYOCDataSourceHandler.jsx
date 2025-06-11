@@ -13,6 +13,7 @@ import { reprojectGeometry } from '../../../utils/reproject';
 import { getSHServiceRootUrl } from './dataSourceHandlers';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import S1MosaicDataSourceHandler from './S1MosaicDataSourceHandler';
+import { RRD_COLLECTIONS } from './RRDDataSources/dataSourceRRDConstants';
 import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 
@@ -38,6 +39,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   OTHER_KNOWN_COLLECTIONS = new OthersDataSourceHandler().getKnownCollectionsList();
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
   MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
+  RRD_KNOWN_COLLECTIONS = RRD_COLLECTIONS;
   CLMS_KNOWN_COLLECTIONS = new CLMSDataSourceHandler().getKnownCollectionsList();
   CDSE_CCM_KNOWN_COLLECTIONS = new CCMDataSourceHandler().getKnownCollectionsList();
 
@@ -50,6 +52,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
         !this.OTHER_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId) &&
+        !this.RRD_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.CLMS_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.CDSE_CCM_KNOWN_COLLECTIONS.includes(l.collectionId),
     );

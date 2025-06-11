@@ -225,6 +225,7 @@ import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import { reqConfigMemoryCache, reqConfigGetMap, DISABLED_ORTHORECTIFICATION } from '../../const';
+import { RRD_COLLECTIONS } from '../../Tools/SearchPanel/dataSourceHandlers/RRDDataSources/dataSourceRRDConstants';
 
 class SentinelHubLayer extends L.TileLayer {
   constructor(options) {
@@ -1070,7 +1071,7 @@ class SentinelHubLayer extends L.TileLayer {
         return layer;
       }
       default:
-        const isBYOC = !!checkIfCustom(datasetId);
+        const isBYOC = !!checkIfCustom(datasetId) || RRD_COLLECTIONS.includes(datasetId);
         if (isBYOC) {
           return await this.createBYOCLayer(
             url,

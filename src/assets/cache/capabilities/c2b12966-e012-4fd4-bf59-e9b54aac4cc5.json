@@ -1,0 +1,13 @@
+{
+    "title": "PRISM_GENERAL_SAR_SM_MGD_HV",
+    "layers": [
+        {
+            "id": "HV",
+            "name": "HV",
+            "description": "",
+            "dataset": "CUSTOM",
+            "legendUrl": null
+        }
+    ],
+    "datasets": []
+}

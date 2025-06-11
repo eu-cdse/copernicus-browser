@@ -13,6 +13,7 @@ export class EOBButton extends PureComponent {
       onDisabledClick,
       disabled,
       className,
+      inputStyle,
       progress = null,
       ...rest
     } = this.props;
@@ -23,6 +24,8 @@ export class EOBButton extends PureComponent {
       <a
         className={`eob-btn ${className || ''} ${fluid ? 'full-size' : ''} ${disabled ? 'disabled' : ''}`}
         onClick={!disabled ? onClick : onDisabledClick}
+        style={inputStyle}
+        title={text}
         {...rest}
       >
         {loading ? (

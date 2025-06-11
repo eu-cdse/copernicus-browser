@@ -1,0 +1,110 @@
+@import '../../variables.module.scss';
+
+.copernicus-button {
+  user-select: none;
+  height: 33px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &.primary {
+    background-color: $primaryColor;
+    color: $whiteColor;
+
+    &:hover:not(.disabled) {
+      background-color: $hoverPrimaryColor;
+    }
+
+    &.outlined {
+      border: 1px solid $primaryColor;
+      color: $primaryColor;
+
+      &:hover:not(.disabled) {
+        color: $whiteColor;
+      }
+    }
+  }
+
+  &.danger {
+    background-color: $errorCol;
+    color: $whiteColor;
+
+    &:hover:not(.disabled) {
+      background-color: $hoverError;
+    }
+
+    &.outlined {
+      border: 1px solid $errorCol;
+      color: $errorCol;
+
+      &:hover:not(.disabled) {
+        color: $whiteColor;
+      }
+    }
+  }
+
+  &.success {
+    background-color: $secondaryColor;
+    color: $whiteColor;
+
+    &:hover:not(.disabled) {
+      background-color: $hoverSecondaryColor;
+    }
+
+    &.outlined {
+      border: 1px solid $secondaryColor;
+      color: $secondaryColor;
+
+      &:hover:not(.disabled) {
+        color: $whiteColor;
+      }
+    }
+  }
+
+  &.text {
+    background-color: transparent;
+    color: $primaryColor;
+  }
+
+  &:not(.rounded) {
+    padding: 0 8px;
+  }
+
+  &.rounded {
+    border-radius: 10px;
+    border: 0;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &.outlined {
+    background-color: transparent;
+  }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .label {
+    font-size: 13.8px;
+    font-weight: 700;
+    font-family: $fontFamily;
+    text-transform: uppercase;
+  }
+
+  &:has(.icon) {
+    &.rounded {
+      border-radius: 50%;
+    }
+
+    min-width: 33px;
+  }
+
+  &.disabled {
+    opacity: $disabled;
+    cursor: auto;
+  }
+}

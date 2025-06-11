@@ -140,3 +140,17 @@ $searchBorderColour: $primaryColor;
     margin-top: 0;
   }
 }
+
+#rapid-response-desk-tab {
+  overflow-y: hidden;
+  flex: 1 1 auto;
+  display: flex;
+
+  .active {
+    flex: 1 1 auto;
+
+    .rapid-response-desk-wrapper {
+      height: 100%;
+    }
+  }
+}
