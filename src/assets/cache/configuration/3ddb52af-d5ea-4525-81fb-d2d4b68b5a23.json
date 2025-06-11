@@ -1,58 +1,79 @@
 [
     {
-        "id": "AMPL_S1",
-        "title": "Season Amplitude - S1",
-        "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+        "id": "A_TPROD_S1",
+        "title": "Total Productivity - S1",
+        "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT AMPL_S1 NAME\n    input: [\"AMPL_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT AMPL_S1 NAME\n  var originalValue = samples.AMPL_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT TPROD_S1 NAME\n    input: [\"TPROD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT TPROD_S1 NAME\n  var originalValue = samples.TPROD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "AMPL_S1",
+                    "title": "TPROD_S1",
                     "gradients": [
                         {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "color": "rgb(45.1%,0.0%,0.0%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "color": "rgb(64.71%,45.1%,0.0%)",
                             "label": "",
-                            "position": 0.5
+                            "position": 35
                         },
                         {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "color": "rgb(100.0%,64.71%,0.0%)",
                             "label": "",
-                            "position": 1
+                            "position": 70
                         },
                         {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "color": "rgb(100.0%,74.51%,72.55%)",
                             "label": "",
-                            "position": 1.5
+                            "position": 105
                         },
                         {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "color": "rgb(100.0%,92.16%,72.55%)",
                             "label": "",
-                            "position": 2
+                            "position": 120
                         },
                         {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
+                            "color": "rgb(90.2%,100.0%,76.47%)",
+                            "label": "",
+                            "position": 135
+                        },
+                        {
+                            "color": "rgb(62.75%,100.0%,43.14%)",
+                            "label": "",
+                            "position": 170
+                        },
+                        {
+                            "color": "rgb(45.1%,64.71%,1.96%)",
+                            "label": "",
+                            "position": 205
+                        },
+                        {
+                            "color": "rgb(7.84%,43.14%,54.9%)",
+                            "label": "",
+                            "position": 275
+                        },
+                        {
+                            "color": "rgb(3.92%,17.65%,49.02%)",
+                            "label": 500,
+                            "position": 500
                         }
                     ],
-                    "maxPosition": 3,
+                    "maxPosition": 500,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:13.143898Z",
+        "lastUpdated": "2025-06-11T08:06:12.724813Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -61,59 +82,80 @@
         }
     },
     {
-        "id": "AMPL_S2",
-        "title": "Season Amplitude - S2",
-        "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+        "id": "B_TPROD_S2",
+        "title": "Total Productivity - S2",
+        "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT AMPL_S2 NAME\n    input: [\"AMPL_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT AMPL_S2 NAME\n  var originalValue = samples.AMPL_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT TPROD_S2 NAME\n    input: [\"TPROD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT TPROD_S2 NAME\n  var originalValue = samples.TPROD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "AMPL_S2",
+                    "title": "TPROD_S2",
                     "gradients": [
                         {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "color": "rgb(45.1%,0.0%,0.0%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "color": "rgb(64.71%,45.1%,0.0%)",
                             "label": "",
-                            "position": 0.5
+                            "position": 35
                         },
                         {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "color": "rgb(100.0%,64.71%,0.0%)",
                             "label": "",
-                            "position": 1
+                            "position": 70
                         },
                         {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "color": "rgb(100.0%,74.51%,72.55%)",
                             "label": "",
-                            "position": 1.5
+                            "position": 105
                         },
                         {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "color": "rgb(100.0%,92.16%,72.55%)",
                             "label": "",
-                            "position": 2
+                            "position": 120
                         },
                         {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
+                            "color": "rgb(90.2%,100.0%,76.47%)",
+                            "label": "",
+                            "position": 135
+                        },
+                        {
+                            "color": "rgb(62.75%,100.0%,43.14%)",
+                            "label": "",
+                            "position": 170
+                        },
+                        {
+                            "color": "rgb(45.1%,64.71%,1.96%)",
+                            "label": "",
+                            "position": 205
+                        },
+                        {
+                            "color": "rgb(7.84%,43.14%,54.9%)",
+                            "label": "",
+                            "position": 275
+                        },
+                        {
+                            "color": "rgb(3.92%,17.65%,49.02%)",
+                            "label": 500,
+                            "position": 500
                         }
                     ],
-                    "maxPosition": 3,
+                    "maxPosition": 500,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.137480Z",
+        "lastUpdated": "2025-06-11T08:06:18.889555Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -122,403 +164,80 @@
         }
     },
     {
-        "id": "EOSD_S1",
-        "title": "End-of-season Date - S1",
-        "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
+        "id": "C_SPROD_S1",
+        "title": "Seasonal Productivity - S1",
+        "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSD_S1 NAME\n    input: [\"EOSD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSD_S1 NAME\n  var originalValue = samples.EOSD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2022"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2022"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2022"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2022"
-                        },
-                        {
-                            "color": "rgb(25.1%,0.0%,100.0%)",
-                            "label": "Jan 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,0.0%,100.0%)",
-                            "label": "Feb 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,74.9%)",
-                            "label": "Mar 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,25.1%)",
-                            "label": "Apr 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,39.22%,0.0%)",
-                            "label": "May 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,74.9%,0.0%)",
-                            "label": "Jun 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,100.0%,0.0%)",
-                            "label": "Jul 2023"
-                        },
-                        {
-                            "color": "rgb(25.1%,100.0%,0.0%)",
-                            "label": "Aug 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,86.27%,25.1%)",
-                            "label": "Sep 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,100.0%,74.9%)",
-                            "label": "Oct 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,74.9%,100.0%)",
-                            "label": "Nov 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,47.06%,100.0%)",
-                            "label": "Dec 2023"
-                        },
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2024"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2024"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2024"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2024"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.276769Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "EOSD_S2",
-        "title": "End-of-season Date - S2",
-        "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSD_S2 NAME\n    input: [\"EOSD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSD_S2 NAME\n  var originalValue = samples.EOSD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2022"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2022"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2022"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2022"
-                        },
-                        {
-                            "color": "rgb(25.1%,0.0%,100.0%)",
-                            "label": "Jan 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,0.0%,100.0%)",
-                            "label": "Feb 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,74.9%)",
-                            "label": "Mar 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,25.1%)",
-                            "label": "Apr 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,39.22%,0.0%)",
-                            "label": "May 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,74.9%,0.0%)",
-                            "label": "Jun 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,100.0%,0.0%)",
-                            "label": "Jul 2023"
-                        },
-                        {
-                            "color": "rgb(25.1%,100.0%,0.0%)",
-                            "label": "Aug 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,86.27%,25.1%)",
-                            "label": "Sep 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,100.0%,74.9%)",
-                            "label": "Oct 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,74.9%,100.0%)",
-                            "label": "Nov 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,47.06%,100.0%)",
-                            "label": "Dec 2023"
-                        },
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2024"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2024"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2024"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2024"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.616893Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "EOSV_S1",
-        "title": "End-of-season Value - S1",
-        "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSV_S1 NAME\n    input: [\"EOSV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSV_S1 NAME\n  var originalValue = samples.EOSV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [194, 94, 60]],\n  [1000, [237, 234, 19]],\n  [2000, [128, 255, 0]],\n  [3000, [0, 219, 219]],\n  [4000, [32, 153, 143]],\n  [5000, [11, 44, 122]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT SPROD_S1 NAME\n    input: [\"SPROD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT SPROD_S1 NAME\n  var originalValue = samples.SPROD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "EOSV_S1",
+                    "title": "SPROD_S1",
                     "gradients": [
                         {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "color": "rgb(45.1%,0.0%,0.0%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "color": "rgb(64.71%,45.1%,0.0%)",
                             "label": "",
-                            "position": 0.5
+                            "position": 35
                         },
                         {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "color": "rgb(100.0%,64.71%,0.0%)",
                             "label": "",
-                            "position": 1
+                            "position": 70
                         },
                         {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "color": "rgb(100.0%,74.51%,72.55%)",
                             "label": "",
-                            "position": 1.5
+                            "position": 105
                         },
                         {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "color": "rgb(100.0%,92.16%,72.55%)",
                             "label": "",
-                            "position": 2
+                            "position": 120
                         },
                         {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
+                            "color": "rgb(90.2%,100.0%,76.47%)",
+                            "label": "",
+                            "position": 135
+                        },
+                        {
+                            "color": "rgb(62.75%,100.0%,43.14%)",
+                            "label": "",
+                            "position": 170
+                        },
+                        {
+                            "color": "rgb(45.1%,64.71%,1.96%)",
+                            "label": "",
+                            "position": 205
+                        },
+                        {
+                            "color": "rgb(7.84%,43.14%,54.9%)",
+                            "label": "",
+                            "position": 275
+                        },
+                        {
+                            "color": "rgb(3.92%,17.65%,49.02%)",
+                            "label": 500,
+                            "position": 500
                         }
                     ],
-                    "maxPosition": 3,
+                    "maxPosition": 500,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.954580Z",
+        "lastUpdated": "2025-06-11T08:06:26.810854Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -527,59 +246,80 @@
         }
     },
     {
-        "id": "EOSV_S2",
-        "title": "End-of-season Value - S2",
-        "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
+        "id": "D_SPROD_S2",
+        "title": "Seasonal Productivity - S2",
+        "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSV_S2 NAME\n    input: [\"EOSV_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSV_S2 NAME\n  var originalValue = samples.EOSV_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [194, 94, 60]],\n  [1000, [237, 234, 19]],\n  [2000, [128, 255, 0]],\n  [3000, [0, 219, 219]],\n  [4000, [32, 153, 143]],\n  [5000, [11, 44, 122]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT SPROD_S2 NAME\n    input: [\"SPROD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT SPROD_S2 NAME\n  var originalValue = samples.SPROD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "EOSV_S2",
+                    "title": "SPROD_S2",
                     "gradients": [
                         {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "color": "rgb(45.1%,0.0%,0.0%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "color": "rgb(64.71%,45.1%,0.0%)",
                             "label": "",
-                            "position": 0.5
+                            "position": 35
                         },
                         {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "color": "rgb(100.0%,64.71%,0.0%)",
                             "label": "",
-                            "position": 1
+                            "position": 70
                         },
                         {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "color": "rgb(100.0%,74.51%,72.55%)",
                             "label": "",
-                            "position": 1.5
+                            "position": 105
                         },
                         {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "color": "rgb(100.0%,92.16%,72.55%)",
                             "label": "",
-                            "position": 2
+                            "position": 120
                         },
                         {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
+                            "color": "rgb(90.2%,100.0%,76.47%)",
+                            "label": "",
+                            "position": 135
+                        },
+                        {
+                            "color": "rgb(62.75%,100.0%,43.14%)",
+                            "label": "",
+                            "position": 170
+                        },
+                        {
+                            "color": "rgb(45.1%,64.71%,1.96%)",
+                            "label": "",
+                            "position": 205
+                        },
+                        {
+                            "color": "rgb(7.84%,43.14%,54.9%)",
+                            "label": "",
+                            "position": 275
+                        },
+                        {
+                            "color": "rgb(3.92%,17.65%,49.02%)",
+                            "label": 500,
+                            "position": 500
                         }
                     ],
-                    "maxPosition": 3,
+                    "maxPosition": 500,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.992847Z",
+        "lastUpdated": "2025-06-11T08:06:33.147911Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -588,7 +328,7 @@
         }
     },
     {
-        "id": "LENGTH_S1",
+        "id": "E_LENGTH_S1",
         "title": "Season Length - S1",
         "description": "Provides the number of days between the start and end dates of the vegetation growing season.",
         "styles": [
@@ -1883,9 +1623,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:10.917681Z",
+        "lastUpdated": "2025-06-11T08:06:38.988808Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -1894,7 +1635,7 @@
         }
     },
     {
-        "id": "LENGTH_S2",
+        "id": "F_LENGTH_S2",
         "title": "Season Length - S2",
         "description": "Provides the number of days between the start and end dates of the vegetation growing season.",
         "styles": [
@@ -3189,9 +2930,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:10.546378Z",
+        "lastUpdated": "2025-06-11T08:06:45.149285Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -3200,7 +2942,131 @@
         }
     },
     {
-        "id": "LSLOPE_S1",
+        "id": "G_AMPL_S1",
+        "title": "Season Amplitude - S1",
+        "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT AMPL_S1 NAME\n    input: [\"AMPL_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT AMPL_S1 NAME\n  var originalValue = samples.AMPL_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "AMPL_S1",
+                    "gradients": [
+                        {
+                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "label": "",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "label": "",
+                            "position": 2
+                        },
+                        {
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
+                        }
+                    ],
+                    "maxPosition": 3,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:06:53.118493Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "H_AMPL_S2",
+        "title": "Season Amplitude - S2",
+        "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT AMPL_S2 NAME\n    input: [\"AMPL_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT AMPL_S2 NAME\n  var originalValue = samples.AMPL_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "AMPL_S2",
+                    "gradients": [
+                        {
+                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "label": "",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "label": "",
+                            "position": 2
+                        },
+                        {
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
+                        }
+                    ],
+                    "maxPosition": 3,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:06:59.144134Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "I_LSLOPE_S1",
         "title": "Slope of the Green-up Period - S1",
         "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
         "styles": [
@@ -3255,7 +3121,7 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-16T11:19:43.407967Z",
+        "lastUpdated": "2025-06-11T08:07:04.554572Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "defaultStyleName": "default",
@@ -3267,7 +3133,7 @@
         }
     },
     {
-        "id": "LSLOPE_S2",
+        "id": "J_LSLOPE_S2",
         "title": "Slope of the Green-up Period - S2",
         "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
         "styles": [
@@ -3322,7 +3188,7 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-16T11:19:57.375276Z",
+        "lastUpdated": "2025-06-11T08:07:10.948692Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "defaultStyleName": "default",
@@ -3334,696 +3200,7 @@
         }
     },
     {
-        "id": "MAXD_S1",
-        "title": "Season Maximum Date - S1",
-        "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXD_S1 NAME\n    input: [\"MAXD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXD_S1 NAME\n  var originalValue = samples.MAXD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2022"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2022"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2022"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2022"
-                        },
-                        {
-                            "color": "rgb(25.1%,0.0%,100.0%)",
-                            "label": "Jan 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,0.0%,100.0%)",
-                            "label": "Feb 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,74.9%)",
-                            "label": "Mar 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,25.1%)",
-                            "label": "Apr 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,39.22%,0.0%)",
-                            "label": "May 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,74.9%,0.0%)",
-                            "label": "Jun 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,100.0%,0.0%)",
-                            "label": "Jul 2023"
-                        },
-                        {
-                            "color": "rgb(25.1%,100.0%,0.0%)",
-                            "label": "Aug 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,86.27%,25.1%)",
-                            "label": "Sep 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,100.0%,74.9%)",
-                            "label": "Oct 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,74.9%,100.0%)",
-                            "label": "Nov 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,47.06%,100.0%)",
-                            "label": "Dec 2023"
-                        },
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2024"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2024"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2024"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2024"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.759250Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "MAXD_S2",
-        "title": "Season Maximum Date - S2",
-        "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXD_S2 NAME\n    input: [\"MAXD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXD_S2 NAME\n  var originalValue = samples.MAXD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2022"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2022"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2022"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2022"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2022"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2022"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2022"
-                        },
-                        {
-                            "color": "rgb(25.1%,0.0%,100.0%)",
-                            "label": "Jan 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,0.0%,100.0%)",
-                            "label": "Feb 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,74.9%)",
-                            "label": "Mar 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,0.0%,25.1%)",
-                            "label": "Apr 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,39.22%,0.0%)",
-                            "label": "May 2023"
-                        },
-                        {
-                            "color": "rgb(100.0%,74.9%,0.0%)",
-                            "label": "Jun 2023"
-                        },
-                        {
-                            "color": "rgb(74.9%,100.0%,0.0%)",
-                            "label": "Jul 2023"
-                        },
-                        {
-                            "color": "rgb(25.1%,100.0%,0.0%)",
-                            "label": "Aug 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,86.27%,25.1%)",
-                            "label": "Sep 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,100.0%,74.9%)",
-                            "label": "Oct 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,74.9%,100.0%)",
-                            "label": "Nov 2023"
-                        },
-                        {
-                            "color": "rgb(0.0%,47.06%,100.0%)",
-                            "label": "Dec 2023"
-                        },
-                        {
-                            "color": "rgb(62.35%,50.2%,100.0%)",
-                            "label": "Jan 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,50.2%,100.0%)",
-                            "label": "Feb 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,87.45%)",
-                            "label": "Mar 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,50.2%,62.35%)",
-                            "label": "Apr 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,69.02%,49.8%)",
-                            "label": "May 2024"
-                        },
-                        {
-                            "color": "rgb(100.0%,87.45%,50.2%)",
-                            "label": "Jun 2024"
-                        },
-                        {
-                            "color": "rgb(87.45%,100.0%,50.2%)",
-                            "label": "Jul 2024"
-                        },
-                        {
-                            "color": "rgb(62.35%,100.0%,50.2%)",
-                            "label": "Aug 2024"
-                        },
-                        {
-                            "color": "rgb(42.75%,86.27%,55.29%)",
-                            "label": "Sep 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,87.45%)",
-                            "label": "Oct 2024"
-                        },
-                        {
-                            "color": "rgb(50.2%,87.45%,100.0%)",
-                            "label": "Nov 2024"
-                        },
-                        {
-                            "color": "rgb(49.8%,74.12%,100.0%)",
-                            "label": "Dec 2024"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.801489Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "MAXV_S1",
-        "title": "Season Maximum Value - S1",
-        "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXV_S1 NAME\n    input: [\"MAXV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXV_S1 NAME\n  var originalValue = samples.MAXV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
-                "legend": {
-                    "type": "continuous",
-                    "title": "MAXV_S1",
-                    "gradients": [
-                        {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
-                            "label": 0,
-                            "position": 0
-                        },
-                        {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
-                            "label": "",
-                            "position": 0.5
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
-                            "label": "",
-                            "position": 1
-                        },
-                        {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
-                            "label": "",
-                            "position": 1.5
-                        },
-                        {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
-                            "label": "",
-                            "position": 2
-                        },
-                        {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
-                        }
-                    ],
-                    "maxPosition": 3,
-                    "minPosition": 0
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:13.050959Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "MAXV_S2",
-        "title": "Season Maximum Value - S2",
-        "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXV_S2 NAME\n    input: [\"MAXV_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXV_S2 NAME\n  var originalValue = samples.MAXV_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
-                "legend": {
-                    "type": "continuous",
-                    "title": "MAXV_S2",
-                    "gradients": [
-                        {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
-                            "label": 0,
-                            "position": 0
-                        },
-                        {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
-                            "label": "",
-                            "position": 0.5
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
-                            "label": "",
-                            "position": 1
-                        },
-                        {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
-                            "label": "",
-                            "position": 1.5
-                        },
-                        {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
-                            "label": "",
-                            "position": 2
-                        },
-                        {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
-                        }
-                    ],
-                    "maxPosition": 3,
-                    "minPosition": 0
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.707636Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "MINV_S1",
-        "title": "Season Minimum Value - S1",
-        "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MINV_S1 NAME\n    input: [\"MINV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MINV_S1 NAME\n  var originalValue = samples.MINV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
-                "legend": {
-                    "type": "continuous",
-                    "title": "MINV_S1",
-                    "gradients": [
-                        {
-                            "color": "rgb(76.08%,36.86%,23.53%)",
-                            "label": 0,
-                            "position": 0
-                        },
-                        {
-                            "color": "rgb(92.94%,91.76%,7.45%)",
-                            "label": "",
-                            "position": 0.5
-                        },
-                        {
-                            "color": "rgb(50.2%,100.0%,0.0%)",
-                            "label": "",
-                            "position": 1
-                        },
-                        {
-                            "color": "rgb(0.0%,85.88%,85.88%)",
-                            "label": "",
-                            "position": 1.5
-                        },
-                        {
-                            "color": "rgb(12.55%,60.0%,56.08%)",
-                            "label": "",
-                            "position": 2
-                        },
-                        {
-                            "color": "rgb(4.31%,17.25%,47.84%)",
-                            "label": 3,
-                            "position": 3
-                        }
-                    ],
-                    "maxPosition": 3,
-                    "minPosition": 0
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.856744Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "MINV_S2",
-        "title": "Seasonal Productivity - S1",
-        "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT SPROD_S1 NAME\n    input: [\"SPROD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT SPROD_S1 NAME\n  var originalValue = samples.SPROD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
-                "legend": {
-                    "type": "continuous",
-                    "title": "SPROD_S1",
-                    "gradients": [
-                        {
-                            "color": "rgb(45.1%,0.0%,0.0%)",
-                            "label": 0,
-                            "position": 0
-                        },
-                        {
-                            "color": "rgb(64.71%,45.1%,0.0%)",
-                            "label": "",
-                            "position": 35
-                        },
-                        {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
-                            "label": "",
-                            "position": 70
-                        },
-                        {
-                            "color": "rgb(100.0%,74.51%,72.55%)",
-                            "label": "",
-                            "position": 105
-                        },
-                        {
-                            "color": "rgb(100.0%,92.16%,72.55%)",
-                            "label": "",
-                            "position": 120
-                        },
-                        {
-                            "color": "rgb(90.2%,100.0%,76.47%)",
-                            "label": "",
-                            "position": 135
-                        },
-                        {
-                            "color": "rgb(62.75%,100.0%,43.14%)",
-                            "label": "",
-                            "position": 170
-                        },
-                        {
-                            "color": "rgb(45.1%,64.71%,1.96%)",
-                            "label": "",
-                            "position": 205
-                        },
-                        {
-                            "color": "rgb(7.84%,43.14%,54.9%)",
-                            "label": "",
-                            "position": 275
-                        },
-                        {
-                            "color": "rgb(3.92%,17.65%,49.02%)",
-                            "label": 500,
-                            "position": 500
-                        }
-                    ],
-                    "maxPosition": 500,
-                    "minPosition": 0
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-16T11:18:47.449616Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "defaultStyleName": "default",
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "QA_S1",
-        "title": "Quality Flag - S1",
-        "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT QA_S1 NAME\n    input: [\"QA_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT QA_S1 NAME\n  var originalValue = samples.QA_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[127.0, [26, 150, 65]], [254.0, [166, 217, 106]], [255.0, [255, 255, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(10.2%,58.82%,25.49%)",
-                            "label": "Overall good"
-                        },
-                        {
-                            "color": "rgb(65.1%,85.1%,41.57%)",
-                            "label": "Overall poor"
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": "No input"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.523847Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "QA_S2",
-        "title": "Quality Flag - S2",
-        "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
-        "styles": [
-            {
-                "name": "default",
-                "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT QA_S2 NAME\n    input: [\"QA_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT QA_S2 NAME\n  var originalValue = samples.QA_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[127.0, [26, 150, 65]], [254.0, [166, 217, 106]], [255.0, [255, 255, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
-                "legend": {
-                    "type": "discrete",
-                    "items": [
-                        {
-                            "color": "rgb(10.2%,58.82%,25.49%)",
-                            "label": "Overall good"
-                        },
-                        {
-                            "color": "rgb(65.1%,85.1%,41.57%)",
-                            "label": "Overall poor"
-                        },
-                        {
-                            "color": "rgb(100.0%,100.0%,100.0%)",
-                            "label": "No input"
-                        }
-                    ]
-                }
-            }
-        ],
-        "orderHint": 0,
-        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.233457Z",
-        "collectionType": "CUSTOM",
-        "datasetSourceId": 10,
-        "datasourceDefaults": {
-            "mosaickingOrder": "mostRecent",
-            "temporal": false,
-            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
-            "type": "CUSTOM"
-        }
-    },
-    {
-        "id": "RSLOPE_S1",
+        "id": "K_RSLOPE_S1",
         "title": "Slope of the Green-down Period - S1",
         "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends.",
         "styles": [
@@ -4078,7 +3255,7 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-16T11:19:15.457585Z",
+        "lastUpdated": "2025-06-11T08:07:15.865121Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "defaultStyleName": "default",
@@ -4090,7 +3267,7 @@
         }
     },
     {
-        "id": "RSLOPE_S2",
+        "id": "L_RSLOPE_S2",
         "title": "Slope of the Green-down Period - S2",
         "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends.",
         "styles": [
@@ -4145,7 +3322,7 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-05-16T11:19:29.949310Z",
+        "lastUpdated": "2025-06-11T08:07:22.258494Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "defaultStyleName": "default",
@@ -4157,7 +3334,7 @@
         }
     },
     {
-        "id": "SOSD_S1",
+        "id": "M_SOSD_S1",
         "title": "Start-of-season Date - S1",
         "description": "Provides the date when the vegetation growing season starts in the time profile of the Plant Phenology Index.",
         "styles": [
@@ -4318,9 +3495,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.178499Z",
+        "lastUpdated": "2025-06-11T08:07:28.177739Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4329,7 +3507,7 @@
         }
     },
     {
-        "id": "SOSD_S2",
+        "id": "N_SOSD_S2",
         "title": "Start-of-season Date - S2",
         "description": "Provides the date when the vegetation growing season starts in the time profile of the Plant Phenology Index.",
         "styles": [
@@ -4490,9 +3668,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.087013Z",
+        "lastUpdated": "2025-06-11T08:07:33.578823Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4501,7 +3680,699 @@
         }
     },
     {
-        "id": "SOSV_S1",
+        "id": "O_MAXD_S1",
+        "title": "Season Maximum Date - S1",
+        "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXD_S1 NAME\n    input: [\"MAXD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXD_S1 NAME\n  var originalValue = samples.MAXD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2022"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2022"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2022"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2022"
+                        },
+                        {
+                            "color": "rgb(25.1%,0.0%,100.0%)",
+                            "label": "Jan 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,0.0%,100.0%)",
+                            "label": "Feb 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,74.9%)",
+                            "label": "Mar 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,25.1%)",
+                            "label": "Apr 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,39.22%,0.0%)",
+                            "label": "May 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,74.9%,0.0%)",
+                            "label": "Jun 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,100.0%,0.0%)",
+                            "label": "Jul 2023"
+                        },
+                        {
+                            "color": "rgb(25.1%,100.0%,0.0%)",
+                            "label": "Aug 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,86.27%,25.1%)",
+                            "label": "Sep 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,100.0%,74.9%)",
+                            "label": "Oct 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,74.9%,100.0%)",
+                            "label": "Nov 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,47.06%,100.0%)",
+                            "label": "Dec 2023"
+                        },
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2024"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2024"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2024"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2024"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:07:38.886321Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "P_MAXD_S2",
+        "title": "Season Maximum Date - S2",
+        "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXD_S2 NAME\n    input: [\"MAXD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXD_S2 NAME\n  var originalValue = samples.MAXD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2022"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2022"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2022"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2022"
+                        },
+                        {
+                            "color": "rgb(25.1%,0.0%,100.0%)",
+                            "label": "Jan 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,0.0%,100.0%)",
+                            "label": "Feb 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,74.9%)",
+                            "label": "Mar 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,25.1%)",
+                            "label": "Apr 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,39.22%,0.0%)",
+                            "label": "May 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,74.9%,0.0%)",
+                            "label": "Jun 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,100.0%,0.0%)",
+                            "label": "Jul 2023"
+                        },
+                        {
+                            "color": "rgb(25.1%,100.0%,0.0%)",
+                            "label": "Aug 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,86.27%,25.1%)",
+                            "label": "Sep 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,100.0%,74.9%)",
+                            "label": "Oct 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,74.9%,100.0%)",
+                            "label": "Nov 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,47.06%,100.0%)",
+                            "label": "Dec 2023"
+                        },
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2024"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2024"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2024"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2024"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:07:43.946697Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "Q_EOSD_S1",
+        "title": "End-of-season Date - S1",
+        "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSD_S1 NAME\n    input: [\"EOSD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSD_S1 NAME\n  var originalValue = samples.EOSD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2022"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2022"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2022"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2022"
+                        },
+                        {
+                            "color": "rgb(25.1%,0.0%,100.0%)",
+                            "label": "Jan 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,0.0%,100.0%)",
+                            "label": "Feb 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,74.9%)",
+                            "label": "Mar 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,25.1%)",
+                            "label": "Apr 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,39.22%,0.0%)",
+                            "label": "May 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,74.9%,0.0%)",
+                            "label": "Jun 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,100.0%,0.0%)",
+                            "label": "Jul 2023"
+                        },
+                        {
+                            "color": "rgb(25.1%,100.0%,0.0%)",
+                            "label": "Aug 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,86.27%,25.1%)",
+                            "label": "Sep 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,100.0%,74.9%)",
+                            "label": "Oct 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,74.9%,100.0%)",
+                            "label": "Nov 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,47.06%,100.0%)",
+                            "label": "Dec 2023"
+                        },
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2024"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2024"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2024"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2024"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:07:50.769547Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "R_EOSD_S2",
+        "title": "End-of-season Date - S2",
+        "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSD_S2 NAME\n    input: [\"EOSD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSD_S2 NAME\n  var originalValue = samples.EOSD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[31.0, [159, 128, 255]], [59.0, [223, 128, 255]], [90.0, [255, 128, 223]], [120.0, [255, 128, 159]], [151.0, [255, 176, 127]], [181.0, [255, 223, 128]], [212.0, [223, 255, 128]], [243.0, [159, 255, 128]], [273.0, [109, 220, 141]], [304.0, [128, 255, 223]], [334.0, [128, 223, 255]], [365.0, [127, 189, 255]], [31.0, [64, 0, 255]], [59.0, [191, 0, 255]], [90.0, [255, 0, 191]], [120.0, [255, 0, 64]], [151.0, [255, 100, 0]], [181.0, [255, 191, 0]], [212.0, [191, 255, 0]], [243.0, [64, 255, 0]], [273.0, [0, 220, 64]], [304.0, [0, 255, 191]], [334.0, [0, 191, 255]], [365.0, [0, 120, 255]], [31.0, [159, 128, 255]], [60.0, [223, 128, 255]], [91.0, [255, 128, 223]], [121.0, [255, 128, 159]], [152.0, [255, 176, 127]], [182.0, [255, 223, 128]], [213.0, [223, 255, 128]], [244.0, [159, 255, 128]], [274.0, [109, 220, 141]], [305.0, [128, 255, 223]], [335.0, [128, 223, 255]], [366.0, [127, 189, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2022"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2022"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2022"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2022"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2022"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2022"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2022"
+                        },
+                        {
+                            "color": "rgb(25.1%,0.0%,100.0%)",
+                            "label": "Jan 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,0.0%,100.0%)",
+                            "label": "Feb 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,74.9%)",
+                            "label": "Mar 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,0.0%,25.1%)",
+                            "label": "Apr 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,39.22%,0.0%)",
+                            "label": "May 2023"
+                        },
+                        {
+                            "color": "rgb(100.0%,74.9%,0.0%)",
+                            "label": "Jun 2023"
+                        },
+                        {
+                            "color": "rgb(74.9%,100.0%,0.0%)",
+                            "label": "Jul 2023"
+                        },
+                        {
+                            "color": "rgb(25.1%,100.0%,0.0%)",
+                            "label": "Aug 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,86.27%,25.1%)",
+                            "label": "Sep 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,100.0%,74.9%)",
+                            "label": "Oct 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,74.9%,100.0%)",
+                            "label": "Nov 2023"
+                        },
+                        {
+                            "color": "rgb(0.0%,47.06%,100.0%)",
+                            "label": "Dec 2023"
+                        },
+                        {
+                            "color": "rgb(62.35%,50.2%,100.0%)",
+                            "label": "Jan 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,50.2%,100.0%)",
+                            "label": "Feb 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,87.45%)",
+                            "label": "Mar 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,50.2%,62.35%)",
+                            "label": "Apr 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,69.02%,49.8%)",
+                            "label": "May 2024"
+                        },
+                        {
+                            "color": "rgb(100.0%,87.45%,50.2%)",
+                            "label": "Jun 2024"
+                        },
+                        {
+                            "color": "rgb(87.45%,100.0%,50.2%)",
+                            "label": "Jul 2024"
+                        },
+                        {
+                            "color": "rgb(62.35%,100.0%,50.2%)",
+                            "label": "Aug 2024"
+                        },
+                        {
+                            "color": "rgb(42.75%,86.27%,55.29%)",
+                            "label": "Sep 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,87.45%)",
+                            "label": "Oct 2024"
+                        },
+                        {
+                            "color": "rgb(50.2%,87.45%,100.0%)",
+                            "label": "Nov 2024"
+                        },
+                        {
+                            "color": "rgb(49.8%,74.12%,100.0%)",
+                            "label": "Dec 2024"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:07:58.390508Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "S_SOSV_S1",
         "title": "Start-of-season Value - S1",
         "description": "Provides the value of the Plant Phenology Index at the start of the vegetation growing season.",
         "styles": [
@@ -4551,9 +4422,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.465024Z",
+        "lastUpdated": "2025-06-11T08:08:03.822277Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4562,7 +4434,7 @@
         }
     },
     {
-        "id": "SOSV_S2",
+        "id": "T_SOSV_S2",
         "title": "Start-of-season Value - S2",
         "description": "Provides the value of the Plant Phenology Index at the start of the vegetation growing season.",
         "styles": [
@@ -4612,9 +4484,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:10.691847Z",
+        "lastUpdated": "2025-06-11T08:08:14.135947Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4623,8 +4496,194 @@
         }
     },
     {
-        "id": "SPROD_S1",
-        "title": "Seasonal Productivity - S1",
+        "id": "U_MAXV_S1",
+        "title": "Season Maximum Value - S1",
+        "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXV_S1 NAME\n    input: [\"MAXV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXV_S1 NAME\n  var originalValue = samples.MAXV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "MAXV_S1",
+                    "gradients": [
+                        {
+                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "label": "",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "label": "",
+                            "position": 2
+                        },
+                        {
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
+                        }
+                    ],
+                    "maxPosition": 3,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:08:19.746808Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "V_MAXV_S2",
+        "title": "Season Maximum Value - S2",
+        "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MAXV_S2 NAME\n    input: [\"MAXV_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MAXV_S2 NAME\n  var originalValue = samples.MAXV_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "MAXV_S2",
+                    "gradients": [
+                        {
+                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "label": "",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "label": "",
+                            "position": 2
+                        },
+                        {
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
+                        }
+                    ],
+                    "maxPosition": 3,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:08:35.911613Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "W_MINV_S1",
+        "title": "Season Minimum Value S1",
+        "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT MINV_S1 NAME\n    input: [\"MINV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT MINV_S1 NAME\n  var originalValue = samples.MINV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [194, 94, 60]], [0.5, [237, 234, 19]], [1.0, [128, 255, 0]], [1.5, [0, 219, 219]], [2.0, [32, 153, 143]], [3.0, [11, 44, 122]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "legend": {
+                    "type": "continuous",
+                    "title": "MINV_S1",
+                    "gradients": [
+                        {
+                            "color": "rgb(76.08%,36.86%,23.53%)",
+                            "label": 0,
+                            "position": 0
+                        },
+                        {
+                            "color": "rgb(92.94%,91.76%,7.45%)",
+                            "label": "",
+                            "position": 0.5
+                        },
+                        {
+                            "color": "rgb(50.2%,100.0%,0.0%)",
+                            "label": "",
+                            "position": 1
+                        },
+                        {
+                            "color": "rgb(0.0%,85.88%,85.88%)",
+                            "label": "",
+                            "position": 1.5
+                        },
+                        {
+                            "color": "rgb(12.55%,60.0%,56.08%)",
+                            "label": "",
+                            "position": 2
+                        },
+                        {
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
+                        }
+                    ],
+                    "maxPosition": 3,
+                    "minPosition": 0
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T08:08:44.919378Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "X_MINV_S2",
+        "title": "Season Minimum Value S2",
         "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
         "styles": [
             {
@@ -4693,9 +4752,10 @@
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:11.332631Z",
+        "lastUpdated": "2025-06-11T08:09:29.291544Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4704,79 +4764,60 @@
         }
     },
     {
-        "id": "SPROD_S2",
-        "title": "Seasonal Productivity - S2",
-        "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
+        "id": "Y_EOSV_S1",
+        "title": "End-of-season Value - S1",
+        "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT SPROD_S2 NAME\n    input: [\"SPROD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT SPROD_S2 NAME\n  var originalValue = samples.SPROD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSV_S1 NAME\n    input: [\"EOSV_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSV_S1 NAME\n  var originalValue = samples.EOSV_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [194, 94, 60]],\n  [1000, [237, 234, 19]],\n  [2000, [128, 255, 0]],\n  [3000, [0, 219, 219]],\n  [4000, [32, 153, 143]],\n  [5000, [11, 44, 122]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "SPROD_S2",
+                    "title": "EOSV_S1",
                     "gradients": [
                         {
-                            "color": "rgb(45.1%,0.0%,0.0%)",
+                            "color": "rgb(76.08%,36.86%,23.53%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(64.71%,45.1%,0.0%)",
+                            "color": "rgb(92.94%,91.76%,7.45%)",
                             "label": "",
-                            "position": 35
+                            "position": 0.5
                         },
                         {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
+                            "color": "rgb(50.2%,100.0%,0.0%)",
                             "label": "",
-                            "position": 70
+                            "position": 1
                         },
                         {
-                            "color": "rgb(100.0%,74.51%,72.55%)",
+                            "color": "rgb(0.0%,85.88%,85.88%)",
                             "label": "",
-                            "position": 105
+                            "position": 1.5
                         },
                         {
-                            "color": "rgb(100.0%,92.16%,72.55%)",
+                            "color": "rgb(12.55%,60.0%,56.08%)",
                             "label": "",
-                            "position": 120
+                            "position": 2
                         },
                         {
-                            "color": "rgb(90.2%,100.0%,76.47%)",
-                            "label": "",
-                            "position": 135
-                        },
-                        {
-                            "color": "rgb(62.75%,100.0%,43.14%)",
-                            "label": "",
-                            "position": 170
-                        },
-                        {
-                            "color": "rgb(45.1%,64.71%,1.96%)",
-                            "label": "",
-                            "position": 205
-                        },
-                        {
-                            "color": "rgb(7.84%,43.14%,54.9%)",
-                            "label": "",
-                            "position": 275
-                        },
-                        {
-                            "color": "rgb(3.92%,17.65%,49.02%)",
-                            "label": 500,
-                            "position": 500
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
                         }
                     ],
-                    "maxPosition": 500,
+                    "maxPosition": 3,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.559214Z",
+        "lastUpdated": "2025-06-11T08:09:39.042194Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4785,79 +4826,60 @@
         }
     },
     {
-        "id": "TPROD_S1",
-        "title": "Total Productivity - S1",
-        "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
+        "id": "ZA_EOSV_S2",
+        "title": "End-of-season Value - S2",
+        "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT TPROD_S1 NAME\n    input: [\"TPROD_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT TPROD_S1 NAME\n  var originalValue = samples.TPROD_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 0.001; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT EOSV_S2 NAME\n    input: [\"EOSV_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT EOSV_S2 NAME\n  var originalValue = samples.EOSV_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [194, 94, 60]],\n  [1000, [237, 234, 19]],\n  [2000, [128, 255, 0]],\n  [3000, [0, 219, 219]],\n  [4000, [32, 153, 143]],\n  [5000, [11, 44, 122]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                 "legend": {
                     "type": "continuous",
-                    "title": "TPROD_S1",
+                    "title": "EOSV_S2",
                     "gradients": [
                         {
-                            "color": "rgb(45.1%,0.0%,0.0%)",
+                            "color": "rgb(76.08%,36.86%,23.53%)",
                             "label": 0,
                             "position": 0
                         },
                         {
-                            "color": "rgb(64.71%,45.1%,0.0%)",
+                            "color": "rgb(92.94%,91.76%,7.45%)",
                             "label": "",
-                            "position": 35
+                            "position": 0.5
                         },
                         {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
+                            "color": "rgb(50.2%,100.0%,0.0%)",
                             "label": "",
-                            "position": 70
+                            "position": 1
                         },
                         {
-                            "color": "rgb(100.0%,74.51%,72.55%)",
+                            "color": "rgb(0.0%,85.88%,85.88%)",
                             "label": "",
-                            "position": 105
+                            "position": 1.5
                         },
                         {
-                            "color": "rgb(100.0%,92.16%,72.55%)",
+                            "color": "rgb(12.55%,60.0%,56.08%)",
                             "label": "",
-                            "position": 120
+                            "position": 2
                         },
                         {
-                            "color": "rgb(90.2%,100.0%,76.47%)",
-                            "label": "",
-                            "position": 135
-                        },
-                        {
-                            "color": "rgb(62.75%,100.0%,43.14%)",
-                            "label": "",
-                            "position": 170
-                        },
-                        {
-                            "color": "rgb(45.1%,64.71%,1.96%)",
-                            "label": "",
-                            "position": 205
-                        },
-                        {
-                            "color": "rgb(7.84%,43.14%,54.9%)",
-                            "label": "",
-                            "position": 275
-                        },
-                        {
-                            "color": "rgb(3.92%,17.65%,49.02%)",
-                            "label": 500,
-                            "position": 500
+                            "color": "rgb(4.31%,17.25%,47.84%)",
+                            "label": 3,
+                            "position": 3
                         }
                     ],
-                    "maxPosition": 500,
+                    "maxPosition": 3,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:12.661180Z",
+        "lastUpdated": "2025-06-11T11:02:37.680423Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
@@ -4866,79 +4888,80 @@
         }
     },
     {
-        "id": "TPROD_S2",
-        "title": "Total Productivity - S2",
-        "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
+        "id": "ZB_QA_S1",
+        "title": "Quality Flag - S1",
+        "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
         "styles": [
             {
                 "name": "default",
                 "description": "Default layer style",
-                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT TPROD_S2 NAME\n    input: [\"TPROD_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT TPROD_S2 NAME\n  var originalValue = samples.TPROD_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [[0.0, [115, 0, 0]], [35.0, [165, 115, 0]], [70.0, [255, 165, 0]], [105.0, [255, 190, 185]], [120.0, [255, 235, 185]], [135.0, [230, 255, 195]], [170.0, [160, 255, 110]], [205.0, [115, 165, 5]], [275.0, [20, 110, 140]], [500.0, [10, 45, 125]]];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT QA_S1 NAME\n    input: [\"QA_S1\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT QA_S1 NAME\n  var originalValue = samples.QA_S1;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[127.0, [26, 150, 65]], [254.0, [166, 217, 106]], [255.0, [255, 255, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
                 "legend": {
-                    "type": "continuous",
-                    "title": "TPROD_S2",
-                    "gradients": [
+                    "type": "discrete",
+                    "items": [
                         {
-                            "color": "rgb(45.1%,0.0%,0.0%)",
-                            "label": 0,
-                            "position": 0
+                            "color": "rgb(10.2%,58.82%,25.49%)",
+                            "label": "Overall good"
                         },
                         {
-                            "color": "rgb(64.71%,45.1%,0.0%)",
-                            "label": "",
-                            "position": 35
+                            "color": "rgb(65.1%,85.1%,41.57%)",
+                            "label": "Overall poor"
                         },
                         {
-                            "color": "rgb(100.0%,64.71%,0.0%)",
-                            "label": "",
-                            "position": 70
-                        },
-                        {
-                            "color": "rgb(100.0%,74.51%,72.55%)",
-                            "label": "",
-                            "position": 105
-                        },
-                        {
-                            "color": "rgb(100.0%,92.16%,72.55%)",
-                            "label": "",
-                            "position": 120
-                        },
-                        {
-                            "color": "rgb(90.2%,100.0%,76.47%)",
-                            "label": "",
-                            "position": 135
-                        },
-                        {
-                            "color": "rgb(62.75%,100.0%,43.14%)",
-                            "label": "",
-                            "position": 170
-                        },
-                        {
-                            "color": "rgb(45.1%,64.71%,1.96%)",
-                            "label": "",
-                            "position": 205
-                        },
-                        {
-                            "color": "rgb(7.84%,43.14%,54.9%)",
-                            "label": "",
-                            "position": 275
-                        },
-                        {
-                            "color": "rgb(3.92%,17.65%,49.02%)",
-                            "label": 500,
-                            "position": 500
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": "No input"
                         }
-                    ],
-                    "maxPosition": 500,
-                    "minPosition": 0
+                    ]
                 }
             }
         ],
         "orderHint": 0,
         "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-23T15:02:10.419792Z",
+        "lastUpdated": "2025-06-11T11:02:47.678777Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "3c49e4-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    },
+    {
+        "id": "ZC_QA_S2",
+        "title": "Quality Flag - S2",
+        "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT QA_S2 NAME\n    input: [\"QA_S2\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT QA_S2 NAME\n  var originalValue = samples.QA_S2;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [[127.0, [26, 150, 65]], [254.0, [166, 217, 106]], [255.0, [255, 255, 255]]];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(10.2%,58.82%,25.49%)",
+                            "label": "Overall good"
+                        },
+                        {
+                            "color": "rgb(65.1%,85.1%,41.57%)",
+                            "label": "Overall poor"
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,100.0%)",
+                            "label": "No input"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "3ddb52-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-11T11:02:53.572387Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
