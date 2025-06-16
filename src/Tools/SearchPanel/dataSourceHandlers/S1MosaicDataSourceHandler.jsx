@@ -35,8 +35,8 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
 
   MIN_MAX_DATES = {
     [S1_MONTHLY_MOSAIC_DH]: {
-      minDate: moment.utc('2020-01-01'),
-      maxDate: moment.utc('2024-01-01'),
+      minDate: moment.utc('2016-01-01'),
+      maxDate: null,
     },
     [S1_MONTHLY_MOSAIC_IW]: {
       minDate: moment.utc('2016-01-01'),
