@@ -188,6 +188,10 @@ export default class DataSourceHandler {
     return { minDate, maxDate };
   }
 
+  getTemporalResolution(datasetId) {
+    return null;
+  }
+
   generateEvalscript = (bands, dataSetId, config) => {
     return constructV3Evalscript(bands, config, this.getBands(dataSetId));
   };

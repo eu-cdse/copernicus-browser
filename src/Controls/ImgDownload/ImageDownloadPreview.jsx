@@ -44,6 +44,7 @@ const ImageDownloadPreview = (props) => {
     is3D,
     showComparePanel,
     comparedClipping,
+    imageFormat,
   } = props;
 
   const fetchPreviewImg = async (layerId = null) => {
@@ -75,7 +76,7 @@ const ImageDownloadPreview = (props) => {
       getMapAuthToken,
       width: width * ratioToAvoidMetersPerPixelLimit,
       height: height * ratioToAvoidMetersPerPixelLimit,
-      imageFormat: IMAGE_FORMATS.PNG,
+      imageFormat: imageFormat === IMAGE_FORMATS.JPG ? IMAGE_FORMATS.JPG : IMAGE_FORMATS.PNG,
       showCaptions: false,
       showLegend: false,
       showLogo: false,
@@ -86,7 +87,6 @@ const ImageDownloadPreview = (props) => {
       geometry: cropToAoi ? aoiGeometry : undefined,
       bounds: cropToAoi ? aoiBounds : mapBounds,
     };
-
     let blob;
 
     if (showComparePanel) {
@@ -139,7 +139,7 @@ const ImageDownloadPreview = (props) => {
   useEffect(() => {
     fetchPreviewImg();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cropToAoi, drawGeoToImg]);
+  }, [cropToAoi, drawGeoToImg, imageFormat]);
 
   useEffect(() => {
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {

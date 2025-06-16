@@ -11466,3 +11466,6 @@ msgstr ""
 
 msgid "There was a problem retrieving user profile"
 msgstr ""
+
+msgid "No description available"
+msgstr ""

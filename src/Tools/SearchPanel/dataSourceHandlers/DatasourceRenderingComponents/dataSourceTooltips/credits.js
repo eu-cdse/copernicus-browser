@@ -14,21 +14,21 @@ import {
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
-  COPERNICUS_CLMS_DMP_1KM_DAILY,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_LAI_1KM_DAILY,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
@@ -254,7 +254,7 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_DMP_1KM_DAILY]: [
+  [COPERNICUS_CLMS_DMP_1KM_10DAILY]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
@@ -267,85 +267,85 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_DMP_1KM_DAILY_RT0]: [
+  [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_DMP_1KM_DAILY_RT1]: [
+  [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_DMP_1KM_DAILY_RT2]: [
+  [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_DMP_1KM_DAILY_RT6]: [
+  [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_FAPAR_1KM_DAILY]: [
+  [COPERNICUS_CLMS_FAPAR_1KM_10DAILY]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0]: [
+  [COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1]: [
+  [COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2]: [
+  [COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6]: [
+  [COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_LAI_1KM_DAILY]: [
+  [COPERNICUS_CLMS_LAI_1KM_10DAILY]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_LAI_1KM_DAILY_RT0]: [
+  [COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_LAI_1KM_DAILY_RT1]: [
+  [COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_LAI_1KM_DAILY_RT2]: [
+  [COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_LAI_1KM_DAILY_RT6]: [
+  [COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

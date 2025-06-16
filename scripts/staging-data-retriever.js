@@ -11,7 +11,7 @@ const isTraining = environment === 'training';
 console.log(`Running in ${isTraining ? 'training' : 'production'} mode.\n`);
 
 const tokenEndpointUrl = process.env.APP_ADMIN_AUTH_BASEURL;
-const collectionsEndpoint = process.env.RRD_COLLECTION_BASEURL;
+const collectionsEndpoint = process.env.RRD_COLLECTION_BASE_URL;
 const configurationsEndpoint = process.env.RRD_CONFIGURATION_BASEURL;
 
 const RRD_COLLECTION_CLIENT_ID = process.env.RRD_COLLECTION_CLIENT_ID;
@@ -162,6 +162,11 @@ const retrieveAndProcessData = async () => {
     const destinationCollectionMapping = mapCollectionNamesToIds(trainingCollections);
     console.log('Destination collections:', trainingCollections.length, 'items retrieved.');
 
+    // Find missing collections
+    const stagingNames = stagingCollections.map((c) => c.name);
+    const trainingNames = trainingCollections.map((c) => c.name);
+    const missingCollections = stagingNames.filter((name) => !trainingNames.includes(name));
+
     const stagingConfigurations = await fetchData(configurationsEndpoint, stagingToken);
     console.log('Configurations from staging:', stagingConfigurations.length, 'items retrieved.');
 
@@ -171,6 +176,7 @@ const retrieveAndProcessData = async () => {
     console.log(`Processing ${stagingConfigurations.length} configurations.`);
 
     const insertedConfigurations = [];
+    const skippedDueToMissingCollection = [];
 
     for (const stagingConfiguration of stagingConfigurations) {
       const existingConfig = trainingConfigurations.find(
@@ -178,9 +184,44 @@ const retrieveAndProcessData = async () => {
       );
 
       if (existingConfig) {
-        console.log(
-          `Configuration with name "${stagingConfiguration.name}" already exists (ID: ${existingConfig.id}).\n Skipping...`,
+        continue;
+      }
+
+      const stagingLayers = await fetchLayersFromConfiguration(
+        stagingConfiguration.id,
+        stagingToken,
+        configurationsEndpoint,
+      );
+
+      // Check if layer collection exist
+      const firstLayer = stagingLayers[0];
+      let collectionExist = true;
+
+      if (firstLayer) {
+        const stagingCollectionId = firstLayer.datasourceDefaults.collectionId;
+        const stagingCollection = stagingCollections.find(
+          (collection) => collection.id === stagingCollectionId,
         );
+        if (!stagingCollection) {
+          collectionExist = false;
+          skippedDueToMissingCollection.push(
+            `Missing staging collection for layer ${firstLayer.name} (collectionId: ${stagingCollectionId})`,
+          );
+        } else {
+          const destinationCollectionId = destinationCollectionMapping[stagingCollection.name.toUpperCase()];
+          if (!destinationCollectionId) {
+            collectionExist = false;
+            skippedDueToMissingCollection.push(
+              `Missing destination collection for layer ${firstLayer.name} (collectionName: ${stagingCollection.name})`,
+            );
+          }
+        }
+      } else {
+        collectionExist = false;
+        skippedDueToMissingCollection.push('No layers found in configuration.');
+      }
+
+      if (!collectionExist) {
         continue;
       }
 
@@ -191,13 +232,23 @@ const retrieveAndProcessData = async () => {
         destinationCollectionMapping,
         stagingCollections,
       );
-      console.log(`New configuration created successfully: ${newConfig.name} (ID: ${newConfig.id})`);
-      insertedConfigurations.push({ id: newConfig.id, name: newConfig.name });
+      insertedConfigurations.push(newConfig.name);
+    }
+
+    console.log(`Missing collections in training: ${missingCollections.length}`);
+    console.log(`Configurations created: ${insertedConfigurations.length}`);
+    console.log(
+      `Configurations skipped due to missing collection in layer: ${skippedDueToMissingCollection.length}`,
+    );
+    if (skippedDueToMissingCollection.length > 0) {
+      skippedDueToMissingCollection.forEach((msg) => console.log('  -', msg));
     }
   } catch (error) {
     console.error('Failed to retrieve and process data:', error.message);
     process.exit(1);
   }
+
+  console.log('All configurations processed successfully.');
 };
 
 retrieveAndProcessData();

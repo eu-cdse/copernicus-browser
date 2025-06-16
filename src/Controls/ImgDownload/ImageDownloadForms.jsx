@@ -244,6 +244,9 @@ export function ImageDownloadForms(props) {
           drawGeoToImg={selectedTab === TABS.BASIC ? basicFormState.drawGeoToImg : false}
           showComparePanel={showComparePanel}
           selectedCrs={CRS_EPSG4326.authId}
+          imageFormat={
+            selectedTab === TABS.BASIC ? basicFormState.imageFormat : analyticalFormState.imageFormat
+          }
         />
       )}
     </div>

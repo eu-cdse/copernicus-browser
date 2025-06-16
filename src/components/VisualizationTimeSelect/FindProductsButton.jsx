@@ -32,8 +32,25 @@ const FindProductsButton = ({
   const [{ searchInProgress, searchError, oDataSearchResult }, productSearch, setODataSearchAuthToken] =
     useODataSearch();
 
-  function getFromTimeToTime() {
+  function getFromTimeToTime(datasetId) {
     if (fromTime && toTime) {
+      const dsh = getDataSourceHandler(datasetId);
+      if (dsh != null) {
+        // CLMS products have hourly daily 10 daily and yearly temporal resolutions, where the oData query uses a contentStart is gte minDate and lt maxDate
+        // We cant rely on just searching by sensing date, as contentStart and contentEnd will span the temporal resolution, where sensing date can be contentEnd or contentStart
+        const temporalResolution = dsh.getTemporalResolution(datasetId);
+        if (temporalResolution != null) {
+          const possibleFromTime = fromTime
+            .clone()
+            .subtract(temporalResolution.unit, temporalResolution.amount)
+            .toISOString();
+
+          const minDate = moment.min([possibleFromTime, toTime]);
+          const maxDate = moment.max([possibleFromTime, toTime]);
+          return { fromTime: moment.utc(minDate).startOf('day'), toTime: moment.utc(maxDate).endOf('day') };
+        }
+      }
+
       return { fromTime: moment.utc(fromTime), toTime: moment.utc(toTime) };
     }
 
@@ -52,7 +69,7 @@ const FindProductsButton = ({
       store.dispatch(searchResultsSlice.actions.setSearchResult(oDataSearchResult));
       store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
 
-      const { fromTime: fromMoment, toTime: toMoment } = getFromTimeToTime();
+      const { fromTime: fromMoment, toTime: toMoment } = getFromTimeToTime(datasetId);
 
       store.dispatch(
         searchResultsSlice.actions.setSearchFormData({
@@ -84,7 +101,7 @@ const FindProductsButton = ({
   }, [searchInProgress, setLoading]);
 
   const getQueryParams = () => {
-    const { fromTime, toTime } = getFromTimeToTime();
+    const { fromTime, toTime } = getFromTimeToTime(datasetId);
     const dsh = getDataSourceHandler(datasetId);
 
     const params = {};

@@ -388,6 +388,25 @@ const CollectionSelection = ({
       );
     }
 
+    const getSelectionDescription = () => {
+      if (datasetId) {
+        const dsh = getDataSourceHandler(datasetId);
+        if (dsh?.getDescriptionForDataset) {
+          const desc = dsh.getDescriptionForDataset(datasetId);
+          if (desc) {
+            return desc;
+          }
+        }
+        if (dsh?.getDescription) {
+          const desc = dsh.getDescription();
+          if (desc) {
+            return desc;
+          }
+        }
+      }
+      return t`No description available`;
+    };
+
     return (
       <div className="collection-search">
         <div className="collection-search-header">
@@ -409,7 +428,7 @@ const CollectionSelection = ({
             ></Select> */}
             {selectedCollectionGroup?.getDescription && (
               <CollectionTooltip
-                source={selectedCollectionGroup.getDescription()}
+                source={getSelectionDescription()}
                 credits={selectedCollectionGroup?.credits}
               />
             )}

@@ -43,21 +43,21 @@ import {
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_DMP_1KM_DAILY,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_LAI_1KM_DAILY,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
@@ -183,9 +183,9 @@ const PRODUCT_TYPE_TO_DATASETID = {
   VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   VHR_IMAGE_2021: CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   ndvi_global_1km_10daily_v3: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
-  dmp_global_1km_10daily_v2: COPERNICUS_CLMS_DMP_1KM_DAILY,
-  lai_global_1km_10daily_v2: COPERNICUS_CLMS_LAI_1KM_DAILY,
-  fapar_global_1km_10daily_v2: COPERNICUS_CLMS_FAPAR_1KM_DAILY,
+  dmp_global_1km_10daily_v2: COPERNICUS_CLMS_DMP_1KM_10DAILY,
+  lai_global_1km_10daily_v2: COPERNICUS_CLMS_LAI_1KM_10DAILY,
+  fapar_global_1km_10daily_v2: COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
   ba_global_300m_daily_v3: COPERNICUS_CLMS_BURNT_AREA_DAILY,
   ba_global_300m_monthly_v3: COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
   fapar_global_300m_10daily_v1: COPERNICUS_CLMS_FAPAR_300M_10DAILY,
@@ -386,15 +386,15 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     if (metricGridSpacing === 1000 && datasetShortName === 'dmp') {
       switch (consolidationPeriod) {
         case 0:
-          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT0;
+          return COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0;
         case 1:
-          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT1;
+          return COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1;
         case 2:
-          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT2;
+          return COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2;
         case 6:
-          return COPERNICUS_CLMS_DMP_1KM_DAILY_RT6;
+          return COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6;
         default:
-          return COPERNICUS_CLMS_DMP_1KM_DAILY;
+          return COPERNICUS_CLMS_DMP_1KM_10DAILY;
       }
     }
 
@@ -497,15 +497,15 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     if (metricGridSpacing === 1000 && datasetShortName === 'fapar') {
       switch (consolidationPeriod) {
         case 0:
-          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0;
+          return COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0;
         case 1:
-          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1;
+          return COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1;
         case 2:
-          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2;
+          return COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2;
         case 6:
-          return COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6;
+          return COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6;
         default:
-          return COPERNICUS_CLMS_FAPAR_1KM_DAILY;
+          return COPERNICUS_CLMS_FAPAR_1KM_10DAILY;
       }
     }
     if (metricGridSpacing === 300 && datasetShortName === 'fapar') {
@@ -525,15 +525,15 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     if (metricGridSpacing === 1000 && datasetShortName === 'lai') {
       switch (consolidationPeriod) {
         case 0:
-          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT0;
+          return COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0;
         case 1:
-          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT1;
+          return COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1;
         case 2:
-          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT2;
+          return COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2;
         case 6:
-          return COPERNICUS_CLMS_LAI_1KM_DAILY_RT6;
+          return COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6;
         default:
-          return COPERNICUS_CLMS_LAI_1KM_DAILY;
+          return COPERNICUS_CLMS_LAI_1KM_10DAILY;
       }
     }
     if (metricGridSpacing === 300 && datasetShortName === 'lai') {
@@ -886,18 +886,18 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
   }
   if (
     [
-      COPERNICUS_CLMS_DMP_1KM_DAILY,
-      COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
-      COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
-      COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
-      COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
+      COPERNICUS_CLMS_DMP_1KM_10DAILY,
+      COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0,
+      COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1,
+      COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2,
+      COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6,
     ].includes(datasetId)
   ) {
     const props = getConsolidationPeriodProps(datasetId);
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'DRY_GROSS_DRY_MATTER_PRODUCTIVITY',
-      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_DMP_1KM_DAILY),
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_DMP_1KM_10DAILY),
       selectedFilters: {
         ...props,
       },
@@ -924,18 +924,18 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
   }
   if (
     [
-      COPERNICUS_CLMS_LAI_1KM_DAILY,
-      COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
-      COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
-      COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
-      COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+      COPERNICUS_CLMS_LAI_1KM_10DAILY,
+      COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0,
+      COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1,
+      COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2,
+      COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6,
     ].includes(datasetId)
   ) {
     const props = getConsolidationPeriodProps(datasetId);
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'VEGETATION_PROPERTIES',
-      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_LAI_1KM_DAILY),
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_LAI_1KM_10DAILY),
       selectedFilters: {
         ...props,
       },
@@ -984,18 +984,18 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   if (
     [
-      COPERNICUS_CLMS_FAPAR_1KM_DAILY,
-      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
-      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
-      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
-      COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
+      COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
+      COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0,
+      COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1,
+      COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2,
+      COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6,
     ].includes(datasetId)
   ) {
     const props = getConsolidationPeriodProps(datasetId);
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'VEGETATION_PROPERTIES',
-      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FAPAR_1KM_DAILY),
+      productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FAPAR_1KM_10DAILY),
       selectedFilters: {
         ...props,
       },

@@ -126,7 +126,8 @@
     "delete-configurations": "node -r esm scripts/delete-configurations.js",
     "generate-frtx-csesa-configs": "node -r esm scripts/manual/generate-frtx-csesa-configs.js",
     "validate-config-collections": "node -r esm scripts/manual/validate-config-collections.js",
-    "check-collections-band-names": "node -r esm scripts/manual/check-collections-band-names.js"
+    "check-collections-band-names": "node -r esm scripts/manual/check-collections-band-names.js",
+    "list-configurations-without-layers": "node -r esm scripts/manual/list-configurations-without-layers.js"
   },
   "eslintConfig": {
     "extends": "react-app"

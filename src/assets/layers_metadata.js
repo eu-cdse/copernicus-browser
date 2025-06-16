@@ -62,21 +62,21 @@ import {
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
-  COPERNICUS_CLMS_DMP_1KM_DAILY,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_DMP_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6,
-  COPERNICUS_CLMS_LAI_1KM_DAILY,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT0,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT1,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT2,
-  COPERNICUS_CLMS_LAI_1KM_DAILY_RT6,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2,
+  COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1,
@@ -4104,11 +4104,11 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
   },
   {
     match: [
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT0, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT1, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT2, layerId: 'DMP' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT6, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2, layerId: 'DMP' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6, layerId: 'DMP' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0, layerId: 'DMP' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT1, layerId: 'DMP' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT2, layerId: 'DMP' },
@@ -4120,11 +4120,11 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
   },
   {
     match: [
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT0, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT1, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT2, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_DAILY_RT6, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2, layerId: 'QFLAG' },
+      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6, layerId: 'QFLAG' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0, layerId: 'QFLAG' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT1, layerId: 'QFLAG' },
       { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT2, layerId: 'QFLAG' },
@@ -4135,27 +4135,27 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
       t`Quality flag of the product. For more information, refer to the Product User Manual.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY, layerId: 'FAPAR' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT0, layerId: 'FAPAR' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT1, layerId: 'FAPAR' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT2, layerId: 'FAPAR' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_DAILY_RT6, layerId: 'FAPAR' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
   },
@@ -4239,11 +4239,11 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
   },
   {
     match: [
-      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY, layerId: 'LAI' },
-      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT0, layerId: 'LAI' },
-      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT1, layerId: 'LAI' },
-      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT2, layerId: 'LAI' },
-      { datasourceId: COPERNICUS_CLMS_LAI_1KM_DAILY_RT6, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_10DAILY, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_10DAILY_RT1, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_10DAILY_RT2, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_1KM_10DAILY_RT6, layerId: 'LAI' },
     ],
     description: () =>
       t`LAI is defined as half the developed area of photosynthetically active elements of the vegetation per unit horizontal ground area. It determines the size of the interface for exchange of energy (including radiation) and mass between the canopy and the atmosphere. This is an intrinsic canopy primary variable that should not depend on observation conditions. LAI is strongly non-linearly related to reflectance.`,
@@ -4598,142 +4598,142 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
       t`SSM (Surface Soil Moisture) describes soil moisture of the soil’s topmost 5cm on a 1km (1°/112) spatial sampling. It is derived from microwave radar data observed by the Sentinel-1 SAR satellite sensors.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'R_EOSD_S1' }],
     description: () =>
       t`Season 1: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'S_EOSD_S2' }],
     description: () =>
       t`Season 2: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSV_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'Y_EOSV_S1' }],
     description: () =>
       t`Season 1: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'EOSV_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZA_EOSV_S2' }],
     description: () =>
       t`Season 2: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'QA_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZB_QA_S1' }],
     description: () =>
       t`Season 1: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'QA_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZC_QA_S2' }],
     description: () =>
       t`Season 2: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'AMPL_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'G_AMPL_S1' }],
     description: () =>
       t`Season 1: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'AMPL_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'H_AMPL_S2' }],
     description: () =>
       t`Season 2: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LENGTH_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'E_LENGTH_S1' }],
     description: () =>
       t`Season 1: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LENGTH_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'F_LENGTH_S2' }],
     description: () =>
       t`Season 2: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'O_MAXD_S1' }],
     description: () =>
       t`Season 1: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'P_MAXD_S2' }],
     description: () =>
       t`Season 2: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXV_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'U_MAXV_S1' }],
     description: () =>
       t`Season 1: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MAXV_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'V_MAXV_S2' }],
     description: () =>
       t`Season 2: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MINV_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'W_MINV_S1' }],
     description: () =>
       t`Season 1: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'MINV_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'X_MINV_S2' }],
     description: () =>
       t`Season 2: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SPROD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'C_SPROD_S1' }],
     description: () =>
       t`Season 1: the growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SPROD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'D_SPROD_S2' }],
     description: () =>
       t`Season 2: he growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'RSLOPE_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'K_RSLOPE_S1' }],
     description: () =>
       t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'RSLOPE_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'L_RSLOPE_S2' }],
     description: () =>
       t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LSLOPE_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'I_LSLOPE_S1' }],
     description: () =>
       t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'LSLOPE_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'J_LSLOPE_S2' }],
     description: () =>
       t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'M_SOSD_S1' }],
     description: () =>
       t`Season 1: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'N_SOSD_S2' }],
     description: () =>
       t`Season 2: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSV_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'S_SOSV_S1' }],
     description: () =>
       t`Season 1: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'SOSV_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'T_SOSV_S2' }],
     description: () =>
       t`Season 2: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'TPROD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'A_TPROD_S1' }],
     description: () =>
       t`Season 1: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'TPROD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'B_TPROD_S2' }],
     description: () =>
       t`Season 2: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
   },
@@ -4834,67 +4834,67 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Change_Confidence' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'N_CHANGE_CONFIDENCE' }],
     description: () =>
       t`Quality layer regarding the change detection between 0-3 (0 = no change, 3 = high confidence). Note: this layer is only available for products produced in production mode conso or nrt.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Data_Density_Indicator' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'O_DATA_DENSITY_INDICATOR' }],
     description: () =>
       t`Data density indicator showing quality of the EO input data between 0 – 100 (0 = bad, 100 = perfect data).`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'A_DISCRETE_CLASSIFICATION' }],
     description: () => t`Main discrete classification according to FAO LCCS scheme.`,
   },
   {
     match: [
-      { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification_Probability' },
+      { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'M_DISCRETE_CLASSIFICATION_PROBABILITY' },
     ],
     description: () => t`Classification probability, a quality indicator for the discrete classification.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Forest_Type' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'B_FOREST_TYPE' }],
     description: () => t`Forest type for all pixels where tree cover fraction is bigger than 1%.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Bare_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'G_BARE_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the bare and sparse vegetation class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Crops_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'F_CROPS_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the cropland class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Tree_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'E_TREE_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the forest class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Grass_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'H_GRASS_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the herbaceous vegetation class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'MossLichen_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'L_MOSSLICHEN_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the moss & lichen class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'PermanentWater_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'C_PERMANENTWATER_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the permanent inland water bodies class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'SeasonalWater_Cover_fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'I_SEASONALWATER_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the seasonal inland water bodies class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Shrub_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'K_SHRUB_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the shrubland class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Snow_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'J_SNOW_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the snow & ice class.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'BuiltUp_Cover_Fraction' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'D_BUILTUP_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the built-up class.`,
   },
   {
