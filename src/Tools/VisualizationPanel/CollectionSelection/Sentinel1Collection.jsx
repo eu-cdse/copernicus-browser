@@ -168,6 +168,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
                         {isAcquisitionModeSelected && <CheckmarkSvg />}
                       </>
                     }
+                    title={ACQUISITION_MODES[acquisition_mode]}
                     className={`s1-collection-button secondary ${
                       isAcquisitionModeSelected ? 'selected' : ''
                     }`}
@@ -198,6 +199,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
                           {isPolarizationSelected && <CheckmarkSvg />}
                         </>
                       }
+                      title={POLARIZATIONS[acquisitionMode][polarization_mode]}
                       className={`s1-collection-button secondary ${isPolarizationSelected ? 'selected' : ''}`}
                       onClick={() => setPolarizationMode(polarization_mode)}
                     />

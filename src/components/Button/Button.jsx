@@ -20,6 +20,7 @@ const Button = ({
   iconStyle,
   styleClassName,
   style,
+  labelStyle,
   onClick,
   isLoading,
   isLoadingStyle,
@@ -35,7 +36,7 @@ const Button = ({
       onClick={!disabled ? onClick : null}
     >
       {!icon ? (
-        <span style={{ visibility: isLoading ? 'hidden' : 'visible' }} className="label">
+        <span style={{ visibility: isLoading ? 'hidden' : 'visible', ...labelStyle }} className="label">
           {label}
         </span>
       ) : (

@@ -117,6 +117,7 @@ function Breadcrumbs({
                     );
                   }}
                   key={item.id}
+                  title={itemLabel}
                   text={
                     <>
                       {itemLabel}

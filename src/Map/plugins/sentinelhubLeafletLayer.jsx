@@ -214,6 +214,8 @@ import {
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -1034,7 +1036,9 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2:
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1:
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1:
-      case COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1: {
+      case COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1:
+      case COPERNICUS_CLMS_LCM_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_TCD_10M_YEARLY_V1: {
         const dsh = getDataSourceHandler(datasetId);
         return await this.createBYOCLayer(
           url,

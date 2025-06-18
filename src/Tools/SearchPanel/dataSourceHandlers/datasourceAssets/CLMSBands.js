@@ -1332,3 +1332,15 @@ export const COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_LCM_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'LCM10',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_TCD_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'TCD10',
+    getDescription: () => ``,
+  },
+];

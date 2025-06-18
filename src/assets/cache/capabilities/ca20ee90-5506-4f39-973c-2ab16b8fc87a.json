@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] CLMS | LCLUM | GDLC| lcm_global_10m_yearly_v1",
+    "layers": [
+        {
+            "id": "LCM10",
+            "name": "LCM-10",
+            "description": "Land Cover Map at 10m - Annual V1",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ca20ee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LCM10&style=default"
+        }
+    ],
+    "datasets": []
+}

@@ -70,10 +70,10 @@ export function doCoordinatesCrossAntimeridian(geometry) {
   let hasPositive = false;
   let hasNegative = false;
   coordEach(geometry, (currentCoord) => {
-    if (currentCoord[0] >= 180) {
+    if (currentCoord[0] > 180) {
       hasPositive = true;
     }
-    if (currentCoord[0] <= -180) {
+    if (currentCoord[0] < -180) {
       hasNegative = true;
     }
   });

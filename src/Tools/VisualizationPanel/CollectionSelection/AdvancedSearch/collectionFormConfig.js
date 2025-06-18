@@ -851,6 +851,26 @@ export const recursiveCollectionCLMS = [
               'lc_global_100m_yearly_v3',
             )})`,
           },
+          {
+            id: 'lcm_global_10m_yearly_v1',
+            label: 'LCM Global, Yearly, 10m, 2020, V1',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'lcm_global_10m_yearly_v1',
+            )})`,
+          },
+          {
+            id: 'tcd_pantropical_10m_yearly_v1',
+            label: 'TCD Pan-tropical, Yearly, 10m, 2020, V1',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'tcd_pantropical_10m_yearly_v1',
+            )})`,
+          },
         ],
       },
       // {

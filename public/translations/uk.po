@@ -11778,9 +11778,6 @@ msgstr ""
 msgid "View cart"
 msgstr ""
 
-msgid "Dashboard"
-msgstr ""
-
 msgid "Any"
 msgstr ""
 
@@ -11966,4 +11963,35 @@ msgid "There was a problem retrieving user profile"
 msgstr ""
 
 msgid "No description available"
+msgstr ""
+
+msgid "Ordering system"
+msgstr ""
+
+msgid "Land Cover Map at 10m resolution with 11 different land cover classes."
+msgstr ""
+
+msgid "Tree Cover Density Map at 10m resolution."
+msgstr ""
+
+msgid "LCM Global 10m Yearly V1"
+msgstr ""
+
+msgid "TCD Pan-tropical 10m Yearly V1"
+msgstr ""
+
+msgid ""
+"Provides spatial information at global level on different types (classes) "
+"of physical coverage of the Earth's surface, e.g. forests, grasslands, "
+"croplands, water bodies, wetlands for the base year 2020. More information "
+"[here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__"
+"use)."
+msgstr ""
+
+msgid ""
+"Provides spatial information at pantropical level on tree canopy density in "
+"percent per pixel for 2020 reference year in a discrete range between 0% "
+"and 100%. More information "
+"[here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__"
+"use)."
 msgstr ""

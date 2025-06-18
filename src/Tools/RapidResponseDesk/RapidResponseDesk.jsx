@@ -306,6 +306,7 @@ const RapidResponseDesk = ({
             label={t`View cart` + ` (${cartSize})`}
             styleClassName="uppercase-text"
             style={{ marginRight: '8px' }}
+            labelStyle={{ fontSize: '13px' }}
             onClick={() => {
               const targetUrl = `${import.meta.env.VITE_RRD_DASHBOARD_BASE_URL}/shopping-cart/`;
               window.open(targetUrl, '_blank');
@@ -313,12 +314,13 @@ const RapidResponseDesk = ({
           ></Button>
           <Button
             outlined={true}
-            label={t`Dashboard`}
+            label={t`Ordering system`}
+            styleClassName="uppercase-text"
+            labelStyle={{ fontSize: '13px' }}
             onClick={() => {
               const targetUrl = `${import.meta.env.VITE_RRD_DASHBOARD_BASE_URL}`;
               window.open(targetUrl, '_blank');
             }}
-            styleClassName="uppercase-text"
           ></Button>
         </div>
         <div className="search-button">
@@ -329,6 +331,7 @@ const RapidResponseDesk = ({
             label={t`Search`}
             styleClassName="uppercase-text"
             style={{ width: '126px' }}
+            labelStyle={{ fontSize: '13px' }}
           ></Button>
         </div>
       </div>

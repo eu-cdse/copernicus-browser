@@ -1,0 +1,75 @@
+[
+    {
+        "id": "TCD10",
+        "title": "TCD-10",
+        "description": "Tree Cover Density Map at 10m - Annual V1",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n// This custom script visualises LCFM - Tree Cover Density MAP layer\nfunction setup() {\n  return {\n    input: [\"TCD10\", \"dataMask\"],\n    output: {\n      bands: 4,\n      sampleType: \"AUTO\",\n    },\n  };\n}\nconst map = [\n  [10, 0xf0f0f0], // >=0% & <=10%\n  [20, 0xfdff73], // >10% & <=20%\n  [30, 0xb7ff73], // >20% & <=30%\n  [40, 0x94fa5c], // >30% & <=40%\n  [50, 0x71f02e], // >40% & <=50%\n  [60, 0x4ce600], // >50% & <=60%\n  [70, 0x42c724], // >60% & <=70%\n  [80, 0x41ab3e], // >70% & <=80%\n  [90, 0x3d9143], // >80% & <=90%\n  [100, 0x2b7533], // >90% & <=100%\n  [254, 0x9c9c9c], // unclassifiable\n];\nconst visualizer = new ColorMapVisualizer(map);\nfunction evaluatePixel(sample) {\n  return visualizer.process(sample.TCD10).concat(sample.dataMask);\n}",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(94.12%,94.12%,94.12%)",
+                            "label": ">= 0% & < =10%"
+                        },
+                        {
+                            "color": "rgb(99.22%,100.0%,45.1%)",
+                            "label": "> 10% & <= 20%"
+                        },
+                        {
+                            "color": "rgb(71.76%,100.0%,45.1%)",
+                            "label": "> 20% & <= 30%"
+                        },
+                        {
+                            "color": "rgb(58.04%,98.04%,36.08%)",
+                            "label": "> 30% & <= 40%"
+                        },
+                        {
+                            "color": "rgb(44.31%,94.12%,18.04%)",
+                            "label": "> 40% & <= 50%"
+                        },
+                        {
+                            "color": "rgb(29.8%,90.2%,0.0%)",
+                            "label": "> 50% & <= 60%"
+                        },
+                        {
+                            "color": "rgb(25.88%,78.04%,14.12%)",
+                            "label": "> 60% & <= 70%"
+                        },
+                        {
+                            "color": "rgb(25.49%,67.06%,24.31%)",
+                            "label": "> 70% & <= 80%"
+                        },
+                        {
+                            "color": "rgb(23.92%,56.86%,26.27%)",
+                            "label": "> 80% & <= 90%"
+                        },
+                        {
+                            "color": "rgb(16.86%,45.88%,20.0%)",
+                            "label": "> 90% & <= 100%"
+                        },
+                        {
+                            "color": "rgb(3.92%,3.92%,3.92%)",
+                            "label": "Unclassifiable"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "01a8e5-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-16T17:20:47.078113Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "8bd33a-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]

@@ -778,6 +778,18 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/dbd4e0-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'lcm_global_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/ca20ee-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'tcd_pantropical_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/01a8e5-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

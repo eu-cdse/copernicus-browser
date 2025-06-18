@@ -120,8 +120,6 @@ div.layer-details {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-left: 15px;
-    padding-right: 30px;
     color: $textColor;
     min-width: 50%;
 
@@ -129,6 +127,8 @@ div.layer-details {
     h2,
     h3 {
       color: $textColor;
+      padding-left: 15px;
+      padding-right: 30px;
     }
 
     h1 {
@@ -146,6 +146,8 @@ div.layer-details {
     p {
       text-align: justify;
       font-size: 12px;
+      padding-left: 15px;
+      padding-right: 30px;
     }
 
     a {

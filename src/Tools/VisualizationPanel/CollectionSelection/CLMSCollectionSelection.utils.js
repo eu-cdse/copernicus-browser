@@ -92,6 +92,8 @@ import {
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -106,6 +108,8 @@ export const CLMS_OPTIONS = [
         id: 'Dynamic Land Cover',
         options: [
           { label: 'clms_global_lcc_100m_v3_yearly_geotiff', id: COPERNICUS_CLMS_LCC_100M_YEARLY_V3 },
+          { label: 'lcm_global_10m_yearly_v1', id: COPERNICUS_CLMS_LCM_10M_YEARLY_V1 },
+          { label: 'tcd_pantropical_10m_yearly_v1', id: COPERNICUS_CLMS_TCD_10M_YEARLY_V1 },
         ],
       },
       // { label: 'CORINE Land Cover', id: 'CORINE Land Cover' },

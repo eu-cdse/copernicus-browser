@@ -31,6 +31,7 @@ export const MultipleSelection = ({
                     />
                   </>
                 }
+                title={option.title}
                 className={`collection-button secondary option-toggle ${
                   defaultOptions[option.value] ? 'selected' : ''
                 }`}

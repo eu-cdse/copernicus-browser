@@ -132,6 +132,8 @@ import {
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -228,6 +230,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'lwq-reproc_global_300m_10daily_v1': COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   'lwq-nrt_global_300m_10daily_v1': COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   'lwq-nrt_global_100m_10daily_v1': COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+  lcm_global_10m_yearly_v1: COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+  tcd_pantropical_10m_yearly_v1: COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -704,7 +708,13 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     };
   }
 
-  if ([COPERNICUS_CLMS_LCC_100M_YEARLY_V3].includes(datasetId)) {
+  if (
+    [
+      COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
+      COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+      COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+    ].includes(datasetId)
+  ) {
     return {
       id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
       instrument: 'DYNAMIC_LAND_COVER',

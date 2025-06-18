@@ -687,6 +687,16 @@ const getClmsGlobalLwq100mV110DailyNrtMarkdown = () =>
 const ClmsGlobalLwq100mV110DailyNrtTooltip = () =>
   DataSourceTooltip({ source: getClmsGlobalLwq100mV110DailyNrtMarkdown() });
 
+const getClmsGlobalLcm10mV1YearlyMarkdown = () =>
+  t`Provides spatial information at global level on different types (classes) of physical coverage of the Earth's surface, e.g. forests, grasslands, croplands, water bodies, wetlands for the base year 2020. More information [here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__use).`;
+const ClmsGlobalLcm10mV1YearlyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLcm10mV1YearlyMarkdown() });
+
+const getClmsPantropicalTcd10mV1YearlyMarkdown = () =>
+  t`Provides spatial information at pantropical level on tree canopy density in percent per pixel for 2020 reference year in a discrete range between 0% and 100%. More information [here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__use).`;
+const ClmsPantropicalTcd10mV1YearlyTooltip = () =>
+  DataSourceTooltip({ source: getClmsPantropicalTcd10mV1YearlyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -864,4 +874,8 @@ export {
   ClmsGlobalLwq300mV110DailyNrtTooltip,
   getClmsGlobalLwq100mV110DailyNrtMarkdown,
   ClmsGlobalLwq100mV110DailyNrtTooltip,
+  getClmsGlobalLcm10mV1YearlyMarkdown,
+  ClmsGlobalLcm10mV1YearlyTooltip,
+  getClmsPantropicalTcd10mV1YearlyMarkdown,
+  ClmsPantropicalTcd10mV1YearlyTooltip,
 };

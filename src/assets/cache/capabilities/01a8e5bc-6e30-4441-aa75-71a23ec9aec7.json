@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] CLMS | LCLUM | GDLC | tcd_pantropical_10m_yearly_v1",
+    "layers": [
+        {
+            "id": "TCD10",
+            "name": "TCD-10",
+            "description": "Tree Cover Density Map at 10m - Annual V1",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/01a8e5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TCD10&style=default"
+        }
+    ],
+    "datasets": []
+}

@@ -151,6 +151,8 @@ import {
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+  COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5386,5 +5388,13 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'TSI' }],
     description: () =>
       t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LCM_10M_YEARLY_V1, layerId: 'LCM10' }],
+    description: () => t`Land Cover Map at 10m resolution with 11 different land cover classes.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_TCD_10M_YEARLY_V1, layerId: 'TCD10' }],
+    description: () => t`Tree Cover Density Map at 10m resolution.`,
   },
 ];

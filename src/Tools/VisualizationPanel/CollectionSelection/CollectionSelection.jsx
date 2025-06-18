@@ -76,6 +76,7 @@ const renderCollectionsList = ({ collections, selectedCollection, onSelect }) =>
                   {isCollectionSelected && <CheckmarkSvg />}
                 </>
               }
+              title={collection.title}
               className={`collection-button secondary ${isCollectionSelected ? 'selected' : ''}`}
               onClick={() =>
                 onSelect({

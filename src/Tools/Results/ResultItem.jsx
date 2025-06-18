@@ -246,7 +246,9 @@ const ResultItem = ({
             {platformShortName ? (
               <div className="detail" title={oDataHelpers.formatAttributesNames('mission')}>
                 <div>{oDataHelpers.formatAttributesNames('mission')}:</div>
-                <div>{platformShortName}</div>
+                <div>
+                  {platformShortName.length > 30 ? `${platformShortName.slice(0, 30)}...` : platformShortName}
+                </div>
               </div>
             ) : null}
             {instrumentShortName ? (

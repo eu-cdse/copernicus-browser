@@ -1,0 +1,79 @@
+[
+    {
+        "id": "LCM10",
+        "title": "LCM-10",
+        "description": "Land Cover Map at 10m - Annual V1",
+        "styles": [
+            {
+                "name": "default",
+                "description": "Default layer style",
+                "evalScript": "//VERSION=3\n\n// This custom script visualises LCFM - Land Cover Map\n\nfunction setup() {\n  return {\n    input: [\"LCM10\", \"dataMask\"],\n    output: {\n      bands: 4,\n      sampleType: \"AUTO\",\n    },\n  };\n}\n\nconst map = [\n  [10, 0x006400], // Tree cover\n  [20, 0xffbb22], // Shrubland\n  [30, 0xffff4c], // Grassland\n  [40, 0xf096ff], // Cropland\n  [50, 0x0096a0], // Herbaceous wetland\n  [60, 0x00cf75], // Mangroves\n  [70, 0xfae6a0], // Moss and lichen\n  [80, 0xb4b4b4], // Bare/sparse vegetation\n  [90, 0xfa0000], // Built-up\n  [100, 0x0064c8], // Permanent water bodies\n  [110, 0xf0f0f0], // Snow and ice\n  [254, 0x0a0a0a], // Unclassifiable\n];\n\nconst visualizer = new ColorMapVisualizer(map);\n\nfunction evaluatePixel(sample) {\n  return visualizer.process(sample.LCM10).concat(sample.dataMask);\n}\n",
+                "legend": {
+                    "type": "discrete",
+                    "items": [
+                        {
+                            "color": "rgb(0.0%,39.22%,0.0%)",
+                            "label": "Tree cover"
+                        },
+                        {
+                            "color": "rgb(100.0%,73.33%,13.33%)",
+                            "label": "Shrubland"
+                        },
+                        {
+                            "color": "rgb(100.0%,100.0%,29.8%)",
+                            "label": "Grassland"
+                        },
+                        {
+                            "color": "rgb(94.12%,58.82%,100.0%)",
+                            "label": "Cropland"
+                        },
+                        {
+                            "color": "rgb(0.0%,58.82%,62.75%)",
+                            "label": "Herbaceous wetland"
+                        },
+                        {
+                            "color": "rgb(0.0%,81.18%,45.88%)",
+                            "label": "Mangroves"
+                        },
+                        {
+                            "color": "rgb(98.04%,90.2%,62.75%)",
+                            "label": "Moss and lichen"
+                        },
+                        {
+                            "color": "rgb(70.59%,70.59%,70.59%)",
+                            "label": "Bare/sparse vegetation"
+                        },
+                        {
+                            "color": "rgb(98.04%,0.0%,0.0%)",
+                            "label": "Built-up"
+                        },
+                        {
+                            "color": "rgb(0.0%,39.22%,78.43%)",
+                            "label": "Permanent water bodies"
+                        },
+                        {
+                            "color": "rgb(94.12%,94.12%,94.12%)",
+                            "label": "Snow and ice"
+                        },
+                        {
+                            "color": "rgb(3.92%,3.92%,3.92%)",
+                            "label": "Unclassifiable"
+                        }
+                    ]
+                }
+            }
+        ],
+        "orderHint": 0,
+        "instanceId": "ca20ee-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-06-16T14:39:17.833338Z",
+        "collectionType": "CUSTOM",
+        "datasetSourceId": 10,
+        "defaultStyleName": "default",
+        "datasourceDefaults": {
+            "mosaickingOrder": "mostRecent",
+            "temporal": false,
+            "collectionId": "828f6b-YOUR-INSTANCEID-HERE",
+            "type": "CUSTOM"
+        }
+    }
+]
