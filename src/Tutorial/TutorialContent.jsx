@@ -78,8 +78,7 @@ export const localeNames = {
 const welcomeMd = () => t`# Welcome to Copernicus Browser!
 
 A complete archive of Sentinel-1, Sentinel-2, Sentinel-3, Sentinel-5P, Sentinel-6,  
-Copernicus Contributing Missions (Optical, SAR and DEM), and Sentinel-1 and  
-Sentinel-2 Global Mosaics in one place.
+Copernicus Contributing Missions (Optical, SAR and DEM), Copernicus Land Monitoring Service (CLMS), and Sentinel-1 and Sentinel-2 Global Mosaics data in one place.
 
 [About Copernicus Browser page](https://documentation.dataspace.copernicus.eu/Applications/Browser.html)  
 [Available data collections](https://dataspace.copernicus.eu/explore-data/data-collections)
@@ -204,7 +203,7 @@ Search for a location either by scrolling the map with a mouse or enter the loca
 `;
 
 const overlaysMd = () => t`
-Here you can select which base layer and overlays (roads, borders, labels, contours, water bodies) are shown on the map.
+Here you can select which base layer and overlays (borders, labels) are shown on the map.
 `;
 
 const tutorialMd = () => t`

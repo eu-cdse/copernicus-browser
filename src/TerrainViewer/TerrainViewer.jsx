@@ -121,36 +121,42 @@ function TerrainViewer(props) {
   }, [props.is3D]);
 
   useEffect(() => {
-    async function changeLayer(layer) {
+    async function changeLayer() {
       if (
-        layer &&
+        is3D &&
         props.dataSourcesInitialized &&
         props.datasetId &&
         (props.layerId || props.evalscript || props.evalscripturl)
       ) {
-        const newLayer = await getLayerFromParams(props).catch((e) => {
-          console.warn(e.message);
-        });
-        if (newLayer) {
-          if (!isDataFusionEnabled(props.dataFusion)) {
-            await newLayer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
+        if (props.visibleOnMap) {
+          const newLayer = await getLayerFromParams(props).catch((e) => {
+            console.warn(e.message);
+          });
+          if (newLayer) {
+            if (!isDataFusionEnabled(props.dataFusion)) {
+              await newLayer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
+            }
+            const dsh = getDataSourceHandler(newLayer.collectionId);
+            if (dsh?.supportsLowResolutionAlternativeCollection(newLayer.collectionId)) {
+              newLayer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(newLayer.collectionId);
+              newLayer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
+                newLayer.collectionId,
+              );
+            }
+            setLayer(newLayer);
+            window.reload3DTextures(terrainViewerId);
           }
-          const dsh = getDataSourceHandler(layer.collectionId);
-          if (dsh?.supportsLowResolutionAlternativeCollection(layer.collectionId)) {
-            layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(layer.collectionId);
-            layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
-              layer.collectionId,
-            );
-          }
-
-          setLayer(newLayer);
+        } else {
+          setLayer(null);
           window.reload3DTextures(terrainViewerId);
         }
       }
     }
-    changeLayer(layer);
+    changeLayer();
     // eslint-disable-next-line
   }, [
+    is3D,
+    terrainViewerId,
     props.layerId,
     props.evalscript,
     props.evalscripturl,
@@ -176,6 +182,7 @@ function TerrainViewer(props) {
     props.orbitDirection,
     props.cloudCoverage,
     props.dateMode,
+    props.visibleOnMap,
   ]);
 
   useEffect(() => {
@@ -361,24 +368,17 @@ function TerrainViewer(props) {
     if (!is3D) {
       return;
     }
-    const layer = await getLayerFromParams(props).catch((e) => {
+
+    // This is needed to initialize the 3D viewer
+    await getLayerFromParams(props).catch((e) => {
       console.warn(e.message);
     });
-    if (layer && !isDataFusionEnabled(props.dataFusion)) {
-      await layer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
-    }
-    const dsh = getDataSourceHandler(layer.collectionId);
-    if (dsh?.supportsLowResolutionAlternativeCollection(layer.collectionId)) {
-      layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(layer.collectionId);
-      layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
-        layer.collectionId,
-      );
-    }
+
+    setLayer(null);
 
     window.addEventListener('resize', onResize);
 
     window.set3DLocale(locale);
-    setLayer(layer);
     setCancelToken(new CancelToken());
     const tileSize = DEFAULT_DEM_TILE_SIZE;
     const maxZoomLevel = getDem3DMaxZoomLevel(props.demSource3D);
@@ -666,6 +666,7 @@ const mapStoreToProps = (store) => ({
   auth: store.auth,
   terrainViewerSettings: store.terrainViewer.settings,
   terrainViewerId: store.terrainViewer.id,
+  visibleOnMap: store.visualization.visibleOnMap,
 });
 
 export default connect(mapStoreToProps, null)(TerrainViewer);

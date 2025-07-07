@@ -399,7 +399,7 @@ class Map extends React.Component {
     return (
       <LeafletMap
         ref={(el) => (this.mapRef = el)}
-        minZoom={3}
+        minZoom={2}
         onViewportChanged={this.updateViewport}
         center={[this.props.lat, this.props.lng]}
         zoom={this.props.zoom}
