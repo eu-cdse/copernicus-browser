@@ -83,6 +83,7 @@ const S5P = {
 - Reprocessing: no time constraints (performed when major product upgrades are required`,
   [AttributeNames.orbitNumber]: () =>
     t`The absolute Orbit Number is the number of orbits that have elapsed since the first ascending node crossing after launch.`,
+  Complementary: () => t`These product types come from the S5P Product Algorithm Laboratory service.`,
 };
 
 const OPTICAL = {
@@ -126,8 +127,15 @@ const DEM = {
     t`This attribute allows selection of available data for a specific grid ID. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
 };
 
+const ProductTypeTooltips = {
+  SR_2_TDP_LI: () =>
+    t`Sentinel-3 altimetry non-operational demonstration products for Land Ice (Greenland & Antarctica).`,
+  SR_2_TDP_HY: () => t`Sentinel-3 altimetry non-operational demonstration products for Lakes and Reservoirs.`,
+};
+
 const InstrumentTooltips = {
   DEM,
+  S5P,
 };
 
 const AttributeTooltips = {
@@ -140,4 +148,4 @@ const AttributeTooltips = {
   DEM,
 };
 
-export { InstrumentTooltips, AttributeTooltips };
+export { ProductTypeTooltips, InstrumentTooltips, AttributeTooltips };

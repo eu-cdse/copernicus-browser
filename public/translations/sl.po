@@ -11931,3 +11931,16 @@ msgid ""
 "Here you can select which base layer and overlays (borders, labels) are "
 "shown on the map."
 msgstr ""
+
+msgid ""
+"Sentinel-3 altimetry non-operational demonstration products for Land Ice "
+"(Greenland & Antarctica)."
+msgstr ""
+
+msgid ""
+"Sentinel-3 altimetry non-operational demonstration products for Lakes and "
+"Reservoirs."
+msgstr ""
+
+msgid "These product types come from the S5P Product Algorithm Laboratory service."
+msgstr ""

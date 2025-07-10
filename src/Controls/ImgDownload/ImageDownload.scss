@@ -211,8 +211,13 @@
       transition-property: max-height, padding-bottom;
       padding: 0 10px 0 0;
 
-      .row label {
-        flex: 0 0 150px;
+      .row {
+        align-items: baseline;
+
+        label {
+          flex: 0 0 150px;
+          font-weight: $fontWeightNormal;
+        }
       }
 
       .download-layers {

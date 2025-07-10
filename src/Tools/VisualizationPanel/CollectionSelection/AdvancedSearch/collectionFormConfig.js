@@ -321,6 +321,34 @@ export const collections = [
         ],
       },
       {
+        id: 'Complementary',
+        label: 'Complementary',
+        supportsInstrumentName: false,
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'SR_2_TDP_LI',
+            name: 'SR_2_TDP_LI',
+            label: 'SR_2_TDP_LI',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'SR_2_TDP_LI',
+            ),
+          },
+          {
+            id: 'SR_2_TDP_HY',
+            name: 'SR_2_TDP_HY',
+            label: 'SR_2_TDP_HY',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'SR_2_TDP_HY',
+            ),
+          },
+        ],
+      },
+      {
         id: 'S3AuxiliaryFiles',
         label: 'Auxiliary Data File',
         supportsInstrumentName: false,
@@ -413,6 +441,84 @@ export const collections = [
           { id: 'L2__O3_TCL', name: 'L2__O3_TCL', label: 'Level-2 O3_TCL', supportsGeometry: false },
           { id: 'L2__O3__PR', name: 'L2__O3__PR', label: 'Level-2 O3__PR' },
           { id: 'L2__SO2___', name: 'L2__SO2___', label: 'Level-2 SO2' },
+        ],
+      },
+      {
+        id: 'Complementary',
+        label: 'Complementary',
+        supportsInstrumentName: false,
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'L2__AER_OT',
+            name: 'L2__AER_OT',
+            label: 'L2__AER_OT',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__AER_OT',
+            ),
+          },
+          {
+            id: 'L2__BRO___',
+            name: 'L2__BRO___',
+            label: 'L2__BRO___',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__BRO___',
+            ),
+          },
+          {
+            id: 'L2B_SIF___',
+            name: 'L2B_SIF___',
+            label: 'L2B_SIF___',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2B_SIF___',
+            ),
+          },
+          {
+            id: 'L2__CHOCHO',
+            name: 'L2__CHOCHO',
+            label: 'L2__CHOCHO',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__CHOCHO',
+            ),
+          },
+          {
+            id: 'L2__OCLO__',
+            name: 'L2__OCLO__',
+            label: 'L2__OCLO__',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__OCLO__',
+            ),
+          },
+          {
+            id: 'L2__SIF___',
+            name: 'L2__SIF___',
+            label: 'L2__SIF___',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__SIF___',
+            ),
+          },
+          {
+            id: 'L2__TCWV__',
+            name: 'L2__TCWV__',
+            label: 'L2__TCWV__',
+            customFilterExpression: FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'L2__TCWV__',
+            ),
+          },
         ],
       },
       {
@@ -1346,7 +1452,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'toc_global_300m_daily_v2',
-                label: 'toc_global_300m_daily_v2',
+                label: 'TOC, Global, Daily, 300m, (2018–present), V2',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1571,7 +1677,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'lsp_global_300m_yearly_v1',
-                label: 'lsp_global_300m_yearly_v1',
+                label: 'LSP, Global, Yearly, 300m, (2023–2024), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,

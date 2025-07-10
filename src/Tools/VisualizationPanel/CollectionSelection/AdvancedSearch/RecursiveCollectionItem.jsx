@@ -5,9 +5,10 @@ import { DEFAULT_CLOUD_COVER_PERCENT } from '../../../../const';
 
 import CustomCheckbox from '../../../../components/CustomCheckbox/CustomCheckbox';
 import { EOBCCSlider } from '../../../../junk/EOBCommon/EOBCCSlider/EOBCCSlider';
-import { InstrumentTooltips } from '../../../../api/OData/assets/tooltips';
+import { InstrumentTooltips, ProductTypeTooltips } from '../../../../api/OData/assets/tooltips';
 import CollectionTooltip from '../CollectionTooltip/CollectionTooltip';
 import { getNestedCloudCover, getNestedValue } from './collectionFormConfig.utils';
+import { isFunction } from '../../../../utils';
 
 const RecursiveCollectionItem = ({
   item,
@@ -73,12 +74,23 @@ const RecursiveCollectionItem = ({
     return null;
   };
 
+  const renderProductTypeTooltip = () => {
+    if (
+      isProductType &&
+      ProductTypeTooltips[item.id] !== undefined &&
+      isFunction(ProductTypeTooltips[item.id])
+    ) {
+      return <CollectionTooltip source={ProductTypeTooltips[item.id]()} />;
+    }
+  };
+
   return (
     <div className={`${isCollection ? 'collection' : `item`}`}>
       <div className={`item-wrapper`}>
         <CustomCheckbox checked={isSelected} onChange={() => onItemToggle(currentPath)} label={item.label} />
         {renderTooltip()}
         {renderGeometryTooltip()}
+        {renderProductTypeTooltip()}
         {additionalFilterToggle}
       </div>
 
