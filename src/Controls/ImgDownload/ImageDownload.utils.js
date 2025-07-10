@@ -55,6 +55,15 @@ import {
   polygonCoordinatesNormalization,
   splitPolygonOnAntimeridian,
 } from '../../utils/handelAntimeridianCoord.utils';
+import {
+  getProcessGraph,
+  isOpenEoSupported,
+  MIMETYPE_TO_OPENEO_FORMAT,
+} from '../../api/openEO/openEOHelpers';
+import processGraphBuilder from '../../api/openEO/processGraphBuilder';
+import openEOApi from '../../api/openEO/openEO.api';
+import { ensureMercatorBBox } from '../../utils/coords';
+import { isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
@@ -165,12 +174,13 @@ export async function fetchImage(layer, options) {
     geometry,
     effects,
     getMapAuthToken,
+    mimeType,
+    isEffectsAndOptionsSelected,
   } = options;
 
   const dsh = getDataSourceHandler(datasetId);
   const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true; //We can only check if a datasetId is BYOC when the datasource handler for it is instantiated (thus, we are on the user instance which includes that BYOC collection), so we set default to `true` to cover that case.
   const bbox = constructBBoxFromBounds(bounds, selectedCrs);
-
   const getMapParams = {
     bbox: bbox,
     geometry: geometry,
@@ -178,12 +188,11 @@ export async function fetchImage(layer, options) {
     toTime: toTime,
     width: width,
     height: height,
-    format: imageFormat,
+    format: mimeType,
     preview: 2,
     showlogo: false,
     effects: effects,
   };
-
   const reqConfig = {
     cancelToken: cancelToken,
     retries: 5,
@@ -199,6 +208,33 @@ export async function fetchImage(layer, options) {
       reqConfig,
     );
   } else {
+    if (isOpenEoSupported(layer.instanceId, layer.layerId, imageFormat, isEffectsAndOptionsSelected)) {
+      const isRawBand = options.bandName != null;
+      const processGraph = getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
+      const spatialExtent =
+        geometry == null
+          ? {
+              west: getMapParams.bbox.minX,
+              east: getMapParams.bbox.maxX,
+              south: getMapParams.bbox.minY,
+              north: getMapParams.bbox.maxY,
+              height: getMapParams.height,
+              width: getMapParams.width,
+              crs: bbox.crs.authId,
+            }
+          : { ...geometry, height: getMapParams.height, width: getMapParams.width, crs: bbox.crs.authId };
+
+      const newProcessGraph = processGraphBuilder.saveResult(
+        processGraphBuilder.loadCollection(processGraph, {
+          spatial_extent: spatialExtent,
+          temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
+          bands: isRawBand ? [options.bandName] : null,
+        }),
+        { format: MIMETYPE_TO_OPENEO_FORMAT[mimeType] },
+      );
+
+      return openEOApi.getResult(newProcessGraph, getMapAuthToken);
+    }
     return refetchWithDefaultToken((reqConfig) => layer.getMap(getMapParams, apiType, reqConfig), reqConfig);
   }
 }
@@ -402,9 +438,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     selectedCrs,
     baseLayerUrl,
   } = params;
-
+  const isEffectsAndOptionsSelected = isVisualizationEffectsApplied(params);
   const layer = await getLayerFromParams(params, cancelToken);
-
   if (!layer) {
     throw Error('No applicable layer found');
   }
@@ -466,8 +501,9 @@ export async function fetchImageFromParams(params, raiseWarning) {
         geometry: reprojectedGeom,
         bounds: tempBbAndPolygons.bounds,
         apiType: apiType,
-        imageFormat: mimeType,
+        mimeType: mimeType,
         getMapAuthToken: getMapAuthToken,
+        isEffectsAndOptionsSelected,
       };
 
       const blob = await fetchImage(layer, options).catch((err) => {
@@ -499,8 +535,9 @@ export async function fetchImageFromParams(params, raiseWarning) {
       bounds: normalizedBounds,
       geometry: reprojectedGeom,
       apiType: apiType,
-      imageFormat: mimeType,
+      mimeType: mimeType,
       getMapAuthToken: getMapAuthToken,
+      isEffectsAndOptionsSelected,
     };
 
     blob = await fetchImage(layer, options).catch((err) => {
@@ -1379,22 +1416,6 @@ export function getPixelCoordinates(lng, lat, mercatorBBox, imageWidth, imageHei
     x: Math.round((mercatorPoint.coordinates[0] - mercatorBBox.minX) * xScale),
     y: Math.round((mercatorBBox.maxY - mercatorPoint.coordinates[1]) * yScale),
   };
-}
-
-export function ensureMercatorBBox(bbox) {
-  const minPoint = turfPoint([bbox.minX, bbox.minY]);
-  const maxPoint = turfPoint([bbox.maxX, bbox.maxY]);
-
-  const minPointMercator = reprojectGeometry(minPoint.geometry, { fromCrs: 'EPSG:4326', toCrs: 'EPSG:3857' });
-  const maxPointMercator = reprojectGeometry(maxPoint.geometry, { fromCrs: 'EPSG:4326', toCrs: 'EPSG:3857' });
-
-  return new BBox(
-    CRS_EPSG3857,
-    minPointMercator.coordinates[0],
-    minPointMercator.coordinates[1],
-    maxPointMercator.coordinates[0],
-    maxPointMercator.coordinates[1],
-  );
 }
 
 async function drawLogo(ctx, logoPartitionWidth, bottomY, drawCopernicusLogo) {

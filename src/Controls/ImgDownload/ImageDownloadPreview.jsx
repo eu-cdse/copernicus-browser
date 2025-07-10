@@ -20,145 +20,102 @@ import { TABS } from './ImageDownloadForms';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import Loader from '../../Loader/Loader';
 
+async function fetchPreviewImage(props) {
+  // setFetchingPreviewImage(true);
+  const cancelToken = new CancelToken();
+  const effectsParams = constructGetMapParamsEffects(props);
+  const getMapAuthToken = getGetMapAuthToken(props.auth);
+  const previewHeight = 200; // height of preview in ImageDownloadPreview.scss in px
+  const ratioToAvoidMetersPerPixelLimit = 2;
+
+  let height, width;
+
+  if (props.hasAoi && props.cropToAoi) {
+    ({ width, height } = getImageDimensionFromBoundsWithCap(props.aoiBounds, props.datasetId));
+  } else {
+    ({ width, height } = getMapDimensions(props.pixelBounds));
+  }
+  const maxDimension = Math.max(width, height);
+
+  // scale the dimension to the size of preview being displayed
+  height = (height / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
+  width = (width / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
+  const params = {
+    ...props,
+    cancelToken,
+    effects: effectsParams,
+    getMapAuthToken,
+    imageFormat: IMAGE_FORMATS.PNG,
+    showCaptions: false,
+    showLegend: false,
+    showLogo: false,
+    addMapOverlays: false,
+    geometry: props.cropToAoi ? props.aoiGeometry : undefined,
+    bounds: props.cropToAoi ? props.aoiBounds : props.mapBounds,
+  };
+
+  let blob;
+
+  if (props.showComparePanel) {
+    const adjustedClipping = props.cropToAoi
+      ? adjustClippingForAoi(props.comparedClipping, props.aoiBounds, props.mapBounds)
+      : props.comparedClipping;
+
+    const response = await fetchAndPatchImagesFromParams({
+      ...params,
+      comparedClipping: adjustedClipping,
+      comparedLayers: props.comparedLayers.map((cLayer) => {
+        let newCLayer = Object.assign({}, cLayer);
+        newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
+        newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
+        return newCLayer;
+      }),
+    }).catch((e) => {
+      console.warn(e);
+    });
+    blob = response && response.finalImage;
+  } else {
+    const response = await fetchImageFromParams({
+      ...params,
+      layerId: props.layerId,
+    }).catch((e) => {
+      console.warn(e);
+    });
+    blob = response && response.blob;
+  }
+
+  return blob;
+}
+
 const ImageDownloadPreview = (props) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [canDisplayPreview, setCanDisplayPreview] = useState(true);
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState(false);
 
-  const {
-    analyticalFormLayers,
-    selectedTab,
-    disabledDownload,
-    comparedLayers,
-    hasAoi,
-    cropToAoi,
-    drawGeoToImg,
-    aoiGeometry,
-    loiGeometry,
-    pixelBounds,
-    auth,
-    aoiBounds,
-    mapBounds,
-    datasetId,
-    layerId,
-    is3D,
-    showComparePanel,
-    comparedClipping,
-    imageFormat,
-  } = props;
+  const { analyticalFormLayers, selectedTab, disabledDownload, auth, layerId, is3D } = props;
 
-  const fetchPreviewImg = async (layerId = null) => {
+  useEffect(() => {
     setFetchingPreviewImage(true);
-    const cancelToken = new CancelToken();
-    const effects = constructGetMapParamsEffects(props);
-    const getMapAuthToken = getGetMapAuthToken(auth);
-    const previewHeight = 200; // height of preview in ImageDownloadPreview.scss in px
-    const ratioToAvoidMetersPerPixelLimit = 2;
-
-    let height, width;
-
-    if (hasAoi && cropToAoi) {
-      ({ width, height } = getImageDimensionFromBoundsWithCap(aoiBounds, datasetId));
-    } else {
-      const { width: imgWidth, height: imgHeight } = getMapDimensions(pixelBounds);
-      const maxDimension = Math.max(imgWidth, imgHeight);
-      const ratioToAvoidMetersPerPixelLimitInFullMap = 2;
-
-      // scale the dimension to the size of preview being displayed
-      height = (imgHeight / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimitInFullMap;
-      width = (imgWidth / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimitInFullMap;
-    }
-
-    const params = {
-      ...props,
-      cancelToken,
-      effects,
-      getMapAuthToken,
-      width: width * ratioToAvoidMetersPerPixelLimit,
-      height: height * ratioToAvoidMetersPerPixelLimit,
-      imageFormat: imageFormat === IMAGE_FORMATS.JPG ? IMAGE_FORMATS.JPG : IMAGE_FORMATS.PNG,
-      showCaptions: false,
-      showLegend: false,
-      showLogo: false,
-      addMapOverlays: false,
-      drawGeoToImg,
-      aoiGeometry,
-      loiGeometry,
-      geometry: cropToAoi ? aoiGeometry : undefined,
-      bounds: cropToAoi ? aoiBounds : mapBounds,
-    };
-    let blob;
-
-    if (showComparePanel) {
-      const adjustedClipping = cropToAoi
-        ? adjustClippingForAoi(comparedClipping, aoiBounds, mapBounds)
-        : comparedClipping;
-
-      const response = await fetchAndPatchImagesFromParams(
-        {
-          ...params,
-          comparedClipping: adjustedClipping,
-          comparedLayers: comparedLayers.map((cLayer) => {
-            let newCLayer = Object.assign({}, cLayer);
-            newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
-            newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
-            return newCLayer;
-          }),
-        },
-        () => null,
-        () => setCanDisplayPreview(false),
-        () => null,
-      ).catch((e) => {
-        console.warn(e);
-      });
-      blob = response && response.finalImage;
-    } else {
-      const response = await fetchImageFromParams({
-        ...params,
-        layerId: layerId ? layerId : params.layerId,
-      }).catch((e) => {
-        console.warn(e);
-      });
-      blob = response && response.blob;
-    }
-
-    if (blob) {
-      setCanDisplayPreview(true);
-      setPreviewUrl(URL.createObjectURL(blob));
-    } else {
-      setCanDisplayPreview(false);
-    }
-    setFetchingPreviewImage(false);
-  };
-
-  useEffect(() => {
-    fetchPreviewImg();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    fetchPreviewImg();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cropToAoi, drawGeoToImg, imageFormat]);
-
-  useEffect(() => {
+    let selectedLayer = layerId;
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
-      const lastSelectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
-      if (lastSelectedLayer !== CUSTOM_TAG) {
-        fetchPreviewImg(lastSelectedLayer);
-      } else {
-        fetchPreviewImg();
+      selectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
+      if (selectedLayer !== CUSTOM_TAG) {
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [analyticalFormLayers, selectedTab]);
+    const options = {
+      ...props,
+      layerId: selectedLayer,
+    };
 
-  useEffect(() => {
-    if (selectedTab !== TABS.ANALYTICAL) {
-      fetchPreviewImg(layerId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTab]);
+    fetchPreviewImage(options)
+      .then((response) => {
+        setCanDisplayPreview(true);
+        setPreviewUrl(URL.createObjectURL(response));
+      })
+      .finally(() => {
+        setFetchingPreviewImage(false);
+      });
+  }, [analyticalFormLayers, auth, layerId, props, selectedTab]);
 
   return (
     canDisplayPreview &&

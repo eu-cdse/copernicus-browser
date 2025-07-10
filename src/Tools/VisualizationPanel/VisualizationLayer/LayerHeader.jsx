@@ -7,6 +7,7 @@ import { PLANET_NICFI } from '../../SearchPanel/dataSourceHandlers/dataSourceCon
 import CodeIcon from './code.svg?react';
 import DoubleChevronDown from '../../../icons/double-chevron-down.svg?react';
 import DoubleChevronUp from '../../../icons/double-chevron-up.svg?react';
+import { isOpenEoSupported } from '../../../api/openEO/openEOHelpers';
 
 const EMPTY_IMAGE_DATA_URI = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
@@ -52,6 +53,7 @@ const LayerHeader = ({
   actionsOpen,
   toggleActions,
 }) => {
+  const supportsOpenEO = isOpenEoSupported(viz.instanceId, viz.layerId);
   return (
     <div className="layer-header">
       <div className="preview">
@@ -74,7 +76,7 @@ const LayerHeader = ({
             <i className={`fas ${actionsOpen ? 'fa-minus' : 'fa-plus'}`}></i> {t`Add to`}
           </div>
 
-          {hasEvalScript && (
+          {hasEvalScript && !supportsOpenEO && (
             <CodeIcon
               className="code"
               title={t`Show evalscript`}

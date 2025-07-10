@@ -31,6 +31,7 @@ import Controls from '../Controls/Controls';
 import PreviewLayer from '../Tools/Results/PreviewLayer';
 import LeafletControls from './LeafletControls/LeafletControls';
 import SentinelHubLayerComponent from './plugins/sentinelhubLeafletLayer';
+import OpenEoLayerComponent from './plugins/openEOLeafletLayer';
 import GlTileLayer from './plugins/GlTileLayer';
 import { baseLayers, overlayTileLayers, LAYER_ACCESS } from './Layers';
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
@@ -50,7 +51,7 @@ import {
 // import { checkUserAccount } from '../Tools/CommercialDataPanel/commercialData.utils';
 import MaptilerLogo from './maptiler-logo-adaptive.svg';
 import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
-import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
+import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../utils/effectsUtils';
 import {
   getOrbitDirectionFromList,
   isTimespanModeSelected,
@@ -66,6 +67,8 @@ import {
   getQuarterlyInfo,
 } from '../Tools/VisualizationPanel/SmartPanel/LatestDataAction.utils';
 import { manipulateODataSearchResultsWithAntimeridianDuplicates } from '../utils/handelAntimeridianCoord.utils';
+import { getProcessGraph, isOpenEoSupported } from '../api/openEO/openEOHelpers';
+import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
 import { processRRDResults } from '../hooks/useRRDProcessResults';
 import QuicklookOverlay from '../Map/plugins/QuicklookOverlay';
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
@@ -335,11 +338,15 @@ class Map extends React.Component {
       RRDFilterStateResultsSection,
       quicklookImages,
     } = this.props;
-
     const { evalscripturl } = getUrlParams();
-
+    const isEffectsSelected = isVisualizationEffectsApplied(this.props);
+    const supportsOpenEo = isOpenEoSupported(
+      visualizationUrl,
+      visualizationLayerId,
+      IMAGE_FORMATS.PNG,
+      isEffectsSelected,
+    );
     const zoomConfig = getZoomConfiguration(datasetId);
-
     let speckleFilterProp = speckleFilter;
     const dsh = getDataSourceHandler(datasetId);
     if (dsh && !dsh.canApplySpeckleFilter(datasetId, this.props.zoom)) {
@@ -456,7 +463,23 @@ class Map extends React.Component {
               {baseLayer.urlType === 'BYOC' ? (
                 <LayerGroup>
                   <TileLayer url={osmLayer.url} attribution={osmLayer.attribution} pane={BASE_PANE_ID} />
-                  {S2QMosaicReady && (
+                  {S2QMosaicReady && isOpenEoSupported(baseLayer.url, S2QuarterlyMosaicLayerId) ? (
+                    <OpenEoLayerComponent
+                      processGraph={getProcessGraph(baseLayer.url, S2QuarterlyMosaicLayerId)}
+                      datasetId={S2QuarterlyMosaicDatasetId}
+                      getMapAuthToken={getGetMapAuthToken(auth)}
+                      fromTime={moment(latestS2QMosaicDate).utc().startOf('day').toDate()}
+                      toTime={moment(latestS2QMosaicDate).utc().endOf('day').toDate()}
+                      minZoom={S2QMosaicZoom.min}
+                      maxZoom={S2QMosaicZoom.max}
+                      progress={this.progress}
+                      onTileImageError={this.onTileError}
+                      onTileImageLoad={this.onTileLoad}
+                      updateLeafletMapSize={this.updateLeafletMapSize}
+                      opacity={S2QMosaicTransparent ? 0.6 : 1}
+                      pane={BASE_S2_MOSAIC_PANE_ID}
+                    />
+                  ) : (
                     <SentinelHubLayerComponent
                       pane={BASE_S2_MOSAIC_PANE_ID}
                       datasetId={S2QuarterlyMosaicDatasetId}
@@ -495,7 +518,26 @@ class Map extends React.Component {
           ))}
 
           <Pane name={SENTINELHUB_LAYER_PANE_ID} style={{ zIndex: SENTINELHUB_LAYER_PANE_ZINDEX }} />
-          {showSingleShLayer && (
+
+          {showSingleShLayer && supportsOpenEo && (
+            <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
+              <OpenEoLayerComponent
+                processGraph={getProcessGraph(visualizationUrl, visualizationLayerId)}
+                datasetId={datasetId}
+                getMapAuthToken={getGetMapAuthToken(auth)}
+                fromTime={fromTime ? fromTime.toISOString() : null}
+                toTime={toTime ? toTime.toISOString() : null}
+                progress={this.progress}
+                onTileImageError={this.onTileError}
+                onTileImageLoad={this.onTileLoad}
+                pane={SENTINELHUB_LAYER_PANE_ID}
+                minZoom={zoomConfig.min}
+                maxZoom={zoomConfig.max}
+              />
+            </Overlay>
+          )}
+
+          {showSingleShLayer && !supportsOpenEo && (
             <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
               <SentinelHubLayerComponent
                 datasetId={datasetId}
@@ -592,6 +634,27 @@ class Map extends React.Component {
                   pinTimeTo = moment.utc(toTime).endOf('day').toDate();
                 }
                 const index = comparedLayers.length - 1 - i;
+                const supportsOpenEo = isOpenEoSupported(visualizationUrl, layerId);
+
+                if (supportsOpenEo) {
+                  return (
+                    <OpenEoLayerComponent
+                      processGraph={getProcessGraph(visualizationUrl, layerId)}
+                      datasetId={datasetId}
+                      getMapAuthToken={getGetMapAuthToken(auth)}
+                      fromTime={fromTime ? fromTime.toISOString() : null}
+                      toTime={toTime ? toTime.toISOString() : null}
+                      progress={this.progress}
+                      onTileImageError={this.onTileError}
+                      onTileImageLoad={this.onTileLoad}
+                      pane={SENTINELHUB_LAYER_PANE_ID}
+                      opacity={comparedOpacity[index]}
+                      clipping={comparedClipping[index]}
+                      minZoom={zoomConfig.min}
+                      maxZoom={zoomConfig.max}
+                    />
+                  );
+                }
                 return (
                   <SentinelHubLayerComponent
                     key={i}

@@ -1,0 +1,248 @@
+{
+  "TRUE-COLOR-CLOUDLESS": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "byoc-65d4af-YOUR-INSTANCEID-HERE",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B04", "B03", "B02"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "trueColor"
+        },
+        "format": "png"
+      },
+      "result": true
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "process": {
+          "process_graph": {
+            "divide1": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                },
+                "y": 10000
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "trueColor": {
+      "process_id": "true_color",
+      "arguments": {
+        "data": {
+          "from_node": "apply1"
+        },
+        "maxR": 3,
+        "midR": 0.13,
+        "sat": 1.2,
+        "gamma": 1.8,
+        "gOff": 0.01,
+        "red": "B04",
+        "green": "B03",
+        "blue": "B02"
+      }
+    }
+  },
+  "FALSE-COLOR-CLOUDLESS": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "byoc-65d4af-YOUR-INSTANCEID-HERE",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B08", "B04", "B03"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "highlight"
+        },
+        "format": "png"
+      },
+      "result": true
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "apply1"
+        },
+        "maxInput": 0.5,
+        "clipInput": 0.8,
+        "maxOutput": 1
+      }
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "process": {
+          "process_graph": {
+            "divide1": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                },
+                "y": 10000
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "NDVI": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "byoc-65d4af-YOUR-INSTANCEID-HERE",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B04", "B08"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "colorRamp"
+        },
+
+        "format": "PNG"
+      },
+      "result": true
+    },
+    "ndvi4": {
+      "process_id": "ndvi",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "target_band": "NDVI",
+        "nir": "B08",
+        "red": "B04"
+      }
+    },
+    "colorRamp": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "ndvi4"
+        },
+        "minValue": -1,
+        "maxValue": 1,
+        "colorRamps": [
+          [-1, "0x0c0c0c"],
+          [-0.5, "0xbfbfbf"],
+          [0, "0xeaeaea"],
+          [0.025, "0xfffacc"],
+          [0.05, "0xfffefa"],
+          [0.075, "0xbcb76b"],
+          [0.1, "0xccc782"],
+          [0.125, "0xbdb86b"],
+          [0.175, "0xa3cc59"],
+          [0.2, "0x91bf51"],
+          [0.25, "0x81b347"],
+          [0.4, "0x81b347"],
+          [1, "0x004500"]
+        ]
+      }
+    }
+  },
+  "NDWI": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "byoc-65d4af-YOUR-INSTANCEID-HERE",
+        "spatial_extent": {
+          "west": 11.953125000000002,
+          "east": 12.304687500000002,
+          "south": 46.07323062540835,
+          "north": 46.31658418182218,
+          "height": 512,
+          "width": 512
+        },
+        "temporal_extent": ["2025-01-01T00:00:00.000Z", "2025-01-01T23:59:59.999Z"],
+        "bands": ["B03", "B08"]
+      }
+    },
+    "index": {
+      "process_id": "ndvi",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "target_band": "NDVI",
+        "nir": "B03",
+        "red": "B08"
+      }
+    },
+    "colorRamp": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "index"
+        },
+        "minValue": -1,
+        "maxValue": 1,
+        "colorRamps": [
+          [-1, "0x008000"],
+          [0, "0xFFFFFF"],
+          [1, "0x0000CC"]
+        ]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "colorRamp"
+        },
+        "format": "png"
+      },
+      "result": true
+    }
+  },
+  "RAW_BAND": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "byoc-65d4af-YOUR-INSTANCEID-HERE",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": []
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "load1"
+        }
+      },
+      "result": true
+    }
+  }
+}

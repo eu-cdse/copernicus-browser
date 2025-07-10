@@ -1,0 +1,790 @@
+{
+  "1_TRUE_COLOR": {
+    "load2": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B04", "B03", "B02"]
+      }
+    },
+    "trueColor": {
+      "process_id": "true_color",
+      "arguments": {
+        "data": {
+          "from_node": "load2"
+        },
+        "maxR": 3,
+        "midR": 0.13,
+        "sat": 1.2,
+        "gamma": 1.8,
+        "gOff": 0.01,
+        "red": "B04",
+        "green": "B03",
+        "blue": "B02"
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "PNG",
+        "data": {
+          "from_node": "trueColor"
+        }
+      },
+      "result": true
+    }
+  },
+  "3_NDVI": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
+        "bands": ["B04", "B08"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "colorRamp"
+        },
+
+        "format": "PNG"
+      },
+      "result": true
+    },
+    "ndvi4": {
+      "process_id": "ndvi",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "target_band": "NDVI",
+        "nir": "B08",
+        "red": "B04"
+      }
+    },
+    "colorRamp": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "ndvi4"
+        },
+        "minValue": -1,
+        "maxValue": 1,
+        "colorRamps": [
+          [-1, "0x0c0c0c"],
+          [-0.5, "0xbfbfbf"],
+          [0, "0xeaeaea"],
+          [0.025, "0xfffacc"],
+          [0.05, "0xfffefa"],
+          [0.075, "0xbcb76b"],
+          [0.1, "0xccc782"],
+          [0.125, "0xbdb86b"],
+          [0.175, "0xa3cc59"],
+          [0.2, "0x91bf51"],
+          [0.25, "0x81b347"],
+          [0.4, "0x81b347"],
+          [1, "0x004500"]
+        ]
+      }
+    }
+  },
+  "2_TONEMAPPED_NATURAL_COLOR": {
+    "loadcollection1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "bands": ["B04", "B03", "B02"],
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null
+      }
+    },
+    "applydimension2": {
+      "process_id": "apply_dimension",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection1"
+        },
+        "dimension": "bands",
+        "process": {
+          "process_graph": {
+            "blue_node": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 2
+              }
+            },
+            "green_node": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "red_node": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 0
+              }
+            },
+            "gt_red": {
+              "process_id": "gt",
+              "arguments": {
+                "x": {
+                  "from_node": "red_node"
+                },
+                "y": 0.15
+              }
+            },
+            "gt_green": {
+              "process_id": "gt",
+              "arguments": {
+                "x": {
+                  "from_node": "green_node"
+                },
+                "y": 0.15
+              }
+            },
+            "gt_blue": {
+              "process_id": "gt",
+              "arguments": {
+                "x": {
+                  "from_node": "blue_node"
+                },
+                "y": 0.15
+              }
+            },
+            "gain_node_red": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "red_node"
+                },
+                "y": 2.9876031644
+              }
+            },
+            "gain_node_green": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "green_node"
+                },
+                "y": 2.9876031644
+              }
+            },
+            "gain_node_blue": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "blue_node"
+                },
+                "y": 2.9876031644
+              }
+            },
+            "multiply_red": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "red_node"
+                },
+                "y": 0.6
+              }
+            },
+            "multiply_green": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "green_node"
+                },
+                "y": 0.6
+              }
+            },
+            "multiply_blue": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "blue_node"
+                },
+                "y": 0.6
+              }
+            },
+            "pow_node_red": {
+              "process_id": "power",
+              "arguments": {
+                "base": {
+                  "from_node": "multiply_red"
+                },
+                "p": 0.3333
+              }
+            },
+            "pow_node_green": {
+              "process_id": "power",
+              "arguments": {
+                "base": {
+                  "from_node": "multiply_green"
+                },
+                "p": 0.3333
+              }
+            },
+            "pow_node_blue": {
+              "process_id": "power",
+              "arguments": {
+                "base": {
+                  "from_node": "multiply_blue"
+                },
+                "p": 0.3333
+              }
+            },
+
+            "red_if": {
+              "process_id": "if",
+              "arguments": {
+                "accept": {
+                  "from_node": "pow_node_red"
+                },
+                "reject": {
+                  "from_node": "gain_node_red"
+                },
+                "value": {
+                  "from_node": "gt_red"
+                }
+              }
+            },
+            "blue_if": {
+              "process_id": "if",
+              "arguments": {
+                "accept": {
+                  "from_node": "pow_node_blue"
+                },
+                "reject": {
+                  "from_node": "gain_node_blue"
+                },
+                "value": {
+                  "from_node": "gt_blue"
+                }
+              }
+            },
+            "green_if": {
+              "process_id": "if",
+              "arguments": {
+                "accept": {
+                  "from_node": "pow_node_green"
+                },
+                "reject": {
+                  "from_node": "gain_node_green"
+                },
+                "value": {
+                  "from_node": "gt_green"
+                }
+              }
+            },
+            "arraycreate2": {
+              "process_id": "array_create",
+              "arguments": {
+                "data": [
+                  {
+                    "from_node": "red_if"
+                  },
+                  {
+                    "from_node": "green_if"
+                  },
+                  {
+                    "from_node": "blue_if"
+                  }
+                ]
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "saveresult1": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "applydimension2"
+        },
+        "format": "png",
+        "options": {}
+      },
+      "result": true
+    }
+  },
+  "2_FALSE_COLOR": {
+    "load2": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
+        "bands": ["B08", "B04", "B03"]
+      }
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "load2"
+        },
+        "maxInput": 0.4,
+        "clipInput": 0.8,
+        "maxOutput": 1
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "PNG",
+        "data": {
+          "from_node": "highlight"
+        }
+      },
+      "result": true
+    }
+  },
+  "4-FALSE-COLOR-URBAN": {
+    "load2": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B12", "B11", "B04"]
+      }
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "load2"
+        },
+        "maxInput": 0.4,
+        "clipInput": 0.8,
+        "maxOutput": 1
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "PNG",
+        "data": {
+          "from_node": "highlight"
+        }
+      },
+      "result": true
+    }
+  },
+  "5-MOISTURE-INDEX1": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B8A", "B11"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "colorRamp"
+        },
+
+        "format": "PNG"
+      },
+      "result": true
+    },
+    "index": {
+      "process_id": "ndvi",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "target_band": "NDVI",
+        "nir": "B8A",
+        "red": "B11"
+      }
+    },
+    "colorRamp": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "index"
+        },
+        "minValue": -1,
+        "maxValue": 1,
+        "colorRamps": [
+          [-0.8, "0x800000"],
+          [-0.24, "0xff0000"],
+          [-0.032, "0xffff00"],
+          [0.032, "0x00ffff"],
+          [0.24, "0x0000ff"],
+          [0.8, " 0x000080"]
+        ]
+      }
+    }
+  },
+  "6-SWIR": {
+    "load2": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B12", "B8A", "B04"]
+      }
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "load2"
+        },
+        "maxInput": 0.4,
+        "clipInput": 0.8,
+        "maxOutput": 1
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "PNG",
+        "data": {
+          "from_node": "highlight"
+        }
+      },
+      "result": true
+    }
+  },
+  "7-NDWI": {
+    "loadcollection": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "sentinel-2-l2a",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B03", "B08"]
+      }
+    },
+    "save": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "colorRamp"
+        },
+
+        "format": "PNG"
+      },
+      "result": true
+    },
+    "index": {
+      "process_id": "ndvi",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection"
+        },
+        "target_band": "NDVI",
+        "nir": "B03",
+        "red": "B08"
+      }
+    },
+    "colorRamp": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "index"
+        },
+        "minValue": -1,
+        "maxValue": 1,
+        "colorRamps": [
+          [-0.8, "0x008000"],
+          [0, "0xFFFFFF"],
+          [0.8, "0x0000CC"]
+        ]
+      }
+    }
+  },
+  "8-NDSI": {
+    "loadcollection1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL2_L2A",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["B04", "B03", "B02", "B11"]
+      }
+    },
+    "applydimension1": {
+      "process_id": "apply_dimension",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection1"
+        },
+        "dimension": "bands",
+        "process": {
+          "process_graph": {
+            "array2": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 3
+              }
+            },
+            "blue": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 2
+              }
+            },
+            "green": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "red": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 0
+              }
+            },
+            "add2": {
+              "process_id": "add",
+              "arguments": {
+                "x": {
+                  "from_node": "array2"
+                },
+                "y": {
+                  "from_node": "green"
+                }
+              }
+            },
+            "subtract1": {
+              "process_id": "subtract",
+              "arguments": {
+                "x": {
+                  "from_node": "green"
+                },
+                "y": {
+                  "from_node": "array2"
+                }
+              }
+            },
+            "blue_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "blue"
+                },
+                "y": 2.5
+              }
+            },
+            "green_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "green"
+                },
+                "y": 2.5
+              }
+            },
+            "red_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "red"
+                },
+                "y": 2.5
+              }
+            },
+            "divide3": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "subtract1"
+                },
+                "y": {
+                  "from_node": "add2"
+                }
+              }
+            },
+            "gt_snow": {
+              "process_id": "gt",
+              "arguments": {
+                "x": {
+                  "from_node": "divide3"
+                },
+                "y": 0.42
+              }
+            },
+            "blue_channel": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "lte1"
+                },
+                "accept": {
+                  "from_node": "blue_gain"
+                },
+                "reject": 1
+              }
+            },
+            "green_channel": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "lte1"
+                },
+                "accept": {
+                  "from_node": "green_gain"
+                },
+                "reject": 0.8
+              }
+            },
+            "red_channel": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "lte1"
+                },
+                "accept": {
+                  "from_node": "red_gain"
+                },
+                "reject": 0
+              }
+            },
+            "arraycreate1": {
+              "process_id": "array_create",
+              "arguments": {
+                "data": [
+                  {
+                    "from_node": "red_channel"
+                  },
+                  {
+                    "from_node": "green_channel"
+                  },
+                  {
+                    "from_node": "blue_channel"
+                  }
+                ]
+              },
+              "result": true
+            },
+            "lte1": {
+              "process_id": "lte",
+              "arguments": {
+                "x": {
+                  "from_node": "divide3"
+                },
+                "y": 0.42
+              }
+            }
+          }
+        }
+      }
+    },
+    "saveresult1": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "applydimension1"
+        },
+        "format": "png"
+      },
+      "result": true
+    }
+  },
+  "SCENE-CLASSIFICATION": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL2_L2A",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["SCL"]
+      }
+    },
+    "color1": {
+      "process_id": "color_ramp",
+      "arguments": {
+        "data": {
+          "from_node": "load1"
+        },
+        "minValue": -0.01,
+        "maxValue": 11.1,
+        "colorRamps": [
+          [-0.01, "0x000000"],
+          [1, "0xff0000"],
+          [2, "0x2f2f2f"],
+          [3, "0x643200"],
+          [4, "0x00a000"],
+          [5, "0xffe65a"],
+          [6, "0x0000ff"],
+          [7, "0x808080"],
+          [8, "0xc0c0c0"],
+          [9, "0xffffff"],
+          [10, "0x64c8ff"],
+          [11, "0xff96ff"],
+          [11.1, "0x000000"]
+        ]
+      }
+    },
+    "save4": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "color1"
+        },
+        "format": "PNG"
+      },
+      "result": true
+    }
+  },
+  "RAW_BAND": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL2_L2A",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": []
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "load1"
+        }
+      },
+      "result": true
+    }
+  }
+}

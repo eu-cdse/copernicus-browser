@@ -21,6 +21,7 @@ getMapParams (only transforming to this format, not from it):
 */
 
 import { isFunction } from '.';
+import { defaultEffects } from '../const';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 export const defaultGain = 1.0;
@@ -50,23 +51,62 @@ export function isEffectRangeSetAndNotDefault(val, defaultVal) {
   return !(val[0] === defaultVal[0] && val[1] === defaultVal[1]);
 }
 
+export function constructGetMapParamsAdvancedOptions(options) {
+  const {
+    minQa,
+    upsampling,
+    downsampling,
+    speckleFilter,
+    orthorectification,
+    backscatterCoeff,
+    demSource3D,
+  } = options;
+
+  const getMapParamsAdvancedOptions = {};
+  if (minQa !== undefined && minQa !== defaultEffects.minQa) {
+    getMapParamsAdvancedOptions.minQa = minQa;
+  }
+  if (upsampling !== undefined && upsampling !== defaultEffects.upsampling) {
+    getMapParamsAdvancedOptions.upsampling = upsampling;
+  }
+  if (downsampling !== undefined && downsampling !== defaultEffects.downsampling) {
+    getMapParamsAdvancedOptions.downsampling = downsampling;
+  }
+  if (orthorectification !== undefined && orthorectification !== defaultEffects.orthorectification) {
+    getMapParamsAdvancedOptions.orthorectification = orthorectification;
+  }
+  if (backscatterCoeff !== undefined && backscatterCoeff !== defaultEffects.backscatterCoeff) {
+    getMapParamsAdvancedOptions.backscatterCoeff = backscatterCoeff;
+  }
+  if (demSource3D !== undefined && demSource3D !== defaultEffects.demSource3D) {
+    getMapParamsAdvancedOptions.demSource3D = demSource3D;
+  }
+
+  if (speckleFilter !== undefined && speckleFilter.type !== defaultEffects.speckleFilter) {
+    getMapParamsAdvancedOptions.speckleFilter = speckleFilter;
+  }
+  if (Object.keys(getMapParamsAdvancedOptions).length === 0) {
+    return null;
+  }
+  return getMapParamsAdvancedOptions;
+}
+
 export function constructGetMapParamsEffects(effects) {
   const { gainEffect, gammaEffect, redRangeEffect, greenRangeEffect, blueRangeEffect } = effects;
-
   const getMapParamsEffects = {};
-  if (isEffectValueSetAndNotDefault(gainEffect, defaultGain)) {
+  if (isEffectValueSetAndNotDefault(gainEffect, defaultEffects.gainEffect)) {
     getMapParamsEffects.gain = gainEffect;
   }
-  if (isEffectValueSetAndNotDefault(gammaEffect, defaultGamma)) {
+  if (isEffectValueSetAndNotDefault(gammaEffect, defaultEffects.gammaEffect)) {
     getMapParamsEffects.gamma = gammaEffect;
   }
-  if (isEffectRangeSetAndNotDefault(redRangeEffect, defaultRange)) {
+  if (isEffectRangeSetAndNotDefault(redRangeEffect, defaultEffects.redRangeEffect)) {
     getMapParamsEffects.redRange = { from: redRangeEffect[0], to: redRangeEffect[1] };
   }
-  if (isEffectRangeSetAndNotDefault(greenRangeEffect, defaultRange)) {
+  if (isEffectRangeSetAndNotDefault(greenRangeEffect, defaultEffects.greenRangeEffect)) {
     getMapParamsEffects.greenRange = { from: greenRangeEffect[0], to: greenRangeEffect[1] };
   }
-  if (isEffectRangeSetAndNotDefault(blueRangeEffect, defaultRange)) {
+  if (isEffectRangeSetAndNotDefault(blueRangeEffect, defaultEffects.blueRangeEffect)) {
     getMapParamsEffects.blueRange = { from: blueRangeEffect[0], to: blueRangeEffect[1] };
   }
 
@@ -117,7 +157,6 @@ export function constructEffectsFromPinOrHighlight(item) {
   if (demSource3D) {
     effects.demSource3D = demSource3D;
   }
-
   return effects;
 }
 
@@ -136,6 +175,12 @@ export const getVisualizationEffectsFromStore = (store) => ({
   backscatterCoeff: store.visualization.backscatterCoeff,
   demSource3D: store.visualization.demSource3D,
 });
+
+export const isVisualizationEffectsApplied = (params) => {
+  const effects = constructGetMapParamsEffects(params);
+  const advancedOptions = constructGetMapParamsAdvancedOptions(params);
+  return effects != null || advancedOptions != null;
+};
 
 export const logToLinear = (e, min, max) => {
   return ((Math.log(e) - Math.log(min)) / (Math.log(max) - Math.log(min))) * max;

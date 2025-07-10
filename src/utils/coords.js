@@ -1,6 +1,10 @@
 import { coordEach } from '@turf/meta';
-import { featureCollection } from '@turf/helpers';
+import { featureCollection, point as turfPoint } from '@turf/helpers';
 import geo_area from '@mapbox/geojson-area';
+import { reprojectGeometry } from './reproject';
+import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
+
+export const EQUATOR_RADIUS = 6378137.0;
 
 export function isCoordsEmpty(geojsonFeature) {
   let coordsEmpty = false;
@@ -85,4 +89,35 @@ export function switchGeometryCoordinates(geometry) {
         ? switchCoordinates(geometry.coordinates)
         : geometry.coordinates.map((subPolygonCoords) => switchCoordinates(subPolygonCoords)),
   };
+}
+export function ensureMercatorBBox(bbox) {
+  if (bbox.crs.authId === CRS_EPSG3857.authId) {
+    return bbox;
+  }
+  const minPoint = turfPoint([bbox.minX, bbox.minY]);
+  const maxPoint = turfPoint([bbox.maxX, bbox.maxY]);
+
+  const minPointMercator = reprojectGeometry(minPoint.geometry, { fromCrs: 'EPSG:4326', toCrs: 'EPSG:3857' });
+  const maxPointMercator = reprojectGeometry(maxPoint.geometry, { fromCrs: 'EPSG:4326', toCrs: 'EPSG:3857' });
+
+  return new BBox(
+    CRS_EPSG3857,
+    minPointMercator.coordinates[0],
+    minPointMercator.coordinates[1],
+    maxPointMercator.coordinates[0],
+    maxPointMercator.coordinates[1],
+  );
+}
+
+function lat(y) {
+  return 2 * (Math.PI / 4 - Math.atan(Math.exp(-y / EQUATOR_RADIUS)));
+}
+
+export function metersPerPixel(bbox, width) {
+  const newBBox = ensureMercatorBBox(bbox);
+
+  const widthInMeters = Math.abs(newBBox.maxX - newBBox.minX);
+  const latitude = (newBBox.minY + newBBox.maxY) / 2;
+
+  return (widthInMeters / width) * Math.cos(lat(latitude));
 }
