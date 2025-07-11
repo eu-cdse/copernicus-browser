@@ -6,6 +6,8 @@ export const MIMETYPE_TO_OPENEO_FORMAT = {
   'image/tiff': 'gtiff',
 };
 
+const PARTIAL_ROLL_OUT_CHANCE = 0.5;
+
 const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_UINT8];
 
 export function getProcessGraph(instanceUrl, layerId) {
@@ -23,7 +25,7 @@ const randomNumber = Math.random(); // Simulate a random number for the example
 
 console.log(
   `Random number generated: ${randomNumber},${
-    randomNumber < 0.1 ? 'Will use openEO' : ' Will not proceed with OpenEO support check'
+    randomNumber < PARTIAL_ROLL_OUT_CHANCE ? 'Will use openEO' : ' Will not proceed with OpenEO support check'
   }`,
 ); // For debugging purposes
 
@@ -33,8 +35,7 @@ export function isOpenEoSupported(
   imageFormat = IMAGE_FORMATS.PNG,
   isVisualizationEffectsApplied = false,
 ) {
-  // Simulate a 10% chance of skipping the check
-  if (randomNumber > 0.1) {
+  if (randomNumber > PARTIAL_ROLL_OUT_CHANCE) {
     return false;
   }
   if (

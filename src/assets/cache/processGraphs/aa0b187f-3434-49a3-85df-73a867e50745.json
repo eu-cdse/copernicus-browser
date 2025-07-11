@@ -1,0 +1,726 @@
+{
+  "0-RGB-RATIO": {
+    "loadcollection1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HH", "HV"]
+      }
+    },
+    "applydimension1": {
+      "process_id": "apply_dimension",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection1"
+        },
+        "dimension": "bands",
+        "process": {
+          "process_graph": {
+            "vh_blue": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "vh_green": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "vv_red": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 0
+              }
+            },
+            "vh_blue_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "vh_blue"
+                },
+                "y": 0.8
+              }
+            },
+            "vh_green_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "vh_green"
+                },
+                "y": 0.8
+              }
+            },
+            "vv_red_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "vv_red"
+                },
+                "y": 0.8
+              }
+            },
+            "vh_blue_factor": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "divide1"
+                },
+                "y": 0.49
+              }
+            },
+            "vh_green_factor": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "vh_green_gain"
+                },
+                "y": 0.06
+              }
+            },
+            "vv_red_factor": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "vv_red_gain"
+                },
+                "y": 0.28
+              }
+            },
+            "arraycreate1": {
+              "process_id": "array_create",
+              "arguments": {
+                "data": [
+                  {
+                    "from_node": "vv_red_factor"
+                  },
+                  {
+                    "from_node": "vh_green_factor"
+                  },
+                  {
+                    "from_node": "vh_blue_factor"
+                  }
+                ]
+              },
+              "result": true
+            },
+            "divide1": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "vh_blue_gain"
+                },
+                "y": {
+                  "from_node": "vv_red"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "applydimension1"
+        },
+        "maxInput": 0.8,
+        "clipInput": "0.9",
+        "maxOutput": 1
+      }
+    },
+    "saveresult1": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "highlight"
+        },
+        "format": "PNG"
+      },
+      "result": true
+    }
+  },
+  "1-SAR-URBAN": {
+    "loadcollection1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HH", "HV"]
+      }
+    },
+    "applydimension1": {
+      "process_id": "apply_dimension",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection1"
+        },
+        "dimension": "bands",
+        "process": {
+          "process_graph": {
+            "hv": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "hh": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 0
+              }
+            },
+            "urban": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hv"
+                },
+                "y": 5.5
+              }
+            },
+            "vh_blue_channel": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hv"
+                },
+                "y": 8
+              }
+            },
+            "gt2": {
+              "process_id": "gt",
+              "arguments": {
+                "y": 0.5,
+                "x": {
+                  "from_node": "urban"
+                }
+              }
+            },
+            "if_urban": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "gt2"
+                },
+                "accept": 1,
+                "reject": 0
+              }
+            },
+            "arraycreate1": {
+              "process_id": "array_create",
+              "arguments": {
+                "data": [
+                  {
+                    "from_node": "if_urban"
+                  },
+                  {
+                    "from_node": "hh"
+                  },
+                  {
+                    "from_node": "vh_blue_channel"
+                  }
+                ]
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "highlight": {
+      "process_id": "highlight_compression",
+      "arguments": {
+        "data": {
+          "from_node": "applydimension1"
+        },
+        "maxInput": 0.8,
+        "clipInput": "0.9",
+        "maxOutput": 1
+      }
+    },
+    "saveresult1": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "highlight"
+        },
+        "format": "PNG"
+      },
+      "result": true
+    }
+  },
+  "ENHANCED": {
+    "loadcollection1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HH", "HV"]
+      }
+    },
+    "applydimension1": {
+      "process_id": "apply_dimension",
+      "arguments": {
+        "data": {
+          "from_node": "loadcollection1"
+        },
+        "dimension": "bands",
+        "process": {
+          "process_graph": {
+            "GT_WATER_THRESHOLD": {
+              "process_id": "gt",
+              "arguments": {
+                "y": 25,
+                "x": {
+                  "from_node": "divide1"
+                }
+              }
+            },
+            "3": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "GT_WATER_THRESHOLD"
+                },
+                "accept": {
+                  "from_node": "multiply5"
+                },
+                "reject": {
+                  "from_node": "add10"
+                }
+              }
+            },
+            "hv": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 1
+              }
+            },
+            "hh": {
+              "process_id": "array_element",
+              "arguments": {
+                "data": {
+                  "from_parameter": "data"
+                },
+                "index": 0
+              }
+            },
+
+            "vv_red_gain": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hh"
+                },
+                "y": 3
+              }
+            },
+            "if3": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "GT_WATER_THRESHOLD"
+                },
+                "accept": {
+                  "from_node": "hh"
+                },
+                "reject": {
+                  "from_node": "vv_red_gain"
+                }
+              }
+            },
+            "arraycreate1": {
+              "process_id": "array_create",
+              "arguments": {
+                "data": [
+                  {
+                    "from_node": "if3"
+                  },
+                  {
+                    "from_node": "3"
+                  }
+                ],
+                "repeat": {
+                  "from_node": "if4"
+                }
+              },
+              "result": true
+            },
+            "divide1": {
+              "process_id": "divide",
+              "arguments": {
+                "x": {
+                  "from_node": "hh"
+                },
+                "y": {
+                  "from_node": "hv"
+                }
+              }
+            },
+            "if4": {
+              "process_id": "if",
+              "arguments": {
+                "value": {
+                  "from_node": "GT_WATER_THRESHOLD"
+                },
+                "accept": {
+                  "from_node": "subtract15"
+                },
+                "reject": {
+                  "from_node": "multiply16"
+                }
+              }
+            },
+            "multiply5": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hh"
+                },
+                "y": 8
+              }
+            },
+            "multiply6": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hh"
+                },
+                "y": 1.1
+              }
+            },
+            "multiply8": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hv"
+                },
+                "y": 8.7
+              }
+            },
+            "add10": {
+              "process_id": "add",
+              "arguments": {
+                "x": {
+                  "from_node": "multiply6"
+                },
+                "y": {
+                  "from_node": "multiply8"
+                }
+              }
+            },
+            "multiply12": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hh"
+                },
+                "y": 3
+              }
+            },
+            "multiply13": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hv"
+                },
+                "y": 2000
+              }
+            },
+            "add14": {
+              "process_id": "add",
+              "arguments": {
+                "x": {
+                  "from_node": "multiply13"
+                },
+                "y": {
+                  "from_node": "multiply12"
+                }
+              }
+            },
+            "subtract15": {
+              "process_id": "subtract",
+              "arguments": {
+                "x": {
+                  "from_node": "add14"
+                },
+                "y": -0.5
+              }
+            },
+            "multiply16": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "hv"
+                },
+                "y": 1.75
+              }
+            }
+          }
+        }
+      }
+    },
+    "saveresult1": {
+      "process_id": "save_result",
+      "arguments": {
+        "data": {
+          "from_node": "applydimension1"
+        },
+        "format": "PNG"
+      },
+      "result": true
+    }
+  },
+  "HV-DECIBEL-GAMMA0": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HV"]
+      }
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "load1"
+        },
+        "process": {
+          "process_graph": {
+            "ln2": {
+              "process_id": "ln",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                }
+              }
+            },
+            "multiply1": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "ln2"
+                },
+                "y": 0.21714724095
+              }
+            },
+            "subtract2": {
+              "process_id": "subtract",
+              "arguments": {
+                "x": {
+                  "from_node": "multiply1"
+                },
+                "y": -1
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "apply1"
+        }
+      },
+      "result": true
+    }
+  },
+  "HV-LINEAR-GAMMA0": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HV"]
+      }
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "load1"
+        },
+        "process": {
+          "process_graph": {
+            "multiply1": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                },
+                "y": 2
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "apply1"
+        }
+      },
+      "result": true
+    }
+  },
+  "HH-DECIBEL-GAMMA0": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HH"]
+      }
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "load1"
+        },
+        "process": {
+          "process_graph": {
+            "ln2": {
+              "process_id": "ln",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                }
+              }
+            },
+            "multiply1": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_node": "ln2"
+                },
+                "y": 0.21714724095
+              }
+            },
+            "subtract2": {
+              "process_id": "subtract",
+              "arguments": {
+                "x": {
+                  "from_node": "multiply1"
+                },
+                "y": -1
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "apply1"
+        }
+      },
+      "result": true
+    }
+  },
+  "HH-LINEAR-GAMMA0": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": ["HH"]
+      }
+    },
+    "apply1": {
+      "process_id": "apply",
+      "arguments": {
+        "data": {
+          "from_node": "load1"
+        },
+        "process": {
+          "process_graph": {
+            "multiply1": {
+              "process_id": "multiply",
+              "arguments": {
+                "x": {
+                  "from_parameter": "x"
+                },
+                "y": 2
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "apply1"
+        }
+      },
+      "result": true
+    }
+  },
+  "RAW_BAND": {
+    "load1": {
+      "process_id": "load_collection",
+      "arguments": {
+        "id": "SENTINEL1_GRD_MONTHLY_MOSAIC_DH",
+        "spatial_extent": {},
+        "temporal_extent": null,
+        "bands": []
+      }
+    },
+    "save5": {
+      "process_id": "save_result",
+      "arguments": {
+        "format": "png",
+        "data": {
+          "from_node": "load1"
+        }
+      },
+      "result": true
+    }
+  }
+}

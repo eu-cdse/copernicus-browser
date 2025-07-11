@@ -338,31 +338,31 @@ export const DEFAULT_THEMES = [
         name: 'clms_global_fapar_300m_v1_10daily_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/9df37f-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/85f0f9-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fapar_300m_v1_10daily_geotiff_RT0',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/418a35-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/e733f3-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fapar_300m_v1_10daily_geotiff_RT1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/fbea5e-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/f6ff91-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fapar_300m_v1_10daily_geotiff_RT2',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/9c29ee-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/1376ec-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fapar_300m_v1_10daily_geotiff_RT6',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/0e828f-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/3d4b9f-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fcover_1km_v2_10daily_geotiff',
@@ -398,31 +398,31 @@ export const DEFAULT_THEMES = [
         name: 'clms_global_fcover_300m_v1_10daily_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/0f0fc5-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/305df0-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fcover_300m_v1_10daily_geotiff_RT0',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/464439-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/de6305-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fcover_300m_v1_10daily_geotiff_RT1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/1d110b-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/d1307b-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fcover_300m_v1_10daily_geotiff_RT2',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/9f5a5a-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/b8feb1-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_fcover_300m_v1_10daily_geotiff_RT6',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/65a86a-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/31d1ec-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_gpp_300m_v1_10daily_geotiff_RT0',

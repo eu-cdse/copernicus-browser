@@ -2,7 +2,7 @@
     {
         "id": "FAPAR",
         "title": "FAPAR",
-        "description": "Fraction of Absorbed PAR",
+        "description": "Fraction of Absorbed Photosynthetically Active Radiation",
         "styles": [
             {
                 "name": "default",
@@ -1194,24 +1194,24 @@
                         },
                         {
                             "color": "rgb(100.0%,0.0%,0.0%)",
-                            "label": 0.9400000000000001,
-                            "position": 0.9400000000000001
+                            "label": 0.94,
+                            "position": 0.94
                         }
                     ],
-                    "maxPosition": 0.9400000000000001,
+                    "maxPosition": 0.94,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
-        "instanceId": "418a35-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-04-15T17:36:21.388433Z",
+        "instanceId": "85f0f9-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-07-09T13:12:04.716932Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
-            "collectionId": "3dc7fb-YOUR-INSTANCEID-HERE",
+            "collectionId": "302c25-YOUR-INSTANCEID-HERE",
             "type": "CUSTOM"
         }
     }

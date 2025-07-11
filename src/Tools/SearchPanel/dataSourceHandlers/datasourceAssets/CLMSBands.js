@@ -101,6 +101,26 @@ export const COPERNICUS_CLMS_FAPAR_300M_10DAILY_BANDS = [
     name: 'FAPAR',
     getDescription: () => ``,
   },
+  {
+    name: 'LENGTH_AFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_BEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
 ];
 export const COPERNICUS_CLMS_FCOVER_1KM_10DAILY_BANDS = [
   {
