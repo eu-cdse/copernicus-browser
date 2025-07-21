@@ -134,7 +134,7 @@ const radarProvidersCollection = [
       {
         id: 10,
         name: 'ICEYE',
-        label: 'ICEYE',
+        label: 'ICEYE Constellation',
         stacConstellation: ['ICEYE'],
         stacPlatform: ['ICEYE-X'],
         taskingSupported: true,
@@ -152,7 +152,7 @@ const radarProvidersCollection = [
         logo: IceyeLogo,
       },
     ],
-    active: false,
+    active: true,
   },
   {
     id: 'mda',
@@ -164,7 +164,7 @@ const radarProvidersCollection = [
         label: 'RADARSAT-2',
         stacConstellation: ['RADARSAT'],
         stacPlatform: ['RS02'],
-        taskingSupported: true,
+        taskingSupported: false,
         archiveSupported: true,
         description: {
           body: 'The aim of the RADARSAT missions is provide useful information to both commercial and scientific users in such fields as disaster management, interferometry, agriculture, cartography, hydrology, forestry, oceanography, ice studies and coastal monitoring.',

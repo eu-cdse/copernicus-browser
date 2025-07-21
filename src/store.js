@@ -387,6 +387,9 @@ export const themesSlice = createSlice({
       state.selectedModeId = selectedModeId;
       state.selectedThemesListId = selectedThemesListId;
     },
+    setCurrentProjectName(state, action) {
+      state.currentProjectName = action.payload;
+    },
     reset: (state) => {
       state.themesUrl = null;
       state.selectedThemesListId = 'mode';
@@ -394,6 +397,7 @@ export const themesSlice = createSlice({
       state.selectedThemeId = DEFAULT_THEME_ID;
       state.selectedModeId = 'default';
       state.failedThemeParts = [];
+      state.currentProjectName = null;
     },
   },
 });
@@ -1137,6 +1141,7 @@ export const collapsiblePanelSlice = createSlice({
     providerExpanded: true,
     advancedExpanded: false,
     resultsExpanded: true,
+    projectDetailsExpanded: true,
   },
   reducers: {
     setDatePanelExpanded: (state, action) => {
@@ -1163,6 +1168,9 @@ export const collapsiblePanelSlice = createSlice({
     setResultsExpanded: (state, action) => {
       state.resultsExpanded = action.payload;
     },
+    setprojectDetailsExpanded: (state, action) => {
+      state.projectDetailsExpanded = action.payload;
+    },
     setOrderPanels: (state, action) => {
       state.areaTimeExpanded = action.payload;
       state.providerExpanded = action.payload;
@@ -1178,6 +1186,7 @@ export const collapsiblePanelSlice = createSlice({
       state.areaTimeExpanded = true;
       state.providerExpanded = true;
       state.advancedExpanded = true;
+      state.projectDetailsExpanded = true;
     },
   },
 });
@@ -1217,6 +1226,7 @@ export const imageQualityAndProviderSectionSlice = createSlice({
     cloudCoverage: 0.3,
     selectedOpticalProvidersAndMissions: [],
     selectedRadarProvidersAndMissions: [],
+    selectedAtmosProvidersAndMissions: [],
     radarPolarizationFilterArray: [],
     radarInstrumentFilterArray: [],
     radarOrbitDirectionArray: [],
@@ -1276,9 +1286,18 @@ export const imageQualityAndProviderSectionSlice = createSlice({
       state.radarProcessorMode = action.payload;
     },
 
+    setSelectedAtmosProvidersAndMissions: (state, action) => {
+      state.selectedAtmosProvidersAndMissions = action.payload;
+    },
+
+    resetAtmosSection: (state, action) => {
+      state.selectedAtmosProvidersAndMissions = [];
+    },
+
     resetProvidersAndMissions: (state) => {
       state.selectedOpticalProvidersAndMissions = [];
       state.selectedRadarProvidersAndMissions = [];
+      state.selectedAtmosProvidersAndMissions = [];
     },
   },
 });

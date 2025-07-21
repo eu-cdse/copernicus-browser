@@ -151,7 +151,7 @@ const opticalProvidersCollection = [
         label: 'SkySat',
         stacConstellation: ['skysat'],
         stacPlatform: ['skysat'],
-        taskingSupported: true,
+        taskingSupported: false,
         archiveSupported: true,
         description: {
           body: 'The SkySat constellation of 21 high-resolution Earth imaging satellites collects thousands of square kilometres of imagery. Each satellite is three-axis stabilised and agile enough to slew between different targets of interest.',

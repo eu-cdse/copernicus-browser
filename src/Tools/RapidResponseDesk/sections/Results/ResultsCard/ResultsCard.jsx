@@ -71,12 +71,11 @@ const ResultsCard = ({
 
   const hasValidQuicklook = (item, quicklookImages) =>
     !!(
-      item?.assets?.quicklook?.href &&
+      (item?.assets?.quicklook?.href || item?.assets?.['quicklook-png']?.href) &&
       (Array.isArray(item.bbox) || (item.geometry && typeof item.geometry === 'object')) &&
-      quicklookImages[item.id] &&
-      quicklookImages[item.id].startsWith('blob:')
+      quicklookImages[item._internalId] &&
+      quicklookImages[item._internalId].startsWith('blob:')
     );
-
   useEffect(() => {
     const isItemInCart = () => {
       return resultsSection.cartResults?.quote?.products.some((product) =>
@@ -88,8 +87,8 @@ const ResultsCard = ({
 
   useEffect(() => {
     const loadImage = async () => {
-      if (quicklookImages[item.id]) {
-        setPreviewImageUrl(quicklookImages[item.id]);
+      if (quicklookImages[item._internalId]) {
+        setPreviewImageUrl(quicklookImages[item._internalId]);
         return;
       }
 
@@ -101,7 +100,7 @@ const ResultsCard = ({
       );
       if (imageUrl) {
         setPreviewImageUrl(imageUrl);
-        onImageLoad(item.id, imageUrl);
+        onImageLoad(item._internalId, imageUrl);
       }
     };
 
@@ -204,7 +203,7 @@ const ResultsCard = ({
   };
   const quicklookOverlay = useSelector((state) => state.mainMap.quicklookOverlay);
 
-  const isQuicklookActive = quicklookOverlay && quicklookOverlay.id === item.id;
+  const isQuicklookActive = quicklookOverlay && quicklookOverlay._internalId === item._internalId;
 
   const handleQuicklookOnMap = () => {
     if (isQuicklookActive) {
@@ -217,7 +216,8 @@ const ResultsCard = ({
       store.dispatch(
         mainMapSlice.actions.setQuicklookOverlay({
           id: item.id,
-          imageUrl: item.assets.quicklook.href,
+          _internalId: item._internalId,
+          imageUrl: item?.assets?.quicklook?.href || item?.assets?.['quicklook-png']?.href || '',
           bbox: item.bbox,
           geometry: item.geometry,
         }),
@@ -227,7 +227,7 @@ const ResultsCard = ({
   };
 
   const onHover = () => {
-    store.dispatch(resultsSectionSlice.actions.setHighlightedResult(item.id));
+    store.dispatch(resultsSectionSlice.actions.setHighlightedResult(item._internalId));
   };
 
   const onLeave = () => {
@@ -325,7 +325,7 @@ const ResultsCard = ({
           <label className="archive-name">{`${transformMetaDataToReadableText()}`}</label>
           <ProductPreview
             product={{
-              name: item.assets?.quicklook.title || '',
+              name: item.assets?.quicklook?.title || item.assets?.['quicklook-png']?.title || '',
               previewUrl: previewImageUrl,
             }}
             validate={true}

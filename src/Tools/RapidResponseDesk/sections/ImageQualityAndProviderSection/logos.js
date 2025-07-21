@@ -7,6 +7,7 @@ import IceyeLogo from '../../../../../public/rrd/iceye-logo.png';
 import PlanetLogo from '../../../../../public/rrd/planet-logo.png';
 import RadarSatLogo from '../../../../../public/rrd/radarsat-logo.png';
 import GeosatLogo from '../../../../../public/rrd/geosat-logo.png';
+import GHGSatLogo from '../../../../../public/rrd/GHGSAT-logo.png';
 
 export {
   AirbusLogo,
@@ -18,4 +19,5 @@ export {
   PlanetLogo,
   RadarSatLogo,
   GeosatLogo,
+  GHGSatLogo,
 };

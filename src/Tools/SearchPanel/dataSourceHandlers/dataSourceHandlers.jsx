@@ -252,6 +252,7 @@ import AirbusFePleiadesNeoDataSourceHandler from './RRDDataSources/AirbusFePleia
 import { datasourceForRRDDatasetId } from './dataSourceRRDHandlers';
 import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
+import GHGSatDatasourceHandler from './RRDDataSources/GHGSatDatasourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -293,6 +294,7 @@ export function initializeDataSourceHandlers() {
     new AirbusFePleiades1DataSourceHandler(),
     new AirbusFePleiadesNeoDataSourceHandler(),
     new IceyeDatasourceHandler(),
+    new GHGSatDatasourceHandler(),
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
   ];
@@ -905,7 +907,7 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_NPP_300M_10DAILY_RT6]: t`NPP 300m 10-daily V1 RT6`,
   [COPERNICUS_CLMS_SWI_12_5KM_10DAILY]: t`SWI 12.5km 10-daily V3`,
   [COPERNICUS_CLMS_SWI_12_5KM_DAILY]: t`SWI 12.5km Daily V3`,
-  [COPERNICUS_CLMS_SWI_1KM_DAILY]: t`SWI 1km Daily V3`,
+  [COPERNICUS_CLMS_SWI_1KM_DAILY]: t`SWI 1km Daily V1`,
   [COPERNICUS_CLMS_DMP_300M_10DAILY_RT0]: t`DMP 300m 10-daily V1`,
   [COPERNICUS_CLMS_DMP_300M_10DAILY_RT1]: t`DMP 300m 10-daily V1 RT1`,
   [COPERNICUS_CLMS_DMP_300M_10DAILY_RT2]: t`DMP 300m 10-daily V1 RT2`,

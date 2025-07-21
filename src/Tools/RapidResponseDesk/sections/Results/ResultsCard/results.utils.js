@@ -50,16 +50,16 @@ const isValidQuicklook = (href, type) =>
   href && href !== 'null' && !type?.includes('tiff') && !type?.includes('image/tif');
 
 export const fetchPreviewImage = async (item, access_token, imageType, isTasking) => {
-  if (imageCache.has(item.id)) {
-    return imageCache.get(item.id);
+  if (imageCache.has(item._internalId)) {
+    return imageCache.get(item._internalId);
   }
 
-  if (loadingStates.get(item.id)) {
+  if (loadingStates.get(item._internalId)) {
     return null;
   }
 
   try {
-    loadingStates.set(item.id, true);
+    loadingStates.set(item._internalId, true);
 
     const quicklookPngHref = item.assets?.['quicklook-png']?.href;
     const quicklookPngType = item.assets?.['quicklook-png']?.type;
@@ -69,7 +69,7 @@ export const fetchPreviewImage = async (item, access_token, imageType, isTasking
       if (imageBlob) {
         const imageUrl = URL.createObjectURL(imageBlob);
         if (imageUrl) {
-          imageCache.set(item.id, imageUrl);
+          imageCache.set(item._internalId, imageUrl);
           return imageUrl;
         }
       }
@@ -83,7 +83,7 @@ export const fetchPreviewImage = async (item, access_token, imageType, isTasking
       if (imageBlob) {
         const imageUrl = URL.createObjectURL(imageBlob);
         if (imageUrl) {
-          imageCache.set(item.id, imageUrl);
+          imageCache.set(item._internalId, imageUrl);
           return imageUrl;
         }
       }
@@ -91,7 +91,7 @@ export const fetchPreviewImage = async (item, access_token, imageType, isTasking
 
     const logo = getLogoForItem(item, imageType, isTasking);
     if (logo) {
-      imageCache.set(item.id, logo);
+      imageCache.set(item._internalId, logo);
       return logo;
     }
 
@@ -100,7 +100,7 @@ export const fetchPreviewImage = async (item, access_token, imageType, isTasking
     console.error('Error in fetchPreviewImage:', error);
     return null;
   } finally {
-    loadingStates.set(item.id, false);
+    loadingStates.set(item._internalId, false);
   }
 };
 
@@ -109,19 +109,19 @@ export const isImageLoading = (itemId) => {
 };
 
 export const getPreviewImageDetails = async (item, access_token) => {
-  if (imageCache.has(item.id)) {
+  if (imageCache.has(item._internalId)) {
     return {
       title: item.assets?.quicklook?.title || null,
-      url: imageCache.get(item.id),
+      url: imageCache.get(item._internalId),
     };
   }
 
-  if (loadingStates.get(item.id)) {
+  if (loadingStates.get(item._internalId)) {
     return null;
   }
 
   try {
-    loadingStates.set(item.id, true);
+    loadingStates.set(item._internalId, true);
 
     // Check for valid quicklook first
     const quicklookHref = item.assets?.quicklook?.href;
@@ -132,7 +132,7 @@ export const getPreviewImageDetails = async (item, access_token) => {
       if (imageBlob) {
         const imageUrl = URL.createObjectURL(imageBlob);
         if (imageUrl) {
-          imageCache.set(item.id, imageUrl);
+          imageCache.set(item._internalId, imageUrl);
           return {
             title: item.assets?.quicklook?.title || null,
             url: imageUrl,
@@ -150,7 +150,7 @@ export const getPreviewImageDetails = async (item, access_token) => {
       if (imageBlob) {
         const imageUrl = URL.createObjectURL(imageBlob);
         if (imageUrl) {
-          imageCache.set(item.id, imageUrl);
+          imageCache.set(item._internalId, imageUrl);
           return {
             title: item.assets?.['quicklook-png']?.title || null,
             url: imageUrl,
@@ -162,7 +162,7 @@ export const getPreviewImageDetails = async (item, access_token) => {
     // Fallback to provider logo
     const logo = getLogoForItem(item, ProviderImageTypes.radar, false);
     if (logo) {
-      imageCache.set(item.id, logo);
+      imageCache.set(item._internalId, logo);
       return {
         title: null,
         url: logo,
@@ -174,6 +174,6 @@ export const getPreviewImageDetails = async (item, access_token) => {
     console.error('Error in getPreviewImageDetails:', error);
     return null;
   } finally {
-    loadingStates.set(item.id, false);
+    loadingStates.set(item._internalId, false);
   }
 };

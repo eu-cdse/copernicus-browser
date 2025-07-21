@@ -95,6 +95,7 @@ describe('RRD Search Query builder - Archive', () => {
       cloudCoverage: 0.3,
       selectedOpticalProvidersAndMissions: [],
       selectedRadarProvidersAndMissions: [],
+      selectedAtmosProvidersAndMissions: [],
       radarPolarizationFilterArray: [],
       radarInstrumentFilterArray: [],
       radarOrbitDirectionArray: [],
@@ -282,7 +283,7 @@ describe('RRD Search Query builder - Archive', () => {
       const filters = [
         createFilter(InstructionNamesRRD.Polarizations, '=', 'HH'),
         createFilter(InstructionNamesRRD.InstrumentMode, '=', 'SAR_ST_S'),
-        createFilter(InstructionNamesRRD.OrbitState, '=', 'All'),
+        createFilter(InstructionNamesRRD.OrbitState, '=', 'all'),
         ...commonRadarFilters,
       ];
 

@@ -217,8 +217,10 @@ class ThemesProvider extends React.Component {
     try {
       const userProfile = await rrdApi.getProfile(access_token);
       const identifier = userProfile?.profile?.current_project?.identifier;
+      const projectName = userProfile?.profile?.current_project?.name;
       const filteredThemes = filterRrdThemesByIdentifier(RRD_THEMES, identifier);
       store.dispatch(themesSlice.actions.setRRDThemesList(filteredThemes));
+      store.dispatch(themesSlice.actions.setCurrentProjectName(projectName));
       return filteredThemes;
     } catch (error) {
       const errorMessage = t`There was a problem retrieving user profile`;

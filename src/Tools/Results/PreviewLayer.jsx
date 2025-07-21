@@ -61,7 +61,7 @@ class PreviewLayer extends React.Component {
     return (
       <>
         <GeoJSON
-          key={`preview-layer-${this.props.tile?.id}-${this.props.isHighlighted}`}
+          key={`preview-layer-${this.props.tile?._internalId}-${this.props.isHighlighted}`}
           data={this.props.tile.geometry}
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}

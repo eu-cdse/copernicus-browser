@@ -209,6 +209,7 @@ export const DATASOURCES = {
   RRD_RADARSAT2: 'RADARSAT-2',
   RRD_PAZ: 'PAZ',
   RRD_ICEYE: 'ICEYE',
+  RRD_GHGSAT: 'GHGSat',
   CLMS: 'CLMS',
   CCM: 'CCM',
 };

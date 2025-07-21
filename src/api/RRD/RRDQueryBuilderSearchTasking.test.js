@@ -92,6 +92,7 @@ describe('RRD Search Query builder - Tasking', () => {
       cloudCoverage: 0.3,
       selectedOpticalProvidersAndMissions: [],
       selectedRadarProvidersAndMissions: [selectedRadarProvidersAndMissions],
+      selectedAtmosProvidersAndMissions: [],
       radarPolarizationFilterArray: [],
       radarInstrumentFilterArray: [],
       radarOrbitDirectionArray: [],
@@ -103,6 +104,7 @@ describe('RRD Search Query builder - Tasking', () => {
       imageQualityAndProviderSection.selectedOpticalProvidersAndMissions = [
         selectedOpticalProvidersAndMissions,
       ];
+      imageQualityAndProviderSection.selectedAtmosProvidersAndMissions = [];
 
       const searchRequestBody = new RRDQueryBuilder(
         aoi,
@@ -256,7 +258,7 @@ describe('RRD Search Query builder - Tasking', () => {
       const filters = [
         createFilter(InstructionNamesRRD.Polarizations, '=', 'HH'),
         createFilter(InstructionNamesRRD.InstrumentMode, '=', 'SAR_ST_S'),
-        createFilter(InstructionNamesRRD.OrbitState, '=', 'All'),
+        createFilter(InstructionNamesRRD.OrbitState, '=', 'all'),
         ...commonRadarFilters,
       ];
 

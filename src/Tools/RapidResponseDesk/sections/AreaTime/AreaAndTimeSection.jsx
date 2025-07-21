@@ -16,7 +16,7 @@ import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 import Button, { ButtonType } from '../../../../components/Button/Button';
 import { TABS } from '../../../../const';
 import RadioButtonGroup from '../../../../components/RadioButtonGroup/RadioButtonGroup';
-import { ProviderModeSupport } from '../../rapidResponseProperties';
+import { ProviderImageTypes, ProviderModeSupport } from '../../rapidResponseProperties';
 
 export const AreaAndTimeSectionAttributes = Object.freeze({
   id: 'area-time',
@@ -33,6 +33,7 @@ const AreaAndTimeSection = ({
   overlappedRanges,
   selectedTabIndex,
   isTaskingEnabled,
+  imageType,
 }) => {
   const [timespanArray, setTimespanArray] = useState([
     {
@@ -52,9 +53,6 @@ const AreaAndTimeSection = ({
   const maxDateRange = isTaskingEnabled ? now.clone().add(1, 'year') : now;
 
   const cardHolderRef = useRef(null);
-
-  const rrdBaseUrl = import.meta.env.VITE_RRD_BASE_URL;
-  const isProduction = rrdBaseUrl === 'https://gateway-rrd.rapidresponse.copernicus.eu/api';
 
   const getTitle = () => <div className="uppercase-text">{AreaAndTimeSectionAttributes.title()}:</div>;
 
@@ -328,6 +326,7 @@ const AreaAndTimeSection = ({
       <RadioButtonGroup
         name="image-quality-and-provider-mode-support-radio-group"
         options={modeSupportOptions}
+        disabled={imageType === ProviderImageTypes.atmos}
         value={
           isTaskingEnabled
             ? modeSupportOptions.find((type) => type.value === ProviderModeSupport.tasking)
@@ -340,7 +339,7 @@ const AreaAndTimeSection = ({
 
   const renderDateRangeContainer = () => (
     <div className="date-picker-container">
-      {!isProduction && renderModeSupportOptions()}
+      {renderModeSupportOptions()}
       {timespanArray.map((timespanFrame, index) => {
         return (
           <div
@@ -415,6 +414,7 @@ const mapStoreToProps = (store) => ({
   selectedTabIndex: store.tabs.selectedTabIndex,
   isTaskingEnabled: store.areaAndTimeSection.isTaskingEnabled,
   isArchiveEnabled: store.areaAndTimeSection.isArchiveEnabled,
+  imageType: store.imageQualityAndProviderSection.imageType,
 });
 
 export default connect(mapStoreToProps, null)(AreaAndTimeSection);

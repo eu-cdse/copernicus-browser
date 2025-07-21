@@ -107,4 +107,9 @@
     opacity: $disabled;
     cursor: auto;
   }
+
+  .loader {
+    height: auto;
+    position: absolute;
+  }
 }

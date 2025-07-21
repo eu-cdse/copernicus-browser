@@ -67,6 +67,9 @@ const RRD_DATASOURCE_KEYWORD_RULES = [
   { keyword: 'TERRASAR', value: 'AIRBUS_DE' },
   { keyword: 'TSX', value: 'AIRBUS_DE' },
   { keyword: 'TDX', value: 'AIRBUS_DE' },
+
+  // GHGSAT
+  { keyword: 'GHGSAT', value: 'GHGSAT' },
 ];
 
 module.exports = {

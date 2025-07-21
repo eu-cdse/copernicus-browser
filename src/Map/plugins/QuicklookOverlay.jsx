@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { ImageOverlay } from 'react-leaflet';
 import L from 'leaflet';
 
-const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, itemId }) => {
-  const blobUrl = quicklookImages[itemId];
+const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, internalId }) => {
+  const blobUrl = quicklookImages[internalId];
 
   const bounds = useMemo(() => {
     if (!quicklookOverlay) {

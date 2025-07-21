@@ -760,10 +760,10 @@ class Map extends React.Component {
           <FeatureGroup onClick={this.onPreviewRRDClick}>
             {this.state.RRDProcessedResults.map((tile, i) => (
               <PreviewLayer
-                isHighlighted={tile.id === highlightedRRDResult}
+                isHighlighted={tile._internalId === highlightedRRDResult}
                 tile={tile}
-                pane={tile?.id === highlightedRRDResult ? 'highlightPane' : 'overlayPane'}
-                key={`rrd-result-${tile?.id}-${tile?.id === highlightedRRDResult}`}
+                pane={tile?._internalId === highlightedRRDResult ? 'highlightPane' : 'overlayPane'}
+                key={`rrd-result-${tile?._internalId}-${tile?._internalId === highlightedRRDResult}`}
               />
             ))}
           </FeatureGroup>
@@ -868,7 +868,7 @@ class Map extends React.Component {
           <QuicklookOverlay
             quicklookOverlay={this.props.quicklookOverlay}
             quicklookImages={quicklookImages}
-            itemId={this.props.quicklookOverlay?.id}
+            internalId={this.props.quicklookOverlay?._internalId}
           />
         )}
       </LeafletMap>

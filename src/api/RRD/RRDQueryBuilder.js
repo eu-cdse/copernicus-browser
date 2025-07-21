@@ -69,6 +69,20 @@ export class RRDQueryBuilder {
             .map((mission) => mission.id),
         )),
     );
+
+    this.latestProviderSectionStoreState.selectedAtmosProvidersAndMissions.forEach(
+      (provider) =>
+        (collections = collections.concat(
+          provider.missions
+            .filter(
+              (mission) =>
+                (this.isTaskingEnabled && mission.taskingSupported) ||
+                (!this.isTaskingEnabled && mission.archiveSupported),
+            )
+            .map((mission) => mission.id),
+        )),
+    );
+
     return collections;
   }
 
@@ -126,7 +140,7 @@ export class RRDQueryBuilder {
         if (orbitArray.length === Object.keys(AttributeOrbitDirectionValues).length) {
           conditions.push({
             op: '=',
-            args: [{ property: InstructionNamesRRD.OrbitState }, 'All'],
+            args: [{ property: InstructionNamesRRD.OrbitState }, 'all'],
           });
         } else {
           conditions.push({
@@ -265,17 +279,23 @@ export class RRDQueryBuilder {
           ],
         });
       }
-
-      conditions.push({
-        op: '>=',
-        args: [
-          {
-            property: InstructionNamesRRD.AOICover,
-          },
-          100 - this.latestAdvancedSectionState.aoiCoverage * 100,
-        ],
-      });
-
+      if (
+        filterPropertySupportsSensorType(
+          InstructionNamesRRD.AOICover,
+          this.latestProviderSectionStoreState.imageType,
+        ) &&
+        filterPropertySupportsMode(InstructionNamesRRD.AOICover, this.isTaskingEnabled)
+      ) {
+        conditions.push({
+          op: '>=',
+          args: [
+            {
+              property: InstructionNamesRRD.AOICover,
+            },
+            100 - this.latestAdvancedSectionState.aoiCoverage * 100,
+          ],
+        });
+      }
       const resolutionClasses = getAllResolutionClasses();
       if (resolutionClasses.length > 0) {
         conditions.push(
@@ -320,7 +340,6 @@ export class RRDQueryBuilder {
       let sarFilter = this._generateSarFilter();
       let opticalFilter = this._generateOpticalFilter();
       let advancedFilter = this._generateAdvancedFilter();
-
       combinedFilter = [...sarFilter, ...opticalFilter, ...advancedFilter];
 
       if (this.isTaskingEnabled) {

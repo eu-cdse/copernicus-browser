@@ -10,6 +10,7 @@ export const MetadataSourceType = Object.freeze({
 export const ProviderImageTypes = Object.freeze({
   optical: 'optical',
   radar: 'radar',
+  atmos: 'atmos',
 });
 
 export const SensorModesProperties = [
@@ -263,4 +264,28 @@ export const RRD_CONSTELLATIONS = {
   AIRBUS_FE_SPOT: 'SPOT',
   AIRBUS_FE_PLEIADAS: 'PHR',
   AIRBUS_FE_PLEIADAS_NEO: 'PNEO',
+  GHGSAT: 'GHGSat',
 };
+
+export const ProviderImageOptions = [
+  {
+    label: t`Optical`,
+    value: ProviderImageTypes.optical,
+    className: 'uppercase-text',
+    searchModes: [ProviderModeSupport.archive, ProviderModeSupport.tasking],
+  },
+  {
+    label: t`Radar`,
+    value: ProviderImageTypes.radar,
+    className: 'uppercase-text',
+    style: { marginLeft: '20px' },
+    searchModes: [ProviderModeSupport.archive, ProviderModeSupport.tasking],
+  },
+  {
+    label: t`Atmospheric`,
+    value: ProviderImageTypes.atmos,
+    className: 'uppercase-text',
+    style: { marginLeft: '20px' },
+    searchModes: [ProviderModeSupport.archive],
+  },
+];

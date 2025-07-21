@@ -99,47 +99,46 @@ const AdvancedSection = (props) => {
       </div>
     );
   };
-
+  const supportedAdvancedFilters = advancedSectionBodyComponentProperties
+    .filter((item) => item.sensorType.includes(imageType))
+    .filter((item) =>
+      item.modeSupport.includes(isTaskingEnabled ? ProviderModeSupport.tasking : ProviderModeSupport.archive),
+    );
   const renderBody = () => {
     return (
       <div className="advanced-section-body">
-        {advancedSectionBodyComponentProperties
-          .filter((item) => item.sensorType.includes(imageType))
-          .filter((item) =>
-            item.modeSupport.includes(
-              isTaskingEnabled ? ProviderModeSupport.tasking : ProviderModeSupport.archive,
-            ),
-          )
-          .map((item) => (
-            <div className="slider-checkbox-container" key={item.name}>
-              {item.inputType === INPUT_TYPES.CHECKBOX
-                ? renderCheckBox(item)
-                : item.inputType === INPUT_TYPES.SLIDER
-                ? renderSlider(item)
-                : item.inputType === INPUT_TYPES.RANGE_SLIDER
-                ? renderRange(item)
-                : item.inputType === INPUT_TYPES.MULTI_SELECT_CHECKBOX
-                ? renderMultiSelectCheckBox(item)
-                : null}
-            </div>
-          ))}
+        {supportedAdvancedFilters.map((item) => (
+          <div className="slider-checkbox-container" key={item.name}>
+            {item.inputType === INPUT_TYPES.CHECKBOX
+              ? renderCheckBox(item)
+              : item.inputType === INPUT_TYPES.SLIDER
+              ? renderSlider(item)
+              : item.inputType === INPUT_TYPES.RANGE_SLIDER
+              ? renderRange(item)
+              : item.inputType === INPUT_TYPES.MULTI_SELECT_CHECKBOX
+              ? renderMultiSelectCheckBox(item)
+              : null}
+          </div>
+        ))}
       </div>
     );
   };
 
   return (
-    <CollapsiblePanel
-      key={AdvancedSectionAttributes.id}
-      className={`section`}
-      title={getTitle()}
-      headerComponent={getTitle()}
-      expanded={advancedExpanded}
-      toggleExpanded={AdvancedSectionAttributes.toggleExpanded}
-    >
-      {() => {
-        return advancedExpanded ? renderBody() : null;
-      }}
-    </CollapsiblePanel>
+    supportedAdvancedFilters.length > 0 && (
+      <CollapsiblePanel
+        key={AdvancedSectionAttributes.id}
+        className={`section`}
+        title={getTitle()}
+        headerComponent={getTitle()}
+        expanded={advancedExpanded}
+        toggleExpanded={AdvancedSectionAttributes.toggleExpanded}
+      >
+        {() => {
+          return advancedExpanded ? renderBody() : null;
+        }}
+      </CollapsiblePanel>
+    )
   );
 };
 

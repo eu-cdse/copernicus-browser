@@ -28,6 +28,7 @@ import {
 import Loader from '../../Loader/Loader';
 import { TABS } from '../../const';
 import { getPolarizationFilterOptions } from './sections/ImageQualityAndProviderSection/Radar/Radar.utils';
+import ProjectDetailsSection from './sections/ProjectDetails/ProjectDetailsSection';
 
 const ErrorCode = {
   OVERLAPPED_RANGES: 'OVERLAPPED_RANGES',
@@ -130,6 +131,10 @@ const RapidResponseDesk = ({
       (provider) => provider.missions?.length > 0,
     );
 
+    const hasValidAtmos = providerSection.selectedAtmosProvidersAndMissions.some(
+      (provider) => provider.missions?.length > 0,
+    );
+
     store.dispatch(
       imageQualityAndProviderSectionSlice.actions.setSelectedOpticalProvidersAndMissions(
         providerSection.selectedOpticalProvidersAndMissions,
@@ -142,7 +147,13 @@ const RapidResponseDesk = ({
       ),
     );
 
-    return hasValidOptical || hasValidRadar;
+    store.dispatch(
+      imageQualityAndProviderSectionSlice.actions.setSelectedAtmosProvidersAndMissions(
+        providerSection.selectedAtmosProvidersAndMissions,
+      ),
+    );
+
+    return hasValidOptical || hasValidRadar || hasValidAtmos;
   };
 
   const isSearchCriteriaValid = () => {
@@ -170,6 +181,15 @@ const RapidResponseDesk = ({
     }
 
     return true;
+  };
+
+  const ensureInternalFeatureIds = (features) => {
+    return features.map((item) => ({
+      ...item,
+      ...{
+        _internalId: Date.now().toString(36) + Math.random().toString(36).slice(2, 10),
+      },
+    }));
   };
 
   const triggerSearchQuery = () => {
@@ -216,6 +236,10 @@ const RapidResponseDesk = ({
       selectedRadarProvidersAndMissions: providerSection.selectedRadarProvidersAndMissions.filter(
         (provider) => provider.missions?.length > 0,
       ),
+
+      selectedAtmosProvidersAndMissions: providerSection.selectedAtmosProvidersAndMissions.filter(
+        (provider) => provider.missions?.length > 0,
+      ),
     };
 
     store.dispatch(
@@ -226,6 +250,11 @@ const RapidResponseDesk = ({
     store.dispatch(
       imageQualityAndProviderSectionSlice.actions.setSelectedRadarProvidersAndMissions(
         latestProviderMissionsCollectionsArray.selectedRadarProvidersAndMissions,
+      ),
+    );
+    store.dispatch(
+      imageQualityAndProviderSectionSlice.actions.setSelectedAtmosProvidersAndMissions(
+        latestProviderMissionsCollectionsArray.selectedAtmosProvidersAndMissions,
       ),
     );
     const latestProviderSection = store.getState().imageQualityAndProviderSection;
@@ -266,6 +295,7 @@ const RapidResponseDesk = ({
           } else {
             result = response.features;
           }
+          result = ensureInternalFeatureIds(result);
           if (result.length > 0) {
             store.dispatch(collapsiblePanelSlice.actions.setOrderPanels(false));
           } else {
@@ -288,6 +318,7 @@ const RapidResponseDesk = ({
         <div ref={divErrorMessageRef}>
           <MessagePanel />
         </div>
+        <ProjectDetailsSection />
         <AreaAndTimeSection />
         <ProviderSection />
         <AdvancedSection />

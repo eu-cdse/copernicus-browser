@@ -122,8 +122,8 @@ const ResultsSection = ({
               <NotificationPanel
                 msg={
                   <ReactMarkdown
-                    children={t`No results found for selected filter parameters.\n  
-                      To get more results, try modifying form fields (like the dates range, data providers, and advanced fields) and/or selecting a larger area on the map.`}
+                    children={t`No results found with your current filters (might be related to access rights).\n
+                    Try adjusting the date range, data providers, advanced fields, or select a bigger area on the map to see more results.`}
                   ></ReactMarkdown>
                 }
                 type="error"
@@ -132,7 +132,7 @@ const ResultsSection = ({
               <div className="results-section-body">
                 {processedResults.map((item) => (
                   <ResultsCard
-                    key={item.id}
+                    key={item._internalId}
                     item={item}
                     currentPage={currentPage}
                     onImageLoad={handleImageLoad}
@@ -180,9 +180,13 @@ const ResultsSection = ({
               </div>
               <div className="results-panel">
                 {processedResults
-                  .filter((result) => selectedTiles.some((tile) => tile.id === result.id))
+                  .filter((result) => selectedTiles.some((tile) => tile._internalId === result._internalId))
                   .map((item) => (
-                    <ResultsCard key={item.id} item={item} loadedImages={quicklookImages}></ResultsCard>
+                    <ResultsCard
+                      key={item._internalId}
+                      item={item}
+                      loadedImages={quicklookImages}
+                    ></ResultsCard>
                   ))}
               </div>
             </>

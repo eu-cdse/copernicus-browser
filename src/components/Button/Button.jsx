@@ -44,7 +44,7 @@ const Button = ({
           <i style={iconStyle} className={icon}></i>
         </div>
       )}
-      {isLoading && <Loader style={{ position: 'fixed', height: 'auto' }} />}
+      {isLoading && <Loader />}
     </div>
   );
 };

@@ -1,16 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './ImageQualityAndProviderSection.scss';
 import { connect } from 'react-redux';
-import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { t } from 'ttag';
+import Slider from 'rc-slider/lib/Slider';
+
 import store, { collapsiblePanelSlice, imageQualityAndProviderSectionSlice } from '../../../../store';
 import RadioButtonGroup from '../../../../components/RadioButtonGroup/RadioButtonGroup';
 import { Range } from 'rc-slider';
 import Optical from './Optical/Optical';
 import Radar from './Radar/Radar';
-import { ProviderImageTypes, ResolutionSliderMarks } from '../../rapidResponseProperties';
-import Slider from 'rc-slider/lib/Slider';
+import Atmos from './Atmos/Atmos';
+import {
+  ProviderImageOptions,
+  ProviderImageTypes,
+  ResolutionSliderMarks,
+  ProviderModeSupport,
+} from '../../rapidResponseProperties';
 import { RRD_RESOLUTION_CLASSES } from '../../../../api/RRD/assets/rrd.utils';
+import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 
 const ProviderSectionAttributes = Object.freeze({
   id: 'provider',
@@ -25,21 +32,30 @@ const ImageQualityAndProviderSection = ({
   isTaskingEnabled,
 }) => {
   const [sliderValue, setSliderValue] = useState(imageResolution);
-  const headerOptions = [
-    { label: t`Optical`, value: ProviderImageTypes.optical, className: 'uppercase-text' },
-    {
-      label: t`Radar`,
-      value: ProviderImageTypes.radar,
-      className: 'uppercase-text',
-      style: { marginLeft: '20px' },
-    },
-  ];
+  const headerOptions = ProviderImageOptions.map((option) => ({
+    ...option,
+    disabled: !option.searchModes.includes(
+      isTaskingEnabled ? ProviderModeSupport.tasking : ProviderModeSupport.archive,
+    ),
+  }));
 
   const setImageType = (value) => {
-    if (value === ProviderImageTypes.radar) {
-      store.dispatch(imageQualityAndProviderSectionSlice.actions.resetOpticalSection());
-    } else {
-      store.dispatch(imageQualityAndProviderSectionSlice.actions.resetRadarSection());
+    switch (value) {
+      case ProviderImageTypes.optical:
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetAtmosSection());
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetRadarSection());
+        break;
+      case ProviderImageTypes.radar:
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetAtmosSection());
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetOpticalSection());
+        break;
+      case ProviderImageTypes.atmos:
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetOpticalSection());
+        store.dispatch(imageQualityAndProviderSectionSlice.actions.resetRadarSection());
+
+        break;
+      default:
+        break;
     }
 
     store.dispatch(imageQualityAndProviderSectionSlice.actions.setImageType(value));
@@ -198,7 +214,13 @@ const ImageQualityAndProviderSection = ({
     return (
       <div className="image-quality-and-provider-body">
         {isTaskingEnabled ? renderResolutionSlider() : renderResolutionRange()}
-        {imageType === ProviderImageTypes.optical ? <Optical /> : <Radar />}
+        {imageType === ProviderImageTypes.optical ? (
+          <Optical />
+        ) : imageType === ProviderImageTypes.radar ? (
+          <Radar />
+        ) : imageType === ProviderImageTypes.atmos ? (
+          <Atmos />
+        ) : null}
       </div>
     );
   };

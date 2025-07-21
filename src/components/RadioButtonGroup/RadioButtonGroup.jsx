@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import RadioButton from '../RadioButton/RadioButton';
 import './RadioButtonGroup.scss';
 
-const RadioButtonGroup = ({ options, name, onChange, value }) => {
+const RadioButtonGroup = ({ options, name, onChange, value, disabled = false }) => {
   const [selectedValue, setSelectedValue] = useState(value.value);
 
   const handleChange = (event) => {
@@ -17,6 +17,7 @@ const RadioButtonGroup = ({ options, name, onChange, value }) => {
     <div className="radio-button-group">
       {options.map((option) => (
         <RadioButton
+          disabled={option.disabled || disabled}
           key={option.value}
           name={name}
           value={option.value}
