@@ -340,5 +340,77 @@ describe('RRD Search Query builder - Archive', () => {
       ).createSearchRequestBody()[0];
       expect(searchRequestBody).toEqual(expectedSearchArchiveQueryBodyRadar);
     });
+
+    it('Create a search query body with resolution set to HR2', () => {
+      imageQualityAndProviderSection.imageType = ProviderImageTypes.radar;
+      imageQualityAndProviderSection.selectedRadarProvidersAndMissions = [selectedRadarProvidersAndMissions];
+      imageQualityAndProviderSection.radarOrbitDirectionArray = [{ value: 'ascending', label: 'Ascending' }];
+      imageQualityAndProviderSection.radarPolarizationFilterArray = [{ value: 'HH', label: 'HH' }];
+      imageQualityAndProviderSection.radarInstrumentFilterArray = [{ value: 'SAR_ST_S', label: 'SAR_ST_S' }];
+      imageQualityAndProviderSection.imageResolution = [60, 80];
+
+      const filters = [createFilter(InstructionNamesRRD.ResolutionClass, '=', 'HR2')];
+
+      const expectedSearchArchiveQueryBodyRadar = createQueryBody([1], filters);
+
+      const searchRequestBody = new RRDQueryBuilder(
+        aoi,
+        mainMap.bounds,
+        areaAndTimeSection,
+        imageQualityAndProviderSection,
+        advancedSection,
+        undefined,
+        isTaskingEnabled,
+      ).createSearchRequestBody();
+      console.log(
+        expectedSearchArchiveQueryBodyRadar.filter.args.find(
+          (arg) => arg.args[0].property === 'resolution_class',
+        ),
+      );
+      expect(
+        searchRequestBody[0].filter.args.find((arg) => arg.args[0].property === 'resolution_class'),
+      ).toEqual(
+        expectedSearchArchiveQueryBodyRadar.filter.args.find(
+          (arg) => arg.args[0].property === 'resolution_class',
+        ),
+      );
+    });
+
+    it('Create a search query body with resolution set to 0.5 to 100m', () => {
+      imageQualityAndProviderSection.imageType = ProviderImageTypes.radar;
+      imageQualityAndProviderSection.selectedRadarProvidersAndMissions = [selectedRadarProvidersAndMissions];
+      imageQualityAndProviderSection.radarOrbitDirectionArray = [{ value: 'ascending', label: 'Ascending' }];
+      imageQualityAndProviderSection.radarPolarizationFilterArray = [{ value: 'HH', label: 'HH' }];
+      imageQualityAndProviderSection.radarInstrumentFilterArray = [{ value: 'SAR_ST_S', label: 'SAR_ST_S' }];
+      imageQualityAndProviderSection.imageResolution = [10, 100];
+
+      const filters = [
+        createFilter(InstructionNamesRRD.ResolutionClass, 'in', ['VHR1b', 'VHR2', 'HR1', 'HR2', 'MR1']),
+      ];
+
+      const expectedSearchArchiveQueryBodyRadar = createQueryBody([1], filters);
+
+      const searchRequestBody = new RRDQueryBuilder(
+        aoi,
+        mainMap.bounds,
+        areaAndTimeSection,
+        imageQualityAndProviderSection,
+        advancedSection,
+        undefined,
+        isTaskingEnabled,
+      ).createSearchRequestBody();
+      console.log(
+        expectedSearchArchiveQueryBodyRadar.filter.args.find(
+          (arg) => arg.args[0].property === 'resolution_class',
+        ),
+      );
+      expect(
+        searchRequestBody[0].filter.args.find((arg) => arg.args[0].property === 'resolution_class'),
+      ).toEqual(
+        expectedSearchArchiveQueryBodyRadar.filter.args.find(
+          (arg) => arg.args[0].property === 'resolution_class',
+        ),
+      );
+    });
   });
 });

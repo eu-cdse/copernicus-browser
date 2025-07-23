@@ -56,6 +56,8 @@ const ODataProductTypeExtension = {
   AUX_PRCPTF: ODataProductFileExtension.EOF,
   SR___MDO_AX: ODataProductFileExtension.TGZ,
   SR___POE_AX: ODataProductFileExtension.TGZ,
+  SR_2_TDP_LI: ODataProductFileExtension.EOF,
+  SR_2_TDP_HY: ODataProductFileExtension.EOF,
 };
 
 const ODataCollections = {

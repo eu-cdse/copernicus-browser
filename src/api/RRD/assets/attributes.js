@@ -17,10 +17,6 @@ export const AttributePolarisationChannelsValuesRRD = {
 
   HH_VV: { value: 'HH_VV', label: 'HH+VV', mode: [ProviderModeSupport.tasking] },
 
-  HH_VH: { value: 'HH_VH', label: 'HH+VH', mode: [ProviderModeSupport.tasking] },
-
-  VH_HV: { value: 'VH_HV', label: 'VH+HV', mode: [ProviderModeSupport.tasking] },
-
   HH_HV_VV_VH: {
     value: 'HH_HV_VV_VH',
     label: 'HH+HV+VV+VH',

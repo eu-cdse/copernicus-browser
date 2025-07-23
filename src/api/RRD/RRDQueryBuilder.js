@@ -186,7 +186,9 @@ export class RRDQueryBuilder {
       }
 
       const [minResolution, maxResolution] = resolution;
-      const matchingKeys = resolutionKeys.filter((key) => key >= minResolution && key <= maxResolution);
+      // Resolution classes is from 10 to 100, where min and max values are from 0-100.
+      // Meaning 0m to 100m as a resolution can be 0.1m but not 0.0m. For this reason we need to search for > instead of >=
+      const matchingKeys = resolutionKeys.filter((key) => key > minResolution && key <= maxResolution);
       return matchingKeys.map((key) => RRD_RESOLUTION_CLASSES[key]);
     };
 
