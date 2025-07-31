@@ -224,6 +224,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from './dataSourceConstants';
 
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
@@ -731,6 +732,7 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1:
     case COPERNICUS_CLMS_LCM_10M_YEARLY_V1:
     case COPERNICUS_CLMS_TCD_10M_YEARLY_V1:
+    case COPERNICUS_CLMS_LIE_500M_DAILY_V2:
       return DATASOURCES.CLMS;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
@@ -954,6 +956,7 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: t`LWQ NRT 100m 10-daily V1`,
   [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: t`LCM Global 10m Yearly V1`,
   [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: t`TCD Pan-tropical 10m Yearly V1`,
+  [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: t`LIE 500m Daily V2`,
 };
 
 export function getDatasetLabel(datasetId) {

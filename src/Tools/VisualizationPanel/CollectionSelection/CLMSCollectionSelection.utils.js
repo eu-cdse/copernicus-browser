@@ -94,6 +94,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -201,10 +202,16 @@ export const CLMS_OPTIONS = [
                 label: 'clms_global_lst_5km_v2_10daily-daily-cycle_geotiff',
                 id: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
               },
-              // { label: 'lswt-nrt_global_1km_10daily', id: 'lswt-nrt_global_1km_10daily' },
-              // { label: 'lswt-offline_global_1km_10daily', id: 'lswt-offline_global_1km_10daily' },
             ],
           },
+          // {
+          //   label: 'Lake Water Surface Temperature',
+          //   id: 'Lake Water Surface Temperature',
+          //   options: [
+          //     { label: 'lswt-nrt_global_1km_10daily', id: 'lswt-nrt_global_1km_10daily' },
+          //     { label: 'lswt-offline_global_1km_10daily', id: 'lswt-offline_global_1km_10daily' },
+          //   ],
+          // },
           // {
           //   label: 'Top of Canopy Reflectances',
           //   id: 'Top of Canopy Reflectances',
@@ -660,6 +667,7 @@ export const CLMS_OPTIONS = [
               // { label: 'lie-agg_europe_vector_daily', id: 'lie-agg_europe_vector_daily' },
               { label: 'clms_global_lie_250m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_250M_DAILY_V2 },
               { label: 'clms_global_lie_500m_v1_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V1 },
+              { label: 'clms_global_lie_500m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V2 },
             ],
           },
         ],

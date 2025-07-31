@@ -697,6 +697,11 @@ const getClmsPantropicalTcd10mV1YearlyMarkdown = () =>
 const ClmsPantropicalTcd10mV1YearlyTooltip = () =>
   DataSourceTooltip({ source: getClmsPantropicalTcd10mV1YearlyMarkdown() });
 
+const getClmsGlobalLie500mV2DailyMarkdown = () =>
+  t`On a daily basis classifies pixels in Global freshwater bodies into 1) Snow-covered ice, 2) Partially snow-covered or snow-free ice, 3) Open water, and 4) Cloud. The data is updated in near-real time with the spatial resolution of 500 m and with a temporal extent from July 2025 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-global-500m_v2).`;
+const ClmsGlobalLie500mV2DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLie500mV2DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -878,4 +883,6 @@ export {
   ClmsGlobalLcm10mV1YearlyTooltip,
   getClmsPantropicalTcd10mV1YearlyMarkdown,
   ClmsPantropicalTcd10mV1YearlyTooltip,
+  getClmsGlobalLie500mV2DailyMarkdown,
+  ClmsGlobalLie500mV2DailyTooltip,
 };

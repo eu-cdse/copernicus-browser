@@ -122,6 +122,10 @@ class Tools extends Component {
     store.dispatch(tabsSlice.actions.setTabIndex(index));
     store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
 
+    if (index !== TABS.VISUALIZE_TAB) {
+      store.dispatch(mainMapSlice.actions.setIs3D(false));
+    }
+
     const searchConfigFromSession = JSON.parse(
       sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
     );

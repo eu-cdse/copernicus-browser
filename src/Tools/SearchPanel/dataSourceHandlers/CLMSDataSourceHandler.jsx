@@ -94,6 +94,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -197,6 +198,7 @@ import {
   getClmsGlobalLwq100mV110DailyNrtMarkdown,
   getClmsGlobalLcm10mV1YearlyMarkdown,
   getClmsPantropicalTcd10mV1YearlyMarkdown,
+  getClmsGlobalLie500mV2DailyMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -249,6 +251,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1_BANDS,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1_BANDS,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1_BANDS,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
@@ -348,6 +351,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: t`LWQ NRT 100m 10-daily V1`,
     [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: t`LCM Global 10m Yearly V1`,
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: t`TCD Pan-tropical 10m Yearly V1`,
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: t`LIE 500m Daily V2`,
   });
 
   urls = {
@@ -445,6 +449,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: [],
     [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: [],
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: [],
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: [],
   };
   datasets = [];
   allLayers = [];
@@ -694,6 +699,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: { min: 7, max: 25 },
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: { min: 6, max: 25 },
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: { min: 2, max: 25 },
   };
 
   KNOWN_COLLECTIONS = {
@@ -791,6 +797,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: ['8894d46b-a451-4abf-838e-292b4bcacae1'],
     [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: ['828f6b20-8ffd-48f8-a1da-fefd271456db'],
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: ['8bd33a42-dce4-4554-9a1f-1bb248b4183d'],
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: ['1a9d1719-03f8-47d6-911b-bc683d1268bd'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -888,6 +895,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1245,6 +1253,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: {
       minDate: moment.utc('2020-01-01'),
       maxDate: moment.utc('2020-01-01'),
+    },
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: {
+      minDate: moment.utc('2025-07-01'),
+      maxDate: moment.utc(),
     },
   };
 
@@ -1605,6 +1617,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       amount: 1,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: {
+      amount: 0,
+      unit: 'day',
+    },
   };
 
   willHandle(service, url, name, layers, preselected) {
@@ -1835,6 +1851,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return COPERNICUS_CLMS_LCM_10M_YEARLY_V1_BANDS;
       case COPERNICUS_CLMS_TCD_10M_YEARLY_V1:
         return COPERNICUS_CLMS_TCD_10M_YEARLY_V1_BANDS;
+      case COPERNICUS_CLMS_LIE_500M_DAILY_V2:
+        return COPERNICUS_CLMS_LIE_500M_DAILY_V2_BANDS;
       default:
         return null;
     }
@@ -2025,6 +2043,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return getClmsGlobalLcm10mV1YearlyMarkdown();
       case COPERNICUS_CLMS_TCD_10M_YEARLY_V1:
         return getClmsPantropicalTcd10mV1YearlyMarkdown();
+      case COPERNICUS_CLMS_LIE_500M_DAILY_V2:
+        return getClmsGlobalLie500mV2DailyMarkdown();
       default:
         return null;
     }

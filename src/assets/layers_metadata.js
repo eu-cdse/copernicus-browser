@@ -153,6 +153,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5396,5 +5397,43 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_TCD_10M_YEARLY_V1, layerId: 'TCD10' }],
     description: () => t`Tree Cover Density Map at 10m resolution.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LIE_500M_DAILY_V2, layerId: 'LIE' }],
+    description: () =>
+      t`The LIE variable is a classification of lake ice state, with the following classes: Fully snow covered ice (1), Partially snow covered or  snow free ice (2), Open water (3). Some specific flag values are also used for LIE: 0 for missing data, 4 for sea pixels, 5 for cloudy pixels, 6 for land area. LIE 250m uses thresholds on Top-of-Atmosphere (TOA) reflectances for full snow cover, partially snow covered ice/clear ice, and open water.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(39.22%,39.22%,39.22%)',
+          label: 'No satellite image data',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 'Fully snow-covered ice',
+        },
+        {
+          color: 'rgb(67.06%,85.1%,91.37%)',
+          label: 'Partially snow-covered or snow-free ice',
+        },
+        {
+          color: 'rgb(27.06%,45.88%,70.59%)',
+          label: 'Open water',
+        },
+        {
+          color: 'rgb(0.39%,40.0%,36.86%)',
+          label: 'Sea area',
+        },
+        {
+          color: 'rgb(99.61%,87.84%,56.47%)',
+          label: 'Cloud',
+        },
+        {
+          color: 'rgb(67.84%,60.39%,55.69%)',
+          label: 'Land area',
+        },
+      ],
+    },
   },
 ];

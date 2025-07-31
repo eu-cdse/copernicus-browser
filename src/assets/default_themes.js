@@ -790,6 +790,12 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/01a8e5-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'clms_global_lie_500m_v2_daily_geotiff',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/bc15f6-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

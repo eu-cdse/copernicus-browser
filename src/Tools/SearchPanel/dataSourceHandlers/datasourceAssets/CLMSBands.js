@@ -1364,3 +1364,13 @@ export const COPERNICUS_CLMS_TCD_10M_YEARLY_V1_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_LIE_500M_DAILY_V2_BANDS = [
+  {
+    name: 'LIE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'P',
+    getDescription: () => ``,
+  },
+];

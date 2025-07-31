@@ -105,6 +105,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -823,6 +824,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

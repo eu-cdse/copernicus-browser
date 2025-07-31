@@ -134,6 +134,7 @@ import {
   COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LIE_500M_DAILY_V2,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -222,6 +223,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   sce_northernhemisphere_1km_daily_v1: COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
   wb_global_300m_monthly_v2: COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   lie_northernhemisphere_500m_daily_v1: COPERNICUS_CLMS_LIE_500M_DAILY_V1,
+  lie_global_500m_daily_v2: COPERNICUS_CLMS_LIE_500M_DAILY_V2,
   lie_europe_250m_daily_v2: COPERNICUS_CLMS_LIE_250M_DAILY_V2,
   wb_global_100m_monthly_v1: COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   'lst-daily-cycle_global_5km_10daily_v1': COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
@@ -750,7 +752,13 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     };
   }
 
-  if ([COPERNICUS_CLMS_LIE_250M_DAILY_V2, COPERNICUS_CLMS_LIE_500M_DAILY_V1].includes(datasetId)) {
+  if (
+    [
+      COPERNICUS_CLMS_LIE_250M_DAILY_V2,
+      COPERNICUS_CLMS_LIE_500M_DAILY_V1,
+      COPERNICUS_CLMS_LIE_500M_DAILY_V2,
+    ].includes(datasetId)
+  ) {
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'RIVER_AND_LAKE_ICE_EXTENT',

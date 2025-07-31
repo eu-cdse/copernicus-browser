@@ -1,0 +1,13 @@
+{
+    "title": "[NEW] CLMS | Bio-geophysical Parameters | Water Bodies | lie_global_500m_daily_v2",
+    "layers": [
+        {
+            "id": "LIE",
+            "name": "LIE",
+            "description": "A classification of lake ice state, with the following classes: Snow-covered ice, Partially snow-covered or snow-free ice, Open water, Cloud.",
+            "dataset": "CUSTOM",
+            "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/bc15f6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LIE&style=default"
+        }
+    ],
+    "datasets": []
+}

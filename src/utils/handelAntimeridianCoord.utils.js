@@ -140,8 +140,28 @@ export function unNormalizeMultiPolygonCoordinates(
         ? ring.filter((coordinate) => coordinate[0] > 0).length
         : 0;
 
-      ring.forEach((coordinate) => {
-        const [longitude, latitude] = coordinate;
+      if (Array.isArray(ring[0])) {
+        ring.forEach((coordinate) => {
+          const [longitude, latitude] = coordinate;
+          const unNormalizedCoordinate = [
+            unNormalizeLongitude(
+              longitude,
+              unNormalizeAllRingsToFaceEast ? false : amountOfCoordinatesToWest > amountOfCoordinatesToEast,
+            ),
+            latitude,
+          ];
+          originalCoordinates.push(unNormalizedCoordinate);
+
+          if (!ignoreReversedMultiPolygons && !unNormalizeAllRingsToFaceEast) {
+            const invertedCoordinate = [
+              unNormalizeLongitude(longitude, amountOfCoordinatesToWest < amountOfCoordinatesToEast),
+              latitude,
+            ];
+            reverseCoordinates.push([...invertedCoordinate]);
+          }
+        });
+      } else {
+        const [longitude, latitude] = ring;
         const unNormalizedCoordinate = [
           unNormalizeLongitude(
             longitude,
@@ -149,16 +169,16 @@ export function unNormalizeMultiPolygonCoordinates(
           ),
           latitude,
         ];
-        originalCoordinates.push(unNormalizedCoordinate);
+        originalCoordinates.push(...unNormalizedCoordinate);
 
         if (!ignoreReversedMultiPolygons && !unNormalizeAllRingsToFaceEast) {
           const invertedCoordinate = [
             unNormalizeLongitude(longitude, amountOfCoordinatesToWest < amountOfCoordinatesToEast),
             latitude,
           ];
-          reverseCoordinates.push([...invertedCoordinate]);
+          reverseCoordinates.push(...invertedCoordinate);
         }
-      });
+      }
 
       if (!ignoreReversedMultiPolygons && !unNormalizeAllRingsToFaceEast) {
         ringsArray.push(originalCoordinates, reverseCoordinates);

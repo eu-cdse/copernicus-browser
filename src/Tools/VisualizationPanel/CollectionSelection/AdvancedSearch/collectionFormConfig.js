@@ -1431,9 +1431,22 @@ export const recursiveCollectionCLMS = [
                   'lst-daily-cycle_global_5km_10daily_v2',
                 )})`,
               },
+            ],
+          },
+          {
+            id: 'LAKE_SURFACE_WATER_TEMPERATURE',
+            label: 'Lake Surface Water Temperature',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'lake_surface_water_temperature',
+            )})`,
+            items: [
               {
                 id: 'lswt-offline_global_1km_10daily_v1',
-                label: 'Lake Surface Water Temperature Offline, Global, 10-daily, 1km, (2002–2012), V1',
+                label: 'Offline, Global, 10-daily, 1km, (2002–2012), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1443,7 +1456,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lswt-nrt_global_1km_10daily_v1',
-                label: 'Lake Surface Water Temperature NRT, Global, 10-daily, 1km, (2002–2012), V1',
+                label: 'NRT, Global, 10-daily, 1km, (2002–2012), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2002,6 +2015,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'lie_europe_250m_daily_v2',
+                )})`,
+              },
+              {
+                id: 'lie_global_500m_daily_v2',
+                label: 'Global, Daily, 500m, (2025–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lie_global_500m_daily_v2',
                 )})`,
               },
             ],
