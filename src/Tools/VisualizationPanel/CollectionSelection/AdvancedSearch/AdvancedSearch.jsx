@@ -42,6 +42,7 @@ import {
 import { recursiveCollections } from './collectionFormConfig';
 import RecursiveCollectionForm from './RecursiveCollectionForm';
 import { AttributeNames } from '../../../../api/OData/assets/attributes';
+import { ODataCollections } from '../../../../api/OData/ODataTypes';
 
 const ErrorCode = {
   noProductsFound: 'noProductsFound',
@@ -236,20 +237,59 @@ class AdvancedSearch extends Component {
     });
   };
 
-  setSelectedCollections = (selectedCollections) => {
+  setSelectedCollections = (newSelectedCollections) => {
     this.setState((state) => {
-      const { maxCc, selectedFilters } = state.collectionForm;
+      const { selectedCollections, maxCc, selectedFilters } = state.collectionForm;
       const newSelectedFilters = cloneDeep(selectedFilters) ?? {};
 
       //remove filters for unselected collections
       const filtersForUnselectedCollections = Object.keys(selectedFilters).filter(
-        (collectionFilterKey) => !Object.keys(selectedCollections).find((key) => key === collectionFilterKey),
+        (collectionFilterKey) =>
+          !Object.keys(newSelectedCollections).find((key) => key === collectionFilterKey),
       );
 
       filtersForUnselectedCollections.forEach((c) => delete newSelectedFilters?.[c]);
 
+      // newly selected L1B
+      if (
+        selectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS'] === undefined &&
+        newSelectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS']
+      ) {
+        if (newSelectedFilters[ODataCollections.S2.id] === undefined) {
+          newSelectedFilters[ODataCollections.S2.id] = {};
+        }
+
+        if (newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType] === undefined) {
+          newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType] = [
+            { value: 'MSI_L1B_DS', label: 'MSI_L1B_DS' },
+          ];
+        } else if (
+          newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType].findIndex(
+            (pt) => pt.value === 'MSI_L1B_DS',
+          ) === -1
+        ) {
+          newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType].push({
+            value: 'MSI_L1B_DS',
+            label: 'MSI_L1B_DS',
+          });
+        }
+        // deselected L1B
+      } else if (
+        selectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS'] &&
+        newSelectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS'] === undefined
+      ) {
+        if (newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType] !== undefined) {
+          const idx = newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType].findIndex(
+            (pt) => pt.value === 'MSI_L1B_DS',
+          );
+          if (idx !== -1) {
+            newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType].splice(idx, 1);
+          }
+        }
+      }
+
       const newCollectionFormState = {
-        selectedCollections: selectedCollections,
+        selectedCollections: newSelectedCollections,
         maxCc: maxCc,
         selectedFilters: newSelectedFilters,
       };
