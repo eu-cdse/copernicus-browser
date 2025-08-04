@@ -1740,7 +1740,7 @@ function createSVGLegendContinous(legend) {
 
   //add ticks
   ticks.forEach((line) => {
-    if (line.label) {
+    if (line.label !== undefined && line.label !== null && line.label !== '') {
       let l = createSVGElement('line');
       const pos = (1 - (line.position - minPosition) / (maxPosition - minPosition)) * LEGEND_HEIGHT;
       setSVGElementAttributes(l, {
@@ -1756,7 +1756,7 @@ function createSVGLegendContinous(legend) {
 
   //add labels
   ticks.forEach((item) => {
-    if (item.label) {
+    if (item.label !== undefined && item.label !== null && item.label !== '') {
       let text = createSVGElement('text');
       const pos = (1 - (item.position - minPosition) / (maxPosition - minPosition)) * LEGEND_HEIGHT;
       setSVGElementAttributes(text, {

@@ -21,7 +21,7 @@ import ProductPreview from '../../../../Results/ProductPreview/ProductPreview';
 import { rrdApi } from '../../../../../api/RRD/RRDApi';
 import { RRDQueryBuilder } from '../../../../../api/RRD/RRDQueryBuilder';
 import { getBoundsAndLatLng } from '../../../../CommercialDataPanel/commercialData.utils';
-import { fetchPreviewImage, isImageLoading } from './results.utils';
+import { fetchPreviewImage, fetchThumbnailImage, isImageLoading } from './results.utils';
 
 import { MetadataSourceType } from '../../../rapidResponseProperties';
 import { ModalId, RRD_INSTANCES_THEMES_LIST, TABS } from '../../../../../const';
@@ -69,13 +69,14 @@ const ResultsCard = ({
     );
   };
 
-  const hasValidQuicklook = (item, quicklookImages) =>
+  const hasValidQuicklook = (item) =>
     !!(
-      (item?.assets?.quicklook?.href || item?.assets?.['quicklook-png']?.href) &&
-      (Array.isArray(item.bbox) || (item.geometry && typeof item.geometry === 'object')) &&
-      quicklookImages[item._internalId] &&
-      quicklookImages[item._internalId].startsWith('blob:')
+      (item?.assets?.quicklook?.href ||
+        item?.assets?.['quicklook-png']?.href ||
+        item?.assets?.thumbnail?.href) &&
+      (Array.isArray(item.bbox) || (item.geometry && typeof item.geometry === 'object'))
     );
+
   useEffect(() => {
     const isItemInCart = () => {
       return resultsSection.cartResults?.quote?.products.some((product) =>
@@ -87,20 +88,39 @@ const ResultsCard = ({
 
   useEffect(() => {
     const loadImage = async () => {
-      if (quicklookImages[item._internalId]) {
-        setPreviewImageUrl(quicklookImages[item._internalId]);
+      // 1. Check if already cached in Redux
+      const cached = quicklookImages[item._internalId] || quicklookImages[item._internalId + '_thumbnail'];
+      if (cached) {
+        setPreviewImageUrl(cached);
         return;
       }
 
-      const imageUrl = await fetchPreviewImage(
+      // 2. Try thumbnail first (if available)
+      const thumbnailHref = item.assets?.thumbnail?.href;
+      if (thumbnailHref) {
+        const thumbnailUrl = await fetchThumbnailImage(
+          item,
+          user.access_token,
+          providerSection.imageType,
+          isTaskingEnabled,
+        );
+        if (thumbnailUrl) {
+          onImageLoad(item._internalId + '_thumbnail', thumbnailUrl);
+          setPreviewImageUrl(thumbnailUrl);
+          return;
+        }
+      }
+
+      // 3. Fallback to quicklook or provider logo
+      const previewUrl = await fetchPreviewImage(
         item,
         user.access_token,
         providerSection.imageType,
         isTaskingEnabled,
       );
-      if (imageUrl) {
-        setPreviewImageUrl(imageUrl);
-        onImageLoad(item._internalId, imageUrl);
+      if (previewUrl) {
+        onImageLoad(item._internalId, previewUrl);
+        setPreviewImageUrl(previewUrl);
       }
     };
 
@@ -205,19 +225,22 @@ const ResultsCard = ({
 
   const isQuicklookActive = quicklookOverlay && quicklookOverlay._internalId === item._internalId;
 
-  const handleQuicklookOnMap = () => {
+  const handleQuicklookOnMap = async () => {
     if (isQuicklookActive) {
       store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
       return;
     }
-    store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
 
     setTimeout(() => {
       store.dispatch(
         mainMapSlice.actions.setQuicklookOverlay({
-          id: item.id,
           _internalId: item._internalId,
-          imageUrl: item?.assets?.quicklook?.href || item?.assets?.['quicklook-png']?.href || '',
+          assets: {
+            quicklook: {
+              href: item?.assets?.['quicklook-png']?.href || item?.assets?.quicklook?.href || '',
+              type: item?.assets?.['quicklook-png']?.type || item?.assets?.quicklook?.type || '',
+            },
+          },
           bbox: item.bbox,
           geometry: item.geometry,
         }),
@@ -329,7 +352,7 @@ const ResultsCard = ({
               previewUrl: previewImageUrl,
             }}
             validate={true}
-            isLoading={isImageLoading(item.id)}
+            isLoading={isImageLoading(item._internalId) || isImageLoading(item._internalId + '_thumbnail')}
           />
         </div>
         <div className="description-container">

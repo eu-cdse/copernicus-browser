@@ -4075,35 +4075,460 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NDVI' }],
     description: () =>
       t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The CGLS NDVI V3 product is a 10-day synthesis product derived from SPOT/VEGETATION or PROBA-V top-of-atmosphere orbital segments.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.1%,3.1%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.7%,37.3%,3.1%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.2%,67.8%,7.4%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(100%,100%,11.8%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.5%,91.0%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.4%,82.4%,8.2%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(56.9%,73.9%,6.7%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(42.7%,65.1%,4.7%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(28.2%,56.5%,3.1%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(14.1%,47.8%,1.6%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0%,39.2%,0%)',
+          label: '',
+          position: 0.92,
+        },
+        {
+          color: 'rgb(86.7%,86.7%,86.7%)',
+          label: 0.93,
+          position: 0.93,
+        },
+      ],
+      maxPosition: 0.93,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NOBS' }],
     description: () =>
       t`The NOBS variable contains the number of observations used in the inversion procedure.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(0.0%,18.43%,38.04%)',
+          label: '1',
+        },
+        {
+          color: 'rgb(0.0%,22.35%,41.18%)',
+          label: '2',
+        },
+        {
+          color: 'rgb(0.0%,26.27%,43.92%)',
+          label: '3',
+        },
+        {
+          color: 'rgb(0.0%,29.8%,47.06%)',
+          label: '4',
+        },
+        {
+          color: 'rgb(0.0%,33.33%,49.41%)',
+          label: '5',
+        },
+        {
+          color: 'rgb(0.0%,36.86%,51.76%)',
+          label: '6',
+        },
+        {
+          color: 'rgb(0.0%,40.39%,54.12%)',
+          label: '7',
+        },
+        {
+          color: 'rgb(0.0%,43.53%,55.69%)',
+          label: '8',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,57.25%)',
+          label: '9',
+        },
+        {
+          color: 'rgb(0.0%,50.2%,58.43%)',
+          label: '10',
+        },
+        {
+          color: 'rgb(0.0%,53.73%,59.61%)',
+          label: '11',
+        },
+        {
+          color: 'rgb(0.0%,56.86%,60.39%)',
+          label: '12',
+        },
+        {
+          color: 'rgb(0.0%,60.0%,60.78%)',
+          label: '13',
+        },
+        {
+          color: 'rgb(0.0%,63.14%,61.18%)',
+          label: '14',
+        },
+        {
+          color: 'rgb(0.0%,66.27%,60.78%)',
+          label: '15',
+        },
+        {
+          color: 'rgb(0.0%,69.41%,60.39%)',
+          label: '16',
+        },
+        {
+          color: 'rgb(0.0%,72.55%,59.61%)',
+          label: '17',
+        },
+        {
+          color: 'rgb(0.0%,75.69%,58.82%)',
+          label: '18',
+        },
+        {
+          color: 'rgb(0.0%,78.43%,56.86%)',
+          label: '19',
+        },
+        {
+          color: 'rgb(0.0%,81.57%,54.9%)',
+          label: '20',
+        },
+        {
+          color: 'rgb(3.14%,84.31%,52.55%)',
+          label: '21',
+        },
+        {
+          color: 'rgb(12.16%,87.06%,49.8%)',
+          label: '22',
+        },
+        {
+          color: 'rgb(21.18%,89.8%,46.27%)',
+          label: '23',
+        },
+        {
+          color: 'rgb(33.33%,91.76%,43.14%)',
+          label: '24',
+        },
+        {
+          color: 'rgb(43.14%,93.33%,40.0%)',
+          label: '25',
+        },
+        {
+          color: 'rgb(52.16%,94.9%,36.47%)',
+          label: '26',
+        },
+        {
+          color: 'rgb(60.78%,96.08%,32.55%)',
+          label: '27',
+        },
+        {
+          color: 'rgb(68.63%,97.25%,28.24%)',
+          label: '28',
+        },
+        {
+          color: 'rgb(76.86%,98.04%,23.53%)',
+          label: '29',
+        },
+        {
+          color: 'rgb(84.71%,98.82%,18.43%)',
+          label: '30',
+        },
+        {
+          color: 'rgb(92.16%,99.61%,11.76%)',
+          label: '31',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '32',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'QFLAGS' }],
     description: () =>
       t`The QFLAG (quality flag) of the NDVI V3 describes the BRDF inversion quality in both RED and NIR bands.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(5.49%,21.57%,14.12%)',
+          label:
+            'BRDF inversion not performed, no clear observations are available during the accumulation period, i.e. NOBS=0',
+        },
+        {
+          color: 'rgb(97.65%,52.16%,9.02%)',
+          label: 'BRDF inversion failed in one or both spectral bands',
+        },
+        {
+          color: 'rgb(20.0%,72.55%,51.37%)',
+          label: 'BRDF OK, successful inversion in both bands, i.e. optimal quality',
+        },
+        {
+          color: 'rgb(60.0%,46.27%,0.0%)',
+          label:
+            'BRDF OK with warning, inversion successful but with suspiciously low normalized RED reflectance value',
+        },
+        {
+          color: 'rgb(60.78%,32.94%,95.29%)',
+          label: 'Sea pixel, BRDF inversion not performed',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'TIMEGRID' }],
     description: () =>
       t`The TIMEGRID (Time Grid) variable indicates the median date of the observations used in the BRDF modelling. It provides an indication of the most representative date of the observations used to compute the BRDF corrected NDVI. Hence, it is recommended to use this layer for time series analyses. Time is measured in minutes passed since the start time of the synthesis, hence day 01, 11 or 21 of the 10-day period.`,
+    legend: {
+      type: 'continuous',
+      title: 'TIMEGRID',
+      gradients: [
+        {
+          color: 'rgb(0%,100%,100%)',
+          label: -8640,
+          position: -8640,
+        },
+        {
+          color: 'rgb(0%,92.9%,100%)',
+          label: '',
+          position: -6464,
+        },
+        {
+          color: 'rgb(0%,85.8%,100%)',
+          label: '',
+          position: -4288,
+        },
+        {
+          color: 'rgb(0%,78.7%,100%)',
+          label: '',
+          position: -2112,
+        },
+        {
+          color: 'rgb(0%,71.6%,100%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(71.6%,0%,0%)',
+          label: '',
+          position: 2112,
+        },
+        {
+          color: 'rgb(100%,0%,0%)',
+          label: '',
+          position: 4288,
+        },
+        {
+          color: 'rgb(100%,12.9%,0%)',
+          label: '',
+          position: 6464,
+        },
+        {
+          color: 'rgb(100%,25.8%,0%)',
+          label: '',
+          position: 8640,
+        },
+        {
+          color: 'rgb(100%,38.7%,0%)',
+          label: 15840,
+          position: 15840,
+        },
+      ],
+      maxPosition: 15840,
+      minPosition: -8640,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'UNC' }],
     description: () => t`"The UNC variable contains the uncertainty associated to the angular normalized NDVI
 estimation. The uncertainties of the normalized reflectances are estimated by propagating the
 uncertainties associated to the BRDF model parameters found via the inversion."`,
+    legend: {
+      type: 'continuous',
+      title: 'UNC',
+      gradients: [
+        {
+          color: 'rgb(0.15%,0.05%,1.39%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(2.85%,1.78%,10.05%)',
+          label: '',
+          position: 0.05,
+        },
+        {
+          color: 'rgb(5.84%,3.23%,17.26%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(9.64%,4.75%,23.42%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(14.48%,5.76%,28.77%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(20.22%,5.99%,33.59%)',
+          label: '',
+          position: 0.25,
+        },
+        {
+          color: 'rgb(26.69%,5.63%,37.97%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(33.69%,4.62%,42.0%)',
+          label: '',
+          position: 0.35,
+        },
+        {
+          color: 'rgb(41.02%,3.11%,45.73%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(48.5%,1.58%,49.14%)',
+          label: '',
+          position: 0.45,
+        },
+        {
+          color: 'rgb(56.02%,0.44%,52.22%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(63.52%,0.83%,54.89%)',
+          label: '',
+          position: 0.55,
+        },
+        {
+          color: 'rgb(70.84%,5.12%,57.01%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(77.92%,11.95%,58.48%)',
+          label: '',
+          position: 0.65,
+        },
+        {
+          color: 'rgb(84.56%,20.81%,59.3%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(90.23%,31.44%,59.62%)',
+          label: '',
+          position: 0.75,
+        },
+        {
+          color: 'rgb(94.8%,43.37%,59.74%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(97.69%,55.65%,60.01%)',
+          label: '',
+          position: 0.85,
+        },
+        {
+          color: 'rgb(98.84%,67.89%,61.02%)',
+          label: '',
+          position: 0.9,
+        },
+        {
+          color: 'rgb(99.29%,79.82%,63.96%)',
+          label: '',
+          position: 0.95,
+        },
+        {
+          color: 'rgb(99.71%,90.96%,74.55%)',
+          label: 1,
+          position: 1,
+        },
+      ],
+      maxPosition: 1,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_BURNT_AREA_DAILY, layerId: 'day_of_burn' }],
     description: () => t`The Burn Scar layer indicates detected burn scars for a given day.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: 'No burn',
+        },
+        {
+          color: 'rgb(100%,0.0%,0.0%)',
+          label: 'Burn scar',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_BURNT_AREA_MONTHLY, layerId: 'day_of_burn' }],
     description: () => t`The Burn Scar layer indicates detected burn scars for a given month.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: 'No burn',
+        },
+        {
+          color: 'rgb(100%,0.0%,0.0%)',
+          label: 'Burn scar',
+        },
+      ],
+    },
   },
   {
     match: [
@@ -4120,72 +4545,4794 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`DMP, or Dry Matter Productivity, represents the overall growth rate or dry biomass increase of the vegetation, expressed in kilograms of dry matter per hectare per day (kgDM/ha/day). DMP is directly related to NPP (Net Primary Productivity, in gC/m²/day), but its units are customized for agro-statistical purposes. `,
-  },
-  {
-    match: [
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_1KM_10DAILY_RT6, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT0, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT1, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT2, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT5, layerId: 'QFLAG' },
-      { datasourceId: COPERNICUS_CLMS_DMP_300M_10DAILY_RT6, layerId: 'QFLAG' },
-    ],
-    description: () =>
-      t`Quality flag of the product. For more information, refer to the Product User Manual.`,
+    legend: {
+      type: 'continuous',
+      title: 'DMP',
+      gradients: [
+        {
+          color: 'rgb(100.000%,100.000%,100.000%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.000%,0.000%,0.000%)',
+          label: '',
+          position: 0.01,
+        },
+        {
+          color: 'rgb(100.000%,64.706%,0.000%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(100.000%,84.314%,0.000%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(100.000%,100.000%,0.000%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(67.843%,100.000%,18.431%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(7.843%,100.000%,7.843%)',
+          label: '',
+          position: 150,
+        },
+        {
+          color: 'rgb(3.922%,78.431%,3.922%)',
+          label: '',
+          position: 180,
+        },
+        {
+          color: 'rgb(0.000%,53.333%,0.000%)',
+          label: 210,
+          position: 210,
+        },
+      ],
+      maxPosition: 210,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT1, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT2, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT6, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT0, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(12.55%,6.27%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(13.73%,7.45%,0.0%)',
+          label: '',
+          position: 0.004,
+        },
+        {
+          color: 'rgb(15.29%,9.02%,0.0%)',
+          label: '',
+          position: 0.008,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.0%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(18.04%,12.16%,0.0%)',
+          label: '',
+          position: 0.016,
+        },
+        {
+          color: 'rgb(19.22%,13.33%,0.0%)',
+          label: '',
+          position: 0.02,
+        },
+        {
+          color: 'rgb(20.78%,14.9%,0.0%)',
+          label: '',
+          position: 0.024,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.0%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(23.53%,18.04%,0.0%)',
+          label: '',
+          position: 0.032,
+        },
+        {
+          color: 'rgb(24.71%,19.22%,0.0%)',
+          label: '',
+          position: 0.036000000000000004,
+        },
+        {
+          color: 'rgb(26.27%,20.78%,0.0%)',
+          label: '',
+          position: 0.04,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.0%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(29.02%,23.92%,0.0%)',
+          label: '',
+          position: 0.048,
+        },
+        {
+          color: 'rgb(30.2%,25.1%,0.0%)',
+          label: '',
+          position: 0.052000000000000005,
+        },
+        {
+          color: 'rgb(31.76%,26.67%,0.0%)',
+          label: '',
+          position: 0.056,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.0%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(34.51%,29.8%,0.0%)',
+          label: '',
+          position: 0.064,
+        },
+        {
+          color: 'rgb(35.69%,30.98%,0.0%)',
+          label: '',
+          position: 0.068,
+        },
+        {
+          color: 'rgb(37.25%,32.55%,0.0%)',
+          label: '',
+          position: 0.07200000000000001,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.0%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(40.0%,35.69%,0.0%)',
+          label: '',
+          position: 0.08,
+        },
+        {
+          color: 'rgb(41.18%,36.86%,0.0%)',
+          label: '',
+          position: 0.084,
+        },
+        {
+          color: 'rgb(42.75%,38.43%,0.0%)',
+          label: '',
+          position: 0.088,
+        },
+        {
+          color: 'rgb(43.92%,40.0%,0.0%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(45.49%,41.57%,0.0%)',
+          label: '',
+          position: 0.096,
+        },
+        {
+          color: 'rgb(46.67%,43.14%,0.0%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(48.24%,44.31%,0.0%)',
+          label: '',
+          position: 0.10400000000000001,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.0%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(50.98%,47.45%,0.0%)',
+          label: '',
+          position: 0.112,
+        },
+        {
+          color: 'rgb(52.16%,49.02%,0.0%)',
+          label: '',
+          position: 0.116,
+        },
+        {
+          color: 'rgb(53.73%,50.2%,0.0%)',
+          label: '',
+          position: 0.12,
+        },
+        {
+          color: 'rgb(54.9%,51.76%,0.0%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(56.47%,53.33%,0.0%)',
+          label: '',
+          position: 0.128,
+        },
+        {
+          color: 'rgb(57.65%,54.9%,0.0%)',
+          label: '',
+          position: 0.132,
+        },
+        {
+          color: 'rgb(59.22%,56.08%,0.0%)',
+          label: '',
+          position: 0.136,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.0%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(61.96%,59.22%,0.0%)',
+          label: '',
+          position: 0.14400000000000002,
+        },
+        {
+          color: 'rgb(63.14%,60.78%,0.0%)',
+          label: '',
+          position: 0.148,
+        },
+        {
+          color: 'rgb(64.71%,61.96%,0.0%)',
+          label: '',
+          position: 0.152,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.0%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(67.45%,65.1%,0.0%)',
+          label: '',
+          position: 0.16,
+        },
+        {
+          color: 'rgb(68.63%,66.67%,0.0%)',
+          label: '',
+          position: 0.164,
+        },
+        {
+          color: 'rgb(70.2%,67.84%,0.0%)',
+          label: '',
+          position: 0.168,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.0%)',
+          label: '',
+          position: 0.17200000000000001,
+        },
+        {
+          color: 'rgb(72.94%,70.98%,0.0%)',
+          label: '',
+          position: 0.176,
+        },
+        {
+          color: 'rgb(74.12%,72.55%,0.0%)',
+          label: '',
+          position: 0.18,
+        },
+        {
+          color: 'rgb(75.69%,73.73%,0.0%)',
+          label: '',
+          position: 0.184,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.0%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(78.43%,76.86%,0.0%)',
+          label: '',
+          position: 0.192,
+        },
+        {
+          color: 'rgb(79.61%,78.43%,0.0%)',
+          label: '',
+          position: 0.196,
+        },
+        {
+          color: 'rgb(81.18%,80.0%,0.0%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(81.18%,80.0%,0.0%)',
+          label: '',
+          position: 0.20400000000000001,
+        },
+        {
+          color: 'rgb(81.57%,80.39%,0.0%)',
+          label: '',
+          position: 0.20800000000000002,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.0%)',
+          label: '',
+          position: 0.212,
+        },
+        {
+          color: 'rgb(81.96%,81.18%,0.0%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(82.35%,81.18%,0.0%)',
+          label: '',
+          position: 0.22,
+        },
+        {
+          color: 'rgb(82.75%,81.57%,0.0%)',
+          label: '',
+          position: 0.224,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.0%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.14%,82.35%,0.0%)',
+          label: '',
+          position: 0.232,
+        },
+        {
+          color: 'rgb(83.53%,82.35%,0.0%)',
+          label: '',
+          position: 0.23600000000000002,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.0%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(83.92%,83.14%,0.0%)',
+          label: '',
+          position: 0.244,
+        },
+        {
+          color: 'rgb(84.31%,83.53%,0.0%)',
+          label: '',
+          position: 0.248,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.0%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.1%,83.92%,0.0%)',
+          label: '',
+          position: 0.256,
+        },
+        {
+          color: 'rgb(85.1%,84.31%,0.0%)',
+          label: '',
+          position: 0.26,
+        },
+        {
+          color: 'rgb(85.49%,84.71%,0.0%)',
+          label: '',
+          position: 0.264,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.0%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(85.88%,85.1%,0.0%)',
+          label: '',
+          position: 0.272,
+        },
+        {
+          color: 'rgb(86.27%,85.49%,0.0%)',
+          label: '',
+          position: 0.276,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.0%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.06%,85.88%,0.0%)',
+          label: '',
+          position: 0.28400000000000003,
+        },
+        {
+          color: 'rgb(87.06%,86.27%,0.0%)',
+          label: '',
+          position: 0.28800000000000003,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.0%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(87.84%,87.06%,0.0%)',
+          label: '',
+          position: 0.296,
+        },
+        {
+          color: 'rgb(87.84%,87.45%,0.0%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(88.24%,87.45%,0.0%)',
+          label: '',
+          position: 0.304,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.0%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.02%,88.24%,0.0%)',
+          label: '',
+          position: 0.312,
+        },
+        {
+          color: 'rgb(89.02%,88.63%,0.0%)',
+          label: '',
+          position: 0.316,
+        },
+        {
+          color: 'rgb(89.41%,88.63%,0.0%)',
+          label: '',
+          position: 0.32,
+        },
+        {
+          color: 'rgb(89.8%,89.02%,0.0%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(89.8%,89.41%,0.0%)',
+          label: '',
+          position: 0.328,
+        },
+        {
+          color: 'rgb(90.2%,89.8%,0.0%)',
+          label: '',
+          position: 0.332,
+        },
+        {
+          color: 'rgb(90.59%,89.8%,0.0%)',
+          label: '',
+          position: 0.336,
+        },
+        {
+          color: 'rgb(90.98%,90.2%,0.0%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(90.98%,90.59%,0.0%)',
+          label: '',
+          position: 0.34400000000000003,
+        },
+        {
+          color: 'rgb(91.37%,90.98%,0.0%)',
+          label: '',
+          position: 0.34800000000000003,
+        },
+        {
+          color: 'rgb(91.76%,90.98%,0.0%)',
+          label: '',
+          position: 0.352,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.0%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.16%,91.76%,0.0%)',
+          label: '',
+          position: 0.36,
+        },
+        {
+          color: 'rgb(92.55%,92.16%,0.0%)',
+          label: '',
+          position: 0.364,
+        },
+        {
+          color: 'rgb(92.94%,92.16%,0.0%)',
+          label: '',
+          position: 0.368,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.0%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(93.33%,92.94%,0.0%)',
+          label: '',
+          position: 0.376,
+        },
+        {
+          color: 'rgb(93.73%,93.33%,0.0%)',
+          label: '',
+          position: 0.38,
+        },
+        {
+          color: 'rgb(93.73%,93.73%,0.0%)',
+          label: '',
+          position: 0.384,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.0%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(94.51%,94.12%,0.0%)',
+          label: '',
+          position: 0.392,
+        },
+        {
+          color: 'rgb(94.9%,94.51%,0.0%)',
+          label: '',
+          position: 0.396,
+        },
+        {
+          color: 'rgb(94.9%,94.9%,0.0%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(95.29%,94.9%,0.0%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(95.69%,95.29%,0.0%)',
+          label: '',
+          position: 0.40800000000000003,
+        },
+        {
+          color: 'rgb(95.69%,95.69%,0.0%)',
+          label: '',
+          position: 0.41200000000000003,
+        },
+        {
+          color: 'rgb(96.08%,96.08%,0.0%)',
+          label: '',
+          position: 0.41600000000000004,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.0%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(96.86%,96.47%,0.0%)',
+          label: '',
+          position: 0.424,
+        },
+        {
+          color: 'rgb(96.86%,96.86%,0.0%)',
+          label: '',
+          position: 0.428,
+        },
+        {
+          color: 'rgb(97.25%,97.25%,0.0%)',
+          label: '',
+          position: 0.432,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.0%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(97.65%,97.65%,0.0%)',
+          label: '',
+          position: 0.44,
+        },
+        {
+          color: 'rgb(98.04%,98.04%,0.0%)',
+          label: '',
+          position: 0.444,
+        },
+        {
+          color: 'rgb(98.43%,98.43%,0.0%)',
+          label: '',
+          position: 0.448,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.0%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(98.82%,98.82%,0.0%)',
+          label: '',
+          position: 0.456,
+        },
+        {
+          color: 'rgb(99.22%,99.22%,0.0%)',
+          label: '',
+          position: 0.46,
+        },
+        {
+          color: 'rgb(99.61%,99.61%,0.0%)',
+          label: '',
+          position: 0.464,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(99.61%,99.22%,0.0%)',
+          label: '',
+          position: 0.47200000000000003,
+        },
+        {
+          color: 'rgb(99.22%,98.82%,0.0%)',
+          label: '',
+          position: 0.47600000000000003,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.0%)',
+          label: '',
+          position: 0.48,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.0%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.65%,0.0%)',
+          label: '',
+          position: 0.488,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.0%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(97.65%,96.86%,0.0%)',
+          label: '',
+          position: 0.496,
+        },
+        {
+          color: 'rgb(97.25%,96.47%,0.0%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(96.86%,96.08%,0.0%)',
+          label: '',
+          position: 0.504,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.0%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(96.47%,95.29%,0.0%)',
+          label: '',
+          position: 0.512,
+        },
+        {
+          color: 'rgb(96.08%,94.9%,0.0%)',
+          label: '',
+          position: 0.516,
+        },
+        {
+          color: 'rgb(95.69%,94.12%,0.0%)',
+          label: '',
+          position: 0.52,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.0%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.9%,93.33%,0.0%)',
+          label: '',
+          position: 0.528,
+        },
+        {
+          color: 'rgb(94.9%,92.94%,0.0%)',
+          label: '',
+          position: 0.532,
+        },
+        {
+          color: 'rgb(94.51%,92.55%,0.0%)',
+          label: '',
+          position: 0.536,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.0%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.73%,91.76%,0.0%)',
+          label: '',
+          position: 0.544,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.0%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(93.33%,90.98%,0.0%)',
+          label: '',
+          position: 0.552,
+        },
+        {
+          color: 'rgb(92.94%,90.59%,0.0%)',
+          label: '',
+          position: 0.556,
+        },
+        {
+          color: 'rgb(92.55%,90.2%,0.0%)',
+          label: '',
+          position: 0.56,
+        },
+        {
+          color: 'rgb(92.16%,89.8%,0.0%)',
+          label: '',
+          position: 0.5640000000000001,
+        },
+        {
+          color: 'rgb(91.76%,89.41%,0.0%)',
+          label: '',
+          position: 0.5680000000000001,
+        },
+        {
+          color: 'rgb(91.76%,88.63%,0.0%)',
+          label: '',
+          position: 0.5720000000000001,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.0%)',
+          label: '',
+          position: 0.5760000000000001,
+        },
+        {
+          color: 'rgb(90.98%,87.84%,0.0%)',
+          label: '',
+          position: 0.58,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.0%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.2%,87.06%,0.0%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(90.2%,86.67%,0.0%)',
+          label: '',
+          position: 0.592,
+        },
+        {
+          color: 'rgb(89.8%,86.27%,0.0%)',
+          label: '',
+          position: 0.596,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.0%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(89.02%,85.49%,0.0%)',
+          label: '',
+          position: 0.604,
+        },
+        {
+          color: 'rgb(88.63%,85.1%,0.0%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(88.63%,84.71%,0.0%)',
+          label: '',
+          position: 0.612,
+        },
+        {
+          color: 'rgb(88.24%,84.31%,0.0%)',
+          label: '',
+          position: 0.616,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.0%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.45%,83.14%,0.0%)',
+          label: '',
+          position: 0.624,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.0%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(87.06%,82.35%,0.0%)',
+          label: '',
+          position: 0.632,
+        },
+        {
+          color: 'rgb(86.67%,81.96%,0.0%)',
+          label: '',
+          position: 0.636,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.0%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.88%,81.18%,0.0%)',
+          label: '',
+          position: 0.644,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.0%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(85.49%,80.39%,0.0%)',
+          label: '',
+          position: 0.652,
+        },
+        {
+          color: 'rgb(85.1%,80.0%,0.0%)',
+          label: '',
+          position: 0.656,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.0%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(84.31%,79.22%,0.0%)',
+          label: '',
+          position: 0.664,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.0%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,78.43%,0.0%)',
+          label: '',
+          position: 0.672,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.0%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,76.08%,0.0%)',
+          label: '',
+          position: 0.68,
+        },
+        {
+          color: 'rgb(84.31%,74.9%,0.0%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(84.71%,73.73%,0.0%)',
+          label: '',
+          position: 0.6880000000000001,
+        },
+        {
+          color: 'rgb(85.1%,72.55%,0.0%)',
+          label: '',
+          position: 0.6920000000000001,
+        },
+        {
+          color: 'rgb(85.1%,71.37%,0.0%)',
+          label: '',
+          position: 0.6960000000000001,
+        },
+        {
+          color: 'rgb(85.49%,70.2%,0.0%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(85.49%,69.02%,0.0%)',
+          label: '',
+          position: 0.704,
+        },
+        {
+          color: 'rgb(85.88%,67.84%,0.0%)',
+          label: '',
+          position: 0.708,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.0%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.27%,65.49%,0.0%)',
+          label: '',
+          position: 0.716,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.0%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(86.67%,63.14%,0.0%)',
+          label: '',
+          position: 0.724,
+        },
+        {
+          color: 'rgb(87.06%,61.96%,0.0%)',
+          label: '',
+          position: 0.728,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.0%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.45%,59.61%,0.0%)',
+          label: '',
+          position: 0.736,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.0%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.24%,57.25%,0.0%)',
+          label: '',
+          position: 0.744,
+        },
+        {
+          color: 'rgb(88.24%,56.08%,0.0%)',
+          label: '',
+          position: 0.748,
+        },
+        {
+          color: 'rgb(88.63%,54.9%,0.0%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(88.63%,53.73%,0.0%)',
+          label: '',
+          position: 0.756,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.0%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.41%,51.37%,0.0%)',
+          label: '',
+          position: 0.764,
+        },
+        {
+          color: 'rgb(89.41%,50.2%,0.0%)',
+          label: '',
+          position: 0.768,
+        },
+        {
+          color: 'rgb(89.8%,49.02%,0.0%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(89.8%,47.84%,0.0%)',
+          label: '',
+          position: 0.776,
+        },
+        {
+          color: 'rgb(90.2%,46.67%,0.0%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.59%,45.49%,0.0%)',
+          label: '',
+          position: 0.784,
+        },
+        {
+          color: 'rgb(90.59%,44.31%,0.0%)',
+          label: '',
+          position: 0.788,
+        },
+        {
+          color: 'rgb(90.98%,43.14%,0.0%)',
+          label: '',
+          position: 0.792,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.0%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.37%,40.78%,0.0%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.0%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(91.76%,38.43%,0.0%)',
+          label: '',
+          position: 0.808,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.0%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.55%,36.08%,0.0%)',
+          label: '',
+          position: 0.8160000000000001,
+        },
+        {
+          color: 'rgb(92.55%,34.9%,0.0%)',
+          label: '',
+          position: 0.8200000000000001,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.0%)',
+          label: '',
+          position: 0.8240000000000001,
+        },
+        {
+          color: 'rgb(92.94%,32.55%,0.0%)',
+          label: '',
+          position: 0.8280000000000001,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.0%)',
+          label: '',
+          position: 0.8320000000000001,
+        },
+        {
+          color: 'rgb(93.73%,30.2%,0.0%)',
+          label: '',
+          position: 0.836,
+        },
+        {
+          color: 'rgb(93.73%,29.02%,0.0%)',
+          label: '',
+          position: 0.84,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.0%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.12%,26.67%,0.0%)',
+          label: '',
+          position: 0.848,
+        },
+        {
+          color: 'rgb(94.51%,25.49%,0.0%)',
+          label: '',
+          position: 0.852,
+        },
+        {
+          color: 'rgb(94.9%,24.31%,0.0%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(94.9%,23.14%,0.0%)',
+          label: '',
+          position: 0.86,
+        },
+        {
+          color: 'rgb(95.29%,21.96%,0.0%)',
+          label: '',
+          position: 0.864,
+        },
+        {
+          color: 'rgb(95.29%,20.78%,0.0%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(95.69%,19.61%,0.0%)',
+          label: '',
+          position: 0.872,
+        },
+        {
+          color: 'rgb(96.08%,18.43%,0.0%)',
+          label: '',
+          position: 0.876,
+        },
+        {
+          color: 'rgb(96.08%,17.25%,0.0%)',
+          label: '',
+          position: 0.88,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.0%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,14.9%,0.0%)',
+          label: '',
+          position: 0.888,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.0%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.25%,12.55%,0.0%)',
+          label: '',
+          position: 0.896,
+        },
+        {
+          color: 'rgb(97.25%,11.37%,0.0%)',
+          label: '',
+          position: 0.9,
+        },
+        {
+          color: 'rgb(97.65%,10.2%,0.0%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.04%,9.02%,0.0%)',
+          label: '',
+          position: 0.908,
+        },
+        {
+          color: 'rgb(98.04%,7.84%,0.0%)',
+          label: '',
+          position: 0.912,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.0%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(98.43%,5.49%,0.0%)',
+          label: '',
+          position: 0.92,
+        },
+        {
+          color: 'rgb(98.82%,4.31%,0.0%)',
+          label: '',
+          position: 0.924,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.0%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(99.22%,1.96%,0.0%)',
+          label: '',
+          position: 0.932,
+        },
+        {
+          color: 'rgb(99.61%,0.78%,0.0%)',
+          label: '',
+          position: 0.936,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: 0.9400000000000001,
+          position: 0.9400000000000001,
+        },
+      ],
+      maxPosition: 0.9400000000000001,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT1, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT2, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_RT6, layerId: 'FAPAR' }],
     description: () =>
       t`FAPAR corresponds to the fraction of photosynthetically active radiation absorbed by the green elements of the canopy. The FAPAR value results directly from the radiative transfer model in the canopy which is computed instantaneously. It depends on canopy structure, vegetation element optical properties and illumination conditions. FAPAR is very useful as input to a number of primary productivity models based on simple efficiency considerations.`,
+    legend: {
+      type: 'continuous',
+      title: 'FAPAR',
+      gradients: [
+        {
+          color: 'rgb(12.55%,6.27%,0.00%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,10.59%,0.00%)',
+          label: '',
+          position: 0.012,
+        },
+        {
+          color: 'rgb(21.96%,16.47%,0.00%)',
+          label: '',
+          position: 0.028,
+        },
+        {
+          color: 'rgb(27.45%,22.35%,0.00%)',
+          label: '',
+          position: 0.044,
+        },
+        {
+          color: 'rgb(32.94%,28.24%,0.00%)',
+          label: '',
+          position: 0.06,
+        },
+        {
+          color: 'rgb(38.43%,34.12%,0.00%)',
+          label: '',
+          position: 0.076,
+        },
+        {
+          color: 'rgb(43.92%,40.00%,0.00%)',
+          label: '',
+          position: 0.092,
+        },
+        {
+          color: 'rgb(49.41%,45.88%,0.00%)',
+          label: '',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(54.90%,51.76%,0.00%)',
+          label: '',
+          position: 0.124,
+        },
+        {
+          color: 'rgb(60.39%,57.65%,0.00%)',
+          label: '',
+          position: 0.14,
+        },
+        {
+          color: 'rgb(65.88%,63.53%,0.00%)',
+          label: '',
+          position: 0.156,
+        },
+        {
+          color: 'rgb(71.37%,69.41%,0.00%)',
+          label: '',
+          position: 0.172,
+        },
+        {
+          color: 'rgb(76.86%,75.29%,0.00%)',
+          label: '',
+          position: 0.188,
+        },
+        {
+          color: 'rgb(81.18%,80.00%,0.00%)',
+          label: '',
+          position: 0.204,
+        },
+        {
+          color: 'rgb(81.96%,80.78%,0.00%)',
+          label: '',
+          position: 0.216,
+        },
+        {
+          color: 'rgb(83.14%,81.96%,0.00%)',
+          label: '',
+          position: 0.228,
+        },
+        {
+          color: 'rgb(83.92%,82.75%,0.00%)',
+          label: '',
+          position: 0.24,
+        },
+        {
+          color: 'rgb(84.71%,83.53%,0.00%)',
+          label: '',
+          position: 0.252,
+        },
+        {
+          color: 'rgb(85.88%,84.71%,0.00%)',
+          label: '',
+          position: 0.268,
+        },
+        {
+          color: 'rgb(86.67%,85.88%,0.00%)',
+          label: '',
+          position: 0.28,
+        },
+        {
+          color: 'rgb(87.45%,86.67%,0.00%)',
+          label: '',
+          position: 0.292,
+        },
+        {
+          color: 'rgb(88.63%,87.84%,0.00%)',
+          label: '',
+          position: 0.308,
+        },
+        {
+          color: 'rgb(89.80%,89.02%,0.00%)',
+          label: '',
+          position: 0.324,
+        },
+        {
+          color: 'rgb(90.98%,90.20%,0.00%)',
+          label: '',
+          position: 0.34,
+        },
+        {
+          color: 'rgb(91.76%,91.37%,0.00%)',
+          label: '',
+          position: 0.356,
+        },
+        {
+          color: 'rgb(92.94%,92.55%,0.00%)',
+          label: '',
+          position: 0.372,
+        },
+        {
+          color: 'rgb(94.12%,93.73%,0.00%)',
+          label: '',
+          position: 0.388,
+        },
+        {
+          color: 'rgb(95.29%,94.90%,0.00%)',
+          label: '',
+          position: 0.404,
+        },
+        {
+          color: 'rgb(96.47%,96.08%,0.00%)',
+          label: '',
+          position: 0.42,
+        },
+        {
+          color: 'rgb(97.65%,97.25%,0.00%)',
+          label: '',
+          position: 0.436,
+        },
+        {
+          color: 'rgb(98.82%,98.43%,0.00%)',
+          label: '',
+          position: 0.452,
+        },
+        {
+          color: 'rgb(100.00%,100.00%,0.00%)',
+          label: '',
+          position: 0.468,
+        },
+        {
+          color: 'rgb(98.43%,98.04%,0.00%)',
+          label: '',
+          position: 0.484,
+        },
+        {
+          color: 'rgb(98.04%,97.25%,0.00%)',
+          label: '',
+          position: 0.492,
+        },
+        {
+          color: 'rgb(96.47%,95.69%,0.00%)',
+          label: '',
+          position: 0.508,
+        },
+        {
+          color: 'rgb(95.29%,93.73%,0.00%)',
+          label: '',
+          position: 0.524,
+        },
+        {
+          color: 'rgb(94.12%,92.16%,0.00%)',
+          label: '',
+          position: 0.54,
+        },
+        {
+          color: 'rgb(93.33%,91.37%,0.00%)',
+          label: '',
+          position: 0.548,
+        },
+        {
+          color: 'rgb(92.16%,89.80%,0.00%)',
+          label: '',
+          position: 0.564,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.00%)',
+          label: '',
+          position: 0.576,
+        },
+        {
+          color: 'rgb(90.59%,87.45%,0.00%)',
+          label: '',
+          position: 0.584,
+        },
+        {
+          color: 'rgb(90.19%,87.06%,0.00%)',
+          label: '',
+          position: 0.588,
+        },
+        {
+          color: 'rgb(89.41%,85.88%,0.00%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(88.63%,85.10%,0.00%)',
+          label: '',
+          position: 0.608,
+        },
+        {
+          color: 'rgb(87.84%,83.92%,0.00%)',
+          label: '',
+          position: 0.62,
+        },
+        {
+          color: 'rgb(87.06%,82.75%,0.00%)',
+          label: '',
+          position: 0.628,
+        },
+        {
+          color: 'rgb(86.27%,81.57%,0.00%)',
+          label: '',
+          position: 0.64,
+        },
+        {
+          color: 'rgb(85.49%,80.78%,0.00%)',
+          label: '',
+          position: 0.648,
+        },
+        {
+          color: 'rgb(84.71%,79.61%,0.00%)',
+          label: '',
+          position: 0.66,
+        },
+        {
+          color: 'rgb(83.92%,78.82%,0.00%)',
+          label: '',
+          position: 0.668,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.00%)',
+          label: '',
+          position: 0.676,
+        },
+        {
+          color: 'rgb(84.31%,74.90%,0.00%)',
+          label: '',
+          position: 0.684,
+        },
+        {
+          color: 'rgb(85.10%,72.55%,0.00%)',
+          label: '',
+          position: 0.692,
+        },
+        {
+          color: 'rgb(85.49%,70.20%,0.00%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(86.27%,66.67%,0.00%)',
+          label: '',
+          position: 0.712,
+        },
+        {
+          color: 'rgb(86.67%,64.31%,0.00%)',
+          label: '',
+          position: 0.72,
+        },
+        {
+          color: 'rgb(87.45%,60.78%,0.00%)',
+          label: '',
+          position: 0.732,
+        },
+        {
+          color: 'rgb(87.84%,58.43%,0.00%)',
+          label: '',
+          position: 0.74,
+        },
+        {
+          color: 'rgb(88.63%,54.90%,0.00%)',
+          label: '',
+          position: 0.752,
+        },
+        {
+          color: 'rgb(89.02%,52.55%,0.00%)',
+          label: '',
+          position: 0.76,
+        },
+        {
+          color: 'rgb(89.80%,49.02%,0.00%)',
+          label: '',
+          position: 0.772,
+        },
+        {
+          color: 'rgb(90.20%,46.67%,0.00%)',
+          label: '',
+          position: 0.78,
+        },
+        {
+          color: 'rgb(90.98%,41.96%,0.00%)',
+          label: '',
+          position: 0.796,
+        },
+        {
+          color: 'rgb(91.76%,39.61%,0.00%)',
+          label: '',
+          position: 0.804,
+        },
+        {
+          color: 'rgb(92.16%,37.25%,0.00%)',
+          label: '',
+          position: 0.812,
+        },
+        {
+          color: 'rgb(92.94%,33.73%,0.00%)',
+          label: '',
+          position: 0.824,
+        },
+        {
+          color: 'rgb(93.33%,31.37%,0.00%)',
+          label: '',
+          position: 0.832,
+        },
+        {
+          color: 'rgb(94.12%,27.84%,0.00%)',
+          label: '',
+          position: 0.844,
+        },
+        {
+          color: 'rgb(94.90%,24.31%,0.00%)',
+          label: '',
+          position: 0.856,
+        },
+        {
+          color: 'rgb(95.69%,20.78%,0.00%)',
+          label: '',
+          position: 0.868,
+        },
+        {
+          color: 'rgb(96.47%,16.08%,0.00%)',
+          label: '',
+          position: 0.884,
+        },
+        {
+          color: 'rgb(96.86%,13.73%,0.00%)',
+          label: '',
+          position: 0.892,
+        },
+        {
+          color: 'rgb(97.65%,10.20%,0.00%)',
+          label: '',
+          position: 0.904,
+        },
+        {
+          color: 'rgb(98.43%,6.67%,0.00%)',
+          label: '',
+          position: 0.916,
+        },
+        {
+          color: 'rgb(99.22%,3.14%,0.00%)',
+          label: '',
+          position: 0.928,
+        },
+        {
+          color: 'rgb(100.00%,0.00%,0.00%)',
+          label: 0.94,
+          position: 0.94,
+        },
+      ],
+      maxPosition: 0.94,
+      minPosition: 0,
+    },
   },
   {
     match: [
@@ -4197,6 +9344,29 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`FCover is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction. It is used to separate vegetation and soil in energy balance processes, including temperature and evapotranspiration. It is computed from the leaf area index and other canopy structural variables and does not depend on variables such as the geometry of illumination as compared to FAPAR. For this reason, it is a very good candidate for the replacement of classical vegetation indices for the monitoring of green vegetation. Because of the linear relationship with radiometric signal, FCover will be only marginally scale dependent. Note that similarly to LAI and FAPAR, only the green elements will be considered, either belonging both to the overstory and understory.`,
+    legend: {
+      type: 'continuous',
+      title: 'FCOVER',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.332,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 1,
+          position: 1,
+        },
+      ],
+      maxPosition: 1,
+      minPosition: 0,
+    },
   },
   {
     match: [
@@ -4208,26 +9378,266 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`FCover is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction. It is used to separate vegetation and soil in energy balance processes, including temperature and evapotranspiration. It is computed from the leaf area index and other canopy structural variables and does not depend on variables such as the geometry of illumination as compared to FAPAR. For this reason, it is a very good candidate for the replacement of classical vegetation indices for the monitoring of green vegetation. Because of the linear relationship with radiometric signal, FCover will be only marginally scale dependent. Note that similarly to LAI and FAPAR, only the green elements will be considered, either belonging both to the overstory and understory.`,
+    legend: {
+      type: 'continuous',
+      title: 'FCOVER',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.332,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 1,
+          position: 1,
+        },
+      ],
+      maxPosition: 1,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT0, layerId: 'GPP' }],
     description: () =>
       t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+    legend: {
+      type: 'continuous',
+      title: 'GPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 21,
+          position: 21,
+        },
+      ],
+      maxPosition: 21,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT1, layerId: 'GPP' }],
     description: () =>
       t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+    legend: {
+      type: 'continuous',
+      title: 'GPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 21,
+          position: 21,
+        },
+      ],
+      maxPosition: 21,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT2, layerId: 'GPP' }],
     description: () =>
       t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+    legend: {
+      type: 'continuous',
+      title: 'GPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 21,
+          position: 21,
+        },
+      ],
+      maxPosition: 21,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_GPP_300M_10DAILY_RT6, layerId: 'GPP' }],
     description: () =>
       t`Gross Primary Production (GPP) expresses a component of Primary Production of ecosystems related to the creation of new organic matter by vegetation. GPP is the total amount of dry matter (carbon) "fixed" by land plants per unit time through photosynthesis (atmospheric CO2 into organic compounds). A substantial fraction of GPP supports plant autotrophic respiration (Ra). GPP is typically expressed as gram of carbon per square meter per day (gC/m2 /day).`,
+    legend: {
+      type: 'continuous',
+      title: 'GPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 21,
+          position: 21,
+        },
+      ],
+      maxPosition: 21,
+      minPosition: 0,
+    },
   },
   {
     match: [
@@ -4239,6 +9649,1069 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`LAI is defined as half the developed area of photosynthetically active elements of the vegetation per unit horizontal ground area. It determines the size of the interface for exchange of energy (including radiation) and mass between the canopy and the atmosphere. This is an intrinsic canopy primary variable that should not depend on observation conditions. LAI is strongly non-linearly related to reflectance. Therefore, its estimation from remote sensing observations is scale dependent.`,
+    legend: {
+      type: 'continuous',
+      title: 'LAI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: '0',
+          position: 0,
+        },
+        {
+          color: 'rgb(55.29%,36.86%,2.75%)',
+          label: '',
+          position: 0.03333333333333333,
+        },
+        {
+          color: 'rgb(56.08%,38.04%,2.75%)',
+          label: '',
+          position: 0.06666666666666667,
+        },
+        {
+          color: 'rgb(56.86%,39.22%,2.75%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(57.65%,40.0%,2.75%)',
+          label: '',
+          position: 0.13333333333333333,
+        },
+        {
+          color: 'rgb(58.43%,41.18%,2.75%)',
+          label: '',
+          position: 0.16666666666666666,
+        },
+        {
+          color: 'rgb(59.22%,42.35%,2.75%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(60.0%,43.53%,2.75%)',
+          label: '',
+          position: 0.23333333333333334,
+        },
+        {
+          color: 'rgb(60.78%,44.31%,2.35%)',
+          label: '',
+          position: 0.26666666666666666,
+        },
+        {
+          color: 'rgb(61.57%,45.49%,2.35%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(62.35%,46.67%,2.35%)',
+          label: '',
+          position: 0.3333333333333333,
+        },
+        {
+          color: 'rgb(63.14%,47.45%,2.35%)',
+          label: '',
+          position: 0.36666666666666664,
+        },
+        {
+          color: 'rgb(63.92%,48.63%,2.35%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(64.31%,49.8%,2.35%)',
+          label: '',
+          position: 0.43333333333333335,
+        },
+        {
+          color: 'rgb(65.1%,50.98%,2.35%)',
+          label: '',
+          position: 0.4666666666666667,
+        },
+        {
+          color: 'rgb(65.88%,51.76%,2.35%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(66.67%,52.94%,1.96%)',
+          label: '',
+          position: 0.5333333333333333,
+        },
+        {
+          color: 'rgb(67.45%,54.12%,1.96%)',
+          label: '',
+          position: 0.5666666666666667,
+        },
+        {
+          color: 'rgb(68.24%,54.9%,1.96%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(69.02%,56.08%,1.96%)',
+          label: '',
+          position: 0.6333333333333333,
+        },
+        {
+          color: 'rgb(69.8%,57.25%,1.96%)',
+          label: '',
+          position: 0.6666666666666666,
+        },
+        {
+          color: 'rgb(70.59%,58.43%,1.96%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(71.37%,59.22%,1.96%)',
+          label: '',
+          position: 0.7333333333333333,
+        },
+        {
+          color: 'rgb(72.16%,60.39%,1.57%)',
+          label: '',
+          position: 0.7666666666666667,
+        },
+        {
+          color: 'rgb(72.94%,61.57%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(73.33%,62.35%,1.57%)',
+          label: '',
+          position: 0.8333333333333334,
+        },
+        {
+          color: 'rgb(74.12%,63.53%,1.57%)',
+          label: '',
+          position: 0.8666666666666667,
+        },
+        {
+          color: 'rgb(74.9%,64.71%,1.57%)',
+          label: '',
+          position: 0.9,
+        },
+        {
+          color: 'rgb(75.69%,65.88%,1.57%)',
+          label: '',
+          position: 0.9333333333333333,
+        },
+        {
+          color: 'rgb(76.47%,66.67%,1.57%)',
+          label: '',
+          position: 0.9666666666666667,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,1.57%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(78.04%,69.02%,1.18%)',
+          label: '',
+          position: 1.0333333333333334,
+        },
+        {
+          color: 'rgb(78.82%,69.8%,1.18%)',
+          label: '',
+          position: 1.0666666666666667,
+        },
+        {
+          color: 'rgb(79.61%,70.98%,1.18%)',
+          label: '',
+          position: 1.1,
+        },
+        {
+          color: 'rgb(80.39%,72.16%,1.18%)',
+          label: '',
+          position: 1.1333333333333333,
+        },
+        {
+          color: 'rgb(81.18%,73.33%,1.18%)',
+          label: '',
+          position: 1.1666666666666667,
+        },
+        {
+          color: 'rgb(81.96%,74.12%,1.18%)',
+          label: '',
+          position: 1.2,
+        },
+        {
+          color: 'rgb(82.35%,75.29%,1.18%)',
+          label: '',
+          position: 1.2333333333333334,
+        },
+        {
+          color: 'rgb(83.14%,76.47%,0.78%)',
+          label: '',
+          position: 1.2666666666666666,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.78%)',
+          label: '',
+          position: 1.3,
+        },
+        {
+          color: 'rgb(84.71%,78.43%,0.78%)',
+          label: '',
+          position: 1.3333333333333333,
+        },
+        {
+          color: 'rgb(85.49%,79.61%,0.78%)',
+          label: '',
+          position: 1.3666666666666667,
+        },
+        {
+          color: 'rgb(86.27%,80.78%,0.78%)',
+          label: '',
+          position: 1.4,
+        },
+        {
+          color: 'rgb(87.06%,81.57%,0.78%)',
+          label: '',
+          position: 1.4333333333333333,
+        },
+        {
+          color: 'rgb(87.84%,82.75%,0.78%)',
+          label: '',
+          position: 1.4666666666666666,
+        },
+        {
+          color: 'rgb(88.63%,83.92%,0.78%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(89.41%,84.71%,0.39%)',
+          label: '',
+          position: 1.5333333333333334,
+        },
+        {
+          color: 'rgb(90.2%,85.88%,0.39%)',
+          label: '',
+          position: 1.5666666666666667,
+        },
+        {
+          color: 'rgb(90.98%,87.06%,0.39%)',
+          label: '',
+          position: 1.6,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.39%)',
+          label: '',
+          position: 1.6333333333333333,
+        },
+        {
+          color: 'rgb(92.16%,89.02%,0.39%)',
+          label: '',
+          position: 1.6666666666666667,
+        },
+        {
+          color: 'rgb(92.94%,90.2%,0.39%)',
+          label: '',
+          position: 1.7,
+        },
+        {
+          color: 'rgb(93.73%,91.37%,0.39%)',
+          label: '',
+          position: 1.7333333333333334,
+        },
+        {
+          color: 'rgb(94.51%,92.16%,0.0%)',
+          label: '',
+          position: 1.7666666666666666,
+        },
+        {
+          color: 'rgb(95.29%,93.33%,0.0%)',
+          label: '',
+          position: 1.8,
+        },
+        {
+          color: 'rgb(96.08%,94.51%,0.0%)',
+          label: '',
+          position: 1.8333333333333333,
+        },
+        {
+          color: 'rgb(96.86%,95.69%,0.0%)',
+          label: '',
+          position: 1.8666666666666667,
+        },
+        {
+          color: 'rgb(97.65%,96.47%,0.0%)',
+          label: '',
+          position: 1.9,
+        },
+        {
+          color: 'rgb(98.43%,97.65%,0.0%)',
+          label: '',
+          position: 1.9333333333333333,
+        },
+        {
+          color: 'rgb(99.22%,98.82%,0.0%)',
+          label: '',
+          position: 1.9666666666666666,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(98.04%,99.61%,0.0%)',
+          label: '',
+          position: 2.033333333333333,
+        },
+        {
+          color: 'rgb(96.47%,99.22%,0.0%)',
+          label: '',
+          position: 2.066666666666667,
+        },
+        {
+          color: 'rgb(94.9%,98.82%,0.0%)',
+          label: '',
+          position: 2.1,
+        },
+        {
+          color: 'rgb(93.33%,98.43%,0.0%)',
+          label: '',
+          position: 2.1333333333333333,
+        },
+        {
+          color: 'rgb(91.37%,98.04%,0.0%)',
+          label: '',
+          position: 2.1666666666666665,
+        },
+        {
+          color: 'rgb(89.8%,97.65%,0.0%)',
+          label: '',
+          position: 2.2,
+        },
+        {
+          color: 'rgb(88.24%,97.25%,0.0%)',
+          label: '',
+          position: 2.2333333333333334,
+        },
+        {
+          color: 'rgb(86.67%,96.86%,0.0%)',
+          label: '',
+          position: 2.2666666666666666,
+        },
+        {
+          color: 'rgb(84.71%,96.47%,0.0%)',
+          label: '',
+          position: 2.3,
+        },
+        {
+          color: 'rgb(83.14%,96.08%,0.0%)',
+          label: '',
+          position: 2.3333333333333335,
+        },
+        {
+          color: 'rgb(81.57%,95.69%,0.0%)',
+          label: '',
+          position: 2.3666666666666667,
+        },
+        {
+          color: 'rgb(80.0%,95.69%,0.0%)',
+          label: '',
+          position: 2.4,
+        },
+        {
+          color: 'rgb(78.04%,95.29%,0.0%)',
+          label: '',
+          position: 2.433333333333333,
+        },
+        {
+          color: 'rgb(76.47%,94.9%,0.0%)',
+          label: '',
+          position: 2.466666666666667,
+        },
+        {
+          color: 'rgb(74.9%,94.51%,0.0%)',
+          label: '',
+          position: 2.5,
+        },
+        {
+          color: 'rgb(73.33%,94.12%,0.0%)',
+          label: '',
+          position: 2.533333333333333,
+        },
+        {
+          color: 'rgb(71.37%,93.73%,0.0%)',
+          label: '',
+          position: 2.566666666666667,
+        },
+        {
+          color: 'rgb(69.8%,93.33%,0.0%)',
+          label: '',
+          position: 2.6,
+        },
+        {
+          color: 'rgb(68.24%,92.94%,0.0%)',
+          label: '',
+          position: 2.6333333333333333,
+        },
+        {
+          color: 'rgb(66.67%,92.55%,0.0%)',
+          label: '',
+          position: 2.6666666666666665,
+        },
+        {
+          color: 'rgb(64.71%,92.16%,0.0%)',
+          label: '',
+          position: 2.7,
+        },
+        {
+          color: 'rgb(63.14%,91.76%,0.0%)',
+          label: '',
+          position: 2.7333333333333334,
+        },
+        {
+          color: 'rgb(61.57%,91.37%,0.0%)',
+          label: '',
+          position: 2.7666666666666666,
+        },
+        {
+          color: 'rgb(60.0%,91.37%,0.0%)',
+          label: '',
+          position: 2.8,
+        },
+        {
+          color: 'rgb(58.04%,90.98%,0.0%)',
+          label: '',
+          position: 2.8333333333333335,
+        },
+        {
+          color: 'rgb(56.47%,90.59%,0.0%)',
+          label: '',
+          position: 2.8666666666666667,
+        },
+        {
+          color: 'rgb(54.9%,90.2%,0.0%)',
+          label: '',
+          position: 2.9,
+        },
+        {
+          color: 'rgb(53.33%,89.8%,0.0%)',
+          label: '',
+          position: 2.933333333333333,
+        },
+        {
+          color: 'rgb(51.37%,89.41%,0.0%)',
+          label: '',
+          position: 2.966666666666667,
+        },
+        {
+          color: 'rgb(49.8%,89.02%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(48.24%,88.63%,0.0%)',
+          label: '',
+          position: 3.033333333333333,
+        },
+        {
+          color: 'rgb(46.67%,88.24%,0.0%)',
+          label: '',
+          position: 3.066666666666667,
+        },
+        {
+          color: 'rgb(44.71%,87.84%,0.0%)',
+          label: '',
+          position: 3.1,
+        },
+        {
+          color: 'rgb(43.14%,87.45%,0.0%)',
+          label: '',
+          position: 3.1333333333333333,
+        },
+        {
+          color: 'rgb(41.57%,87.06%,0.0%)',
+          label: '',
+          position: 3.1666666666666665,
+        },
+        {
+          color: 'rgb(40.0%,87.06%,0.0%)',
+          label: '',
+          position: 3.2,
+        },
+        {
+          color: 'rgb(38.04%,86.67%,0.0%)',
+          label: '',
+          position: 3.2333333333333334,
+        },
+        {
+          color: 'rgb(36.47%,86.27%,0.0%)',
+          label: '',
+          position: 3.2666666666666666,
+        },
+        {
+          color: 'rgb(34.9%,85.88%,0.0%)',
+          label: '',
+          position: 3.3,
+        },
+        {
+          color: 'rgb(33.33%,85.49%,0.0%)',
+          label: '',
+          position: 3.3333333333333335,
+        },
+        {
+          color: 'rgb(31.37%,85.1%,0.0%)',
+          label: '',
+          position: 3.3666666666666667,
+        },
+        {
+          color: 'rgb(29.8%,84.71%,0.0%)',
+          label: '',
+          position: 3.4,
+        },
+        {
+          color: 'rgb(28.24%,84.31%,0.0%)',
+          label: '',
+          position: 3.433333333333333,
+        },
+        {
+          color: 'rgb(26.67%,83.92%,0.0%)',
+          label: '',
+          position: 3.466666666666667,
+        },
+        {
+          color: 'rgb(24.71%,83.53%,0.0%)',
+          label: '',
+          position: 3.5,
+        },
+        {
+          color: 'rgb(23.14%,83.14%,0.0%)',
+          label: '',
+          position: 3.533333333333333,
+        },
+        {
+          color: 'rgb(21.57%,82.75%,0.0%)',
+          label: '',
+          position: 3.566666666666667,
+        },
+        {
+          color: 'rgb(20.0%,82.75%,0.0%)',
+          label: '',
+          position: 3.6,
+        },
+        {
+          color: 'rgb(18.04%,82.35%,0.0%)',
+          label: '',
+          position: 3.6333333333333333,
+        },
+        {
+          color: 'rgb(16.47%,81.96%,0.0%)',
+          label: '',
+          position: 3.6666666666666665,
+        },
+        {
+          color: 'rgb(14.9%,81.57%,0.0%)',
+          label: '',
+          position: 3.7,
+        },
+        {
+          color: 'rgb(13.33%,81.18%,0.0%)',
+          label: '',
+          position: 3.7333333333333334,
+        },
+        {
+          color: 'rgb(11.37%,80.78%,0.0%)',
+          label: '',
+          position: 3.7666666666666666,
+        },
+        {
+          color: 'rgb(9.8%,80.39%,0.0%)',
+          label: '',
+          position: 3.8,
+        },
+        {
+          color: 'rgb(8.24%,80.0%,0.0%)',
+          label: '',
+          position: 3.8333333333333335,
+        },
+        {
+          color: 'rgb(6.67%,79.61%,0.0%)',
+          label: '',
+          position: 3.8666666666666667,
+        },
+        {
+          color: 'rgb(4.71%,79.22%,0.0%)',
+          label: '',
+          position: 3.9,
+        },
+        {
+          color: 'rgb(3.14%,78.82%,0.0%)',
+          label: '',
+          position: 3.933333333333333,
+        },
+        {
+          color: 'rgb(1.57%,78.43%,0.0%)',
+          label: '',
+          position: 3.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,78.43%,0.0%)',
+          label: '',
+          position: 4,
+        },
+        {
+          color: 'rgb(0.0%,77.65%,0.0%)',
+          label: '',
+          position: 4.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,77.25%,0.0%)',
+          label: '',
+          position: 4.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,76.86%,0.0%)',
+          label: '',
+          position: 4.1,
+        },
+        {
+          color: 'rgb(0.0%,76.47%,0.0%)',
+          label: '',
+          position: 4.133333333333334,
+        },
+        {
+          color: 'rgb(0.0%,76.08%,0.0%)',
+          label: '',
+          position: 4.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,75.69%,0.0%)',
+          label: '',
+          position: 4.2,
+        },
+        {
+          color: 'rgb(0.0%,75.29%,0.0%)',
+          label: '',
+          position: 4.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,74.9%,0.0%)',
+          label: '',
+          position: 4.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,74.51%,0.0%)',
+          label: '',
+          position: 4.3,
+        },
+        {
+          color: 'rgb(0.0%,73.73%,0.0%)',
+          label: '',
+          position: 4.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,73.33%,0.0%)',
+          label: '',
+          position: 4.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,72.94%,0.0%)',
+          label: '',
+          position: 4.4,
+        },
+        {
+          color: 'rgb(0.0%,72.55%,0.0%)',
+          label: '',
+          position: 4.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,72.16%,0.0%)',
+          label: '',
+          position: 4.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,71.76%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(0.0%,71.37%,0.0%)',
+          label: '',
+          position: 4.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,70.98%,0.0%)',
+          label: '',
+          position: 4.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,70.59%,0.0%)',
+          label: '',
+          position: 4.6,
+        },
+        {
+          color: 'rgb(0.0%,69.8%,0.0%)',
+          label: '',
+          position: 4.633333333333334,
+        },
+        {
+          color: 'rgb(0.0%,69.41%,0.0%)',
+          label: '',
+          position: 4.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,69.02%,0.0%)',
+          label: '',
+          position: 4.7,
+        },
+        {
+          color: 'rgb(0.0%,68.63%,0.0%)',
+          label: '',
+          position: 4.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,68.24%,0.0%)',
+          label: '',
+          position: 4.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,67.84%,0.0%)',
+          label: '',
+          position: 4.8,
+        },
+        {
+          color: 'rgb(0.0%,67.45%,0.0%)',
+          label: '',
+          position: 4.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,67.06%,0.0%)',
+          label: '',
+          position: 4.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,66.67%,0.0%)',
+          label: '',
+          position: 4.9,
+        },
+        {
+          color: 'rgb(0.0%,65.88%,0.0%)',
+          label: '',
+          position: 4.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,65.49%,0.0%)',
+          label: '',
+          position: 4.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,65.1%,0.0%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(0.0%,64.71%,0.0%)',
+          label: '',
+          position: 5.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,64.31%,0.0%)',
+          label: '',
+          position: 5.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,63.92%,0.0%)',
+          label: '',
+          position: 5.1,
+        },
+        {
+          color: 'rgb(0.0%,63.53%,0.0%)',
+          label: '',
+          position: 5.133333333333334,
+        },
+        {
+          color: 'rgb(0.0%,63.14%,0.0%)',
+          label: '',
+          position: 5.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,62.75%,0.0%)',
+          label: '',
+          position: 5.2,
+        },
+        {
+          color: 'rgb(0.0%,61.96%,0.0%)',
+          label: '',
+          position: 5.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,61.57%,0.0%)',
+          label: '',
+          position: 5.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,61.18%,0.0%)',
+          label: '',
+          position: 5.3,
+        },
+        {
+          color: 'rgb(0.0%,60.78%,0.0%)',
+          label: '',
+          position: 5.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,60.39%,0.0%)',
+          label: '',
+          position: 5.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,60.0%,0.0%)',
+          label: '',
+          position: 5.4,
+        },
+        {
+          color: 'rgb(0.0%,59.61%,0.0%)',
+          label: '',
+          position: 5.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,59.22%,0.0%)',
+          label: '',
+          position: 5.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,58.82%,0.0%)',
+          label: '',
+          position: 5.5,
+        },
+        {
+          color: 'rgb(0.0%,58.04%,0.0%)',
+          label: '',
+          position: 5.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,57.65%,0.0%)',
+          label: '',
+          position: 5.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,57.25%,0.0%)',
+          label: '',
+          position: 5.6,
+        },
+        {
+          color: 'rgb(0.0%,56.86%,0.0%)',
+          label: '',
+          position: 5.633333333333334,
+        },
+        {
+          color: 'rgb(0.0%,56.47%,0.0%)',
+          label: '',
+          position: 5.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,56.08%,0.0%)',
+          label: '',
+          position: 5.7,
+        },
+        {
+          color: 'rgb(0.0%,55.69%,0.0%)',
+          label: '',
+          position: 5.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,55.29%,0.0%)',
+          label: '',
+          position: 5.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,54.9%,0.0%)',
+          label: '',
+          position: 5.8,
+        },
+        {
+          color: 'rgb(0.0%,54.12%,0.0%)',
+          label: '',
+          position: 5.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,53.73%,0.0%)',
+          label: '',
+          position: 5.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: '',
+          position: 5.9,
+        },
+        {
+          color: 'rgb(0.0%,52.94%,0.0%)',
+          label: '',
+          position: 5.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,52.55%,0.0%)',
+          label: '',
+          position: 5.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,52.16%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(0.0%,51.76%,0.0%)',
+          label: '',
+          position: 6.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,51.37%,0.0%)',
+          label: '',
+          position: 6.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,50.98%,0.0%)',
+          label: '',
+          position: 6.1,
+        },
+        {
+          color: 'rgb(0.0%,50.2%,0.0%)',
+          label: '',
+          position: 6.133333333333334,
+        },
+        {
+          color: 'rgb(0.0%,49.8%,0.0%)',
+          label: '',
+          position: 6.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,49.41%,0.0%)',
+          label: '',
+          position: 6.2,
+        },
+        {
+          color: 'rgb(0.0%,49.02%,0.0%)',
+          label: '',
+          position: 6.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,48.63%,0.0%)',
+          label: '',
+          position: 6.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,48.24%,0.0%)',
+          label: '',
+          position: 6.3,
+        },
+        {
+          color: 'rgb(0.0%,47.84%,0.0%)',
+          label: '',
+          position: 6.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,47.45%,0.0%)',
+          label: '',
+          position: 6.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,47.06%,0.0%)',
+          label: '',
+          position: 6.4,
+        },
+        {
+          color: 'rgb(0.0%,46.27%,0.0%)',
+          label: '',
+          position: 6.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,45.88%,0.0%)',
+          label: '',
+          position: 6.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,45.49%,0.0%)',
+          label: '',
+          position: 6.5,
+        },
+        {
+          color: 'rgb(0.0%,45.1%,0.0%)',
+          label: '',
+          position: 6.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,44.71%,0.0%)',
+          label: '',
+          position: 6.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,44.31%,0.0%)',
+          label: '',
+          position: 6.6,
+        },
+        {
+          color: 'rgb(0.0%,43.92%,0.0%)',
+          label: '',
+          position: 6.633333333333334,
+        },
+        {
+          color: 'rgb(0.0%,43.53%,0.0%)',
+          label: '',
+          position: 6.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,43.14%,0.0%)',
+          label: '',
+          position: 6.7,
+        },
+        {
+          color: 'rgb(0.0%,42.35%,0.0%)',
+          label: '',
+          position: 6.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,41.96%,0.0%)',
+          label: '',
+          position: 6.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,41.57%,0.0%)',
+          label: '',
+          position: 6.8,
+        },
+        {
+          color: 'rgb(0.0%,41.18%,0.0%)',
+          label: '',
+          position: 6.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,40.78%,0.0%)',
+          label: '',
+          position: 6.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,40.39%,0.0%)',
+          label: '',
+          position: 6.9,
+        },
+        {
+          color: 'rgb(0.0%,40.0%,0.0%)',
+          label: '',
+          position: 6.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,39.61%,0.0%)',
+          label: '',
+          position: 6.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 7,
+          position: 7,
+        },
+      ],
+      maxPosition: 7,
+      minPosition: -0.0003333333333333333,
+    },
   },
   {
     match: [
@@ -4250,157 +10723,2991 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     ],
     description: () =>
       t`LAI is defined as half the developed area of photosynthetically active elements of the vegetation per unit horizontal ground area. It determines the size of the interface for exchange of energy (including radiation) and mass between the canopy and the atmosphere. This is an intrinsic canopy primary variable that should not depend on observation conditions. LAI is strongly non-linearly related to reflectance.`,
+    legend: {
+      type: 'continuous',
+      title: 'LAI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(55.29%,36.86%,2.75%)',
+          label: '',
+          position: 0.03333333333333333,
+        },
+        {
+          color: 'rgb(56.08%,38.04%,2.75%)',
+          label: '',
+          position: 0.06666666666666667,
+        },
+        {
+          color: 'rgb(56.86%,39.22%,2.75%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(57.65%,40.0%,2.75%)',
+          label: '',
+          position: 0.13333333333333333,
+        },
+        {
+          color: 'rgb(58.43%,41.18%,2.75%)',
+          label: '',
+          position: 0.16666666666666666,
+        },
+        {
+          color: 'rgb(59.22%,42.35%,2.75%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(60.0%,43.53%,2.75%)',
+          label: '',
+          position: 0.23333333333333334,
+        },
+        {
+          color: 'rgb(60.78%,44.31%,2.35%)',
+          label: '',
+          position: 0.26666666666666666,
+        },
+        {
+          color: 'rgb(61.57%,45.49%,2.35%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(62.35%,46.67%,2.35%)',
+          label: '',
+          position: 0.3333333333333333,
+        },
+        {
+          color: 'rgb(63.14%,47.45%,2.35%)',
+          label: '',
+          position: 0.36666666666666664,
+        },
+        {
+          color: 'rgb(63.92%,48.63%,2.35%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(64.31%,49.8%,2.35%)',
+          label: '',
+          position: 0.43333333333333335,
+        },
+        {
+          color: 'rgb(65.1%,50.98%,2.35%)',
+          label: '',
+          position: 0.4666666666666667,
+        },
+        {
+          color: 'rgb(65.88%,51.76%,2.35%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(66.67%,52.94%,1.96%)',
+          label: '',
+          position: 0.5333333333333333,
+        },
+        {
+          color: 'rgb(67.45%,54.12%,1.96%)',
+          label: '',
+          position: 0.5666666666666667,
+        },
+        {
+          color: 'rgb(68.24%,54.9%,1.96%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(69.02%,56.08%,1.96%)',
+          label: '',
+          position: 0.6333333333333333,
+        },
+        {
+          color: 'rgb(69.8%,57.25%,1.96%)',
+          label: '',
+          position: 0.6666666666666666,
+        },
+        {
+          color: 'rgb(70.59%,58.43%,1.96%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(71.37%,59.22%,1.96%)',
+          label: '',
+          position: 0.7333333333333333,
+        },
+        {
+          color: 'rgb(72.16%,60.39%,1.57%)',
+          label: '',
+          position: 0.7666666666666666,
+        },
+        {
+          color: 'rgb(72.94%,61.57%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(73.33%,62.35%,1.57%)',
+          label: '',
+          position: 0.8333333333333334,
+        },
+        {
+          color: 'rgb(74.12%,63.53%,1.57%)',
+          label: '',
+          position: 0.8666666666666667,
+        },
+        {
+          color: 'rgb(74.9%,64.71%,1.57%)',
+          label: '',
+          position: 0.9,
+        },
+        {
+          color: 'rgb(75.69%,65.88%,1.57%)',
+          label: '',
+          position: 0.9333333333333333,
+        },
+        {
+          color: 'rgb(76.47%,66.67%,1.57%)',
+          label: '',
+          position: 0.9666666666666667,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,1.57%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(78.04%,69.02%,1.18%)',
+          label: '',
+          position: 1.0333333333333332,
+        },
+        {
+          color: 'rgb(78.82%,69.8%,1.18%)',
+          label: '',
+          position: 1.0666666666666667,
+        },
+        {
+          color: 'rgb(79.61%,70.98%,1.18%)',
+          label: '',
+          position: 1.1,
+        },
+        {
+          color: 'rgb(80.39%,72.16%,1.18%)',
+          label: '',
+          position: 1.1333333333333333,
+        },
+        {
+          color: 'rgb(81.18%,73.33%,1.18%)',
+          label: '',
+          position: 1.1666666666666667,
+        },
+        {
+          color: 'rgb(81.96%,74.12%,1.18%)',
+          label: '',
+          position: 1.2,
+        },
+        {
+          color: 'rgb(82.35%,75.29%,1.18%)',
+          label: '',
+          position: 1.2333333333333334,
+        },
+        {
+          color: 'rgb(83.14%,76.47%,0.78%)',
+          label: '',
+          position: 1.2666666666666666,
+        },
+        {
+          color: 'rgb(83.92%,77.25%,0.78%)',
+          label: '',
+          position: 1.3,
+        },
+        {
+          color: 'rgb(84.71%,78.43%,0.78%)',
+          label: '',
+          position: 1.3333333333333333,
+        },
+        {
+          color: 'rgb(85.49%,79.61%,0.78%)',
+          label: '',
+          position: 1.3666666666666667,
+        },
+        {
+          color: 'rgb(86.27%,80.78%,0.78%)',
+          label: '',
+          position: 1.4,
+        },
+        {
+          color: 'rgb(87.06%,81.57%,0.78%)',
+          label: '',
+          position: 1.4333333333333333,
+        },
+        {
+          color: 'rgb(87.84%,82.75%,0.78%)',
+          label: '',
+          position: 1.4666666666666666,
+        },
+        {
+          color: 'rgb(88.63%,83.92%,0.78%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(89.41%,84.71%,0.39%)',
+          label: '',
+          position: 1.5333333333333332,
+        },
+        {
+          color: 'rgb(90.2%,85.88%,0.39%)',
+          label: '',
+          position: 1.5666666666666667,
+        },
+        {
+          color: 'rgb(90.98%,87.06%,0.39%)',
+          label: '',
+          position: 1.6,
+        },
+        {
+          color: 'rgb(91.37%,88.24%,0.39%)',
+          label: '',
+          position: 1.6333333333333333,
+        },
+        {
+          color: 'rgb(92.16%,89.02%,0.39%)',
+          label: '',
+          position: 1.6666666666666667,
+        },
+        {
+          color: 'rgb(92.94%,90.2%,0.39%)',
+          label: '',
+          position: 1.7,
+        },
+        {
+          color: 'rgb(93.73%,91.37%,0.39%)',
+          label: '',
+          position: 1.7333333333333334,
+        },
+        {
+          color: 'rgb(94.51%,92.16%,0.0%)',
+          label: '',
+          position: 1.7666666666666666,
+        },
+        {
+          color: 'rgb(95.29%,93.33%,0.0%)',
+          label: '',
+          position: 1.8,
+        },
+        {
+          color: 'rgb(96.08%,94.51%,0.0%)',
+          label: '',
+          position: 1.8333333333333333,
+        },
+        {
+          color: 'rgb(96.86%,95.69%,0.0%)',
+          label: '',
+          position: 1.8666666666666667,
+        },
+        {
+          color: 'rgb(97.65%,96.47%,0.0%)',
+          label: '',
+          position: 1.9,
+        },
+        {
+          color: 'rgb(98.43%,97.65%,0.0%)',
+          label: '',
+          position: 1.9333333333333333,
+        },
+        {
+          color: 'rgb(99.22%,98.82%,0.0%)',
+          label: '',
+          position: 1.9666666666666666,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(98.04%,99.61%,0.0%)',
+          label: '',
+          position: 2.033333333333333,
+        },
+        {
+          color: 'rgb(96.47%,99.22%,0.0%)',
+          label: '',
+          position: 2.0666666666666664,
+        },
+        {
+          color: 'rgb(94.9%,98.82%,0.0%)',
+          label: '',
+          position: 2.1,
+        },
+        {
+          color: 'rgb(93.33%,98.43%,0.0%)',
+          label: '',
+          position: 2.1333333333333333,
+        },
+        {
+          color: 'rgb(91.37%,98.04%,0.0%)',
+          label: '',
+          position: 2.1666666666666665,
+        },
+        {
+          color: 'rgb(89.8%,97.65%,0.0%)',
+          label: '',
+          position: 2.2,
+        },
+        {
+          color: 'rgb(88.24%,97.25%,0.0%)',
+          label: '',
+          position: 2.2333333333333334,
+        },
+        {
+          color: 'rgb(86.67%,96.86%,0.0%)',
+          label: '',
+          position: 2.2666666666666666,
+        },
+        {
+          color: 'rgb(84.71%,96.47%,0.0%)',
+          label: '',
+          position: 2.3,
+        },
+        {
+          color: 'rgb(83.14%,96.08%,0.0%)',
+          label: '',
+          position: 2.3333333333333335,
+        },
+        {
+          color: 'rgb(81.57%,95.69%,0.0%)',
+          label: '',
+          position: 2.3666666666666667,
+        },
+        {
+          color: 'rgb(80.0%,95.69%,0.0%)',
+          label: '',
+          position: 2.4,
+        },
+        {
+          color: 'rgb(78.04%,95.29%,0.0%)',
+          label: '',
+          position: 2.433333333333333,
+        },
+        {
+          color: 'rgb(76.47%,94.9%,0.0%)',
+          label: '',
+          position: 2.466666666666667,
+        },
+        {
+          color: 'rgb(74.9%,94.51%,0.0%)',
+          label: '',
+          position: 2.5,
+        },
+        {
+          color: 'rgb(73.33%,94.12%,0.0%)',
+          label: '',
+          position: 2.533333333333333,
+        },
+        {
+          color: 'rgb(71.37%,93.73%,0.0%)',
+          label: '',
+          position: 2.5666666666666664,
+        },
+        {
+          color: 'rgb(69.8%,93.33%,0.0%)',
+          label: '',
+          position: 2.6,
+        },
+        {
+          color: 'rgb(68.24%,92.94%,0.0%)',
+          label: '',
+          position: 2.6333333333333333,
+        },
+        {
+          color: 'rgb(66.67%,92.55%,0.0%)',
+          label: '',
+          position: 2.6666666666666665,
+        },
+        {
+          color: 'rgb(64.71%,92.16%,0.0%)',
+          label: '',
+          position: 2.7,
+        },
+        {
+          color: 'rgb(63.14%,91.76%,0.0%)',
+          label: '',
+          position: 2.7333333333333334,
+        },
+        {
+          color: 'rgb(61.57%,91.37%,0.0%)',
+          label: '',
+          position: 2.7666666666666666,
+        },
+        {
+          color: 'rgb(60.0%,91.37%,0.0%)',
+          label: '',
+          position: 2.8,
+        },
+        {
+          color: 'rgb(58.04%,90.98%,0.0%)',
+          label: '',
+          position: 2.8333333333333335,
+        },
+        {
+          color: 'rgb(56.47%,90.59%,0.0%)',
+          label: '',
+          position: 2.8666666666666667,
+        },
+        {
+          color: 'rgb(54.9%,90.2%,0.0%)',
+          label: '',
+          position: 2.9,
+        },
+        {
+          color: 'rgb(53.33%,89.8%,0.0%)',
+          label: '',
+          position: 2.933333333333333,
+        },
+        {
+          color: 'rgb(51.37%,89.41%,0.0%)',
+          label: '',
+          position: 2.966666666666667,
+        },
+        {
+          color: 'rgb(49.8%,89.02%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(48.24%,88.63%,0.0%)',
+          label: '',
+          position: 3.033333333333333,
+        },
+        {
+          color: 'rgb(46.67%,88.24%,0.0%)',
+          label: '',
+          position: 3.0666666666666664,
+        },
+        {
+          color: 'rgb(44.71%,87.84%,0.0%)',
+          label: '',
+          position: 3.1,
+        },
+        {
+          color: 'rgb(43.14%,87.45%,0.0%)',
+          label: '',
+          position: 3.1333333333333333,
+        },
+        {
+          color: 'rgb(41.57%,87.06%,0.0%)',
+          label: '',
+          position: 3.166666666666666,
+        },
+        {
+          color: 'rgb(40.0%,87.06%,0.0%)',
+          label: '',
+          position: 3.2,
+        },
+        {
+          color: 'rgb(38.04%,86.67%,0.0%)',
+          label: '',
+          position: 3.2333333333333334,
+        },
+        {
+          color: 'rgb(36.47%,86.27%,0.0%)',
+          label: '',
+          position: 3.2666666666666666,
+        },
+        {
+          color: 'rgb(34.9%,85.88%,0.0%)',
+          label: '',
+          position: 3.3,
+        },
+        {
+          color: 'rgb(33.33%,85.49%,0.0%)',
+          label: '',
+          position: 3.3333333333333335,
+        },
+        {
+          color: 'rgb(31.37%,85.1%,0.0%)',
+          label: '',
+          position: 3.3666666666666667,
+        },
+        {
+          color: 'rgb(29.8%,84.71%,0.0%)',
+          label: '',
+          position: 3.4,
+        },
+        {
+          color: 'rgb(28.24%,84.31%,0.0%)',
+          label: '',
+          position: 3.433333333333333,
+        },
+        {
+          color: 'rgb(26.67%,83.92%,0.0%)',
+          label: '',
+          position: 3.466666666666667,
+        },
+        {
+          color: 'rgb(24.71%,83.53%,0.0%)',
+          label: '',
+          position: 3.5,
+        },
+        {
+          color: 'rgb(23.14%,83.14%,0.0%)',
+          label: '',
+          position: 3.533333333333333,
+        },
+        {
+          color: 'rgb(21.57%,82.75%,0.0%)',
+          label: '',
+          position: 3.5666666666666664,
+        },
+        {
+          color: 'rgb(20.0%,82.75%,0.0%)',
+          label: '',
+          position: 3.6,
+        },
+        {
+          color: 'rgb(18.04%,82.35%,0.0%)',
+          label: '',
+          position: 3.6333333333333333,
+        },
+        {
+          color: 'rgb(16.47%,81.96%,0.0%)',
+          label: '',
+          position: 3.6666666666666665,
+        },
+        {
+          color: 'rgb(14.9%,81.57%,0.0%)',
+          label: '',
+          position: 3.6999999999999997,
+        },
+        {
+          color: 'rgb(13.33%,81.18%,0.0%)',
+          label: '',
+          position: 3.7333333333333334,
+        },
+        {
+          color: 'rgb(11.37%,80.78%,0.0%)',
+          label: '',
+          position: 3.7666666666666666,
+        },
+        {
+          color: 'rgb(9.8%,80.39%,0.0%)',
+          label: '',
+          position: 3.8,
+        },
+        {
+          color: 'rgb(8.24%,80.0%,0.0%)',
+          label: '',
+          position: 3.8333333333333335,
+        },
+        {
+          color: 'rgb(6.67%,79.61%,0.0%)',
+          label: '',
+          position: 3.8666666666666667,
+        },
+        {
+          color: 'rgb(4.71%,79.22%,0.0%)',
+          label: '',
+          position: 3.9,
+        },
+        {
+          color: 'rgb(3.14%,78.82%,0.0%)',
+          label: '',
+          position: 3.933333333333333,
+        },
+        {
+          color: 'rgb(1.57%,78.43%,0.0%)',
+          label: '',
+          position: 3.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,78.43%,0.0%)',
+          label: '',
+          position: 4,
+        },
+        {
+          color: 'rgb(0.0%,77.65%,0.0%)',
+          label: '',
+          position: 4.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,77.25%,0.0%)',
+          label: '',
+          position: 4.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,76.86%,0.0%)',
+          label: '',
+          position: 4.1,
+        },
+        {
+          color: 'rgb(0.0%,76.47%,0.0%)',
+          label: '',
+          position: 4.133333333333333,
+        },
+        {
+          color: 'rgb(0.0%,76.08%,0.0%)',
+          label: '',
+          position: 4.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,75.69%,0.0%)',
+          label: '',
+          position: 4.2,
+        },
+        {
+          color: 'rgb(0.0%,75.29%,0.0%)',
+          label: '',
+          position: 4.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,74.9%,0.0%)',
+          label: '',
+          position: 4.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,74.51%,0.0%)',
+          label: '',
+          position: 4.3,
+        },
+        {
+          color: 'rgb(0.0%,73.73%,0.0%)',
+          label: '',
+          position: 4.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,73.33%,0.0%)',
+          label: '',
+          position: 4.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,72.94%,0.0%)',
+          label: '',
+          position: 4.4,
+        },
+        {
+          color: 'rgb(0.0%,72.55%,0.0%)',
+          label: '',
+          position: 4.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,72.16%,0.0%)',
+          label: '',
+          position: 4.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,71.76%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(0.0%,71.37%,0.0%)',
+          label: '',
+          position: 4.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,70.98%,0.0%)',
+          label: '',
+          position: 4.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,70.59%,0.0%)',
+          label: '',
+          position: 4.6,
+        },
+        {
+          color: 'rgb(0.0%,69.8%,0.0%)',
+          label: '',
+          position: 4.633333333333333,
+        },
+        {
+          color: 'rgb(0.0%,69.41%,0.0%)',
+          label: '',
+          position: 4.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,69.02%,0.0%)',
+          label: '',
+          position: 4.7,
+        },
+        {
+          color: 'rgb(0.0%,68.63%,0.0%)',
+          label: '',
+          position: 4.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,68.24%,0.0%)',
+          label: '',
+          position: 4.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,67.84%,0.0%)',
+          label: '',
+          position: 4.8,
+        },
+        {
+          color: 'rgb(0.0%,67.45%,0.0%)',
+          label: '',
+          position: 4.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,67.06%,0.0%)',
+          label: '',
+          position: 4.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,66.67%,0.0%)',
+          label: '',
+          position: 4.9,
+        },
+        {
+          color: 'rgb(0.0%,65.88%,0.0%)',
+          label: '',
+          position: 4.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,65.49%,0.0%)',
+          label: '',
+          position: 4.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,65.1%,0.0%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(0.0%,64.71%,0.0%)',
+          label: '',
+          position: 5.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,64.31%,0.0%)',
+          label: '',
+          position: 5.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,63.92%,0.0%)',
+          label: '',
+          position: 5.1,
+        },
+        {
+          color: 'rgb(0.0%,63.53%,0.0%)',
+          label: '',
+          position: 5.133333333333333,
+        },
+        {
+          color: 'rgb(0.0%,63.14%,0.0%)',
+          label: '',
+          position: 5.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,62.75%,0.0%)',
+          label: '',
+          position: 5.2,
+        },
+        {
+          color: 'rgb(0.0%,61.96%,0.0%)',
+          label: '',
+          position: 5.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,61.57%,0.0%)',
+          label: '',
+          position: 5.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,61.18%,0.0%)',
+          label: '',
+          position: 5.3,
+        },
+        {
+          color: 'rgb(0.0%,60.78%,0.0%)',
+          label: '',
+          position: 5.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,60.39%,0.0%)',
+          label: '',
+          position: 5.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,60.0%,0.0%)',
+          label: '',
+          position: 5.4,
+        },
+        {
+          color: 'rgb(0.0%,59.61%,0.0%)',
+          label: '',
+          position: 5.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,59.22%,0.0%)',
+          label: '',
+          position: 5.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,58.82%,0.0%)',
+          label: '',
+          position: 5.5,
+        },
+        {
+          color: 'rgb(0.0%,58.04%,0.0%)',
+          label: '',
+          position: 5.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,57.65%,0.0%)',
+          label: '',
+          position: 5.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,57.25%,0.0%)',
+          label: '',
+          position: 5.6,
+        },
+        {
+          color: 'rgb(0.0%,56.86%,0.0%)',
+          label: '',
+          position: 5.633333333333333,
+        },
+        {
+          color: 'rgb(0.0%,56.47%,0.0%)',
+          label: '',
+          position: 5.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,56.08%,0.0%)',
+          label: '',
+          position: 5.7,
+        },
+        {
+          color: 'rgb(0.0%,55.69%,0.0%)',
+          label: '',
+          position: 5.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,55.29%,0.0%)',
+          label: '',
+          position: 5.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,54.9%,0.0%)',
+          label: '',
+          position: 5.8,
+        },
+        {
+          color: 'rgb(0.0%,54.12%,0.0%)',
+          label: '',
+          position: 5.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,53.73%,0.0%)',
+          label: '',
+          position: 5.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: '',
+          position: 5.9,
+        },
+        {
+          color: 'rgb(0.0%,52.94%,0.0%)',
+          label: '',
+          position: 5.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,52.55%,0.0%)',
+          label: '',
+          position: 5.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,52.16%,0.0%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(0.0%,51.76%,0.0%)',
+          label: '',
+          position: 6.033333333333333,
+        },
+        {
+          color: 'rgb(0.0%,51.37%,0.0%)',
+          label: '',
+          position: 6.066666666666666,
+        },
+        {
+          color: 'rgb(0.0%,50.98%,0.0%)',
+          label: '',
+          position: 6.1,
+        },
+        {
+          color: 'rgb(0.0%,50.2%,0.0%)',
+          label: '',
+          position: 6.133333333333333,
+        },
+        {
+          color: 'rgb(0.0%,49.8%,0.0%)',
+          label: '',
+          position: 6.166666666666667,
+        },
+        {
+          color: 'rgb(0.0%,49.41%,0.0%)',
+          label: '',
+          position: 6.2,
+        },
+        {
+          color: 'rgb(0.0%,49.02%,0.0%)',
+          label: '',
+          position: 6.233333333333333,
+        },
+        {
+          color: 'rgb(0.0%,48.63%,0.0%)',
+          label: '',
+          position: 6.266666666666667,
+        },
+        {
+          color: 'rgb(0.0%,48.24%,0.0%)',
+          label: '',
+          position: 6.3,
+        },
+        {
+          color: 'rgb(0.0%,47.84%,0.0%)',
+          label: '',
+          position: 6.333333333333333,
+        },
+        {
+          color: 'rgb(0.0%,47.45%,0.0%)',
+          label: '',
+          position: 6.366666666666666,
+        },
+        {
+          color: 'rgb(0.0%,47.06%,0.0%)',
+          label: '',
+          position: 6.4,
+        },
+        {
+          color: 'rgb(0.0%,46.27%,0.0%)',
+          label: '',
+          position: 6.433333333333334,
+        },
+        {
+          color: 'rgb(0.0%,45.88%,0.0%)',
+          label: '',
+          position: 6.466666666666667,
+        },
+        {
+          color: 'rgb(0.0%,45.49%,0.0%)',
+          label: '',
+          position: 6.5,
+        },
+        {
+          color: 'rgb(0.0%,45.1%,0.0%)',
+          label: '',
+          position: 6.533333333333333,
+        },
+        {
+          color: 'rgb(0.0%,44.71%,0.0%)',
+          label: '',
+          position: 6.566666666666666,
+        },
+        {
+          color: 'rgb(0.0%,44.31%,0.0%)',
+          label: '',
+          position: 6.6,
+        },
+        {
+          color: 'rgb(0.0%,43.92%,0.0%)',
+          label: '',
+          position: 6.633333333333333,
+        },
+        {
+          color: 'rgb(0.0%,43.53%,0.0%)',
+          label: '',
+          position: 6.666666666666667,
+        },
+        {
+          color: 'rgb(0.0%,43.14%,0.0%)',
+          label: '',
+          position: 6.7,
+        },
+        {
+          color: 'rgb(0.0%,42.35%,0.0%)',
+          label: '',
+          position: 6.733333333333333,
+        },
+        {
+          color: 'rgb(0.0%,41.96%,0.0%)',
+          label: '',
+          position: 6.766666666666667,
+        },
+        {
+          color: 'rgb(0.0%,41.57%,0.0%)',
+          label: '',
+          position: 6.8,
+        },
+        {
+          color: 'rgb(0.0%,41.18%,0.0%)',
+          label: '',
+          position: 6.833333333333333,
+        },
+        {
+          color: 'rgb(0.0%,40.78%,0.0%)',
+          label: '',
+          position: 6.866666666666666,
+        },
+        {
+          color: 'rgb(0.0%,40.39%,0.0%)',
+          label: '',
+          position: 6.8999999999999995,
+        },
+        {
+          color: 'rgb(0.0%,40.0%,0.0%)',
+          label: '',
+          position: 6.933333333333334,
+        },
+        {
+          color: 'rgb(0.0%,39.61%,0.0%)',
+          label: '',
+          position: 6.966666666666667,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: '7',
+          position: 7,
+        },
+      ],
+      maxPosition: 7,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT0, layerId: 'NPP' }],
     description: () =>
       t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+    legend: {
+      type: 'continuous',
+      title: 'NPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.0005,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 7.5,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 10.5,
+          position: 10.5,
+        },
+      ],
+      maxPosition: 10.5,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT1, layerId: 'NPP' }],
     description: () =>
       t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+    legend: {
+      type: 'continuous',
+      title: 'NPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.0005,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 7.5,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 10.5,
+          position: 10.5,
+        },
+      ],
+      maxPosition: 10.5,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT2, layerId: 'NPP' }],
     description: () =>
       t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+    legend: {
+      type: 'continuous',
+      title: 'NPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.0005,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 7.5,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 10.5,
+          position: 10.5,
+        },
+      ],
+      maxPosition: 10.5,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NPP_300M_10DAILY_RT6, layerId: 'NPP' }],
     description: () =>
       t`"NPP, or Net Primary Production, is an indicator of the rate at which plants produce net useful chemical energy expressed in mass of carbon per unit area per day (gC/m²/day)."`,
+    legend: {
+      type: 'continuous',
+      title: 'NPP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.0005,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 4.5,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 6,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 7.5,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 9,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 10.5,
+          position: 10.5,
+        },
+      ],
+      maxPosition: 10.5,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI001' }],
     description: () =>
       t`SWI computed with a characteristic time length of 1 day. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI001',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI005' }],
     description: () =>
       t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI005',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI010' }],
     description: () =>
       t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI010',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI015' }],
     description: () =>
       t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI015',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI020' }],
     description: () =>
       t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI020',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI040' }],
     description: () =>
       t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI040',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI060' }],
     description: () =>
       t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI060',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY, layerId: 'SWI100' }],
     description: () =>
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI100',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(95.29%,95.29%,95.29%)',
+          label: 'Unknown',
+        },
+        {
+          color: 'rgb(96.47%,71.37%,33.73%)',
+          label: 'Unfrozen',
+        },
+        {
+          color: 'rgb(33.73%,50.59%,96.47%)',
+          label: 'Frozen',
+        },
+        {
+          color: 'rgb(92.55%,53.33%,53.33%)',
+          label: 'Temporary melting / Water on the surface',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI001' }],
     description: () =>
       t`SWI computed with a characteristic time length of 1 day. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI001',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI005' }],
     description: () =>
       t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI005',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI010' }],
     description: () =>
       t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI010',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI015' }],
     description: () =>
       t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI015',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
 
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI020' }],
     description: () =>
       t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI020',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI040' }],
     description: () =>
       t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI040',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI060' }],
     description: () =>
       t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI060',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SWI100' }],
     description: () =>
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI100',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(95.29%,95.29%,95.29%)',
+          label: 'Unknown',
+        },
+        {
+          color: 'rgb(96.47%,71.37%,33.73%)',
+          label: 'Unfrozen',
+        },
+        {
+          color: 'rgb(33.73%,50.59%,96.47%)',
+          label: 'Frozen',
+        },
+        {
+          color: 'rgb(92.55%,53.33%,53.33%)',
+          label: 'Temporary melting / Water on the surface',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI002' }],
     description: () =>
       t`SWI computed with a characteristic time length of 2 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI002',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI005' }],
     description: () =>
       t`SWI computed with a characteristic time length of 5 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI005',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI010' }],
     description: () =>
       t`SWI computed with a characteristic time length of 10 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI010',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI015' }],
     description: () =>
       t`SWI computed with a characteristic time length of 15 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI015',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI020' }],
     description: () =>
       t`SWI computed with a characteristic time length of 20 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI020',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI040' }],
     description: () =>
       t`SWI computed with a characteristic time length of 40 days.The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI040',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI060' }],
     description: () =>
       t`SWI computed with a characteristic time length of 60 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI060',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI100' }],
     description: () =>
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI100',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '1_TRUE_COLOR' }],
@@ -4534,285 +13841,5772 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V1, layerId: 'TCI' }],
     description: () =>
       t`TCI, long used as a suitable indicator of vegetation health, characterises how hot any given land pixel is with respect to its maximum temperature range. Since over vegetated surfaces, temperature is strongly controlled by energy fluxes (sensible and latent heat), the TCI indirectly characterizes the moisture availability through the near-surface radiation and aerodynamic conditions.`,
+    legend: {
+      type: 'continuous',
+      title: 'TCI',
+      gradients: [
+        {
+          color: 'rgb(0.00%,0.00%,0.00%)',
+          label: -0.6,
+          position: -0.6,
+        },
+        {
+          color: 'rgb(0.00%,0.00%,100.00%)',
+          position: -0.1,
+        },
+        {
+          color: 'rgb(1.18%,22.75%,69.41%)',
+          position: -0.0412,
+        },
+        {
+          color: 'rgb(1.96%,47.45%,36.47%)',
+          position: 0.0221,
+        },
+        {
+          color: 'rgb(2.75%,65.10%,12.94%)',
+          position: 0.0673,
+        },
+        {
+          color: 'rgb(17.65%,74.51%,5.10%)',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(34.51%,80.00%,3.92%)',
+          position: 0.13970000000000002,
+        },
+        {
+          color: 'rgb(51.76%,85.10%,3.14%)',
+          position: 0.1714,
+        },
+        {
+          color: 'rgb(68.63%,90.20%,1.96%)',
+          position: 0.203,
+        },
+        {
+          color: 'rgb(85.49%,95.69%,0.78%)',
+          position: 0.23470000000000002,
+        },
+        {
+          color: 'rgb(97.65%,99.22%,0.00%)',
+          position: 0.25730000000000003,
+        },
+        {
+          color: 'rgb(100.00%,96.47%,0.00%)',
+          position: 0.27990000000000004,
+        },
+        {
+          color: 'rgb(100.00%,92.94%,0.00%)',
+          position: 0.298,
+        },
+        {
+          color: 'rgb(100.00%,89.02%,0.00%)',
+          position: 0.3161,
+        },
+        {
+          color: 'rgb(100.00%,85.49%,0.00%)',
+          position: 0.3342,
+        },
+        {
+          color: 'rgb(100.00%,81.96%,0.00%)',
+          position: 0.3523,
+        },
+        {
+          color: 'rgb(100.00%,78.43%,0.00%)',
+          position: 0.3704,
+        },
+        {
+          color: 'rgb(100.00%,74.51%,0.00%)',
+          position: 0.3884,
+        },
+        {
+          color: 'rgb(100.00%,71.00%,0.00%)',
+          position: 0.40650000000000003,
+        },
+        {
+          color: 'rgb(100.00%,67.45%,0.00%)',
+          position: 0.42460000000000003,
+        },
+        {
+          color: 'rgb(100.00%,63.14%,0.00%)',
+          position: 0.44270000000000004,
+        },
+        {
+          color: 'rgb(100.00%,58.43%,0.00%)',
+          position: 0.45630000000000004,
+        },
+        {
+          color: 'rgb(100.00%,54.90%,0.00%)',
+          position: 0.46530000000000005,
+        },
+        {
+          color: 'rgb(100.00%,50.20%,0.00%)',
+          position: 0.47890000000000005,
+        },
+        {
+          color: 'rgb(100.00%,45.49%,0.00%)',
+          position: 0.49250000000000005,
+        },
+        {
+          color: 'rgb(100.00%,40.39%,0.00%)',
+          position: 0.506,
+        },
+        {
+          color: 'rgb(100.00%,35.69%,0.00%)',
+          position: 0.5196000000000001,
+        },
+        {
+          color: 'rgb(100.00%,30.59%,0.00%)',
+          position: 0.5332,
+        },
+        {
+          color: 'rgb(100.00%,25.88%,0.00%)',
+          position: 0.5467000000000001,
+        },
+        {
+          color: 'rgb(100.00%,21.18%,0.00%)',
+          position: 0.5603,
+        },
+        {
+          color: 'rgb(100.00%,16.08%,0.00%)',
+          position: 0.5739000000000001,
+        },
+        {
+          color: 'rgb(100.00%,11.37%,0.00%)',
+          position: 0.5874,
+        },
+        {
+          color: 'rgb(100.00%,6.67%,0.00%)',
+          position: 0.601,
+        },
+        {
+          color: 'rgb(100.00%,1.57%,0.00%)',
+          position: 0.6146,
+        },
+        {
+          color: 'rgb(94.90%,0.00%,3.92%)',
+          position: 0.6327,
+        },
+        {
+          color: 'rgb(88.63%,0.00%,9.41%)',
+          position: 0.6508,
+        },
+        {
+          color: 'rgb(81.96%,0.00%,14.51%)',
+          position: 0.6688000000000001,
+        },
+        {
+          color: 'rgb(75.29%,0.00%,20.00%)',
+          position: 0.6869000000000001,
+        },
+        {
+          color: 'rgb(68.63%,0.00%,25.49%)',
+          position: 0.7050000000000001,
+        },
+        {
+          color: 'rgb(61.96%,0.00%,30.59%)',
+          position: 0.7231000000000001,
+        },
+        {
+          color: 'rgb(55.69%,0.00%,36.08%)',
+          position: 0.7412000000000001,
+        },
+        {
+          color: 'rgb(49.02%,0.00%,41.18%)',
+          position: 0.7593000000000001,
+        },
+        {
+          color: 'rgb(42.35%,0.00%,46.67%)',
+          position: 0.7774000000000001,
+        },
+        {
+          color: 'rgb(35.69%,0.00%,52.16%)',
+          position: 0.7955,
+        },
+        {
+          color: 'rgb(34.12%,0.00%,53.33%)',
+          label: 0.8,
+          position: 0.8,
+        },
+      ],
+      maxPosition: 0.8,
+      minPosition: -0.6,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_10DAILY_V2, layerId: 'TCI' }],
     description: () =>
       t`TCI, long used as a suitable indicator of vegetation health, characterises how hot any given land pixel is with respect to its maximum temperature range. Since over vegetated surfaces, temperature is strongly controlled by energy fluxes (sensible and latent heat), the TCI indirectly characterizes the moisture availability through the near-surface radiation and aerodynamic conditions.`,
+    legend: {
+      type: 'continuous',
+      title: 'TCI',
+      gradients: [
+        {
+          color: 'rgb(0.00%,0.00%,0.00%)',
+          label: -0.6,
+          position: -0.6,
+        },
+        {
+          color: 'rgb(0.00%,0.00%,100.00%)',
+          position: -0.1,
+        },
+        {
+          color: 'rgb(1.18%,22.75%,69.41%)',
+          position: -0.0412,
+        },
+        {
+          color: 'rgb(1.96%,47.45%,36.47%)',
+          position: 0.0221,
+        },
+        {
+          color: 'rgb(2.75%,65.10%,12.94%)',
+          position: 0.0673,
+        },
+        {
+          color: 'rgb(17.65%,74.51%,5.10%)',
+          position: 0.108,
+        },
+        {
+          color: 'rgb(34.51%,80.00%,3.92%)',
+          position: 0.13970000000000002,
+        },
+        {
+          color: 'rgb(51.76%,85.10%,3.14%)',
+          position: 0.1714,
+        },
+        {
+          color: 'rgb(68.63%,90.20%,1.96%)',
+          position: 0.203,
+        },
+        {
+          color: 'rgb(85.49%,95.69%,0.78%)',
+          position: 0.23470000000000002,
+        },
+        {
+          color: 'rgb(97.65%,99.22%,0.00%)',
+          position: 0.25730000000000003,
+        },
+        {
+          color: 'rgb(100.00%,96.47%,0.00%)',
+          position: 0.27990000000000004,
+        },
+        {
+          color: 'rgb(100.00%,92.94%,0.00%)',
+          position: 0.298,
+        },
+        {
+          color: 'rgb(100.00%,89.02%,0.00%)',
+          position: 0.3161,
+        },
+        {
+          color: 'rgb(100.00%,85.49%,0.00%)',
+          position: 0.3342,
+        },
+        {
+          color: 'rgb(100.00%,81.96%,0.00%)',
+          position: 0.3523,
+        },
+        {
+          color: 'rgb(100.00%,78.43%,0.00%)',
+          position: 0.3704,
+        },
+        {
+          color: 'rgb(100.00%,74.51%,0.00%)',
+          position: 0.3884,
+        },
+        {
+          color: 'rgb(100.00%,71.00%,0.00%)',
+          position: 0.40650000000000003,
+        },
+        {
+          color: 'rgb(100.00%,67.45%,0.00%)',
+          position: 0.42460000000000003,
+        },
+        {
+          color: 'rgb(100.00%,63.14%,0.00%)',
+          position: 0.44270000000000004,
+        },
+        {
+          color: 'rgb(100.00%,58.43%,0.00%)',
+          position: 0.45630000000000004,
+        },
+        {
+          color: 'rgb(100.00%,54.90%,0.00%)',
+          position: 0.46530000000000005,
+        },
+        {
+          color: 'rgb(100.00%,50.20%,0.00%)',
+          position: 0.47890000000000005,
+        },
+        {
+          color: 'rgb(100.00%,45.49%,0.00%)',
+          position: 0.49250000000000005,
+        },
+        {
+          color: 'rgb(100.00%,40.39%,0.00%)',
+          position: 0.506,
+        },
+        {
+          color: 'rgb(100.00%,35.69%,0.00%)',
+          position: 0.5196000000000001,
+        },
+        {
+          color: 'rgb(100.00%,30.59%,0.00%)',
+          position: 0.5332,
+        },
+        {
+          color: 'rgb(100.00%,25.88%,0.00%)',
+          position: 0.5467000000000001,
+        },
+        {
+          color: 'rgb(100.00%,21.18%,0.00%)',
+          position: 0.5603,
+        },
+        {
+          color: 'rgb(100.00%,16.08%,0.00%)',
+          position: 0.5739000000000001,
+        },
+        {
+          color: 'rgb(100.00%,11.37%,0.00%)',
+          position: 0.5874,
+        },
+        {
+          color: 'rgb(100.00%,6.67%,0.00%)',
+          position: 0.601,
+        },
+        {
+          color: 'rgb(100.00%,1.57%,0.00%)',
+          position: 0.6146,
+        },
+        {
+          color: 'rgb(94.90%,0.00%,3.92%)',
+          position: 0.6327,
+        },
+        {
+          color: 'rgb(88.63%,0.00%,9.41%)',
+          position: 0.6508,
+        },
+        {
+          color: 'rgb(81.96%,0.00%,14.51%)',
+          position: 0.6688000000000001,
+        },
+        {
+          color: 'rgb(75.29%,0.00%,20.00%)',
+          position: 0.6869000000000001,
+        },
+        {
+          color: 'rgb(68.63%,0.00%,25.49%)',
+          position: 0.7050000000000001,
+        },
+        {
+          color: 'rgb(61.96%,0.00%,30.59%)',
+          position: 0.7231000000000001,
+        },
+        {
+          color: 'rgb(55.69%,0.00%,36.08%)',
+          position: 0.7412000000000001,
+        },
+        {
+          color: 'rgb(49.02%,0.00%,41.18%)',
+          position: 0.7593000000000001,
+        },
+        {
+          color: 'rgb(42.35%,0.00%,46.67%)',
+          position: 0.7774000000000001,
+        },
+        {
+          color: 'rgb(35.69%,0.00%,52.16%)',
+          position: 0.7955,
+        },
+        {
+          color: 'rgb(34.12%,0.00%,53.33%)',
+          label: 0.8,
+          position: 0.8,
+        },
+      ],
+      maxPosition: 0.8,
+      minPosition: -0.6,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MAX_LTS' }],
     description: () =>
       t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MAX_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEAN_LTS' }],
     description: () =>
       t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MEAN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEDIAN_LTS' }],
     description: () =>
       t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MEDIAN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MIN_LTS' }],
     description: () =>
       t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MIN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MAX_LTS' }],
     description: () =>
       t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MAX_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEAN_LTS' }],
     description: () =>
       t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MEAN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEDIAN_LTS' }],
     description: () =>
       t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MEDIAN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MIN_LTS' }],
     description: () =>
       t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI_MIN_LTS',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2, layerId: 'NDVI' }],
     description: () =>
       t`The Normalized Difference Vegetation Index (NDVI) can be related to the vegetation photosynthetic activity. It is computed from the RED and NIR reflectances only: NDVI = (NIR - RED) / (NIR+RED) = (B3 - B2) / (B3 + B2), where B2 and B3 are the atmospherically corrected surface reflectances in the RED and NIR bands from the SPOT/VEGETATION and PROBA-V 10-daily synthesis dataset.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1, layerId: 'NDVI' }],
     description: () =>
       t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The Global Land NDVI Collection 300m product is a 10-day synthesis product derived from Top of Canopy PROBA-V 300m data.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2, layerId: 'NDVI' }],
     description: () =>
       t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The Global Land NDVI Collection 300m product is a 10-day synthesis product derived from Top of Canopy PROBA-V 300m data.`,
+    legend: {
+      type: 'continuous',
+      title: 'NDVI',
+      gradients: [
+        {
+          color: 'rgb(54.9%,36.08%,3.14%)',
+          label: -0.08,
+          position: -0.08,
+        },
+        {
+          color: 'rgb(55.69%,37.25%,3.14%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(77.25%,67.84%,7.45%)',
+          label: '',
+          position: 0.09999999999999999,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,11.76%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(85.49%,90.98%,9.8%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(71.37%,82.35%,8.24%)',
+          label: '',
+          position: 0.39999999999999997,
+        },
+        {
+          color: 'rgb(56.86%,73.73%,6.67%)',
+          label: '',
+          position: 0.49999999999999994,
+        },
+        {
+          color: 'rgb(42.75%,65.1%,4.71%)',
+          label: '',
+          position: 0.6000000000000001,
+        },
+        {
+          color: 'rgb(28.24%,56.47%,3.14%)',
+          label: '',
+          position: 0.7000000000000001,
+        },
+        {
+          color: 'rgb(14.12%,47.84%,1.57%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 0.92,
+          position: 0.92,
+        },
+      ],
+      maxPosition: 0.92,
+      minPosition: -0.08,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SSM_1KM_DAILY_V1, layerId: 'SSM' }],
     description: () =>
       t`SSM (Surface Soil Moisture) describes soil moisture of the soil’s topmost 5cm on a 1km (1°/112) spatial sampling. It is derived from microwave radar data observed by the Sentinel-1 SAR satellite sensors.`,
+    legend: {
+      type: 'continuous',
+      title: 'SSM',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'R_EOSD_S1' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'Q_EOSD_S1' }],
     description: () =>
       t`Season 1: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'S_EOSD_S2' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'R_EOSD_S2' }],
     description: () =>
       t`Season 2: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'Y_EOSV_S1' }],
     description: () =>
       t`Season 1: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'EOSV_S1',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZA_EOSV_S2' }],
     description: () =>
       t`Season 2: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'EOSV_S2',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZB_QA_S1' }],
     description: () =>
       t`Season 1: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(10.2%,58.82%,25.49%)',
+          label: 'Overall good',
+        },
+        {
+          color: 'rgb(65.1%,85.1%,41.57%)',
+          label: 'Overall poor',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 'No input',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'ZC_QA_S2' }],
     description: () =>
       t`Season 2: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(10.2%,58.82%,25.49%)',
+          label: 'Overall good',
+        },
+        {
+          color: 'rgb(65.1%,85.1%,41.57%)',
+          label: 'Overall poor',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 'No input',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'G_AMPL_S1' }],
     description: () =>
       t`Season 1: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'AMPL_S1',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'H_AMPL_S2' }],
     description: () =>
       t`Season 2: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'AMPL_S2',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'E_LENGTH_S1' }],
     description: () =>
       t`Season 1: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'LENGTH_S1',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 1,
+          position: 1,
+        },
+        {
+          color: 'rgb(26.67%,0.78%,33.73%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(27.06%,1.57%,34.12%)',
+          label: '',
+          position: 4,
+        },
+        {
+          color: 'rgb(27.06%,1.96%,34.9%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(27.45%,2.75%,35.29%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(27.45%,3.14%,36.08%)',
+          label: '',
+          position: 8,
+        },
+        {
+          color: 'rgb(27.45%,3.92%,36.47%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(27.45%,4.31%,36.86%)',
+          label: '',
+          position: 11,
+        },
+        {
+          color: 'rgb(27.84%,5.1%,37.65%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(27.84%,5.49%,38.04%)',
+          label: '',
+          position: 14,
+        },
+        {
+          color: 'rgb(27.84%,6.27%,38.82%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(27.84%,6.67%,39.22%)',
+          label: '',
+          position: 17,
+        },
+        {
+          color: 'rgb(27.84%,7.45%,39.61%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(28.24%,7.84%,40.39%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(28.24%,8.63%,40.78%)',
+          label: '',
+          position: 21,
+        },
+        {
+          color: 'rgb(28.24%,9.02%,41.18%)',
+          label: '',
+          position: 22,
+        },
+        {
+          color: 'rgb(28.24%,9.41%,41.57%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(28.24%,10.2%,42.35%)',
+          label: '',
+          position: 25,
+        },
+        {
+          color: 'rgb(28.24%,10.59%,42.75%)',
+          label: '',
+          position: 27,
+        },
+        {
+          color: 'rgb(28.24%,10.98%,43.14%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(28.24%,11.37%,43.53%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(28.24%,12.16%,43.92%)',
+          label: '',
+          position: 31,
+        },
+        {
+          color: 'rgb(28.24%,12.55%,44.31%)',
+          label: '',
+          position: 33,
+        },
+        {
+          color: 'rgb(28.24%,12.94%,45.1%)',
+          label: '',
+          position: 34,
+        },
+        {
+          color: 'rgb(28.24%,13.73%,45.49%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(28.24%,14.12%,45.88%)',
+          label: '',
+          position: 37,
+        },
+        {
+          color: 'rgb(28.24%,14.51%,46.27%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(28.24%,14.9%,46.67%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(28.24%,15.69%,47.06%)',
+          label: '',
+          position: 41,
+        },
+        {
+          color: 'rgb(28.24%,16.08%,47.45%)',
+          label: '',
+          position: 43,
+        },
+        {
+          color: 'rgb(27.84%,16.47%,47.84%)',
+          label: '',
+          position: 44,
+        },
+        {
+          color: 'rgb(27.84%,17.25%,47.84%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(27.84%,17.65%,48.24%)',
+          label: '',
+          position: 47,
+        },
+        {
+          color: 'rgb(27.84%,18.04%,48.63%)',
+          label: '',
+          position: 48,
+        },
+        {
+          color: 'rgb(27.84%,18.43%,49.02%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(27.45%,18.82%,49.41%)',
+          label: '',
+          position: 51,
+        },
+        {
+          color: 'rgb(27.45%,19.61%,49.41%)',
+          label: '',
+          position: 53,
+        },
+        {
+          color: 'rgb(27.45%,20.0%,49.8%)',
+          label: '',
+          position: 54,
+        },
+        {
+          color: 'rgb(27.45%,20.39%,50.2%)',
+          label: '',
+          position: 55,
+        },
+        {
+          color: 'rgb(27.06%,20.78%,50.59%)',
+          label: '',
+          position: 57,
+        },
+        {
+          color: 'rgb(27.06%,21.57%,50.59%)',
+          label: '',
+          position: 58,
+        },
+        {
+          color: 'rgb(27.06%,21.96%,50.98%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(26.67%,22.35%,51.37%)',
+          label: '',
+          position: 61,
+        },
+        {
+          color: 'rgb(26.67%,22.75%,51.37%)',
+          label: '',
+          position: 63,
+        },
+        {
+          color: 'rgb(26.67%,23.14%,51.76%)',
+          label: '',
+          position: 64,
+        },
+        {
+          color: 'rgb(26.27%,23.92%,51.76%)',
+          label: '',
+          position: 65,
+        },
+        {
+          color: 'rgb(26.27%,24.31%,52.16%)',
+          label: '',
+          position: 67,
+        },
+        {
+          color: 'rgb(25.88%,24.71%,52.16%)',
+          label: '',
+          position: 68,
+        },
+        {
+          color: 'rgb(25.88%,25.1%,52.55%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(25.88%,25.49%,52.55%)',
+          label: '',
+          position: 71,
+        },
+        {
+          color: 'rgb(25.49%,25.88%,52.94%)',
+          label: '',
+          position: 73,
+        },
+        {
+          color: 'rgb(25.49%,26.67%,52.94%)',
+          label: '',
+          position: 74,
+        },
+        {
+          color: 'rgb(25.1%,27.06%,53.33%)',
+          label: '',
+          position: 76,
+        },
+        {
+          color: 'rgb(25.1%,27.45%,53.33%)',
+          label: '',
+          position: 77,
+        },
+        {
+          color: 'rgb(24.71%,27.84%,53.33%)',
+          label: '',
+          position: 78,
+        },
+        {
+          color: 'rgb(24.71%,28.24%,53.73%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(24.31%,28.63%,53.73%)',
+          label: '',
+          position: 81,
+        },
+        {
+          color: 'rgb(24.31%,29.02%,53.73%)',
+          label: '',
+          position: 83,
+        },
+        {
+          color: 'rgb(24.31%,29.8%,54.12%)',
+          label: '',
+          position: 84,
+        },
+        {
+          color: 'rgb(23.92%,30.2%,54.12%)',
+          label: '',
+          position: 86,
+        },
+        {
+          color: 'rgb(23.92%,30.59%,54.12%)',
+          label: '',
+          position: 87,
+        },
+        {
+          color: 'rgb(23.53%,30.98%,54.12%)',
+          label: '',
+          position: 88,
+        },
+        {
+          color: 'rgb(23.53%,31.37%,54.51%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(23.14%,31.76%,54.51%)',
+          label: '',
+          position: 91,
+        },
+        {
+          color: 'rgb(23.14%,32.16%,54.51%)',
+          label: '',
+          position: 93,
+        },
+        {
+          color: 'rgb(22.75%,32.55%,54.51%)',
+          label: '',
+          position: 94,
+        },
+        {
+          color: 'rgb(22.75%,32.94%,54.9%)',
+          label: '',
+          position: 96,
+        },
+        {
+          color: 'rgb(22.35%,33.33%,54.9%)',
+          label: '',
+          position: 97,
+        },
+        {
+          color: 'rgb(22.35%,34.12%,54.9%)',
+          label: '',
+          position: 98,
+        },
+        {
+          color: 'rgb(21.96%,34.51%,54.9%)',
+          label: '',
+          position: 100,
+        },
+        {
+          color: 'rgb(21.96%,34.9%,54.9%)',
+          label: '',
+          position: 101,
+        },
+        {
+          color: 'rgb(21.57%,35.29%,54.9%)',
+          label: '',
+          position: 103,
+        },
+        {
+          color: 'rgb(21.57%,35.69%,55.29%)',
+          label: '',
+          position: 104,
+        },
+        {
+          color: 'rgb(21.18%,36.08%,55.29%)',
+          label: '',
+          position: 106,
+        },
+        {
+          color: 'rgb(21.18%,36.47%,55.29%)',
+          label: '',
+          position: 107,
+        },
+        {
+          color: 'rgb(20.78%,36.86%,55.29%)',
+          label: '',
+          position: 108,
+        },
+        {
+          color: 'rgb(20.78%,37.25%,55.29%)',
+          label: '',
+          position: 110,
+        },
+        {
+          color: 'rgb(20.39%,37.65%,55.29%)',
+          label: '',
+          position: 111,
+        },
+        {
+          color: 'rgb(20.39%,38.04%,55.29%)',
+          label: '',
+          position: 113,
+        },
+        {
+          color: 'rgb(20.0%,38.43%,55.29%)',
+          label: '',
+          position: 114,
+        },
+        {
+          color: 'rgb(20.0%,38.82%,55.29%)',
+          label: '',
+          position: 116,
+        },
+        {
+          color: 'rgb(19.61%,39.22%,55.69%)',
+          label: '',
+          position: 117,
+        },
+        {
+          color: 'rgb(19.61%,39.61%,55.69%)',
+          label: '',
+          position: 119,
+        },
+        {
+          color: 'rgb(19.22%,40.0%,55.69%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(19.22%,40.39%,55.69%)',
+          label: '',
+          position: 121,
+        },
+        {
+          color: 'rgb(19.22%,40.78%,55.69%)',
+          label: '',
+          position: 123,
+        },
+        {
+          color: 'rgb(18.82%,41.18%,55.69%)',
+          label: '',
+          position: 124,
+        },
+        {
+          color: 'rgb(18.82%,41.57%,55.69%)',
+          label: '',
+          position: 126,
+        },
+        {
+          color: 'rgb(18.43%,41.96%,55.69%)',
+          label: '',
+          position: 127,
+        },
+        {
+          color: 'rgb(18.43%,42.35%,55.69%)',
+          label: '',
+          position: 129,
+        },
+        {
+          color: 'rgb(18.04%,42.75%,55.69%)',
+          label: '',
+          position: 130,
+        },
+        {
+          color: 'rgb(18.04%,43.14%,55.69%)',
+          label: '',
+          position: 131,
+        },
+        {
+          color: 'rgb(18.04%,43.53%,55.69%)',
+          label: '',
+          position: 133,
+        },
+        {
+          color: 'rgb(17.65%,43.92%,55.69%)',
+          label: '',
+          position: 134,
+        },
+        {
+          color: 'rgb(17.65%,44.31%,55.69%)',
+          label: '',
+          position: 136,
+        },
+        {
+          color: 'rgb(17.25%,44.31%,55.69%)',
+          label: '',
+          position: 137,
+        },
+        {
+          color: 'rgb(17.25%,44.71%,55.69%)',
+          label: '',
+          position: 139,
+        },
+        {
+          color: 'rgb(17.25%,45.1%,55.69%)',
+          label: '',
+          position: 140,
+        },
+        {
+          color: 'rgb(16.86%,45.49%,55.69%)',
+          label: '',
+          position: 141,
+        },
+        {
+          color: 'rgb(16.86%,45.88%,55.69%)',
+          label: '',
+          position: 143,
+        },
+        {
+          color: 'rgb(16.47%,46.27%,55.69%)',
+          label: '',
+          position: 144,
+        },
+        {
+          color: 'rgb(16.47%,46.67%,55.69%)',
+          label: '',
+          position: 146,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 147,
+        },
+        {
+          color: 'rgb(16.08%,47.45%,55.69%)',
+          label: '',
+          position: 149,
+        },
+        {
+          color: 'rgb(16.08%,47.84%,55.69%)',
+          label: '',
+          position: 150,
+        },
+        {
+          color: 'rgb(16.08%,48.24%,55.69%)',
+          label: '',
+          position: 151,
+        },
+        {
+          color: 'rgb(15.69%,48.63%,55.69%)',
+          label: '',
+          position: 153,
+        },
+        {
+          color: 'rgb(15.69%,49.02%,55.69%)',
+          label: '',
+          position: 154,
+        },
+        {
+          color: 'rgb(15.29%,49.41%,55.69%)',
+          label: '',
+          position: 156,
+        },
+        {
+          color: 'rgb(15.29%,49.8%,55.69%)',
+          label: '',
+          position: 157,
+        },
+        {
+          color: 'rgb(15.29%,50.2%,55.69%)',
+          label: '',
+          position: 159,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 160,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 162,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 163,
+        },
+        {
+          color: 'rgb(14.51%,51.37%,55.69%)',
+          label: '',
+          position: 164,
+        },
+        {
+          color: 'rgb(14.51%,51.76%,55.69%)',
+          label: '',
+          position: 166,
+        },
+        {
+          color: 'rgb(14.51%,52.16%,55.69%)',
+          label: '',
+          position: 167,
+        },
+        {
+          color: 'rgb(14.12%,52.55%,55.69%)',
+          label: '',
+          position: 169,
+        },
+        {
+          color: 'rgb(14.12%,52.94%,55.69%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(13.73%,53.33%,55.69%)',
+          label: '',
+          position: 172,
+        },
+        {
+          color: 'rgb(13.73%,53.73%,55.69%)',
+          label: '',
+          position: 173,
+        },
+        {
+          color: 'rgb(13.73%,54.12%,55.29%)',
+          label: '',
+          position: 174,
+        },
+        {
+          color: 'rgb(13.33%,54.51%,55.29%)',
+          label: '',
+          position: 176,
+        },
+        {
+          color: 'rgb(13.33%,54.9%,55.29%)',
+          label: '',
+          position: 177,
+        },
+        {
+          color: 'rgb(13.33%,55.29%,55.29%)',
+          label: '',
+          position: 179,
+        },
+        {
+          color: 'rgb(12.94%,55.69%,55.29%)',
+          label: '',
+          position: 180,
+        },
+        {
+          color: 'rgb(12.94%,56.47%,55.29%)',
+          label: '',
+          position: 182,
+        },
+        {
+          color: 'rgb(12.94%,56.47%,54.9%)',
+          label: '',
+          position: 183,
+        },
+        {
+          color: 'rgb(12.94%,57.25%,54.9%)',
+          label: '',
+          position: 184,
+        },
+        {
+          color: 'rgb(12.55%,57.25%,54.9%)',
+          label: '',
+          position: 186,
+        },
+        {
+          color: 'rgb(12.55%,57.25%,54.9%)',
+          label: '',
+          position: 187,
+        },
+        {
+          color: 'rgb(12.16%,58.04%,54.9%)',
+          label: '',
+          position: 189,
+        },
+        {
+          color: 'rgb(12.16%,58.43%,54.51%)',
+          label: '',
+          position: 190,
+        },
+        {
+          color: 'rgb(12.16%,58.82%,54.51%)',
+          label: '',
+          position: 192,
+        },
+        {
+          color: 'rgb(12.16%,59.22%,54.51%)',
+          label: '',
+          position: 193,
+        },
+        {
+          color: 'rgb(12.16%,59.61%,54.51%)',
+          label: '',
+          position: 194,
+        },
+        {
+          color: 'rgb(12.16%,60.0%,54.12%)',
+          label: '',
+          position: 196,
+        },
+        {
+          color: 'rgb(12.16%,60.39%,54.12%)',
+          label: '',
+          position: 197,
+        },
+        {
+          color: 'rgb(11.76%,60.78%,54.12%)',
+          label: '',
+          position: 199,
+        },
+        {
+          color: 'rgb(11.76%,61.18%,53.73%)',
+          label: '',
+          position: 200,
+        },
+        {
+          color: 'rgb(11.76%,61.57%,53.73%)',
+          label: '',
+          position: 202,
+        },
+        {
+          color: 'rgb(12.16%,61.96%,53.73%)',
+          label: '',
+          position: 203,
+        },
+        {
+          color: 'rgb(12.16%,62.35%,53.33%)',
+          label: '',
+          position: 204,
+        },
+        {
+          color: 'rgb(12.16%,62.75%,53.33%)',
+          label: '',
+          position: 206,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,53.33%)',
+          label: '',
+          position: 207,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,52.94%)',
+          label: '',
+          position: 209,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,52.94%)',
+          label: '',
+          position: 210,
+        },
+        {
+          color: 'rgb(12.55%,63.92%,52.55%)',
+          label: '',
+          position: 212,
+        },
+        {
+          color: 'rgb(12.55%,64.31%,52.55%)',
+          label: '',
+          position: 213,
+        },
+        {
+          color: 'rgb(12.94%,64.71%,52.16%)',
+          label: '',
+          position: 215,
+        },
+        {
+          color: 'rgb(12.94%,65.1%,52.16%)',
+          label: '',
+          position: 216,
+        },
+        {
+          color: 'rgb(13.33%,65.49%,52.16%)',
+          label: '',
+          position: 217,
+        },
+        {
+          color: 'rgb(13.33%,65.88%,51.76%)',
+          label: '',
+          position: 219,
+        },
+        {
+          color: 'rgb(13.73%,66.27%,51.37%)',
+          label: '',
+          position: 220,
+        },
+        {
+          color: 'rgb(14.12%,66.67%,51.37%)',
+          label: '',
+          position: 222,
+        },
+        {
+          color: 'rgb(14.51%,67.06%,50.98%)',
+          label: '',
+          position: 223,
+        },
+        {
+          color: 'rgb(14.51%,67.45%,50.98%)',
+          label: '',
+          position: 225,
+        },
+        {
+          color: 'rgb(14.9%,67.84%,50.59%)',
+          label: '',
+          position: 226,
+        },
+        {
+          color: 'rgb(15.29%,67.84%,50.59%)',
+          label: '',
+          position: 227,
+        },
+        {
+          color: 'rgb(15.69%,68.24%,50.2%)',
+          label: '',
+          position: 229,
+        },
+        {
+          color: 'rgb(16.08%,68.63%,49.8%)',
+          label: '',
+          position: 230,
+        },
+        {
+          color: 'rgb(16.47%,69.02%,49.8%)',
+          label: '',
+          position: 232,
+        },
+        {
+          color: 'rgb(16.86%,69.41%,49.41%)',
+          label: '',
+          position: 233,
+        },
+        {
+          color: 'rgb(17.65%,69.8%,49.02%)',
+          label: '',
+          position: 235,
+        },
+        {
+          color: 'rgb(18.04%,70.2%,48.63%)',
+          label: '',
+          position: 236,
+        },
+        {
+          color: 'rgb(18.43%,70.59%,48.63%)',
+          label: '',
+          position: 237,
+        },
+        {
+          color: 'rgb(18.82%,70.98%,48.24%)',
+          label: '',
+          position: 239,
+        },
+        {
+          color: 'rgb(19.61%,71.37%,47.84%)',
+          label: '',
+          position: 240,
+        },
+        {
+          color: 'rgb(20.0%,71.37%,47.45%)',
+          label: '',
+          position: 242,
+        },
+        {
+          color: 'rgb(20.78%,71.76%,47.45%)',
+          label: '',
+          position: 243,
+        },
+        {
+          color: 'rgb(21.18%,72.16%,47.06%)',
+          label: '',
+          position: 245,
+        },
+        {
+          color: 'rgb(21.96%,72.55%,46.67%)',
+          label: '',
+          position: 246,
+        },
+        {
+          color: 'rgb(22.35%,72.94%,46.27%)',
+          label: '',
+          position: 247,
+        },
+        {
+          color: 'rgb(23.14%,73.33%,45.88%)',
+          label: '',
+          position: 249,
+        },
+        {
+          color: 'rgb(23.53%,73.73%,45.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(24.71%,73.73%,45.1%)',
+          label: '',
+          position: 252,
+        },
+        {
+          color: 'rgb(25.1%,74.12%,44.71%)',
+          label: '',
+          position: 253,
+        },
+        {
+          color: 'rgb(25.49%,74.51%,44.31%)',
+          label: '',
+          position: 255,
+        },
+        {
+          color: 'rgb(26.27%,74.9%,43.92%)',
+          label: '',
+          position: 256,
+        },
+        {
+          color: 'rgb(27.06%,75.29%,43.53%)',
+          label: '',
+          position: 258,
+        },
+        {
+          color: 'rgb(27.84%,75.69%,43.14%)',
+          label: '',
+          position: 259,
+        },
+        {
+          color: 'rgb(28.63%,75.69%,42.75%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(29.41%,76.08%,42.35%)',
+          label: '',
+          position: 262,
+        },
+        {
+          color: 'rgb(30.2%,76.47%,41.96%)',
+          label: '',
+          position: 263,
+        },
+        {
+          color: 'rgb(30.98%,76.86%,41.57%)',
+          label: '',
+          position: 265,
+        },
+        {
+          color: 'rgb(31.76%,77.25%,41.18%)',
+          label: '',
+          position: 266,
+        },
+        {
+          color: 'rgb(32.55%,77.25%,40.78%)',
+          label: '',
+          position: 268,
+        },
+        {
+          color: 'rgb(33.33%,77.65%,40.39%)',
+          label: '',
+          position: 269,
+        },
+        {
+          color: 'rgb(34.12%,78.04%,39.61%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(34.9%,78.43%,39.22%)',
+          label: '',
+          position: 272,
+        },
+        {
+          color: 'rgb(35.69%,78.43%,38.82%)',
+          label: '',
+          position: 273,
+        },
+        {
+          color: 'rgb(36.86%,78.82%,38.43%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(37.25%,79.22%,37.65%)',
+          label: '',
+          position: 276,
+        },
+        {
+          color: 'rgb(38.43%,79.61%,37.25%)',
+          label: '',
+          position: 278,
+        },
+        {
+          color: 'rgb(39.61%,79.61%,36.86%)',
+          label: '',
+          position: 279,
+        },
+        {
+          color: 'rgb(40.39%,80.0%,36.08%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(40.78%,80.39%,35.69%)',
+          label: '',
+          position: 282,
+        },
+        {
+          color: 'rgb(41.96%,80.39%,35.29%)',
+          label: '',
+          position: 283,
+        },
+        {
+          color: 'rgb(43.14%,80.78%,34.51%)',
+          label: '',
+          position: 285,
+        },
+        {
+          color: 'rgb(43.53%,81.18%,34.12%)',
+          label: '',
+          position: 286,
+        },
+        {
+          color: 'rgb(44.71%,81.57%,33.73%)',
+          label: '',
+          position: 288,
+        },
+        {
+          color: 'rgb(45.88%,81.57%,32.94%)',
+          label: '',
+          position: 289,
+        },
+        {
+          color: 'rgb(46.27%,81.96%,32.55%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(47.45%,81.96%,31.76%)',
+          label: '',
+          position: 292,
+        },
+        {
+          color: 'rgb(48.63%,82.35%,31.37%)',
+          label: '',
+          position: 293,
+        },
+        {
+          color: 'rgb(49.41%,82.75%,30.59%)',
+          label: '',
+          position: 295,
+        },
+        {
+          color: 'rgb(50.59%,82.75%,30.2%)',
+          label: '',
+          position: 296,
+        },
+        {
+          color: 'rgb(51.37%,83.14%,29.41%)',
+          label: '',
+          position: 298,
+        },
+        {
+          color: 'rgb(52.55%,83.53%,28.63%)',
+          label: '',
+          position: 299,
+        },
+        {
+          color: 'rgb(53.73%,83.53%,28.24%)',
+          label: '',
+          position: 301,
+        },
+        {
+          color: 'rgb(54.51%,83.92%,27.45%)',
+          label: '',
+          position: 302,
+        },
+        {
+          color: 'rgb(55.69%,83.92%,27.06%)',
+          label: '',
+          position: 303,
+        },
+        {
+          color: 'rgb(56.47%,84.31%,26.27%)',
+          label: '',
+          position: 305,
+        },
+        {
+          color: 'rgb(57.65%,84.31%,25.49%)',
+          label: '',
+          position: 306,
+        },
+        {
+          color: 'rgb(58.43%,84.71%,25.1%)',
+          label: '',
+          position: 308,
+        },
+        {
+          color: 'rgb(59.22%,84.71%,24.31%)',
+          label: '',
+          position: 309,
+        },
+        {
+          color: 'rgb(60.78%,85.1%,23.53%)',
+          label: '',
+          position: 311,
+        },
+        {
+          color: 'rgb(61.57%,85.1%,23.14%)',
+          label: '',
+          position: 312,
+        },
+        {
+          color: 'rgb(62.75%,85.49%,22.35%)',
+          label: '',
+          position: 313,
+        },
+        {
+          color: 'rgb(63.53%,85.49%,21.57%)',
+          label: '',
+          position: 315,
+        },
+        {
+          color: 'rgb(64.71%,85.88%,21.18%)',
+          label: '',
+          position: 316,
+        },
+        {
+          color: 'rgb(65.88%,85.88%,20.39%)',
+          label: '',
+          position: 318,
+        },
+        {
+          color: 'rgb(66.67%,86.27%,19.61%)',
+          label: '',
+          position: 319,
+        },
+        {
+          color: 'rgb(67.84%,86.27%,18.82%)',
+          label: '',
+          position: 321,
+        },
+        {
+          color: 'rgb(69.02%,86.67%,18.43%)',
+          label: '',
+          position: 322,
+        },
+        {
+          color: 'rgb(69.8%,86.67%,17.65%)',
+          label: '',
+          position: 323,
+        },
+        {
+          color: 'rgb(70.98%,87.06%,16.86%)',
+          label: '',
+          position: 325,
+        },
+        {
+          color: 'rgb(72.16%,87.06%,16.08%)',
+          label: '',
+          position: 326,
+        },
+        {
+          color: 'rgb(72.94%,87.06%,15.69%)',
+          label: '',
+          position: 328,
+        },
+        {
+          color: 'rgb(74.12%,87.45%,14.9%)',
+          label: '',
+          position: 329,
+        },
+        {
+          color: 'rgb(75.29%,87.45%,14.51%)',
+          label: '',
+          position: 331,
+        },
+        {
+          color: 'rgb(76.08%,87.45%,13.73%)',
+          label: '',
+          position: 332,
+        },
+        {
+          color: 'rgb(77.25%,87.84%,12.94%)',
+          label: '',
+          position: 333,
+        },
+        {
+          color: 'rgb(78.43%,87.84%,12.55%)',
+          label: '',
+          position: 335,
+        },
+        {
+          color: 'rgb(79.22%,88.24%,12.16%)',
+          label: '',
+          position: 336,
+        },
+        {
+          color: 'rgb(80.39%,88.24%,11.37%)',
+          label: '',
+          position: 338,
+        },
+        {
+          color: 'rgb(81.57%,88.24%,10.98%)',
+          label: '',
+          position: 339,
+        },
+        {
+          color: 'rgb(82.35%,88.63%,10.59%)',
+          label: '',
+          position: 341,
+        },
+        {
+          color: 'rgb(83.53%,88.63%,10.2%)',
+          label: '',
+          position: 342,
+        },
+        {
+          color: 'rgb(84.71%,88.63%,9.8%)',
+          label: '',
+          position: 344,
+        },
+        {
+          color: 'rgb(85.49%,89.02%,9.8%)',
+          label: '',
+          position: 345,
+        },
+        {
+          color: 'rgb(86.67%,89.02%,9.41%)',
+          label: '',
+          position: 346,
+        },
+        {
+          color: 'rgb(87.45%,89.02%,9.41%)',
+          label: '',
+          position: 348,
+        },
+        {
+          color: 'rgb(88.63%,89.41%,9.41%)',
+          label: '',
+          position: 349,
+        },
+        {
+          color: 'rgb(89.8%,89.41%,9.8%)',
+          label: '',
+          position: 351,
+        },
+        {
+          color: 'rgb(90.59%,89.41%,9.8%)',
+          label: '',
+          position: 352,
+        },
+        {
+          color: 'rgb(91.76%,89.8%,10.2%)',
+          label: '',
+          position: 354,
+        },
+        {
+          color: 'rgb(92.55%,89.8%,10.59%)',
+          label: '',
+          position: 355,
+        },
+        {
+          color: 'rgb(93.73%,89.8%,10.98%)',
+          label: '',
+          position: 356,
+        },
+        {
+          color: 'rgb(94.51%,89.8%,11.37%)',
+          label: '',
+          position: 358,
+        },
+        {
+          color: 'rgb(95.69%,90.2%,11.76%)',
+          label: '',
+          position: 359,
+        },
+        {
+          color: 'rgb(96.47%,90.2%,12.55%)',
+          label: '',
+          position: 361,
+        },
+        {
+          color: 'rgb(97.25%,90.2%,12.94%)',
+          label: '',
+          position: 362,
+        },
+        {
+          color: 'rgb(98.43%,90.59%,13.73%)',
+          label: '',
+          position: 364,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 365,
+          position: 365,
+        },
+      ],
+      maxPosition: 365,
+      minPosition: 1,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'F_LENGTH_S2' }],
     description: () =>
       t`Season 2: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'LENGTH_S2',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 1,
+          position: 1,
+        },
+        {
+          color: 'rgb(26.67%,0.78%,33.73%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(27.06%,1.57%,34.12%)',
+          label: '',
+          position: 4,
+        },
+        {
+          color: 'rgb(27.06%,1.96%,34.9%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(27.45%,2.75%,35.29%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(27.45%,3.14%,36.08%)',
+          label: '',
+          position: 8,
+        },
+        {
+          color: 'rgb(27.45%,3.92%,36.47%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(27.45%,4.31%,36.86%)',
+          label: '',
+          position: 11,
+        },
+        {
+          color: 'rgb(27.84%,5.1%,37.65%)',
+          label: '',
+          position: 12,
+        },
+        {
+          color: 'rgb(27.84%,5.49%,38.04%)',
+          label: '',
+          position: 14,
+        },
+        {
+          color: 'rgb(27.84%,6.27%,38.82%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(27.84%,6.67%,39.22%)',
+          label: '',
+          position: 17,
+        },
+        {
+          color: 'rgb(27.84%,7.45%,39.61%)',
+          label: '',
+          position: 18,
+        },
+        {
+          color: 'rgb(28.24%,7.84%,40.39%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(28.24%,8.63%,40.78%)',
+          label: '',
+          position: 21,
+        },
+        {
+          color: 'rgb(28.24%,9.02%,41.18%)',
+          label: '',
+          position: 22,
+        },
+        {
+          color: 'rgb(28.24%,9.41%,41.57%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(28.24%,10.2%,42.35%)',
+          label: '',
+          position: 25,
+        },
+        {
+          color: 'rgb(28.24%,10.59%,42.75%)',
+          label: '',
+          position: 27,
+        },
+        {
+          color: 'rgb(28.24%,10.98%,43.14%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(28.24%,11.37%,43.53%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(28.24%,12.16%,43.92%)',
+          label: '',
+          position: 31,
+        },
+        {
+          color: 'rgb(28.24%,12.55%,44.31%)',
+          label: '',
+          position: 33,
+        },
+        {
+          color: 'rgb(28.24%,12.94%,45.1%)',
+          label: '',
+          position: 34,
+        },
+        {
+          color: 'rgb(28.24%,13.73%,45.49%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(28.24%,14.12%,45.88%)',
+          label: '',
+          position: 37,
+        },
+        {
+          color: 'rgb(28.24%,14.51%,46.27%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(28.24%,14.9%,46.67%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(28.24%,15.69%,47.06%)',
+          label: '',
+          position: 41,
+        },
+        {
+          color: 'rgb(28.24%,16.08%,47.45%)',
+          label: '',
+          position: 43,
+        },
+        {
+          color: 'rgb(27.84%,16.47%,47.84%)',
+          label: '',
+          position: 44,
+        },
+        {
+          color: 'rgb(27.84%,17.25%,47.84%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(27.84%,17.65%,48.24%)',
+          label: '',
+          position: 47,
+        },
+        {
+          color: 'rgb(27.84%,18.04%,48.63%)',
+          label: '',
+          position: 48,
+        },
+        {
+          color: 'rgb(27.84%,18.43%,49.02%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(27.45%,18.82%,49.41%)',
+          label: '',
+          position: 51,
+        },
+        {
+          color: 'rgb(27.45%,19.61%,49.41%)',
+          label: '',
+          position: 53,
+        },
+        {
+          color: 'rgb(27.45%,20.0%,49.8%)',
+          label: '',
+          position: 54,
+        },
+        {
+          color: 'rgb(27.45%,20.39%,50.2%)',
+          label: '',
+          position: 55,
+        },
+        {
+          color: 'rgb(27.06%,20.78%,50.59%)',
+          label: '',
+          position: 57,
+        },
+        {
+          color: 'rgb(27.06%,21.57%,50.59%)',
+          label: '',
+          position: 58,
+        },
+        {
+          color: 'rgb(27.06%,21.96%,50.98%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(26.67%,22.35%,51.37%)',
+          label: '',
+          position: 61,
+        },
+        {
+          color: 'rgb(26.67%,22.75%,51.37%)',
+          label: '',
+          position: 63,
+        },
+        {
+          color: 'rgb(26.67%,23.14%,51.76%)',
+          label: '',
+          position: 64,
+        },
+        {
+          color: 'rgb(26.27%,23.92%,51.76%)',
+          label: '',
+          position: 65,
+        },
+        {
+          color: 'rgb(26.27%,24.31%,52.16%)',
+          label: '',
+          position: 67,
+        },
+        {
+          color: 'rgb(25.88%,24.71%,52.16%)',
+          label: '',
+          position: 68,
+        },
+        {
+          color: 'rgb(25.88%,25.1%,52.55%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(25.88%,25.49%,52.55%)',
+          label: '',
+          position: 71,
+        },
+        {
+          color: 'rgb(25.49%,25.88%,52.94%)',
+          label: '',
+          position: 73,
+        },
+        {
+          color: 'rgb(25.49%,26.67%,52.94%)',
+          label: '',
+          position: 74,
+        },
+        {
+          color: 'rgb(25.1%,27.06%,53.33%)',
+          label: '',
+          position: 76,
+        },
+        {
+          color: 'rgb(25.1%,27.45%,53.33%)',
+          label: '',
+          position: 77,
+        },
+        {
+          color: 'rgb(24.71%,27.84%,53.33%)',
+          label: '',
+          position: 78,
+        },
+        {
+          color: 'rgb(24.71%,28.24%,53.73%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(24.31%,28.63%,53.73%)',
+          label: '',
+          position: 81,
+        },
+        {
+          color: 'rgb(24.31%,29.02%,53.73%)',
+          label: '',
+          position: 83,
+        },
+        {
+          color: 'rgb(24.31%,29.8%,54.12%)',
+          label: '',
+          position: 84,
+        },
+        {
+          color: 'rgb(23.92%,30.2%,54.12%)',
+          label: '',
+          position: 86,
+        },
+        {
+          color: 'rgb(23.92%,30.59%,54.12%)',
+          label: '',
+          position: 87,
+        },
+        {
+          color: 'rgb(23.53%,30.98%,54.12%)',
+          label: '',
+          position: 88,
+        },
+        {
+          color: 'rgb(23.53%,31.37%,54.51%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(23.14%,31.76%,54.51%)',
+          label: '',
+          position: 91,
+        },
+        {
+          color: 'rgb(23.14%,32.16%,54.51%)',
+          label: '',
+          position: 93,
+        },
+        {
+          color: 'rgb(22.75%,32.55%,54.51%)',
+          label: '',
+          position: 94,
+        },
+        {
+          color: 'rgb(22.75%,32.94%,54.9%)',
+          label: '',
+          position: 96,
+        },
+        {
+          color: 'rgb(22.35%,33.33%,54.9%)',
+          label: '',
+          position: 97,
+        },
+        {
+          color: 'rgb(22.35%,34.12%,54.9%)',
+          label: '',
+          position: 98,
+        },
+        {
+          color: 'rgb(21.96%,34.51%,54.9%)',
+          label: '',
+          position: 100,
+        },
+        {
+          color: 'rgb(21.96%,34.9%,54.9%)',
+          label: '',
+          position: 101,
+        },
+        {
+          color: 'rgb(21.57%,35.29%,54.9%)',
+          label: '',
+          position: 103,
+        },
+        {
+          color: 'rgb(21.57%,35.69%,55.29%)',
+          label: '',
+          position: 104,
+        },
+        {
+          color: 'rgb(21.18%,36.08%,55.29%)',
+          label: '',
+          position: 106,
+        },
+        {
+          color: 'rgb(21.18%,36.47%,55.29%)',
+          label: '',
+          position: 107,
+        },
+        {
+          color: 'rgb(20.78%,36.86%,55.29%)',
+          label: '',
+          position: 108,
+        },
+        {
+          color: 'rgb(20.78%,37.25%,55.29%)',
+          label: '',
+          position: 110,
+        },
+        {
+          color: 'rgb(20.39%,37.65%,55.29%)',
+          label: '',
+          position: 111,
+        },
+        {
+          color: 'rgb(20.39%,38.04%,55.29%)',
+          label: '',
+          position: 113,
+        },
+        {
+          color: 'rgb(20.0%,38.43%,55.29%)',
+          label: '',
+          position: 114,
+        },
+        {
+          color: 'rgb(20.0%,38.82%,55.29%)',
+          label: '',
+          position: 116,
+        },
+        {
+          color: 'rgb(19.61%,39.22%,55.69%)',
+          label: '',
+          position: 117,
+        },
+        {
+          color: 'rgb(19.61%,39.61%,55.69%)',
+          label: '',
+          position: 119,
+        },
+        {
+          color: 'rgb(19.22%,40.0%,55.69%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(19.22%,40.39%,55.69%)',
+          label: '',
+          position: 121,
+        },
+        {
+          color: 'rgb(19.22%,40.78%,55.69%)',
+          label: '',
+          position: 123,
+        },
+        {
+          color: 'rgb(18.82%,41.18%,55.69%)',
+          label: '',
+          position: 124,
+        },
+        {
+          color: 'rgb(18.82%,41.57%,55.69%)',
+          label: '',
+          position: 126,
+        },
+        {
+          color: 'rgb(18.43%,41.96%,55.69%)',
+          label: '',
+          position: 127,
+        },
+        {
+          color: 'rgb(18.43%,42.35%,55.69%)',
+          label: '',
+          position: 129,
+        },
+        {
+          color: 'rgb(18.04%,42.75%,55.69%)',
+          label: '',
+          position: 130,
+        },
+        {
+          color: 'rgb(18.04%,43.14%,55.69%)',
+          label: '',
+          position: 131,
+        },
+        {
+          color: 'rgb(18.04%,43.53%,55.69%)',
+          label: '',
+          position: 133,
+        },
+        {
+          color: 'rgb(17.65%,43.92%,55.69%)',
+          label: '',
+          position: 134,
+        },
+        {
+          color: 'rgb(17.65%,44.31%,55.69%)',
+          label: '',
+          position: 136,
+        },
+        {
+          color: 'rgb(17.25%,44.31%,55.69%)',
+          label: '',
+          position: 137,
+        },
+        {
+          color: 'rgb(17.25%,44.71%,55.69%)',
+          label: '',
+          position: 139,
+        },
+        {
+          color: 'rgb(17.25%,45.1%,55.69%)',
+          label: '',
+          position: 140,
+        },
+        {
+          color: 'rgb(16.86%,45.49%,55.69%)',
+          label: '',
+          position: 141,
+        },
+        {
+          color: 'rgb(16.86%,45.88%,55.69%)',
+          label: '',
+          position: 143,
+        },
+        {
+          color: 'rgb(16.47%,46.27%,55.69%)',
+          label: '',
+          position: 144,
+        },
+        {
+          color: 'rgb(16.47%,46.67%,55.69%)',
+          label: '',
+          position: 146,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 147,
+        },
+        {
+          color: 'rgb(16.08%,47.45%,55.69%)',
+          label: '',
+          position: 149,
+        },
+        {
+          color: 'rgb(16.08%,47.84%,55.69%)',
+          label: '',
+          position: 150,
+        },
+        {
+          color: 'rgb(16.08%,48.24%,55.69%)',
+          label: '',
+          position: 151,
+        },
+        {
+          color: 'rgb(15.69%,48.63%,55.69%)',
+          label: '',
+          position: 153,
+        },
+        {
+          color: 'rgb(15.69%,49.02%,55.69%)',
+          label: '',
+          position: 154,
+        },
+        {
+          color: 'rgb(15.29%,49.41%,55.69%)',
+          label: '',
+          position: 156,
+        },
+        {
+          color: 'rgb(15.29%,49.8%,55.69%)',
+          label: '',
+          position: 157,
+        },
+        {
+          color: 'rgb(15.29%,50.2%,55.69%)',
+          label: '',
+          position: 159,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 160,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 162,
+        },
+        {
+          color: 'rgb(14.9%,50.98%,55.69%)',
+          label: '',
+          position: 163,
+        },
+        {
+          color: 'rgb(14.51%,51.37%,55.69%)',
+          label: '',
+          position: 164,
+        },
+        {
+          color: 'rgb(14.51%,51.76%,55.69%)',
+          label: '',
+          position: 166,
+        },
+        {
+          color: 'rgb(14.51%,52.16%,55.69%)',
+          label: '',
+          position: 167,
+        },
+        {
+          color: 'rgb(14.12%,52.55%,55.69%)',
+          label: '',
+          position: 169,
+        },
+        {
+          color: 'rgb(14.12%,52.94%,55.69%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(13.73%,53.33%,55.69%)',
+          label: '',
+          position: 172,
+        },
+        {
+          color: 'rgb(13.73%,53.73%,55.69%)',
+          label: '',
+          position: 173,
+        },
+        {
+          color: 'rgb(13.73%,54.12%,55.29%)',
+          label: '',
+          position: 174,
+        },
+        {
+          color: 'rgb(13.33%,54.51%,55.29%)',
+          label: '',
+          position: 176,
+        },
+        {
+          color: 'rgb(13.33%,54.9%,55.29%)',
+          label: '',
+          position: 177,
+        },
+        {
+          color: 'rgb(13.33%,55.29%,55.29%)',
+          label: '',
+          position: 179,
+        },
+        {
+          color: 'rgb(12.94%,55.69%,55.29%)',
+          label: '',
+          position: 180,
+        },
+        {
+          color: 'rgb(12.94%,56.47%,55.29%)',
+          label: '',
+          position: 182,
+        },
+        {
+          color: 'rgb(12.94%,56.47%,54.9%)',
+          label: '',
+          position: 183,
+        },
+        {
+          color: 'rgb(12.94%,57.25%,54.9%)',
+          label: '',
+          position: 184,
+        },
+        {
+          color: 'rgb(12.55%,57.25%,54.9%)',
+          label: '',
+          position: 186,
+        },
+        {
+          color: 'rgb(12.55%,57.25%,54.9%)',
+          label: '',
+          position: 187,
+        },
+        {
+          color: 'rgb(12.16%,58.04%,54.9%)',
+          label: '',
+          position: 189,
+        },
+        {
+          color: 'rgb(12.16%,58.43%,54.51%)',
+          label: '',
+          position: 190,
+        },
+        {
+          color: 'rgb(12.16%,58.82%,54.51%)',
+          label: '',
+          position: 192,
+        },
+        {
+          color: 'rgb(12.16%,59.22%,54.51%)',
+          label: '',
+          position: 193,
+        },
+        {
+          color: 'rgb(12.16%,59.61%,54.51%)',
+          label: '',
+          position: 194,
+        },
+        {
+          color: 'rgb(12.16%,60.0%,54.12%)',
+          label: '',
+          position: 196,
+        },
+        {
+          color: 'rgb(12.16%,60.39%,54.12%)',
+          label: '',
+          position: 197,
+        },
+        {
+          color: 'rgb(11.76%,60.78%,54.12%)',
+          label: '',
+          position: 199,
+        },
+        {
+          color: 'rgb(11.76%,61.18%,53.73%)',
+          label: '',
+          position: 200,
+        },
+        {
+          color: 'rgb(11.76%,61.57%,53.73%)',
+          label: '',
+          position: 202,
+        },
+        {
+          color: 'rgb(12.16%,61.96%,53.73%)',
+          label: '',
+          position: 203,
+        },
+        {
+          color: 'rgb(12.16%,62.35%,53.33%)',
+          label: '',
+          position: 204,
+        },
+        {
+          color: 'rgb(12.16%,62.75%,53.33%)',
+          label: '',
+          position: 206,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,53.33%)',
+          label: '',
+          position: 207,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,52.94%)',
+          label: '',
+          position: 209,
+        },
+        {
+          color: 'rgb(12.16%,63.14%,52.94%)',
+          label: '',
+          position: 210,
+        },
+        {
+          color: 'rgb(12.55%,63.92%,52.55%)',
+          label: '',
+          position: 212,
+        },
+        {
+          color: 'rgb(12.55%,64.31%,52.55%)',
+          label: '',
+          position: 213,
+        },
+        {
+          color: 'rgb(12.94%,64.71%,52.16%)',
+          label: '',
+          position: 215,
+        },
+        {
+          color: 'rgb(12.94%,65.1%,52.16%)',
+          label: '',
+          position: 216,
+        },
+        {
+          color: 'rgb(13.33%,65.49%,52.16%)',
+          label: '',
+          position: 217,
+        },
+        {
+          color: 'rgb(13.33%,65.88%,51.76%)',
+          label: '',
+          position: 219,
+        },
+        {
+          color: 'rgb(13.73%,66.27%,51.37%)',
+          label: '',
+          position: 220,
+        },
+        {
+          color: 'rgb(14.12%,66.67%,51.37%)',
+          label: '',
+          position: 222,
+        },
+        {
+          color: 'rgb(14.51%,67.06%,50.98%)',
+          label: '',
+          position: 223,
+        },
+        {
+          color: 'rgb(14.51%,67.45%,50.98%)',
+          label: '',
+          position: 225,
+        },
+        {
+          color: 'rgb(14.9%,67.84%,50.59%)',
+          label: '',
+          position: 226,
+        },
+        {
+          color: 'rgb(15.29%,67.84%,50.59%)',
+          label: '',
+          position: 227,
+        },
+        {
+          color: 'rgb(15.69%,68.24%,50.2%)',
+          label: '',
+          position: 229,
+        },
+        {
+          color: 'rgb(16.08%,68.63%,49.8%)',
+          label: '',
+          position: 230,
+        },
+        {
+          color: 'rgb(16.47%,69.02%,49.8%)',
+          label: '',
+          position: 232,
+        },
+        {
+          color: 'rgb(16.86%,69.41%,49.41%)',
+          label: '',
+          position: 233,
+        },
+        {
+          color: 'rgb(17.65%,69.8%,49.02%)',
+          label: '',
+          position: 235,
+        },
+        {
+          color: 'rgb(18.04%,70.2%,48.63%)',
+          label: '',
+          position: 236,
+        },
+        {
+          color: 'rgb(18.43%,70.59%,48.63%)',
+          label: '',
+          position: 237,
+        },
+        {
+          color: 'rgb(18.82%,70.98%,48.24%)',
+          label: '',
+          position: 239,
+        },
+        {
+          color: 'rgb(19.61%,71.37%,47.84%)',
+          label: '',
+          position: 240,
+        },
+        {
+          color: 'rgb(20.0%,71.37%,47.45%)',
+          label: '',
+          position: 242,
+        },
+        {
+          color: 'rgb(20.78%,71.76%,47.45%)',
+          label: '',
+          position: 243,
+        },
+        {
+          color: 'rgb(21.18%,72.16%,47.06%)',
+          label: '',
+          position: 245,
+        },
+        {
+          color: 'rgb(21.96%,72.55%,46.67%)',
+          label: '',
+          position: 246,
+        },
+        {
+          color: 'rgb(22.35%,72.94%,46.27%)',
+          label: '',
+          position: 247,
+        },
+        {
+          color: 'rgb(23.14%,73.33%,45.88%)',
+          label: '',
+          position: 249,
+        },
+        {
+          color: 'rgb(23.53%,73.73%,45.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(24.71%,73.73%,45.1%)',
+          label: '',
+          position: 252,
+        },
+        {
+          color: 'rgb(25.1%,74.12%,44.71%)',
+          label: '',
+          position: 253,
+        },
+        {
+          color: 'rgb(25.49%,74.51%,44.31%)',
+          label: '',
+          position: 255,
+        },
+        {
+          color: 'rgb(26.27%,74.9%,43.92%)',
+          label: '',
+          position: 256,
+        },
+        {
+          color: 'rgb(27.06%,75.29%,43.53%)',
+          label: '',
+          position: 258,
+        },
+        {
+          color: 'rgb(27.84%,75.69%,43.14%)',
+          label: '',
+          position: 259,
+        },
+        {
+          color: 'rgb(28.63%,75.69%,42.75%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(29.41%,76.08%,42.35%)',
+          label: '',
+          position: 262,
+        },
+        {
+          color: 'rgb(30.2%,76.47%,41.96%)',
+          label: '',
+          position: 263,
+        },
+        {
+          color: 'rgb(30.98%,76.86%,41.57%)',
+          label: '',
+          position: 265,
+        },
+        {
+          color: 'rgb(31.76%,77.25%,41.18%)',
+          label: '',
+          position: 266,
+        },
+        {
+          color: 'rgb(32.55%,77.25%,40.78%)',
+          label: '',
+          position: 268,
+        },
+        {
+          color: 'rgb(33.33%,77.65%,40.39%)',
+          label: '',
+          position: 269,
+        },
+        {
+          color: 'rgb(34.12%,78.04%,39.61%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(34.9%,78.43%,39.22%)',
+          label: '',
+          position: 272,
+        },
+        {
+          color: 'rgb(35.69%,78.43%,38.82%)',
+          label: '',
+          position: 273,
+        },
+        {
+          color: 'rgb(36.86%,78.82%,38.43%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(37.25%,79.22%,37.65%)',
+          label: '',
+          position: 276,
+        },
+        {
+          color: 'rgb(38.43%,79.61%,37.25%)',
+          label: '',
+          position: 278,
+        },
+        {
+          color: 'rgb(39.61%,79.61%,36.86%)',
+          label: '',
+          position: 279,
+        },
+        {
+          color: 'rgb(40.39%,80.0%,36.08%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(40.78%,80.39%,35.69%)',
+          label: '',
+          position: 282,
+        },
+        {
+          color: 'rgb(41.96%,80.39%,35.29%)',
+          label: '',
+          position: 283,
+        },
+        {
+          color: 'rgb(43.14%,80.78%,34.51%)',
+          label: '',
+          position: 285,
+        },
+        {
+          color: 'rgb(43.53%,81.18%,34.12%)',
+          label: '',
+          position: 286,
+        },
+        {
+          color: 'rgb(44.71%,81.57%,33.73%)',
+          label: '',
+          position: 288,
+        },
+        {
+          color: 'rgb(45.88%,81.57%,32.94%)',
+          label: '',
+          position: 289,
+        },
+        {
+          color: 'rgb(46.27%,81.96%,32.55%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(47.45%,81.96%,31.76%)',
+          label: '',
+          position: 292,
+        },
+        {
+          color: 'rgb(48.63%,82.35%,31.37%)',
+          label: '',
+          position: 293,
+        },
+        {
+          color: 'rgb(49.41%,82.75%,30.59%)',
+          label: '',
+          position: 295,
+        },
+        {
+          color: 'rgb(50.59%,82.75%,30.2%)',
+          label: '',
+          position: 296,
+        },
+        {
+          color: 'rgb(51.37%,83.14%,29.41%)',
+          label: '',
+          position: 298,
+        },
+        {
+          color: 'rgb(52.55%,83.53%,28.63%)',
+          label: '',
+          position: 299,
+        },
+        {
+          color: 'rgb(53.73%,83.53%,28.24%)',
+          label: '',
+          position: 301,
+        },
+        {
+          color: 'rgb(54.51%,83.92%,27.45%)',
+          label: '',
+          position: 302,
+        },
+        {
+          color: 'rgb(55.69%,83.92%,27.06%)',
+          label: '',
+          position: 303,
+        },
+        {
+          color: 'rgb(56.47%,84.31%,26.27%)',
+          label: '',
+          position: 305,
+        },
+        {
+          color: 'rgb(57.65%,84.31%,25.49%)',
+          label: '',
+          position: 306,
+        },
+        {
+          color: 'rgb(58.43%,84.71%,25.1%)',
+          label: '',
+          position: 308,
+        },
+        {
+          color: 'rgb(59.22%,84.71%,24.31%)',
+          label: '',
+          position: 309,
+        },
+        {
+          color: 'rgb(60.78%,85.1%,23.53%)',
+          label: '',
+          position: 311,
+        },
+        {
+          color: 'rgb(61.57%,85.1%,23.14%)',
+          label: '',
+          position: 312,
+        },
+        {
+          color: 'rgb(62.75%,85.49%,22.35%)',
+          label: '',
+          position: 313,
+        },
+        {
+          color: 'rgb(63.53%,85.49%,21.57%)',
+          label: '',
+          position: 315,
+        },
+        {
+          color: 'rgb(64.71%,85.88%,21.18%)',
+          label: '',
+          position: 316,
+        },
+        {
+          color: 'rgb(65.88%,85.88%,20.39%)',
+          label: '',
+          position: 318,
+        },
+        {
+          color: 'rgb(66.67%,86.27%,19.61%)',
+          label: '',
+          position: 319,
+        },
+        {
+          color: 'rgb(67.84%,86.27%,18.82%)',
+          label: '',
+          position: 321,
+        },
+        {
+          color: 'rgb(69.02%,86.67%,18.43%)',
+          label: '',
+          position: 322,
+        },
+        {
+          color: 'rgb(69.8%,86.67%,17.65%)',
+          label: '',
+          position: 323,
+        },
+        {
+          color: 'rgb(70.98%,87.06%,16.86%)',
+          label: '',
+          position: 325,
+        },
+        {
+          color: 'rgb(72.16%,87.06%,16.08%)',
+          label: '',
+          position: 326,
+        },
+        {
+          color: 'rgb(72.94%,87.06%,15.69%)',
+          label: '',
+          position: 328,
+        },
+        {
+          color: 'rgb(74.12%,87.45%,14.9%)',
+          label: '',
+          position: 329,
+        },
+        {
+          color: 'rgb(75.29%,87.45%,14.51%)',
+          label: '',
+          position: 331,
+        },
+        {
+          color: 'rgb(76.08%,87.45%,13.73%)',
+          label: '',
+          position: 332,
+        },
+        {
+          color: 'rgb(77.25%,87.84%,12.94%)',
+          label: '',
+          position: 333,
+        },
+        {
+          color: 'rgb(78.43%,87.84%,12.55%)',
+          label: '',
+          position: 335,
+        },
+        {
+          color: 'rgb(79.22%,88.24%,12.16%)',
+          label: '',
+          position: 336,
+        },
+        {
+          color: 'rgb(80.39%,88.24%,11.37%)',
+          label: '',
+          position: 338,
+        },
+        {
+          color: 'rgb(81.57%,88.24%,10.98%)',
+          label: '',
+          position: 339,
+        },
+        {
+          color: 'rgb(82.35%,88.63%,10.59%)',
+          label: '',
+          position: 341,
+        },
+        {
+          color: 'rgb(83.53%,88.63%,10.2%)',
+          label: '',
+          position: 342,
+        },
+        {
+          color: 'rgb(84.71%,88.63%,9.8%)',
+          label: '',
+          position: 344,
+        },
+        {
+          color: 'rgb(85.49%,89.02%,9.8%)',
+          label: '',
+          position: 345,
+        },
+        {
+          color: 'rgb(86.67%,89.02%,9.41%)',
+          label: '',
+          position: 346,
+        },
+        {
+          color: 'rgb(87.45%,89.02%,9.41%)',
+          label: '',
+          position: 348,
+        },
+        {
+          color: 'rgb(88.63%,89.41%,9.41%)',
+          label: '',
+          position: 349,
+        },
+        {
+          color: 'rgb(89.8%,89.41%,9.8%)',
+          label: '',
+          position: 351,
+        },
+        {
+          color: 'rgb(90.59%,89.41%,9.8%)',
+          label: '',
+          position: 352,
+        },
+        {
+          color: 'rgb(91.76%,89.8%,10.2%)',
+          label: '',
+          position: 354,
+        },
+        {
+          color: 'rgb(92.55%,89.8%,10.59%)',
+          label: '',
+          position: 355,
+        },
+        {
+          color: 'rgb(93.73%,89.8%,10.98%)',
+          label: '',
+          position: 356,
+        },
+        {
+          color: 'rgb(94.51%,89.8%,11.37%)',
+          label: '',
+          position: 358,
+        },
+        {
+          color: 'rgb(95.69%,90.2%,11.76%)',
+          label: '',
+          position: 359,
+        },
+        {
+          color: 'rgb(96.47%,90.2%,12.55%)',
+          label: '',
+          position: 361,
+        },
+        {
+          color: 'rgb(97.25%,90.2%,12.94%)',
+          label: '',
+          position: 362,
+        },
+        {
+          color: 'rgb(98.43%,90.59%,13.73%)',
+          label: '',
+          position: 364,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 365,
+          position: 365,
+        },
+      ],
+      maxPosition: 365,
+      minPosition: 1,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'O_MAXD_S1' }],
     description: () =>
       t`Season 1: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'P_MAXD_S2' }],
     description: () =>
       t`Season 2: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'U_MAXV_S1' }],
     description: () =>
       t`Season 1: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'MAXV_S1',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'V_MAXV_S2' }],
     description: () =>
       t`Season 2: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'MAXV_S2',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'W_MINV_S1' }],
     description: () =>
       t`Season 1: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'MINV_S1',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'X_MINV_S2' }],
     description: () =>
       t`Season 2: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'SPROD_S1',
+      gradients: [
+        {
+          color: 'rgb(45.1%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(64.71%,45.1%,0.0%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(100.0%,74.51%,72.55%)',
+          label: '',
+          position: 105,
+        },
+        {
+          color: 'rgb(100.0%,92.16%,72.55%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(90.2%,100.0%,76.47%)',
+          label: '',
+          position: 135,
+        },
+        {
+          color: 'rgb(62.75%,100.0%,43.14%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(45.1%,64.71%,1.96%)',
+          label: '',
+          position: 205,
+        },
+        {
+          color: 'rgb(7.84%,43.14%,54.9%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(3.92%,17.65%,49.02%)',
+          label: 500,
+          position: 500,
+        },
+      ],
+      maxPosition: 500,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'C_SPROD_S1' }],
     description: () =>
       t`Season 1: the growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'SPROD_S1',
+      gradients: [
+        {
+          color: 'rgb(45.1%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(64.71%,45.1%,0.0%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(100.0%,74.51%,72.55%)',
+          label: '',
+          position: 105,
+        },
+        {
+          color: 'rgb(100.0%,92.16%,72.55%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(90.2%,100.0%,76.47%)',
+          label: '',
+          position: 135,
+        },
+        {
+          color: 'rgb(62.75%,100.0%,43.14%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(45.1%,64.71%,1.96%)',
+          label: '',
+          position: 205,
+        },
+        {
+          color: 'rgb(7.84%,43.14%,54.9%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(3.92%,17.65%,49.02%)',
+          label: 500,
+          position: 500,
+        },
+      ],
+      maxPosition: 500,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'D_SPROD_S2' }],
     description: () =>
       t`Season 2: he growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'SPROD_S2',
+      gradients: [
+        {
+          color: 'rgb(45.1%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(64.71%,45.1%,0.0%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(100.0%,74.51%,72.55%)',
+          label: '',
+          position: 105,
+        },
+        {
+          color: 'rgb(100.0%,92.16%,72.55%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(90.2%,100.0%,76.47%)',
+          label: '',
+          position: 135,
+        },
+        {
+          color: 'rgb(62.75%,100.0%,43.14%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(45.1%,64.71%,1.96%)',
+          label: '',
+          position: 205,
+        },
+        {
+          color: 'rgb(7.84%,43.14%,54.9%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(3.92%,17.65%,49.02%)',
+          label: 500,
+          position: 500,
+        },
+      ],
+      maxPosition: 500,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'K_RSLOPE_S1' }],
     description: () =>
       t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'RSLOPE_S1',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(25.49%,26.27%,52.94%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(13.73%,65.88%,51.76%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(47.84%,81.96%,31.76%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: '70',
+          position: 70,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 1000,
+          position: 1000,
+        },
+      ],
+      maxPosition: 1000,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'L_RSLOPE_S2' }],
     description: () =>
       t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'RSLOPE_S2',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(25.49%,26.27%,52.94%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(13.73%,65.88%,51.76%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(47.84%,81.96%,31.76%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: '70',
+          position: 70,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 1000,
+          position: 1000,
+        },
+      ],
+      maxPosition: 1000,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'I_LSLOPE_S1' }],
     description: () =>
       t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'LSLOPE_S1',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(25.49%,26.27%,52.94%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(13.73%,65.88%,51.76%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(47.84%,81.96%,31.76%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: '70',
+          position: 70,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 1000,
+          position: 1000,
+        },
+      ],
+      maxPosition: 1000,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'J_LSLOPE_S2' }],
     description: () =>
       t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'LSLOPE_S2',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(25.49%,26.27%,52.94%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(16.47%,47.06%,55.69%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(13.73%,65.88%,51.76%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(47.84%,81.96%,31.76%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: '70',
+          position: 70,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 1000,
+          position: 1000,
+        },
+      ],
+      maxPosition: 1000,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'M_SOSD_S1' }],
     description: () =>
       t`Season 1: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'N_SOSD_S2' }],
     description: () =>
       t`Season 2: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2022',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2022',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2022',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2022',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2022',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2022',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2022',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2022',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2022',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2022',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2022',
+        },
+        {
+          color: 'rgb(25.1%,0.0%,100.0%)',
+          label: 'Jan 2023',
+        },
+        {
+          color: 'rgb(74.9%,0.0%,100.0%)',
+          label: 'Feb 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,74.9%)',
+          label: 'Mar 2023',
+        },
+        {
+          color: 'rgb(100.0%,0.0%,25.1%)',
+          label: 'Apr 2023',
+        },
+        {
+          color: 'rgb(100.0%,39.22%,0.0%)',
+          label: 'May 2023',
+        },
+        {
+          color: 'rgb(100.0%,74.9%,0.0%)',
+          label: 'Jun 2023',
+        },
+        {
+          color: 'rgb(74.9%,100.0%,0.0%)',
+          label: 'Jul 2023',
+        },
+        {
+          color: 'rgb(25.1%,100.0%,0.0%)',
+          label: 'Aug 2023',
+        },
+        {
+          color: 'rgb(0.0%,86.27%,25.1%)',
+          label: 'Sep 2023',
+        },
+        {
+          color: 'rgb(0.0%,100.0%,74.9%)',
+          label: 'Oct 2023',
+        },
+        {
+          color: 'rgb(0.0%,74.9%,100.0%)',
+          label: 'Nov 2023',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,100.0%)',
+          label: 'Dec 2023',
+        },
+        {
+          color: 'rgb(62.35%,50.2%,100.0%)',
+          label: 'Jan 2024',
+        },
+        {
+          color: 'rgb(87.45%,50.2%,100.0%)',
+          label: 'Feb 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,87.45%)',
+          label: 'Mar 2024',
+        },
+        {
+          color: 'rgb(100.0%,50.2%,62.35%)',
+          label: 'Apr 2024',
+        },
+        {
+          color: 'rgb(100.0%,69.02%,49.8%)',
+          label: 'May 2024',
+        },
+        {
+          color: 'rgb(100.0%,87.45%,50.2%)',
+          label: 'Jun 2024',
+        },
+        {
+          color: 'rgb(87.45%,100.0%,50.2%)',
+          label: 'Jul 2024',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,50.2%)',
+          label: 'Aug 2024',
+        },
+        {
+          color: 'rgb(42.75%,86.27%,55.29%)',
+          label: 'Sep 2024',
+        },
+        {
+          color: 'rgb(50.2%,100.0%,87.45%)',
+          label: 'Oct 2024',
+        },
+        {
+          color: 'rgb(50.2%,87.45%,100.0%)',
+          label: 'Nov 2024',
+        },
+        {
+          color: 'rgb(49.8%,74.12%,100.0%)',
+          label: 'Dec 2024',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'S_SOSV_S1' }],
     description: () =>
       t`Season 1: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'SOSV_S1',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'T_SOSV_S2' }],
     description: () =>
       t`Season 2: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'SOSV_S2',
+      gradients: [
+        {
+          color: 'rgb(76.08%,36.86%,23.53%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(92.94%,91.76%,7.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(50.2%,100.0%,0.0%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(0.0%,85.88%,85.88%)',
+          label: '',
+          position: 1.5,
+        },
+        {
+          color: 'rgb(12.55%,60.0%,56.08%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(4.31%,17.25%,47.84%)',
+          label: 3,
+          position: 3,
+        },
+      ],
+      maxPosition: 3,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'A_TPROD_S1' }],
     description: () =>
       t`Season 1: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'TPROD_S1',
+      gradients: [
+        {
+          color: 'rgb(45.1%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(64.71%,45.1%,0.0%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(100.0%,74.51%,72.55%)',
+          label: '',
+          position: 105,
+        },
+        {
+          color: 'rgb(100.0%,92.16%,72.55%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(90.2%,100.0%,76.47%)',
+          label: '',
+          position: 135,
+        },
+        {
+          color: 'rgb(62.75%,100.0%,43.14%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(45.1%,64.71%,1.96%)',
+          label: '',
+          position: 205,
+        },
+        {
+          color: 'rgb(7.84%,43.14%,54.9%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(3.92%,17.65%,49.02%)',
+          label: 500,
+          position: 500,
+        },
+      ],
+      maxPosition: 500,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'B_TPROD_S2' }],
     description: () =>
       t`Season 2: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+    legend: {
+      type: 'continuous',
+      title: 'TPROD_S2',
+      gradients: [
+        {
+          color: 'rgb(45.1%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(64.71%,45.1%,0.0%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(100.0%,74.51%,72.55%)',
+          label: '',
+          position: 105,
+        },
+        {
+          color: 'rgb(100.0%,92.16%,72.55%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(90.2%,100.0%,76.47%)',
+          label: '',
+          position: 135,
+        },
+        {
+          color: 'rgb(62.75%,100.0%,43.14%)',
+          label: '',
+          position: 170,
+        },
+        {
+          color: 'rgb(45.1%,64.71%,1.96%)',
+          label: '',
+          position: 205,
+        },
+        {
+          color: 'rgb(7.84%,43.14%,54.9%)',
+          label: '',
+          position: 275,
+        },
+        {
+          color: 'rgb(3.92%,17.65%,49.02%)',
+          label: 500,
+          position: 500,
+        },
+      ],
+      maxPosition: 500,
+      minPosition: 0,
+    },
   },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Change_Confidence' }],
-    description: () =>
-      t`Quality layer regarding the change detection between 0-3 (0 = no change, 3 = high confidence). Note: this layer is only available for products produced in production mode conso or nrt.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Data_Density_Indicator' }],
-    description: () =>
-      t`Data density indicator showing quality of the EO input data between 0 – 100 (0 = bad, 100 = perfect data).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification' }],
-    description: () => t`Main discrete classification according to FAO LCCS scheme.`,
-  },
-  {
-    match: [
-      { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Discrete_Classification_Probability' },
-    ],
-    description: () => t`Classification probability, a quality indicator for the discrete classification.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Forest_Type' }],
-    description: () => t`Forest type for all pixels where tree cover fraction is bigger than 1%.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Bare_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the bare and sparse vegetation class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Crops_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the cropland class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Tree_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the forest class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Grass_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the herbaceous vegetation class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'MossLichen_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the moss & lichen class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'PermanentWater_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the permanent inland water bodies class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'SeasonalWater_Cover_fraction' }],
-    description: () => t`Fractional cover (%) for the seasonal inland water bodies class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Shrub_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the shrubland class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'Snow_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the snow & ice class.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'BuiltUp_Cover_Fraction' }],
-    description: () => t`Fractional cover (%) for the built-up class.`,
-  },
+
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V1, layerId: 'LST' }],
     description: () => t`Land Surface Temperature (LST) is estimated from Top-of-Atmosphere (TOA) brightness
 temperatures of atmospheric window channels within the infrared range. LST describes processes such as the exchange of energy and water between the land surface and atmosphere, and influences the rate and timing of plant growth.`,
+    legend: {
+      type: 'continuous',
+      title: 'LST',
+      gradients: [
+        {
+          color: 'rgb(0.00%,0.00%,1.57%)',
+          label: 240,
+          position: 240,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(29.80%,4.71%,41.96%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 310,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 320,
+        },
+        {
+          color: 'rgb(98.82%,100.00%,64.31%)',
+          label: 330,
+          position: 330,
+        },
+      ],
+      maxPosition: 330,
+      minPosition: 240,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V2, layerId: 'LST' }],
     description: () => t`Land Surface Temperature (LST) is estimated from Top-of-Atmosphere (TOA) brightness
 temperatures of atmospheric window channels within the infrared range. LST describes processes such as the exchange of energy and water between the land surface and atmosphere, and influences the rate and timing of plant growth.`,
+    legend: {
+      type: 'continuous',
+      title: 'LST',
+      gradients: [
+        {
+          color: 'rgb(0.00%,0.00%,1.57%)',
+          label: 240,
+          position: 240,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(29.80%,4.71%,41.96%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 310,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 320,
+        },
+        {
+          color: 'rgb(98.82%,100.00%,64.31%)',
+          label: 330,
+          position: 330,
+        },
+      ],
+      maxPosition: 330,
+      minPosition: 240,
+    },
   },
   {
     match: [
@@ -4824,6 +19618,59 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+    legend: {
+      type: 'continuous',
+      title: 'GDMP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.02,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 180,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 240,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 360,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 420,
+          position: 420,
+        },
+      ],
+      maxPosition: 420,
+      minPosition: 0,
+    },
   },
   {
     match: [
@@ -4835,70 +19682,486 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
+    legend: {
+      type: 'continuous',
+      title: 'GDMP',
+      gradients: [
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(100.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.02,
+        },
+        {
+          color: 'rgb(100.0%,64.71%,0.0%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(100.0%,84.31%,0.0%)',
+          label: '',
+          position: 120,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,0.0%)',
+          label: '',
+          position: 180,
+        },
+        {
+          color: 'rgb(67.84%,100.0%,18.43%)',
+          label: '',
+          position: 240,
+        },
+        {
+          color: 'rgb(7.84%,100.0%,7.84%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(3.92%,78.43%,3.92%)',
+          label: '',
+          position: 360,
+        },
+        {
+          color: 'rgb(0.0%,53.33%,0.0%)',
+          label: 420,
+          position: 420,
+        },
+      ],
+      maxPosition: 420,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'N_CHANGE_CONFIDENCE' }],
     description: () =>
       t`Quality layer regarding the change detection between 0-3 (0 = no change, 3 = high confidence). Note: this layer is only available for products produced in production mode conso or nrt.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(87.06%,87.06%,87.06%)',
+          label: '0',
+        },
+        {
+          color: 'rgb(45.1%,52.16%,44.71%)',
+          label: '1',
+        },
+        {
+          color: 'rgb(54.51%,67.06%,54.12%)',
+          label: '2',
+        },
+        {
+          color: 'rgb(62.35%,100.0%,61.18%)',
+          label: '3',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'O_DATA_DENSITY_INDICATOR' }],
     description: () =>
       t`Data density indicator showing quality of the EO input data between 0 – 100 (0 = bad, 100 = perfect data).`,
+    legend: {
+      type: 'continuous',
+      title: 'Data_Density_Indicator',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'A_DISCRETE_CLASSIFICATION' }],
     description: () => t`Main discrete classification according to FAO LCCS scheme.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(15.69%,15.69%,15.69%)',
+          label: 'No input data available',
+        },
+        {
+          color: 'rgb(34.51%,28.24%,12.16%)',
+          label: 'Closed forest, evergreen needle leaf',
+        },
+        {
+          color: 'rgb(43.92%,40.0%,24.31%)',
+          label: 'Closed forest, deciduous needle leaf',
+        },
+        {
+          color: 'rgb(0.0%,60.0%,0.0%)',
+          label: 'Closed forest, evergreen, broad leaf',
+        },
+        {
+          color: 'rgb(0.0%,80.0%,0.0%)',
+          label: 'Closed forest, deciduous broad leaf',
+        },
+        {
+          color: 'rgb(30.59%,45.88%,12.16%)',
+          label: 'Closed forest, mixed',
+        },
+        {
+          color: 'rgb(0.0%,47.06%,0.0%)',
+          label: 'Closed forest, unknown',
+        },
+        {
+          color: 'rgb(40.0%,37.65%,0.0%)',
+          label: 'Open forest, evergreen needle leaf',
+        },
+        {
+          color: 'rgb(55.29%,45.49%,0.0%)',
+          label: 'Open forest, deciduous needle leaf',
+        },
+        {
+          color: 'rgb(55.29%,70.59%,0.0%)',
+          label: 'Open forest, evergreen broad leaf',
+        },
+        {
+          color: 'rgb(62.75%,86.27%,0.0%)',
+          label: 'Open forest, deciduous broad leaf',
+        },
+        {
+          color: 'rgb(57.25%,60.0%,0.0%)',
+          label: 'Open forest, mixed',
+        },
+        {
+          color: 'rgb(39.22%,54.9%,0.0%)',
+          label: 'Open forest, unknown',
+        },
+        {
+          color: 'rgb(100.0%,73.33%,13.33%)',
+          label: 'Shrubs',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,29.8%)',
+          label: 'Herbaceous vegetation',
+        },
+        {
+          color: 'rgb(0.0%,58.82%,62.75%)',
+          label: 'Herbaceous wetland',
+        },
+        {
+          color: 'rgb(98.04%,90.2%,62.75%)',
+          label: 'Moss and lichen',
+        },
+        {
+          color: 'rgb(70.59%,70.59%,70.59%)',
+          label: 'Bare / sparse vegetation',
+        },
+        {
+          color: 'rgb(94.12%,58.82%,100.0%)',
+          label: 'Cultivated and managed vegetation/agriculture (cropland)',
+        },
+        {
+          color: 'rgb(98.04%,0.0%,0.0%)',
+          label: 'Urban / built up',
+        },
+        {
+          color: 'rgb(94.12%,94.12%,94.12%)',
+          label: 'Snow and Ice',
+        },
+        {
+          color: 'rgb(0.0%,19.61%,78.43%)',
+          label: 'Permanent water bodies',
+        },
+        {
+          color: 'rgb(0.0%,0.0%,50.2%)',
+          label: 'Open sea',
+        },
+      ],
+    },
   },
   {
     match: [
       { datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'M_DISCRETE_CLASSIFICATION_PROBABILITY' },
     ],
     description: () => t`Classification probability, a quality indicator for the discrete classification.`,
+    legend: {
+      type: 'continuous',
+      title: 'Discrete_Classification_Probability',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'B_FOREST_TYPE' }],
     description: () => t`Forest type for all pixels where tree cover fraction is bigger than 1%.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(15.69%,15.69%,15.69%)',
+          label: 'Unknown',
+        },
+        {
+          color: 'rgb(40.0%,37.65%,0.0%)',
+          label: 'Evergreen needle leaf forest',
+        },
+        {
+          color: 'rgb(0.0%,60.0%,0.0%)',
+          label: 'Evergreen broad leaf forest',
+        },
+        {
+          color: 'rgb(43.92%,40.0%,24.31%)',
+          label: 'Deciduous needle leaf',
+        },
+        {
+          color: 'rgb(62.75%,86.27%,0.0%)',
+          label: 'Deciduous broad leaf',
+        },
+        {
+          color: 'rgb(57.25%,60.0%,0.0%)',
+          label: 'Mix of forest types',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'G_BARE_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the bare and sparse vegetation class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Bare_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'F_CROPS_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the cropland class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Crops_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'E_TREE_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the forest class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Tree_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'H_GRASS_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the herbaceous vegetation class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Grass_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'L_MOSSLICHEN_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the moss & lichen class.`,
+    legend: {
+      type: 'continuous',
+      title: 'MossLichen_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'C_PERMANENTWATER_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the permanent inland water bodies class.`,
+    legend: {
+      type: 'continuous',
+      title: 'PermanentWater_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'I_SEASONALWATER_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the seasonal inland water bodies class.`,
+    legend: {
+      type: 'continuous',
+      title: 'SeasonalWater_Cover_fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'K_SHRUB_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the shrubland class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Shrub_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'J_SNOW_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the snow & ice class.`,
+    legend: {
+      type: 'continuous',
+      title: 'Snow_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCC_100M_YEARLY_V3, layerId: 'D_BUILTUP_COVER_FRACTION' }],
     description: () => t`Fractional cover (%) for the built-up class.`,
+    legend: {
+      type: 'continuous',
+      title: 'BuiltUp_Cover_Fraction',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.2%,44.71%,46.27%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V1, layerId: 'LST' }],
@@ -4915,17 +20178,6 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1, layerId: 'GDMP' },
       { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT2, layerId: 'GDMP' },
       { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT6, layerId: 'GDMP' },
-    ],
-    description: () =>
-      t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
-  },
-  {
-    match: [
-      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT0, layerId: 'GDMP' },
-      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT1, layerId: 'GDMP' },
-      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2, layerId: 'GDMP' },
-      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5, layerId: 'GDMP' },
-      { datasourceId: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6, layerId: 'GDMP' },
     ],
     description: () =>
       t` GDMP (Gross Dry Matter Productivity) is considered as the amount of biomass that primary producers create in a given length of time, without any losses caused by respiration. The relation between the DMP (Dry matter productivity) and the GDMP is as follows: DMP = GDMP * AR (with AR = Autotrophic respiration factor).`,
@@ -4934,50 +20186,348 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_WB_300M_10DAILY_V1, layerId: 'WB' }],
     description: () =>
       t`This product is a 10-daily synthesis product derived from Top of Canopy (TOC) PROVA-V 333 m data. The basic Water Bodies (WB) layer which tells which pixels contain water and which not, defined as permanent and seasonal water bodies, natural and man-made, independently of their size. Include but are not restricted to the lakes of the Global terrestrial Network for lakes.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(12.16%,44.31%,86.27%)',
+          label: 'Inland water',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_WB_1KM_10DAILY_V2, layerId: 'WB' }],
     description: () => t`Information not currently available.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(12.16%,44.31%,86.27%)',
+          label: 'Inland water',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWE_5KM_DAILY_V1, layerId: 'SWE' }],
     description: () =>
       t`Snow Water Equivalent (SWE) is the measure of the amount of water frozen within the snow pack per unit area. In principle, it gives the height of the water column that would form, if the snow pack would melt completely. It is measured and indicated in millimetres [mm]. The retrieval algorithm used here combines information from satellite-based microwave radiometer and optical spectrometer observations with ground based weather station snow depth measurements and produces daily hemispherical scale SWE estimates. `,
+    legend: {
+      type: 'continuous',
+      title: 'SWE',
+      gradients: [
+        {
+          color: 'rgb(3.14%,100.0%,43.92%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(76.08%,87.06%,98.82%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(81.57%,89.8%,96.47%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(83.92%,90.98%,95.29%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(85.88%,92.55%,96.08%)',
+          label: '',
+          position: 75,
+        },
+        {
+          color: 'rgb(88.63%,93.73%,96.47%)',
+          label: '',
+          position: 100,
+        },
+        {
+          color: 'rgb(90.98%,94.51%,97.65%)',
+          label: '',
+          position: 150,
+        },
+        {
+          color: 'rgb(94.9%,96.86%,98.82%)',
+          label: '',
+          position: 200,
+        },
+        {
+          color: 'rgb(96.86%,98.43%,100.0%)',
+          label: 250,
+          position: 250,
+        },
+      ],
+      maxPosition: 250,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWE_5KM_DAILY_V2, layerId: 'SWE' }],
     description: () =>
       t`Snow Water Equivalent (SWE) is the measure of the amount of water frozen within the snow pack per unit area. In principle, it gives the height of the water column that would form, if the snow pack would melt completely. It is measured and indicated in millimetres [mm]. The retrieval algorithm used here combines information from satellite-based microwave radiometer and optical spectrometer observations with ground based weather station snow depth measurements and produces daily hemispherical scale SWE estimates. `,
+    legend: {
+      type: 'continuous',
+      title: 'SWE',
+      gradients: [
+        {
+          color: 'rgb(3.14%,100.0%,43.92%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(76.08%,87.06%,98.82%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(81.57%,89.8%,96.47%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(83.92%,90.98%,95.29%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(85.88%,92.55%,96.08%)',
+          label: '',
+          position: 75,
+        },
+        {
+          color: 'rgb(88.63%,93.73%,96.47%)',
+          label: '',
+          position: 100,
+        },
+        {
+          color: 'rgb(90.98%,94.51%,97.65%)',
+          label: '',
+          position: 150,
+        },
+        {
+          color: 'rgb(94.9%,96.86%,98.82%)',
+          label: '',
+          position: 200,
+        },
+        {
+          color: 'rgb(96.86%,98.43%,100.0%)',
+          label: 250,
+          position: 250,
+        },
+      ],
+      maxPosition: 250,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SCE_500M_DAILY_V1, layerId: 'SCE' }],
     description: () =>
       t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(0.0%,0.0%,43.14%)',
+          label: 'Water',
+        },
+        {
+          color: 'rgb(61.57%,61.57%,61.57%)',
+          label: 'Cloud',
+        },
+        {
+          color: 'rgb(17.25%,50.2%,17.65%)',
+          label: '0 % snow cover (snow free)',
+        },
+        {
+          color: 'rgb(29.41%,70.59%,100.0%)',
+          label: '20 % snow cover',
+        },
+        {
+          color: 'rgb(15.69%,35.69%,92.55%)',
+          label: '40 % snow cover',
+        },
+        {
+          color: 'rgb(14.51%,21.57%,94.9%)',
+          label: '50 % snow cover',
+        },
+        {
+          color: 'rgb(13.73%,8.24%,88.24%)',
+          label: '60 % snow cover',
+        },
+        {
+          color: 'rgb(41.57%,10.2%,85.1%)',
+          label: '80 % snow cover',
+        },
+        {
+          color: 'rgb(71.76%,4.31%,85.1%)',
+          label: '100 % snow cover (fully snow covered)',
+        },
+        {
+          color: 'rgb(14.9%,14.9%,14.9%)',
+          label: 'Polar Night',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SCE_1KM_DAILY_V1, layerId: 'SCE' }],
     description: () =>
       t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(0.0%,0.0%,43.14%)',
+          label: 'Water',
+        },
+        {
+          color: 'rgb(61.57%,61.57%,61.57%)',
+          label: 'Cloud',
+        },
+        {
+          color: 'rgb(17.25%,50.2%,17.65%)',
+          label: '0 % snow cover (snow free)',
+        },
+        {
+          color: 'rgb(29.41%,70.59%,100.0%)',
+          label: '20 % snow cover',
+        },
+        {
+          color: 'rgb(15.69%,35.69%,92.55%)',
+          label: '40 % snow cover',
+        },
+        {
+          color: 'rgb(14.51%,21.57%,94.9%)',
+          label: '50 % snow cover',
+        },
+        {
+          color: 'rgb(13.73%,8.24%,88.24%)',
+          label: '60 % snow cover',
+        },
+        {
+          color: 'rgb(41.57%,10.2%,85.1%)',
+          label: '80 % snow cover',
+        },
+        {
+          color: 'rgb(71.76%,4.31%,85.1%)',
+          label: '100 % snow cover (fully snow covered)',
+        },
+        {
+          color: 'rgb(14.9%,14.9%,14.9%)',
+          label: 'Polar Night',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_WB_300M_MONTHLY_V2, layerId: 'WB' }],
     description: () =>
       t`The main Water Bodies detection layer (WB) uses the following values: Sea (0), Water (70), No data (251), No water (255). From the Sentinel-2 L1C input reflectances, Water Bodies are detected using the Modified Normalized Difference Water Index (MNDWI), for each input tile`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(12.16%,44.31%,86.27%)',
+          label: 'Inland water',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LIE_500M_DAILY_V1, layerId: 'LIE' }],
     description: () =>
       t`The LIE variable is a classification of lake ice state, with the following classes: Ice cover (10), Open water (30), Cloud (40). Some specific flag values are used: Not interpreted / no satellite input data (50), Sea pixel (60), Land pixel (70).`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(39.22%,39.22%,39.22%)',
+          label: 'No data',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 'Ice',
+        },
+        {
+          color: 'rgb(0.0%,60.0%,100.0%)',
+          label: 'Water',
+        },
+        {
+          color: 'rgb(87.84%,87.06%,40.39%)',
+          label: 'Cloud',
+        },
+        {
+          color: 'rgb(51.76%,51.76%,48.63%)',
+          label: 'Not interpreted',
+        },
+        {
+          color: 'rgb(0.0%,40.0%,39.61%)',
+          label: 'Sea',
+        },
+        {
+          color: 'rgb(67.84%,60.0%,50.2%)',
+          label: 'Land',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LIE_250M_DAILY_V2, layerId: 'LIE' }],
     description: () =>
       t`The LIE variable is a classification of lake ice state, with the following classes: Fully snow covered ice (1), Partially snow covered or  snow free ice (2), Open water (3). Some specific flag values are also used for LIE: 0 for missing data, 4 for sea pixels, 5 for cloudy pixels, 6 for land area. LIE 250m uses thresholds on Top-of-Atmosphere (TOA) reflectances for full snow cover, partially snow covered ice/clear ice, and open water.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(39.22%,39.22%,39.22%)',
+          label: 'No data',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 'Snow-covered ice',
+        },
+        {
+          color: 'rgb(67.06%,85.1%,91.37%)',
+          label: 'Partially snow-covered or snow-free ice',
+        },
+        {
+          color: 'rgb(27.06%,45.88%,70.59%)',
+          label: 'Open water',
+        },
+        {
+          color: 'rgb(0.39%,40.0%,36.86%)',
+          label: 'Sea',
+        },
+        {
+          color: 'rgb(99.61%,87.84%,56.47%)',
+          label: 'Cloud',
+        },
+        {
+          color: 'rgb(67.84%,60.39%,55.69%)',
+          label: 'Land',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_WB_100M_MONTHLY_V1, layerId: 'WB' }],
     description: () =>
       t`The main Water Bodies detection layer (WB) uses the following values: Sea (0), Water (70), No data (251), No water (255). From the Sentinel-2 L1C input reflectances, Water Bodies are detected using the Modified Normalized Difference Water Index (MNDWI), for each input tile`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(12.16%,44.31%,86.27%)',
+          label: 'Inland water',
+        },
+      ],
+    },
   },
   {
     match: [
@@ -4986,6 +20536,69 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t`Fraction of valid LST values (used to calculate statistics) in the compositing period. In this context, a valid LST value corresponds to a clear-sky retrieval, after outlier removal.`,
+    legend: {
+      type: 'continuous',
+      title: 'FOBS',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 0.1,
+        },
+        {
+          color: 'rgb(29.8%,4.71%,41.96%)',
+          label: '',
+          position: 0.2,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 0.4,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 0.6,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 0.8,
+        },
+        {
+          color: 'rgb(98.82%,100.0%,64.31%)',
+          label: '',
+          position: 0.9,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 1,
+          position: 1,
+        },
+      ],
+      maxPosition: 1,
+      minPosition: 0,
+    },
   },
   {
     match: [
@@ -4994,6 +20607,64 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the maximum LST values retrieved during the 10-days composite period.`,
+    legend: {
+      type: 'continuous',
+      title: 'MAX',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 240,
+          position: 240,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(29.8%,4.71%,41.96%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 310,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 320,
+        },
+        {
+          color: 'rgb(98.82%,100.0%,64.31%)',
+          label: 330,
+          position: 330,
+        },
+      ],
+      maxPosition: 330,
+      minPosition: 240,
+    },
   },
   {
     match: [
@@ -5002,6 +20673,64 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the median LST values retrieved during the 10-days composite period.`,
+    legend: {
+      type: 'continuous',
+      title: 'MEDIAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 240,
+          position: 240,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(29.8%,4.71%,41.96%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 310,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 320,
+        },
+        {
+          color: 'rgb(98.82%,100.0%,64.31%)',
+          label: 330,
+          position: 330,
+        },
+      ],
+      maxPosition: 330,
+      minPosition: 240,
+    },
   },
   {
     match: [
@@ -5010,393 +20739,3970 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t`The aim of 10-day Land Surface Temperature (LST) product is to provide a complete overview of the LST daily cycle over each 10-day compositing for every image pixel. This layer represents the minimum LST values retrieved during the 10-days composite period.`,
+    legend: {
+      type: 'continuous',
+      title: 'MIN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 240,
+          position: 240,
+        },
+        {
+          color: 'rgb(10.59%,4.71%,25.49%)',
+          label: '',
+          position: 250,
+        },
+        {
+          color: 'rgb(29.8%,4.71%,41.96%)',
+          label: '',
+          position: 260,
+        },
+        {
+          color: 'rgb(47.06%,10.98%,42.75%)',
+          label: '',
+          position: 270,
+        },
+        {
+          color: 'rgb(64.71%,17.65%,37.65%)',
+          label: '',
+          position: 280,
+        },
+        {
+          color: 'rgb(80.78%,26.67%,27.45%)',
+          label: '',
+          position: 290,
+        },
+        {
+          color: 'rgb(92.94%,41.18%,14.51%)',
+          label: '',
+          position: 300,
+        },
+        {
+          color: 'rgb(98.43%,60.39%,2.75%)',
+          label: '',
+          position: 310,
+        },
+        {
+          color: 'rgb(96.86%,81.57%,23.53%)',
+          label: '',
+          position: 320,
+        },
+        {
+          color: 'rgb(98.82%,100.0%,64.31%)',
+          label: 330,
+          position: 330,
+        },
+      ],
+      maxPosition: 330,
+      minPosition: 240,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'CHLAMEAN' }],
     description: () => t`Chlorophyll-a (Chla) in mg/m³, commonly used as a proxy to phytoplankton biomass.`,
+    legend: {
+      type: 'continuous',
+      title: 'CHLAMEAN',
+      gradients: [
+        {
+          color: 'rgb(26.67%,0.39%,32.94%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(28.24%,8.24%,40.39%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(28.24%,14.9%,46.67%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(27.06%,21.57%,50.59%)',
+          label: '',
+          position: 15,
+        },
+        {
+          color: 'rgb(25.1%,27.45%,53.33%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(22.35%,33.73%,54.51%)',
+          label: '',
+          position: 25,
+        },
+        {
+          color: 'rgb(20.0%,39.22%,55.29%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(17.25%,43.92%,55.69%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(15.69%,49.02%,55.69%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(13.73%,54.12%,55.69%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(12.16%,58.82%,54.51%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(12.55%,63.92%,52.55%)',
+          label: '',
+          position: 55,
+        },
+        {
+          color: 'rgb(16.08%,68.63%,49.8%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.53%,73.33%,45.88%)',
+          label: '',
+          position: 65,
+        },
+        {
+          color: 'rgb(33.73%,77.65%,40.39%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(45.1%,81.57%,33.33%)',
+          label: '',
+          position: 75,
+        },
+        {
+          color: 'rgb(58.04%,84.71%,25.1%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(72.16%,87.06%,16.08%)',
+          label: '',
+          position: 85,
+        },
+        {
+          color: 'rgb(86.27%,89.02%,9.8%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(99.22%,90.59%,14.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'FCBPROB' }],
     description: () =>
       t`Floating Cyanobacteria probability, indicating the probability of cyanobacteria surface blooms present in the water body.`,
+    legend: {
+      type: 'continuous',
+      title: 'FCBPROB',
+      gradients: [
+        {
+          color: 'rgb(100.0%,96.08%,94.12%)',
+          label: 0.1,
+          position: 0.1,
+        },
+        {
+          color: 'rgb(98.82%,74.51%,64.71%)',
+          label: '',
+          position: 0.3,
+        },
+        {
+          color: 'rgb(98.43%,43.92%,31.37%)',
+          label: '',
+          position: 0.5,
+        },
+        {
+          color: 'rgb(82.75%,12.55%,12.55%)',
+          label: '',
+          position: 0.7,
+        },
+        {
+          color: 'rgb(40.39%,0.0%,5.1%)',
+          label: 0.9,
+          position: 0.9,
+        },
+      ],
+      maxPosition: 0.9,
+      minPosition: 0.1,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW1020' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 1020nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW1020',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW400' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 400nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW400',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW412' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW412',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW443' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW443',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW490' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW490',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW510' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW510',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW560' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW560',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW620' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW620',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW665' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW665',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW674' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 674nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW674',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW681' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW681',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW709' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW709',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW754' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW754',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW779' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW779',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW885' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW885',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'RW900' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW900',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TMEAN' }],
     description: () =>
       t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+    legend: {
+      type: 'continuous',
+      title: 'TMEAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(3.14%,2.35%,11.37%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(8.63%,5.88%,22.75%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(16.08%,6.67%,35.69%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(25.1%,5.88%,45.1%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(33.33%,7.84%,49.02%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(41.96%,10.98%,50.59%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(49.8%,14.12%,50.59%)',
+          label: '',
+          position: 13,
+        },
+        {
+          color: 'rgb(58.43%,17.25%,50.59%)',
+          label: '',
+          position: 16,
+        },
+        {
+          color: 'rgb(67.06%,20.0%,49.02%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(75.69%,23.14%,45.88%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(83.92%,26.67%,42.75%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(90.98%,32.55%,38.43%)',
+          label: '',
+          position: 32,
+        },
+        {
+          color: 'rgb(95.69%,40.78%,36.08%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(98.04%,50.59%,37.25%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(99.22%,60.39%,41.57%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(99.61%,70.2%,48.24%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(99.61%,80.0%,56.08%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,89.8%,65.1%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(98.82%,99.22%,74.9%)',
+          label: 75,
+          position: 75,
+        },
+      ],
+      maxPosition: 75,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TSI' }],
     description: () =>
       t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSI',
+      gradients: [
+        {
+          color: 'rgb(16.86%,15.29%,55.29%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,28.24%,65.88%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(20.39%,39.61%,72.94%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(21.96%,49.02%,77.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(23.92%,53.73%,85.1%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(20.0%,62.35%,90.2%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(23.53%,81.18%,77.25%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.14%,87.45%,57.65%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(27.06%,79.22%,52.16%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(23.92%,78.82%,43.92%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(11.37%,64.31%,5.49%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2, layerId: 'TSMMEAN' }],
     description: () =>
       t`Total suspended matter (TSM) in g/m³, used to quantify the concentration of suspended particles in the water body.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSMMEAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(3.14%,2.35%,11.37%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(8.63%,5.88%,22.75%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(16.08%,6.67%,35.69%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(25.1%,5.88%,45.1%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(33.33%,7.84%,49.02%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(41.96%,10.98%,50.59%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(49.8%,14.12%,50.59%)',
+          label: '',
+          position: 13,
+        },
+        {
+          color: 'rgb(58.43%,17.25%,50.59%)',
+          label: '',
+          position: 16,
+        },
+        {
+          color: 'rgb(67.06%,20.0%,49.02%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(75.69%,23.14%,45.88%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(83.92%,26.67%,42.75%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(90.98%,32.55%,38.43%)',
+          label: '',
+          position: 32,
+        },
+        {
+          color: 'rgb(95.69%,40.78%,36.08%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(98.04%,50.59%,37.25%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(99.22%,60.39%,41.57%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(99.61%,70.2%,48.24%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(99.61%,80.0%,56.08%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,89.8%,65.1%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(98.82%,99.22%,74.9%)',
+          label: 75,
+          position: 75,
+        },
+      ],
+      maxPosition: 75,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW412' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW412',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW443' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW443',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW490' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW490',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW510' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW510',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW560' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW560',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW620' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW620',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW665' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW665',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW681' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW681',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW709' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW709',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW754' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW754',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW760' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 760nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW760',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW779' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW779',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW865' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW865',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW885' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW885',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'RW900' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW900',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'TMEAN' }],
     description: () =>
       t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+    legend: {
+      type: 'continuous',
+      title: 'TMEAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(3.14%,2.35%,11.37%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(8.63%,5.88%,22.75%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(16.08%,6.67%,35.69%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(25.1%,5.88%,45.1%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(33.33%,7.84%,49.02%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(41.96%,10.98%,50.59%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(49.8%,14.12%,50.59%)',
+          label: '',
+          position: 13,
+        },
+        {
+          color: 'rgb(58.43%,17.25%,50.59%)',
+          label: '',
+          position: 16,
+        },
+        {
+          color: 'rgb(67.06%,20.0%,49.02%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(75.69%,23.14%,45.88%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(83.92%,26.67%,42.75%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(90.98%,32.55%,38.43%)',
+          label: '',
+          position: 32,
+        },
+        {
+          color: 'rgb(95.69%,40.78%,36.08%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(98.04%,50.59%,37.25%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(99.22%,60.39%,41.57%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(99.61%,70.2%,48.24%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(99.61%,80.0%,56.08%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,89.8%,65.1%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(98.82%,99.22%,74.9%)',
+          label: 75,
+          position: 75,
+        },
+      ],
+      maxPosition: 75,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1, layerId: 'TSI' }],
     description: () =>
       t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSI',
+      gradients: [
+        {
+          color: 'rgb(16.86%,15.29%,55.29%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,28.24%,65.88%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(20.39%,39.61%,72.94%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(21.96%,49.02%,77.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(23.92%,53.73%,85.1%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(20.0%,62.35%,90.2%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(23.53%,81.18%,77.25%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.14%,87.45%,57.65%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(27.06%,79.22%,52.16%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(23.92%,78.82%,43.92%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(11.37%,64.31%,5.49%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW1020' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 1020nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW1020',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW400' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 400nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW400',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW412' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 412nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW412',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW443' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 443nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW443',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW490' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 490nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW490',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW510' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 510nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW510',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW560' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 560nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW560',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW620' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 620nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW620',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW665' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 665nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW665',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW674' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 674nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW674',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW681' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 681nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW681',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW709' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 709nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW709',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW754' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 754nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW754',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW760' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 760nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW760',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW764' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 764nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW764',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW767' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 767nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW767',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW779' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 779nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW779',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW865' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW865',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW885' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 885nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW885',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW900' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 900nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW900',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'RW940' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 940nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW940',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'TMEAN' }],
     description: () =>
       t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+    legend: {
+      type: 'continuous',
+      title: 'TMEAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(3.14%,2.35%,11.37%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(8.63%,5.88%,22.75%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(16.08%,6.67%,35.69%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(25.1%,5.88%,45.1%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(33.33%,7.84%,49.02%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(41.96%,10.98%,50.59%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(49.8%,14.12%,50.59%)',
+          label: '',
+          position: 13,
+        },
+        {
+          color: 'rgb(58.43%,17.25%,50.59%)',
+          label: '',
+          position: 16,
+        },
+        {
+          color: 'rgb(67.06%,20.0%,49.02%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(75.69%,23.14%,45.88%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(83.92%,26.67%,42.75%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(90.98%,32.55%,38.43%)',
+          label: '',
+          position: 32,
+        },
+        {
+          color: 'rgb(95.69%,40.78%,36.08%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(98.04%,50.59%,37.25%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(99.22%,60.39%,41.57%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(99.61%,70.2%,48.24%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(99.61%,80.0%,56.08%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,89.8%,65.1%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(98.82%,99.22%,74.9%)',
+          label: 75,
+          position: 75,
+        },
+      ],
+      maxPosition: 75,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1, layerId: 'TSI' }],
     description: () =>
       t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSI',
+      gradients: [
+        {
+          color: 'rgb(16.86%,15.29%,55.29%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,28.24%,65.88%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(20.39%,39.61%,72.94%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(21.96%,49.02%,77.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(23.92%,53.73%,85.1%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(20.0%,62.35%,90.2%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(23.53%,81.18%,77.25%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.14%,87.45%,57.65%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(27.06%,79.22%,52.16%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(23.92%,78.82%,43.92%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(11.37%,64.31%,5.49%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW1375' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 1375, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW1375',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW1610' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 1610, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW1610',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW2190' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 2190, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW2190',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW443' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 443, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW443',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW490' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 490, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW490',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW560' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 560, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW560',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW665' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 665, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW665',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW705' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 705, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW705',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW740' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 740, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW740',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW783' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 783, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW783',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW842' }],
     description: () =>
       t`Fully normalized water-leaving reflectance at the waveband 842, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW842',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW865' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 865nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW865',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'RW945' }],
     description: () =>
       t`Fully normalized water leaving reflectances at the waveband 945nm, using most representative spectrum within the aggregation period.`,
+    legend: {
+      type: 'continuous',
+      title: 'RW945',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(0.0%,0.0%,0.0%)',
+          label: '',
+          position: 0.001,
+        },
+        {
+          color: 'rgb(25.1%,25.1%,25.1%)',
+          label: '',
+          position: 0.051,
+        },
+        {
+          color: 'rgb(50.2%,50.2%,50.2%)',
+          label: '',
+          position: 0.101,
+        },
+        {
+          color: 'rgb(74.9%,74.9%,74.9%)',
+          label: '',
+          position: 0.15,
+        },
+        {
+          color: 'rgb(100.0%,100.0%,100.0%)',
+          label: 0.2,
+          position: 0.2,
+        },
+      ],
+      maxPosition: 0.2,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'TMEAN' }],
     description: () =>
       t`Mean turbidity, which is a key indicator of water clarity, quantifying the haziness of the water and acting as an indicator of underwater light availability. Here TMEAN is derived from total suspended matter (TSM) estimates.`,
+    legend: {
+      type: 'continuous',
+      title: 'TMEAN',
+      gradients: [
+        {
+          color: 'rgb(0.0%,0.0%,1.57%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(3.14%,2.35%,11.37%)',
+          label: '',
+          position: 1,
+        },
+        {
+          color: 'rgb(8.63%,5.88%,22.75%)',
+          label: '',
+          position: 2,
+        },
+        {
+          color: 'rgb(16.08%,6.67%,35.69%)',
+          label: '',
+          position: 3,
+        },
+        {
+          color: 'rgb(25.1%,5.88%,45.1%)',
+          label: '',
+          position: 5,
+        },
+        {
+          color: 'rgb(33.33%,7.84%,49.02%)',
+          label: '',
+          position: 7,
+        },
+        {
+          color: 'rgb(41.96%,10.98%,50.59%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(49.8%,14.12%,50.59%)',
+          label: '',
+          position: 13,
+        },
+        {
+          color: 'rgb(58.43%,17.25%,50.59%)',
+          label: '',
+          position: 16,
+        },
+        {
+          color: 'rgb(67.06%,20.0%,49.02%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(75.69%,23.14%,45.88%)',
+          label: '',
+          position: 24,
+        },
+        {
+          color: 'rgb(83.92%,26.67%,42.75%)',
+          label: '',
+          position: 28,
+        },
+        {
+          color: 'rgb(90.98%,32.55%,38.43%)',
+          label: '',
+          position: 32,
+        },
+        {
+          color: 'rgb(95.69%,40.78%,36.08%)',
+          label: '',
+          position: 35,
+        },
+        {
+          color: 'rgb(98.04%,50.59%,37.25%)',
+          label: '',
+          position: 38,
+        },
+        {
+          color: 'rgb(99.22%,60.39%,41.57%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(99.61%,70.2%,48.24%)',
+          label: '',
+          position: 45,
+        },
+        {
+          color: 'rgb(99.61%,80.0%,56.08%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(99.22%,89.8%,65.1%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(98.82%,99.22%,74.9%)',
+          label: 75,
+          position: 75,
+        },
+      ],
+      maxPosition: 75,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1, layerId: 'TSI' }],
     description: () =>
       t`Trophic State Index, referring to the degree at which organic matter accumulates in the water body and is most commonly used in relation to monitoring eutrophication. Here TSI is derived from phytoplankton biomass by proxy of chlorophyll-a.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSI',
+      gradients: [
+        {
+          color: 'rgb(16.86%,15.29%,55.29%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,28.24%,65.88%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(20.39%,39.61%,72.94%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(21.96%,49.02%,77.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(23.92%,53.73%,85.1%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(20.0%,62.35%,90.2%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(23.53%,81.18%,77.25%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.14%,87.45%,57.65%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(27.06%,79.22%,52.16%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(23.92%,78.82%,43.92%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(11.37%,64.31%,5.49%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LCM_10M_YEARLY_V1, layerId: 'LCM10' }],
     description: () => t`Land Cover Map at 10m resolution with 11 different land cover classes.`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: 'rgb(0.0%,39.22%,0.0%)',
+          label: 'Tree cover',
+        },
+        {
+          color: 'rgb(100.0%,73.33%,13.33%)',
+          label: 'Shrubland',
+        },
+        {
+          color: 'rgb(100.0%,100.0%,29.8%)',
+          label: 'Grassland',
+        },
+        {
+          color: 'rgb(94.12%,58.82%,100.0%)',
+          label: 'Cropland',
+        },
+        {
+          color: 'rgb(0.0%,58.82%,62.75%)',
+          label: 'Herbaceous wetland',
+        },
+        {
+          color: 'rgb(0.0%,81.18%,45.88%)',
+          label: 'Mangroves',
+        },
+        {
+          color: 'rgb(98.04%,90.2%,62.75%)',
+          label: 'Moss and lichen',
+        },
+        {
+          color: 'rgb(70.59%,70.59%,70.59%)',
+          label: 'Bare/sparse vegetation',
+        },
+        {
+          color: 'rgb(98.04%,0.0%,0.0%)',
+          label: 'Built-up',
+        },
+        {
+          color: 'rgb(0.0%,39.22%,78.43%)',
+          label: 'Permanent water bodies',
+        },
+        {
+          color: 'rgb(94.12%,94.12%,94.12%)',
+          label: 'Snow and ice',
+        },
+        {
+          color: 'rgb(3.92%,3.92%,3.92%)',
+          label: 'Unclassifiable',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_TCD_10M_YEARLY_V1, layerId: 'TCD10' }],
     description: () => t`Tree Cover Density Map at 10m resolution.`,
+    legend: {
+      type: 'continuous',
+      title: 'TSI',
+      gradients: [
+        {
+          color: 'rgb(16.86%,15.29%,55.29%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(16.47%,28.24%,65.88%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(20.39%,39.61%,72.94%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(21.96%,49.02%,77.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(23.92%,53.73%,85.1%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(20.0%,62.35%,90.2%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(23.53%,81.18%,77.25%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(23.14%,87.45%,57.65%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(27.06%,79.22%,52.16%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(23.92%,78.82%,43.92%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(11.37%,64.31%,5.49%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LIE_500M_DAILY_V2, layerId: 'LIE' }],

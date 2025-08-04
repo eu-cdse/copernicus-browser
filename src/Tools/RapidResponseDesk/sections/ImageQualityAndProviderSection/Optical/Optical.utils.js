@@ -152,7 +152,7 @@ const opticalProvidersCollection = [
         stacConstellation: ['skysat'],
         stacPlatform: ['skysat'],
         taskingSupported: false,
-        archiveSupported: true,
+        archiveSupported: false,
         description: {
           body: 'The SkySat constellation of 21 high-resolution Earth imaging satellites collects thousands of square kilometres of imagery. Each satellite is three-axis stabilised and agile enough to slew between different targets of interest.',
           footer: '',
@@ -160,7 +160,7 @@ const opticalProvidersCollection = [
         logo: PlanetLogo,
       },
     ],
-    active: false,
+    active: true,
   },
   {
     id: 'airbus_fr',

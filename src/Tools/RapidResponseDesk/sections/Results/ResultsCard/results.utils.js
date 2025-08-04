@@ -7,6 +7,9 @@ import { getRrdCollectionId } from '../../../../../api/RRD/api.utils';
 const imageCache = new Map();
 const loadingStates = new Map();
 
+const isValidQuicklook = (href, type) =>
+  href && href !== 'null' && !type?.includes('tiff') && !type?.includes('image/tif');
+
 const findProviderLogo = (item, providers, isTasking) => {
   for (const provider of providers) {
     const selectedMission = provider.missions.find((mission) => {
@@ -27,15 +30,21 @@ const findProviderLogo = (item, providers, isTasking) => {
 const getLogoForItem = (item, imageType, isTasking) => {
   const providers =
     imageType === ProviderImageTypes.radar ? getActiveRadarProviders() : getActiveOpticalProviders();
-
   return findProviderLogo(item, providers, isTasking);
 };
 
-const fetchImageFromUrl = async (url, access_token) => {
+// TODO: Remove this function when API is updated
+const prependBaseUrl = (url) => {
+  const baseURL = import.meta.env.VITE_RRD_BASE_URL;
+  const baseUrl = `${baseURL}/sor/mw/quicklook?url=`;
+  return url.startsWith('http') ? url : `${baseUrl}${encodeURI(url)}`;
+};
+
+const fetchImageBlob = async (url, accessToken) => {
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       responseType: 'blob',
     });
@@ -46,53 +55,74 @@ const fetchImageFromUrl = async (url, access_token) => {
   }
 };
 
-const isValidQuicklook = (href, type) =>
-  href && href !== 'null' && !type?.includes('tiff') && !type?.includes('image/tif');
+export const isImageLoading = (itemId) => {
+  return loadingStates.get(itemId) || false;
+};
 
-export const fetchPreviewImage = async (item, access_token, imageType, isTasking) => {
-  if (imageCache.has(item._internalId)) {
-    return imageCache.get(item._internalId);
+export const fetchThumbnailImage = async (item, accessToken, imageType, isTasking) => {
+  const itemId = item._internalId;
+  if (imageCache.has(itemId + '_thumbnail')) {
+    return imageCache.get(itemId + '_thumbnail');
   }
 
-  if (loadingStates.get(item._internalId)) {
+  const thumbnailHref = item.assets?.thumbnail?.href;
+  if (thumbnailHref) {
+    const formatted = prependBaseUrl(thumbnailHref);
+    const blob = await fetchImageBlob(formatted, accessToken);
+    if (blob) {
+      const imageUrl = URL.createObjectURL(blob);
+      imageCache.set(itemId + '_thumbnail', imageUrl);
+      return imageUrl;
+    }
+  }
+
+  return null;
+};
+
+const fetchHDImage = async (url, accessToken) => {
+  const blob = await fetchImageBlob(url, accessToken);
+  return blob ? URL.createObjectURL(blob) : null;
+};
+
+export const fetchPreviewImage = async (item, accessToken, imageType, isTasking) => {
+  const itemId = item._internalId;
+
+  if (imageCache.has(itemId)) {
+    return imageCache.get(itemId);
+  }
+
+  if (loadingStates.get(itemId)) {
     return null;
   }
 
+  loadingStates.set(itemId, true);
+
   try {
-    loadingStates.set(item._internalId, true);
-
-    const quicklookPngHref = item.assets?.['quicklook-png']?.href;
-    const quicklookPngType = item.assets?.['quicklook-png']?.type;
-
-    if (isValidQuicklook(quicklookPngHref, quicklookPngType)) {
-      const imageBlob = await fetchImageFromUrl(quicklookPngHref, access_token);
-      if (imageBlob) {
-        const imageUrl = URL.createObjectURL(imageBlob);
-        if (imageUrl) {
-          imageCache.set(item._internalId, imageUrl);
-          return imageUrl;
-        }
+    // 1. Try quicklook-png first
+    const quicklookPng = item.assets?.['quicklook-png'];
+    if (isValidQuicklook(quicklookPng?.href, quicklookPng?.type)) {
+      const pngUrl = await fetchHDImage(quicklookPng.href, accessToken);
+      if (pngUrl) {
+        imageCache.set(itemId, pngUrl);
+        return pngUrl;
       }
     }
 
-    const quicklookHref = item.assets?.quicklook?.href;
-    const quicklookType = item.assets?.quicklook?.type;
-
-    if (isValidQuicklook(quicklookHref, quicklookType)) {
-      const imageBlob = await fetchImageFromUrl(quicklookHref, access_token);
-      if (imageBlob) {
-        const imageUrl = URL.createObjectURL(imageBlob);
-        if (imageUrl) {
-          imageCache.set(item._internalId, imageUrl);
-          return imageUrl;
-        }
+    // 2. Then try regular quicklook
+    const quicklook = item.assets?.quicklook;
+    if (isValidQuicklook(quicklook?.href, quicklook?.type)) {
+      const quicklookUrl = await fetchHDImage(quicklook.href, accessToken);
+      if (quicklookUrl) {
+        imageCache.set(itemId, quicklookUrl);
+        return quicklookUrl;
       }
     }
 
-    const logo = getLogoForItem(item, imageType, isTasking);
-    if (logo) {
-      imageCache.set(item._internalId, logo);
-      return logo;
+    // 3. Fallback to logo
+    const fallbackLogo = getLogoForItem(item, imageType, isTasking);
+    if (fallbackLogo) {
+      imageCache.set(itemId, fallbackLogo);
+      return fallbackLogo;
     }
 
     return null;
@@ -100,80 +130,6 @@ export const fetchPreviewImage = async (item, access_token, imageType, isTasking
     console.error('Error in fetchPreviewImage:', error);
     return null;
   } finally {
-    loadingStates.set(item._internalId, false);
-  }
-};
-
-export const isImageLoading = (itemId) => {
-  return loadingStates.get(itemId) || false;
-};
-
-export const getPreviewImageDetails = async (item, access_token) => {
-  if (imageCache.has(item._internalId)) {
-    return {
-      title: item.assets?.quicklook?.title || null,
-      url: imageCache.get(item._internalId),
-    };
-  }
-
-  if (loadingStates.get(item._internalId)) {
-    return null;
-  }
-
-  try {
-    loadingStates.set(item._internalId, true);
-
-    // Check for valid quicklook first
-    const quicklookHref = item.assets?.quicklook?.href;
-    const quicklookType = item.assets?.quicklook?.type;
-
-    if (isValidQuicklook(quicklookHref, quicklookType)) {
-      const imageBlob = await fetchImageFromUrl(quicklookHref, access_token);
-      if (imageBlob) {
-        const imageUrl = URL.createObjectURL(imageBlob);
-        if (imageUrl) {
-          imageCache.set(item._internalId, imageUrl);
-          return {
-            title: item.assets?.quicklook?.title || null,
-            url: imageUrl,
-          };
-        }
-      }
-    }
-
-    // Fallback to quicklook-png
-    const quicklookPngHref = item.assets?.['quicklook-png']?.href;
-    const quicklookPngType = item.assets?.['quicklook-png']?.type;
-
-    if (isValidQuicklook(quicklookPngHref, quicklookPngType)) {
-      const imageBlob = await fetchImageFromUrl(quicklookPngHref, access_token);
-      if (imageBlob) {
-        const imageUrl = URL.createObjectURL(imageBlob);
-        if (imageUrl) {
-          imageCache.set(item._internalId, imageUrl);
-          return {
-            title: item.assets?.['quicklook-png']?.title || null,
-            url: imageUrl,
-          };
-        }
-      }
-    }
-
-    // Fallback to provider logo
-    const logo = getLogoForItem(item, ProviderImageTypes.radar, false);
-    if (logo) {
-      imageCache.set(item._internalId, logo);
-      return {
-        title: null,
-        url: logo,
-      };
-    }
-
-    return null;
-  } catch (error) {
-    console.error('Error in getPreviewImageDetails:', error);
-    return null;
-  } finally {
-    loadingStates.set(item._internalId, false);
+    loadingStates.set(itemId, false);
   }
 };

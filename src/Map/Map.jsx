@@ -634,16 +634,23 @@ class Map extends React.Component {
                   pinTimeTo = moment.utc(toTime).endOf('day').toDate();
                 }
                 const index = comparedLayers.length - 1 - i;
-                const supportsOpenEo = isOpenEoSupported(visualizationUrl, layerId);
+                const areEffectsAppliedForComparedLayer = isVisualizationEffectsApplied(p);
+                const supportsOpenEoComparedLayer = isOpenEoSupported(
+                  visualizationUrl,
+                  layerId,
+                  IMAGE_FORMATS.PNG,
+                  areEffectsAppliedForComparedLayer,
+                );
 
-                if (supportsOpenEo) {
+                if (supportsOpenEoComparedLayer) {
                   return (
                     <OpenEoLayerComponent
+                      key={i}
                       processGraph={getProcessGraph(visualizationUrl, layerId)}
                       datasetId={datasetId}
                       getMapAuthToken={getGetMapAuthToken(auth)}
-                      fromTime={fromTime ? fromTime.toISOString() : null}
-                      toTime={toTime ? toTime.toISOString() : null}
+                      fromTime={pinTimeFrom}
+                      toTime={pinTimeTo}
                       progress={this.progress}
                       onTileImageError={this.onTileError}
                       onTileImageLoad={this.onTileLoad}
@@ -868,7 +875,6 @@ class Map extends React.Component {
           <QuicklookOverlay
             quicklookOverlay={this.props.quicklookOverlay}
             quicklookImages={quicklookImages}
-            internalId={this.props.quicklookOverlay?._internalId}
           />
         )}
       </LeafletMap>

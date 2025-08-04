@@ -12,7 +12,7 @@ import { t } from 'ttag';
 import L from 'leaflet';
 import proj4 from 'proj4';
 
-import { addImageOverlays, getTitle } from '../Controls/ImgDownload/ImageDownload.utils';
+import { addImageOverlays, getLayerFromParams, getTitle } from '../Controls/ImgDownload/ImageDownload.utils';
 import { TERRAIN_VIEWER_IDS, setTerrainViewerId, IS_3D_MODULE_ENABLED } from './TerrainViewer.const';
 import {
   checkIfCustom,
@@ -197,11 +197,27 @@ export async function getTerrainViewerImage({
   const addLogos = drawCopernicusLogo;
 
   let legendDefinition;
+  let legendUrl;
 
   if (showLegend) {
     const predefinedLayerMetadata = findMatchingLayerMetadata(datasetId, layerId, selectedThemeId, toTime);
     if (predefinedLayerMetadata && predefinedLayerMetadata.legend) {
       legendDefinition = predefinedLayerMetadata.legend;
+    } else {
+      try {
+        const layer = await getLayerFromParams(
+          { layerId, datasetId, visualizationUrl: dsh.getVisualizationUrl(datasetId) },
+          null,
+        );
+        if (layer) {
+          legendUrl = layer.legendUrl;
+          if (!legendDefinition && layer.legend) {
+            legendDefinition = layer.legend;
+          }
+        }
+      } catch (error) {
+        console.warn('Could not fetch layer for legend in 3D view:', error);
+      }
     }
   }
 
@@ -220,7 +236,7 @@ export async function getTerrainViewerImage({
     userDescription,
     null,
     legendDefinition,
-    null,
+    legendUrl,
     showCaptions ? dsh.getCopyrightText(datasetId) : null,
     title,
     false,

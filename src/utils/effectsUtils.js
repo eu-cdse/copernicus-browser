@@ -63,26 +63,26 @@ export function constructGetMapParamsAdvancedOptions(options) {
   } = options;
 
   const getMapParamsAdvancedOptions = {};
-  if (minQa !== undefined && minQa !== defaultEffects.minQa) {
+  if (minQa != null && minQa !== defaultEffects.minQa) {
     getMapParamsAdvancedOptions.minQa = minQa;
   }
-  if (upsampling !== undefined && upsampling !== defaultEffects.upsampling) {
+  if (upsampling != null && upsampling !== defaultEffects.upsampling) {
     getMapParamsAdvancedOptions.upsampling = upsampling;
   }
-  if (downsampling !== undefined && downsampling !== defaultEffects.downsampling) {
+  if (downsampling != null && downsampling !== defaultEffects.downsampling) {
     getMapParamsAdvancedOptions.downsampling = downsampling;
   }
-  if (orthorectification !== undefined && orthorectification !== defaultEffects.orthorectification) {
+  if (orthorectification != null && orthorectification !== defaultEffects.orthorectification) {
     getMapParamsAdvancedOptions.orthorectification = orthorectification;
   }
-  if (backscatterCoeff !== undefined && backscatterCoeff !== defaultEffects.backscatterCoeff) {
+  if (backscatterCoeff != null && backscatterCoeff !== defaultEffects.backscatterCoeff) {
     getMapParamsAdvancedOptions.backscatterCoeff = backscatterCoeff;
   }
-  if (demSource3D !== undefined && demSource3D !== defaultEffects.demSource3D) {
+  if (demSource3D != null && demSource3D !== defaultEffects.demSource3D) {
     getMapParamsAdvancedOptions.demSource3D = demSource3D;
   }
 
-  if (speckleFilter !== undefined && speckleFilter.type !== defaultEffects.speckleFilter) {
+  if (speckleFilter != null && speckleFilter.type !== defaultEffects.speckleFilter) {
     getMapParamsAdvancedOptions.speckleFilter = speckleFilter;
   }
   if (Object.keys(getMapParamsAdvancedOptions).length === 0) {
