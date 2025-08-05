@@ -34,14 +34,14 @@
             }
         ],
         "orderHint": 0,
-        "instanceId": "de6305-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-07-09T13:12:04.185768Z",
+        "instanceId": "75537a-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-08-04T15:28:45.105349Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
-            "collectionId": "fb63c0-YOUR-INSTANCEID-HERE",
+            "collectionId": "934fe7-YOUR-INSTANCEID-HERE",
             "type": "CUSTOM"
         }
     }

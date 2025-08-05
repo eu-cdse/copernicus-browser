@@ -133,6 +133,26 @@ export const COPERNICUS_CLMS_FCOVER_300M_10DAILY_BANDS = [
     name: 'FCOVER',
     getDescription: () => ``,
   },
+  {
+    name: 'LENGTH_AFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_BEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFlAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
 ];
 export const COPERNICUS_CLMS_GPP_300M_10DAILY_BANDS = [
   {

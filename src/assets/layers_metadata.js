@@ -9394,11 +9394,6 @@ uncertainties associated to the BRDF model parameters found via the inversion."`
         },
         {
           color: 'rgb(0.0%,39.22%,0.0%)',
-          label: '',
-          position: 1,
-        },
-        {
-          color: 'rgb(100.0%,100.0%,100.0%)',
           label: 1,
           position: 1,
         },

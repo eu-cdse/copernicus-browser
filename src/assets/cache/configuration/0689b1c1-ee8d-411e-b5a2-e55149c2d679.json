@@ -28,20 +28,20 @@
                             "position": 1
                         }
                     ],
-                    "maxPosition": 1.02,
+                    "maxPosition": 1,
                     "minPosition": 0
                 }
             }
         ],
         "orderHint": 0,
-        "instanceId": "305df0-YOUR-INSTANCEID-HERE",
-        "lastUpdated": "2025-07-09T13:12:00.466031Z",
+        "instanceId": "0689b1-YOUR-INSTANCEID-HERE",
+        "lastUpdated": "2025-08-04T15:28:44.297825Z",
         "collectionType": "CUSTOM",
         "datasetSourceId": 10,
         "datasourceDefaults": {
             "mosaickingOrder": "mostRecent",
             "temporal": false,
-            "collectionId": "5e7796-YOUR-INSTANCEID-HERE",
+            "collectionId": "8785d9-YOUR-INSTANCEID-HERE",
             "type": "CUSTOM"
         }
     }
