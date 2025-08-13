@@ -16,18 +16,6 @@ export function getProcessGraph(instanceUrl, layerId) {
   }
   const instanceId = instanceUrl.split('/').pop();
 
-  // temporarily disable openeo for S1,S2 mosaics until Perše fixes CRS problems
-  if (
-    [
-      '867895-YOUR-INSTANCEID-HERE',
-      '65330d-YOUR-INSTANCEID-HERE',
-      'c9e05c-YOUR-INSTANCEID-HERE',
-      'aa0b18-YOUR-INSTANCEID-HERE',
-    ].includes(instanceId)
-  ) {
-    return undefined;
-  }
-
   const files = import.meta.glob('../../assets/cache/processGraphs/*.json', { eager: true });
   const texts = files[`../../assets/cache/processGraphs/${instanceId}.json`];
   const graphs = texts?.default || {};

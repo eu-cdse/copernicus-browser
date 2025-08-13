@@ -1394,3 +1394,143 @@ export const COPERNICUS_CLMS_LIE_500M_DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4_BANDS = [
+  {
+    name: 'QFLAG001',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG005',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG010',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG015',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG020',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG040',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG060',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG100',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SSF',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI001',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI005',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI010',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI015',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI020',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI040',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI060',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI100',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_SWI_1KM_DAILY_V2_BANDS = [
+  {
+    name: 'QFLAG002',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG005',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG010',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG015',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG020',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG040',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG060',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG100',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SSF',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI002',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI005',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI010',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI015',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI020',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI040',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI060',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI100',
+    getDescription: () => ``,
+  },
+];

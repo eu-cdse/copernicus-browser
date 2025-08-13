@@ -796,6 +796,18 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/bc15f6-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'swi_global_12.5km_daily_v4_geotiff',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/cbf041-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'swi_europe_1km_daily_v2_geotiff',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3606ef-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

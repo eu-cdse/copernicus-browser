@@ -176,6 +176,7 @@ export async function fetchImage(layer, options) {
     getMapAuthToken,
     mimeType,
     isEffectsAndOptionsSelected,
+    customSelected,
   } = options;
 
   const dsh = getDataSourceHandler(datasetId);
@@ -208,7 +209,14 @@ export async function fetchImage(layer, options) {
       reqConfig,
     );
   } else {
-    if (isOpenEoSupported(layer.instanceId, layer.layerId, imageFormat, isEffectsAndOptionsSelected)) {
+    if (
+      isOpenEoSupported(
+        layer.instanceId,
+        customSelected ? 'Custom' : layer.layerId,
+        imageFormat,
+        isEffectsAndOptionsSelected,
+      )
+    ) {
       const isRawBand = options.bandName != null;
       const processGraph = getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
       const spatialExtent =
@@ -504,6 +512,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
         mimeType: mimeType,
         getMapAuthToken: getMapAuthToken,
         isEffectsAndOptionsSelected,
+        customSelected,
       };
 
       const blob = await fetchImage(layer, options).catch((err) => {

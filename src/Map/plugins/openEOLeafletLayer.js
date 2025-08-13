@@ -5,7 +5,7 @@ import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
 import { MIMETYPE_TO_OPENEO_FORMAT } from '../../api/openEO/openEOHelpers';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { BBox, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
+import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
 import { metersPerPixel } from '../../utils/coords';
 
 function findNodeByProcessId(processGraph, processId) {
@@ -48,8 +48,8 @@ class OpenEoLayer extends L.TileLayer {
     tile.height = this.options.tileSize;
     const nwPoint = coords.multiplyBy(this.options.tileSize);
     const sePoint = nwPoint.add([this.options.tileSize, this.options.tileSize]);
-    const nw = L.CRS.EPSG4326.project(this._map.unproject(nwPoint, coords.z));
-    const se = L.CRS.EPSG4326.project(this._map.unproject(sePoint, coords.z));
+    const nw = L.CRS.EPSG3857.project(this._map.unproject(nwPoint, coords.z));
+    const se = L.CRS.EPSG3857.project(this._map.unproject(sePoint, coords.z));
     const processGraph = this.options.processGraph;
     const loadCollectionNode = findNodeByProcessId(processGraph, 'load_collection');
     if (loadCollectionNode === undefined) {
@@ -61,7 +61,7 @@ class OpenEoLayer extends L.TileLayer {
       const lowResolutionMetersPerPixelThreshold = this.dsh.getLowResolutionMetersPerPixelThreshold(
         this.options.datasetId,
       );
-      const mPerPixel = metersPerPixel(new BBox(CRS_EPSG4326, nw.x, se.y, se.x, nw.y), this.options.tileSize);
+      const mPerPixel = metersPerPixel(new BBox(CRS_EPSG3857, nw.x, se.y, se.x, nw.y), this.options.tileSize);
       if (mPerPixel > lowResolutionMetersPerPixelThreshold) {
         collectionId = `byoc-${lowResolutionCollectionId}`;
       }
@@ -77,6 +77,7 @@ class OpenEoLayer extends L.TileLayer {
           north: nw.y,
           height: this.options.tileSize,
           width: this.options.tileSize,
+          crs: CRS_EPSG3857.authId,
         },
         temporal_extent: [this.options.fromTime, this.options.toTime],
       }),

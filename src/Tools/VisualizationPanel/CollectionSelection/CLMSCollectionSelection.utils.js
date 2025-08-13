@@ -95,6 +95,8 @@ import {
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
+  COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
+  COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -152,8 +154,10 @@ export const CLMS_OPTIONS = [
               // { label: 'swi-timeseries_global_12.5km_daily', id: 'swi-timeseries_global_12.5km_daily' },
               // { label: 'swi-static_global_12.5km_daily', id: 'swi-static_global_12.5km_daily' },
               { label: 'clms_europe_swi_1km_v3_daily_geotiff', id: COPERNICUS_CLMS_SWI_1KM_DAILY },
+              { label: 'swi_europe_1km_daily_v2_geotiff', id: COPERNICUS_CLMS_SWI_1KM_DAILY_V2 },
               { label: 'clms_global_swi_12.5km_v3_daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_DAILY },
               { label: 'clms_global_swi_12.5km_v3_10daily_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_10DAILY },
+              { label: 'swi_global_12.5km_daily_v4_geotiff', id: COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4 },
             ],
           },
         ],

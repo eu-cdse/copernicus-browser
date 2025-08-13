@@ -1227,6 +1227,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'swi_europe_1km_daily_v2',
+                label: 'Europe, Daily, 1km, (2025–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_europe_1km_daily_v2',
+                )})`,
+              },
+              {
                 id: 'swi_global_12.5km_daily_v3',
                 label: 'Global, Daily, 12.5km, (2007–present), V3',
                 type: 'productType',
@@ -1234,6 +1244,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'swi_global_12.5km_daily_v3',
+                )})`,
+              },
+              {
+                id: 'swi_global_12.5km_daily_v4',
+                label: 'Global, Daily, 12.5km, (2025–present), V4',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_global_12.5km_daily_v4',
                 )})`,
               },
               {

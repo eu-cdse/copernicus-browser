@@ -135,6 +135,8 @@ import {
   COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
+  COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
+  COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -234,6 +236,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'lwq-nrt_global_100m_10daily_v1': COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
   lcm_global_10m_yearly_v1: COPERNICUS_CLMS_LCM_10M_YEARLY_V1,
   tcd_pantropical_10m_yearly_v1: COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  'swi_global_12.5km_daily_v4': COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
+  swi_europe_1km_daily_v2: COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -848,6 +852,8 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
       COPERNICUS_CLMS_SWI_12_5KM_DAILY,
       COPERNICUS_CLMS_SWI_1KM_DAILY,
+      COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
+      COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
     ].includes(datasetId)
   ) {
     return {

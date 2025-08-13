@@ -256,7 +256,10 @@ export function manipulateODataSearchResultsWithAntimeridianDuplicates(prevSearc
   });
 
   // combines new array with old results
-  if (prevAllResultsFromOdataSearchResults?.length > 0) {
+  if (
+    prevAllResultsFromOdataSearchResults?.length > 0 &&
+    !arePrevResultsAlreadyInTheList(prevAllResultsFromOdataSearchResults, updatedSearchResults)
+  ) {
     updatedSearchResults.unshift(...prevAllResultsFromOdataSearchResults);
   }
 

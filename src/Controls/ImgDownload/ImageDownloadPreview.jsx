@@ -36,7 +36,6 @@ async function fetchPreviewImage(props) {
     ({ width, height } = getMapDimensions(props.pixelBounds));
   }
   const maxDimension = Math.max(width, height);
-
   // scale the dimension to the size of preview being displayed
   height = (height / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
   width = (width / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
@@ -52,6 +51,8 @@ async function fetchPreviewImage(props) {
     addMapOverlays: false,
     geometry: props.cropToAoi ? props.aoiGeometry : undefined,
     bounds: props.cropToAoi ? props.aoiBounds : props.mapBounds,
+    width,
+    height,
   };
 
   let blob;
@@ -99,12 +100,16 @@ const ImageDownloadPreview = (props) => {
     let selectedLayer = layerId;
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
       selectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
-      if (selectedLayer !== CUSTOM_TAG) {
-      }
+    } else if (props.customSelected) {
+      selectedLayer = CUSTOM_TAG;
     }
     const options = {
       ...props,
-      layerId: selectedLayer,
+      layerId: selectedLayer === CUSTOM_TAG ? null : selectedLayer,
+      // We need to change the evalscript of the selected layer depending if it is a custom layer or not.
+      // evalscript can be defined even if the custom layer is not selected in analytical
+      evalscript: selectedLayer === CUSTOM_TAG ? props.evalscript : null,
+      customSelected: selectedLayer === CUSTOM_TAG,
     };
 
     fetchPreviewImage(options)

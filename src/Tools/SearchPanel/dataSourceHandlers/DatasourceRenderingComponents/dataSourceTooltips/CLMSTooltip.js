@@ -702,6 +702,16 @@ const getClmsGlobalLie500mV2DailyMarkdown = () =>
 const ClmsGlobalLie500mV2DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsGlobalLie500mV2DailyMarkdown() });
 
+const getClmsGlobalSwi125kmV4DailyMarkdown = () =>
+  t`Provides daily updates on the moisture conditions in different soil layers. The data are available over the globe at the spatial resolution of 0.1° and with the temporal extent from July 2025 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-water-index-global-12-5km).`;
+const ClmsGlobalSwi125kmV4DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalSwi125kmV4DailyMarkdown() });
+
+const getClmsEuropeSwi1kmV2DailyMarkdown = () =>
+  t`Quantifies the moisture condition at various depths in the soil. Daily observations are available for the continental Europe in the spatial resolution of 1 km and with the temporal extent from July 2025 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-soil-water-index-europe-1km).`;
+const ClmsEuropeSwi1kmV2DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsEuropeSwi1kmV2DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -885,4 +895,8 @@ export {
   ClmsPantropicalTcd10mV1YearlyTooltip,
   getClmsGlobalLie500mV2DailyMarkdown,
   ClmsGlobalLie500mV2DailyTooltip,
+  getClmsGlobalSwi125kmV4DailyMarkdown,
+  ClmsGlobalSwi125kmV4DailyTooltip,
+  getClmsEuropeSwi1kmV2DailyMarkdown,
+  ClmsEuropeSwi1kmV2DailyTooltip,
 };
