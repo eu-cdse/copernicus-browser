@@ -6,7 +6,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B04", "B03", "B02"]
+        "bands": ["B04", "B03", "B02"],
+        "resampling": "BICUBIC"
       }
     },
     "trueColor": {
@@ -44,7 +45,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B08", "B04", "B03"]
+        "bands": ["B08", "B04", "B03"],
+        "resampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -76,7 +78,8 @@
         "bands": ["B04", "B03", "B02"],
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
-        "temporal_extent": null
+        "temporal_extent": null,
+        "resampling": "BICUBIC"
       }
     },
     "applydimension2": {
@@ -306,7 +309,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B04", "B08"]
+        "bands": ["B04", "B08"],
+        "resampling": "NEAREST"
       }
     },
     "save": {
@@ -364,7 +368,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B12", "B11", "B04"]
+        "bands": ["B12", "B11", "B04"],
+        "resampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -396,7 +401,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B8A", "B11"]
+        "bands": ["B8A", "B11"],
+        "resampling": "NEAREST"
       }
     },
     "save": {
@@ -447,7 +453,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B12", "B8A", "B04"]
+        "bands": ["B12", "B8A", "B04"],
+        "resampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -479,7 +486,8 @@
         "id": "sentinel-2-l1c",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B03", "B08"]
+        "bands": ["B03", "B08"],
+        "resampling": "NEAREST"
       }
     },
     "save": {
@@ -527,7 +535,8 @@
         "id": "SENTINEL2_L1C",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B04", "B03", "B02", "B11"]
+        "bands": ["B04", "B03", "B02", "B11"],
+        "resampling": "NEAREST"
       }
     },
     "applydimension1": {

@@ -6,7 +6,8 @@
         "id": "byoc-5460de-YOUR-INSTANCEID-HERE",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B04", "B03", "B02"]
+        "bands": ["B04", "B03", "B02"],
+        "resampling": "BICUBIC"
       }
     },
     "save": {
@@ -65,7 +66,8 @@
         "id": "byoc-5460de-YOUR-INSTANCEID-HERE",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B08", "B04", "B03"]
+        "bands": ["B08", "B04", "B03"],
+        "resampling": "BICUBIC"
       }
     },
     "save": {
@@ -119,7 +121,8 @@
         "id": "byoc-5460de-YOUR-INSTANCEID-HERE",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B04", "B08"]
+        "bands": ["B04", "B08"],
+        "resampling": "NEAREST"
       }
     },
     "save": {
@@ -184,7 +187,8 @@
           "width": 512
         },
         "temporal_extent": ["2025-01-01T00:00:00.000Z", "2025-01-01T23:59:59.999Z"],
-        "bands": ["B03", "B08"]
+        "bands": ["B03", "B08"],
+        "resampling": "NEAREST"
       }
     },
     "index": {
