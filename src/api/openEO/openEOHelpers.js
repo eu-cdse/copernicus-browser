@@ -6,7 +6,9 @@ export const MIMETYPE_TO_OPENEO_FORMAT = {
   'image/tiff': 'gtiff',
 };
 
-const PARTIAL_ROLL_OUT_CHANCE = 0.75;
+window.useOpenEO = true;
+
+const PARTIAL_ROLL_OUT_CHANCE = 1;
 
 const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_UINT8];
 
@@ -36,9 +38,15 @@ export function isOpenEoSupported(
   imageFormat = IMAGE_FORMATS.PNG,
   isVisualizationEffectsApplied = false,
 ) {
+  // enables switching between openEO and process api from developer tools
+  if (!window.useOpenEO) {
+    return false;
+  }
+
   if (randomNumber > PARTIAL_ROLL_OUT_CHANCE) {
     return false;
   }
+
   if (
     !instanceUrl ||
     !layerId ||

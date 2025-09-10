@@ -32,13 +32,13 @@ import { handleError } from './BrowseProduct/BrowseProduct.utils';
 import { AttributeNames } from '../../api/OData/assets/attributes';
 import {
   CLMS_OPTIONS,
-  DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
   flattenCLMSOptionsWithParent,
 } from '../VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
 import { getTagsFromAttributes } from '../../api/OData/OData.utils';
+import { handleCLMSConsolidationPeriod } from '../../utils/clms';
 
 export const ErrorMessage = {
   visualizationNotSupported: () => t`Visualization for this product type is not supported yet`,
@@ -166,25 +166,18 @@ const ResultItem = ({
 
   const visualize = async ({ onResultSelected, tile, currentZoom }) => {
     const datasetId = getDatasetIdFromProductType(tile?.productType, tile?.attributes);
-
     const collectionName = tile?.attributes.find((att) => att.Name === 'collectionName');
     if (collectionName?.Value === DATASOURCES.CLMS) {
       const clmsOptionsWithParent = flattenCLMSOptionsWithParent(CLMS_OPTIONS, DATASOURCES.CLMS);
-      let clmsDataset = null;
-      const consolidationPeriod = datasetId.split('_').pop();
-      if (consolidationPeriod.includes('RT')) {
-        clmsDataset = clmsOptionsWithParent.find((opt) =>
-          opt.consolidationPeriods?.map((cp) => cp.id).includes(datasetId),
-        );
-        const idx = clmsDataset?.consolidationPeriods.findIndex((cp) => cp.id === datasetId);
-        store.dispatch(
-          clmsSlice.actions.setSelectedConsolidationPeriodIndex(
-            idx > -1 ? idx : DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
-          ),
-        );
-      } else {
-        clmsDataset = clmsOptionsWithParent.find((opt) => opt.id === datasetId);
+      const { consolidationPeriodIndex, clmsDataset } = handleCLMSConsolidationPeriod(
+        datasetId,
+        clmsOptionsWithParent,
+      );
+
+      if (consolidationPeriodIndex !== undefined) {
+        store.dispatch(clmsSlice.actions.setSelectedConsolidationPeriodIndex(consolidationPeriodIndex));
       }
+
       store.dispatch(clmsSlice.actions.setSelectedPath(clmsDataset.parentPath));
       store.dispatch(clmsSlice.actions.setSelectedCollection(clmsDataset.id));
     }

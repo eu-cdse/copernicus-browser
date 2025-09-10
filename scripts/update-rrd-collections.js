@@ -18,6 +18,24 @@ const handlersFilePath = path.join(
 
 const rollingArchiveMapFilePath = path.join(__dirname, '../src/Tools/RapidResponseDesk/rollingArchiveMap.js');
 
+let token = null;
+const MAX_RETRIES = 2; // Maximum number of retry attempts
+const RETRY_DELAY_MS = 500; // Static delay in milliseconds between retries
+
+// Validate required environment variables
+const requiredEnvVars = [
+  'APP_ADMIN_AUTH_BASEURL',
+  'RRD_COLLECTION_BASE_URL',
+  'RRD_COLLECTION_CLIENT_ID',
+  'RRD_COLLECTION_CLIENT_SECRET',
+];
+requiredEnvVars.forEach((envVar) => {
+  if (!process.env[envVar]) {
+    console.error(`Missing required environment variable: ${envVar}`);
+    process.exit(1);
+  }
+});
+
 const tokenEndpointUrl = process.env.APP_ADMIN_AUTH_BASEURL;
 const apiEndpoint = process.env.RRD_COLLECTION_BASE_URL;
 const clientId = process.env.RRD_COLLECTION_CLIENT_ID;
@@ -59,12 +77,44 @@ const buildCollectionExport = (items) =>
     .map(({ cleaned }) => `${cleaned}_COLLECTION`)
     .join(',\n  ')},\n];`;
 
+const fetchCollectionsWithRetry = async (apiEndpoint, token) => {
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      // Attempt to fetch collections
+      return await fetchCollections(apiEndpoint, token);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.warn('Token expired. Fetching a new token...');
+        token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
+        continue;
+      }
+
+      if (attempt === MAX_RETRIES || !isTransientError(error)) {
+        throw error;
+      }
+
+      console.warn(`Attempt ${attempt} failed. Retrying...`);
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+    }
+  }
+};
+
+const isTransientError = (error) => {
+  return (
+    error.code === 'ETIMEDOUT' || // Network timeout
+    error.code === 'ECONNRESET' || // Connection reset
+    (error.response && error.response.status >= 500) // Server errors
+  );
+};
+
 const updateRRDConstants = async () => {
   try {
-    const token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
+    token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
     console.log('Auth token fetched successfully.');
 
-    const data = await fetchCollections(apiEndpoint, token);
+    const data = await fetchCollectionsWithRetry(apiEndpoint, token);
+    console.log('Collections fetched successfully.');
+
     const validItems = [];
     const failingItems = [];
 
@@ -106,7 +156,7 @@ const updateRRDConstants = async () => {
       console.log('Failing items:', failingItems);
     }
   } catch (error) {
-    console.error('Failed to fetch data from API. Exiting.');
+    console.error('Failed to update RRD constants:', error.message);
     process.exit(1);
   }
 };

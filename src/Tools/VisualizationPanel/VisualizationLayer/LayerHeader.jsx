@@ -3,7 +3,6 @@ import { t, gettext } from 'ttag';
 
 import { md5 } from 'js-md5';
 import previews from '../../../previews.json';
-import { PLANET_NICFI } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import CodeIcon from './code.svg?react';
 import DoubleChevronDown from '../../../icons/double-chevron-down.svg?react';
 import DoubleChevronUp from '../../../icons/double-chevron-up.svg?react';
@@ -16,9 +15,6 @@ const getIconSrc = (selectedThemeId, viz, datasetId) => {
   const urlHash = instanceId ? instanceId.substr(0, 6) : md5(url).substr(0, 8);
   let layerId = viz.layerId;
 
-  if (datasetId === PLANET_NICFI) {
-    layerId = layerId.replace(/_\d{4}-\d{2}/g, '');
-  }
   const filename = `${selectedThemeId}-${urlHash}-${layerId}.png`;
 
   if (!previews.includes(filename)) {

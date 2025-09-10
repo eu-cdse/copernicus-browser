@@ -93,7 +93,7 @@ const radarProvidersCollection = [
         },
         instruments: [
           AttributeInstrumentModesValuesRRD.Spotlight_2,
-          AttributeInstrumentModesValuesRRD.StripMap_HIMAGE,
+          AttributeInstrumentModesValuesRRD.StripMap,
           AttributeInstrumentModesValuesRRD.PingPong,
           AttributeInstrumentModesValuesRRD.ScanSAR_Wide,
           AttributeInstrumentModesValuesRRD.ScanSAR_Huge,
@@ -146,7 +146,7 @@ const radarProvidersCollection = [
         instruments: [
           AttributeInstrumentModesValuesRRD.spotlight_extended_dwell,
           AttributeInstrumentModesValuesRRD.spotlight,
-          AttributeInstrumentModesValuesRRD.stripmap,
+          AttributeInstrumentModesValuesRRD.strip,
           AttributeInstrumentModesValuesRRD.scan,
         ],
         logo: IceyeLogo,

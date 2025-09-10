@@ -18,8 +18,7 @@ import {
 
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
 import { convertToWgs84, wgs84ToMercator } from '../../junk/EOBCommon/utils/coords';
-import { DATASOURCES, TRANSITION } from '../../const';
-import planetUtils from '../../Tools/SearchPanel/dataSourceHandlers/planetNicfi.utils';
+import { TRANSITION } from '../../const';
 import { drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
 import store, { timelapseSlice } from '../../store';
 import { baseLayers } from '../../Map/Layers';
@@ -705,18 +704,6 @@ async function addOverlays(imgBlob, bbox, overlayLayers, timelapseWidth, timelap
     return imgBlob;
   }
 }
-
-// We need to get get a new layer for each flyover if the datasource is PLANET NICFI as we cant change the date per PLANET NICFI layer
-export const getFlyOverVisualization = async (visualization, flyover) => {
-  const dsh = getDataSourceHandler(visualization.datasetId);
-  const isPlanetNicfi = dsh && dsh.datasource === DATASOURCES.PLANET_NICFI;
-  return {
-    ...visualization,
-    ...(isPlanetNicfi && {
-      layer: await planetUtils.getSameLayerWithDifferentDate(visualization.layer.layerId, flyover.fromTime),
-    }),
-  };
-};
 
 export const resetNewLayersCount = ({ newLayersCount }) => {
   if (newLayersCount) {

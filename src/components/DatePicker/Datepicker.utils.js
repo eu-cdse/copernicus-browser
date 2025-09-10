@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { DEFAULT_CLOUD_COVER_PERCENT } from '../../const';
 
+export const YYYY_MM_REGEX = /\d{4}-\d{2}/g;
+
 export const isNextMonthAvailable = (maxDate, selectedDay) => {
   if (!selectedDay) {
     return false;

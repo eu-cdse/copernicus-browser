@@ -23,27 +23,22 @@ const API_PROVIDER = {
   GOOGLE: 'GOOGLE_API',
 };
 
-const listenForOutsideClicks = (listening, setListening, menuRef, setShowResults) => {
-  return () => {
-    if (listening) {
+function listenForOutsideClicks(menuRef, setShowResults) {
+  const handleClick = (evt) => {
+    if (menuRef.current?.contains(evt.target)) {
       return;
     }
-
-    if (!menuRef.current) {
-      return;
-    }
-
-    setListening(true);
-    [`click`, `touchstart`].forEach((type) => {
-      document.addEventListener(`click`, (evt) => {
-        if (menuRef.current?.contains(evt.target)) {
-          return;
-        }
-        setShowResults(false);
-      });
-    });
+    setShowResults(false);
   };
-};
+
+  document.addEventListener('click', handleClick);
+  document.addEventListener('touchstart', handleClick);
+
+  return () => {
+    document.removeEventListener('click', handleClick);
+    document.removeEventListener('touchstart', handleClick);
+  };
+}
 
 const getProviderOptions = () => [
   { provider: API_PROVIDER.GISCO, getLabel: () => t`Gisco search` },
@@ -74,7 +69,6 @@ const LocationSearchBoxControlled = (props) => {
     resultsShown: numberResultsShown,
   } = props;
 
-  const [listening, setListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [locationResults, setLocationResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
@@ -82,10 +76,12 @@ const LocationSearchBoxControlled = (props) => {
   const [googleAutocompleteService, setGoogleAutocompleteService] = useState(undefined);
   const [googleGeocoder, setGoogleGeocoder] = useState(undefined);
 
-  useEffect(
-    () => listenForOutsideClicks(listening, setListening, menuRef, setShowResults),
-    [listening, setListening, menuRef, setShowResults],
-  );
+  useEffect(() => {
+    if (!menuRef.current) {
+      return;
+    }
+    return listenForOutsideClicks(menuRef, setShowResults);
+  }, [menuRef]);
 
   const updateApiProvider = () => {
     const newApiProvider = giscoAPI ? API_PROVIDER.GISCO : googleAPI ? API_PROVIDER.GOOGLE : null;
@@ -98,15 +94,29 @@ const LocationSearchBoxControlled = (props) => {
     setGoogleGeocoder(new googleAPI.maps.Geocoder());
   };
 
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const onInputChange = async (val) => {
     setIsLoading(true);
 
     onValueChange(val);
     if (val.length === 0) {
-      setLocationResults([]);
+      if (isMounted.current) {
+        setLocationResults([]);
+      }
     }
 
     if (val.length < minChar) {
+      if (isMounted.current) {
+        setIsLoading(false);
+      }
       return;
     }
 
@@ -119,8 +129,10 @@ const LocationSearchBoxControlled = (props) => {
       locationResults = await fetchLocationsGoogle(val, googleAutocompleteService);
     }
 
-    setLocationResults(locationResults);
-    setIsLoading(false);
+    if (isMounted.current) {
+      setLocationResults(locationResults);
+      setIsLoading(false);
+    }
   };
 
   const onSelectHandle = (selected) => {
@@ -140,6 +152,9 @@ const LocationSearchBoxControlled = (props) => {
       onSelect(selectedItem);
     } else if (apiProvider === API_PROVIDER.GOOGLE) {
       googleGeocoder.geocode({ placeId: selectedItem.placeId }, (results, status) => {
+        if (!isMounted.current) {
+          return;
+        }
         if (status !== googleAPI.maps.GeocoderStatus.OK) {
           console.error(`Geocoder failed converting placeId to lat/lng, status: ${status}`);
           return;

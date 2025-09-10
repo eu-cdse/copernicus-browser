@@ -108,6 +108,7 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
+  COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -191,12 +192,6 @@ export const credits = {
     {
       title: 'NASA',
       link: 'https://earthdata.nasa.gov/about/science-system-description/eosdis-components/global-imagery-browse-services-gibs',
-    },
-  ],
-  [DATASOURCES.PLANET_NICFI]: [
-    {
-      title: 'Planet NICFI',
-      link: 'https://www.planet.com/nicfi/',
     },
   ],
   [DATASOURCES.COPERNICUS]: [{ ...copernicus, link: 'https://www.copernicus.eu/en/copernicus-services' }],
@@ -844,6 +839,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

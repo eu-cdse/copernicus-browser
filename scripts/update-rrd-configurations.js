@@ -21,6 +21,9 @@ const clientSecret = process.env.RRD_COLLECTION_CLIENT_SECRET;
 
 const rrdThemesFilePath = path.join(__dirname, '../src/assets/cache/rrdThemes.js');
 
+const RETRY_COUNT = 2;
+const RETRY_DELAY = 500;
+
 async function fetchInstances(client) {
   try {
     const response = await client.get('https://sh.dataspace.copernicus.eu/api/v2/configuration/instances');
@@ -63,6 +66,12 @@ function createRrdThemesFile(items) {
   fs.writeFileSync(rrdThemesFilePath, themes_content + '\n');
 }
 
+async function getCapabilitiesWithRetry(httpClient, instanceId) {
+  for (let attempt = 1; attempt <= RETRY_COUNT; attempt++) {
+    return await getCapabilities(httpClient, instanceId);
+  }
+}
+
 async function updateRrdConfigurations() {
   if (RRD_THEMES !== undefined && RRD_THEMES[0].content !== undefined) {
     const oldInstances = RRD_THEMES[0].content.map((theme) =>
@@ -71,30 +80,52 @@ async function updateRrdConfigurations() {
     removeExisting(oldInstances);
   }
 
-  const token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
-  const httpClient = await createHttpClient(token);
+  let token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
+  let httpClient = await createHttpClient(token);
   const instances = await fetchInstances(httpClient);
   const instanceIds = instances.map((instance) => instance.id);
 
   createRrdThemesFile(instances);
 
+  let successfulInstances = 0;
+  console.log(`Saving capabilities and configuration layers for ${instanceIds.length} instances...`);
   for (let instanceId of instanceIds) {
     printOut('Instance', instanceId);
-    try {
-      //save response from configuration/layers endpoint
-      const configurationLayers = await getConfigurationLayers(httpClient, instanceId);
-      save(cacheType.configuration, instanceId, configurationLayers);
-    } catch (err) {
-      console.error('Saving response for configuration endpoint', instanceId, err);
-    }
-    try {
-      //save response from getCapabilities
-      const capabilities = await getCapabilities(httpClient, instanceId);
-      save(cacheType.capabilities, instanceId, capabilities);
-    } catch (err) {
-      console.error('Saving response for getCapabilities ', instanceId, err);
+
+    let success = false;
+    let attempt = 0;
+
+    while (!success && attempt < RETRY_COUNT) {
+      attempt++;
+      try {
+        const configurationLayers = await getConfigurationLayers(httpClient, instanceId);
+        save(cacheType.configuration, instanceId, configurationLayers);
+
+        const capabilities = await getCapabilitiesWithRetry(httpClient, instanceId);
+        save(cacheType.capabilities, instanceId, capabilities);
+
+        success = true;
+        successfulInstances++;
+      } catch (err) {
+        console.error(`Error processing instance ${instanceId} on attempt ${attempt}:`, err.message);
+        if (err.response && err.response.status === 401) {
+          console.log('Token expired. Fetching a new token...');
+          token = await getAuthToken(tokenEndpointUrl, clientId, clientSecret);
+          httpClient = await createHttpClient(token);
+          continue;
+        }
+
+        console.log(`Attempt ${attempt} failed for instance ${instanceId}. Retrying...`, err.message);
+        if (attempt === RETRY_COUNT) {
+          console.log(`Failed to process instance ${instanceId} after ${RETRY_COUNT} attempts.`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+      }
     }
   }
+  console.log(
+    `Summary: Successfully processed ${successfulInstances} out of ${instanceIds.length} instances.`,
+  );
 }
 
 updateRrdConfigurations()
@@ -102,8 +133,10 @@ updateRrdConfigurations()
     console.log('Done.');
   })
   .catch((ex) => {
-    console.error(ex);
+    console.log('An error occurred:', ex);
+    process.exit(1);
   })
   .finally(() => {
+    console.log('Script execution completed.');
     process.exit(0);
   });

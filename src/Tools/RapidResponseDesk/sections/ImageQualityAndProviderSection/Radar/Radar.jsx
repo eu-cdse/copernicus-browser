@@ -75,7 +75,13 @@ const Radar = ({
         collection.missions.flatMap((mission) => mission.instruments),
       );
 
-      return [...new Set(instruments.map(JSON.stringify))].map(JSON.parse);
+      return [...new Set(instruments.map(JSON.stringify))].map((instrument) => {
+        const parsedInstrument = JSON.parse(instrument);
+        return {
+          ...parsedInstrument,
+          value: `${parsedInstrument.value}+${parsedInstrument.label}`,
+        };
+      });
     }
     return getUniqueInstruments(radarProvidersCollection);
   }, [radarProvidersCollection]);

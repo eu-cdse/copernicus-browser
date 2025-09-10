@@ -808,6 +808,12 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/3606ef-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'swi_global_12.5km_10daily_v4_geotiff',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/e5d980-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

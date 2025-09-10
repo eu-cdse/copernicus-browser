@@ -42,7 +42,7 @@ const FindProductsButton = ({
         if (temporalResolution != null) {
           const possibleFromTime = fromTime
             .clone()
-            .subtract(temporalResolution.unit, temporalResolution.amount)
+            .subtract(temporalResolution.amount, temporalResolution.unit)
             .toISOString();
 
           const minDate = moment.min([possibleFromTime, toTime]);
@@ -56,12 +56,12 @@ const FindProductsButton = ({
 
     const dsh = getDataSourceHandler(datasetId);
     const { minDate } = dsh.getMinMaxDates(datasetId);
-    let newFromTime = moment.utc().subtract(1, 'months').startOf('day');
+    let newFromTime = moment.utc().subtract(1, 'months');
     if (minDate && newFromTime.isBefore(minDate)) {
       newFromTime = minDate.clone();
     }
 
-    return { fromTime: newFromTime, toTime: moment.utc().endOf('day') };
+    return { fromTime: newFromTime.startOf('day'), toTime: moment.utc().endOf('day') };
   }
 
   useEffect(() => {

@@ -29,7 +29,6 @@ import {
   determineDefaultImageSize,
   determineDefaultImageSize3D,
   generateTimelapseWithFFMPEG,
-  getFlyOverVisualization,
   DEFAULT_IMAGE_DIMENSION,
   isImageClearEnough,
   isImageCoverageEnough,
@@ -281,7 +280,7 @@ class Timelapse extends Component {
         ...(await Promise.all(
           layerFlyoversToFetch.map(async (flyover) => ({
             ...flyover,
-            visualization: await getFlyOverVisualization(visualization, flyover),
+            visualization: visualization,
             visualizationIndex: index,
           })),
         )),

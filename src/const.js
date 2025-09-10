@@ -190,7 +190,6 @@ export const DATASOURCES = {
   DEM_CDAS: 'DEM CDAS',
   COPERNICUS_HRSI: 'Copernicus Snow & Ice',
   COPERNICUS_HRVPP: 'Copernicus Vegetation',
-  PLANET_NICFI: 'Planet NICFI',
   CUSTOM: 'CUSTOM',
   OTHER: 'OTHER',
   MOSAIC: 'MOSAIC',

@@ -113,11 +113,19 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
-          AttributePlatformSerialIdentifierValues.S1A,
-          AttributePlatformSerialIdentifierValues.S1B,
-          AttributePlatformSerialIdentifierValues.S1C,
-        ],
+        getOptions: ({ userToken }) =>
+          hasRole(userToken, EXPERT_ROLES.S1C_COMMISSIONING)
+            ? [
+                AttributePlatformSerialIdentifierValues.S1A,
+                AttributePlatformSerialIdentifierValues.S1B,
+                AttributePlatformSerialIdentifierValues.S1C,
+                AttributePlatformSerialIdentifierValues.S1D,
+              ]
+            : [
+                AttributePlatformSerialIdentifierValues.S1A,
+                AttributePlatformSerialIdentifierValues.S1B,
+                AttributePlatformSerialIdentifierValues.S1C,
+              ],
       },
       {
         id: AttributeNames.orbitDirection,
@@ -1267,6 +1275,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'swi_global_12.5km_10daily_v4',
+                label: 'Global, 10-daily, 12.5km, (2025–present), V4',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi_global_12.5km_10daily_v4',
+                )})`,
+              },
+              {
                 id: 'swi-static_global_12.5km_daily_v3',
                 label: 'Static Layers, Global, Daily, 12.5km, V3',
                 type: 'productType',
@@ -1276,6 +1294,7 @@ export const recursiveCollectionCLMS = [
                   'swi-static_global_12.5km_daily_v3',
                 )})`,
               },
+
               {
                 id: 'swi-timeseries_global_12.5km_daily_v3',
                 label: 'Time Series, Global, Daily, 12.5km, (2007–present), V3',

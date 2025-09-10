@@ -712,6 +712,11 @@ const getClmsEuropeSwi1kmV2DailyMarkdown = () =>
 const ClmsEuropeSwi1kmV2DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsEuropeSwi1kmV2DailyMarkdown() });
 
+const getClmsGlobalSwi125km10V4DailyMarkdown = () =>
+  t`Averages the daily Soil Water Index product over 10 days. The data are produced every 10 days over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/10-daily-soil-water-index-global-v3-0-12-5-km).`;
+const ClmsGlobalSwi125km10V4DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalSwi125km10V4DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -899,4 +904,6 @@ export {
   ClmsGlobalSwi125kmV4DailyTooltip,
   getClmsEuropeSwi1kmV2DailyMarkdown,
   ClmsEuropeSwi1kmV2DailyTooltip,
+  ClmsGlobalSwi125km10V4DailyTooltip,
+  getClmsGlobalSwi125km10V4DailyMarkdown,
 };

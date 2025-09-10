@@ -1,3 +1,4 @@
+import { t } from 'ttag';
 import { DATASOURCES } from '../../../const';
 import {
   S1_MONTHLY_MOSAIC_DH,
@@ -11,6 +12,7 @@ import {
   getSentinel1IWMosaic,
   getSentinel1DHMosaic,
 } from './DatasourceRenderingComponents/dataSourceTooltips/S1MosaicsTooltip';
+import { S1_DH_MONTHLY_MOSAIC_BANDS, S1_IW_MONTHLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [S1_MONTHLY_MOSAIC_DH]: {
@@ -54,6 +56,12 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
       max: 25,
     },
   };
+
+  getDatasetSearchLabels = () => ({
+    [S1_MONTHLY_MOSAIC_DH]: t`Sentinel-1 DH Monthly Mosaics`,
+    [S1_MONTHLY_MOSAIC_IW]: t`Sentinel-1 IW Monthly Mosaics`,
+  });
+
   supportsLowResolutionAlternativeCollection = (collectionId) => {
     return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];
   };
@@ -76,6 +84,18 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
         return getSentinel1IWMosaic();
       default:
         return null;
+    }
+  };
+
+  getBands = (datasetId) => {
+    const collectionId = this.getCollectionByDatasetId(datasetId);
+    switch (collectionId) {
+      case S1_MONTHLY_MOSAIC_DH:
+        return S1_DH_MONTHLY_MOSAIC_BANDS;
+      case S1_MONTHLY_MOSAIC_IW:
+        return S1_IW_MONTHLY_MOSAIC_BANDS;
+      default:
+        return [];
     }
   };
 }

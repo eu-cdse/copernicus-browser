@@ -156,6 +156,7 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
+  COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -24638,67 +24639,53 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_TCD_10M_YEARLY_V1, layerId: 'TCD10' }],
     description: () => t`Tree Cover Density Map at 10m resolution.`,
     legend: {
-      type: 'continuous',
-      title: 'TSI',
-      gradients: [
+      type: 'discrete',
+      items: [
         {
-          color: 'rgb(16.86%,15.29%,55.29%)',
-          label: 0,
-          position: 0,
+          color: 'rgb(94.12%,94.12%,94.12%)',
+          label: '>= 0% & < =10%',
         },
         {
-          color: 'rgb(16.47%,28.24%,65.88%)',
-          label: '',
-          position: 10,
+          color: 'rgb(99.22%,100.0%,45.1%)',
+          label: '> 10% & <= 20%',
         },
         {
-          color: 'rgb(20.39%,39.61%,72.94%)',
-          label: '',
-          position: 20,
+          color: 'rgb(71.76%,100.0%,45.1%)',
+          label: '> 20% & <= 30%',
         },
         {
-          color: 'rgb(21.96%,49.02%,77.65%)',
-          label: '',
-          position: 30,
+          color: 'rgb(58.04%,98.04%,36.08%)',
+          label: '> 30% & <= 40%',
         },
         {
-          color: 'rgb(23.92%,53.73%,85.1%)',
-          label: '',
-          position: 40,
+          color: 'rgb(44.31%,94.12%,18.04%)',
+          label: '> 40% & <= 50%',
         },
         {
-          color: 'rgb(20.0%,62.35%,90.2%)',
-          label: '',
-          position: 50,
+          color: 'rgb(29.8%,90.2%,0.0%)',
+          label: '> 50% & <= 60%',
         },
         {
-          color: 'rgb(23.53%,81.18%,77.25%)',
-          label: '',
-          position: 60,
+          color: 'rgb(25.88%,78.04%,14.12%)',
+          label: '> 60% & <= 70%',
         },
         {
-          color: 'rgb(23.14%,87.45%,57.65%)',
-          label: '',
-          position: 70,
+          color: 'rgb(25.49%,67.06%,24.31%)',
+          label: '> 70% & <= 80%',
         },
         {
-          color: 'rgb(27.06%,79.22%,52.16%)',
-          label: '',
-          position: 80,
+          color: 'rgb(23.92%,56.86%,26.27%)',
+          label: '> 80% & <= 90%',
         },
         {
-          color: 'rgb(23.92%,78.82%,43.92%)',
-          label: '',
-          position: 90,
+          color: 'rgb(16.86%,45.88%,20.0%)',
+          label: '> 90% & <= 100%',
         },
         {
-          color: 'rgb(11.37%,64.31%,5.49%)',
-          label: 100,
-          position: 100,
+          color: 'rgb(3.92%,3.92%,3.92%)',
+          label: 'Unclassifiable',
         },
       ],
-      maxPosition: 100,
-      minPosition: 0,
     },
   },
   {
@@ -25815,6 +25802,542 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY_V2, layerId: 'SWI100' }],
     description: () =>
       t`SWI computed with a characteristic time length of 100 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the H SAF H28 SSM product as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien. `,
+    legend: {
+      type: 'continuous',
+      title: 'SWI100',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI001' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI001',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI005' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI005',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI010' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI010',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI015' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI015',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI020' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI020',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI040' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI040',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI060' }],
+    description: () => t`Soil Water Index at different time lengths.`,
+    legend: {
+      type: 'continuous',
+      title: 'SWI060',
+      gradients: [
+        {
+          color: 'rgb(58.04%,31.37%,9.02%)',
+          label: 0,
+          position: 0,
+        },
+        {
+          color: 'rgb(67.45%,46.27%,18.43%)',
+          label: '',
+          position: 10,
+        },
+        {
+          color: 'rgb(76.86%,61.18%,27.84%)',
+          label: '',
+          position: 20,
+        },
+        {
+          color: 'rgb(86.27%,76.08%,37.65%)',
+          label: '',
+          position: 30,
+        },
+        {
+          color: 'rgb(96.08%,91.37%,47.45%)',
+          label: '',
+          position: 40,
+        },
+        {
+          color: 'rgb(71.76%,81.96%,67.84%)',
+          label: '',
+          position: 50,
+        },
+        {
+          color: 'rgb(47.45%,72.55%,88.24%)',
+          label: '',
+          position: 60,
+        },
+        {
+          color: 'rgb(38.04%,59.61%,79.61%)',
+          label: '',
+          position: 70,
+        },
+        {
+          color: 'rgb(29.02%,47.06%,71.37%)',
+          label: '',
+          position: 80,
+        },
+        {
+          color: 'rgb(19.61%,34.12%,62.75%)',
+          label: '',
+          position: 90,
+        },
+        {
+          color: 'rgb(10.59%,21.57%,54.51%)',
+          label: 100,
+          position: 100,
+        },
+      ],
+      maxPosition: 100,
+      minPosition: 0,
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI100' }],
+    description: () => t`Soil Water Index at different time lengths.`,
     legend: {
       type: 'continuous',
       title: 'SWI100',

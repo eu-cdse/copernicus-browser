@@ -119,7 +119,10 @@ export class RRDQueryBuilder {
       }
 
       const instrumentArray = this.latestProviderSectionStoreState.radarInstrumentFilterArray.map(
-        (instrument) => instrument.value,
+        (instrument) => {
+          // Clean the value by removing the extra string if it exists
+          return instrument.value.includes('+') ? instrument.value.split('+')[0] : instrument.value;
+        },
       );
 
       // instrument filters

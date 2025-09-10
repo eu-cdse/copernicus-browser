@@ -26,7 +26,6 @@ import BYOCDataSourceHandler from './BYOCDataSourceHandler';
 import DEMDataSourceHandler from './DEMDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
 
-import PlanetBasemapDataSourceHandler from './PlanetBasemapDataSourceHandler';
 import OthersDataSourceHandler from './OthersDataSourceHandler';
 
 import { getCollectionInformation } from '../../../utils/collections';
@@ -87,7 +86,6 @@ import {
   PROBAV_S5,
   PROBAV_S10,
   CUSTOM,
-  PLANET_NICFI,
   AWS_HLS_LANDSAT,
   AWS_HLS_SENTINEL,
   S1_CDAS_IW_VVVH,
@@ -227,6 +225,7 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
+  COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
 } from './dataSourceConstants';
 
 import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
@@ -282,7 +281,6 @@ export function initializeDataSourceHandlers() {
     new ProbaVDataSourceHandler(),
     new GibsDataSourceHandler(),
     new BYOCDataSourceHandler(),
-    new PlanetBasemapDataSourceHandler(),
     new OthersDataSourceHandler(),
     new AirbusDeDataSourceHandler(),
     new EUSIDataSourceHandler(),
@@ -323,6 +321,22 @@ export function getAllAvailableCollections() {
     .flat();
 }
 
+function getDataSourceHandlerAndDatasetIdFromCollectionId(collectionId) {
+  for (let dsh of dataSourceHandlers) {
+    const knownCollections = dsh.KNOWN_COLLECTIONS;
+    if (dsh.KNOWN_COLLECTIONS) {
+      const datasetId = Object.keys(knownCollections).find(
+        (c) => knownCollections[c] && knownCollections[c].indexOf(collectionId) > -1,
+      );
+      if (datasetId && dsh) {
+        return { datasetId, dsh };
+      }
+    }
+  }
+
+  return { datasetId: null, dsh: null };
+}
+
 /*
 BYOCLayer is an exception where lazy loading of service parameters is not sufficent. If we want to generate search form without
 hardcoding collectionIds or without assuming there will always be only one different collection per instance, we need to have
@@ -351,16 +365,28 @@ async function updateLayersFromServiceIfNeeded(layers) {
         });
         if (l instanceof BYOCLayer) {
           let availableBands = [];
+
           try {
-            availableBands = await l.getAvailableBands({
-              timeout: 30000,
-              cache: {
-                expiresIn: Number.POSITIVE_INFINITY,
-                targets: [CacheTarget.MEMORY],
-              },
-            });
+            const { datasetId, dsh } = getDataSourceHandlerAndDatasetIdFromCollectionId(l.collectionId);
+            availableBands = dsh.getBands(datasetId);
           } catch (err) {
-            console.error(err);
+            console.warn(
+              `Could not find predefined bands for layer ${l.layerId} in instance ${l.instanceId}, fetching from dashboard...`,
+            );
+          }
+
+          if (availableBands.length === 0) {
+            try {
+              availableBands = await l.getAvailableBands({
+                timeout: 30000,
+                cache: {
+                  expiresIn: Number.POSITIVE_INFINITY,
+                  targets: [CacheTarget.MEMORY],
+                },
+              });
+            } catch (err) {
+              console.error(err);
+            }
           }
           l.availableBands = availableBands;
         }
@@ -430,7 +456,13 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
 
 // try to get collection name from datasource handler for known collections (Copernicus&friends)
 const checkKnownCollections = (collectionId) => {
-  const datasourceHandlers = [new OthersDataSourceHandler()];
+  const datasourceHandlers = [
+    new OthersDataSourceHandler(),
+    new CLMSDataSourceHandler(),
+    new CCMDataSourceHandler(),
+    new MosaicDataSourceHandler(),
+    new S1MosaicDataSourceHandler(),
+  ];
 
   let collectionTitle;
 
@@ -516,7 +548,10 @@ export async function prepareDataSourceHandlers(theme) {
   const failedS2QuarterlyMosaicParts = await prepareThemeDataSourceHandlers(
     S2QuarterlyCloudlessMosaicsBaseLayerTheme,
   );
-  console.error(`Could not retrieve data for base layer: ${failedS2QuarterlyMosaicParts.toString()}`);
+
+  if (failedS2QuarterlyMosaicParts.length > 0) {
+    console.error(`Could not retrieve data for base layer: ${failedS2QuarterlyMosaicParts.toString()}`);
+  }
 
   const failedThemeParts = await prepareThemeDataSourceHandlers(theme);
   store.dispatch(themesSlice.actions.setDataSourcesInitialized(true));
@@ -626,8 +661,6 @@ export function datasourceForDatasetId(datasetId) {
     case DEM_COPERNICUS_30_CDAS:
     case DEM_COPERNICUS_90_CDAS:
       return DATASOURCES.DEM_CDAS;
-    case PLANET_NICFI:
-      return DATASOURCES.PLANET_NICFI;
     case CNES_LAND_COVER:
     case ESA_WORLD_COVER:
     case COPERNICUS_GLOBAL_SURFACE_WATER:
@@ -737,6 +770,7 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_LIE_500M_DAILY_V2:
     case COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4:
     case COPERNICUS_CLMS_SWI_1KM_DAILY_V2:
+    case COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4:
       return DATASOURCES.CLMS;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
@@ -859,7 +893,6 @@ export const datasetLabels = {
   [COPERNICUS_WATER_BODIES]: 'Water Bodies',
   [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
   [GLOBAL_HUMAN_SETTLEMENT]: 'Global Human Settlement',
-  [PLANET_NICFI]: 'Planet NICFI Basemaps',
   [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics V2',
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
@@ -963,6 +996,7 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: t`LIE 500m Daily V2`,
   [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: t`SWI Global 12.5km Daily V4`,
   [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: t`SWI Europe 1km Daily V2`,
+  [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: t`SWI Global 12.5km 10-daily V4`,
 };
 
 export function getDatasetLabel(datasetId) {

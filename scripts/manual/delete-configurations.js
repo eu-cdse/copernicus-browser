@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const dotenv = require('dotenv');
-const { getAuthToken } = require('./utils/auth');
+const { getAuthToken } = require('../utils/auth');
 dotenv.config();
 
 // Determine the environment (training or production) based on the command-line argument
@@ -17,7 +17,7 @@ const RRD_CLIENT_SECRET = isTraining
   ? process.env.RRD_TRAINING_CLIENT_SECRET
   : process.env.RRD_PRODUCTION_CLIENT_SECRET;
 
-const insertedConfigurationsFile = path.join(__dirname, './rrd/configurations-to-delete.json');
+const insertedConfigurationsFile = path.join(__dirname, '../rrd/configurations-to-delete.json');
 
 /**
  * Script: delete-configurations.js

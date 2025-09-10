@@ -1,6 +1,6 @@
 import React from 'react';
-import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
+import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 
 import DataSourceHandler from './DataSourceHandler';
 import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
@@ -19,6 +19,7 @@ import {
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
 } from './dataSourceConstants';
 import moment from 'moment';
+import { S2_ANNUAL_MOSAIC_BANDS, S2_QUARTERLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
 
 const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
 
@@ -70,6 +71,11 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
       max: 25,
     },
   };
+
+  getDatasetSearchLabels = () => ({
+    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: t`Sentinel-2 Quarterly Mosaics`,
+    [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: t`WorldCover Annual Cloudless Mosaics V2`,
+  });
 
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     name = isFunction(name) ? name() : name;
@@ -254,7 +260,15 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   };
 
   getBands = (datasetId) => {
-    return this.collections[datasetId].availableBands;
+    const collectionId = this.getCollectionByDatasetId(datasetId);
+    switch (collectionId) {
+      case COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC:
+        return S2_ANNUAL_MOSAIC_BANDS;
+      case COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC:
+        return S2_QUARTERLY_MOSAIC_BANDS;
+      default:
+        return [];
+    }
   };
 
   generateEvalscript = (bands, dataSetId, config) => {

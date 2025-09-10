@@ -33,7 +33,6 @@ export const AttributeInstrumentModesValuesRRD = {
   SAR_WS_S: { value: 'SAR_WS_S', label: 'Wide ScanSAR' },
   SAR_HS_D_150: { value: 'SAR_HS_D_150', label: 'High Resolution Dual Polarization Spotlight' },
   Spotlight_2: { value: 'Spotlight-2', label: 'Spotlight-2' },
-  StripMap_HIMAGE: { value: 'StripMap', label: 'StripMap HIMAGE' },
   PingPong: { value: 'PingPong', label: 'PingPong' },
   ScanSAR_Wide: { value: 'ScanSAR Wide', label: 'ScanSAR Wide' },
   ScanSAR_Huge: { value: 'ScanSAR Huge', label: 'ScanSAR Huge' },
@@ -51,6 +50,6 @@ export const AttributeInstrumentModesValuesRRD = {
   Multi_Look_Fine: { value: 'Multi-Look Fine', label: 'Multi-Look Fine' },
   spotlight_extended_dwell: { value: 'SPOTLIGHT_EXTENDED_DWELL', label: 'Dwell' },
   spotlight: { value: 'SPOTLIGHT', label: 'Spot' },
-  stripmap: { value: 'STRIPMAP', label: 'Strip' },
+  strip: { value: 'STRIPMAP', label: 'Strip' },
   scan: { value: 'SCAN', label: 'Scan' },
 };

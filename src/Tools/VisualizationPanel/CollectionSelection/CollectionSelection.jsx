@@ -27,8 +27,6 @@ import CheckmarkSvg from './checkmark.svg?react';
 import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
 import { CustomOption } from '../../../components/CustomOption/CustomOption';
 
-// import checkmarkSvg from './checkmark.svg';
-
 import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
@@ -131,7 +129,6 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
       if (isUserCopernicusServicesUser) {
         return true;
       }
-
       if (opt.value === DATASOURCES.CCM || opt.parentDataset === DATASOURCES.CCM) {
         return false;
       }
@@ -170,6 +167,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
           datasource: parentDataset,
           dataset: value,
         });
+        store.dispatch(clmsSlice.actions.setSelectedCollection(value));
       }
     }
 
@@ -326,61 +324,6 @@ const CollectionSelection = ({
     const selectedCollectionGroup = collectionGroups.find(
       (d) => d.datasource === selectedCollection.datasource,
     );
-    // const collectionsPerGroup = Object.fromEntries(
-    //   collectionGroups.map((g) => [
-    //     g.title,
-    //     g.collections.map((c) => ({ label: c.title, value: c.dataset })),
-    //   ]),
-    // );
-    // const options = [
-    //   ...collectionGroups
-    //     .map((g) =>
-    //       [{ label: g.title, value: g.datasource, type: 'datasource' }].concat(
-    //         g.collections.map((c) => ({
-    //           label: c.title,
-    //           value: c.dataset,
-    //           type: 'dataset',
-    //           parentDataset: g.datasource,
-    //         })),
-    //       ),
-    //     )
-    //     .flat(),
-    // ];
-
-    // const filterOption = (option, string) => {
-    //   if (string.length < 3 && option.data.type === 'dataset') {
-    //     return false;
-    //   }
-    //   string = string.toLowerCase();
-    //   if (option.label.toLowerCase().includes(string) || option.value.toLowerCase().includes(string)) {
-    //     return true;
-    //   }
-    //   if (option.data.type === 'datasource') {
-    //     for (let dataset of collectionsPerGroup[option.label]) {
-    //       if (dataset.label.toLowerCase().includes(string) || dataset.value.toLowerCase().includes(string)) {
-    //         return true;
-    //       }
-    //     }
-    //   }
-    //   return false;
-    // };
-
-    // function setValue({ label, value, type, parentDataset }) {
-    //   if (type === 'datasource') {
-    //     onSelect({
-    //       datasource: value,
-    //       dataset: collectionGroups.find((d) => d.datasource === value).preselectedDataset,
-    //     });
-    //   }
-    //   if (type === 'dataset') {
-    //     onSelect({
-    //       datasource: parentDataset,
-    //       dataset: value,
-    //     });
-    //   }
-    // }
-
-    // const value = options.find((o) => o.value === selectedCollection.datasource);
 
     let temporaryLabel;
     if (selectedCollectionGroup) {
@@ -413,20 +356,6 @@ const CollectionSelection = ({
         <div className="collection-search-header">
           <div className="sensors-satellites-selection">
             {temporaryLabel && temporaryLabel.title}
-            {/* <Select
-              value={value}
-              getValue={() => selectedCollection.datasource}
-              options={options}
-              placeholder={'No collection selected'}
-              onChange={setValue}
-              styles={customSelectStyle}
-              menuPosition="fixed"
-              menuShouldBlockScroll={true}
-              className="collection-select-dropdown"
-              classNamePrefix="collection-select"
-              filterOption={filterOption}
-              components={{ DropdownIndicator: CustomDropdownIndicator }}
-            ></Select> */}
             {selectedCollectionGroup?.getDescription && (
               <CollectionTooltip
                 source={getSelectionDescription()}

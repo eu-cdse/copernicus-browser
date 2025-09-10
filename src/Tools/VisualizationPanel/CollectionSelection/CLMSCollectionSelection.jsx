@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -10,26 +10,61 @@ import CheckmarkSvg from './checkmark.svg?react';
 import './CLMSCollectionSelection.scss';
 import { connect } from 'react-redux';
 import store, { clmsSlice } from '../../../store';
-import { CLMS_OPTIONS, DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX } from './CLMSCollectionSelection.utils';
+import {
+  CLMS_OPTIONS,
+  DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
+  flattenCLMSOptionsWithParent,
+} from './CLMSCollectionSelection.utils';
+import { DATASOURCES } from '../../../const';
+import { handleCLMSConsolidationPeriod } from '../../../utils/clms';
 
-function* walk(xs, path = []) {
-  for (let x of xs) {
-    const newPath = path.concat(x);
-    yield newPath;
-    yield* walk(x.options || [], newPath);
-  }
-}
+const findNodePath = (menus, targetId) => {
+  const findPath = (items, path = []) => {
+    for (const item of items) {
+      const currentPath = [...path, item];
 
-const ancestry = (pred) => (obj) => {
-  for (let nodes of walk(obj)) {
-    if (pred(nodes.at(-1))) {
-      return nodes;
+      if (item.id === targetId) {
+        return currentPath;
+      }
+
+      if (item.options?.length > 0) {
+        const result = findPath(item.options, currentPath);
+        if (result.length > 0) {
+          return result;
+        }
+      }
     }
-  }
-  return [];
+    return [];
+  };
+
+  return findPath(menus);
 };
 
-const findAncestryById = (targetId) => ancestry(({ id }) => id === targetId);
+const updatePathAndCollection = (targetId, menus, parentDataset) => {
+  const ancestry = findNodePath(menus, targetId);
+
+  if (ancestry.length > 1) {
+    const parent = ancestry.at(-2); // Get the parent node
+    store.dispatch(clmsSlice.actions.setSelectedPath(parent.id));
+  } else {
+    store.dispatch(clmsSlice.actions.setSelectedPath(parentDataset));
+  }
+
+  if (targetId && parentDataset === DATASOURCES.CLMS) {
+    const clmsOptionsWithParent = flattenCLMSOptionsWithParent(CLMS_OPTIONS, DATASOURCES.CLMS);
+    const { baseDatasetId, consolidationPeriodIndex } = handleCLMSConsolidationPeriod(
+      targetId,
+      clmsOptionsWithParent,
+    );
+
+    store.dispatch(clmsSlice.actions.setSelectedCollection(baseDatasetId));
+    if (consolidationPeriodIndex !== undefined) {
+      store.dispatch(clmsSlice.actions.setSelectedConsolidationPeriodIndex(consolidationPeriodIndex));
+    }
+  } else {
+    store.dispatch(clmsSlice.actions.setSelectedCollection(targetId));
+  }
+};
 
 function Breadcrumbs({
   datasource,
@@ -44,7 +79,7 @@ function Breadcrumbs({
     store.dispatch(clmsSlice.actions.setSelectedCollection(null));
   };
 
-  const ancestors = findAncestryById(selectedPath)(menus);
+  const ancestors = findNodePath(menus, selectedPath);
   const parent = ancestors.at(-1);
   const selectedNodeOptions = selectedPath === null ? menus : parent ? parent.options ?? [] : [];
 
@@ -166,6 +201,13 @@ function CLMSCollectionSelection({
   selectedCollection,
   selectedConsolidationPeriodIndex,
 }) {
+  useEffect(() => {
+    if (datasource) {
+      const menus = [{ label: datasource, id: datasource, options: CLMS_OPTIONS }];
+      updatePathAndCollection(selectedCollection, menus, datasource);
+    }
+  }, [selectedCollection, datasource]);
+
   return (
     <Breadcrumbs
       menus={[{ label: datasource, id: datasource, options: CLMS_OPTIONS }]}

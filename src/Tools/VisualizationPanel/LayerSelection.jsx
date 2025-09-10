@@ -7,14 +7,12 @@ import CustomVisualizationLayer from './VisualizationLayer/CustomVisualizationLa
 import Loader from '../../Loader/Loader';
 import { CUSTOM_VISUALIZATION_URL_ROUTES } from '../../junk/EOBAdvancedHolder/EOBAdvancedHolder';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { YYYY_MM_REGEX } from '../SearchPanel/dataSourceHandlers/PlanetBasemapDataSourceHandler';
-import { PLANET_NICFI } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { sortLayers } from './VisualizationPanel.utils';
 import store, { visualizationSlice } from '../../store';
 import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
 import { usePrevious } from '../../hooks/usePrevious';
 
-import { reqConfigMemoryCache, DATASOURCES } from '../../const';
+import { reqConfigMemoryCache } from '../../const';
 
 function LayerSelection({
   selectedLayerId,
@@ -45,7 +43,6 @@ function LayerSelection({
   const [evalscriptUrl, setEvalscriptUrl] = useState(visualizedEvalscriptUrl);
   const [useEvalscriptUrl, setUseEvalscriptUrl] = useState(!!visualizedEvalscriptUrl);
   const [dataFusion, setDataFusion] = useState(visualizedDataFusion);
-  const previousSelectedLayerId = usePrevious(selectedLayerId);
   const previousDatasetId = usePrevious(datasetId);
 
   const datasourceHandler = getDataSourceHandler(datasetId);
@@ -58,40 +55,8 @@ function LayerSelection({
   }, [dataSourcesInitialized, datasetId, visualizationUrl]);
 
   useEffect(() => {
-    // Layers and dates work differently for Planet NICFI than other datasets
-    // We do not change the date on a layer, as a layer only has one date(sensing timeTange) for the mosaic
-    // If the selected date changes, we need to get all layers that has data for that date
-    if (dataSourcesInitialized && datasetId && datasetId === PLANET_NICFI) {
-      getAllLayers();
-    }
-    // eslint-disable-next-line
-  }, [toTime]);
-
-  useEffect(() => {
     if (layers.length > 0 && !customSelected) {
-      if (
-        datasourceHandler &&
-        datasourceHandler.datasource === DATASOURCES.PLANET_NICFI &&
-        previousSelectedLayerId &&
-        selectedLayerId
-      ) {
-        // If NDVI layer is currently selected and date changes, we will get a new list of layers
-        // Find the NDVI from the new list and select this layer as the selected layer
-        const selectedLayerDateArr = previousSelectedLayerId.match(YYYY_MM_REGEX);
-        const newSelectedLayer = layers.find((l) => {
-          const currentLayerDateArr = l.layerId.match(YYYY_MM_REGEX);
-          return (
-            l.layerId.replace(currentLayerDateArr.join('_'), '_DATE_') ===
-            previousSelectedLayerId.replace(selectedLayerDateArr.join('_'), '_DATE_')
-          );
-        });
-        store.dispatch(
-          visualizationSlice.actions.setVisualizationParams({
-            layerId: newSelectedLayer.layerId,
-            visibleOnMap: true,
-          }),
-        );
-      } else if (!selectedLayerId || !layers.find((l) => l.layerId === selectedLayerId)) {
+      if (!selectedLayerId || !layers.find((l) => l.layerId === selectedLayerId)) {
         const newLayerId = layers[0].layerId;
         store.dispatch(
           visualizationSlice.actions.setVisualizationParams({

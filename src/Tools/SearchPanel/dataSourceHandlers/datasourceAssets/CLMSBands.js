@@ -1534,3 +1534,38 @@ export const COPERNICUS_CLMS_SWI_1KM_DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+
+export const COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4_BANDS = [
+  {
+    name: 'SWI001',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI005',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI010',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI015',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI020',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI040',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI060',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SWI100',
+    getDescription: () => ``,
+  },
+];
