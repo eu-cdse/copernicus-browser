@@ -37,6 +37,7 @@ import {
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   S2_L2A_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { saveToLocalStorage } from '../utils/localStorage.utils';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -98,7 +99,7 @@ class URLParamsParser extends React.Component {
     const { shouldDisplayTutorial } = params;
 
     if (shouldDisplayTutorial === 'true') {
-      window.localStorage.setItem(SHOW_TUTORIAL_LC, true);
+      saveToLocalStorage(SHOW_TUTORIAL_LC, true);
     }
   };
 

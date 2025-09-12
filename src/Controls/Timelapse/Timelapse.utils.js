@@ -19,9 +19,9 @@ import {
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
 import { convertToWgs84, wgs84ToMercator } from '../../junk/EOBCommon/utils/coords';
 import { TRANSITION } from '../../const';
-import { drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
+import { CRS_EPSG3857, drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
 import store, { timelapseSlice } from '../../store';
-import { baseLayers } from '../../Map/Layers';
+import { getDefaultBaseLayer } from '../../Map/Layers';
 
 export const DEFAULT_IMAGE_DIMENSION = 512;
 
@@ -158,12 +158,15 @@ export async function fetchTimelapseImage(params) {
     params;
 
   const apiType = await getAppropriateApiType(layer, imageFormat);
+  const defaultBaseLayer = getDefaultBaseLayer();
   const options = {
     ...layer,
     ...params,
+    aoiGeometry: params?.aoi?.geometry,
+    selectedCrs: CRS_EPSG3857.authId,
     bounds,
     apiType,
-    baseLayerUrl: baseLayers.find((layer) => layer.id === 'osm-background')?.url,
+    baseLayerUrl: defaultBaseLayer?.url,
   };
 
   let { blob } = await fetchImageFromParams(options).catch((err) => {

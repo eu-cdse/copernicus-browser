@@ -264,6 +264,16 @@ import {
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
+const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
+  [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: {
+    lowResolutionCollectionId: 'e74fe5ba-1886-4732-a8eb-f8f05b021432',
+    lowResolutionMetersPerPixelThreshold: 2300,
+  },
+  [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: {
+    lowResolutionCollectionId: '69c5ec78-34a6-46fb-ae6c-96f8ee2613fc',
+    lowResolutionMetersPerPixelThreshold: 2800,
+  },
+};
 export default class CLMSDataSourceHandler extends DataSourceHandler {
   getDatasetSearchLabels = () => ({
     [COPERNICUS_CLMS_BURNT_AREA_DAILY]: t`BA 300m Daily V3`,
@@ -712,8 +722,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: { min: 2, max: 25 },
-    [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: { min: 7, max: 25 },
-    [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: { min: 6, max: 25 },
+    [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: { min: 2, max: 25 },
@@ -813,8 +823,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: ['bc5c3c52-d88d-4756-9793-524dce1cd6a4'],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: ['71b198f7-eec7-45aa-bcb9-87a28b5c4e73'],
     [COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1]: ['8894d46b-a451-4abf-838e-292b4bcacae1'],
-    [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: ['828f6b20-8ffd-48f8-a1da-fefd271456db'],
-    [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: ['8bd33a42-dce4-4554-9a1f-1bb248b4183d'],
+    [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: [COPERNICUS_CLMS_LCM_10M_YEARLY_V1],
+    [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: [COPERNICUS_CLMS_TCD_10M_YEARLY_V1],
     [COPERNICUS_CLMS_LIE_500M_DAILY_V2]: ['1a9d1719-03f8-47d6-911b-bc683d1268bd'],
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: ['59c08cd0-762b-4b8a-9eaa-0d55d054a732'],
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: ['4bd995a1-dc49-4176-a285-b1d0084ba51a'],
@@ -2179,6 +2189,18 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     }
 
     return this.defaultEvalscript(bands, 1 / 1000);
+  };
+
+  supportsLowResolutionAlternativeCollection = (collectionId) => {
+    return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];
+  };
+
+  getLowResolutionCollectionId = (collectionId) => {
+    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionCollectionId;
+  };
+
+  getLowResolutionMetersPerPixelThreshold = (collectionId) => {
+    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
   };
 
   defaultEvalscript = (bands, factor) => {

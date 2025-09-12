@@ -7,6 +7,7 @@ import { TUTORIAL_STEPS, TUTORIAL_STEPS_MOBILE } from './TutorialContent';
 
 import './Tutorial.scss';
 import { SHOW_TUTORIAL_LC } from '../const';
+import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage.utils';
 
 const Tutorial = ({ selectedLanguage }) => {
   const [steps, setSteps] = useState([]);
@@ -14,7 +15,7 @@ const Tutorial = ({ selectedLanguage }) => {
   const [shouldRun, setShouldRun] = useState(null);
 
   useEffect(() => {
-    const showTutorialVal = window.localStorage.getItem(SHOW_TUTORIAL_LC);
+    const showTutorialVal = getFromLocalStorage(SHOW_TUTORIAL_LC);
     const shouldShowTutorial = showTutorialVal ? showTutorialVal === 'true' : true;
     if (shouldShowTutorial) {
       setShouldRun(true);
@@ -48,14 +49,10 @@ const Tutorial = ({ selectedLanguage }) => {
     } else if (action === ACTIONS.CLOSE && type === EVENTS.STEP_AFTER) {
       setStepIndex(0);
       setShouldRun(false);
+      saveToLocalStorage(SHOW_TUTORIAL_LC, false);
     } else if (action === ACTIONS.SKIP && type === EVENTS.TOUR_END) {
       setShouldRun(false);
-    }
-
-    if (action === ACTIONS.CLOSE && type === EVENTS.STEP_AFTER) {
-      window.localStorage.setItem(SHOW_TUTORIAL_LC, false);
-    } else if (action === ACTIONS.SKIP && type === EVENTS.TOUR_END) {
-      window.localStorage.setItem(SHOW_TUTORIAL_LC, true);
+      saveToLocalStorage(SHOW_TUTORIAL_LC, true);
     }
   };
 

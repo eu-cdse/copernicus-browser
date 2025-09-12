@@ -4,12 +4,14 @@ import {
   getTokenExpiration,
   saveAnonTokenToLocalStorage,
   scheduleAction,
-  UPDATE_BEFORE_EXPIRY_ANON_TOKEN,
-  MAX_NUM_ANON_TOKEN_REQUESTS,
   fetchAnonTokenUsingService,
   removeItemFromLocalStorage,
-  LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY,
 } from '../authHelpers';
+import {
+  LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY,
+  MAX_NUM_ANON_TOKEN_REQUESTS,
+  UPDATE_BEFORE_EXPIRY_ANON_TOKEN,
+} from '../../const';
 
 let anonTokenRefreshTimeout = null;
 let anonTokenRequestsCounter = 0;

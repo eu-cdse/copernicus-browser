@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { usePrevious } from '../hooks/usePrevious';
-import { refreshUserToken, scheduleTokenRefresh, UPDATE_BEFORE_EXPIRY_USER_TOKEN } from './authHelpers';
+import { refreshUserToken, scheduleTokenRefresh } from './authHelpers';
+import { UPDATE_BEFORE_EXPIRY_USER_TOKEN } from '../const';
 
 let refreshTimeout = null;
 

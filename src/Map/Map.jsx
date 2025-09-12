@@ -26,14 +26,14 @@ import 'leaflet/dist/leaflet.css';
 import './Map.scss';
 import L from 'leaflet';
 import moment from 'moment';
-import { TABS } from '../const';
+import { SELECTED_BASE_LAYER_KEY, TABS } from '../const';
 import Controls from '../Controls/Controls';
 import PreviewLayer from '../Tools/Results/PreviewLayer';
 import LeafletControls from './LeafletControls/LeafletControls';
 import SentinelHubLayerComponent from './plugins/sentinelhubLeafletLayer';
 import OpenEoLayerComponent from './plugins/openEOLeafletLayer';
 import GlTileLayer from './plugins/GlTileLayer';
-import { baseLayers, overlayTileLayers, LAYER_ACCESS } from './Layers';
+import { baseLayers, overlayTileLayers, getDefaultBaseLayer } from './Layers';
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
 import {
   getDatasetLabel,
@@ -71,6 +71,8 @@ import { getProcessGraph, isOpenEoSupported } from '../api/openEO/openEOHelpers'
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
 import { processRRDResults } from '../hooks/useRRDProcessResults';
 import QuicklookOverlay from '../Map/plugins/QuicklookOverlay';
+import { saveToLocalStorage } from '../utils/localStorage.utils';
+
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
 
 const BASE_PANE_ID = 'baseMapPane';
@@ -376,26 +378,22 @@ class Map extends React.Component {
     const S2QMosaicTransparent = (showSingleShLayer && visibleOnMap) || showCompareShLayers;
     const S2QMosaicReady = authenticated && dataSourcesInitialized && latestS2QMosaicDate && S2QMosaicZoom;
 
-    let shownBaseLayers =
-      this.state.accountInfo.payingAccount && googleAPI
-        ? baseLayers
-        : baseLayers.filter((baseLayer) => baseLayer.access === LAYER_ACCESS.PUBLIC);
+    const shownBaseLayers = baseLayers.map((baseLayer) => {
+      const isS2Mosaic = baseLayer.id === S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].id;
+      const name =
+        S2QMosaicReady && isS2Mosaic
+          ? `${baseLayer.name} (${getQuarterlyInfo(latestS2QMosaicDate)})`
+          : baseLayer.name;
+      return {
+        ...baseLayer,
+        name: name,
+        checked: baseLayer.id === baseLayerId,
+      };
+    });
 
-    if (S2QMosaicReady) {
-      shownBaseLayers = shownBaseLayers.map((baseLayer) => {
-        if (baseLayer.id === S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].name) {
-          return {
-            ...baseLayer,
-            name: `${baseLayer.name} (${getQuarterlyInfo(latestS2QMosaicDate)})`,
-          };
-        }
-        return baseLayer;
-      });
-    }
+    const osmLayer = getDefaultBaseLayer();
 
-    const osmLayer = baseLayers.find((bl) => bl.id === 'osm-background');
-
-    const isBaseMapMaptiler = baseLayers
+    const isBaseMapMaptiler = shownBaseLayers
       .find((baseLayer) => baseLayer.id === baseLayerId)
       ?.attribution?.includes('maptiler');
 
@@ -432,11 +430,12 @@ class Map extends React.Component {
           }
         }}
         onBaseLayerChange={(ev) => {
-          store.dispatch(
-            mainMapSlice.actions.setBaseLayerId(
-              baseLayers.find((baseLayer) => baseLayer.name === ev.name)?.id,
-            ),
-          );
+          const selectedBaseLayerId = shownBaseLayers.find((baseLayer) => baseLayer.name === ev.name)?.id;
+
+          if (selectedBaseLayerId) {
+            store.dispatch(mainMapSlice.actions.setBaseLayerId(selectedBaseLayerId));
+            saveToLocalStorage(SELECTED_BASE_LAYER_KEY, selectedBaseLayerId);
+          }
         }}
       >
         <Pane name={BASE_PANE_ID} style={{ zIndex: BASE_PANE_ZINDEX }} />
@@ -445,7 +444,7 @@ class Map extends React.Component {
         <LayersControl
           // force rerender of layers-control to reset the selected layer if google maps was selected and user logs out.
           // also force rerender when S2QMosaic name changes to reorder the layers
-          key={shownBaseLayers.map(({ name }) => name).join('')}
+          key={`${shownBaseLayers.map(({ id }) => id).join('|')}-${S2QMosaicReady}`}
           position="topright"
           sortLayers={true}
           sortFunction={(a, b) => {
@@ -459,7 +458,7 @@ class Map extends React.Component {
           }}
         >
           {shownBaseLayers.map((baseLayer) => (
-            <BaseLayer checked={baseLayer.checked} name={baseLayer.name} key={baseLayer.name}>
+            <BaseLayer checked={baseLayer.checked} name={baseLayer.name} key={baseLayer.id}>
               {baseLayer.urlType === 'BYOC' ? (
                 <LayerGroup>
                   <TileLayer url={osmLayer.url} attribution={osmLayer.attribution} pane={BASE_PANE_ID} />

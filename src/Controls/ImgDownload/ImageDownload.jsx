@@ -61,7 +61,7 @@ import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 import './ImageDownload.scss';
 import { DATASOURCES, MAX_SH_IMAGE_SIZE } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
-import { baseLayers } from '../../Map/Layers';
+import { getDefaultBaseLayer } from '../../Map/Layers';
 
 function checkZoomLevel(datasetId, zoom) {
   const dsh = getDataSourceHandler(datasetId);
@@ -298,7 +298,7 @@ function ImageDownload(props) {
       addMapOverlays || showOSMBackgroundLayer ? CRS_EPSG3857.authId : CRS_EPSG4326.authId;
 
     try {
-      const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
+      const defaultBaseLayer = getDefaultBaseLayer();
       blob = await fetchImageFromParams(
         {
           ...props,
@@ -596,7 +596,7 @@ function ImageDownload(props) {
 
     let image;
     try {
-      const defaultBaseLayer = baseLayers.find((layer) => layer.id === 'osm-background');
+      const defaultBaseLayer = getDefaultBaseLayer();
       image = await fetchImageFromParams(
         {
           ...props,

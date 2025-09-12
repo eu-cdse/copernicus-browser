@@ -305,5 +305,16 @@ export const SH_PAYING_ACCOUNT_TYPES = [
   SH_ACCOUNT_TYPE.ENTERPRISE_L,
 ];
 
+export const UPDATE_BEFORE_EXPIRY_USER_TOKEN = 3 * 60 * 1000; //minutes*seconds*miliseconds
+export const UPDATE_BEFORE_EXPIRY_ANON_TOKEN = 10 * 1000; //seconds*miliseconds
+export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
+
 export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
 export const ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY = 'cdsebrowser_search_config';
+export const SHOW_ZOOM_IN_ACTION_ANIMATION = 'eobrowser_show_zoom_in_action_animation';
+export const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
+export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
+export const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
+export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
+export const OSM_BACKGROUND_NAME = 'osm-background';
+export const SELECTED_BASE_LAYER_KEY = 'selectedBaseLayerId';

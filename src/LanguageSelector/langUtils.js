@@ -3,6 +3,7 @@ import moment from 'moment';
 import axios from 'axios';
 import store, { languageSlice } from '../store';
 import { DEFAULT_LANG, LOCAL_STORAGE_KEY, SUPPORTED_LANGUAGES } from './const';
+import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage.utils';
 
 export const changeLanguage = async (locale) => {
   await setTtagLocale(locale);
@@ -14,7 +15,7 @@ export const changeLanguage = async (locale) => {
 };
 
 export const getLanguage = () => {
-  const storedLang = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const storedLang = getFromLocalStorage(LOCAL_STORAGE_KEY);
   if (!storedLang || !SUPPORTED_LANGUAGES.find((l) => l.langCode === storedLang)) {
     saveLang(DEFAULT_LANG);
     return DEFAULT_LANG;
@@ -24,7 +25,7 @@ export const getLanguage = () => {
 };
 
 const saveLang = (locale) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, locale);
+  saveToLocalStorage(LOCAL_STORAGE_KEY, locale);
 };
 
 const setTtagLocale = async (locale) => {

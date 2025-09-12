@@ -37,6 +37,7 @@ fi
 
 
 echo "Upload from local to target"
-lftp -e "mirror -R --delete-first --transfer-all --upload-older $temp_local_path $target_path ; exit" -u $CDAS_OTC_FTP_USERNAME,$CDAS_OTC_FTP_PASSWORD $CDAS_OTC_FTP_HOST
+lftp -e "set mirror:parallel-transfer-count 4; mirror -R --delete --overwrite $temp_local_path $target_path ; exit" -u $CDAS_OTC_FTP_USERNAME,$CDAS_OTC_FTP_PASSWORD $CDAS_OTC_FTP_HOST
 
 rm -rf "$temp_local_path"
+echo "Deployment completed"

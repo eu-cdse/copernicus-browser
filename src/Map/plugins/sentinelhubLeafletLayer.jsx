@@ -1048,7 +1048,7 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_SWI_1KM_DAILY_V2:
       case COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4: {
         const dsh = getDataSourceHandler(datasetId);
-        return await this.createBYOCLayer(
+        const layer = await this.createBYOCLayer(
           url,
           dsh.KNOWN_COLLECTIONS[datasetId],
           evalscript,
@@ -1058,6 +1058,13 @@ class SentinelHubLayer extends L.TileLayer {
           downsampling,
           mosaickingOrder,
         );
+        if (dsh?.supportsLowResolutionAlternativeCollection(layer.collectionId)) {
+          layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(layer.collectionId);
+          layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
+            layer.collectionId,
+          );
+        }
+        return layer;
       }
       case S1_MONTHLY_MOSAIC_IW:
       case S1_MONTHLY_MOSAIC_DH:

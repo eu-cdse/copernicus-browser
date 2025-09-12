@@ -19,7 +19,7 @@ import {
   RRD_INSTANCES_THEMES_LIST,
 } from './const';
 import { DEMInstanceType } from '@sentinel-hub/sentinelhub-js';
-import { baseLayers } from './Map/Layers';
+import { getInitialBaseLayerId } from './Map/Layers';
 import { isValidMosaickingOrder } from './utils/mosaickingOrder.utils';
 import {
   getResultsSectionFilterDefaultValue,
@@ -106,13 +106,15 @@ export const poiSlice = createSlice({
   },
 });
 
+const initialBaseLayerId = getInitialBaseLayerId();
+
 export const mainMapSlice = createSlice({
   name: 'mainMap',
   initialState: {
     lat: DEFAULT_LAT_LNG.lat,
     lng: DEFAULT_LAT_LNG.lng,
     zoom: DEFAULT_ZOOM,
-    baseLayerId: baseLayers.find((baseLayer) => baseLayer.checked).id,
+    baseLayerId: initialBaseLayerId,
     enabledOverlaysId: ['labels'],
     is3D: false,
     loadingMessage: null,

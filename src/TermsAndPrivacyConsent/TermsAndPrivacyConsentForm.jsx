@@ -8,6 +8,7 @@ import { LOCAL_STORAGE_PRIVACY_CONSENT_KEY } from '../const';
 
 import './TermsAndPrivacyConsentForm.scss';
 import useLoginLogout from '../Auth/loginLogout/useLoginLogout';
+import { saveToLocalStorage } from '../utils/localStorage.utils';
 
 export default function TermsAndPrivacyConsentForm() {
   const [hasRejected, setHasRejected] = useState(false);
@@ -15,7 +16,7 @@ export default function TermsAndPrivacyConsentForm() {
 
   function onSelect(selection) {
     if (selection) {
-      localStorage.setItem(LOCAL_STORAGE_PRIVACY_CONSENT_KEY, true);
+      saveToLocalStorage(LOCAL_STORAGE_PRIVACY_CONSENT_KEY, true);
       store.dispatch(authSlice.actions.setTermsPrivacyAccepted(true));
       store.dispatch(modalSlice.actions.removeModal());
     } else {

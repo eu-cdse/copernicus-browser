@@ -3,6 +3,7 @@ import { t } from 'ttag';
 const FALLBACK_SH_SERVICES_URL = 'https://sh.dataspace.copernicus.eu';
 
 export const S2QuarterlyCloudlessMosaicsInstance = {
+  id: 'S2-QUARTERLY-CLOUDLESS-MOSAICS',
   name: 'S2 Quarterly Cloudless Mosaics',
   service: 'WMS',
   url: `${
@@ -16,8 +17,8 @@ export const S2QuarterlyCloudlessMosaicsBaseLayerTheme = {
   content: [
     {
       ...S2QuarterlyCloudlessMosaicsInstance,
-      name: `${S2QuarterlyCloudlessMosaicsInstance.name} Base Layer`,
-      label: 'Sentinel-2 Mosaic',
+      id: `${S2QuarterlyCloudlessMosaicsInstance.name} Base Layer`,
+      name: 'Sentinel-2 Mosaic',
       baseLayer: true,
     },
   ],

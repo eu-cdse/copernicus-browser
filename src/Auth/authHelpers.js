@@ -3,13 +3,12 @@ import store, { authSlice, notificationSlice } from '../store';
 import axios from 'axios';
 import Keycloak from 'keycloak-js';
 import { t } from 'ttag';
-
-export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
-
-export const UPDATE_BEFORE_EXPIRY_USER_TOKEN = 3 * 60 * 1000; //minutes*seconds*miliseconds
-export const UPDATE_BEFORE_EXPIRY_ANON_TOKEN = 10 * 1000; //seconds*miliseconds
-export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
-export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
+import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../utils/localStorage.utils';
+import {
+  LOCAL_STORAGE_ANON_AUTH_KEY,
+  LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY,
+  UPDATE_BEFORE_EXPIRY_USER_TOKEN,
+} from '../const';
 
 const keycloakInstance = new Keycloak({
   url: window.API_ENDPOINT_CONFIG.AUTH_BASEURL + '/auth',
@@ -99,8 +98,8 @@ export const scheduleTokenRefresh = (expires_at, updateBeforeExpiry, refreshTime
   return refreshTimeout;
 };
 
-const getTokenFromLocalStorage = async (key) => {
-  const token = await localStorage.getItem(key);
+const getTokenFromLocalStorage = (key) => {
+  const token = getFromLocalStorage(key);
   let parsedToken;
   try {
     parsedToken = JSON.parse(token);
@@ -116,17 +115,17 @@ const getTokenFromLocalStorage = async (key) => {
 export const getAnonTokenFromLocalStorage = () => getTokenFromLocalStorage(LOCAL_STORAGE_ANON_AUTH_KEY);
 
 const saveTokenToLocalStorage = (key, token) => {
-  localStorage.setItem(key, JSON.stringify(token));
+  saveToLocalStorage(key, JSON.stringify(token));
 };
 
 export const getRecaptchaConsentFromLocalStorage = () =>
-  !!localStorage.getItem(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY);
+  !!getFromLocalStorage(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY);
 
 export const saveRecaptchaConsentToLocalStorage = () =>
-  localStorage.setItem(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY, true);
+  saveToLocalStorage(LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY, true);
 
 export const removeItemFromLocalStorage = (key) => {
-  localStorage.removeItem(key);
+  removeFromLocalStorage(key);
 };
 
 export const saveAnonTokenToLocalStorage = (token) =>

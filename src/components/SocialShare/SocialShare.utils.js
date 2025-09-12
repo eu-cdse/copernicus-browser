@@ -1,12 +1,10 @@
 import axios from 'axios';
-import { HTTPS, MAX_CHARACTER_LIMIT_ERROR } from '../../const';
+import { DEFAULT_HASHTAGS, HTTPS, LOCAL_STORAGE_SHARED_LINKS, MAX_CHARACTER_LIMIT_ERROR } from '../../const';
 import store, { notificationSlice } from '../../store';
 
 import { getDataSourceHashtags } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAccessToken } from '../../Auth/authHelpers';
-
-const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
-const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
+import { getFromLocalStorage, saveToLocalStorage } from '../../utils/localStorage.utils';
 
 const savedSharedLinksToLocalStorage = (destination, shortUrl) => {
   const existingLinks = getSharedLinks();
@@ -16,12 +14,12 @@ const savedSharedLinksToLocalStorage = (destination, shortUrl) => {
     [destination]: shortUrl.startsWith(HTTPS) ? shortUrl : HTTPS + shortUrl,
   };
 
-  localStorage.setItem(LOCAL_STORAGE_SHARED_LINKS, JSON.stringify(updatedLinks));
+  saveToLocalStorage(LOCAL_STORAGE_SHARED_LINKS, JSON.stringify(updatedLinks));
 };
 
 export const getSharedLinks = () => {
   try {
-    const parsedSharedLinks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SHARED_LINKS));
+    const parsedSharedLinks = JSON.parse(getFromLocalStorage(LOCAL_STORAGE_SHARED_LINKS));
     return parsedSharedLinks || {};
   } catch (err) {
     console.error(err);
