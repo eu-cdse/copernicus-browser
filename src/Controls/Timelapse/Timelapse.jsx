@@ -889,7 +889,8 @@ class Timelapse extends Component {
   };
 
   refetchImages = async (images, size) => {
-    const { mapBounds, aoi, auth, showBorders, visualizationUrl, lat, lng, zoom } = this.props;
+    const { mapBounds, aoi, auth, showBorders, visualizationUrl, lat, lng, zoom, selectedProcessing } =
+      this.props;
     let resolvedCounter = 0;
 
     const imageUrls = await Promise.all(
@@ -917,6 +918,7 @@ class Timelapse extends Component {
           lat: lat,
           lng: lng,
           zoom: zoom,
+          selectedProcessing: selectedProcessing,
         }).catch((err) => {
           console.warn('Unable to refetch timelapse image', err);
           throw err;
@@ -1243,6 +1245,7 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   evalscript: store.visualization.evalscript,
   evalscripturl: store.visualization.evalscripturl,
+  selectedProcessing: store.visualization.selectedProcessing,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

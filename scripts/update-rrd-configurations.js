@@ -1,3 +1,9 @@
+/**
+ * This is a deprecated (backup) script for updating metadata cache for RRD configurations.
+ * It has been replaced by scripts/update-rrd-metadata-cache-bundle.js which
+ * generates a single bundle file instead of multiple files.
+ */
+
 import path from 'path';
 import fs from 'fs';
 import axios from 'axios';

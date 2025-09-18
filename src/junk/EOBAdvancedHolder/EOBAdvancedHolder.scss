@@ -87,12 +87,40 @@
   .custom-visualisation-content {
     background-color: $mainLight;
 
-    .help-tooltip {
-      float: right;
+    .evalscript-tooltip-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        margin: 0.5em 0;
+      }
     }
 
     .custom-visualisation-wrapper {
       padding: 0 10px 10px;
+
+      .radio-button-group {
+        margin: 1em 0;
+        justify-content: center;
+        gap: 24px;
+
+        .radio-button {
+          .radio-button-label {
+            height: 17px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-end;
+            gap: 6px;
+
+            input {
+              width: 17px;
+              height: 17px;
+            }
+          }
+        }
+      }
     }
 
     .custom-visualisation-tabs {

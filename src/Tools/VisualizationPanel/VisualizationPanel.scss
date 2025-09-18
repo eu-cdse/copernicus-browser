@@ -142,6 +142,10 @@
         }
       }
 
+      .code-icon-wrapper {
+        height: 19px;
+      }
+
       .code {
         path {
           fill: $whiteColor;
@@ -263,6 +267,7 @@
 
       .eob-btn {
         font-size: 12px;
+        margin-bottom: 6px;
       }
     }
 

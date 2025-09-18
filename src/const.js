@@ -245,6 +245,11 @@ export const OrderType = {
   QUERY: 'QUERY',
 };
 
+export const PROCESSING_OPTIONS = {
+  OPENEO: 'OpenEO',
+  PROCESS_API: 'Process API',
+};
+
 export const FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG =
   'This functionality is temporarily unavailable due to updates. Please try again later.';
 

@@ -26,7 +26,7 @@ import 'leaflet/dist/leaflet.css';
 import './Map.scss';
 import L from 'leaflet';
 import moment from 'moment';
-import { SELECTED_BASE_LAYER_KEY, TABS } from '../const';
+import { PROCESSING_OPTIONS, SELECTED_BASE_LAYER_KEY, TABS } from '../const';
 import Controls from '../Controls/Controls';
 import PreviewLayer from '../Tools/Results/PreviewLayer';
 import LeafletControls from './LeafletControls/LeafletControls';
@@ -339,6 +339,7 @@ class Map extends React.Component {
       // eslint-disable-next-line no-unused-vars
       RRDFilterStateResultsSection,
       quicklookImages,
+      selectedProcessing,
     } = this.props;
     const { evalscripturl } = getUrlParams();
     const isEffectsSelected = isVisualizationEffectsApplied(this.props);
@@ -347,6 +348,7 @@ class Map extends React.Component {
       visualizationLayerId,
       IMAGE_FORMATS.PNG,
       isEffectsSelected,
+      customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
     );
     const zoomConfig = getZoomConfiguration(datasetId);
     let speckleFilterProp = speckleFilter;
@@ -518,7 +520,7 @@ class Map extends React.Component {
 
           <Pane name={SENTINELHUB_LAYER_PANE_ID} style={{ zIndex: SENTINELHUB_LAYER_PANE_ZINDEX }} />
 
-          {showSingleShLayer && supportsOpenEo && (
+          {showSingleShLayer && supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.OPENEO && (
             <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
               <OpenEoLayerComponent
                 processGraph={getProcessGraph(visualizationUrl, visualizationLayerId)}
@@ -536,7 +538,7 @@ class Map extends React.Component {
             </Overlay>
           )}
 
-          {showSingleShLayer && !supportsOpenEo && (
+          {showSingleShLayer && !supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && (
             <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
               <SentinelHubLayerComponent
                 datasetId={datasetId}
@@ -611,6 +613,7 @@ class Map extends React.Component {
                   backscatterCoeff,
                   themeId,
                   orbitDirection,
+                  selectedProcessing,
                 } = p;
                 const dsh = getDataSourceHandler(datasetId);
                 const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true; //We can only check if a datasetId is BYOC when the datasource handler for it is instantiated (thus, we are on the user instance which includes that BYOC collection), so we set default to `true` to cover other cases.
@@ -641,7 +644,7 @@ class Map extends React.Component {
                   areEffectsAppliedForComparedLayer,
                 );
 
-                if (supportsOpenEoComparedLayer) {
+                if (supportsOpenEoComparedLayer && selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
                   return (
                     <OpenEoLayerComponent
                       key={i}
@@ -915,6 +918,7 @@ const mapStoreToProps = (store) => {
     evalscript: store.visualization.evalscript,
     dataFusion: store.visualization.dataFusion,
     cloudCoverage: store.visualization.cloudCoverage,
+    selectedProcessing: store.visualization.selectedProcessing,
     dataSourcesInitialized: store.themes.dataSourcesInitialized,
     selectedThemeId: store.themes.selectedThemeId,
     selectedTabIndex: store.tabs.selectedTabIndex,

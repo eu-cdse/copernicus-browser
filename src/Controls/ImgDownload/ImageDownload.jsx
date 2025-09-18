@@ -274,6 +274,7 @@ function ImageDownload(props) {
           let newCLayer = Object.assign({}, cLayer);
           newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
           newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
+          newCLayer.effects = constructGetMapParamsEffects(cLayer);
           return newCLayer;
         }),
         selectedCrs: correctProjection,
@@ -913,6 +914,7 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   customSelected: store.visualization.customSelected,
   cloudCoverage: store.visualization.cloudCoverage,
+  selectedProcessing: store.visualization.selectedProcessing,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   selectedThemesListId: store.themes.selectedThemesListId,

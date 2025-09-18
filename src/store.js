@@ -17,6 +17,7 @@ import {
   DEFAULT_THEME_ID,
   DATE_MODES,
   RRD_INSTANCES_THEMES_LIST,
+  PROCESSING_OPTIONS,
 } from './const';
 import { DEMInstanceType } from '@sentinel-hub/sentinelhub-js';
 import { getInitialBaseLayerId } from './Map/Layers';
@@ -476,6 +477,7 @@ export const visualizationSlice = createSlice({
     orbitDirection: undefined,
     cloudCoverage: DEFAULT_CLOUD_COVER_PERCENT,
     dateMode: DATE_MODES.SINGLE.value,
+    selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
   },
   reducers: {
     setVisualizationTime: (state, action) => {
@@ -729,6 +731,9 @@ export const visualizationSlice = createSlice({
       }
       if (action.payload.dateMode !== undefined) {
         state.dateMode = action.payload.dateMode;
+      }
+      if (action.payload.selectedProcessing !== undefined) {
+        state.selectedProcessing = action.payload.selectedProcessing;
       }
     },
     reset: (state) => {

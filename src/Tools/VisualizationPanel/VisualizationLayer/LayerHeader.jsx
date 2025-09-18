@@ -72,16 +72,17 @@ const LayerHeader = ({
             <i className={`fas ${actionsOpen ? 'fa-minus' : 'fa-plus'}`}></i> {t`Add to`}
           </div>
 
-          {hasEvalScript && !supportsOpenEO && (
-            <CodeIcon
-              className="code"
-              title={t`Show evalscript`}
-              onClick={(e) => {
-                e.stopPropagation();
-                window.location.hash = '#custom-script'; // open accordion option for evalscript
-                setEvalScriptAndCustomVisualization(viz.layerId);
-              }}
-            />
+          {(hasEvalScript || supportsOpenEO) && (
+            <div title={t`Show custom option`} className="code-icon-wrapper">
+              <CodeIcon
+                className="code"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.hash = '#custom-script'; // open accordion option for evalscript
+                  setEvalScriptAndCustomVisualization(viz.layerId);
+                }}
+              />
+            </div>
           )}
           {detailsOpen ? (
             <DoubleChevronUp

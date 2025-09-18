@@ -4621,9 +4621,6 @@ msgstr "Сортувати за:"
 msgid "Location"
 msgstr "Розташування"
 
-msgid "Show evalscript"
-msgstr "Показати користувацький скрипт (evalscript)"
-
 msgid "Show details"
 msgstr "Показати детальну інформацію"
 
@@ -7009,9 +7006,6 @@ msgstr "Індекс"
 msgid "Custom script"
 msgstr "Спеціальний скрипт"
 
-msgid "Use custom script to create a custom visualization"
-msgstr "Використовувати спеціальний скрипт для створення індивідуальної візуалізації"
-
 #, javascript-format
 msgid ""
 "By using different spectral bands in the different colour channels (RGB) of "
@@ -8880,13 +8874,6 @@ msgid ""
 "The available Sentinel-1 data includes products from the Sentinel-1 "
 "satellite constellation, including Sentinel-1A (operational since 2014), "
 "Sentinel-1B (operational from 2016 to 2022) and Sentinel-1C (sample)."
-msgstr ""
-
-msgid ""
-"Sentinel-2 Collection 1 represents the product dataset generated from "
-"processing baselines 05.00 and 05.10. See more "
-"[here](https://sentiwiki.copernicus.eu/web/s2-processing#S2Processing-"
-"Collection-1ProcessingBaselineS2-Processing-Collection-Processing-Baseline)."
 msgstr ""
 
 msgid ""
@@ -12102,4 +12089,37 @@ msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
 msgid "Sentinel-1 IW Monthly Mosaics"
+msgstr ""
+
+msgid "OpenEO process graph"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "Show custom option"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"OpenEO process graph is currently not supported for this collection.\n"
+"\n"
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "OpenEO process graph is currently not supported for this collection."
 msgstr ""

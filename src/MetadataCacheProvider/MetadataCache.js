@@ -6,29 +6,49 @@ const capabilitiesCache = {};
 
 export const cacheConfig = {
   configuration: {
-    dir: 'configuration',
+    fileName: 'configuration',
     cache: configurationCache,
   },
   capabilities: {
-    dir: 'capabilities',
+    fileName: 'capabilities',
     cache: capabilitiesCache,
   },
 };
 
 export const initMetadaCache = async (config) => {
-  const p1 = [...DEFAULT_THEMES, ...RRD_THEMES].map(async (t) => {
-    const p2 = t.content.map(async (theme) => {
+  // Load all cache entries from the four generated files
+  let mainData = {};
+  let rrdData = {};
+  try {
+    const mainResponse = await import(`../assets/cache/${config.fileName}.json`);
+    mainData = mainResponse.default;
+  } catch (e) {
+    mainData = {};
+  }
+  try {
+    const rrdResponse = await import(`../assets/cache/rrd_${config.fileName}.json`);
+    rrdData = rrdResponse.default;
+  } catch (e) {
+    rrdData = {};
+  }
+
+  // Load from DEFAULT_THEMES (main) and RRD_THEMES (rrd)
+  DEFAULT_THEMES.forEach((t) => {
+    t.content.forEach((theme) => {
       const instanceId = theme.url.split('/').pop();
-      try {
-        if (instanceId !== undefined) {
-          const response = await import(`../assets/cache/${config.dir}/${instanceId}.json`);
-          config.cache[instanceId] = response.default;
-        }
-      } catch (e) {}
+      if (instanceId !== undefined && mainData[instanceId] !== undefined) {
+        config.cache[instanceId] = mainData[instanceId];
+      }
     });
-    return Promise.all(p2);
   });
-  await Promise.all(p1);
+  RRD_THEMES.forEach((t) => {
+    t.content.forEach((theme) => {
+      const instanceId = theme.url.split('/').pop();
+      if (instanceId !== undefined && rrdData[instanceId] !== undefined) {
+        config.cache[instanceId] = rrdData[instanceId];
+      }
+    });
+  });
 };
 
 export const getMetadataFromCache = (config, cacheKey) => {

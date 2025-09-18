@@ -1,3 +1,9 @@
+/**
+ * This is a deprecated (backup) script for updating metadata cache for default configurations.
+ * It has been replaced by scripts/update-metadata-cache-bundle.js which
+ * generates a single bundle file instead of multiple files.
+ */
+
 import {
   createHttpClient,
   fetchInstancesById,

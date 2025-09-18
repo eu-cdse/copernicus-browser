@@ -37,6 +37,7 @@ export function isOpenEoSupported(
   layerId,
   imageFormat = IMAGE_FORMATS.PNG,
   isVisualizationEffectsApplied = false,
+  isCustomVisualization = false,
 ) {
   // enables switching between openEO and process api from developer tools
   if (!window.useOpenEO) {
@@ -51,7 +52,8 @@ export function isOpenEoSupported(
     !instanceUrl ||
     !layerId ||
     !SUPPORTED_IMAGE_FORMATS.includes(imageFormat) ||
-    isVisualizationEffectsApplied
+    isVisualizationEffectsApplied ||
+    isCustomVisualization
   ) {
     return false;
   }

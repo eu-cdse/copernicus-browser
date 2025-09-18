@@ -58,8 +58,6 @@ const S2 = {
   [AttributeNames.origin]: () =>
     t`The available Sentinel-2 data is processed either by ESA or by CloudFerro.`,
   [AttributeNames.online]: productAvailabilityTooltip,
-  [AttributeNames.S2Collection]: () =>
-    t`Sentinel-2 Collection 1 represents the product dataset generated from processing baselines 05.00 and 05.10. See more [here](https://sentiwiki.copernicus.eu/web/s2-processing#S2Processing-Collection-1ProcessingBaselineS2-Processing-Collection-Processing-Baseline).`,
 };
 
 const S3 = {

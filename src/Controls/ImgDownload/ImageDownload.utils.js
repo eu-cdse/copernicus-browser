@@ -42,7 +42,12 @@ import {
 } from '../../utils/parseEvalscript';
 import { WARNINGS } from './ImageDownloadWarningPanel';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
-import { reqConfigMemoryCache, MAX_SH_IMAGE_SIZE, DISABLED_ORTHORECTIFICATION } from '../../const';
+import {
+  reqConfigMemoryCache,
+  MAX_SH_IMAGE_SIZE,
+  DISABLED_ORTHORECTIFICATION,
+  PROCESSING_OPTIONS,
+} from '../../const';
 
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
 import { isAuthIdUtm } from '../../utils/utm';
@@ -177,6 +182,7 @@ export async function fetchImage(layer, options) {
     mimeType,
     isEffectsAndOptionsSelected,
     customSelected,
+    selectedProcessing,
   } = options;
 
   const dsh = getDataSourceHandler(datasetId);
@@ -212,9 +218,10 @@ export async function fetchImage(layer, options) {
     if (
       isOpenEoSupported(
         layer.instanceId,
-        customSelected ? 'Custom' : layer.layerId,
+        layer.layerId,
         imageFormat,
         isEffectsAndOptionsSelected,
+        customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
       )
     ) {
       const isRawBand = options.bandName != null;
@@ -781,7 +788,7 @@ export function getTitle(fromTime, toTime, datasetId, layerTitle, customSelected
   return `${fromTime ? fromTime.clone().utc().format(format) + ' - ' : ''}${toTime
     .clone()
     .utc()
-    .format(format)}, ${datasetLabel}, ${customSelected ? 'Custom script' : layerTitle}`;
+    .format(format)}, ${datasetLabel}, ${customSelected ? 'custom' : layerTitle}`;
 }
 
 export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelected, isRawBand, bandName) {
@@ -791,7 +798,7 @@ export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelec
   if (isRawBand) {
     layerName = `${bandName}_(Raw)`;
   } else if (customSelected) {
-    layerName = 'Custom_script';
+    layerName = 'custom';
   } else {
     layerName = layerTitle?.replace(/ /gi, '_');
   }

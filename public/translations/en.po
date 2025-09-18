@@ -351,9 +351,6 @@ msgstr ""
 msgid "Custom script"
 msgstr ""
 
-msgid "Use custom script to create a custom visualization"
-msgstr ""
-
 msgid "Error loading script. Check your URL."
 msgstr ""
 
@@ -4720,13 +4717,6 @@ msgid "The available Sentinel-2 data is processed either by ESA or by CloudFerro
 msgstr ""
 
 msgid ""
-"Sentinel-2 Collection 1 represents the product dataset generated from "
-"processing baselines 05.00 and 05.10. See more "
-"[here](https://sentiwiki.copernicus.eu/web/s2-processing#S2Processing-"
-"Collection-1ProcessingBaselineS2-Processing-Collection-Processing-Baseline)."
-msgstr ""
-
-msgid ""
 "Sentinel-3 data is  available in the following timeliness:\n"
 "- Near Real Time (NRT):  typically available within 3 hours after data "
 "acquisition\n"
@@ -5334,9 +5324,6 @@ msgid "Create custom visualisation"
 msgstr ""
 
 msgid "Add to"
-msgstr ""
-
-msgid "Show evalscript"
 msgstr ""
 
 msgid "Hide details"
@@ -9876,4 +9863,37 @@ msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
 msgid "Sentinel-1 IW Monthly Mosaics"
+msgstr ""
+
+msgid "OpenEO process graph"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "Show custom option"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"OpenEO process graph is currently not supported for this collection.\n"
+"\n"
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "OpenEO process graph is currently not supported for this collection."
 msgstr ""

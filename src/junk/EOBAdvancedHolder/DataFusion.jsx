@@ -42,6 +42,7 @@ import DataFusionAdditionalParametersS1 from './DataFusionAdditionalParametersS1
 import DataFusionAdditionalParameters from './DataFusionAdditionalParameters';
 
 import './DataFusion.scss';
+import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 
 const DATAFUSION_DATASETS = {
   [DATASET_AWSEU_S1GRD.id]: {
@@ -374,13 +375,11 @@ class DataFusion extends React.Component {
     return (
       <div className="data-fusion">
         <div className="checkbox-holder use-url data-fusion-enabled">
-          <input
-            type="checkbox"
-            id="data-fusion-checkbox"
-            onChange={this.toggleDataFusionEnabled}
+          <CustomCheckbox
             checked={enabled}
+            onChange={this.toggleDataFusionEnabled}
+            label={t`Use additional datasets (advanced)`}
           />
-          <label htmlFor="data-fusion-checkbox">{t`Use additional datasets (advanced)`}</label>
         </div>
 
         {enabled && (

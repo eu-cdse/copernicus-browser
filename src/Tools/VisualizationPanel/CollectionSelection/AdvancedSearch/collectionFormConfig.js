@@ -11,7 +11,6 @@ import {
   AttributePolarisationChannelsValues,
   AttributeProcessingModeValues,
   AttributeTimelinessValues,
-  AttributeS2CollectionValues,
   AttributeProductClassValues,
   AttributeProductResolution,
   FormatedAttributeNames,
@@ -26,7 +25,6 @@ import {
   createAcrossTrackIncidenceAngleFilter,
   createOriginFilter,
   createS1GRDResolutionFilter,
-  createS2Collection1Filter,
   getS5MaxAbsoluteOrbit,
 } from './filters/AdditionalFilters.utils';
 import { DefaultInput } from './filters/DefaultInput';
@@ -265,13 +263,6 @@ export const collections = [
         getOptions: ({ userToken }) => [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
         filterElement: FilterElement.CustomFilter,
         customFilter: (key, value) => createOriginFilter(key, value),
-      },
-      {
-        id: AttributeNames.S2Collection,
-        render: MultiSelectInput,
-        getOptions: ({ userToken }) => [AttributeS2CollectionValues.COLLECTION1],
-        filterElement: FilterElement.CustomFilter,
-        customFilter: (key, value) => createS2Collection1Filter(key, value),
       },
       {
         id: AttributeNames.productType,

@@ -142,10 +142,39 @@ const removeExtraCoordDimensionsIfNeeded = (geometry) => {
 
 const getFileExtension = (filename) => filename.toLowerCase().split('.').pop();
 
+function ensureKmlNamespaces(kmlString) {
+  // Add missing main KML namespace
+  if (!kmlString.includes('xmlns="http://www.opengis.net/kml/2.2"')) {
+    kmlString = kmlString.replace(/<kml([^>]*)>/, '<kml$1 xmlns="http://www.opengis.net/kml/2.2">');
+  }
+  // Add missing Google extension
+  if (!kmlString.includes('xmlns:gx=')) {
+    kmlString = kmlString.replace(/<kml([^>]*)>/, '<kml$1 xmlns:gx="http://www.google.com/kml/ext/2.2">');
+  }
+  // Add missing KML alias
+  if (!kmlString.includes('xmlns:kml=')) {
+    kmlString = kmlString.replace(/<kml([^>]*)>/, '<kml$1 xmlns:kml="http://www.opengis.net/kml/2.2">');
+  }
+  // Add missing Atom namespace
+  if (!kmlString.includes('xmlns:atom=')) {
+    kmlString = kmlString.replace(/<kml([^>]*)>/, '<kml$1 xmlns:atom="http://www.w3.org/2005/Atom">');
+  }
+  // Add missing XSI namespace
+  if (!kmlString.includes('xmlns:xsi=')) {
+    kmlString = kmlString.replace(
+      /<kml([^>]*)>/,
+      '<kml$1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">',
+    );
+  }
+  return kmlString;
+}
+
 const convertKmlToGeoJson = (input) => {
-  const xml = new DOMParser().parseFromString(input, 'text/xml');
+  // Preprocess KML string to ensure required namespaces
+  const fixedInput = ensureKmlNamespaces(input);
+  const xml = new DOMParser().parseFromString(fixedInput, 'text/xml');
   const kml = toGeoJSON.kml(xml);
-  return kml && kml.features && kml.features.length ? kml : null;
+  return kml?.features?.length ? kml : null;
 };
 
 const conversionFunctions = {

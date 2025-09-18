@@ -26,6 +26,8 @@ const RadioButtonGroup = ({ options, name, onChange, value, disabled = false }) 
           onChange={handleChange}
           label={option.label}
           style={option.style}
+          getTooltipContent={option.getTooltipContent}
+          title={option.title}
         />
       ))}
     </div>

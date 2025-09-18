@@ -28,11 +28,11 @@ import {
 import { DATASOURCES } from '../src/const';
 import { getAuthToken } from './utils/auth';
 import {
-  createHttpClient,
   getArrayOfInstanceIds,
   getCsvFullPath,
   OGC_REQUEST_STATE,
   setOgcRequestsStates,
+  createHttpClientWithCredentials,
 } from './shared-functions';
 
 dotenv.config({ path: './.env' });
@@ -136,14 +136,12 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
 
   let instances = csvFullPath ? getArrayOfInstanceIds(csvFullPath) : [];
 
-  const httpClient = await createHttpClient(authBaseUrl);
-
   if (!process.env.APP_ADMIN_CLIENT_ID || !process.env.APP_ADMIN_CLIENT_SECRET) {
     throw new Error('Env vars APP_ADMIN_CLIENT_ID and APP_ADMIN_CLIENT_SECRET are not set');
   }
-
   const clientId = process.env.APP_ADMIN_CLIENT_ID;
   const clientSecret = process.env.APP_ADMIN_CLIENT_SECRET;
+  const httpClient = await createHttpClientWithCredentials(authBaseUrl, clientId, clientSecret);
   const authToken = await getAuthToken(authBaseUrl, clientId, clientSecret);
 
   setAuthToken(authToken);

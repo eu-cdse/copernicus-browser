@@ -2,4 +2,8 @@ package.json
 src/translations/*.json
 src/assets/cache/capabilities/*.json
 src/assets/cache/configuration/*.json
+src/assets/cache/capabilities.json
+src/assets/cache/configuration.json
+src/assets/cache/rrd_capabilities.json
+src/assets/cache/rrd_configuration.json
 /build

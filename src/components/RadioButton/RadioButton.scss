@@ -1,6 +1,10 @@
+@import '../../variables.module.scss';
+
 .radio-button {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  gap: 6px;
 
   &.disabled {
     cursor: not-allowed;
@@ -8,6 +12,7 @@
   }
 
   input {
+    accent-color: $primaryColor;
     cursor: pointer;
   }
 }

@@ -227,26 +227,13 @@ export const AttributeOriginValues = {
   ESA: { value: 'ESA', label: 'ESA' },
   CLOUDFERRO: { value: 'CLOUDFERRO', label: 'CloudFerro' },
 };
-export const AttributeS2CollectionValues = {
-  COLLECTION1: { value: 'COLLECTION1', label: 'Collection 1' },
-};
+
 export const AttributeS2ProductTypeValues = {
   MSI_L1B_GR: { value: 'MSI_L1B_GR', label: 'MSI_L1B_GR' },
   MSI_L1B_DS: { value: 'MSI_L1B_DS', label: 'MSI_L1B_DS' },
 };
 
 export const AttributeProcessorVersionValues = {
-  V05_00: {
-    value: '05.00',
-    label: '05.00',
-    timeLimitations: { fromTime: '2015-07-04T00:00:00.000Z', toTime: '2021-12-31T23:59:59.999Z' },
-  },
-  V05_09: { value: '05.09', label: '05.09' },
-  V05_10: {
-    value: '05.10',
-    label: '05.10',
-    timeLimitations: { fromTime: '2022-01-01T00:00:00.000Z', toTime: '2023-12-13T07:00:00.000Z' },
-  },
   V99_99: { value: '99.99', label: '99.99' },
 };
 export const AttributeOnlineValues = {

@@ -13,15 +13,7 @@ import oDataHelpers, {
   findProductTypeConfigById,
   roundGeometryValues,
 } from './ODataHelpers';
-import {
-  AttributeNames,
-  AttributeOriginValues,
-  AttributeProcessorVersionValues,
-  AttributeS2CollectionValues,
-  ODataAttributes,
-} from './assets/attributes';
-import { FilterElement } from './FilterElement';
-import { ODataFilterOperator } from './ODataTypes';
+import { AttributeNames, AttributeOriginValues, AttributeProcessorVersionValues } from './assets/attributes';
 
 describe('findCollectionConfigById', () => {
   test('S1', () => {
@@ -626,103 +618,6 @@ describe('createAdvancedSearchQuery', () => {
     expect(filter.value).toContain(originEsaString);
     expect(filter.value).toContain(originCfString);
     expect(filter.value).toContain(originBothString);
-  });
-
-  test('S2 collection1 filter is selected', () => {
-    const params = {
-      collections: [
-        {
-          ...collectionS2,
-          additionalFilters: {
-            [AttributeNames.S2Collection]: [AttributeS2CollectionValues.COLLECTION1],
-          },
-        },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toContain(
-      `((ContentDate/Start ge 2015-07-04T00:00:00.000Z and ContentDate/Start lt 2021-12-31T23:59:59.999Z and ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_00.value,
-      )}) or (ContentDate/Start ge 2022-01-01T00:00:00.000Z and ContentDate/Start lt 2023-12-13T07:00:00.000Z and ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_10.value,
-      )})`,
-    );
-  });
-
-  test('S2 collection1 filter is not selected', () => {
-    const params = {
-      collections: [
-        {
-          ...collectionS2,
-          additionalFilters: {
-            [AttributeNames.S2Collection]: undefined,
-          },
-        },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).not.toContain(AttributeProcessorVersionValues.V05_00.value);
-    expect(filter.value).not.toContain(AttributeProcessorVersionValues.V05_10.value);
-  });
-
-  test('S2 collection1 filter and origin CLOUDFERRO are selected', () => {
-    const params = {
-      collections: [
-        {
-          ...collectionS2,
-          additionalFilters: {
-            [AttributeNames.S2Collection]: [AttributeS2CollectionValues.COLLECTION1],
-            [AttributeNames.origin]: [AttributeOriginValues.CLOUDFERRO],
-          },
-        },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toContain(
-      `((ContentDate/Start ge ${
-        AttributeProcessorVersionValues.V05_00.timeLimitations.fromTime
-      } and ContentDate/Start lt ${
-        AttributeProcessorVersionValues.V05_00.timeLimitations.toTime
-      } and ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_00.value,
-      )}) or (ContentDate/Start ge ${
-        AttributeProcessorVersionValues.V05_10.timeLimitations.fromTime
-      } and ContentDate/Start lt ${
-        AttributeProcessorVersionValues.V05_10.timeLimitations.toTime
-      } and ${FilterElement.Attribute(
-        ODataAttributes.processorVersion,
-        ODataFilterOperator.eq,
-        AttributeProcessorVersionValues.V05_10.value,
-      )})`,
-    );
-    expect(filter.value).toContain(originCfString);
   });
 });
 

@@ -38,6 +38,15 @@ export function getArrayOfInstanceIds(fullPath) {
   return Array.from(instancesMap, ([name, value]) => value);
 }
 
+export async function createHttpClientWithCredentials(authBaseUrl, clientId, clientSecret) {
+  const authToken = await getAuthToken(authBaseUrl, clientId, clientSecret);
+  return axios.create({
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  });
+}
+
 export async function createHttpClient(authBaseUrl) {
   if (!process.env.APP_ADMIN_CLIENT_ID || !process.env.APP_ADMIN_CLIENT_SECRET) {
     throw new Error('Env vars APP_ADMIN_CLIENT_ID and APP_ADMIN_CLIENT_SECRET are not set');

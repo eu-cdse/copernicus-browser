@@ -7,6 +7,22 @@
 
   .checkbox-holder.data-fusion-enabled {
     margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+
+    .custom-checkbox-inner-wrapper {
+      width: 14px;
+      height: 14px;
+
+      .custom-checkbox {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .custom-checkbox-text {
+      font-size: 12px;
+    }
   }
 
   .data-fusion-details {

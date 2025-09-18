@@ -13,6 +13,7 @@ import { getVisualizationEffectsFromStore } from '../../../utils/effectsUtils';
 const CustomVisualizationLayer = (props) => {
   const {
     datasetId,
+    selectedVisualizationId,
     visualizationUrl,
     evalscriptUrl,
     evalscript,
@@ -26,6 +27,7 @@ const CustomVisualizationLayer = (props) => {
     onVisualizeEditorEvalscript,
     onCompositeChange,
     onIndexScriptChange,
+    selectedProcessing,
   } = props;
 
   const datasourceHandler = getDataSourceHandler(datasetId);
@@ -91,6 +93,9 @@ const CustomVisualizationLayer = (props) => {
         onIndexScriptChange={onIndexScriptChange}
         supportsIndex={supportsIndex}
         areBandsClasses={areBandsClasses}
+        selectedVisualizationId={selectedVisualizationId}
+        visualizationUrl={visualizationUrl}
+        selectedProcessing={selectedProcessing}
       />
     </div>
   );
@@ -103,6 +108,7 @@ const mapStoreToProps = (store) => ({
   selectedVisualizationId: store.visualization.layerId,
   visualizationUrl: store.visualization.visualizationUrl,
   datasetId: store.visualization.datasetId,
+  selectedProcessing: store.visualization.selectedProcessing,
   selectedThemeId: store.themes.selectedThemeId,
   selectedModeId: store.themes.selectedModeId,
   is3D: store.mainMap.is3D,

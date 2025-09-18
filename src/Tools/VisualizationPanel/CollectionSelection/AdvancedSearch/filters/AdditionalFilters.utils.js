@@ -3,7 +3,6 @@ import {
   AttributeNames,
   AttributeOriginValues,
   AttributeProcessorVersionValues,
-  AttributeS2CollectionValues,
   ODataAttributes,
 } from '../../../../../api/OData/assets/attributes';
 import { AttributeTooltips } from '../../../../../api/OData/assets/tooltips';
@@ -51,48 +50,6 @@ export const createOriginFilter = (key, value) => {
     );
   }
   return originOptionFilter;
-};
-
-export const createS2Collection1Filter = (key, value) => {
-  const S2Collection1ProcessorVersions = [
-    AttributeProcessorVersionValues.V05_00,
-    AttributeProcessorVersionValues.V05_10,
-  ];
-
-  let s2Collection1Filter = null;
-
-  if (value === AttributeS2CollectionValues.COLLECTION1.value) {
-    s2Collection1Filter = new ODataFilterBuilder(ExpressionTreeOperator.OR);
-    S2Collection1ProcessorVersions.forEach((processorVersion) => {
-      if (processorVersion.timeLimitations) {
-        const s2Collection1V0510Filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
-        s2Collection1V0510Filter.expression(
-          AttributeNames.sensingTime,
-          ODataFilterOperator.ge,
-          processorVersion.timeLimitations.fromTime,
-        );
-        s2Collection1V0510Filter.expression(
-          AttributeNames.sensingTime,
-          ODataFilterOperator.lt,
-          processorVersion.timeLimitations.toTime,
-        );
-        s2Collection1V0510Filter.attribute(
-          ODataAttributes.processorVersion,
-          ODataFilterOperator.eq,
-          processorVersion.value,
-        );
-        s2Collection1Filter.add(s2Collection1V0510Filter.getTree());
-      } else {
-        s2Collection1Filter.attribute(
-          ODataAttributes.processorVersion,
-          ODataFilterOperator.eq,
-          processorVersion.value,
-        );
-      }
-    });
-  }
-
-  return s2Collection1Filter;
 };
 
 export const createS1GRDResolutionFilter = (key, value) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { t } from 'ttag';
 
@@ -6,13 +6,14 @@ import store, { modalSlice, notificationSlice } from '../../store';
 import { ModalId } from '../../const';
 
 import DownloadIcon from './download-icon.svg?react';
-import './ImgDownloadBtn.scss';
 import { TABS } from '../../const';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getDatasourceNotSupportedMsg } from '../../junk/ConstMessages';
 
-class ImageDownloadBtn extends Component {
-  onOpenImageDownloadPanel = (enabled, errorMessage) => {
+import './ImgDownloadBtn.scss';
+
+const ImageDownloadBtn = (props) => {
+  const onOpenImageDownloadPanel = (enabled, errorMessage) => {
     if (!enabled) {
       store.dispatch(notificationSlice.actions.displayError(errorMessage));
       return;
@@ -20,18 +21,22 @@ class ImageDownloadBtn extends Component {
     store.dispatch(modalSlice.actions.addModal({ modal: ModalId.IMG_DOWNLOAD }));
   };
 
-  checkIfSupportedByDatasetId = (datasetId) => {
+  const checkIfSupportedByDatasetId = (datasetId) => {
     const datasourceHandler = getDataSourceHandler(datasetId);
     const supportsImgExport = datasourceHandler && datasourceHandler.supportsImgExport();
     if (!supportsImgExport) {
       return { enabled: false, errorMessage: getDatasourceNotSupportedMsg() };
     }
+
+    const zoomConfig = datasourceHandler.getLeafletZoomConfig(datasetId);
+    if (zoomConfig && props.zoom < zoomConfig.min) {
+      return { enabled: false, errorMessage: t`Zoom too low. Please zoom in.` };
+    }
     return { enabled: true, errorMessage: null };
   };
 
-  checkIfEnabled = () => {
-    const { layerId, customSelected, selectedTabIndex, comparedLayers, datasetId, showComparePanel } =
-      this.props;
+  const checkIfEnabled = () => {
+    const { layerId, customSelected, selectedTabIndex, comparedLayers, datasetId, showComparePanel } = props;
     const isOnVisualizationPanel = selectedTabIndex === TABS.VISUALIZE_TAB;
     const isOnComparePanel = showComparePanel;
     const hasVisualization = !!(layerId || customSelected);
@@ -44,7 +49,7 @@ class ImageDownloadBtn extends Component {
     }
 
     if (hasVisualization && datasetId && !isOnComparePanel) {
-      return this.checkIfSupportedByDatasetId(datasetId);
+      return checkIfSupportedByDatasetId(datasetId);
     }
 
     if (!hasVisualization && !isOnComparePanel) {
@@ -55,7 +60,7 @@ class ImageDownloadBtn extends Component {
       return { enabled: false, errorMessage: t`you need to compare at least 2 layers` };
     }
     if (isOnComparePanel && comparedLayers.length >= 2) {
-      const allLayersSupport = comparedLayers.map((l) => this.checkIfSupportedByDatasetId(l.datasetId));
+      const allLayersSupport = comparedLayers.map((l) => checkIfSupportedByDatasetId(l.datasetId));
       const disabledDatasetFound = allLayersSupport.find((s) => !s.enabled);
       if (disabledDatasetFound) {
         return disabledDatasetFound;
@@ -64,26 +69,22 @@ class ImageDownloadBtn extends Component {
     return { enabled: true, errorMessage: null };
   };
 
-  render() {
-    const { modalId } = this.props;
-    const { enabled, errorMessage } = this.checkIfEnabled();
-    const title = t`Download image` + ` ${errorMessage ? `\n(${errorMessage})` : ''}`;
+  const { modalId, is3D } = props;
+  const { enabled, errorMessage } = checkIfEnabled();
+  const title = t`Download image` + ` ${errorMessage ? `\n(${errorMessage})` : ''}`;
 
-    return (
-      <div
-        className={`img-download-btn-wrapper ${this.props.is3D ? 'is3d' : ''}`}
-        title={title}
-        onClick={() => this.onOpenImageDownloadPanel(enabled, title)}
-      >
-        {
-          <div className={`${enabled ? '' : 'disabled'} ${modalId === ModalId.IMG_DOWNLOAD ? 'active' : ''}`}>
-            <DownloadIcon alt="download-icon" />
-          </div>
-        }
+  return (
+    <div
+      className={`img-download-btn-wrapper ${is3D ? 'is3d' : ''}`}
+      title={title}
+      onClick={() => onOpenImageDownloadPanel(enabled, title)}
+    >
+      <div className={`${enabled ? '' : 'disabled'} ${modalId === ModalId.IMG_DOWNLOAD ? 'active' : ''}`}>
+        <DownloadIcon alt="download-icon" />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStoreToProps = (store) => ({
   layerId: store.visualization.layerId,
@@ -94,6 +95,7 @@ const mapStoreToProps = (store) => ({
   selectedTabIndex: store.tabs.selectedTabIndex,
   comparedLayers: store.compare.comparedLayers,
   is3D: store.mainMap.is3D,
+  zoom: store.mainMap.zoom,
   modalId: store.modal.id,
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });

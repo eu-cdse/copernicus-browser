@@ -4573,9 +4573,6 @@ msgstr "Kolejno:"
 msgid "Location"
 msgstr "Lokalizacja"
 
-msgid "Show evalscript"
-msgstr "Pokaż evalscript"
-
 msgid "Show details"
 msgstr "Pokaż szczegóły"
 
@@ -6894,9 +6891,6 @@ msgstr "Wskaźnik"
 msgid "Custom script"
 msgstr "Indywidualny skrypt"
 
-msgid "Use custom script to create a custom visualization"
-msgstr "Użyj indywidualnego skryptu by stworzyć własną wizualizację"
-
 #, javascript-format
 msgid ""
 "By using different spectral bands in the different colour channels (RGB) of "
@@ -8823,13 +8817,6 @@ msgid "The .zip file is missing content. The .prj and .shp files are required"
 msgstr ""
 
 msgid "Drop a zipped SHP, KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file."
-msgstr ""
-
-msgid ""
-"Sentinel-2 Collection 1 represents the product dataset generated from "
-"processing baselines 05.00 and 05.10. See more "
-"[here](https://sentiwiki.copernicus.eu/web/s2-processing#S2Processing-"
-"Collection-1ProcessingBaselineS2-Processing-Collection-Processing-Baseline)."
 msgstr ""
 
 #, javascript-format
@@ -11620,4 +11607,37 @@ msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
 msgid "Sentinel-1 IW Monthly Mosaics"
+msgstr ""
+
+msgid "OpenEO process graph"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "Show custom option"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"OpenEO process graph is currently not supported for this collection.\n"
+"\n"
+"An OpenEO process graph is a chain of processes that defines how satellite "
+"data should be processed by the synchronous OpenEO API (one of the "
+"underlying services that powers the Browser) and what values the service "
+"should return. \n"
+"\n"
+"\n"
+"Read more about processes and process graphs [here](${ processGraphUrl })."
+msgstr ""
+
+msgid "OpenEO process graph is currently not supported for this collection."
 msgstr ""

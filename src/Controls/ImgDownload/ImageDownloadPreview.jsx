@@ -19,6 +19,7 @@ import './ImageDownloadPreview.scss';
 import { TABS } from './ImageDownloadForms';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import Loader from '../../Loader/Loader';
+import { PROCESSING_OPTIONS } from '../../const';
 
 async function fetchPreviewImage(props) {
   // setFetchingPreviewImage(true);
@@ -69,6 +70,7 @@ async function fetchPreviewImage(props) {
         let newCLayer = Object.assign({}, cLayer);
         newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
         newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
+        newCLayer.effects = constructGetMapParamsEffects(cLayer);
         return newCLayer;
       }),
     }).catch((e) => {
@@ -93,14 +95,15 @@ const ImageDownloadPreview = (props) => {
   const [canDisplayPreview, setCanDisplayPreview] = useState(true);
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState(false);
 
-  const { analyticalFormLayers, selectedTab, disabledDownload, auth, layerId, is3D } = props;
+  const { analyticalFormLayers, selectedTab, disabledDownload, auth, layerId, is3D, selectedProcessing } =
+    props;
 
   useEffect(() => {
     setFetchingPreviewImage(true);
     let selectedLayer = layerId;
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
       selectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
-    } else if (props.customSelected) {
+    } else if (props.customSelected && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API) {
       selectedLayer = CUSTOM_TAG;
     }
     const options = {
@@ -120,7 +123,7 @@ const ImageDownloadPreview = (props) => {
       .finally(() => {
         setFetchingPreviewImage(false);
       });
-  }, [analyticalFormLayers, auth, layerId, props, selectedTab]);
+  }, [analyticalFormLayers, auth, layerId, props, selectedTab, selectedProcessing]);
 
   return (
     canDisplayPreview &&
@@ -160,6 +163,7 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   customSelected: store.visualization.customSelected,
   cloudCoverage: store.visualization.cloudCoverage,
+  selectedProcessing: store.visualization.selectedProcessing,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   selectedThemeId: store.themes.selectedThemeId,

@@ -19,10 +19,12 @@ import { getSavedWorkspaceProducts } from '../../api/OData/workspace';
 const Tabs = (props) => {
   useEffect(() => {
     (async () => {
-      const savedWorkspaceProducts = await getSavedWorkspaceProducts();
-      store.dispatch(tabsSlice.actions.setSavedWorkspaceProducts(savedWorkspaceProducts));
+      if (!!props.user.userdata) {
+        const savedWorkspaceProducts = await getSavedWorkspaceProducts();
+        store.dispatch(tabsSlice.actions.setSavedWorkspaceProducts(savedWorkspaceProducts));
+      }
     })();
-  }, []);
+  }, [props.user]);
 
   const handleScrollOnSidePanel = (e) => {
     store.dispatch(tabsSlice.actions.setScrollTop(e.currentTarget.scrollTop));
@@ -175,6 +177,7 @@ const Tabs = (props) => {
 const mapStoreToProps = (store) => ({
   scrollTop: store.tabs.scrollTop,
   savedWorkspaceProducts: store.tabs.savedWorkspaceProducts,
+  user: store.auth.user,
 });
 
 const ConnectedTabs = connect(mapStoreToProps)(Tabs);

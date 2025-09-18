@@ -1,15 +1,65 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { EOBTimelapsePanelButton } from '../../junk/EOBTimelapsePanelButton/EOBTimelapsePanelButton';
 import 'rodal/lib/rodal.css';
 
-import store, { notificationSlice } from '../../store';
+import store, { notificationSlice, timelapseSlice } from '../../store';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { TIMELAPSE_3D_MIN_EYE_HEIGHT } from '../../TerrainViewer/TerrainViewer.const';
 
-class TimelapseButton extends Component {
-  generateSelectedResult = () => {
-    const { dataSourcesInitialized, layerId, customSelected, datasetId, visualizationUrl } = this.props;
+const TimelapseButton = (props) => {
+  const [zoomTooLow, setZoomTooLow] = useState(false);
+
+  const {
+    is3D,
+    terrainViewerSettings,
+    newLayersCount,
+    displayTimelapseAreaPreview,
+    dataSourcesInitialized,
+    layerId,
+    customSelected,
+    datasetId,
+    visualizationUrl,
+    zoom,
+    user,
+    selectedTabIndex,
+    aoi,
+    showComparePanel,
+    isPlacingVertex,
+  } = props;
+
+  useEffect(() => {
+    let zTooLow = false;
+    if (is3D && terrainViewerSettings && Object.keys(terrainViewerSettings).length > 3) {
+      const { z } = terrainViewerSettings;
+      zTooLow = z > TIMELAPSE_3D_MIN_EYE_HEIGHT;
+    }
+
+    const isVisualizationSet =
+      dataSourcesInitialized && (layerId || customSelected) && datasetId && visualizationUrl;
+    if (isVisualizationSet) {
+      const dsh = getDataSourceHandler(datasetId);
+      const zoomConfig = dsh.getLeafletZoomConfig(datasetId);
+      zTooLow = zTooLow || (zoomConfig && zoom < zoomConfig.min);
+
+      if (zTooLow) {
+        store.dispatch(timelapseSlice.actions.setTimelapseAreaPreview(false));
+      }
+    }
+    setZoomTooLow(zTooLow);
+  }, [
+    zoom,
+    is3D,
+    terrainViewerSettings,
+    dataSourcesInitialized,
+    layerId,
+    customSelected,
+    datasetId,
+    visualizationUrl,
+  ]);
+
+  const generateSelectedResult = () => {
+    const { dataSourcesInitialized, layerId, customSelected, datasetId, visualizationUrl } = props;
     const isVisualizationSet =
       dataSourcesInitialized && (layerId || customSelected) && datasetId && visualizationUrl;
     let selectedResult;
@@ -25,32 +75,24 @@ class TimelapseButton extends Component {
     return selectedResult;
   };
 
-  render() {
-    const { is3D, terrainViewerSettings, newLayersCount, displayTimelapseAreaPreview } = this.props;
-    let zoomTooLow = false;
-    if (is3D && terrainViewerSettings && Object.keys(terrainViewerSettings).length > 3) {
-      const { z } = terrainViewerSettings;
-      zoomTooLow = z > TIMELAPSE_3D_MIN_EYE_HEIGHT;
-    }
-    return (
-      <div className="timelapse-wrapper">
-        <EOBTimelapsePanelButton
-          selectedResult={this.generateSelectedResult()}
-          isLoggedIn={!!this.props.user.userdata}
-          selectedTabIndex={this.props.selectedTabIndex}
-          is3D={this.props.is3D}
-          aoi={this.props.aoi}
-          onErrorMessage={(msg) => store.dispatch(notificationSlice.actions.displayError(msg))}
-          zoomTooLow={zoomTooLow}
-          newLayersCount={newLayersCount}
-          displayTimelapseAreaPreview={displayTimelapseAreaPreview}
-          showComparePanel={this.props.showComparePanel}
-          isPlacingVertex={this.props.isPlacingVertex}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="timelapse-wrapper">
+      <EOBTimelapsePanelButton
+        selectedResult={generateSelectedResult()}
+        isLoggedIn={!!user.userdata}
+        selectedTabIndex={selectedTabIndex}
+        is3D={is3D}
+        aoi={aoi}
+        onErrorMessage={(msg) => store.dispatch(notificationSlice.actions.displayError(msg))}
+        zoomTooLow={zoomTooLow}
+        newLayersCount={newLayersCount}
+        displayTimelapseAreaPreview={displayTimelapseAreaPreview}
+        showComparePanel={showComparePanel}
+        isPlacingVertex={isPlacingVertex}
+      />
+    </div>
+  );
+};
 
 const mapStoreToProps = (store) => ({
   user: store.auth.user,
@@ -61,6 +103,7 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   selectedTabIndex: store.tabs.selectedTabIndex,
   is3D: store.mainMap.is3D,
+  zoom: store.mainMap.zoom,
   aoi: store.aoi,
   terrainViewerSettings: store.terrainViewer.settings,
   newLayersCount: store.timelapse.newLayersCount,

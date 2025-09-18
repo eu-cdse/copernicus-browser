@@ -12,7 +12,8 @@ import store, { visualizationSlice } from '../../store';
 import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
 import { usePrevious } from '../../hooks/usePrevious';
 
-import { reqConfigMemoryCache } from '../../const';
+import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';
+import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 
 function LayerSelection({
   selectedLayerId,
@@ -58,10 +59,12 @@ function LayerSelection({
     if (layers.length > 0 && !customSelected) {
       if (!selectedLayerId || !layers.find((l) => l.layerId === selectedLayerId)) {
         const newLayerId = layers[0].layerId;
+        const supportsOpenEO = isOpenEoSupported(layers[0].url, layers[0].layerId);
         store.dispatch(
           visualizationSlice.actions.setVisualizationParams({
             layerId: newLayerId,
             visibleOnMap: true,
+            selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
           }),
         );
       }
@@ -146,6 +149,7 @@ function LayerSelection({
 
   function setSelectedVisualization(layer) {
     setLocationHash('');
+    const supportsOpenEO = isOpenEoSupported(layer.url, layer.layerId);
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
         visualizationUrl: layer.url,
@@ -155,6 +159,7 @@ function LayerSelection({
         evalscripturl: null,
         visibleOnMap: true,
         dataFusion: [],
+        selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
       }),
     );
   }
@@ -186,6 +191,7 @@ function LayerSelection({
         visibleOnMap: true,
         visualizationUrl: layers[0].url,
         evalscript: customEvalscript || datasourceHandler.generateEvalscript(selectedBands, datasetId),
+        selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
       }),
     );
   }
@@ -193,12 +199,14 @@ function LayerSelection({
   function setEvalScriptAndCustomVisualization(layerId) {
     const layer = layers.find((l) => l.layerId === layerId);
     if (layer) {
+      const supportsOpenEO = isOpenEoSupported(layer.url, layer.layerId);
       store.dispatch(
         visualizationSlice.actions.setVisualizationParams({
           evalscript: layer.evalscript,
-          layerId: null,
+          layerId: layer.id,
           customSelected: true,
           visibleOnMap: true,
+          selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
         }),
       );
       setLocationHash(CUSTOM_VISUALIZATION_URL_ROUTES[2]);
@@ -235,12 +243,12 @@ function LayerSelection({
   function onVisualizeEditorEvalscript() {
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
-        layerId: null,
         customSelected: true,
         visibleOnMap: true,
         dataFusion: dataFusion,
         evalscript: evalscript,
         evalscripturl: evalscriptUrl,
+        selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
       }),
     );
   }
