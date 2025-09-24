@@ -11,7 +11,7 @@ import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPane
 import Pin from './Pin';
 import PinTools from './PinTools';
 import UpdatingStatus from './UpdatingStatus';
-import { constructEffectsFromPinOrHighlight } from '../../utils/effectsUtils';
+import { constructEffectsFromPinOrHighlight, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../TerrainViewer/TerrainViewer.utils';
 
 import store, {
@@ -46,10 +46,13 @@ import {
   URL_THEMES_LIST,
   USER_INSTANCES_THEMES_LIST,
   FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG,
+  PROCESSING_OPTIONS,
 } from '../../const';
 import { ModalId } from '../../const';
 
 import ArrowSvg from '../../icons/arrow.svg?react';
+import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
+import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 const PINS_LC_NAME = 'eob-pins';
 export const UNSAVED_PINS = 'unsaved-pins';
@@ -437,6 +440,15 @@ class PinPanel extends Component {
       ...(dateMode ? { dateMode: dateMode } : {}),
       visibleOnMap: true,
       dataFusion: dataFusion,
+      selectedProcessing: isOpenEoSupported(
+        getVisualizationUrl(pin),
+        layerId,
+        IMAGE_FORMATS.PNG,
+        isVisualizationEffectsApplied(pin),
+        evalscript || evalscripturl,
+      )
+        ? PROCESSING_OPTIONS.OPENEO
+        : PROCESSING_OPTIONS.PROCESS_API,
     };
 
     if (evalscript || evalscripturl) {

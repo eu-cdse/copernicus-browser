@@ -26,7 +26,7 @@ const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: {
     lowResolutionCollectionId: '6af2d932-8f18-4bed-a31b-d32bc49d43a0',
-    lowResolutionMetersPerPixelThreshold: 1600,
+    lowResolutionMetersPerPixelThreshold: 320,
   },
 };
 

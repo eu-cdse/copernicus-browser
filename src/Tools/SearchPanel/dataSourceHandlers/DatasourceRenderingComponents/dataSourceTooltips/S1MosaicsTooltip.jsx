@@ -7,7 +7,7 @@ The input for the Sentinel-1 DH Monthly Mosaics are scenes with DH polarization 
 
 **Coverage:** Primarily polar and near-polar areas, as well as ocean-relevant areas
 
-**Data availability:** 2020 – Aug 2025
+**Data availability:** 2019 – Aug 2025
 
 The data for each month is available in the catalog on the 1st day of the corresponding month (e.g. 1.1. or 1.2.).
 
@@ -21,7 +21,7 @@ The input for the Sentinel-1 IW Monthly Mosaics are scenes taken in the IW acqui
 
 **Coverage:** Over land and coastal areas (mainly between 80°N and 56°S)
 
-**Data availability:** 2020 – Aug 2025
+**Data availability:** 2019 – Aug 2025
 
 The data for each month is available in the catalog on the 1st day of the corresponding month (e.g. 1.1. or 1.2.).
 

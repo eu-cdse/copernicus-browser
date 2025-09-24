@@ -43,13 +43,9 @@ const findNodePath = (menus, targetId) => {
 const updatePathAndCollection = (targetId, menus, parentDataset) => {
   const ancestry = findNodePath(menus, targetId);
 
-  if (ancestry.length > 1) {
-    const parent = ancestry.at(-2); // Get the parent node
-    store.dispatch(clmsSlice.actions.setSelectedPath(parent.id));
-  } else {
-    store.dispatch(clmsSlice.actions.setSelectedPath(parentDataset));
+  if (ancestry.length > 0) {
+    store.dispatch(clmsSlice.actions.setSelectedPath(ancestry.at(-1).id));
   }
-
   if (targetId && parentDataset === DATASOURCES.CLMS) {
     const clmsOptionsWithParent = flattenCLMSOptionsWithParent(CLMS_OPTIONS, DATASOURCES.CLMS);
     const { baseDatasetId, consolidationPeriodIndex } = handleCLMSConsolidationPeriod(
@@ -79,9 +75,16 @@ function Breadcrumbs({
     store.dispatch(clmsSlice.actions.setSelectedCollection(null));
   };
 
-  const ancestors = findNodePath(menus, selectedPath);
+  const fullPath = findNodePath(menus, selectedPath);
+  const isLeaf = fullPath.length > 0 && !(fullPath.at(-1)?.options && fullPath.at(-1)?.options.length > 0);
+  const ancestors = isLeaf ? fullPath.slice(0, -1) : fullPath;
   const parent = ancestors.at(-1);
-  const selectedNodeOptions = selectedPath === null ? menus : parent ? parent.options ?? [] : [];
+  const selectedNodeOptions =
+    selectedPath === null
+      ? menus
+      : parent && parent.options && parent.options.length > 0
+      ? parent.options
+      : [parent];
 
   return (
     <div className="breadcrumb-wrapper">
@@ -117,7 +120,14 @@ function Breadcrumbs({
 
           return (
             <React.Fragment key={index}>
-              <div className="item">{`...`}</div>
+              <div
+                className="item"
+                style={{ cursor: 'pointer' }}
+                onClick={() => onPathChange(h.id)}
+                title={h.label}
+              >
+                ...
+              </div>
               <div className="breadcrumb-divider">
                 <i className="fa fa-chevron-right" />
               </div>

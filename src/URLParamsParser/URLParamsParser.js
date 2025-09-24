@@ -25,7 +25,7 @@ import store, {
 } from '../store';
 import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
-import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, SHOW_TUTORIAL_LC, TABS } from '../const';
+import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, PROCESSING_OPTIONS, SHOW_TUTORIAL_LC, TABS } from '../const';
 import { ModalId } from '../const';
 import { ACCESS_ROLES } from '../api/OData/assets/accessRoles';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
@@ -38,6 +38,9 @@ import {
   S2_L2A_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
+import { isOpenEoSupported } from '../api/openEO/openEOHelpers';
+import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
+import { isVisualizationEffectsApplied } from '../utils/effectsUtils';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -247,15 +250,16 @@ class URLParamsParser extends React.Component {
       parsedLat = DEFAULT_LAT_LNG.lat;
     }
     store.dispatch(mainMapSlice.actions.setPosition({ zoom: parsedZoom, lat: parsedLat, lng: parsedLng }));
+    const decryptedVisualisationUrl =
+      visualizationUrl && !visualizationUrl.startsWith('https')
+        ? decrypt(visualizationUrl)
+        : visualizationUrl;
 
     const newVisualizationParams = {
       datasetId: datasetId,
       fromTime: fromTime ? moment.utc(fromTime) : null,
       toTime: toTime ? moment.utc(toTime) : null,
-      visualizationUrl:
-        visualizationUrl && !visualizationUrl.startsWith('https')
-          ? decrypt(visualizationUrl)
-          : visualizationUrl,
+      visualizationUrl: decryptedVisualisationUrl,
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
       customSelected: evalscript || evalscripturl ? true : undefined,
@@ -279,6 +283,15 @@ class URLParamsParser extends React.Component {
       cloudCoverage: cloudCoverage && !isNaN(cloudCoverage) ? JSON.parse(cloudCoverage) : undefined,
       dateMode: dateMode,
       ...getNewDatasetPropertiesIfDeprecatedDatasetId(datasetId, visualizationUrl),
+      selectedProcessing: isOpenEoSupported(
+        decryptedVisualisationUrl,
+        layerId,
+        IMAGE_FORMATS.PNG,
+        isVisualizationEffectsApplied({ effects: { gain, gamma, redRange, greenRange, blueRange } }),
+        evalscript || evalscripturl,
+      )
+        ? PROCESSING_OPTIONS.OPENEO
+        : PROCESSING_OPTIONS.PROCESS_API,
     };
     store.dispatch(visualizationSlice.actions.setVisualizationParams(newVisualizationParams));
     if (datasetId && !compareShare) {

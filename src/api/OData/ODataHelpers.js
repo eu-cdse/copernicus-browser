@@ -450,13 +450,13 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
         case 0:
           return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
         case 1:
-          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT1;
         case 2:
-          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT2;
         case 6:
-          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT6;
         default:
-          return undefined;
+          return COPERNICUS_CLMS_GPP_300M_10DAILY_RT0;
       }
     }
 
@@ -465,13 +465,13 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
         case 0:
           return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
         case 1:
-          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT1;
         case 2:
-          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT2;
         case 6:
-          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT6;
         default:
-          return undefined;
+          return COPERNICUS_CLMS_NPP_300M_10DAILY_RT0;
       }
     }
   }

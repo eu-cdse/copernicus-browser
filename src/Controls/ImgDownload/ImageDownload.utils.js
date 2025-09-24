@@ -421,6 +421,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
 
 export async function fetchImageFromParams(params, raiseWarning) {
   const {
+    layer: layerFromParams,
     fromTime,
     toTime,
     datasetId,
@@ -454,7 +455,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     baseLayerUrl,
   } = params;
   const isEffectsAndOptionsSelected = isVisualizationEffectsApplied(params);
-  const layer = await getLayerFromParams(params, cancelToken);
+  const layer = layerFromParams ?? (await getLayerFromParams(params, cancelToken));
+
   if (!layer) {
     throw Error('No applicable layer found');
   }
@@ -871,6 +873,7 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
       await layer.updateLayerFromServiceIfNeeded(reqConfig);
       layer.evalscript = evalscript;
       layer.evalscriptUrl = evalscripturl;
+      layer.layerId = layerId;
     }
   }
   if (layer) {
