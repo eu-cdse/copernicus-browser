@@ -6,13 +6,19 @@ import Highlight from './Highlight';
 import store, { visualizationSlice, mainMapSlice, pinsSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { parsePosition } from '../../../utils';
-import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
+import {
+  constructEffectsFromPinOrHighlight,
+  isVisualizationEffectsApplied,
+} from '../../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
 import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from '../../Pins/PinPanel';
 import { getPinsFromSessionStorage, savePinsToServer, savePinsToSessionStorage } from '../../Pins/Pin.utils';
 import { connect } from 'react-redux';
+import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';
+import { isOpenEoSupported } from '../../../api/openEO/openEOHelpers';
+import { PROCESSING_OPTIONS } from '../../../const';
 
 class Highlights extends Component {
   state = {
@@ -86,6 +92,15 @@ class Highlights extends Component {
       pinTimeTo = moment.utc(toTime);
     }
 
+    const effects = constructEffectsFromPinOrHighlight(pin);
+    const isEffectsApplied = isVisualizationEffectsApplied(effects);
+    const supportsOpenEO = isOpenEoSupported(
+      visualizationUrl,
+      datasetId,
+      IMAGE_FORMATS.PNG,
+      isEffectsApplied,
+      evalscript || evalscripturl,
+    );
     let visualizationParams = {
       datasetId: datasetId,
       visualizationUrl: visualizationUrl,
@@ -93,6 +108,7 @@ class Highlights extends Component {
       toTime: pinTimeTo,
       visibleOnMap: true,
       dataFusion: dataFusion,
+      selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
     };
 
     if (evalscript || evalscripturl) {
@@ -103,7 +119,6 @@ class Highlights extends Component {
       visualizationParams.layerId = layerId;
     }
 
-    const effects = constructEffectsFromPinOrHighlight(pin);
     visualizationParams = { ...visualizationParams, ...effects };
 
     store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));

@@ -55,7 +55,6 @@ class VisualizationLayer extends Component {
     return (
       <div
         key={`${vizId}-${visualizationUrl}`}
-        onClick={() => this.props.setSelectedVisualization(viz)}
         className={isActive ? 'layer-container active' : 'layer-container'}
       >
         <LayerHeader
@@ -72,6 +71,9 @@ class VisualizationLayer extends Component {
           toggleDetails={this.toggleDetails}
           actionsOpen={layerActionsOpen}
           toggleActions={toggleLayerActions}
+          onClick={() => {
+            this.props.setSelectedVisualization(viz);
+          }}
         />
         <ActionBar
           className="layer-actions"

@@ -48,10 +48,11 @@ const LayerHeader = ({
   toggleDetails,
   actionsOpen,
   toggleActions,
+  onClick,
 }) => {
   const supportsOpenEO = isOpenEoSupported(viz.instanceId, viz.layerId);
   return (
-    <div className="layer-header">
+    <div className="layer-header" onClick={onClick}>
       <div className="preview">
         <img
           className="icon"

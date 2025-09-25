@@ -17,11 +17,11 @@ import { S1_DH_MONTHLY_MOSAIC_BANDS, S1_IW_MONTHLY_MOSAIC_BANDS } from './dataso
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [S1_MONTHLY_MOSAIC_DH]: {
     lowResolutionCollectionId: S1_MONTHLY_MOSAIC_DH_LR,
-    lowResolutionMetersPerPixelThreshold: 1600,
+    lowResolutionMetersPerPixelThreshold: 320,
   },
   [S1_MONTHLY_MOSAIC_IW]: {
     lowResolutionCollectionId: S1_MONTHLY_MOSAIC_IW_LR,
-    lowResolutionMetersPerPixelThreshold: 1600,
+    lowResolutionMetersPerPixelThreshold: 320,
   },
 };
 

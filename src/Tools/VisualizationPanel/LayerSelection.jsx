@@ -14,6 +14,8 @@ import { usePrevious } from '../../hooks/usePrevious';
 
 import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
+import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
+import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 function LayerSelection({
   selectedLayerId,
@@ -36,6 +38,7 @@ function LayerSelection({
   onBackToLayerList,
   toggleLayerActions,
   layerActionsOpen,
+  effects,
 }) {
   const [layers, setLayers] = useState([]);
   const [loadingLayersInProgress, setLoadingLayersInProgress] = useState(false);
@@ -149,7 +152,15 @@ function LayerSelection({
 
   function setSelectedVisualization(layer) {
     setLocationHash('');
-    const supportsOpenEO = isOpenEoSupported(layer.url, layer.layerId);
+    const isEffectsApplied = isVisualizationEffectsApplied(effects);
+
+    const supportsOpenEO = isOpenEoSupported(
+      layer.url,
+      layer.layerId,
+      IMAGE_FORMATS.PNG,
+      isEffectsApplied,
+      false,
+    );
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
         visualizationUrl: layer.url,
@@ -315,6 +326,7 @@ const mapStoreToProps = (store) => ({
   themesLists: store.themes.themesLists,
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   selectedLanguage: store.language.selectedLanguage,
+  effects: getVisualizationEffectsFromStore(store),
 });
 
 export default connect(mapStoreToProps, null)(LayerSelection);
