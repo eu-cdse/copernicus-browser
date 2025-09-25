@@ -23,7 +23,11 @@ import store, {
   pinsSlice,
   collapsiblePanelSlice,
 } from '../../store';
-import { EXPIRED_ACCOUNT, MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL } from '../../const';
+import {
+  EXPIRED_ACCOUNT,
+  MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL,
+  PROCESSING_OPTIONS,
+} from '../../const';
 
 import './VisualizationPanel.scss';
 import { getVisualizationEffectsFromStore } from '../../utils/effectsUtils';
@@ -131,6 +135,16 @@ function VisualizationPanel({
 
   const visualizationActionsRef = useRef();
   const selectedTimeRef = useRef(toTime);
+
+  const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
+
+  useEffect(() => {
+    store.dispatch(
+      visualizationSlice.actions.setVisualizationParams({
+        selectedProcessing: haveEffectsChanged ? PROCESSING_OPTIONS.PROCESS_API : PROCESSING_OPTIONS.OPENEO,
+      }),
+    );
+  }, [haveEffectsChanged]);
 
   useEffect(() => {
     if ((displaySocialShareOptions || displayEffects) && visualizationActionsRef.current) {

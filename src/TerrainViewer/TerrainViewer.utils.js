@@ -200,23 +200,21 @@ export async function getTerrainViewerImage({
   let legendUrl;
 
   if (showLegend) {
-    const predefinedLayerMetadata = findMatchingLayerMetadata(datasetId, layerId, selectedThemeId, toTime);
-    if (predefinedLayerMetadata && predefinedLayerMetadata.legend) {
-      legendDefinition = predefinedLayerMetadata.legend;
-    } else {
-      try {
-        const layer = await getLayerFromParams(
-          { layerId, datasetId, visualizationUrl: dsh.getVisualizationUrl(datasetId) },
-          null,
-        );
-        if (layer) {
-          legendUrl = layer.legendUrl;
-          if (!legendDefinition && layer.legend) {
-            legendDefinition = layer.legend;
-          }
-        }
-      } catch (error) {
-        console.warn('Could not fetch layer for legend in 3D view:', error);
+    try {
+      const visualizationUrl = dsh.getUrlsForDataset(datasetId).at(0);
+      const layer = await getLayerFromParams({ layerId, datasetId, visualizationUrl }, null);
+      if (layer) {
+        legendUrl = layer.legendUrl;
+        legendDefinition = layer.legend;
+      }
+    } catch (error) {
+      console.warn(`Could not fetch layer for legend in 3D view: ${error}, fetching from layers metadata.`);
+    }
+
+    if (legendDefinition === undefined) {
+      const predefinedLayerMetadata = findMatchingLayerMetadata(datasetId, layerId, selectedThemeId, toTime);
+      if (predefinedLayerMetadata && predefinedLayerMetadata.legend) {
+        legendDefinition = predefinedLayerMetadata.legend;
       }
     }
   }
