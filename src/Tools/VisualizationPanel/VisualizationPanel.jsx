@@ -33,6 +33,8 @@ import './VisualizationPanel.scss';
 import { getVisualizationEffectsFromStore } from '../../utils/effectsUtils';
 import { getAppropriateAuthToken } from '../../App';
 import { resetMessagePanel } from '../../utils';
+import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
+import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 const showEffectsText = () => t`Show effects and advanced options`;
 const appliedEffectsText = () => t`Effects and advanced options applied`;
@@ -97,6 +99,7 @@ function VisualizationPanel({
   toTime,
   datasetId,
   visualizationUrl,
+  layerId,
   selectedThemeId,
   selectedThemesListId,
   themesLists,
@@ -137,14 +140,15 @@ function VisualizationPanel({
   const selectedTimeRef = useRef(toTime);
 
   const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
+  const supportsOpenEo = isOpenEoSupported(visualizationUrl, layerId, IMAGE_FORMATS.PNG, haveEffectsChanged);
 
   useEffect(() => {
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
-        selectedProcessing: haveEffectsChanged ? PROCESSING_OPTIONS.PROCESS_API : PROCESSING_OPTIONS.OPENEO,
+        selectedProcessing: supportsOpenEo ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
       }),
     );
-  }, [haveEffectsChanged]);
+  }, [supportsOpenEo]);
 
   useEffect(() => {
     if ((displaySocialShareOptions || displayEffects) && visualizationActionsRef.current) {
@@ -357,6 +361,7 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   toTime: store.visualization.toTime,
   visualizationUrl: store.visualization.visualizationUrl,
+  layerId: store.visualization.layerId,
   visibleOnMap: store.visualization.visibleOnMap,
   selectedLanguage: store.language.selectedLanguage,
   is3D: store.mainMap.is3D,
