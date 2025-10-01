@@ -120,7 +120,7 @@ class Tools extends Component {
 
   setActiveTabIndex = (index) => {
     store.dispatch(tabsSlice.actions.setTabIndex(index));
-    store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
+    store.dispatch(mainMapSlice.actions.clearQuicklookOverlays());
 
     if (index !== TABS.VISUALIZE_TAB) {
       store.dispatch(mainMapSlice.actions.setIs3D(false));

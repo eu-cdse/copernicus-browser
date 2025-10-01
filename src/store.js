@@ -119,7 +119,7 @@ export const mainMapSlice = createSlice({
     enabledOverlaysId: ['labels'],
     is3D: false,
     loadingMessage: null,
-    quicklookOverlay: null,
+    quicklookOverlays: [],
   },
   reducers: {
     setPosition: (state, action) => {
@@ -164,11 +164,16 @@ export const mainMapSlice = createSlice({
     setLoadingMessage: (state, action) => {
       state.loadingMessage = action.payload;
     },
-    setQuicklookOverlay: (state, action) => {
-      state.quicklookOverlay = action.payload;
+    addQuicklookOverlay: (state, action) => {
+      if (!state.quicklookOverlays.some((o) => o._internalId === action.payload._internalId)) {
+        state.quicklookOverlays.push(action.payload);
+      }
     },
-    clearQuicklookOverlay: (state) => {
-      state.quicklookOverlay = null;
+    removeQuicklookOverlay: (state, action) => {
+      state.quicklookOverlays = state.quicklookOverlays.filter((o) => o._internalId !== action.payload);
+    },
+    clearQuicklookOverlays: (state) => {
+      state.quicklookOverlays = [];
     },
     reset: (state) => {
       state.lat = DEFAULT_LAT_LNG.lat;

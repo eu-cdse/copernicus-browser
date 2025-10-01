@@ -59,18 +59,15 @@ function LayerSelection({
   }, [dataSourcesInitialized, datasetId, visualizationUrl]);
 
   useEffect(() => {
-    if (layers.length > 0 && !customSelected) {
-      if (!selectedLayerId || !layers.find((l) => l.layerId === selectedLayerId)) {
-        const newLayerId = layers[0].layerId;
-        const supportsOpenEO = isOpenEoSupported(layers[0].url, layers[0].layerId);
-        store.dispatch(
-          visualizationSlice.actions.setVisualizationParams({
-            layerId: newLayerId,
-            visibleOnMap: true,
-            selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
-          }),
-        );
-      }
+    if (layers.length === 0 || customSelected) {
+      return;
+    }
+
+    const currentlySelectedLayer = layers.find((l) => l.layerId === selectedLayerId);
+    const layerToSelect = currentlySelectedLayer || layers[0];
+
+    if (layerToSelect) {
+      setSelectedVisualization(layerToSelect);
     }
     // eslint-disable-next-line
   }, [layers]);

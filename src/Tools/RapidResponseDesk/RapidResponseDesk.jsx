@@ -193,7 +193,7 @@ const RapidResponseDesk = ({
   };
 
   const triggerSearchQuery = () => {
-    store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
+    store.dispatch(mainMapSlice.actions.clearQuicklookOverlays());
     resetMessagePanel();
     if (!isSearchCriteriaValid()) {
       scrollToErrorMessage();

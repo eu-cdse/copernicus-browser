@@ -221,19 +221,17 @@ const ResultsCard = ({
       );
     }
   };
-  const quicklookOverlay = useSelector((state) => state.mainMap.quicklookOverlay);
 
-  const isQuicklookActive = quicklookOverlay && quicklookOverlay._internalId === item._internalId;
+  const quicklookOverlays = useSelector((state) => state.mainMap.quicklookOverlays || []);
+
+  const isQuicklookActive = quicklookOverlays.some((overlay) => overlay._internalId === item._internalId);
 
   const handleQuicklookOnMap = async () => {
     if (isQuicklookActive) {
-      store.dispatch(mainMapSlice.actions.setQuicklookOverlay(null));
-      return;
-    }
-
-    setTimeout(() => {
+      store.dispatch(mainMapSlice.actions.removeQuicklookOverlay(item._internalId));
+    } else {
       store.dispatch(
-        mainMapSlice.actions.setQuicklookOverlay({
+        mainMapSlice.actions.addQuicklookOverlay({
           _internalId: item._internalId,
           assets: {
             quicklook: {
@@ -246,7 +244,7 @@ const ResultsCard = ({
         }),
       );
       zoomToProduct(item);
-    }, 0);
+    }
   };
 
   const onHover = () => {

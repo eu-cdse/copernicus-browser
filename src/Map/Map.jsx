@@ -12,7 +12,6 @@ import {
 } from 'react-leaflet';
 
 import { connect } from 'react-redux';
-import ReactLeafletGoogleLayer from './plugins/ReactLeafletGoogleLayer';
 import 'nprogress/nprogress.css';
 
 import store, {
@@ -49,7 +48,6 @@ import {
   getZoomConfiguration,
 } from '../Tools/SearchPanel/dataSourceHandlers/helper';
 // import { checkUserAccount } from '../Tools/CommercialDataPanel/commercialData.utils';
-import MaptilerLogo from './maptiler-logo-adaptive.svg';
 import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
 import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../utils/effectsUtils';
 import {
@@ -395,14 +393,6 @@ class Map extends React.Component {
 
     const osmLayer = getDefaultBaseLayer();
 
-    const isBaseMapMaptiler = shownBaseLayers
-      .find((baseLayer) => baseLayer.id === baseLayerId)
-      ?.attribution?.includes('maptiler');
-
-    const isAnyOverlayMaptiler = overlayTileLayers()
-      .filter((overlayTileLayer) => enabledOverlaysId.includes(overlayTileLayer.id))
-      .some((overlayTileLayer) => overlayTileLayer.attribution.includes('maptiler'));
-
     return (
       <LeafletMap
         ref={(el) => (this.mapRef = el)}
@@ -505,12 +495,6 @@ class Map extends React.Component {
                   attribution={baseLayer.attribution}
                   pane={BASE_PANE_ID}
                   preserveDrawingBuffer={baseLayer.preserveDrawingBuffer}
-                />
-              ) : baseLayer.urlType === 'GOOGLE_MAPS' ? (
-                <ReactLeafletGoogleLayer
-                  apiKey={import.meta.env.VITE_GOOGLE_MAP_KEY}
-                  type={'satellite'}
-                  pane={BASE_PANE_ID}
                 />
               ) : baseLayer.urlType === 'WMTS' ? (
                 <TileLayer url={baseLayer.url} attribution={baseLayer.attribution} pane={BASE_PANE_ID} />
@@ -867,18 +851,14 @@ class Map extends React.Component {
           showComparePanel={this.props.showComparePanel}
         />
 
-        {isBaseMapMaptiler || isAnyOverlayMaptiler ? (
-          <a href="https://www.maptiler.com/" target="_blank" rel="noopener noreferrer">
-            <img className="maptiler-logo" src={MaptilerLogo} alt="" />
-          </a>
-        ) : null}
-
-        {this.props.quicklookOverlay && (
-          <QuicklookOverlay
-            quicklookOverlay={this.props.quicklookOverlay}
-            quicklookImages={quicklookImages}
-          />
-        )}
+        {Array.isArray(this.props.quicklookOverlays) &&
+          this.props.quicklookOverlays.map((overlay) => (
+            <QuicklookOverlay
+              key={overlay._internalId}
+              quicklookOverlay={overlay}
+              quicklookImages={quicklookImages}
+            />
+          ))}
       </LeafletMap>
     );
   }
@@ -938,7 +918,7 @@ const mapStoreToProps = (store) => {
     is3D: store.mainMap.is3D,
     selectedModeId: store.themes.selectedModeId,
     elevationProfileHighlightedPoint: store.elevationProfile.highlightedPoint,
-    quicklookOverlay: store.mainMap.quicklookOverlay,
+    quicklookOverlays: store.mainMap.quicklookOverlays,
     quicklookImages: store.resultsSection.quicklookImages,
   };
 };

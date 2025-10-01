@@ -108,9 +108,6 @@ Environment variables needed for anonymous usage:
 - `VITE_GOOGLE_TOKEN`: Google Maps API key for location search
   - see [Google's documentation](https://developers.google.com/maps/documentation/javascript/get-api-key)
   - without it, users won't be able to use Google for location search
-- `VITE_GOOGLE_MAP_KEY`: Google Maps API key for Google satellite baselayer
-  - see [Google's documentation](https://developers.google.com/maps/documentation/javascript/get-api-key)
-  - without it, there will be no Google Satellite basemap for paying users
 
 #### Optional, for maintenance
 

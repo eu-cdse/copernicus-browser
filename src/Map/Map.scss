@@ -6,54 +6,6 @@
   min-height: 406px;
   z-index: 0;
 
-  .maptiler-logo {
-    position: absolute;
-    bottom: 25px;
-    left: 10px;
-    z-index: 999;
-    width: 75px;
-    opacity: 0.75;
-    filter: drop-shadow($boxShadow);
-  }
-
-  .google-logo {
-    position: fixed;
-    bottom: 21px;
-    left: 90px;
-    z-index: 999;
-    width: 75px;
-    opacity: 0.75;
-    -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-  }
-
-  @media (max-width: $breakpoint-1200) {
-    .maptiler-logo {
-      bottom: 25px;
-    }
-
-    .google-logo {
-      bottom: 31px;
-    }
-  }
-
-  @media (max-width: $breakpoint-890) {
-    .maptiler-logo {
-      bottom: 48px;
-    }
-
-    .google-logo {
-      bottom: 56px;
-    }
-  }
-
-  @media (max-width: 450px) {
-    .maptiler-logo {
-      bottom: 53px;
-      left: 5px;
-    }
-  }
-
   .leaflet-control-container {
     .leaflet-top.leaflet-right {
       .leaflet-control-layers {

@@ -353,6 +353,9 @@ class SentinelHubLayer extends L.TileLayer {
     const onTileImageError = this.options.onTileImageError;
     const onTileImageLoad = this.options.onTileImageLoad;
     this.layer.then(async (layer) => {
+      if (!layer) {
+        return;
+      }
       let reqConfig = { cancelToken: cancelToken, ...reqConfigGetMap };
 
       if (this.options.accessToken) {
@@ -527,6 +530,9 @@ class SentinelHubLayer extends L.TileLayer {
       cloudCoverage,
     } = options;
     let layer = await LayersFactory.makeLayer(url, layerId, null, reqConfigMemoryCache);
+    if (!layer) {
+      return;
+    }
     await layer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
 
     if (cloudCoverage !== undefined) {

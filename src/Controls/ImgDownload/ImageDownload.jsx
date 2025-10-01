@@ -348,6 +348,11 @@ function ImageDownload(props) {
       mapBounds,
       orbitDirection,
       cloudCoverage,
+      gainEffect,
+      gammaEffect,
+      blueRangeEffect,
+      redRangeEffect,
+      greenRangeEffect,
     } = props;
     const {
       selectedResolution,
@@ -411,6 +416,11 @@ function ImageDownload(props) {
         : {}),
       aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
       mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
+      gainEffect: gainEffect,
+      gammaEffect: gammaEffect,
+      blueRangeEffect: blueRangeEffect,
+      redRangeEffect: redRangeEffect,
+      greenRangeEffect: greenRangeEffect,
     };
 
     if (customSelected) {

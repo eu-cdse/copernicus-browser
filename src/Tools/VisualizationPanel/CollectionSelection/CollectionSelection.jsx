@@ -231,6 +231,7 @@ const CollectionSelection = ({
   pixelBounds,
   maxCloudCover,
   user,
+  layerId,
 }) => {
   const [advanced] = useState(false);
   const [selectedCollection, setSelected] = useState({});
@@ -277,6 +278,8 @@ const CollectionSelection = ({
           orbitDirection: orbitDirection,
         }),
       );
+
+      store.dispatch(visualizationSlice.actions.setLayerId(layerId));
 
       if (dsh && dsh.supportsDisplayLatestDateOnSelect(selectedDatasetId)) {
         await displayLatestDateOnSelect({
@@ -427,6 +430,7 @@ const mapStoreToProps = (store) => ({
   collectionPanelExpanded: store.collapsiblePanel.collectionPanelExpanded,
   maxCloudCover: store.visualization.cloudCoverage,
   user: store.auth.user,
+  layerId: store.visualization.layerId,
 });
 
 export default connect(mapStoreToProps, null)(CollectionSelection);
