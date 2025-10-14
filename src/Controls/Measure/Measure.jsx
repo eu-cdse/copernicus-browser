@@ -44,7 +44,12 @@ class Measure extends Component {
         <EOBMeasurePanelButton
           active={this.state.isMeasuring}
           isLoggedIn={this.props.user}
-          toggleMeasure={() => this.ruler.toggle()}
+          toggleMeasure={() => {
+            this.ruler.toggle();
+            if (this.state.isMeasuring) {
+              this.ruler.removeMeasurement();
+            }
+          }}
           removeMeasurement={() => this.ruler.removeMeasurement()}
           hasMeasurement={this.state.isMeasuring}
           distance={this.state.distance}

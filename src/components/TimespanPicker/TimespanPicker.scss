@@ -1,5 +1,5 @@
 /* stylelint-disable */
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .timespan-picker {
   position: relative;
@@ -23,7 +23,7 @@
   }
 
   .date-time-input {
-    color: $textColor;
+    color: vars.$textColor;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -41,8 +41,8 @@
     .date-picker-input-wrapper {
       i.fas.fa-chevron-left,
       i.fas.fa-chevron-right {
-        color: $primaryColor;
-        background-color: $mainLight;
+        color: vars.$primaryColor;
+        background-color: vars.$mainLight;
         line-height: 35px;
         width: 35px;
       }
@@ -81,7 +81,7 @@
       }
 
       i {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         margin-right: 5px;
       }
 
@@ -125,8 +125,8 @@
 
       .percentage {
         width: 40px;
-        font-weight: $fontWeightBold;
-        color: $primaryColor;
+        font-weight: vars.$fontWeightBold;
+        color: vars.$primaryColor;
       }
     }
   }
@@ -143,7 +143,7 @@
 
       .effect-dropdown-select__single-value {
         font-weight: 400;
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }
@@ -153,19 +153,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid $customBorderBottomColor;
+  border-bottom: 1px solid vars.$customBorderBottomColor;
   height: 25px;
   margin-left: 5px;
   margin-right: 5px;
 
   label {
-    color: $textColor;
+    color: vars.$textColor;
   }
 
   input {
     text-align: left;
     background: transparent;
-    color: $textColor;
+    color: vars.$textColor;
     border: none;
     max-width: 25px;
     padding: 0;
@@ -187,7 +187,7 @@
       margin: -3px 0;
 
       i {
-        color: $textColor;
+        color: vars.$textColor;
         margin-right: 0;
       }
     }

@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .ensure-auth {
   z-index: 10000;
@@ -10,7 +10,7 @@
   }
 
   .ensure-user-logged-in-modal-text {
-    color: $textColor;
+    color: vars.$textColor;
     text-align: center;
     margin-top: 15px;
   }
@@ -20,7 +20,7 @@
     flex-direction: row;
     justify-content: space-around;
 
-    @media only screen and (max-width: $breakpoint-500) {
+    @media only screen and (max-width: vars.$breakpoint-500) {
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -33,17 +33,17 @@
 
   .login-button {
     cursor: pointer;
-    color: $whiteColor;
+    color: vars.$whiteColor;
     padding: 10px 50px;
     min-width: 100px;
     margin-top: 40px;
-    background-color: $primaryColor;
+    background-color: vars.$primaryColor;
     width: fit-content;
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
     text-align: center;
 
     &:hover {
-      background-color: $hoverPrimaryColor;
+      background-color: vars.$hoverPrimaryColor;
     }
   }
 

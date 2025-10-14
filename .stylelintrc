@@ -4,8 +4,8 @@
     "stylelint-config-recommended-scss"
   ],
   "rules": {
-    "selector-class-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
-    "selector-id-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+    "selector-class-pattern": "^([a-zA-Z0-9_-]+)([_-][a-zA-Z0-9]+)*$",
+    "selector-id-pattern": "^([a-zA-Z0-9_-]+)([_-][a-zA-Z0-9]+)*$",
     "linebreaks": "unix"
   }
 }

@@ -18,6 +18,7 @@ class LeafletPMLanguage extends Component {
   }
 
   setLanguage = (selectedLanguage) => {
+    const safeLanguage = (selectedLanguage || '').trim();
     const translation = {
       tooltips: {
         placeMarker: t`Click to place marker`,
@@ -26,7 +27,7 @@ class LeafletPMLanguage extends Component {
         finishPoly: t`Click first marker to finish`,
       },
     };
-    this.props.map.pm.setLang(selectedLanguage, translation, 'en');
+    this.props.map.pm.setLang(safeLanguage, translation, 'en');
   };
 
   render() {

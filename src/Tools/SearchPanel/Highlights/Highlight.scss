@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .highlight-item {
   position: relative;
@@ -7,8 +7,8 @@
   clear: both;
   margin-bottom: 10px;
   user-select: none;
-  color: $textColor;
-  background-color: $mainLight;
+  color: vars.$textColor;
+  background-color: vars.$mainLight;
   font-size: 12px;
   line-height: 16px;
   cursor: pointer;
@@ -116,16 +116,16 @@
       position: absolute;
       right: 38px;
       bottom: 15px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       font-size: 12px;
       font-weight: 400;
 
       &.selected {
-        color: $mainLight;
+        color: vars.$mainLight;
       }
 
       &:hover {
-        color: $hoverSecondaryColor;
+        color: vars.$hoverSecondaryColor;
       }
 
       div {
@@ -140,14 +140,14 @@
     .description-toggle {
       svg {
         path {
-          stroke: $textColor;
+          stroke: vars.$textColor;
         }
       }
 
       &-selected {
         svg {
           path {
-            stroke: $mainLight;
+            stroke: vars.$mainLight;
           }
         }
       }
@@ -157,7 +157,7 @@
           margin-bottom: 10px;
 
           svg {
-            fill: $textColor;
+            fill: vars.$textColor;
           }
         }
       }
@@ -169,11 +169,11 @@
   }
 
   &-selected {
-    background-color: $primaryColor;
-    color: $mainLight;
+    background-color: vars.$primaryColor;
+    color: vars.$mainLight;
 
     a {
-      color: $mainLight;
+      color: vars.$mainLight;
     }
   }
 }

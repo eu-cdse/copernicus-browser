@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .supplemental-datasets {
   .supplemental-dataset-label {
@@ -25,18 +25,18 @@
   }
 
   .supplemental-dataset {
-    background: $mainLight;
+    background: vars.$mainLight;
     margin-top: 5px;
     margin-bottom: 5px;
 
     .supplemental-dataset-header {
-      background: $mainMedium;
+      background: vars.$mainMedium;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       margin-bottom: 5px;
       font-weight: bold;
-      border-bottom: 1px solid $primaryColor;
+      border-bottom: 1px solid vars.$primaryColor;
       padding: 5px 10px;
       cursor: pointer;
       align-items: center;
@@ -97,11 +97,11 @@
         }
 
         .timespan-picker {
-          background-color: $mainLight;
+          background-color: vars.$mainLight;
           margin-top: 2px;
 
           .input-value {
-            background: $mainLight;
+            background: vars.$mainLight;
           }
 
           .date-time-input {

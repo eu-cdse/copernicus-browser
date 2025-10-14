@@ -207,7 +207,7 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/c9e05c-YOUR-INSTANCEID-HERE`,
       },
       {
-        name: 'WorldCover Annual Cloudless Mosaics V2',
+        name: 'WorldCover Annual Cloudless Mosaics',
         service: 'WMS',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

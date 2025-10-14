@@ -1,46 +1,46 @@
-@import './variables.module.scss';
+@use './variables.module.scss' as vars;
 
 /* stylelint-disable */
 .sgDialogBox3d {
-  background-color: $mainLight !important;
-  color: $textColor !important;
+  background-color: vars.$mainLight !important;
+  color: vars.$textColor !important;
 
   .Caption {
-    background-color: $mainLight !important;
-    color: $textColor !important;
+    background-color: vars.$mainLight !important;
+    color: vars.$textColor !important;
   }
 
   input[type='text'],
   input[type='password'],
   select,
   textarea {
-    background-color: $mainMedium !important;
-    color: $textColor !important;
+    background-color: vars.$mainMedium !important;
+    color: vars.$textColor !important;
   }
 
   // .actionClose {
-  //     background-color: $mainMedium !important;
+  //     background-color: vars.$mainMedium !important;
   // }
 
   .sgButton3d {
-    background-color: $primaryColor !important;
-    color: $whiteColor !important;
+    background-color: vars.$primaryColor !important;
+    color: vars.$whiteColor !important;
     border: none !important;
   }
 
   .sgSlider {
     .sgSliderMainTrack {
-      background-color: $mainDark !important;
+      background-color: vars.$mainDark !important;
       box-shadow: none !important;
     }
 
     .sgSliderLeft {
-      background-color: $primaryColor !important;
+      background-color: vars.$primaryColor !important;
     }
 
     .sgSliderThumb {
-      background-color: $primaryColor !important;
-      border: 2px solid $primaryColor !important;
+      background-color: vars.$primaryColor !important;
+      border: 2px solid vars.$primaryColor !important;
     }
   }
 
@@ -48,7 +48,7 @@
     .helpControls {
       h2,
       h3 {
-        color: $textColor !important;
+        color: vars.$textColor !important;
       }
     }
   }
@@ -56,36 +56,36 @@
 
 .sgDatePicker-calendarPopup {
   .datePickerMonthSelector {
-    background-color: $mainMedium !important;
-    color: $textColor !important;
+    background-color: vars.$mainMedium !important;
+    color: vars.$textColor !important;
 
     .datePickerMonth {
-      color: $textColor !important;
+      color: vars.$textColor !important;
     }
 
     .datePickerNextButton,
     .datePickerPreviousButton {
-      color: $textColor !important;
+      color: vars.$textColor !important;
     }
   }
 
   .datePickerDay:hover {
-    background-color: $mainDarkest !important;
-    color: $textColor !important;
+    background-color: vars.$mainDarkest !important;
+    color: vars.$textColor !important;
   }
 
   .datePickerDayIsWeekend {
-    background-color: $mainMedium !important;
+    background-color: vars.$mainMedium !important;
   }
 
   .datePickerDayIsToday {
-    background-color: $mainDarkest !important;
+    background-color: vars.$mainDarkest !important;
   }
 
   .datePickerWeekdayLabel,
   .datePickerWeekendLabel,
   .datePickerDayIsValue {
-    background-color: $primaryColor !important;
+    background-color: vars.$primaryColor !important;
   }
 }
 /* stylelint-enable */

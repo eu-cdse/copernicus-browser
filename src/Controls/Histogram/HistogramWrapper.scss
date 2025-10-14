@@ -1,4 +1,4 @@
-@import './../../variables.module.scss';
+@use './../../variables.module.scss' as vars;
 
 .histogram-wrapper {
   .histogram-button-wrapper {
@@ -10,10 +10,10 @@
     width: 40px;
     height: 40px;
     font-size: 12px;
-    background: $mainLight;
+    background: vars.$mainLight;
     color: #fff;
-    -webkit-box-shadow: $boxShadow;
-    box-shadow: $boxShadow;
+    -webkit-box-shadow: vars.$boxShadow;
+    box-shadow: vars.$boxShadow;
     text-align: center;
 
     .histogram-button {
@@ -32,11 +32,11 @@
         line-height: 40px;
         width: 40px;
         cursor: pointer;
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
 
       &.active i {
-        color: $primaryColor;
+        color: vars.$secondaryColor;
       }
     }
   }

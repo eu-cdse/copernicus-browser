@@ -1,51 +1,33 @@
-import React, { Component } from 'react';
-import onClickOutside from 'react-onclickoutside';
+import React, { useRef, useState } from 'react';
 import Tooltip from 'react-tooltip-lite';
 
 import './CollectionTooltip.scss';
+import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
 
-class CollectionTooltipContainer extends Component {
-  state = {
-    isOpened: false,
-  };
-
-  toggleTooltip = () => {
-    this.setState((oldState) => ({
-      isOpened: !oldState.isOpened,
-    }));
-  };
-
-  handleClickOutside = (e) => {
-    const { closeOnClickOutside } = this.props;
+export default function CollectionTooltipContainer(props) {
+  const [isOpened, setIsOpened] = useState(false);
+  const ref = useRef();
+  useOnClickOutside(ref, (e) => {
     const tooltipClassName = 'react-tooltip-lite';
     const clickIsInside = Array.from(document.querySelectorAll(`[class^="${tooltipClassName}"]`)).some(
       (elem) => elem.contains(e.target),
     );
-    if (closeOnClickOutside && !clickIsInside) {
-      this.setState({
-        isOpened: false,
-      });
+    if (props.closeOnClickOutside && !clickIsInside) {
+      setIsOpened(false);
     }
-  };
-
-  render() {
-    const { isOpened } = this.state;
-    const { direction, children, className } = this.props;
-
-    return (
-      <Tooltip
-        isOpen={isOpened}
-        tagName="div"
-        direction={direction}
-        content={children}
-        className={`collection-tooltip ${className} ${isOpened ? 'opened' : 'closed'}`}
-      >
-        <div onClick={this.toggleTooltip} className="collection-tooltip-icon">
-          <i className="fa fa-info"></i>
-        </div>
-      </Tooltip>
-    );
-  }
+  });
+  const { direction, children, className } = props;
+  return (
+    <Tooltip
+      isOpen={isOpened}
+      tagName="div"
+      direction={direction}
+      content={children}
+      className={`collection-tooltip ${className} ${isOpened ? 'opened' : 'closed'}`}
+    >
+      <div ref={ref} onClick={() => setIsOpened((o) => !o)} className="collection-tooltip-icon">
+        <i className="fa fa-info"></i>
+      </div>
+    </Tooltip>
+  );
 }
-
-export default onClickOutside(CollectionTooltipContainer);

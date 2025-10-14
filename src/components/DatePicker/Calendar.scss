@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .calendar-wrapper {
-  color: $textColor;
+  color: vars.$textColor;
   margin-top: 5px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 
@@ -31,12 +31,12 @@
 
   // stylelint-disable
   .DayPicker-wrapper {
-    background-color: $mainLight;
+    background-color: vars.$mainLight;
     padding-bottom: 10px;
 
     select {
-      background: $mainLight;
-      color: $textColor;
+      background: vars.$mainLight;
+      color: vars.$textColor;
       cursor: default;
       border: 1px solid #797373;
       font-size: 14px;
@@ -56,7 +56,7 @@
 
   .DayPicker-Day {
     padding: 0.5em;
-    border: 2px solid $mainLight;
+    border: 2px solid vars.$mainLight;
     min-width: 30px;
 
     @media screen and (max-width: 400px) {
@@ -77,57 +77,57 @@
 
   .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
     position: relative;
-    color: $whiteColor;
-    background-color: $primaryColor;
+    color: vars.$whiteColor;
+    background-color: vars.$primaryColor;
     border-radius: 0;
     border: none;
     cursor: default;
   }
 
   .DayPicker-Day--available {
-    background-color: $mainMedium;
-    color: $textColor;
+    background-color: vars.$mainMedium;
+    color: vars.$textColor;
     border-radius: 0;
   }
 
   .DayPicker:not(.DayPicker--interactionDisabled)
     .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-    background-color: $mainDark;
-    border: 2px solid $mainDark;
+    background-color: vars.$mainDark;
+    border: 2px solid vars.$mainDark;
     border-radius: 0;
   }
 
   .DayPicker-Day--disabled {
-    color: $mainDark;
+    color: vars.$mainDark;
     cursor: default;
     pointer-events: none;
   }
 
   .DayPicker-Day--highlighted {
-    background-color: $mainDark;
-    border: 2px solid $primaryColor;
-    color: $textColor;
+    background-color: vars.$mainDark;
+    border: 2px solid vars.$primaryColor;
+    color: vars.$textColor;
     border-radius: 0;
 
     &.DayPicker-Day--disabled {
-      color: $textColor;
+      color: vars.$textColor;
       opacity: 0.5;
       pointer-events: none;
     }
 
     &:hover {
-      border: 2px solid $primaryColor !important;
+      border: 2px solid vars.$primaryColor !important;
     }
   }
 
   .DayPicker-Day--highlightedCloudy {
-    background-color: $mainMedium;
-    border: 2px solid $mainMedium;
-    color: $textColor;
+    background-color: vars.$mainMedium;
+    border: 2px solid vars.$mainMedium;
+    color: vars.$textColor;
     border-radius: 0;
 
     &.DayPicker-Day--disabled {
-      color: $mainDark;
+      color: vars.$mainDark;
       pointer-events: none;
     }
   }
@@ -146,7 +146,7 @@
   }
 
   .DayPicker-Day--today {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     font-weight: 600;
   }
 
@@ -160,7 +160,7 @@
     position: relative;
 
     i {
-      color: $textColor;
+      color: vars.$textColor;
     }
   }
 
@@ -174,7 +174,7 @@
 
   .date-nav-button.disabled {
     i {
-      color: rgba($color: $textColor, $alpha: 0.25);
+      color: rgba(vars.$color: vars.$textColor, vars.$alpha: 0.25);
     }
   }
 
@@ -186,15 +186,15 @@
 
       .percentage {
         min-width: 40px;
-        font-weight: $fontWeightBold;
-        color: $primaryColor;
+        font-weight: vars.$fontWeightBold;
+        color: vars.$primaryColor;
       }
     }
   }
 
   .cloud-cover-calendar-cc-section {
-    background-color: $mainLight;
-    color: $textColor;
+    background-color: vars.$mainLight;
+    color: vars.$textColor;
     display: flex;
     padding: 10px 12px 0 12px;
     font-size: 14px;

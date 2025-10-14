@@ -1,9 +1,9 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .collapsible-panel {
   position: relative;
   overflow-y: hidden;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
 
   .background-image {
     position: absolute;
@@ -18,18 +18,18 @@
     display: flex;
     justify-content: space-between;
     padding: 12px;
-    color: $primaryColor;
+    color: vars.$primaryColor;
     font-size: 16px;
-    background: $mainLight;
+    background: vars.$mainLight;
 
     .title-content {
       display: flex;
       flex-grow: 1;
       max-width: 100%;
-      color: $primaryColor;
-      font-weight: $fontWeightBold;
+      color: vars.$primaryColor;
+      font-weight: vars.$fontWeightBold;
 
-      @media (max-width: $breakpoint-430) {
+      @media (max-width: vars.$breakpoint-430) {
         .date-picker {
           .date-picker-input-wrapper {
             .date-picker-input {
@@ -89,9 +89,9 @@
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
-      background-color: $mainLight;
-      box-shadow: $boxShadow;
-      color: $primaryColor;
+      background-color: vars.$mainLight;
+      box-shadow: vars.$boxShadow;
+      color: vars.$primaryColor;
       border-radius: 100%;
       width: 33px;
       height: 33px;

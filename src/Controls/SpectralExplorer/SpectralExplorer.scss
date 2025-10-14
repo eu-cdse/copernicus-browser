@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .spectral-explorer {
-  color: $textColor;
+  color: vars.$textColor;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -44,15 +44,15 @@
       padding: 10px;
 
       .eob-btn {
-        border-bottom: 3px solid $mainDark;
+        border-bottom: 3px solid vars.$mainDark;
         display: inline-block;
-        color: $textColor;
-        background: $whiteBackground;
+        color: vars.$textColor;
+        background: vars.$whiteBackground;
         margin-right: 5px;
       }
 
       .eob-btn.selected {
-        border-bottom: 3px solid $primaryColor;
+        border-bottom: 3px solid vars.$primaryColor;
       }
     }
 
@@ -63,8 +63,8 @@
       flex-direction: column;
 
       .tooltip-content {
-        background-color: $mainMedium;
-        color: $textColor;
+        background-color: vars.$mainMedium;
+        color: vars.$textColor;
         padding: 10px;
         border-radius: 5px;
         min-width: max-content;
@@ -101,7 +101,7 @@
       .chart {
         svg.background-graphics {
           text {
-            fill: $textColor;
+            fill: vars.$textColor;
           }
 
           path,
@@ -117,13 +117,13 @@
 
           line.axis-baseline {
             shape-rendering: crispEdges;
-            stroke: $textColor;
+            stroke: vars.$textColor;
           }
         }
 
         svg.visualization-layer {
           text {
-            fill: $textColor;
+            fill: vars.$textColor;
           }
 
           path,
@@ -139,7 +139,7 @@
 
           line.axis-baseline {
             shape-rendering: crispEdges;
-            stroke: $textColor;
+            stroke: vars.$textColor;
           }
         }
       }
@@ -157,7 +157,7 @@
         th,
         td {
           padding: 5px;
-          border: 1px solid $textColor;
+          border: 1px solid vars.$textColor;
           text-align: center;
           min-width: 50px;
         }
@@ -180,7 +180,7 @@
 
           span {
             padding: 0 5px;
-            color: $textColor;
+            color: vars.$textColor;
           }
         }
       }
@@ -190,10 +190,10 @@
         font-size: 0.6rem;
         padding: 0.5rem;
         font-weight: 600;
-        color: $primaryColor;
+        color: vars.$primaryColor;
 
         a {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
     }

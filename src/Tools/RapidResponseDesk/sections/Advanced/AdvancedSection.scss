@@ -1,4 +1,4 @@
-@import '../../../../variables.module';
+@use '../../../../variables.module' as vars;
 
 .advanced-section-body {
   display: flex;
@@ -30,7 +30,7 @@
       }
 
       .current-value-text {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         padding-left: 15px;
       }
 
@@ -51,7 +51,7 @@
 
     .rc-slider-mark-text,
     .rc-slider-mark-text-active {
-      color: $sliderColor;
+      color: vars.$sliderColor;
     }
   }
 

@@ -1,4 +1,4 @@
-@import '../../../../../variables.module';
+@use '../../../../../variables.module' as vars;
 
 .optical-type-container {
   .cloud-coverage-slider-container,
@@ -23,7 +23,7 @@
 
     .coverage-current-value-text {
       padding-left: 20px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 }

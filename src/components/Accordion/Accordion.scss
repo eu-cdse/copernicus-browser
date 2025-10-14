@@ -1,21 +1,21 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .accordion-wrap {
-  border-bottom: 2px solid $mainMedium;
+  border-bottom: 2px solid vars.$mainMedium;
 }
 
 .accordion-title {
   align-items: center;
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   display: flex;
   justify-content: space-between;
   padding: 12px;
-  color: $textColor;
+  color: vars.$textColor;
   font-size: 14px;
   cursor: pointer;
 
   &:hover {
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
   }
 
   &.disabled {
@@ -25,7 +25,7 @@
 }
 
 .accordion-content {
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   padding: 8px 12px;
   border-top: none;
 }

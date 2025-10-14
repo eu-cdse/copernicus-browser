@@ -1,11 +1,12 @@
 import React, { Component, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSearch,
+  faMagnifyingGlass,
   faList,
   faPaintBrush,
   faThumbtack,
-  faExchangeAlt,
+  faRightLeft,
+  faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import Sentinel2Banner from './icons/data-space-sentinel-2-banner.svg?react';
 import MultiSentinelBanner from './icons/multi-sentinel-banner.svg?react';
@@ -52,7 +53,7 @@ const Tabs = (props) => {
                 let icon = null;
                 switch (tab.props.icon) {
                   case 'search':
-                    icon = faSearch;
+                    icon = faMagnifyingGlass;
                     break;
                   case 'list':
                     icon = faList;
@@ -64,7 +65,7 @@ const Tabs = (props) => {
                     icon = faThumbtack;
                     break;
                   case 'exchange-alt':
-                    icon = faExchangeAlt;
+                    icon = faRightLeft;
                     break;
                   default:
                     icon = null;
@@ -111,7 +112,7 @@ const Tabs = (props) => {
           className="tabs-wrapper-workspace-button"
           title={t`Sentinel Hub Dashboard`}
         >
-          <i className="fas fa-external-link-alt"></i>
+          <FontAwesomeIcon icon={faUpRightFromSquare} className="fa-icon" />
           SH DASHBOARD
         </a>
         <a
@@ -121,7 +122,7 @@ const Tabs = (props) => {
           className="tabs-wrapper-workspace-button"
           title={t`Data Workspace`}
         >
-          <i className="fas fa-external-link-alt"></i>
+          <FontAwesomeIcon icon={faUpRightFromSquare} className="fa-icon" />
           WORKSPACE
           {workspacesCount !== null && workspacesCount > 0 ? (
             <span className="counter-badge">{Math.min(workspacesCount, 99)}</span>

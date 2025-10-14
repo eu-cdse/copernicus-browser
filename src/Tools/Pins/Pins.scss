@@ -1,16 +1,16 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .pins-selection-confirm {
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   top: 0;
   display: flex;
   flex-direction: column;
   margin: 0 10px 10px 10px;
 
   .eob-btn {
-    background-color: $primaryColor;
-    color: $whiteColor;
-    font-weight: $fontWeightBold;
+    background-color: vars.$primaryColor;
+    color: vars.$whiteColor;
+    font-weight: vars.$fontWeightBold;
     font-size: 13px;
     display: flex;
     align-items: center;
@@ -20,17 +20,17 @@
       margin-left: 10px;
 
       path {
-        fill: $whiteColor;
+        fill: vars.$whiteColor;
       }
     }
   }
 
   .pins-controls {
     padding: 10px 25px;
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
 
     .compare-pin-button {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       float: left;
       cursor: pointer;
       text-align: center;
@@ -49,7 +49,7 @@
 }
 
 .error {
-  color: $orangeColor;
+  color: vars.$orangeColor;
   text-align: center;
 }
 
@@ -59,12 +59,12 @@
   padding: 0 10px 10px 10px;
 
   a {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 
   textarea {
     margin-bottom: 5px;
-    font-family: $fontFamily;
+    font-family: vars.$fontFamily;
     font-style: normal;
     font-size: 13px;
     padding: 0.25em;
@@ -82,7 +82,7 @@
     align-items: flex-end;
 
     svg path {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
 
     .confirm {
@@ -99,18 +99,18 @@
 .pin-item {
   margin: 10px;
   font-size: 13px;
-  font-weight: $fontWeightNormal;
+  font-weight: vars.$fontWeightNormal;
   clear: both;
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
   user-select: none;
-  color: $textColor;
+  color: vars.$textColor;
 
   &:hover {
     cursor: pointer;
   }
 
   &.invalid {
-    background: $mainMedium;
+    background: vars.$mainMedium;
   }
 
   .pin-top-container {
@@ -128,7 +128,7 @@
         text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
 
         path {
-          fill: $textColor;
+          fill: vars.$textColor;
         }
       }
     }
@@ -143,7 +143,7 @@
       width: 80px;
 
       i {
-        color: $whiteColor;
+        color: vars.$whiteColor;
         padding: 0;
         font-size: 16px;
         text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
@@ -197,8 +197,8 @@
       content: '';
       width: 4px;
       height: 10px;
-      border-right: 2px solid $primaryColor;
-      border-bottom: 2px solid $primaryColor;
+      border-right: 2px solid vars.$primaryColor;
+      border-bottom: 2px solid vars.$primaryColor;
       transform: rotate(45deg);
       position: absolute;
       left: 14px;
@@ -262,7 +262,7 @@
       justify-content: flex-end;
 
       svg path {
-        fill: $textColor;
+        fill: vars.$textColor;
       }
 
       .confirm {
@@ -295,7 +295,7 @@
     }
 
     .pin-lat-lng-link {
-      color: $textColor;
+      color: vars.$textColor;
       text-decoration: underline;
       border: none;
       background-color: transparent;
@@ -325,7 +325,7 @@
           text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
 
           path {
-            stroke: $textColor;
+            stroke: vars.$textColor;
           }
         }
       }
@@ -333,16 +333,16 @@
   }
 
   &.dragging {
-    color: $textColor;
+    color: vars.$textColor;
     opacity: 0.8;
-    background-color: $mainDark !important;
+    background-color: vars.$mainDark !important;
     box-shadow: 0 3px 5px #000;
     cursor: -webkit-grabbing !important;
   }
 }
 
 .pins-header {
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   position: sticky;
   top: 0;
   display: flex;
@@ -358,7 +358,7 @@
 
     .pins-header-title {
       font-size: 16px;
-      font-weight: $fontWeightBold;
+      font-weight: vars.$fontWeightBold;
       text-transform: uppercase;
     }
 
@@ -369,7 +369,7 @@
 
       .pins-header-order-label {
         font-size: 13px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
         margin-right: 10px;
       }
 
@@ -384,7 +384,7 @@
         /* stylelint-disable */
         .order-by-select__single-value {
           font-size: 13px;
-          font-weight: $fontWeightNormal;
+          font-weight: vars.$fontWeightNormal;
         }
 
         .order-by-select__menu {
@@ -395,7 +395,7 @@
               height: 20px;
               line-height: 20px;
               font-size: 13px;
-              font-weight: $fontWeightNormal;
+              font-weight: vars.$fontWeightNormal;
               padding: 0 6px;
             }
           }
@@ -409,7 +409,7 @@
 
               #chevron-up,
               #chevron-down {
-                stroke: $grayColor;
+                stroke: vars.$grayColor;
               }
             }
           }
@@ -432,7 +432,7 @@
       .dropdown {
         max-width: 130px;
         outline: none;
-        color: $textColor;
+        color: vars.$textColor;
         font-size: 13px;
         cursor: pointer;
         background-image: url("data:image/svg+xml,%3csvg width='14' height='7' viewBox='0 0 14 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 0.582031L6.83434 6.41637' stroke='%23041223' stroke-linecap='round'/%3e%3cpath d='M12.668 0.582031L6.83363 6.41637' stroke='%23041223' stroke-linecap='round'/%3e%3c/svg%3e");
@@ -445,10 +445,10 @@
 
   .pins-controls {
     padding: 10px 25px;
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
 
     .compare-pin-button {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       float: left;
       cursor: pointer;
       text-align: center;
@@ -469,17 +469,17 @@
   bottom: 0;
   font-size: 13px;
   line-height: 17px;
-  font-weight: $fontWeightBold;
+  font-weight: vars.$fontWeightBold;
   width: 100%;
   height: 35px;
-  color: $textColor;
+  color: vars.$textColor;
   cursor: pointer;
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
 }
 
 .pin-panel {
-  background-color: $mainLight;
-  color: $textColor;
+  background-color: vars.$mainLight;
+  color: vars.$textColor;
   display: flex;
   flex-flow: column;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
@@ -491,12 +491,12 @@
 
   .clear-data {
     float: right;
-    color: $primaryColor;
+    color: vars.$primaryColor;
     cursor: pointer;
   }
 
   .results-heading {
-    border-bottom: 2px solid $primaryColor;
+    border-bottom: 2px solid vars.$primaryColor;
     padding: 5px 0;
     margin-top: 10px;
   }
@@ -504,7 +504,7 @@
   .rodal .results-panel {
     height: calc(100% - 20px);
     overflow: auto;
-    background: $mainMedium;
+    background: vars.$mainMedium;
   }
 
   .compare-toggle-panel {
@@ -512,6 +512,6 @@
     padding-top: 8px;
     justify-content: center;
     text-align: center;
-    color: $textColor;
+    color: vars.$textColor;
   }
 }

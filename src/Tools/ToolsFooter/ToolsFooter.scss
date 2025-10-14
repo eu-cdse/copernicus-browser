@@ -1,8 +1,8 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .tools-footer {
   font-size: 12px;
-  color: $whiteColor;
+  color: vars.$whiteColor;
 
   .footer-info {
     .free-signup {
@@ -12,11 +12,11 @@
       margin: 0;
       padding: 0;
       height: 34px;
-      background-color: $mainDark;
+      background-color: vars.$mainDark;
 
       * {
         font-size: 14px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
       }
     }
 
@@ -26,8 +26,8 @@
       justify-content: space-between;
       height: 52px;
       padding: 0 20px;
-      background-color: $primaryColor;
-      color: $whiteColor;
+      background-color: vars.$primaryColor;
+      color: vars.$whiteColor;
 
       .banners {
         display: inherit;
@@ -36,7 +36,7 @@
 
         .europe-banner {
           display: inherit;
-          border: 1px solid $whiteColor;
+          border: 1px solid vars.$whiteColor;
         }
 
         .esa-banner {
@@ -82,9 +82,9 @@
 
           .about,
           .support {
-            color: $whiteColor;
+            color: vars.$whiteColor;
             font-size: 13px;
-            font-weight: $fontWeightNormal;
+            font-weight: vars.$fontWeightNormal;
           }
 
           @media screen and (max-width: 420px) {
@@ -100,13 +100,13 @@
         text-align: center;
 
         * {
-          color: $whiteColor;
+          color: vars.$whiteColor;
           font-size: 12px;
-          font-weight: $fontWeightNormal;
+          font-weight: vars.$fontWeightNormal;
         }
 
         a {
-          color: $whiteColor;
+          color: vars.$whiteColor;
         }
       }
 
@@ -114,10 +114,10 @@
         position: absolute;
         bottom: 1px;
         right: 5px;
-        font-family: $fontFamily;
+        font-family: vars.$fontFamily;
         font-size: 8px;
-        color: $whiteColor;
-        font-weight: $fontWeightNormal;
+        color: vars.$whiteColor;
+        font-weight: vars.$fontWeightNormal;
         text-align: right;
 
         span {
@@ -130,7 +130,7 @@
     }
   }
 
-  @media screen and (max-width: $breakpoint-768) {
+  @media screen and (max-width: vars.$breakpoint-768) {
     .footer-info {
       display: none;
     }

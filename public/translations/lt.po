@@ -492,9 +492,6 @@ msgstr "Jutimo laikas"
 msgid "Load more"
 msgstr "Įkelti daugiau"
 
-msgid "Loading more results ..."
-msgstr "Įkeliama daugiau rezultatų ..."
-
 msgid "Results"
 msgstr "Rezultatai"
 
@@ -701,26 +698,14 @@ msgstr "Sukurti laiko intervalo animaciją"
 msgid "Mark point of interest"
 msgstr "Pažymėti dominančią vietą"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Center map on feature"
 msgstr "Centruokite žemėlapį ant funkcijos"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove geometry"
-msgstr "Pašalinti geometriją"
 
 msgid "Area of interest"
 msgstr "Dominanti sritis"
 
 msgid "Select mode"
 msgstr "Pasirinkti režimą"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove measurement"
-msgstr "Pašalinti matavimą"
 
 msgid "km"
 msgstr "km"
@@ -748,11 +733,6 @@ msgstr "Atstatyti viską"
 
 msgid "Copy geometry to clipboard"
 msgstr "Nukopijuoti geometriją į iškarpinę"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Cancel edit."
-msgstr "Atšaukti redagavimą."
 
 msgid "Least cloud coverage"
 msgstr "Mažiausias debesų padengimas"
@@ -5018,15 +4998,11 @@ msgstr ""
 msgid "Processing parameters"
 msgstr "Apdorojimo parametrai"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw rectangular area of interest for image downloads and timelapse"
 msgstr ""
 "Nubrėžkite stačiakampę dominančią sritį vaizdų atsisiuntimui ir laikui "
 "bėgant"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw polygonal area of interest for image downloads and timelapse"
 msgstr ""
 "Nubraižykite daugiakampę dominančią sritį vaizdų atsisiuntimui ir laikui "
@@ -5977,11 +5953,6 @@ msgstr "Rodyti produktus žemėlapyje"
 
 msgid "Show tutorial"
 msgstr "Rodyti mokymą"
-
-msgid "Measure (Click to place first vertex and double click to finish)"
-msgstr ""
-"Matuoti (spustelėkite, kad patalpintumėte pirmąją viršūnę, ir dukart "
-"spustelėkite, kad užbaigtumėte)"
 
 #. jsx-a11y/anchor-is-valid
 #. eslint-disable-next-line
@@ -12112,9 +12083,6 @@ msgstr ""
 msgid "Sentinel-2 Quarterly Mosaics"
 msgstr ""
 
-msgid "WorldCover Annual Cloudless Mosaics V2"
-msgstr ""
-
 msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
@@ -12202,4 +12170,13 @@ msgid ""
 "normalized NDVI estimation. The uncertainties of the normalized "
 "reflectances are estimated by propagating the uncertainties associated to "
 "the BRDF model parameters found via the inversion."
+msgstr ""
+
+msgid "WorldCover Annual Cloudless Mosaics"
+msgstr ""
+
+#. Button to start/stop measuring
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
+msgid "Measure (Click to start, double click to finish)"
 msgstr ""

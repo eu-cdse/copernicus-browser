@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .browse-product-modal {
   .rodal-dialog {
@@ -23,17 +23,17 @@
 }
 
 .browse-product-title {
-  font-weight: $fontWeightBold;
+  font-weight: vars.$fontWeightBold;
   font-size: 16px;
   text-transform: uppercase;
-  color: $primaryColor;
+  color: vars.$primaryColor;
   margin: 0;
 }
 
 .browse-product {
   display: flex;
   flex-flow: column;
-  color: $textColor;
+  color: vars.$textColor;
   margin-top: 10px;
 
   .browse-product-content {

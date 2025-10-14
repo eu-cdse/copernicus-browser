@@ -1,5 +1,5 @@
 /* stylelint-disable */
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .image-download-preview-wrapper {
   display: flex;

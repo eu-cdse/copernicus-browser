@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .gwt-DialogBox,
@@ -13,7 +13,7 @@
   position: absolute;
   top: 360px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  background: $mainLight;
+  background: vars.$mainLight;
   padding: 0;
   color: #fff;
   margin: 0;
@@ -31,7 +31,7 @@
   }
 
   .icon {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     cursor: pointer;
     width: 38px;
   }
@@ -102,7 +102,7 @@
   /* stylelint-enable */
 
   .loader-bar {
-    background: $primaryColor;
+    background: vars.$primaryColor;
     position: fixed;
     z-index: 1031;
     top: 0;
@@ -132,14 +132,14 @@
       height: 40px;
       font-size: 21px;
       line-height: 40px;
-      background: $mainLight;
-      color: $secondaryColor;
-      -webkit-box-shadow: $boxShadow;
-      box-shadow: $boxShadow;
+      background: vars.$mainLight;
+      color: vars.$secondaryColor;
+      -webkit-box-shadow: vars.$boxShadow;
+      box-shadow: vars.$boxShadow;
       text-align: center;
 
       svg {
-        fill: $primaryColor;
+        fill: vars.$primaryColor;
       }
 
       &.animated {
@@ -153,16 +153,16 @@
       }
 
       .icon {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
 
       i {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
 
       &.help {
         i {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
 
@@ -175,10 +175,10 @@
       }
 
       &.enabled {
-        box-shadow: $boxShadow;
+        box-shadow: vars.$boxShadow;
 
         i {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
     }
@@ -192,8 +192,8 @@
     display: flex;
     flex-direction: row;
     font-size: 10px;
-    background: $mainDark;
-    color: $textColor;
+    background: vars.$mainDark;
+    color: vars.$textColor;
     padding: 1px;
     justify-content: center;
     min-width: 250px;
@@ -206,14 +206,14 @@
     z-index: 400;
     display: flex;
     flex-direction: row;
-    background: $mainDark;
+    background: vars.$mainDark;
     padding: 1px;
     justify-content: center;
     min-width: 250px;
 
     .attribution-link {
       text-decoration: none;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       font-size: 11px;
       margin-right: 5px;
     }

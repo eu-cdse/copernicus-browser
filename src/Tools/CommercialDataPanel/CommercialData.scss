@@ -1,12 +1,12 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 div.commercial-data-description {
   padding: 5px;
   margin-right: 0;
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
 
   strong {
-    color: $textColor;
+    color: vars.$textColor;
   }
 
   p {
@@ -27,7 +27,7 @@ div.commercial-data-description {
   }
 
   a {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 
   ul {

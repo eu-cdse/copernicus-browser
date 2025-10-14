@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .commercial-data-transactions {
   display: flex;
@@ -7,7 +7,7 @@
   .actions-container {
     position: sticky;
     bottom: -10px;
-    background: $mainLight;
+    background: vars.$mainLight;
   }
 
   .transactions-list {
@@ -43,7 +43,7 @@
         margin: 2px 0;
 
         .bold {
-          font-weight: $fontWeightBold;
+          font-weight: vars.$fontWeightBold;
         }
 
         .transaction-header {
@@ -54,7 +54,7 @@
 
           &:hover {
             cursor: pointer;
-            color: $primaryColor;
+            color: vars.$primaryColor;
           }
 
           .transaction-title {
@@ -84,7 +84,7 @@
             }
 
             i {
-              color: $primaryColor;
+              color: vars.$primaryColor;
             }
           }
 

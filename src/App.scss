@@ -1,4 +1,4 @@
-@import './variables.module.scss';
+@use './variables.module.scss' as vars;
 
 html,
 body,
@@ -27,7 +27,7 @@ body,
 }
 
 .rodal-dialog {
-  background: $mainLight;
+  background: vars.$mainLight;
 }
 
 .fa-exclamation-circle {

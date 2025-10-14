@@ -1,10 +1,10 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .language-selector {
   max-height: 25px;
 
   .menu-globe {
-    color: $whiteColor;
+    color: vars.$whiteColor;
     border-radius: 0;
     width: 45px;
     margin: 0;
@@ -15,12 +15,12 @@
 
   .menu-flags {
     position: static;
-    color: $whiteColor;
+    color: vars.$whiteColor;
     padding: 0;
 
     button {
       padding: 0;
-      color: $textColor;
+      color: vars.$textColor;
       text-transform: uppercase;
       border: none;
 
@@ -38,7 +38,7 @@
 
       span {
         font-size: 13px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
         margin: 0;
         padding: 0;
       }
@@ -55,14 +55,14 @@
       width: max-content;
       max-width: calc(100% - 57px);
       max-height: none;
-      color: $textColor;
-      background-color: $mainLight;
+      color: vars.$textColor;
+      background-color: vars.$mainLight;
       padding: 20px;
       padding-bottom: 60px;
       border: none;
       border-radius: 0;
       text-transform: capitalize;
-      box-shadow: $boxShadow;
+      box-shadow: vars.$boxShadow;
       z-index: 3;
       margin: 0 0 0 -3px;
 
@@ -78,8 +78,8 @@
       }
 
       li:hover {
-        background-color: $primaryColor;
-        color: $whiteColor;
+        background-color: vars.$primaryColor;
+        color: vars.$whiteColor;
       }
 
       @media only screen and (max-height: 450px) {
@@ -101,7 +101,8 @@
       }
     }
 
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] { /* stylelint-disable-line */
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] {
+      /* stylelint-disable-line */
       border-radius: 0;
       width: 45px;
       margin: 0;
@@ -121,23 +122,27 @@
       }
 
       span {
-        color: $whiteColor;
+        color: vars.$whiteColor;
       }
     }
 
-    .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+    .ReactFlagsSelect-module_selectFlag__2q5gC {
+      /* stylelint-disable-line */
       display: none;
     }
 
-    .ReactFlagsSelect-module_selectOptionValue__vS99- { /* stylelint-disable-line */
-      .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+    .ReactFlagsSelect-module_selectOptionValue__vS99- {
+      /* stylelint-disable-line */
+      .ReactFlagsSelect-module_selectFlag__2q5gC {
+        /* stylelint-disable-line */
         display: inline-flex;
       }
     }
 
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] { /* stylelint-disable-line */
-      background-color: $mainLight;
-      color: $textColor;
+    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] {
+      /* stylelint-disable-line */
+      background-color: vars.$mainLight;
+      color: vars.$textColor;
       border-radius: 0;
       position: relative;
       z-index: 3;
@@ -159,39 +164,46 @@
       }
 
       span {
-        color: $textColor;
+        color: vars.$textColor;
       }
     }
 
-    .ReactFlagsSelect-module_selectOption__3pcgW { /* stylelint-disable-line */
+    .ReactFlagsSelect-module_selectOption__3pcgW {
+      /* stylelint-disable-line */
       margin: 0 2px;
     }
   }
 
-  .ReactFlagsSelect-module_flagsSelect__2pfa2 { /* stylelint-disable-line */
+  .ReactFlagsSelect-module_flagsSelect__2pfa2 {
+    /* stylelint-disable-line */
     ul {
-      #rfs-CA { /* stylelint-disable-line */
-        .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+      #rfs-CA {
+        /* stylelint-disable-line */
+        .ReactFlagsSelect-module_selectFlag__2q5gC {
+          /* stylelint-disable-line */
           content: url(../LanguageSelector/icons/catalan-flag.svg);
         }
       }
 
-      #rfs-TO { /* stylelint-disable-line */
+      #rfs-TO {
+        /* stylelint-disable-line */
         border-top: none;
 
-        .ReactFlagsSelect-module_selectFlag__2q5gC { /* stylelint-disable-line */
+        .ReactFlagsSelect-module_selectFlag__2q5gC {
+          /* stylelint-disable-line */
           content: url(../LanguageSelector/icons/people-group.svg);
         }
 
-        .ReactFlagsSelect-module_label__27pw9 { /* stylelint-disable-line */
-          color: $primaryColor;
+        .ReactFlagsSelect-module_label__27pw9 {
+          /* stylelint-disable-line */
+          color: vars.$primaryColor;
           text-decoration: underline;
           text-underline-offset: 2px;
           overflow: visible;
         }
 
         &:hover {
-          background-color: $whiteBackground;
+          background-color: vars.$whiteBackground;
         }
       }
     }
@@ -204,7 +216,7 @@
     left: 0;
     right: 0;
     width: 45px;
-    background: $whiteColor;
+    background: vars.$whiteColor;
     height: 1px;
     border-radius: 10px 10px 10px 10px;
   }

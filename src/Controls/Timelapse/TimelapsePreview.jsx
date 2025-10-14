@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { t } from 'ttag';
 import RCSlider from 'rc-slider';
 import { isMobile } from 'react-device-detect';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import { generateS3PreSignedPost, getS3FileUrl, isImageApplicable, uploadFileToS3 } from './Timelapse.utils';
@@ -12,6 +12,18 @@ import { TRANSITION, FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG } from '../../con
 import TimelapseSettings from './TimelapseSettings';
 
 export class TimelapsePreview extends Component {
+  constructor(props) {
+    super(props);
+    this.nodeRefs = new Map(); // url -> ref
+  }
+
+  getNodeRef = (key) => {
+    if (!this.nodeRefs.has(key)) {
+      this.nodeRefs.set(key, createRef());
+    }
+    return this.nodeRefs.get(key);
+  };
+
   state = {
     displaySocialShareOptions: false,
     displayDownloadPanel: false,
@@ -206,20 +218,24 @@ export class TimelapsePreview extends Component {
           {isVideoElement ? (
             <video className="preview-video" src={image.url} autoPlay loop muted />
           ) : isPreviewPlaying && transition !== TRANSITION.none ? (
-            <CSSTransitionGroup
-              className="transition-group"
-              transitionName="example"
-              transitionEnterTimeout={(fadeDuration / timelapseFPS) * 1000}
-              transitionLeaveTimeout={(fadeDuration / timelapseFPS) * 1000}
-            >
-              <img
-                key={image.url}
-                className="preview-image-transition"
-                src={image.url}
-                alt=""
-                style={{ transitionDuration: (fadeDuration / timelapseFPS) * 1000 + 'ms' }}
-              />
-            </CSSTransitionGroup>
+            <TransitionGroup className="transition-group">
+              {(() => {
+                const key = image.url;
+                const nodeRef = this.getNodeRef(key);
+                const timeout = Math.round((fadeDuration / timelapseFPS) * 1000);
+                return (
+                  <CSSTransition key={key} nodeRef={nodeRef} timeout={timeout} classNames="example">
+                    <img
+                      ref={nodeRef}
+                      className="preview-image-transition"
+                      src={image.url}
+                      alt=""
+                      style={{ transitionDuration: `${timeout}ms` }}
+                    />
+                  </CSSTransition>
+                );
+              })()}
+            </TransitionGroup>
           ) : (
             <img className="preview-image" src={image.url} alt="" />
           )}

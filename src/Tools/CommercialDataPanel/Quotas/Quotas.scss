@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .commercial-data-quotas {
   text-align: center;
@@ -9,7 +9,7 @@
 
     thead {
       font-weight: 500;
-      border-bottom: 1px dashed $textColor;
+      border-bottom: 1px dashed vars.$textColor;
     }
 
     td {

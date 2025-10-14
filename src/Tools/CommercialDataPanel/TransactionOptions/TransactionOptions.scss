@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .commercial-data-order-options,
 .commercial-data-subscription-options {
@@ -40,7 +40,7 @@
     }
 
     a {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 
@@ -76,7 +76,7 @@
       align-items: center;
 
       i {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         cursor: pointer;
       }
     }

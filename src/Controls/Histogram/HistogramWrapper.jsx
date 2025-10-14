@@ -109,7 +109,8 @@ class HistogramWrapper extends Component {
             className={`histogram-button ${histogramEnabled ? '' : 'disabled'} ${
               histogramOpened ? 'active' : ''
             }`}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               this.onToggleHistogramModal(histogramEnabled, errorMessage);
             }}
           >

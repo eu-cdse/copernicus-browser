@@ -1,11 +1,11 @@
-@import '../../../../variables.module.scss';
+@use '../../../../variables.module.scss' as vars;
 
 .search-panel {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
   margin-right: 0;
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
 
   &.disabled {
     pointer-events: none;
@@ -21,13 +21,13 @@
   }
 
   .top-label {
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
 
     .data-source-advanced-title {
       font-weight: 700;
       font-size: 16px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       margin: 0;
       padding-bottom: 12px;
       text-transform: uppercase;
@@ -36,15 +36,15 @@
 
   div.top-label,
   div.select-time-range {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     padding: 12px;
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
 
     .time-range-advanced-title {
       padding-bottom: 12px;
       text-transform: uppercase;
-      font-weight: $fontWeightBold;
+      font-weight: vars.$fontWeightBold;
     }
 
     .top-label {
@@ -52,13 +52,13 @@
     }
 
     .filter-search-by-months {
-      color: $textColor;
+      color: vars.$textColor;
       margin-left: 0;
     }
   }
 
   div.top-label > div {
-    font-weight: $fontWeightNormal;
+    font-weight: vars.$fontWeightNormal;
   }
 
   div.top-label {
@@ -86,19 +86,19 @@
     }
 
     label {
-      color: $textColor;
+      color: vars.$textColor;
       font-size: 14px;
     }
 
     .no-theme-selected {
       font-size: 14px;
-      color: $orangeColor;
+      color: vars.$orangeColor;
     }
   }
 
   .search-criteria-wrapper {
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
 
     input {
       width: 100%;
@@ -106,9 +106,9 @@
       padding: 9px;
       box-sizing: border-box;
       font-size: 14px;
-      background-color: $mainLight;
-      box-shadow: $boxShadow;
-      color: $textColor;
+      background-color: vars.$mainLight;
+      box-shadow: vars.$boxShadow;
+      color: vars.$textColor;
       border: 0;
       border-radius: 0;
     }
@@ -116,7 +116,7 @@
     .search-criteria-geometry-notice {
       padding-top: 6px;
       font-size: 10px;
-      color: $textColor;
+      color: vars.$textColor;
     }
   }
 
@@ -127,7 +127,7 @@
     label {
       float: left;
       clear: both;
-      color: $textColor;
+      color: vars.$textColor;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -175,7 +175,7 @@
 
   .notification {
     a {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
 
     p {
@@ -184,18 +184,18 @@
   }
 
   .search-btn-wrapper {
-    background: $mainLight;
+    background: vars.$mainLight;
 
     .eob-btn {
       margin: 0 10px 15px;
       display: block;
       text-align: center;
-      background-color: $secondaryColor;
-      box-shadow: $boxShadow;
+      background-color: vars.$secondaryColor;
+      box-shadow: vars.$boxShadow;
       font-size: 14px;
 
       &:hover {
-        background-color: $hoverSecondaryColor;
+        background-color: vars.$hoverSecondaryColor;
       }
     }
   }

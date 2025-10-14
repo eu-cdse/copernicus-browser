@@ -1,10 +1,11 @@
-@import './../../variables.module.scss';
+@use './../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .measure-text {
   display: inline-flex;
   padding: 0 5px 0 5px;
-  color: $textColor;
+  color: vars.$textColor;
+  align-self: baseline;
 }
 
 .measurePanel {

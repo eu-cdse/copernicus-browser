@@ -1,15 +1,15 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
-$searchBorderColour: $primaryColor;
+$searchBorderColour: vars.$primaryColor;
 
 .tools-wrapper {
   max-width: 450px;
   height: 100vh;
   max-height: 100%;
   color: #868fa0;
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
   position: relative;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
   z-index: 500;
 
   @media screen and (max-width: 450px) {
@@ -35,14 +35,14 @@ $searchBorderColour: $primaryColor;
     position: absolute;
     top: 10px;
     left: 10px;
-    color: $whiteColor;
-    background: $primaryColor;
+    color: vars.$whiteColor;
+    background: vars.$primaryColor;
     border-radius: 40px;
     text-align: center;
     cursor: pointer;
     z-index: 2;
     transition: all ease 0.4s;
-    box-shadow: $boxShadow;
+    box-shadow: vars.$boxShadow;
 
     i {
       margin: 5px;
@@ -81,7 +81,7 @@ $searchBorderColour: $primaryColor;
 
   .configurations-settings {
     margin-left: 10px;
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 }
 
@@ -101,10 +101,10 @@ $searchBorderColour: $primaryColor;
   background-position-x: 100%;
   background-position-y: 0;
   border: none;
-  border-bottom: 1px solid $textColor;
+  border-bottom: 1px solid vars.$textColor;
   border-radius: 0;
   padding: 7px 15px 2px 0;
-  color: $textColor;
+  color: vars.$textColor;
   font-size: 0.9em;
   width: 100%;
   text-align: left;
@@ -130,7 +130,7 @@ $searchBorderColour: $primaryColor;
 
 .commercial-data-wrapper,
 .advanced-search-wrapper {
-  color: $textColor;
+  color: vars.$textColor;
 
   & > * {
     margin: 5px 1px 5px 5px;

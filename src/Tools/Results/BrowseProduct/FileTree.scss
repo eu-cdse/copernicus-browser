@@ -1,11 +1,11 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .file-tree {
   padding: 10px;
-  background-color: $mainDark;
+  background-color: vars.$mainDark;
   display: flex;
   flex-flow: column;
-  color: $textColor;
+  color: vars.$textColor;
   word-wrap: break-word;
   font-size: 14px;
 
@@ -14,7 +14,7 @@
     min-width: 15px;
 
     &.download {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       cursor: pointer;
     }
   }
@@ -25,18 +25,18 @@
     flex-grow: 0;
 
     .selected {
-      background-color: $mainDarkest;
+      background-color: vars.$mainDarkest;
     }
 
     .expanded {
       i {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
 
     .collapsed {
       i {
-        color: $mainDarkest;
+        color: vars.$mainDarkest;
       }
     }
   }
@@ -65,7 +65,7 @@
     word-break: break-word;
 
     &:hover {
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
     }
   }
 }

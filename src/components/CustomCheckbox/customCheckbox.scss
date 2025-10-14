@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .custom-checkbox-container {
   position: relative;
@@ -33,43 +33,43 @@
         width: 18px;
         height: 18px;
         margin: 0;
-        background-color: $customCheckboxBackgroundColor;
+        background-color: vars.$customCheckboxBackgroundColor;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
 
         &.white {
-          background-color: $whiteColor;
-          box-shadow: $boxShadow;
+          background-color: vars.$whiteColor;
+          box-shadow: vars.$boxShadow;
         }
 
         &:active {
-          border: 1px solid $activePrimaryColor;
+          border: 1px solid vars.$activePrimaryColor;
         }
 
         &:checked {
-          background-color: $primaryColor;
+          background-color: vars.$primaryColor;
         }
 
         &:hover:checked {
-          background-color: $hoverPrimaryColor;
+          background-color: vars.$hoverPrimaryColor;
         }
 
         &:hover:active:checked {
-          border: 1px solid $activePrimaryColor;
-          background-color: $activePrimaryColor;
+          border: 1px solid vars.$activePrimaryColor;
+          background-color: vars.$activePrimaryColor;
         }
 
         &.disabled {
           cursor: not-allowed;
-          background-color: $sliderRailGray;
+          background-color: vars.$sliderRailGray;
           opacity: 0.9;
         }
       }
 
       .check-mark {
         fill: none;
-        stroke: $whiteColor;
+        stroke: vars.$whiteColor;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -78,7 +78,7 @@
     }
 
     .custom-checkbox-text {
-      font-weight: $fontWeightNormal;
+      font-weight: vars.$fontWeightNormal;
       margin-left: 5px;
     }
 

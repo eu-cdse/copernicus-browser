@@ -1,12 +1,12 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .elevation-profile {
   display: flex;
   flex-direction: column;
 
   &.draggable-dialog-box {
-    color: $textColor;
-    background-color: $whiteBackground;
+    color: vars.$textColor;
+    background-color: vars.$whiteBackground;
   }
 
   .fetching {
@@ -42,10 +42,10 @@
 
     .container {
       .tooltip-content {
-        background: $mainMedium;
+        background: vars.$mainMedium;
         position: relative;
-        border: 1px solid $mainDark;
-        color: $textColor;
+        border: 1px solid vars.$mainDark;
+        color: vars.$textColor;
         padding: 20px;
         z-index: 100;
         transform: translateX(-50%) translateY(5px);
@@ -57,13 +57,13 @@
       }
 
       circle.frame-hover {
-        stroke: $textColor;
+        stroke: vars.$textColor;
         r: 4;
       }
 
       svg.background-graphics {
         text {
-          fill: $textColor;
+          fill: vars.$textColor;
         }
 
         path,
@@ -73,19 +73,19 @@
 
         path.tick-line {
           shape-rendering: crispEdges;
-          stroke: $mainDarkest;
+          stroke: vars.$mainDarkest;
           stroke-dasharray: 5, 5;
         }
 
         line.axis-baseline {
           shape-rendering: crispEdges;
-          stroke: $textColor;
+          stroke: vars.$textColor;
         }
       }
 
       svg.visualization-layer {
         text {
-          fill: $textColor;
+          fill: vars.$textColor;
         }
 
         path,
@@ -101,7 +101,7 @@
 
         line.axis-baseline {
           shape-rendering: crispEdges;
-          stroke: $textColor;
+          stroke: vars.$textColor;
         }
       }
     }
@@ -118,7 +118,7 @@
 
         span {
           padding: 0 5px;
-          color: $textColor;
+          color: vars.$textColor;
         }
       }
     }

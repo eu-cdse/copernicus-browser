@@ -485,9 +485,6 @@ msgstr "Date d'acquisition"
 msgid "Load more"
 msgstr "Charger plus de données"
 
-msgid "Loading more results ..."
-msgstr "Chargement de plus de résultats ..."
-
 msgid "Results"
 msgstr "Résultats"
 
@@ -703,26 +700,14 @@ msgstr "Créer un timelapse"
 msgid "Mark point of interest"
 msgstr "Marquer un point d'intérêt"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Center map on feature"
 msgstr "Centrer la carte sur l'élément"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove geometry"
-msgstr "Supprimer la géométrie"
 
 msgid "Area of interest"
 msgstr "Zone d'intérêt"
 
 msgid "Select mode"
 msgstr "Mode de sélection"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove measurement"
-msgstr "Supprimer la mesure"
 
 msgid "km"
 msgstr "km"
@@ -750,11 +735,6 @@ msgstr "Réinitialiser tout"
 
 msgid "Copy geometry to clipboard"
 msgstr "Copier la géométrie dans le presse-papiers"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Cancel edit."
-msgstr "Annuler les modifications."
 
 msgid "Least cloud coverage"
 msgstr "Couverture nuageuse la plus faible"
@@ -5479,13 +5459,9 @@ msgstr ""
 msgid "Processing parameters"
 msgstr "Paramètres de traitement"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw rectangular area of interest for image downloads and timelapse"
 msgstr "Dessiner une zone d'intérêt rectangulaire pour les téléchargements d'images"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw polygonal area of interest for image downloads and timelapse"
 msgstr "Dessiner une zone d'intérêt polygonale pour les téléchargements d'images"
 
@@ -6594,11 +6570,6 @@ msgstr "Afficher les produits sur la carte"
 
 msgid "Show tutorial"
 msgstr "Afficher le tutoriel"
-
-msgid "Measure (Click to place first vertex and double click to finish)"
-msgstr ""
-"Mesurer (Cliquez afin de créer le premier sommet et double-cliquer pour "
-"terminer)"
 
 #. jsx-a11y/anchor-is-valid
 #. eslint-disable-next-line
@@ -12356,9 +12327,6 @@ msgstr ""
 msgid "Sentinel-2 Quarterly Mosaics"
 msgstr ""
 
-msgid "WorldCover Annual Cloudless Mosaics V2"
-msgstr ""
-
 msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
@@ -12446,4 +12414,13 @@ msgid ""
 "normalized NDVI estimation. The uncertainties of the normalized "
 "reflectances are estimated by propagating the uncertainties associated to "
 "the BRDF model parameters found via the inversion."
+msgstr ""
+
+msgid "WorldCover Annual Cloudless Mosaics"
+msgstr ""
+
+#. Button to start/stop measuring
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
+msgid "Measure (Click to start, double click to finish)"
 msgstr ""

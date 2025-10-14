@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 div.layer-details {
   border-bottom: 1px solid #555;
@@ -38,7 +38,7 @@ div.layer-details {
         display: block;
         font-size: 12px;
         margin-left: 10px;
-        color: $textColor;
+        color: vars.$textColor;
         white-space: pre-wrap;
       }
     }
@@ -76,7 +76,7 @@ div.layer-details {
           font-size: 12px;
           line-height: 26px;
           margin-bottom: -12px;
-          color: $textColor;
+          color: vars.$textColor;
         }
 
         .hidden-width-placeholders {
@@ -120,13 +120,13 @@ div.layer-details {
     display: flex;
     flex-direction: column;
     flex: 1;
-    color: $textColor;
+    color: vars.$textColor;
     min-width: 50%;
 
     h1,
     h2,
     h3 {
-      color: $textColor;
+      color: vars.$textColor;
       padding-left: 15px;
       padding-right: 30px;
     }
@@ -151,7 +151,7 @@ div.layer-details {
     }
 
     a {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       cursor: pointer;
     }
 

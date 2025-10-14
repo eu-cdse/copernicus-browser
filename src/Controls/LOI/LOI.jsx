@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { t } from 'ttag';
 import L from 'leaflet';
 import store, { loiSlice, modalSlice } from '../../store';
@@ -13,28 +13,10 @@ import LoiIcon from './loi-icon.svg?react';
 import { ModalId } from '../../const';
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
 
-const LOIPanelWrapper = ({ setMenuExpanded, className, shouldClose, children }) => {
-  const closeTimeout = useRef(null);
+const LOIPanelWrapper = ({ className, children }) => {
   return (
     <div className={`loi-wrapper ${className}`}>
-      <div
-        className={`loiPanel panelButton floatItem`}
-        onMouseEnter={() => {
-          if (closeTimeout?.current) {
-            clearTimeout(closeTimeout.current);
-            closeTimeout.current = null;
-          }
-          setMenuExpanded(true);
-        }}
-        onMouseLeave={() => {
-          if (shouldClose) {
-            closeTimeout.current = setTimeout(() => {
-              setMenuExpanded(false);
-            }, 400);
-          }
-        }}
-        title={t`Draw a line`}
-      >
+      <div className={`loiPanel panelButton floatItem`} title={t`Draw a line`}>
         {children}
       </div>
     </div>
@@ -45,7 +27,14 @@ const MenuItem = ({ title, className, onClick, iconClassName }) => {
   return (
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
-    <a title={title} onClick={onClick} className={className}>
+    <a
+      title={title}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className={className}
+    >
       <i className={iconClassName} />
     </a>
   );
@@ -53,10 +42,8 @@ const MenuItem = ({ title, className, onClick, iconClassName }) => {
 
 const LOI = ({ className, map, loiBounds, loiGeometry }) => {
   const [menuExpanded, setMenuExpanded] = useState(false);
-  const [drawing, setDrawing] = useState(false);
   const [uploadDialog, showUploadDialog] = useState(false);
-  const onEndDrawing = useCallback(() => setDrawing(false), []);
-  const { startDrawingLoi, resetLoi } = useLoi(map, { onEndDrawing: onEndDrawing });
+  const { startDrawingLoi, resetLoi } = useLoi(map, { onEndDrawing: () => {} });
 
   const menuItems = [
     {
@@ -73,7 +60,7 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
     {
       key: 'featureInfo',
       displayed: menuExpanded && !!loiGeometry && !isNaN(length(loiGeometry, { units: 'meters' })),
-      render: () => <PrettyDistance distance={length(loiGeometry, { units: 'meters' })} />,
+      render: () => <PrettyDistance value={length(loiGeometry, { units: 'meters' })} />,
     },
     {
       key: 'uploadButton',
@@ -83,23 +70,7 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
           iconClassName="fa fa-upload"
           title={t`Upload a file to create a line`}
           onClick={() => {
-            setDrawing(true);
             showUploadDialog(true);
-          }}
-        />
-      ),
-    },
-    {
-      key: 'removeGeometry',
-      displayed: menuExpanded && (loiGeometry || drawing),
-      render: () => (
-        <MenuItem
-          iconClassName="fa fa-close"
-          title={t`Remove geometry`}
-          onClick={() => {
-            setDrawing(false);
-            setMenuExpanded(false);
-            resetLoi();
           }}
         />
       ),
@@ -134,7 +105,6 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
           iconClassName="fa fa-pencil"
           title={t`Draw a line`}
           onClick={() => {
-            setDrawing(true);
             startDrawingLoi();
           }}
         />
@@ -143,11 +113,7 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
   ];
 
   return (
-    <LOIPanelWrapper
-      className={className}
-      setMenuExpanded={setMenuExpanded}
-      shouldClose={!loiGeometry && !drawing}
-    >
+    <LOIPanelWrapper className={className} setMenuExpanded={setMenuExpanded} menuExpanded={menuExpanded}>
       <div className="loiMenu">
         {menuItems
           .filter((item) => item.displayed)
@@ -155,12 +121,18 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
             <React.Fragment key={item.key}>{item.render()}</React.Fragment>
           ))}
       </div>
-      {
-        // eslint-disable-next-line
-        <a className={'loiIcon'} onClick={() => setMenuExpanded(!menuExpanded)} title={t`Draw a line`}>
-          <LoiIcon />
-        </a>
-      }
+      {/* jsx-a11y/anchor-is-valid */}
+      {/* eslint-disable-next-line */}
+      <a
+        className={`loiIcon ${menuExpanded ? 'open-options' : ''}`}
+        onClick={() => {
+          setMenuExpanded(!menuExpanded);
+          resetLoi();
+        }}
+        title={t`Draw a line`}
+      >
+        <LoiIcon />
+      </a>
       {uploadDialog && (
         <EOBUploadGeoFile
           onUpload={(geometry) => {
@@ -168,7 +140,6 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
             store.dispatch(loiSlice.actions.set({ geometry, bounds: layer.getBounds() }));
             map.fitBounds(layer.getBounds());
             showUploadDialog(false);
-            setDrawing(false);
           }}
           onClose={() => showUploadDialog(false)}
           type={UPLOAD_GEOMETRY_TYPE.LINE}

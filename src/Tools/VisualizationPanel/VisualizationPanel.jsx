@@ -63,7 +63,8 @@ const getActions = ({
           : haveEffectsChanged
           ? appliedEffectsText()
           : showEffectsText(),
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
         toggleEffects(!displayEffects);
       },
       icon: () => `${displayEffects ? 'fa fa-paint-brush' : 'fa fa-sliders'}`,
@@ -74,7 +75,8 @@ const getActions = ({
     {
       id: 'hideLayer',
       label: () => (displayLayer ? t`Hide layer` : t`Show layer`),
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
         toggleLayer(!displayLayer);
       },
       icon: () => (displayLayer ? 'fa fa-eye-slash' : 'fa fa-eye'),
@@ -85,7 +87,8 @@ const getActions = ({
     {
       id: 'socialShare',
       label: () => t`Share`,
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
         toggleSocialShareOptions(!displaySocialShareOptions);
       },
       icon: () => 'fas fa-share-alt',
@@ -124,6 +127,8 @@ function VisualizationPanel({
   dataSourcesInitialized,
   compareShare,
   selectedTabIndex,
+  customSelected,
+  selectedProcessing,
 }) {
   const selectedTheme = selectedThemesListId
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
@@ -140,15 +145,24 @@ function VisualizationPanel({
   const selectedTimeRef = useRef(toTime);
 
   const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
-  const supportsOpenEo = isOpenEoSupported(visualizationUrl, layerId, IMAGE_FORMATS.PNG, haveEffectsChanged);
+  const supportsOpenEo = isOpenEoSupported(
+    visualizationUrl,
+    layerId,
+    IMAGE_FORMATS.PNG,
+    haveEffectsChanged,
+    customSelected && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API,
+  );
 
   useEffect(() => {
-    store.dispatch(
-      visualizationSlice.actions.setVisualizationParams({
-        selectedProcessing: supportsOpenEo ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
-      }),
-    );
-  }, [supportsOpenEo]);
+    const newSelectedProcessing = supportsOpenEo ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API;
+    if (newSelectedProcessing !== selectedProcessing) {
+      store.dispatch(
+        visualizationSlice.actions.setVisualizationParams({
+          selectedProcessing: newSelectedProcessing,
+        }),
+      );
+    }
+  }, [supportsOpenEo, selectedProcessing]);
 
   useEffect(() => {
     if ((displaySocialShareOptions || displayEffects) && visualizationActionsRef.current) {
@@ -323,6 +337,7 @@ function VisualizationPanel({
                     <SocialShare
                       displaySocialShareOptions={displaySocialShareOptions}
                       toggleSocialSharePanel={() => toggleSocialShareOptions(false)}
+                      datasetId={datasetId}
                     />
                   )}
                   <ActionBar actionsOpen={shouldShowLayerList} actions={actions} />
@@ -363,6 +378,8 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   layerId: store.visualization.layerId,
   visibleOnMap: store.visualization.visibleOnMap,
+  customSelected: store.visualization.customSelected,
+  selectedProcessing: store.visualization.selectedProcessing,
   selectedLanguage: store.language.selectedLanguage,
   is3D: store.mainMap.is3D,
   terrainViewerId: store.terrainViewer.id,

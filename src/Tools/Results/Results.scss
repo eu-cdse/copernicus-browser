@@ -1,6 +1,6 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
-$textColor: $textColor;
+$textColor: vars.$textColor;
 $headerBorderWidth: 2px;
 $headerPadding: 10px;
 
@@ -17,8 +17,8 @@ $headerPadding: 10px;
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
 
     &-top,
     &-bottom {
@@ -34,7 +34,7 @@ $headerPadding: 10px;
 
     .showing-n-results {
       font-size: 14px;
-      color: $textColor;
+      color: vars.$textColor;
       padding: 2px 0;
     }
   }
@@ -42,7 +42,7 @@ $headerPadding: 10px;
   .rodal {
     .results-heading {
       box-shadow: none;
-      border-bottom: 1px solid $mainDark;
+      border-bottom: 1px solid vars.$mainDark;
     }
 
     .rodal-close {
@@ -69,8 +69,8 @@ $headerPadding: 10px;
     position: relative;
     transition: all ease 0.4s;
     padding: 5px;
-    background: $mainLight;
-    box-shadow: $boxShadow;
+    background: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
     display: flex;
     flex-direction: column;
     font-size: 13px;
@@ -122,8 +122,8 @@ $headerPadding: 10px;
           align-self: center;
           padding: 2px 5px;
           align-content: center;
-          background-color: $mainDark;
-          color: $textColor;
+          background-color: vars.$mainDark;
+          color: vars.$textColor;
           border-radius: 10px;
           margin: 1px 5px 1px 0;
           font-size: 10px;
@@ -135,20 +135,20 @@ $headerPadding: 10px;
         cursor: pointer;
         display: flex;
         align-items: center;
-        color: $primaryColor;
-        fill: $primaryColor;
+        color: vars.$primaryColor;
+        fill: vars.$primaryColor;
         font-size: 14px;
 
         .active {
-          color: $secondaryColor;
+          color: vars.$secondaryColor;
         }
 
         .disabled {
           opacity: 0.5;
 
           &:hover {
-            color: $textColor;
-            fill: $textColor;
+            color: vars.$textColor;
+            fill: vars.$textColor;
           }
         }
 
@@ -160,8 +160,8 @@ $headerPadding: 10px;
           width: 16px;
 
           &:hover {
-            color: $secondaryColor;
-            fill: $secondaryColor;
+            color: vars.$secondaryColor;
+            fill: vars.$secondaryColor;
           }
         }
       }
@@ -200,19 +200,35 @@ $headerPadding: 10px;
         flex-direction: row;
 
         :first-child {
-          font-weight: $fontWeightBold;
+          font-weight: vars.$fontWeightBold;
         }
       }
     }
   }
 
   .results-panel {
-    color: $textColor;
-    padding-bottom: 10px;
+    color: vars.$textColor;
 
-    & > .eob-btn {
-      display: block;
-      text-align: center;
+    .load-more-btn-wrapper {
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      padding: 8px;
+      background-color: vars.$mainLight;
+      box-shadow: vars.$boxShadow;
+
+      .loader {
+        height: 18px;
+
+        span {
+          top: unset;
+        }
+      }
+
+      .eob-btn {
+        display: block;
+        text-align: center;
+      }
     }
 
     .rodal {
@@ -226,13 +242,13 @@ $headerPadding: 10px;
 
         .title {
           font-size: 16px;
-          font-weight: $fontWeightBold;
+          font-weight: vars.$fontWeightBold;
         }
 
         .paragraph {
           font-size: 14px;
           padding: 10px 0;
-          border-bottom: 1px solid $mainDark;
+          border-bottom: 1px solid vars.$mainDark;
         }
       }
 

@@ -1,11 +1,11 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 $footer-height: 53px;
 
 .rapid-response-desk {
   height: 100%;
   position: relative;
-  color: $textColor;
+  color: vars.$textColor;
 
   .rapid-response-desk-body {
     position: absolute;
@@ -16,7 +16,7 @@ $footer-height: 53px;
 
     & > * {
       margin: 0 1px 5px 5px;
-      background-color: $whiteColor;
+      background-color: vars.$whiteColor;
     }
 
     .message-panel {
@@ -46,7 +46,7 @@ $footer-height: 53px;
     position: absolute;
     bottom: 0;
     height: $footer-height;
-    background-color: $whiteBackground;
+    background-color: vars.$whiteBackground;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,4 +1,4 @@
-@import '../../../../../variables.module';
+@use '../../../../../variables.module' as vars;
 
 .providers-and-missions-container {
   display: flex;

@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .row {
   display: flex;
@@ -16,12 +16,12 @@
     }
 
     i {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       padding: 0 4px;
       cursor: pointer;
 
       &.disabled {
-        color: $textColor;
+        color: vars.$textColor;
         cursor: not-allowed;
       }
     }
@@ -37,6 +37,6 @@
   }
 
   a {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 }

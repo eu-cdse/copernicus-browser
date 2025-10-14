@@ -9,7 +9,12 @@ import {
   ResultsSectionSortProperties,
 } from '../../rapidResponseProperties';
 import EffectDropdown from '../../../../junk/EOBEffectsPanel/EffectDropdown';
-import store, { collapsiblePanelSlice, searchResultsSlice, resultsSectionSlice } from '../../../../store';
+import store, {
+  collapsiblePanelSlice,
+  searchResultsSlice,
+  resultsSectionSlice,
+  mainMapSlice,
+} from '../../../../store';
 import ResultsCard from './ResultsCard/ResultsCard';
 import { useRRDProcessResults } from '../../../../hooks/useRRDProcessResults';
 import Button, { ButtonType } from '../../../../components/Button/Button';
@@ -34,6 +39,7 @@ const ResultsSection = ({
   isTaskingEnabled,
   currentPage,
   quicklookImages,
+  quicklookOverlays,
 }) => {
   const [emptyResult, setEmptyResult] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
@@ -63,6 +69,21 @@ const ResultsSection = ({
       setDisplayModal(true);
     }
   }, [selectedTiles]);
+
+  const handleImageLoad = (id, image, source) => {
+    store.dispatch(resultsSectionSlice.actions.addQuicklookImage({ id, url: image }));
+  };
+
+  useEffect(() => {
+    if (!quicklookOverlays || quicklookOverlays.length === 0) {
+      store.dispatch(mainMapSlice.actions.setFilteredQuicklookOverlays([]));
+      return;
+    }
+    const filteredOverlays = quicklookOverlays.filter(
+      (overlay) => filterState === 'all' || overlay.source === filterState,
+    );
+    store.dispatch(mainMapSlice.actions.setFilteredQuicklookOverlays(filteredOverlays));
+  }, [filterState, quicklookOverlays]);
 
   const getNResultsString = (resultsLength, hasMore, totalCount) => {
     let showingNResultsString = ngettext(
@@ -102,10 +123,6 @@ const ResultsSection = ({
     </div>
   );
 
-  const handleImageLoad = (id, image) => {
-    store.dispatch(resultsSectionSlice.actions.setQuicklookImage({ id, url: image }));
-  };
-
   return (
     <div id="search-results">
       <CollapsiblePanel
@@ -123,7 +140,7 @@ const ResultsSection = ({
                 msg={
                   <ReactMarkdown
                     children={t`No results found with your current filters (might be related to access rights).\n
-                    Try adjusting the date range, data providers, advanced fields, or select a bigger area on the map to see more results.`}
+Try adjusting the date range, data providers, advanced fields, or select a bigger area on the map to see more results.`}
                   ></ReactMarkdown>
                 }
                 type="error"
@@ -208,6 +225,7 @@ const mapStoreToProps = (store) => ({
   auth: store.auth,
   isTaskingEnabled: store.areaAndTimeSection.isTaskingEnabled,
   quicklookImages: store.resultsSection.quicklookImages,
+  quicklookOverlays: store.mainMap.quicklookOverlays,
 });
 
 export default connect(mapStoreToProps, null)(ResultsSection);

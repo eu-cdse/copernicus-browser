@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .floating-notification-panel {
   display: flex;
@@ -7,10 +7,10 @@
   flex-direction: column;
   padding: 10px;
   text-align: center;
-  background: $tertiaryColor;
-  box-shadow: $boxShadow;
-  color: $textColor;
-  font-weight: $fontWeightBold;
+  background: vars.$tertiaryColor;
+  box-shadow: vars.$boxShadow;
+  color: vars.$textColor;
+  font-weight: vars.$fontWeightBold;
   z-index: 1000;
   position: absolute;
 
@@ -20,17 +20,17 @@
 
   .eob-btn {
     font-size: 14px;
-    background-color: $whiteColor;
-    color: $textColor;
+    background-color: vars.$whiteColor;
+    color: vars.$textColor;
 
     &:hover {
-      background: $mainMedium;
+      background: vars.$mainMedium;
       box-shadow: none;
     }
   }
 
   &.tools-opened {
-    @media (min-width: $breakpoint-1300) {
+    @media (min-width: vars.$breakpoint-1300) {
       top: 10px;
       width: 400px;
       min-height: 40px;
@@ -38,13 +38,13 @@
       transform: translateX(50%);
     }
 
-    @media (max-width: $breakpoint-1300) {
+    @media (max-width: vars.$breakpoint-1300) {
       top: 60px;
       right: 60px;
       left: 460px;
     }
 
-    @media (max-width: $breakpoint-768) {
+    @media (max-width: vars.$breakpoint-768) {
       top: unset;
       left: 15px;
       right: 15px;
@@ -52,7 +52,7 @@
       bottom: 10px;
     }
 
-    @media (max-width: $breakpoint-450) {
+    @media (max-width: vars.$breakpoint-450) {
       left: 15px;
       right: 15px;
       bottom: 85px;
@@ -60,7 +60,7 @@
   }
 
   &.tools-closed {
-    @media (min-width: $breakpoint-1024) {
+    @media (min-width: vars.$breakpoint-1024) {
       top: 10px;
       width: 400px;
       min-height: 40px;
@@ -68,13 +68,13 @@
       transform: translateX(50%);
     }
 
-    @media (max-width: $breakpoint-1024) {
+    @media (max-width: vars.$breakpoint-1024) {
       top: 60px;
       right: 60px;
       left: 10px;
     }
 
-    @media (max-width: $breakpoint-450) {
+    @media (max-width: vars.$breakpoint-450) {
       top: unset;
       left: 60px;
       right: 60px;

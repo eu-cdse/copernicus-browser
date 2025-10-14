@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .colors-container {
   display: flex;
@@ -16,7 +16,7 @@
     height: 42px;
     width: 42px;
     border-radius: 50px;
-    color: $whiteColor;
+    color: vars.$whiteColor;
     text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
     font-size: 14px;
     font-weight: bold;
@@ -65,7 +65,7 @@
 
   &.index {
     font-size: 24px;
-    color: $textColor;
+    color: vars.$textColor;
   }
 
   .divide {
@@ -80,10 +80,10 @@
   width: 50px;
   height: 50px;
   margin: 10px;
-  background-color: $randomGrayColor;
+  background-color: vars.$randomGrayColor;
   border-radius: 50px;
   position: relative;
-  color: $whiteColor;
+  color: vars.$whiteColor;
 
   &::before {
     position: absolute;
@@ -94,7 +94,7 @@
     border-radius: 100px;
     content: '';
     display: block;
-    color: $whiteColor;
+    color: vars.$whiteColor;
   }
 
   &.is-active {
@@ -102,14 +102,14 @@
 
     &::before {
       opacity: 0.8;
-      border: 2px solid $primaryColor;
+      border: 2px solid vars.$primaryColor;
     }
   }
 
   &.can-drop {
     &::before {
       opacity: 1;
-      border: 2px solid $primaryColor;
+      border: 2px solid vars.$primaryColor;
     }
   }
 
@@ -120,7 +120,7 @@
     height: 50px;
     width: 50px;
     border-radius: 50px;
-    color: $whiteColor;
+    color: vars.$whiteColor;
     font-size: 14px;
     font-weight: bold;
     user-select: none;
@@ -176,7 +176,7 @@ select:-moz-focusring {
   position: relative;
 
   .fa {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     cursor: pointer;
   }
 
@@ -186,10 +186,10 @@ select:-moz-focusring {
     margin-bottom: 12px;
 
     input {
-      background: $mainDark;
+      background: vars.$mainDark;
       border-radius: 2px;
-      border: 2px solid $mainLight;
-      color: $textColor;
+      border: 2px solid vars.$mainLight;
+      color: vars.$textColor;
       font-size: 14px;
       font-weight: bold;
       margin: 4px 0;
@@ -206,7 +206,7 @@ select:-moz-focusring {
   }
 
   .gradients-list {
-    border: 1px solid $mainDark;
+    border: 1px solid vars.$mainDark;
     position: absolute;
     margin-top: 0;
     z-index: 9000;
@@ -249,7 +249,7 @@ select:-moz-focusring {
     &::before {
       content: '';
       display: block;
-      background: $errorCol;
+      background: vars.$errorCol;
       height: 34px;
       width: 4px;
       position: absolute;
@@ -278,7 +278,7 @@ select:-moz-focusring {
         margin-left: -10px;
         font-size: 12px;
         display: none;
-        background-color: $mainDark;
+        background-color: vars.$mainDark;
         border-radius: 4px;
         border: 2px solid rgba(255, 255, 255, 0.8);
         width: 28px;

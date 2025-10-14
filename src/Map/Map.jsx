@@ -336,7 +336,7 @@ class Map extends React.Component {
       RRDSortStateResultsSection,
       // eslint-disable-next-line no-unused-vars
       RRDFilterStateResultsSection,
-      quicklookImages,
+      filteredQuicklookOverlays,
       selectedProcessing,
     } = this.props;
     const { evalscripturl } = getUrlParams();
@@ -505,7 +505,11 @@ class Map extends React.Component {
           <Pane name={SENTINELHUB_LAYER_PANE_ID} style={{ zIndex: SENTINELHUB_LAYER_PANE_ZINDEX }} />
 
           {showSingleShLayer && supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.OPENEO && (
-            <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
+            <Overlay
+              key={`overlay-${datasetId}-${selectedProcessing}`}
+              name={`${getDatasetLabel(datasetId)}`}
+              checked={visibleOnMap}
+            >
               <OpenEoLayerComponent
                 processGraph={getProcessGraph(visualizationUrl, visualizationLayerId)}
                 datasetId={datasetId}
@@ -523,7 +527,11 @@ class Map extends React.Component {
           )}
 
           {showSingleShLayer && !supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && (
-            <Overlay name={`${getDatasetLabel(datasetId)}`} checked={visibleOnMap}>
+            <Overlay
+              key={`overlay-${datasetId}-${selectedProcessing}`}
+              name={`${getDatasetLabel(datasetId)}`}
+              checked={visibleOnMap}
+            >
               <SentinelHubLayerComponent
                 datasetId={datasetId}
                 url={visualizationUrl}
@@ -851,12 +859,12 @@ class Map extends React.Component {
           showComparePanel={this.props.showComparePanel}
         />
 
-        {Array.isArray(this.props.quicklookOverlays) &&
-          this.props.quicklookOverlays.map((overlay) => (
+        {Array.isArray(filteredQuicklookOverlays) &&
+          filteredQuicklookOverlays.map((overlay) => (
             <QuicklookOverlay
               key={overlay._internalId}
               quicklookOverlay={overlay}
-              quicklookImages={quicklookImages}
+              quicklookImages={filteredQuicklookOverlays}
             />
           ))}
       </LeafletMap>
@@ -919,7 +927,7 @@ const mapStoreToProps = (store) => {
     selectedModeId: store.themes.selectedModeId,
     elevationProfileHighlightedPoint: store.elevationProfile.highlightedPoint,
     quicklookOverlays: store.mainMap.quicklookOverlays,
-    quicklookImages: store.resultsSection.quicklookImages,
+    filteredQuicklookOverlays: store.mainMap.filteredQuicklookOverlays,
   };
 };
 

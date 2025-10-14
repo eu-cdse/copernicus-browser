@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .login-overlay {
   position: absolute;
@@ -18,39 +18,39 @@
     padding: 25px !important;
     text-align: center !important;
     border-radius: 1px !important;
-    background-color: $mainLight !important;
+    background-color: vars.$mainLight !important;
 
     .alert-title {
-      color: $textColor !important;
+      color: vars.$textColor !important;
       font-size: 18px !important;
       font-weight: bold !important;
     }
 
     .alert-text {
-      color: $textColor !important;
+      color: vars.$textColor !important;
     }
 
     .alert-buttons {
       border-radius: 1px !important;
 
       &_ok {
-        color: $whiteColor !important;
+        color: vars.$whiteColor !important;
         cursor: pointer !important;
         content: 'Terst' !important;
         font-weight: 600 !important;
         padding: 8px 12px !important;
         border-radius: 1px !important;
-        background: $primaryColor !important;
+        background: vars.$primaryColor !important;
       }
 
       &_cancel {
         cursor: pointer !important;
         font-weight: 600 !important;
-        color: $primaryColor !important;
+        color: vars.$primaryColor !important;
         padding: 8px 12px !important;
         border-radius: 1px !important;
         background: transparent !important;
-        border: 1px solid $primaryColor !important;
+        border: 1px solid vars.$primaryColor !important;
       }
     }
   }

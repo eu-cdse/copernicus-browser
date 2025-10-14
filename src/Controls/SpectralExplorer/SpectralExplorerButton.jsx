@@ -77,7 +77,8 @@ const SpectralExplorerButton = ({
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
     <a
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         handleOnClick({ errorMessage, onErrorMessage, geometryType, datasetId, selectedSeries });
       }}
       title={errorMessage ? errorMessage : spectralExplorerLabels.title()}

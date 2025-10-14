@@ -1,8 +1,8 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .compare-panel {
-  background-color: $mainLight;
-  color: $textColor;
+  background-color: vars.$mainLight;
+  color: vars.$textColor;
   display: flex;
   flex-flow: column;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
@@ -16,7 +16,7 @@
 
     > div {
       width: 100%;
-      color: $textColor;
+      color: vars.$textColor;
       text-decoration: none;
       text-align: center;
       margin: 0 5px;
@@ -32,7 +32,7 @@
 
       .compare-panel-title {
         font-size: 16px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
         text-transform: uppercase;
       }
 
@@ -49,7 +49,7 @@
           /* stylelint-disable */
           .compare-mode-select__single-value {
             font-size: 13px;
-            font-weight: $fontWeightNormal;
+            font-weight: vars.$fontWeightNormal;
           }
 
           .compare-mode-select__menu {
@@ -60,7 +60,7 @@
                 height: 20px;
                 line-height: 20px;
                 font-size: 13px;
-                font-weight: $fontWeightNormal;
+                font-weight: vars.$fontWeightNormal;
                 padding: 0 6px;
               }
             }
@@ -74,7 +74,7 @@
 
                 #chevron-up,
                 #chevron-down {
-                  stroke: $grayColor;
+                  stroke: vars.$grayColor;
                 }
               }
             }
@@ -104,12 +104,12 @@
         .compare-panel-toggle-label {
           margin-right: 10px;
           font-size: 13px;
-          font-weight: $fontWeightNormal;
+          font-weight: vars.$fontWeightNormal;
         }
 
         .dropdown {
           cursor: pointer;
-          color: $textColor;
+          color: vars.$textColor;
         }
       }
     }
@@ -119,8 +119,8 @@
 
       .compare-panel-button {
         cursor: pointer;
-        color: $textColor;
-        background-color: $mainMedium;
+        color: vars.$textColor;
+        background-color: vars.$mainMedium;
         flex-grow: 1;
         padding: 10px 0;
         text-decoration: underline;
@@ -136,7 +136,7 @@
 
   .social-networks {
     position: relative;
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
     padding: 10px;
     display: flex;
     margin: -5px 10px 10px 10px;

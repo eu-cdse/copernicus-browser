@@ -1,8 +1,8 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .visualization-panel {
-  background-color: $whiteColor;
-  color: $textColor;
+  background-color: vars.$whiteColor;
+  color: vars.$textColor;
 
   & > * {
     margin: 5px 1px 5px 5px;
@@ -51,7 +51,7 @@
 
     .preview-custom {
       background-color: #303333;
-      color: $whiteColor;
+      color: vars.$whiteColor;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -78,7 +78,7 @@
       }
 
       .active-title {
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
 
         @media screen and (max-width: 428px) {
           width: 152px;
@@ -122,23 +122,23 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: $whiteColor;
+        color: vars.$whiteColor;
 
         &:hover {
-          color: $secondaryColor;
+          color: vars.$secondaryColor;
           cursor: pointer;
         }
       }
 
       .double-chevron-up {
         path {
-          stroke: $whiteColor;
+          stroke: vars.$whiteColor;
         }
       }
 
       .double-chevron-down {
         path {
-          stroke: $whiteColor;
+          stroke: vars.$whiteColor;
         }
       }
 
@@ -148,14 +148,14 @@
 
       .code {
         path {
-          fill: $whiteColor;
+          fill: vars.$whiteColor;
         }
 
         &:hover {
           cursor: pointer;
 
           path {
-            fill: $secondaryColor;
+            fill: vars.$secondaryColor;
           }
         }
       }
@@ -169,7 +169,7 @@
 
         &:hover {
           path {
-            stroke: $secondaryColor;
+            stroke: vars.$secondaryColor;
           }
         }
 
@@ -180,7 +180,7 @@
       }
 
       .active {
-        color: $secondaryColor;
+        color: vars.$secondaryColor;
       }
     }
   }
@@ -188,8 +188,8 @@
   .header {
     display: flex;
     flex-flow: column;
-    border-bottom: 1px solid $primaryColor;
-    font-family: $fontFamily;
+    border-bottom: 1px solid vars.$primaryColor;
+    font-family: vars.$fontFamily;
     font-style: normal;
     font-weight: bold;
 
@@ -206,7 +206,7 @@
         font-size: 15px;
 
         b {
-          color: $textColor;
+          color: vars.$textColor;
           text-transform: none;
           padding-top: 5px;
         }
@@ -241,8 +241,8 @@
     bottom: 0;
     font-size: 13px;
     padding: 5px 10px;
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
 
     .action-bar {
       justify-content: space-around;
@@ -253,9 +253,9 @@
 
   .layer-selection {
     display: block;
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
-    color: $textColor;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
+    color: vars.$textColor;
     font-size: 14px;
     padding: 11px;
 
@@ -273,45 +273,45 @@
 
     .layer-title {
       font-size: 16px;
-      font-weight: $fontWeightBold;
+      font-weight: vars.$fontWeightBold;
       margin-bottom: 10px;
       text-transform: uppercase;
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
 
     .layer-container {
       margin-bottom: 5px;
       cursor: pointer;
-      background-color: $mainLight;
-      box-shadow: $boxShadow;
+      background-color: vars.$mainLight;
+      box-shadow: vars.$boxShadow;
 
       &:hover {
-        background-color: $mainDark;
+        background-color: vars.$mainDark;
       }
 
       &.active {
-        background-color: $primaryColor;
-        color: $whiteColor;
+        background-color: vars.$primaryColor;
+        color: vars.$whiteColor;
         cursor: default;
       }
 
       .layer-actions {
         padding: 11px 14px;
-        color: $whiteColor;
+        color: vars.$whiteColor;
 
         div {
           font-size: 12px;
 
           &:hover {
-            color: $secondaryColor;
+            color: vars.$secondaryColor;
           }
         }
       }
 
       .layer-details {
         border-bottom: 0;
-        color: $textColor;
-        background-color: $mainDark;
+        color: vars.$textColor;
+        background-color: vars.$mainDark;
 
         .layer-description {
           p:nth-child(2) {
@@ -322,7 +322,7 @@
     }
 
     .custom-visualization {
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
 
       > * {
         padding: 5px 5px 5px 0;
@@ -330,19 +330,19 @@
 
       .action-bar {
         padding: 5px 12px;
-        border-bottom: 2px solid $mainDark;
-        background-color: $mainMedium;
+        border-bottom: 2px solid vars.$mainDark;
+        background-color: vars.$mainMedium;
 
         .action-wrapper {
           &:hover {
-            color: $primaryColor;
+            color: vars.$primaryColor;
           }
         }
       }
 
       .accordion-title {
         font-size: 14px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
       }
     }
 
@@ -353,7 +353,7 @@
   }
 
   .commercial-data-header {
-    background: $mainMedium;
+    background: vars.$mainMedium;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-@import '../../../../../variables.module.scss';
+@use '../../../../../variables.module.scss' as vars;
 
 div.sentinel1-dsg,
 div.sentinel2-dsg {

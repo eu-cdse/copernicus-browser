@@ -1,11 +1,11 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .message-panel {
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   overflow-y: auto;
 
   .message-panel-header {
-    color: $orangeColor;
+    color: vars.$orangeColor;
     display: flex;
     flex-direction: row;
     position: relative;
@@ -23,7 +23,7 @@
 
   .message-panel-messages {
     & > :not(:last-child) {
-      border-bottom: 3px dashed $mainLight;
+      border-bottom: 3px dashed vars.$mainLight;
     }
 
     .message-content {
@@ -31,7 +31,7 @@
     }
 
     .notification {
-      color: $textColor;
+      color: vars.$textColor;
 
       &.notification-error-themes {
         min-height: 130px;
@@ -60,8 +60,8 @@
 
       .textarea-wrapper {
         .error-container {
-          color: $textColor;
-          background-color: $mainLight;
+          color: vars.$textColor;
+          background-color: vars.$mainLight;
           padding: 5px;
           text-align: left;
           white-space: pre-wrap;
@@ -73,7 +73,7 @@
 
     .message-panel-logout {
       padding: 5px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       font-weight: bold;
       text-decoration: underline;
       cursor: pointer;

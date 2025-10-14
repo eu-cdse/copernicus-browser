@@ -1,9 +1,9 @@
-@import '../../../../../variables.module.scss';
+@use '../../../../../variables.module.scss' as vars;
 
 .help-tooltip {
   .react-tooltip-lite {
-    background: $mainMedium;
-    color: $textColor;
+    background: vars.$mainMedium;
+    color: vars.$textColor;
     border-radius: 5px;
     max-width: 300px !important;
     font-size: 0.8em;
@@ -18,19 +18,19 @@
   }
 
   .react-tooltip-lite-up-arrow {
-    border-top: 10px solid $mainMedium;
+    border-top: 10px solid vars.$mainMedium;
   }
 
   .react-tooltip-lite-down-arrow {
-    border-bottom: 10px solid $mainMedium;
+    border-bottom: 10px solid vars.$mainMedium;
   }
 
   .react-tooltip-lite-right-arrow {
-    border-right: 10px solid $mainMedium;
+    border-right: 10px solid vars.$mainMedium;
   }
 
   .react-tooltip-lite-left-arrow {
-    border-left: 10px solid $mainMedium;
+    border-left: 10px solid vars.$mainMedium;
   }
 
   .help-tooltip-icon {

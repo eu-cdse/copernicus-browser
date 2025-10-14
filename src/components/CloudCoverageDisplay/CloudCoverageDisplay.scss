@@ -1,18 +1,18 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .cloud-coverage-picker {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-left: 20px;
-  color: $primaryColor;
+  color: vars.$primaryColor;
   font-weight: bold;
   cursor: pointer;
   font-size: 14px;
 
   .fas.fa-cloud {
     margin-right: 5px;
-    color: $iconGrayColor;
+    color: vars.$iconGrayColor;
   }
 
   &.disabled {

@@ -1,11 +1,11 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .action-bar {
   justify-content: space-between;
   display: flex;
   flex: 1;
   flex-direction: row;
-  color: $textColor;
+  color: vars.$textColor;
   font-size: 13px;
   column-gap: 10px;
 
@@ -27,15 +27,15 @@
       text-overflow: ellipsis;
       text-decoration: underline 1px;
       font-size: 12px;
-      font-weight: $fontWeightNormal;
+      font-weight: vars.$fontWeightNormal;
     }
 
     &:hover {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
 
     &.active {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
 
     &.disabled {
@@ -43,7 +43,7 @@
       opacity: 0.3;
 
       &:hover {
-        color: $textColor;
+        color: vars.$textColor;
       }
     }
   }

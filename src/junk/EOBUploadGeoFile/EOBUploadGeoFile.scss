@@ -1,8 +1,8 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .fileUploadWindow {
-  color: $textColor;
+  color: vars.$textColor;
 
   .fileUploadPanel {
     border: 2px dashed #aaa;

@@ -28,6 +28,7 @@ const CustomVisualizationLayer = (props) => {
     onCompositeChange,
     onIndexScriptChange,
     selectedProcessing,
+    effects,
   } = props;
 
   const datasourceHandler = getDataSourceHandler(datasetId);
@@ -96,6 +97,7 @@ const CustomVisualizationLayer = (props) => {
         selectedVisualizationId={selectedVisualizationId}
         visualizationUrl={visualizationUrl}
         selectedProcessing={selectedProcessing}
+        effects={effects}
       />
     </div>
   );
@@ -117,7 +119,7 @@ const mapStoreToProps = (store) => ({
   lng: store.mainMap.lng,
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
-  ...getVisualizationEffectsFromStore(store),
+  effects: getVisualizationEffectsFromStore(store),
 });
 
 export default connect(mapStoreToProps, null)(CustomVisualizationLayer);

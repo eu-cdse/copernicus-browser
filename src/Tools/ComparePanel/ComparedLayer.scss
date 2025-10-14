@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .compare-layer {
   position: relative;
@@ -7,15 +7,15 @@
   margin: 0 10px 10px 10px;
   clear: both;
   user-select: none;
-  color: $textColor;
-  background-color: $mainMedium;
+  color: vars.$textColor;
+  background-color: vars.$mainMedium;
   font-size: 14px;
 
   &.normal-mode:hover {
-    background: $mainMedium;
+    background: vars.$mainMedium;
 
     & > div:first-child {
-      color: $whiteColor;
+      color: vars.$whiteColor;
     }
   }
 
@@ -43,7 +43,7 @@
     left: 5px;
 
     i {
-      color: $whiteColor;
+      color: vars.$whiteColor;
       padding: 0;
       text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
     }
@@ -85,7 +85,7 @@
 
         label {
           text-wrap: nowrap;
-          color: $textColor;
+          color: vars.$textColor;
         }
 
         span {
@@ -100,13 +100,13 @@
 
           .rc-slider-rail {
             height: 1px;
-            background-color: $sliderRailGray;
+            background-color: vars.$sliderRailGray;
             margin-top: 6px;
           }
 
           .rc-slider-track {
             height: 1px;
-            background-color: $sliderPrimaryColor;
+            background-color: vars.$sliderPrimaryColor;
             margin-top: 6px;
           }
 
@@ -115,7 +115,7 @@
             height: 17px;
             margin-top: -2px;
             border: none;
-            background-color: $sliderPrimaryColor;
+            background-color: vars.$sliderPrimaryColor;
 
             &:focus {
               box-shadow: none;
@@ -130,7 +130,7 @@
     position: absolute;
     bottom: 5px;
     left: 70px;
-    color: $whiteColor;
+    color: vars.$whiteColor;
 
     i.fa-trash {
       text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
@@ -145,14 +145,14 @@
     cursor: pointer;
 
     svg path {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
   }
 
   &.dragging {
-    color: $textColor;
+    color: vars.$textColor;
     opacity: 0.8;
-    background-color: $mainDark !important;
+    background-color: vars.$mainDark !important;
     box-shadow: 0 3px 5px #000;
     cursor: -webkit-grabbing !important;
   }

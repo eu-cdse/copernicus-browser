@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 #map {
   background-color: #fff;
@@ -9,12 +9,12 @@
   .leaflet-control-container {
     .leaflet-top.leaflet-right {
       .leaflet-control-layers {
-        background: $mainLight;
-        color: $textColor;
+        background: vars.$mainLight;
+        color: vars.$textColor;
         border-radius: 0;
         border: none;
         margin-right: 60px;
-        box-shadow: $boxShadow;
+        box-shadow: vars.$boxShadow;
 
         .leaflet-control-layers-toggle {
           background-image: url(layers.svg);
@@ -23,7 +23,7 @@
           height: 40px;
 
           svg {
-            fill: $primaryColor;
+            fill: vars.$primaryColor;
           }
         }
 
@@ -41,19 +41,6 @@
       }
     }
   }
-
-  // Prevent visible tile borders on some browsers/devices - https://github.com/Leaflet/Leaflet/issues/3575#issuecomment-688644225
-  .leaflet-tile-container {
-    img[style*='width: 512px'] {
-      width: 512.5px !important;
-      height: 512.5px !important;
-    }
-
-    img[style*='width: 256px'] {
-      width: 256.5px !important;
-      height: 256.5px !important;
-    }
-  }
 }
 
 #map.left-align-attribution {
@@ -66,7 +53,7 @@
 
 #nprogress {
   .bar {
-    background: linear-gradient(to right, $primaryColor 0%, $secondaryColor 100%);
+    background: linear-gradient(to right, vars.$primaryColor 0%, vars.$secondaryColor 100%);
     height: 10px;
 
     .peg {
@@ -74,8 +61,8 @@
     }
 
     .spinner-icon {
-      border-top-color: $primaryColor;
-      border-left-color: $primaryColor;
+      border-top-color: vars.$primaryColor;
+      border-left-color: vars.$primaryColor;
     }
   }
 }
@@ -148,6 +135,6 @@
   z-index: 9999;
   padding: 15px;
   border-radius: 3px;
-  background: $mainDark;
+  background: vars.$mainDark;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }

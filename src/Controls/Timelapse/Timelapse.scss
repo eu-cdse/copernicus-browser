@@ -1,14 +1,14 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .timelapse {
   width: 100%;
   height: 100%;
-  color: $textColor;
+  color: vars.$textColor;
 
   .title {
     h1 {
       font-size: 20px;
-      font-weight: $fontWeightNormal;
+      font-weight: vars.$fontWeightNormal;
       margin: 0 0 1px;
       height: 50px;
       padding: 0 15px;
@@ -27,7 +27,7 @@
       flex-basis: 335px;
       flex-direction: column;
       align-items: center;
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
       height: 100%;
       padding: 0 10px;
 
@@ -54,7 +54,7 @@
           width: 100%;
 
           .filter-search-by-months {
-            color: $textColor;
+            color: vars.$textColor;
             margin: 0 5px 10px;
           }
 
@@ -64,7 +64,7 @@
             gap: 6px;
             margin: 7px 0 0 0;
             justify-content: space-between;
-            border-top: 1px solid $mainDark;
+            border-top: 1px solid vars.$mainDark;
             padding-top: 7px;
           }
 
@@ -100,7 +100,7 @@
             margin: 20px 0;
             padding: 5px 0;
             padding-right: 25px;
-            border-bottom: 1px solid $primaryColor;
+            border-bottom: 1px solid vars.$primaryColor;
             position: relative;
             font-weight: 500;
           }
@@ -120,7 +120,7 @@
         }
 
         .add-layers {
-          color: $primaryColor;
+          color: vars.$primaryColor;
           text-align: center;
           margin-bottom: 20px;
 
@@ -137,15 +137,15 @@
       box-sizing: border-box;
       flex-basis: 360px;
       flex-direction: column;
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
       height: 100%;
 
       h2 {
         font-size: 20px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
         margin: 0;
         padding: 10px;
-        background-color: $mainMedium;
+        background-color: vars.$mainMedium;
       }
 
       .container {
@@ -175,7 +175,7 @@
 
           .pins-container {
             overflow: auto;
-            background-color: $mainMedium;
+            background-color: vars.$mainMedium;
           }
 
           .pin-container {
@@ -184,7 +184,7 @@
             margin: 0;
             padding: 10px 15px;
             font-size: 0.7em;
-            background-color: $mainMedium;
+            background-color: vars.$mainMedium;
             border-bottom: 1px solid black;
 
             img {
@@ -193,7 +193,7 @@
             }
 
             &:hover {
-              background-color: $mainDark;
+              background-color: vars.$mainDark;
               cursor: pointer;
             }
 
@@ -282,7 +282,7 @@
               right: 0;
               top: 0;
               background: #fff;
-              color: $textColor;
+              color: vars.$textColor;
               font-size: 11px;
               padding: 3px 5px;
             }
@@ -295,11 +295,11 @@
             }
 
             &.active {
-              border: 2px solid $primaryColor;
+              border: 2px solid vars.$primaryColor;
             }
 
             &.not-applicable {
-              background-color: $mainMedium;
+              background-color: vars.$mainMedium;
               max-height: 20px;
               transition: max-height 0.2s ease-out;
 
@@ -308,7 +308,7 @@
               }
 
               .image-date {
-                background: $mainMedium;
+                background: vars.$mainMedium;
               }
 
               .fas.fa-border-all,
@@ -370,7 +370,7 @@
       }
     }
 
-    @media screen and (max-height: $breakpoint-400) {
+    @media screen and (max-height: vars.$breakpoint-400) {
       .sidebar-2 {
         h2 {
           display: none;
@@ -395,7 +395,7 @@
       flex-direction: column;
       flex: 1 1;
       align-items: center;
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
       position: relative;
 
       .preview {
@@ -458,13 +458,15 @@
           font-size: 12px;
           min-width: 350px;
           max-width: 400px;
-          background: $mainMedium;
+          background: vars.$mainMedium;
           float: right;
           text-align: right;
           display: flex;
           flex-direction: row;
           transform: translateX(100%);
           -webkit-transform: translateX(100%);
+          animation: slide-in 1s forwards;
+          -webkit-animation: slide-in 1s forwards;
 
           @keyframes slide-in {
             100% {
@@ -472,11 +474,8 @@
             }
           }
 
-          animation: slide-in 1s forwards;
-          -webkit-animation: slide-in 1s forwards;
-
           .close-3d-warning-button {
-            color: $textColor;
+            color: vars.$textColor;
             height: 100%;
             margin-left: 10px;
 
@@ -507,11 +506,11 @@
         }
 
         a {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
 
-      @media screen and (max-width: $breakpoint-1280) {
+      @media screen and (max-width: vars.$breakpoint-1280) {
         .social-networks {
           bottom: calc(50vh - 20px);
           right: calc(50vw - 256px);
@@ -523,7 +522,7 @@
         display: flex;
         flex-direction: row;
         padding: 20px 0;
-        background-color: $mainDark;
+        background-color: vars.$mainDark;
         justify-content: center;
         align-items: center;
         position: relative;
@@ -534,13 +533,13 @@
           top: 0;
           left: 15px;
           line-height: 74px;
-          color: $primaryColor;
+          color: vars.$primaryColor;
           cursor: pointer;
         }
 
         .pause-play {
           .fas {
-            color: $primaryColor;
+            color: vars.$primaryColor;
             font-size: 30px;
           }
         }
@@ -555,7 +554,7 @@
         }
 
         .share {
-          color: $primaryColor;
+          color: vars.$primaryColor;
           cursor: pointer;
 
           &.disabled {
@@ -574,7 +573,7 @@
         }
       }
 
-      @media screen and (max-width: $breakpoint-1280) {
+      @media screen and (max-width: vars.$breakpoint-1280) {
         .preview-controls {
           flex-direction: column;
           padding: 5px 0;
@@ -598,12 +597,12 @@
           .bar {
             width: 1%;
             height: 20px;
-            background-color: $primaryColor;
+            background-color: vars.$primaryColor;
           }
         }
 
         .cancel {
-          background-color: $mainLight;
+          background-color: vars.$mainLight;
 
           .eob-btn {
             display: block;

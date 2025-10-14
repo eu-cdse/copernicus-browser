@@ -1,13 +1,19 @@
-@import './../../variables.module.scss';
+@use './../../variables.module.scss' as vars;
 
 .draggable-dialog-box {
   z-index: 9999;
   position: absolute;
-  background-color: $mainDark;
-  color: $textColor;
+  background-color: vars.$mainDark;
+  color: vars.$textColor;
 
   .drag-handle {
     cursor: grab;
+  }
+
+  &.dragging {
+    .drag-handle {
+      cursor: grabbing;
+    }
   }
 }
 

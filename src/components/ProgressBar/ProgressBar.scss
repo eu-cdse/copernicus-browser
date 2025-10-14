@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .progress-bar {
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
   display: flex;
 
   .pb-container {
@@ -9,12 +9,12 @@
     height: 7px;
     display: flex;
     align-self: center;
-    background-color: $mainDark;
+    background-color: vars.$mainDark;
 
     .pb-bar {
       height: 100%;
       width: 0%;
-      background-color: $primaryColor;
+      background-color: vars.$primaryColor;
     }
   }
 
@@ -29,7 +29,7 @@
     cursor: pointer;
 
     &:hover {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 }

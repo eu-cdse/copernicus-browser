@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { useODataSearch } from './useODataSearch';
-import { act } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import oDataHelpers from '../api/OData/ODataHelpers';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -35,23 +34,30 @@ describe('useODataSearch with auth token', () => {
   });
 
   test('search without auth token', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate();
+
+    await waitFor(() => {
+      expect(mockNetwork.history.get.length).toBeGreaterThan(0);
+    });
 
     expect(mockNetwork.history.get[0].headers.Authorization).toBe(undefined);
   });
 
   test('search with auth token', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
+
     act(() => {
       result.current[2](authToken);
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate();
+
+    await waitFor(() => {
+      expect(mockNetwork.history.get.length).toBeGreaterThan(0);
+    });
 
     expect(mockNetwork.history.get[0].headers.Authorization).toBe(`Bearer ${authToken}`);
 
@@ -59,7 +65,11 @@ describe('useODataSearch with auth token', () => {
       result.current[2](null);
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate();
+
+    await waitFor(() => {
+      expect(mockNetwork.history.get.length).toBeGreaterThan(1);
+    });
+
     expect(mockNetwork.history.get[1].headers.Authorization).toBe(undefined);
   });
 });

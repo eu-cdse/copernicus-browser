@@ -1,10 +1,10 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .collection-button {
-  background: $mainDark;
-  color: $textColor;
-  font-weight: $fontWeightNormal;
-  box-shadow: $boxShadow;
+  background: vars.$mainDark;
+  color: vars.$textColor;
+  font-weight: vars.$fontWeightNormal;
+  box-shadow: vars.$boxShadow;
 
   &.primary {
     font-size: 14px;
@@ -12,20 +12,20 @@
 
   &.secondary {
     font-size: 12px;
-    background: $mainLight;
+    background: vars.$mainLight;
     margin: 5px 10px 5px 0;
   }
 
   &.secondary:hover {
-    background: $mainLight;
+    background: vars.$mainLight;
   }
 
   &.selected {
-    background-color: $primaryColor;
+    background-color: vars.$primaryColor;
   }
 
   &.selected:hover {
-    background-color: $primaryColor;
+    background-color: vars.$primaryColor;
   }
 }
 
@@ -41,11 +41,11 @@
     padding-left: 20px;
     padding-bottom: 5px;
     margin-top: 0;
-    border-bottom: 1px dashed $textColor;
+    border-bottom: 1px dashed vars.$textColor;
   }
 
   .secondary-collection-button-title {
-    color: $textColor;
+    color: vars.$textColor;
     padding-bottom: 5px;
     font-size: 14px;
   }

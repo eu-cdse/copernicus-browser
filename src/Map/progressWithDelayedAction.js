@@ -2,14 +2,29 @@ import NProgress from 'nprogress';
 import { isFunction } from '../utils';
 
 export function progressWithDelayedAction({ parent, delay, action, resetAction }) {
-  const progressBar = NProgress.configure({
-    showSpinner: false,
-    parent: parent,
-  });
+  // Create a safer progress bar configuration that handles missing parent elements
+  let progressBar;
+
+  function ensureProgressBar() {
+    if (!progressBar) {
+      // Check if the parent element exists, if not fall back to body
+      const parentElement = document.querySelector(parent);
+      progressBar = NProgress.configure({
+        showSpinner: false,
+        parent: parentElement ? parent : 'body',
+      });
+    }
+    return progressBar;
+  }
+
+  function isParentAvailable() {
+    return document.querySelector(parent) !== null;
+  }
+
   let delayedActionTimeout = null;
 
   function isStarted() {
-    return progressBar.isStarted();
+    return isParentAvailable() ? ensureProgressBar().isStarted() : false;
   }
 
   function resetDelayedAction() {
@@ -23,16 +38,22 @@ export function progressWithDelayedAction({ parent, delay, action, resetAction }
 
   function done() {
     resetDelayedAction();
-    progressBar.done();
+    if (isParentAvailable()) {
+      ensureProgressBar().done();
+    }
   }
 
   function inc() {
-    progressBar.inc();
+    if (isParentAvailable()) {
+      ensureProgressBar().inc();
+    }
   }
 
   function remove() {
     resetDelayedAction();
-    progressBar.remove();
+    if (isParentAvailable()) {
+      ensureProgressBar().remove();
+    }
   }
 
   function start() {
@@ -40,7 +61,9 @@ export function progressWithDelayedAction({ parent, delay, action, resetAction }
     if (action && isFunction(action)) {
       delayedActionTimeout = setTimeout(action, delay);
     }
-    progressBar.start();
+    if (isParentAvailable()) {
+      ensureProgressBar().start();
+    }
   }
 
   return {

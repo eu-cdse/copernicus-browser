@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { useODataSearch } from './useODataSearch';
-import { act } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import oDataHelpers from '../api/OData/ODataHelpers';
 
 const TIMEOUT = 30000;
@@ -28,7 +27,7 @@ describe('useODataSearch S1', () => {
       datasetId: 'S1_CDAS_IW_VVVH',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -36,17 +35,20 @@ describe('useODataSearch S1', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('GRD');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
-    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('SAR');
-    expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('IW_GRDH_1S');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('GRD');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
+        expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('SAR');
+        expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('IW_GRDH_1S');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S1 EW result', async () => {
@@ -68,7 +70,7 @@ describe('useODataSearch S1', () => {
       datasetId: 'S1_CDAS_EW_HHHV',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -76,18 +78,21 @@ describe('useODataSearch S1', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
-      expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
-      expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('SAR');
-      expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2016-12-23');
-    }
+        for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
+          expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
+          expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('SAR');
+          expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2016-12-23');
+        }
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S1 IW results', async () => {
@@ -109,7 +114,7 @@ describe('useODataSearch S1', () => {
       datasetId: 'S1_CDAS_IW_VVVH',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -117,26 +122,29 @@ describe('useODataSearch S1', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
-      expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
-      expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('SAR');
-      /*
+        for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S1');
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('GRD');
+          expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-1');
+          expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('SAR');
+          /*
         The product filter was changed to "contains(Name,'GRD')" after recommendation by CF.
         This worked for a while, but now the results also contain products with product types
         'CARD-BS', 'CARD-COH6', 'CARD-COH12.
         This is probably not correct and also causes the check below to fail.
         So, this check should be disabled until the right approach is agreed upon.
       */
-      // expect(result.current[0].oDataSearchResult.allResults[i].productType).toContain('IW_GRDH_1S');
-      expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
-    }
+          // expect(result.current[0].oDataSearchResult.allResults[i].productType).toContain('IW_GRDH_1S');
+          expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
+        }
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S1 product types', async () => {
@@ -169,7 +177,7 @@ describe('useODataSearch S1', () => {
       ],
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -177,31 +185,34 @@ describe('useODataSearch S1', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
+        expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('SAR');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-16');
 
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S1');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-1');
-    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('SAR');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-16');
-
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('RAW')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('SLC')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('GRD')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('COG')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('OCN')),
-    ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('RAW')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('SLC')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('GRD')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('COG')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('OCN')),
+        ).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -227,7 +238,7 @@ describe('useODataSearch S2', () => {
       datasetId: 'S2_L2A_CDAS',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -235,17 +246,20 @@ describe('useODataSearch S2', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('L2A');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
-    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('MSI');
-    expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('S2MSI2A');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('L2A');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
+        expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('MSI');
+        expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('S2MSI2A');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S2 L1C results', async () => {
@@ -267,7 +281,7 @@ describe('useODataSearch S2', () => {
       datasetId: 'S2_L1C_CDAS',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -275,19 +289,22 @@ describe('useODataSearch S2', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S2');
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('L1C');
-      expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-2');
-      expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('MSI');
-      expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('S2MSI1C');
-      expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
-    }
+        for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S2');
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('L1C');
+          expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-2');
+          expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('MSI');
+          expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('S2MSI1C');
+          expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
+        }
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S2 product types', async () => {
@@ -320,7 +337,7 @@ describe('useODataSearch S2', () => {
       ],
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -328,28 +345,31 @@ describe('useODataSearch S2', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
+        expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('MSI');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
 
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S2');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-2');
-    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toContain('MSI');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
-
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('L2A')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'S2MSI2A'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('L1C')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'S2MSI1C'),
-    ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('L2A')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'S2MSI2A'),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('L1C')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'S2MSI1C'),
+        ).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -375,7 +395,7 @@ describe('useODataSearch S3', () => {
       datasetId: 'S3OLCI_CDAS',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -383,19 +403,22 @@ describe('useODataSearch S3', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S3');
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('OL');
-      expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-3');
-      expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('OLCI');
-      expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('OL_1_EFR___');
-      expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
-    }
+        for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S3');
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('OL');
+          expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-3');
+          expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('OLCI');
+          expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('OL_1_EFR___');
+          expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
+        }
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S3 product types', async () => {
@@ -428,7 +451,7 @@ describe('useODataSearch S3', () => {
       ],
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -436,36 +459,43 @@ describe('useODataSearch S3', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S3');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-3');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
 
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S3');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-3');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
-
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
-        instrumentShortName.includes('OLCI'),
-      ),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'OL_1_EFR___'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
-        instrumentShortName.includes('SLSTR'),
-      ),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'SL_1_RBT___'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
-        instrumentShortName.includes('SYNERGY'),
-      ),
-    ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
+            instrumentShortName.includes('OLCI'),
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'OL_1_EFR___',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
+            instrumentShortName.includes('SLSTR'),
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'SL_1_RBT___',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
+            instrumentShortName.includes('SYNERGY'),
+          ),
+        ).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -491,7 +521,7 @@ describe('useODataSearch S5', () => {
       datasetId: 'S5_O3_CDAS',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -499,19 +529,22 @@ describe('useODataSearch S5', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S5');
-      expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('03');
-      expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-5P');
-      expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('TROPOMI');
-      expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('L2__O3____');
-      expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
-    }
+        for (let i = 0; i < result.current[0].oDataSearchResult.allResults.length; i++) {
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('S5');
+          expect(result.current[0].oDataSearchResult.allResults[i].name).toContain('03');
+          expect(result.current[0].oDataSearchResult.allResults[i].platformShortName).toEqual('SENTINEL-5P');
+          expect(result.current[0].oDataSearchResult.allResults[i].instrumentShortName).toContain('TROPOMI');
+          expect(result.current[0].oDataSearchResult.allResults[i].productType).toEqual('L2__O3____');
+          expect(result.current[0].oDataSearchResult.allResults[i].sensingTime).toContain('2023-05-28');
+        }
+      },
+      { timeout: TIMEOUT },
+    );
   });
 
   test('multiple S5 product types', async () => {
@@ -550,7 +583,7 @@ describe('useODataSearch S5', () => {
       ],
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -558,35 +591,48 @@ describe('useODataSearch S5', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S5');
+        expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-5P');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
 
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('S5');
-    expect(result.current[0].oDataSearchResult.allResults[0].platformShortName).toEqual('SENTINEL-5P');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
-
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
-        instrumentShortName.includes('TROPOMI'),
-      ),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L1B_RA_BD2'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L1B_RA_BD1'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L1B_IR_UVN'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L2__CH4___'),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L2__CLOUD_'),
-    ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ instrumentShortName }) =>
+            instrumentShortName.includes('TROPOMI'),
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L1B_RA_BD2',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L1B_RA_BD1',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L1B_IR_UVN',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L2__CH4___',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L2__CLOUD_',
+          ),
+        ).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -627,7 +673,7 @@ describe('useODataSearch CCM Optical', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -635,10 +681,13 @@ describe('useODataSearch CCM Optical', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -698,7 +747,7 @@ describe('useODataSearch CCM Optical', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -706,10 +755,13 @@ describe('useODataSearch CCM Optical', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -781,7 +833,7 @@ describe('useODataSearch CCM Optical', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -789,10 +841,13 @@ describe('useODataSearch CCM Optical', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -860,7 +915,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -868,10 +923,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -921,7 +979,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -929,10 +987,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -982,7 +1043,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -990,10 +1051,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -1043,7 +1107,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1051,10 +1115,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -1104,7 +1171,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1112,10 +1179,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -1165,7 +1235,7 @@ describe('useODataSearch CCM DEM', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1173,10 +1243,13 @@ describe('useODataSearch CCM DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 
@@ -1252,7 +1325,7 @@ describe('useODataSearch multiple data sources', () => {
       ],
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1260,43 +1333,48 @@ describe('useODataSearch multiple data sources', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
 
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2023-05-28');
-
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(
-        ({ instrumentShortName }) => instrumentShortName === 'SAR',
-      ),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('RAW')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('GRD')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(
-        ({ instrumentShortName }) => instrumentShortName === 'MSI',
-      ),
-    ).toBeTruthy();
-    // expect(
-    //   result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S3')),
-    // ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S5P')),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(
-        ({ instrumentShortName }) => instrumentShortName === 'TROPOMI',
-      ),
-    ).toBeTruthy();
-    expect(
-      result.current[0].oDataSearchResult.allResults.find(({ productType }) => productType === 'L1B_RA_BD2'),
-    ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ instrumentShortName }) => instrumentShortName === 'SAR',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('RAW')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('GRD')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ instrumentShortName }) => instrumentShortName === 'MSI',
+          ),
+        ).toBeTruthy();
+        // expect(
+        //   result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S3')),
+        // ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(({ name }) => name.includes('S5P')),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ instrumentShortName }) => instrumentShortName === 'TROPOMI',
+          ),
+        ).toBeTruthy();
+        expect(
+          result.current[0].oDataSearchResult.allResults.find(
+            ({ productType }) => productType === 'L1B_RA_BD2',
+          ),
+        ).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -1320,7 +1398,7 @@ describe('useODataSearch DEM', () => {
       datasetId: 'DEM_COPERNICUS_30_CDAS',
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1328,16 +1406,19 @@ describe('useODataSearch DEM', () => {
     act(() => {
       result.current[1](oDataHelpers.createBasicSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
 
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
-
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('DEM');
-    expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('SAR_DGE_30');
-    expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toBeUndefined();
-    expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('SAR_DGE_30_A4AD');
-    expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2011-06-20');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('DEM');
+        expect(result.current[0].oDataSearchResult.allResults[0].name).toContain('SAR_DGE_30');
+        expect(result.current[0].oDataSearchResult.allResults[0].instrumentShortName).toBeUndefined();
+        expect(result.current[0].oDataSearchResult.allResults[0].productType).toEqual('SAR_DGE_30_A4AD');
+        expect(result.current[0].oDataSearchResult.allResults[0].sensingTime).toContain('2011-06-20');
+      },
+      { timeout: TIMEOUT },
+    );
   });
 });
 
@@ -1384,7 +1465,7 @@ describe('Test additional filters', () => {
       },
     };
 
-    const { result, waitForNextUpdate } = renderHook(() => useODataSearch());
+    const { result } = renderHook(() => useODataSearch());
 
     expect(result.current[0].searchInProgress).toBeFalsy();
     expect(result.current[0].oDataSearchResult).toBeNull();
@@ -1392,10 +1473,13 @@ describe('Test additional filters', () => {
     act(() => {
       result.current[1](oDataHelpers.createAdvancedSearchQuery(params));
     });
-    await waitForNextUpdate({ timeout: TIMEOUT });
-
-    expect(result.current[0].searchInProgress).toBeFalsy();
-    expect(result.current[0].oDataSearchResult).toBeTruthy();
+    await waitFor(
+      () => {
+        expect(result.current[0].searchInProgress).toBeFalsy();
+        expect(result.current[0].oDataSearchResult).toBeTruthy();
+      },
+      { timeout: TIMEOUT },
+    );
 
     const { allResults } = result.current[0].oDataSearchResult;
 

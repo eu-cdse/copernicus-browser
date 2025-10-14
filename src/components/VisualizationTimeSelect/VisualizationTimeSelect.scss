@@ -1,11 +1,11 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .visualization-time-select {
   display: flex;
   flex-direction: column;
   text-transform: none;
-  color: $textColor;
-  background-color: $mainLight;
+  color: vars.$textColor;
+  background-color: vars.$mainLight;
   text-align: center;
   position: relative;
 
@@ -27,14 +27,14 @@
     .timespan-label {
       display: flex;
       align-items: center;
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
       font-size: 13px;
       height: 36px;
       padding: 0 10px;
 
       &:hover {
         cursor: pointer;
-        border-color: $primaryColor;
+        border-color: vars.$primaryColor;
       }
     }
 
@@ -89,7 +89,7 @@
             .time-input {
               margin-right: 15px;
               padding: 0 5px;
-              background-color: $mainLight;
+              background-color: vars.$mainLight;
 
               .time-input-hours-minutes {
                 width: 15px;
@@ -153,7 +153,7 @@
 
           .time-select-type {
             text-transform: uppercase;
-            color: $primaryColor;
+            color: vars.$primaryColor;
             margin-left: 0;
             width: auto;
             margin-right: 6px;
@@ -173,11 +173,11 @@
 
             .active {
               rect {
-                fill: $primaryColor;
+                fill: vars.$primaryColor;
               }
 
               path {
-                fill: $secondaryColor;
+                fill: vars.$secondaryColor;
               }
             }
           }
@@ -192,17 +192,17 @@
     align-items: center;
     margin-left: 18px;
     width: 67px;
-    background-color: $secondaryColor;
-    box-shadow: $boxShadow;
+    background-color: vars.$secondaryColor;
+    box-shadow: vars.$boxShadow;
     cursor: pointer;
 
     &:hover {
-      background-color: $hoverSecondaryColor;
+      background-color: vars.$hoverSecondaryColor;
     }
 
     svg {
       width: 15px;
-      fill: $whiteColor;
+      fill: vars.$whiteColor;
       transform: rotate(-45deg);
     }
 
@@ -219,45 +219,45 @@
     height: 35px;
     margin-top: 14px;
     margin-bottom: 12px;
-    background-color: $secondaryColor;
+    background-color: vars.$secondaryColor;
     cursor: pointer;
-    box-shadow: $boxShadow;
+    box-shadow: vars.$boxShadow;
 
     &:hover {
-      background-color: $hoverSecondaryColor;
+      background-color: vars.$hoverSecondaryColor;
     }
 
     .action-button-text {
-      color: $whiteColor;
+      color: vars.$whiteColor;
       margin-right: 10px;
       font-size: 14px;
-      font-weight: $fontWeightBold;
+      font-weight: vars.$fontWeightBold;
     }
 
     svg {
       width: 13px;
-      fill: $whiteColor;
+      fill: vars.$whiteColor;
       rotate: -45deg;
     }
 
     &.secondary {
-      background-color: $mainLight;
-      color: $primaryColor;
+      background-color: vars.$mainLight;
+      color: vars.$primaryColor;
       cursor: default;
     }
 
     &.disabled {
       pointer-events: none;
-      background-color: rgba($color: $secondaryColor, $alpha: 0.5);
+      background-color: rgba(vars.$color: vars.$secondaryColor, vars.$alpha: 0.5);
 
       svg {
-        fill: $whiteColor;
+        fill: vars.$whiteColor;
       }
     }
   }
 
   .secondary {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     font-size: 13px;
     font-weight: bold;
     text-decoration: underline;
@@ -265,7 +265,7 @@
     cursor: pointer;
 
     &.disabled {
-      color: $textColorGray;
+      color: vars.$textColorGray;
       pointer-events: none;
     }
   }

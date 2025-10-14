@@ -1,10 +1,10 @@
 /* stylelint-disable */
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .eob-btn {
-  background: $secondaryColor;
+  background: vars.$secondaryColor;
   border: none;
-  color: $whiteColor;
+  color: vars.$whiteColor;
   cursor: pointer;
   display: inline-block;
   align-items: center;
@@ -24,7 +24,7 @@
 
   i,
   .svg-icon {
-    fill: $whiteColor;
+    fill: vars.$whiteColor;
     margin-right: 5px;
 
     &.fa-spinner {
@@ -33,42 +33,42 @@
   }
 
   &:hover {
-    background-color: $hoverSecondaryColor;
+    background-color: vars.$hoverSecondaryColor;
   }
 
   &.secondary {
-    background: $mainDark;
-    color: $whiteColor;
+    background: vars.$mainDark;
+    color: vars.$whiteColor;
 
     &:hover {
-      background: rgba($mainDark, 0.8);
+      background: rgba(vars.$mainDark, 0.8);
     }
   }
 
   &.text {
     display: inline-flex;
     background: transparent;
-    color: $primaryColor;
+    color: vars.$primaryColor;
 
     .svg-icon {
-      fill: $primaryColor;
+      fill: vars.$primaryColor;
     }
 
     &:hover {
-      color: $secondaryColor;
+      color: vars.$secondaryColor;
 
       .svg-icon {
-        fill: $secondaryColor;
+        fill: vars.$secondaryColor;
       }
     }
 
     &.inactive {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       background: transparent;
-      opacity: $disabled;
+      opacity: vars.$disabled;
 
       .svg-icon {
-        fill: $primaryColor;
+        fill: vars.$primaryColor;
       }
     }
   }
@@ -96,8 +96,8 @@
   &.disabled,
   &[disabled],
   &[disabled]:hover {
-    color: $whiteColor;
-    background-color: rgba($color: $primaryColor, $alpha: 0.25);
+    color: vars.$whiteColor;
+    background-color: rgba(vars.$color: vars.$primaryColor, vars.$alpha: 0.25);
     cursor: not-allowed;
     box-shadow: none;
   }

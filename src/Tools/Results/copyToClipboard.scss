@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .copy-wrapper {
   display: flex;
@@ -23,8 +23,8 @@
 
   .copy-btn {
     padding: 10px;
-    background-color: $primaryColor;
-    color: $textColor;
+    background-color: vars.$primaryColor;
+    color: vars.$textColor;
     display: flex;
     align-items: center;
   }

@@ -63,7 +63,7 @@ const ElevationProfile = ({ geometry, bounds }) => {
         store.dispatch(modalSlice.actions.removeModal());
       }}
       title={t`Elevation profile`}
-      modal={false}
+      modal={true}
     >
       <Loading loading={loading} />
       <ErrorMessage error={error} onClose={() => store.dispatch(modalSlice.actions.removeModal())} />

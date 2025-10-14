@@ -1,9 +1,9 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .collection-search {
   display: flex;
   flex-direction: column;
-  color: $textColor;
+  color: vars.$textColor;
   width: 100%;
 
   .collection-search-field-wrapper {
@@ -19,7 +19,7 @@
     flex-grow: 1;
 
     .collection-search-title {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       text-transform: uppercase;
       font-weight: 700;
     }
@@ -28,7 +28,7 @@
       display: flex;
       flex-direction: row;
       margin-right: 18px;
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
       gap: 4px;
     }
 
@@ -42,19 +42,19 @@
       cursor: pointer;
 
       svg {
-        fill: $primaryColor;
+        fill: vars.$primaryColor;
       }
 
       &.active {
-        background-color: $primaryColor;
+        background-color: vars.$primaryColor;
 
         svg {
-          fill: $secondaryColor;
+          fill: vars.$secondaryColor;
         }
       }
 
       &.disabled {
-        opacity: $disabled;
+        opacity: vars.$disabled;
         cursor: default;
       }
     }
@@ -62,10 +62,10 @@
 
   input {
     border: none;
-    border-bottom: 1px solid $textColor;
+    border-bottom: 1px solid vars.$textColor;
     width: 100%;
     background: none;
-    color: $textColor;
+    color: vars.$textColor;
     font-size: 16px;
     padding: 5px 25px 5px 5px;
 

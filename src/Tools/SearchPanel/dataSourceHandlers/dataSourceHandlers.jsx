@@ -893,7 +893,7 @@ export const datasetLabels = {
   [COPERNICUS_WATER_BODIES]: 'Water Bodies',
   [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
   [GLOBAL_HUMAN_SETTLEMENT]: 'Global Human Settlement',
-  [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics V2',
+  [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics',
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
   [S1_MONTHLY_MOSAIC_IW]: 'Sentinel-1 IW',

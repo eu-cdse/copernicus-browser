@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .notification-panel-workspace {
   position: absolute;
@@ -23,10 +23,10 @@
   }
 
   .success {
-    color: $whiteColor;
+    color: vars.$whiteColor;
   }
 
   .warning {
-    color: $textColor;
+    color: vars.$textColor;
   }
 }

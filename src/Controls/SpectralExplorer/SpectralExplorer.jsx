@@ -103,7 +103,7 @@ const SpectralExplorer = ({
       height={650}
       onClose={onClose}
       title={`${spectralExplorerLabels.title()}: ${getDatasetLabel(datasetId)}`}
-      modal={false}
+      modal={true}
     >
       <Loading loading={loading} />
       <ErrorMessage error={error} onClose={onClose} />

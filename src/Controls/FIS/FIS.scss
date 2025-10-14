@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .fis {
-  color: $textColor;
+  color: vars.$textColor;
 
   .export-csv-button {
     margin-right: 20px;
@@ -59,12 +59,12 @@
     a.eob-btn {
       border-radius: 0;
       border-bottom: 3px solid transparent;
-      color: $textColor;
-      background: $whiteBackground;
+      color: vars.$textColor;
+      background: vars.$whiteBackground;
     }
 
     a.eob-btn.selected {
-      border-bottom: 3px solid $primaryColor;
+      border-bottom: 3px solid vars.$primaryColor;
     }
   }
 
@@ -76,7 +76,7 @@
 
   svg.background-graphics {
     text {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
 
     path,
@@ -92,7 +92,7 @@
 
     line.axis-baseline {
       shape-rendering: crispEdges;
-      stroke: $textColor;
+      stroke: vars.$textColor;
     }
   }
 
@@ -100,32 +100,32 @@
     margin-left: 50px;
 
     text {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
   }
 
   svg.visualization-layer {
     text {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
 
     path,
     line {
-      fill: $primaryColor;
+      fill: vars.$primaryColor;
     }
 
     .data-visualization {
       .lines {
         .xyframe-line {
           path {
-            stroke: $primaryColor;
+            stroke: vars.$primaryColor;
           }
         }
       }
 
       .points {
         .frame-piece {
-          fill: $primaryColor;
+          fill: vars.$primaryColor;
         }
       }
     }
@@ -138,13 +138,13 @@
 
     line.axis-baseline {
       shape-rendering: crispEdges;
-      stroke: $textColor;
+      stroke: vars.$textColor;
     }
   }
 
   div.annotation {
-    background-color: $mainMedium;
-    color: $textColor;
+    background-color: vars.$mainMedium;
+    color: vars.$textColor;
     padding: 20px;
     border-radius: 5px;
     min-width: 200px;

@@ -1,4 +1,4 @@
-@import '../../../../variables.module.scss';
+@use '../../../../variables.module.scss' as vars;
 
 .collection-tooltip {
   .collection-tooltip-icon {
@@ -10,19 +10,19 @@
     border-radius: 100%;
     margin-left: 10px;
     margin-right: 10px;
-    background-color: $mainLight;
-    box-shadow: $boxShadow;
-    color: $textColor;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
+    color: vars.$textColor;
     transition: background-color 0.2s ease;
     cursor: pointer;
 
     i {
       font-size: 11px;
-      color: $textColor;
+      color: vars.$textColor;
     }
 
     &:hover {
-      background-color: $mainDark;
+      background-color: vars.$mainDark;
     }
   }
 
@@ -32,7 +32,7 @@
     align-items: center;
 
     a {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
 
     div {
@@ -55,9 +55,9 @@
   }
 
   .react-tooltip-lite {
-    box-shadow: $boxShadow;
-    background: $mainMedium;
-    color: $textColor;
+    box-shadow: vars.$boxShadow;
+    background: vars.$mainMedium;
+    color: vars.$textColor;
     border-radius: 5px;
     max-width: 300px !important;
     font-size: 0.8em;
@@ -69,26 +69,26 @@
       margin: 5px 0;
 
       a {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }
 
   .react-tooltip-lite-up-arrow {
-    border-top: 10px solid $mainMedium;
+    border-top: 10px solid vars.$mainMedium;
   }
 
   .react-tooltip-lite-down-arrow {
-    border-bottom: 10px solid $mainMedium;
+    border-bottom: 10px solid vars.$mainMedium;
   }
 
   .react-tooltip-lite-right-arrow {
-    border-right: 10px solid $mainMedium;
+    border-right: 10px solid vars.$mainMedium;
     margin-left: 5px;
   }
 
   .react-tooltip-lite-left-arrow {
-    border-left: 10px solid $mainMedium;
+    border-left: 10px solid vars.$mainMedium;
   }
 }
 

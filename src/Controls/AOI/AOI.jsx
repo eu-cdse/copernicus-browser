@@ -45,6 +45,10 @@ class AOI extends Component {
           }),
         );
         this.props.map.removeLayer(e.layer);
+        // Disable drawing mode to prevent double draw
+        if (this.props.map.pm && this.props.map.pm.disableDraw) {
+          this.props.map.pm.disableDraw();
+        }
         this.enableEdit();
       }
     });
@@ -107,6 +111,10 @@ class AOI extends Component {
       this.onResetAoi();
       store.dispatch(aoiSlice.actions.clearMap(false));
     }
+
+    if (this.props.aoiLastEdited !== prevProps.aoiLastEdited) {
+      this.enableEdit();
+    }
   }
 
   setEditModeIfPolygonsInSessionStorage = () => {
@@ -124,10 +132,13 @@ class AOI extends Component {
 
   enableEdit = () => {
     this.props.map.eachLayer((l) => {
-      if (l.options.id && l.options.id === 'aoi-layer') {
+      if (l.options && l.options.id === 'aoi-layer') {
         this.AOILayerRef = l;
       }
     });
+    if (!this.AOILayerRef || !this.AOILayerRef.pm) {
+      return;
+    }
     this.AOILayerRef.pm.enable({
       allowSelfIntersection: false,
     });
@@ -282,6 +293,7 @@ const mapStoreToProps = (store) => ({
   aoiShape: store.aoi.shape,
   aoiBounds: store.aoi.bounds,
   aoiEditMode: store.aoi.editMode,
+  aoiLastEdited: store.aoi.lastEdited,
   aoi: store.aoi,
   aoiClearMap: store.aoi.clearMap,
   mapBounds: store.mainMap.bounds,

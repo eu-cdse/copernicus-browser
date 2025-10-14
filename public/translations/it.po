@@ -487,9 +487,6 @@ msgstr "Orario di acquisizione"
 msgid "Load more"
 msgstr "Carica piú"
 
-msgid "Loading more results ..."
-msgstr "Caricamento di piú risultati in corso..."
-
 msgid "Results"
 msgstr "Risultati"
 
@@ -690,25 +687,13 @@ msgstr "Crea un'animazione in timelapse"
 msgid "Mark point of interest"
 msgstr "Evidenzia un punto di interesse"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Center map on feature"
 msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove geometry"
-msgstr "Rimuovi geometria"
 
 msgid "Area of interest"
 msgstr "Area di interesse"
 
 msgid "Select mode"
-msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove measurement"
 msgstr ""
 
 msgid "km"
@@ -737,11 +722,6 @@ msgstr "Reset"
 
 msgid "Copy geometry to clipboard"
 msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Cancel edit."
-msgstr "Annulla le modifiche."
 
 msgid "Least cloud coverage"
 msgstr ""
@@ -3732,13 +3712,9 @@ msgstr ""
 msgid "Processing parameters"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw rectangular area of interest for image downloads and timelapse"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw polygonal area of interest for image downloads and timelapse"
 msgstr ""
 
@@ -4581,11 +4557,6 @@ msgstr "Mostra prodotti sulla mappa"
 
 msgid "Show tutorial"
 msgstr "Mostra il tutorial"
-
-msgid "Measure (Click to place first vertex and double click to finish)"
-msgstr ""
-"Misura (fare clic per posizionare il primo vertice e fare doppio clic per "
-"terminare)"
 
 #. jsx-a11y/anchor-is-valid
 #. eslint-disable-next-line
@@ -9979,9 +9950,6 @@ msgstr ""
 msgid "Sentinel-2 Quarterly Mosaics"
 msgstr ""
 
-msgid "WorldCover Annual Cloudless Mosaics V2"
-msgstr ""
-
 msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
@@ -10069,4 +10037,13 @@ msgid ""
 "normalized NDVI estimation. The uncertainties of the normalized "
 "reflectances are estimated by propagating the uncertainties associated to "
 "the BRDF model parameters found via the inversion."
+msgstr ""
+
+msgid "WorldCover Annual Cloudless Mosaics"
+msgstr ""
+
+#. Button to start/stop measuring
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
+msgid "Measure (Click to start, double click to finish)"
 msgstr ""

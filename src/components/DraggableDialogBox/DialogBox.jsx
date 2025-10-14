@@ -32,7 +32,9 @@ const DialogBox = ({
       {modal && modalMask ? modalMask : null}
       <div ref={elemRef} className={`dialog-box ${className}`}>
         <div className="title-bar drag-handle" onMouseDown={onMouseDown}>
-          <h3 className="title ">{title}</h3>
+          <h3 className="title" title={title}>
+            {title}
+          </h3>
           <i className="close-btn fa fa-close" onClick={onClose} />
         </div>
         {children}

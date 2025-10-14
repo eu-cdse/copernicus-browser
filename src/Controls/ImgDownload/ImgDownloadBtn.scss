@@ -1,4 +1,4 @@
-@import './../../variables.module.scss';
+@use './../../variables.module.scss' as vars;
 
 .img-download-btn-wrapper {
   z-index: 400;
@@ -9,10 +9,10 @@
   width: 40px;
   height: 40px;
   font-size: 12px;
-  background: $mainLight;
+  background: vars.$mainLight;
   color: #fff;
-  -webkit-box-shadow: $boxShadow;
-  box-shadow: $boxShadow;
+  -webkit-box-shadow: vars.$boxShadow;
+  box-shadow: vars.$boxShadow;
   text-align: center;
 
   &.is3d {
@@ -24,11 +24,11 @@
   }
 
   svg path {
-    fill: $primaryColor;
+    fill: vars.$primaryColor;
   }
 
   .active svg path {
-    fill: $secondaryColor;
-    color: $primaryColor;
+    fill: vars.$secondaryColor;
+    color: vars.$primaryColor;
   }
 }

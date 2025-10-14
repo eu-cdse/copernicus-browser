@@ -7,92 +7,74 @@ import PixelExplorer from '../../Controls/PixelExplorer/PixelExplorer';
 import SpectralExplorerButton from '../../Controls/SpectralExplorer/SpectralExplorerButton';
 import { connect } from 'react-redux';
 
-class EOBPOIPanelButton extends React.Component {
-  state = {
-    showOptions: false,
-  };
+function EOBPOIPanelButton(props) {
+  const errMsg = props.disabled ? getLoggedInErrorMsg() : null;
+  const isEnabled = errMsg === null;
+  const errorMessage = errMsg ? `\n(${errMsg})` : '';
+  const title = t`Mark point of interest` + ` ${errorMessage}`;
 
-  renderMarkerIcon = () => {
-    const errMsg = this.props.disabled ? getLoggedInErrorMsg() : null;
-    const isEnabled = errMsg === null;
-    const errorMessage = errMsg ? `\n(${errMsg})` : '';
-    const title = t`Mark point of interest` + ` ${errorMessage}`;
-    return (
-      <span
-        onClick={(ev) => {
+  const renderMarkerIcon = () => (
+    <span title={title}>
+      {/* jsx-a11y/anchor-is-valid */}
+      {/* eslint-disable-next-line */}
+      <a
+        className={`drawGeometry ${props.disabled ? 'disabled' : ''} ${props.active ? 'active' : ''} ${
+          props.active ? 'open-options' : ''
+        }`}
+        onClick={() => {
           if (!isEnabled) {
-            this.props.onErrorMessage(title);
+            props.onErrorMessage(title);
             return;
           }
-          this.props.drawMarker();
-        }}
-        title={title}
-      >
-        {' '}
-        {
-          // jsx-a11y/anchor-is-valid
-          // eslint-disable-next-line
-          <a
-            className={`drawGeometry ${this.props.disabled ? 'disabled' : ''} ${
-              this.props.active ? 'active' : ''
-            }`}
-          >
-            <i className="fa fa-map-marker" />
-          </a>
-        }
-      </span>
-    );
-  };
 
-  renderMarkerInfo = () => (
+          if (!!props.poi) {
+            props.deleteMarker();
+          } else {
+            props.drawMarker();
+          }
+        }}
+      >
+        <i className="fa fa-map-marker" />
+      </a>
+    </span>
+  );
+
+  const renderMarkerInfo = () => (
     <span style={{ display: 'inline-flex' }}>
-      {
-        // jsx-a11y/anchor-is-valid
-        // eslint-disable-next-line
-        <a onClick={this.props.deleteMarker} title={t`Remove geometry`}>
-          <i className={`fa fa-close`} />
-        </a>
-      }
-      {
-        // jsx-a11y/anchor-is-valid
-        // eslint-disable-next-line
-        <a onClick={() => this.props.centerOnFeature('poiLayer')} title={t`Center map on feature`}>
-          <i className={`fa fa-crosshairs`} />
-        </a>
-      }
-      {this.props.poi && (
+      {/* jsx-a11y/anchor-is-valid */}
+      {/* eslint-disable-next-line */}
+      <a onClick={() => props.centerOnFeature('poiLayer')} title={t`Center map on feature`}>
+        <i className="fa fa-crosshairs" />
+      </a>
+      {props.poi && (
         <FisChartLink
-          aoiOrPoi={'poi'}
-          selectedResult={this.props.selectedResult}
-          openFisPopup={this.props.openFisPopup}
-          presetLayerName={this.props.presetLayerName}
-          fisShadowLayer={this.props.fisShadowLayer}
-          onErrorMessage={this.props.onErrorMessage}
-          // active={this.props.fisOpened}
+          aoiOrPoi="poi"
+          selectedResult={props.selectedResult}
+          openFisPopup={props.openFisPopup}
+          presetLayerName={props.presetLayerName}
+          fisShadowLayer={props.fisShadowLayer}
+          onErrorMessage={props.onErrorMessage}
         />
       )}
-
-      {this.props.poi && (
+      {props.poi && (
         <SpectralExplorerButton
-          datasetId={this.props.datasetId}
-          geometry={this.props.poiGeometry}
-          onErrorMessage={this.props.onErrorMessage}
-          geometryType={'poi'}
+          datasetId={props.datasetId}
+          geometry={props.poiGeometry}
+          onErrorMessage={props.onErrorMessage}
+          geometryType="poi"
         />
       )}
     </span>
   );
 
-  render() {
-    const { poi } = this.props;
-    return (
-      <div className="poiPanel panelButton floatItem" title={t`Area of interest`}>
-        {<PixelExplorer />}
-        {poi && !this.props.disabled && this.renderMarkerInfo()}
-        {this.renderMarkerIcon()}
-      </div>
-    );
-  }
+  const { poi } = props;
+  return (
+    <div className="poiPanel panelButton floatItem" title={t`Area of interest`}>
+      <PixelExplorer />
+      {poi && !props.disabled && renderMarkerInfo()}
+      {renderMarkerIcon()}
+    </div>
+  );
 }
 
 const mapStoreToProps = (store) => ({

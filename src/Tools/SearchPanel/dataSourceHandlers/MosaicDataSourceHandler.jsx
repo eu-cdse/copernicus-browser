@@ -73,7 +73,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   };
 
   getDatasetSearchLabels = () => ({
-    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: t`WorldCover Annual Cloudless Mosaics V2`,
+    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: t`WorldCover Annual Cloudless Mosaics`,
     [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: t`Sentinel-2 Quarterly Mosaics`,
   });
 

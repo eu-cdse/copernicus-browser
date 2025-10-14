@@ -67,7 +67,7 @@ import {
 } from '../../api/openEO/openEOHelpers';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
-import { ensureMercatorBBox } from '../../utils/coords';
+import { ensureMercatorBBox, metersPerPixel } from '../../utils/coords';
 import { isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 
 const PARTITION_PADDING = 5;
@@ -239,8 +239,20 @@ export async function fetchImage(layer, options) {
             }
           : { ...geometry, height: getMapParams.height, width: getMapParams.width, crs: bbox.crs.authId };
 
+      let collectionId;
+      if (dsh.supportsLowResolutionAlternativeCollection(datasetId)) {
+        const lowResolutionCollectionId = dsh.getLowResolutionCollectionId(datasetId);
+        const lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(datasetId);
+
+        const mPerPixel = metersPerPixel(getMapParams.bbox, getMapParams.width);
+        if (mPerPixel > lowResolutionMetersPerPixelThreshold) {
+          collectionId = `byoc-${lowResolutionCollectionId}`;
+        }
+      }
+
       const newProcessGraph = processGraphBuilder.saveResult(
         processGraphBuilder.loadCollection(processGraph, {
+          id: collectionId,
           spatial_extent: spatialExtent,
           temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
           bands: isRawBand ? [options.bandName] : null,

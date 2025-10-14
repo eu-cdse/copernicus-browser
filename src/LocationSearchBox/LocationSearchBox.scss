@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .search-box-wrapper {
   position: absolute;
@@ -13,7 +13,7 @@
   font-size: 15px;
   border: 0;
   border-radius: 0;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
   color: white;
   z-index: 500;
 
@@ -29,7 +29,7 @@
 
     .autocomplete {
       .icon-search {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         width: 22px;
         height: 20px;
         padding: 10px;
@@ -49,7 +49,7 @@
         box-shadow: none;
 
         &::placeholder {
-          color: rgba($textColor, 0.3);
+          color: rgba(vars.$textColor, 0.3);
         }
 
         &::-moz-focus-inner {
@@ -62,22 +62,22 @@
       }
 
       #async-places {
-        background-color: $whiteBackground;
-        border-top: 1px solid $randomGrayColor;
+        background-color: vars.$whiteBackground;
+        border-top: 1px solid vars.$randomGrayColor;
 
         a {
-          color: $textColor;
+          color: vars.$textColor;
           text-decoration: none;
           font-size: 13.5px;
 
           .search-item {
-            border-bottom: 1px solid $randomGrayColor;
+            border-bottom: 1px solid vars.$randomGrayColor;
             padding: 4px;
             cursor: pointer;
 
             &:hover {
-              background-color: $primaryColor;
-              color: $whiteColor;
+              background-color: vars.$primaryColor;
+              color: vars.$whiteColor;
             }
           }
 
@@ -105,7 +105,7 @@
   }
 }
 
-@media screen and (max-width: $breakpoint-700) {
+@media screen and (max-width: vars.$breakpoint-700) {
   .search-box-wrapper {
     &.open {
       width: 45%;

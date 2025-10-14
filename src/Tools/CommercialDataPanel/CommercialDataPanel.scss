@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .commercial-data-panel {
-  color: $textColor;
+  color: vars.$textColor;
   display: flex;
   flex-flow: column;
   font-size: 14px;
@@ -17,14 +17,14 @@
       font-size: 1em;
 
       a {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
 
     ul {
       li {
         a {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
     }
@@ -32,8 +32,8 @@
 
   .date-picker {
     .date-picker-input {
-      background: $mainLight;
-      color: $primaryColor;
+      background: vars.$mainLight;
+      color: vars.$primaryColor;
     }
   }
 
@@ -43,12 +43,12 @@
     justify-content: space-between;
 
     i {
-      color: $textColor;
+      color: vars.$textColor;
       padding: 0 5px;
       cursor: pointer;
 
       &.disabled {
-        color: $textColor;
+        color: vars.$textColor;
         cursor: not-allowed;
       }
     }
@@ -56,25 +56,25 @@
 
   .dropdown {
     padding: 7px 0 2px 0;
-    color: $textColor;
+    color: vars.$textColor;
   }
 
   .transaction-type-selection {
     .eob-btn {
       margin-right: 20px;
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
       border-radius: 0;
-      border-bottom: 3px solid $mainLight;
-      color: $textColor;
+      border-bottom: 3px solid vars.$mainLight;
+      color: vars.$textColor;
       font-size: 14px;
 
       &.selected {
-        border-bottom: 3px solid $primaryColor;
+        border-bottom: 3px solid vars.$primaryColor;
       }
 
       &:hover {
         box-shadow: none;
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }

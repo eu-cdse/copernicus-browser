@@ -1,24 +1,25 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 #map {
   .leaflet-control-container {
     .leaflet-bottom.leaflet-left {
       .leaflet-control-attribution {
-        background: $mainDark;
-        color: $textColor;
+        background: vars.$mainDark;
+        color: vars.$textColor;
+        font-size: 11px;
 
         a {
-          color: $textColor;
+          color: vars.$textColor;
         }
       }
 
-      @media screen and (max-width: $breakpoint-1200) {
+      @media screen and (max-width: vars.$breakpoint-1200) {
         .leaflet-control-attribution {
           max-width: 340px;
         }
       }
 
-      @media screen and (max-width: $breakpoint-890) {
+      @media screen and (max-width: vars.$breakpoint-890) {
         .leaflet-control-attribution {
           bottom: 25px;
         }
@@ -45,25 +46,25 @@
         }
 
         .leaflet-control-zoom-in {
-          border-bottom: 2px solid $mainLight;
+          border-bottom: 2px solid vars.$mainLight;
         }
 
         .leaflet-control-zoom-in,
         .leaflet-control-zoom-out {
-          background-color: $mainLight;
-          color: $primaryColor;
-          box-shadow: $boxShadow;
+          background-color: vars.$mainLight;
+          color: vars.$primaryColor;
+          box-shadow: vars.$boxShadow;
           border-radius: 0;
         }
 
         .leaflet-control-zoom-in:hover,
         .leaflet-control-zoom-out:hover {
-          background-color: $primaryColor;
-          color: $secondaryColor;
+          background-color: vars.$primaryColor;
+          color: vars.$secondaryColor;
         }
       }
 
-      @media screen and (max-width: $breakpoint-700) {
+      @media screen and (max-width: vars.$breakpoint-700) {
         .leaflet-control-zoom {
           display: none;
         }
@@ -78,10 +79,11 @@
         }
 
         .leaflet-control-scale-line {
-          background: $mainDark;
-          color: $textColor;
-          border-color: $textColor;
+          background: vars.$mainDark;
+          color: vars.$textColor;
+          border-color: vars.$textColor;
           box-shadow: 1px 1px 4px #000;
+          font-size: 11px;
 
           @media screen and (max-width: 450px) {
             width: 75px !important;
@@ -95,8 +97,8 @@
         margin-bottom: 0;
         clear: unset;
         font-size: 10px;
-        background: $mainDark;
-        color: $textColor;
+        background: vars.$mainDark;
+        color: vars.$textColor;
         padding: 1px;
         min-width: 160px;
         text-align: center;
@@ -116,7 +118,7 @@
       }
     }
 
-    @media screen and (max-width: $breakpoint-700) {
+    @media screen and (max-width: vars.$breakpoint-700) {
       .leaflet-bottom.leaflet-right {
         height: 19px;
       }

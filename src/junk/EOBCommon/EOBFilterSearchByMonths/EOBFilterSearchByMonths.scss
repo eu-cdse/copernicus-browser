@@ -1,7 +1,7 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .filter-search-by-months {
-  color: $textColor;
+  color: vars.$textColor;
   font-size: 0.9em;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@
     gap: 6px;
     margin: 7px 0 0 0;
     justify-content: space-between;
-    border-top: 1px solid $mainDark;
+    border-top: 1px solid vars.$mainDark;
     padding-top: 7px;
   }
 }

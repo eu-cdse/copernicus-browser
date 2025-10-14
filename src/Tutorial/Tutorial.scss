@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .activate-close-animation {
   display: block !important;
@@ -31,16 +31,16 @@
   position: absolute !important;
   right: 10px;
   font-size: 12px;
-  color: $primaryColor;
+  color: vars.$primaryColor;
   z-index: 400;
-  background: $whiteBackground;
+  background: vars.$whiteBackground;
   height: 40px;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
   text-align: center;
 
   &.tutorial-infopanel-button {
     top: 10px;
-    background: $whiteBackground;
+    background: vars.$whiteBackground;
   }
 
   &#tutorial-animatedinfopanel-button {
@@ -64,7 +64,7 @@
   }
 
   a {
-    color: $primaryColor;
+    color: vars.$primaryColor;
     background: none;
     display: inline-block;
     width: 40px;
@@ -94,7 +94,7 @@
 
   .link {
     text-decoration: underline;
-    color: $primaryColor;
+    color: vars.$primaryColor;
     cursor: pointer;
     padding: 5px;
   }
@@ -103,23 +103,23 @@
   li {
     img {
       width: 25px;
-      box-shadow: $boxShadow;
+      box-shadow: vars.$boxShadow;
       vertical-align: middle;
     }
 
     span {
       padding: 4px 6px;
-      box-shadow: $boxShadow;
+      box-shadow: vars.$boxShadow;
       cursor: default;
 
       &.icon {
-        color: $primaryColor;
-        background-color: $whiteBackground;
+        color: vars.$primaryColor;
+        background-color: vars.$whiteBackground;
         white-space: nowrap;
 
         &.inverted {
-          color: $whiteColor;
-          background-color: $primaryColor;
+          color: vars.$whiteColor;
+          background-color: vars.$primaryColor;
         }
 
         &.large-padding {
@@ -128,8 +128,8 @@
       }
 
       &.active-icon {
-        color: $secondaryColor;
-        background-color: $primaryColor;
+        color: vars.$secondaryColor;
+        background-color: vars.$primaryColor;
         white-space: nowrap;
       }
     }
@@ -137,10 +137,10 @@
 }
 
 .tutorial-wrap {
-  background-color: $tutorialBackgroundColor;
+  background-color: vars.$tutorialBackgroundColor;
   border-radius: 5px;
   box-sizing: border-box;
-  color: $tutorialTextColor;
+  color: vars.$tutorialTextColor;
   font-size: 16px;
   max-width: 100%;
   padding: 15px;
@@ -153,7 +153,7 @@
     text-align: center;
 
     a {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       cursor: pointer;
     }
 
@@ -181,7 +181,7 @@
         justify-content: center;
 
         img {
-          box-shadow: $boxShadow;
+          box-shadow: vars.$boxShadow;
         }
       }
     }
@@ -202,10 +202,10 @@
       padding: 0 10px;
 
       .tutorial-button {
-        background-color: $primaryColor;
+        background-color: vars.$primaryColor;
         border: 0;
         border-radius: 4px;
-        color: $whiteColor;
+        color: vars.$whiteColor;
         cursor: pointer;
         line-height: 1;
         padding: 8px;
@@ -214,7 +214,7 @@
         margin: 2px;
 
         &.step {
-          color: $whiteColor;
+          color: vars.$whiteColor;
           outline-color: transparent;
           width: 60px;
           padding: 7px;
@@ -226,7 +226,7 @@
         }
 
         &:disabled {
-          background-color: $primaryColor;
+          background-color: vars.$primaryColor;
           opacity: 0.5;
           cursor: default;
         }
@@ -236,9 +236,9 @@
         margin: 2px 8px 2px 0;
         padding-left: 30px;
         padding-right: 30px;
-        color: $primaryColor;
-        background: $tutorialBackgroundColor;
-        border: 1px solid $primaryColor;
+        color: vars.$primaryColor;
+        background: vars.$tutorialBackgroundColor;
+        border: 1px solid vars.$primaryColor;
       }
 
       .tutorial-buttons {

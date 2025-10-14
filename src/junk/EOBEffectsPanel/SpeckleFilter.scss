@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .speckleFilter-select-dropdown {
@@ -7,7 +7,7 @@
 
   .speckleFilter-select__single-value {
     font-size: 13px;
-    font-weight: $fontWeightNormal;
+    font-weight: vars.$fontWeightNormal;
   }
 
   .speckleFilter-select__menu {
@@ -18,7 +18,7 @@
         height: 20px;
         line-height: 20px;
         font-size: 13px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
         padding: 0 6px;
       }
     }

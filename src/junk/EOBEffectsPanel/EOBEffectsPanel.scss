@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .effects-panel {
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   padding: 12px;
   font-size: 14px;
   margin-bottom: 0 !important;
@@ -9,7 +9,7 @@
   .effects-header {
     display: flex;
     justify-content: space-between;
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
     font-size: 16px;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -24,14 +24,14 @@
     cursor: pointer;
 
     &:hover {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 
   .title {
     display: flex;
-    color: $textColor;
-    font-weight: $fontWeightBold;
+    color: vars.$textColor;
+    font-weight: vars.$fontWeightBold;
     margin: 10px 0 20px;
   }
 
@@ -64,9 +64,9 @@
     }
 
     .effect-name {
-      color: $textColor;
+      color: vars.$textColor;
       font-size: 15px;
-      font-weight: $fontWeightNormal;
+      font-weight: vars.$fontWeightNormal;
     }
 
     .effect-dropdown-select-dropdown {
@@ -76,7 +76,7 @@
       /* stylelint-disable */
       .effect-dropdown-select__single-value {
         font-size: 13px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
       }
 
       .effect-dropdown-select__menu {
@@ -87,12 +87,12 @@
             height: 20px;
             line-height: 20px;
             font-size: 13px;
-            font-weight: $fontWeightNormal;
+            font-weight: vars.$fontWeightNormal;
             padding: 0 6px;
-            
+
             &--is-disabled {
-              background-color: $mainDark;
-              color: $textColor;
+              background-color: vars.$mainDark;
+              color: vars.$textColor;
               cursor: default;
             }
           }
@@ -113,13 +113,13 @@
 
         .rc-slider-rail {
           height: 1px;
-          background-color: $sliderRailGray;
+          background-color: vars.$sliderRailGray;
           margin-top: 6px;
         }
 
         .rc-slider-track {
           height: 1px;
-          background-color: $sliderPrimaryColor;
+          background-color: vars.$sliderPrimaryColor;
           margin-top: 6px;
         }
 
@@ -128,11 +128,11 @@
           height: 17px;
           margin-top: -2px;
           border: none;
-          background-color: $sliderPrimaryColor;
+          background-color: vars.$sliderPrimaryColor;
 
           &:focus,
           &:active {
-            box-shadow: 0 0 5px $sliderPrimaryColor;
+            box-shadow: 0 0 5px vars.$sliderPrimaryColor;
           }
         }
       }
@@ -143,8 +143,8 @@
         font-weight: 400;
         text-align: center;
         padding: 0;
-        color: $textColor;
-        background-color: $mainMedium;
+        color: vars.$textColor;
+        background-color: vars.$mainMedium;
         border: none;
 
         &,
@@ -172,7 +172,7 @@
       select {
         // width of the slider + 2 times label and its margin
         width: calc(120px + 2 * 36px + 2 * 10px);
-        color: $textColor;
+        color: vars.$textColor;
       }
 
       .alert {
@@ -192,10 +192,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
 
     label {
-      color: $textColor;
+      color: vars.$textColor;
     }
 
     .react-toggle {
@@ -204,23 +204,23 @@
     /* stylelint-disable */
     .react-toggle--checked .react-toggle-track,
     .react-toggle.react-toggle--checked:hover .react-toggle-track {
-      background: $primaryColor;
+      background: vars.$primaryColor;
     }
 
     .react-toggle--focus .react-toggle-thumb {
-      box-shadow: 0 0 2px 3px $primaryColor;
+      box-shadow: 0 0 2px 3px vars.$primaryColor;
     }
 
     .react-toggle:active .react-toggle-thumb {
-      box-shadow: 0 0 5px 5px $primaryColor;
+      box-shadow: 0 0 5px 5px vars.$primaryColor;
     }
 
     .react-toggle.react-toggle--focus .react-toggle-thumb {
-      box-shadow: 0 0 3px $primaryColor;
+      box-shadow: 0 0 3px vars.$primaryColor;
     }
 
     .react-toggle--checked .react-toggle-thumb {
-      border-color: $primaryColor;
+      border-color: vars.$primaryColor;
     }
 
     .react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
@@ -232,12 +232,12 @@
     }
 
     .react-toggle.react-toggle--checked:hover .react-toggle-track {
-      background-color: $primaryColor;
+      background-color: vars.$primaryColor;
     }
     /* stylelint-enable */
   }
 
-  @media screen and (max-width: $breakpoint-400) {
+  @media screen and (max-width: vars.$breakpoint-400) {
     .effect-container {
       flex-direction: column;
       padding-bottom: 20px;

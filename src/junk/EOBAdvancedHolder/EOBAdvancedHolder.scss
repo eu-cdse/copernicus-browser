@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .advancedPanel {
@@ -7,8 +7,8 @@
   .grouped-bands-to-rgb {
     button {
       border: none;
-      background-color: $mainDark;
-      color: $textColor;
+      background-color: vars.$mainDark;
+      color: vars.$textColor;
       font-size: 14px;
       padding: 3px 25px;
       margin: 20px 15px 0 0;
@@ -16,7 +16,7 @@
       cursor: pointer;
 
       &.selected {
-        border: 2px solid $primaryColor;
+        border: 2px solid vars.$primaryColor;
         padding: 1px 23px;
       }
     }
@@ -25,7 +25,7 @@
   .toggleBandMode {
     position: relative;
     float: right;
-    background: $mainDark;
+    background: vars.$mainDark;
     width: 72px;
     height: 28px;
     border-radius: 30px;
@@ -38,7 +38,7 @@
       position: absolute;
       left: 8px;
       top: 6px;
-      color: $whiteColor;
+      color: vars.$whiteColor;
       font-size: 16px;
 
       &.script {
@@ -55,7 +55,7 @@
       height: 25px;
       border-radius: 25px;
       content: '';
-      background: $primaryColor;
+      background: vars.$primaryColor;
       transition: all ease 0.4s;
     }
 
@@ -85,7 +85,7 @@
   }
 
   .custom-visualisation-content {
-    background-color: $mainLight;
+    background-color: vars.$mainLight;
 
     .evalscript-tooltip-wrapper {
       display: flex;
@@ -136,10 +136,10 @@
         text-align: center;
         list-style: none;
         cursor: pointer;
-        color: $textColor;
+        color: vars.$textColor;
         height: 35px;
         line-height: 35px;
-        background-color: $mainMedium;
+        background-color: vars.$mainMedium;
       }
 
       .hidden {
@@ -147,7 +147,7 @@
       }
 
       .active {
-        background-color: $mainLight;
+        background-color: vars.$mainLight;
       }
 
       .not-clickable {

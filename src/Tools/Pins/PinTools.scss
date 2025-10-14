@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .pin-tools {
   display: flex;
@@ -8,7 +8,7 @@
   > div,
   a {
     cursor: pointer;
-    color: $textColor;
+    color: vars.$textColor;
     text-decoration: underline;
     text-align: center;
     font-size: 14px;
@@ -18,16 +18,16 @@
     }
 
     &:hover:not(.disabled) {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 
   .share-pins.active {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 
   .file-upload-dialog {
-    color: $textColor;
+    color: vars.$textColor;
 
     .file-upload-panel {
       border: 2px dashed #aaa;

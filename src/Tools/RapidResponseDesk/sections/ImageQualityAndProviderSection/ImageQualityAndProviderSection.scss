@@ -1,4 +1,4 @@
-@import '../../../../variables.module';
+@use '../../../../variables.module' as vars;
 
 .image-quality-and-provider-body {
   display: flex;
@@ -32,11 +32,11 @@
       .rc-slider-mark {
         font-size: 11px;
         top: -15px;
-        color: $sliderColor;
+        color: vars.$sliderColor;
 
         .rc-slider-mark-text,
         .rc-slider-mark-text-active {
-          color: $sliderColor;
+          color: vars.$sliderColor;
         }
       }
 
@@ -48,25 +48,25 @@
         z-index: 2;
 
         .rc-slider-dot {
-          background-color: $sliderColor;
-          border-color: $sliderColor;
+          background-color: vars.$sliderColor;
+          border-color: vars.$sliderColor;
 
           &.rc-slider-dot-active {
-            border-color: $primaryColor;
-            background-color: $primaryColor;
+            border-color: vars.$primaryColor;
+            background-color: vars.$primaryColor;
           }
         }
       }
 
       &.tasking {
         .rc-slider-track {
-          background: $sliderColor;
+          background: vars.$sliderColor;
         }
 
         .rc-slider-dot {
           &.rc-slider-dot-active {
-            border-color: $sliderColor;
-            background-color: $sliderColor;
+            border-color: vars.$sliderColor;
+            background-color: vars.$sliderColor;
           }
         }
       }
@@ -89,12 +89,12 @@
 
         span {
           transform: translateY(3px);
-          color: $sliderColor;
+          color: vars.$sliderColor;
         }
 
         &.border {
-          border-left: 1px solid $sliderColor;
-          border-right: 1px solid $sliderColor;
+          border-left: 1px solid vars.$sliderColor;
+          border-right: 1px solid vars.$sliderColor;
         }
       }
     }
@@ -103,7 +103,7 @@
       font-size: 14px;
       font-weight: 700;
       padding-left: 20px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 }

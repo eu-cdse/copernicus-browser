@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .radio-button {
   display: flex;
@@ -12,7 +12,7 @@
   }
 
   input {
-    accent-color: $primaryColor;
+    accent-color: vars.$primaryColor;
     cursor: pointer;
   }
 }

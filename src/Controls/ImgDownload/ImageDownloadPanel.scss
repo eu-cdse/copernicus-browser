@@ -1,5 +1,5 @@
 /* stylelint-disable */
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .image-download-panel {
   overflow: auto;
@@ -78,17 +78,17 @@
 
   div.modeSelection .eob-btn {
     margin-right: 20px;
-    background-color: $mainDark;
+    background-color: vars.$mainDark;
     border-radius: 0;
-    border-bottom: 3px solid $mainDark;
+    border-bottom: 3px solid vars.$mainDark;
 
     &.selected {
-      border-bottom: 3px solid $primaryColor;
+      border-bottom: 3px solid vars.$primaryColor;
     }
 
     &:hover {
       box-shadow: none;
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 

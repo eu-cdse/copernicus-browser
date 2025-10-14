@@ -184,13 +184,6 @@ msgstr ""
 msgid "Mark point of interest"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove geometry"
-msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Center map on feature"
 msgstr ""
 
@@ -198,14 +191,6 @@ msgid "Area of interest"
 msgstr ""
 
 msgid "Select mode"
-msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove measurement"
-msgstr ""
-
-msgid "Measure (Click to place first vertex and double click to finish)"
 msgstr ""
 
 msgid "km"
@@ -387,22 +372,13 @@ msgstr ""
 msgid "Additional datasets:"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw rectangular area of interest for image downloads and timelapse"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw polygonal area of interest for image downloads and timelapse"
 msgstr ""
 
 msgid "Copy geometry to clipboard"
-msgstr ""
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Cancel edit."
 msgstr ""
 
 msgid "Create an area of interest"
@@ -8087,9 +8063,6 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
-msgid "Loading more results ..."
-msgstr ""
-
 msgid "Results"
 msgstr ""
 
@@ -9801,9 +9774,6 @@ msgstr ""
 msgid "Sentinel-2 Quarterly Mosaics"
 msgstr ""
 
-msgid "WorldCover Annual Cloudless Mosaics V2"
-msgstr ""
-
 msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
@@ -9891,4 +9861,13 @@ msgid ""
 "normalized NDVI estimation. The uncertainties of the normalized "
 "reflectances are estimated by propagating the uncertainties associated to "
 "the BRDF model parameters found via the inversion."
+msgstr ""
+
+msgid "WorldCover Annual Cloudless Mosaics"
+msgstr ""
+
+#. Button to start/stop measuring
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
+msgid "Measure (Click to start, double click to finish)"
 msgstr ""

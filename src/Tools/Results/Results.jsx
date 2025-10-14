@@ -3,7 +3,6 @@ import Rodal from 'rodal';
 import { t, ngettext, msgid } from 'ttag';
 
 import ResultItem, { ErrorMessage } from './ResultItem';
-import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPanel';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import WorkspacePlus from '../../icons/workspace-plus.svg?react';
 
@@ -14,6 +13,7 @@ import { ResultItemLabels } from './ResultItemFooter';
 import store, { notificationSlice } from '../../store';
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
 import isEqual from 'lodash/isEqual';
+import Loader from '../../Loader/Loader';
 
 class Results extends Component {
   state = {
@@ -204,12 +204,19 @@ class Results extends Component {
                   />
                 ))}
             </div>
-            {hasMore && !loadingMore ? (
-              <div className="eob-btn" onClick={this.loadMore}>
-                {t`Load more`}
+            {hasMore ? (
+              <div className="load-more-btn-wrapper">
+                {loadingMore ? (
+                  <div className="eob-btn">
+                    <Loader />
+                  </div>
+                ) : (
+                  <div className="eob-btn" onClick={this.loadMore}>
+                    {t`Load more`}
+                  </div>
+                )}
               </div>
             ) : null}
-            {loadingMore && <NotificationPanel msg={t`Loading more results ...`} type="loading" />}
 
             {displayModal ? (
               <Rodal

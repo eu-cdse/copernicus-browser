@@ -1,4 +1,4 @@
-@import '../../variables.module';
+@use '../../variables.module' as vars;
 
 .tag {
   width: fit-content;
@@ -12,18 +12,18 @@
   font-weight: bold;
 
   &.primary {
-    background-color: $primaryColor;
-    color: $whiteColor;
+    background-color: vars.$primaryColor;
+    color: vars.$whiteColor;
   }
 
   &.success {
-    background-color: $successColor;
-    color: $whiteColor;
+    background-color: vars.$successColor;
+    color: vars.$whiteColor;
   }
 
   &.danger {
-    background-color: $errorCol;
-    color: $whiteColor;
+    background-color: vars.$errorCol;
+    color: vars.$whiteColor;
   }
 
   &.light {

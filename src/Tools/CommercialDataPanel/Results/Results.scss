@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .commercial-data-results {
   display: flex;
@@ -20,7 +20,7 @@
   .products-container {
     display: flex;
     flex-flow: column;
-    border-bottom: 1px solid $mainDark;
+    border-bottom: 1px solid vars.$mainDark;
 
     .product {
       padding: 5px 0;
@@ -29,7 +29,7 @@
       font-size: 14px;
 
       .preview {
-        border: 1px solid $textColor;
+        border: 1px solid vars.$textColor;
 
         .preview-small {
           .image-loader {
@@ -60,7 +60,7 @@
               width: 100%;
               top: 33%;
               opacity: 0.7;
-              color: $textColor;
+              color: vars.$textColor;
               font-size: 20px;
               text-align: center;
               cursor: pointer;
@@ -94,7 +94,7 @@
           cursor: pointer;
 
           i {
-            color: $primaryColor;
+            color: vars.$primaryColor;
           }
         }
       }
@@ -117,7 +117,7 @@
   .actions-container {
     position: sticky;
     bottom: -10px;
-    background: $mainLight;
+    background: vars.$mainLight;
   }
 
   .toggle-display-results {
@@ -125,23 +125,23 @@
   }
 
   .bold {
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
   }
 }
 
 .commercial-data-results-modal {
   .header {
-    border-bottom: 1px solid $primaryColor;
+    border-bottom: 1px solid vars.$primaryColor;
     margin-bottom: 10px;
     padding: 5px;
     font-weight: 600;
     top: 0;
-    background-color: $mainDark;
+    background-color: vars.$mainDark;
   }
 
   .commercial-data-results {
     overflow-y: auto;
     max-height: 400px;
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
   }
 }

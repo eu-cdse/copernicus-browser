@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .tabs-container {
@@ -17,7 +17,7 @@
 .tabs-wrapper-workspace {
   display: flex;
   align-items: center;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
   z-index: 1;
 
   &-button {
@@ -28,12 +28,12 @@
     flex: 1;
     font-size: 12px;
     padding: 10px;
-    color: $primaryColor;
+    color: vars.$primaryColor;
     cursor: pointer;
     text-decoration: none;
 
     &:hover {
-      background-color: $dropdownHoverBackground;
+      background-color: vars.$dropdownHoverBackground;
     }
 
     .counter-badge {
@@ -44,15 +44,15 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: $primaryColor;
-      color: $whiteColor;
+      background: vars.$primaryColor;
+      color: vars.$whiteColor;
       font-size: 10px;
     }
   }
 }
 
 .tabs-wrapper {
-  background-color: $primaryColor;
+  background-color: vars.$primaryColor;
 
   .tab-list {
     display: flex;
@@ -67,28 +67,28 @@
       text-align: center;
       list-style: none;
       cursor: pointer;
-      color: $whiteColor;
+      color: vars.$whiteColor;
       padding: 9px 9px 7px 9px;
       text-transform: uppercase;
       margin: 2px;
 
       &:hover {
-        background-color: $hoverPrimaryColor;
+        background-color: vars.$hoverPrimaryColor;
       }
 
-      @media screen and (max-width: $breakpoint-430) {
+      @media screen and (max-width: vars.$breakpoint-430) {
         padding: 9px 9px 7px 9px;
       }
 
-      @media screen and (max-width: $breakpoint-400) {
+      @media screen and (max-width: vars.$breakpoint-400) {
         padding: 9px 9px 7px 9px;
       }
 
-      @media screen and (max-width: $breakpoint-360) {
+      @media screen and (max-width: vars.$breakpoint-360) {
         font-size: 15px;
       }
 
-      @media screen and (max-width: $breakpoint-340) {
+      @media screen and (max-width: vars.$breakpoint-340) {
         font-size: 14px;
       }
 
@@ -102,18 +102,18 @@
       fill: #aaa;
       margin: 0 6px 0 0;
 
-      @media screen and (max-width: $breakpoint-430) {
+      @media screen and (max-width: vars.$breakpoint-430) {
         display: none;
       }
     }
 
     & .tab-selected {
-      box-shadow: $boxShadowStrong;
-      font-weight: $fontWeightBold;
-      color: $secondaryColor;
+      box-shadow: vars.$boxShadowStrong;
+      font-weight: vars.$fontWeightBold;
+      color: vars.$secondaryColor;
 
       &:hover {
-        background-color: $primaryColor;
+        background-color: vars.$primaryColor;
       }
     }
 
@@ -127,8 +127,8 @@
       margin-right: 5px;
       padding: 3px 3px;
       border-radius: 15%;
-      background: $primaryColor;
-      color: $whiteColor;
+      background: vars.$primaryColor;
+      color: vars.$whiteColor;
       font-size: 14px;
     }
   }

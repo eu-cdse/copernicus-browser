@@ -120,6 +120,7 @@ export const mainMapSlice = createSlice({
     is3D: false,
     loadingMessage: null,
     quicklookOverlays: [],
+    filteredQuicklookOverlays: [],
   },
   reducers: {
     setPosition: (state, action) => {
@@ -175,6 +176,12 @@ export const mainMapSlice = createSlice({
     clearQuicklookOverlays: (state) => {
       state.quicklookOverlays = [];
     },
+    setFilteredQuicklookOverlays: (state, action) => {
+      state.filteredQuicklookOverlays = action.payload;
+    },
+    clearFilteredQuicklookOverlays: (state) => {
+      state.filteredQuicklookOverlays = [];
+    },
     reset: (state) => {
       state.lat = DEFAULT_LAT_LNG.lat;
       state.lng = DEFAULT_LAT_LNG.lng;
@@ -183,6 +190,7 @@ export const mainMapSlice = createSlice({
       state.is3D = false;
       state.loadingMessage = null;
       state.quicklookOverlay = null;
+      state.filteredQuicklookOverlays = null;
     },
   },
 });
@@ -497,6 +505,7 @@ export const visualizationSlice = createSlice({
         state.toTime = null;
       }
       state.visualizationUrl = undefined;
+      state.visibleOnMap = false;
       state.layerId = undefined;
       state.customSelected = false;
       state.evalscript = undefined;
@@ -1384,7 +1393,7 @@ export const resultsSectionSlice = createSlice({
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
-    setQuicklookImage: (state, action) => {
+    addQuicklookImage: (state, action) => {
       const { id, url } = action.payload;
       state.quicklookImages[id] = url;
     },

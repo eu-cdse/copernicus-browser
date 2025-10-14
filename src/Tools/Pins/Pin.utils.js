@@ -552,6 +552,10 @@ export async function layerFromPin(pin, reqConfig) {
     layer = layers.find((l) => l.layerId === layerId);
     if (layer) {
       await layer.updateLayerFromServiceIfNeeded(reqConfig);
+      if (dsh && dsh.supportsLowResolutionAlternativeCollection(datasetId)) {
+        layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(datasetId);
+        layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(datasetId);
+      }
     }
   } else {
     layer = layers[0];

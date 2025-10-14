@@ -1,4 +1,4 @@
-@import '../../../../variables.module';
+@use '../../../../variables.module' as vars;
 
 #search-results {
   position: relative;
@@ -18,7 +18,7 @@
 
       .dropdown-container {
         font-size: 14px;
-        color: $textColor;
+        color: vars.$textColor;
         align-items: center;
         font-weight: normal;
         display: flex;
@@ -31,7 +31,7 @@
 
         /* stylelint-disable */
         .effect-dropdown-select__single-value {
-          font-weight: $fontWeightNormal;
+          font-weight: vars.$fontWeightNormal;
         }
         /* stylelint-enable */
       }
@@ -71,13 +71,13 @@
 
       .title {
         font-size: 16px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
       }
 
       .paragraph {
         font-size: 14px;
         padding: 10px 0;
-        border-bottom: 1px solid $mainDark;
+        border-bottom: 1px solid vars.$mainDark;
       }
     }
 

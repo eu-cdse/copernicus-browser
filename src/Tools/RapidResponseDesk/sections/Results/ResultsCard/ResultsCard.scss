@@ -1,10 +1,10 @@
-@import '../../../../../variables.module';
+@use '../../../../../variables.module' as vars;
 
 .results-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  box-shadow: $boxShadow;
+  box-shadow: vars.$boxShadow;
   padding: 7px;
   min-height: 126px;
   width: 400px;
@@ -55,7 +55,7 @@
       row-gap: 1px;
 
       & > label {
-        color: $textColorGray;
+        color: vars.$textColorGray;
         text-transform: uppercase;
         font-size: 10px;
         letter-spacing: -0.1px;
@@ -138,7 +138,7 @@
         }
 
         i {
-          color: $primaryColor;
+          color: vars.$primaryColor;
           transform: scale(0.8);
         }
 
@@ -163,19 +163,19 @@
 
   &.rolling {
     &::before {
-      border-left: 15px solid $secondaryColor;
+      border-left: 15px solid vars.$secondaryColor;
     }
   }
 
   &.ccme {
     &::before {
-      border-left: 15px solid $tertiaryColor;
+      border-left: 15px solid vars.$tertiaryColor;
     }
   }
 
   &.tasking {
     &::before {
-      border-left: 15px solid $brightRed;
+      border-left: 15px solid vars.$brightRed;
     }
   }
 

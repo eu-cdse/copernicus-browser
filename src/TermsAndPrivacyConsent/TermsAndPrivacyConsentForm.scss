@@ -1,12 +1,12 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .terms-and-privacy {
-  color: $textColor;
+  color: vars.$textColor;
   height: 100%;
 
   .message {
     .link-external {
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 
@@ -30,7 +30,7 @@
     font-size: 12px;
 
     .log-in-button {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       cursor: pointer;
       text-decoration: underline;
     }

@@ -1486,7 +1486,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lswt-nrt_global_1km_10daily_v1',
-                label: 'NRT, Global, 10-daily, 1km, (2002–2012), V1',
+                label: 'NRT, Global, 10-daily, 1km, (2016–present), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1849,28 +1849,8 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
-                id: 'wb_global_1km_10daily_v2',
-                label: 'Global, 10-daily, 1km, (2014–present), V2',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'wb_global_1km_10daily_v2',
-                )})`,
-              },
-              {
-                id: 'wb_global_300m_10daily_v1',
-                label: 'Global, 10-daily, 300m, (2014–present), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'wb_global_300m_10daily_v1',
-                )})`,
-              },
-              {
                 id: 'wb_global_100m_monthly_v1',
-                label: 'Global, 10-daily, 100m, (2014–present), V1',
+                label: 'Global, Monthly, 100m, (2014–present), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1886,6 +1866,26 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'wb_global_300m_monthly_v2',
+                )})`,
+              },
+              {
+                id: 'wb_global_300m_10daily_v1',
+                label: 'Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'wb_global_1km_10daily_v2',
+                label: 'Global, 10-daily, 1km, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'wb_global_1km_10daily_v2',
                 )})`,
               },
             ],

@@ -1,9 +1,9 @@
-@import '../../../../variables.module.scss';
+@use '../../../../variables.module.scss' as vars;
 
 .collection-group {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid $mainDark;
+  border-bottom: 1px solid vars.$mainDark;
   padding: 10px 0;
   row-gap: 9px;
 
@@ -19,9 +19,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: $primaryColor;
+        color: vars.$primaryColor;
         font-size: 0.8rem;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
         padding: 5px;
         position: absolute;
         right: 0;
@@ -30,22 +30,22 @@
         svg {
           width: 15px;
           margin-left: 10px;
-          fill: $primaryColor;
+          fill: vars.$primaryColor;
         }
 
         &.selected,
         &:hover {
-          background-color: $hoverPrimaryColor;
-          color: $whiteColor;
+          background-color: vars.$hoverPrimaryColor;
+          color: vars.$whiteColor;
 
           svg {
-            fill: $secondaryColor;
+            fill: vars.$secondaryColor;
           }
         }
 
         &.selected {
-          background-color: $primaryColor;
-          color: $whiteColor;
+          background-color: vars.$primaryColor;
+          color: vars.$whiteColor;
         }
 
         &.disabled {
@@ -97,8 +97,8 @@
     flex-wrap: wrap;
 
     .tag {
-      background-color: $mainMedium;
-      color: $textColor;
+      background-color: vars.$mainMedium;
+      color: vars.$textColor;
       display: flex;
       align-items: center;
       border-radius: 10px;
@@ -112,7 +112,7 @@
         margin-left: 2px;
 
         &:hover {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
     }

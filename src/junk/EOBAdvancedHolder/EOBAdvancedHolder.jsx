@@ -15,8 +15,10 @@ import {
   themeCdasBrowserLight,
 } from '@sentinel-hub/evalscript-code-editor';
 import RadioButtonGroup from '../../components/RadioButtonGroup/RadioButtonGroup';
+import { haveEffectsChangedFromDefault } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 
 import { PROCESSING_OPTIONS } from '../../const';
+import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 import store, { visualizationSlice } from '../../store';
 
 import './EOBAdvancedHolder.scss';
@@ -106,6 +108,7 @@ class EOBAdvancedHolder extends React.Component {
       selectedVisualizationId,
       visualizationUrl,
       selectedProcessing,
+      effects,
     } = this.props;
 
     const groupedChannels =
@@ -113,7 +116,13 @@ class EOBAdvancedHolder extends React.Component {
         ? activeDatasource.groupChannels(activeDatasource.datasetId)
         : null;
 
-    const supportsOpenEO = isOpenEoSupported(visualizationUrl, selectedVisualizationId);
+    const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
+    const supportsOpenEO = isOpenEoSupported(
+      visualizationUrl,
+      selectedVisualizationId,
+      IMAGE_FORMATS.PNG,
+      haveEffectsChanged,
+    );
     const customProcessingOptions = [
       {
         label: t`OpenEO process graph`,
@@ -191,7 +200,7 @@ class EOBAdvancedHolder extends React.Component {
           )}
 
           {selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
-            <div className="custom-visualisation-wrapper">
+            <div className="custom-visualisation-wrapper" key={selectedProcessing}>
               <RadioButtonGroup
                 value={customProcessingOptions.find((opt) => opt.value === selectedProcessing)}
                 options={customProcessingOptions}

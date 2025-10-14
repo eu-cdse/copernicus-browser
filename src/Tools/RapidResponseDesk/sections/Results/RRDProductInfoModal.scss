@@ -1,4 +1,4 @@
-@import '../../../../variables.module';
+@use '../../../../variables.module' as vars;
 
 .product-info-rrd-modal {
   .rodal-dialog {
@@ -7,7 +7,7 @@
     top: 5vh;
     overflow: auto;
 
-    @media screen and (max-width: $breakpoint-400) {
+    @media screen and (max-width: vars.$breakpoint-400) {
       bottom: 0;
       top: 0;
       min-width: 95%;
@@ -20,10 +20,10 @@
 }
 
 .product-info-rrd-title {
-  font-weight: $fontWeightBold;
+  font-weight: vars.$fontWeightBold;
   font-size: 16px;
   text-transform: uppercase;
-  color: $primaryColor;
+  color: vars.$primaryColor;
   margin: 0;
 }
 
@@ -31,7 +31,7 @@
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  color: $textColor;
+  color: vars.$textColor;
   margin-top: 10px;
   max-height: 80vh;
   font-size: 13px;
@@ -52,20 +52,20 @@
         flex-direction: column;
         flex: 1;
         padding: 10px;
-        background-color: $mainMedium;
+        background-color: vars.$mainMedium;
 
         h3 {
-          color: $primaryColor;
+          color: vars.$primaryColor;
           text-transform: uppercase;
         }
 
         .section {
-          background-color: $mainDark;
+          background-color: vars.$mainDark;
           margin: 2px 0;
 
           .title,
           .title-arrow-wrapper {
-            background-color: $mainDark;
+            background-color: vars.$mainDark;
           }
 
           .content {
@@ -81,7 +81,7 @@
             box-shadow: none;
 
             .title-content {
-              color: $textColor;
+              color: vars.$textColor;
             }
 
             .title {
@@ -90,7 +90,7 @@
 
               &.expanded {
                 .title-content {
-                  color: $primaryColor;
+                  color: vars.$primaryColor;
                 }
               }
             }
@@ -121,7 +121,7 @@
 
       .attributes {
         width: 67%;
-        background-color: $mainMedium;
+        background-color: vars.$mainMedium;
 
         .row {
           display: flex;
@@ -129,7 +129,7 @@
         }
 
         .left {
-          font-weight: $fontWeightBold;
+          font-weight: vars.$fontWeightBold;
           min-width: 150px;
           width: 150px;
           word-wrap: anywhere;
@@ -162,7 +162,7 @@
       }
     }
 
-    @media screen and (max-width: $breakpoint-768) {
+    @media screen and (max-width: vars.$breakpoint-768) {
       .product-info-rrd-content {
         flex-direction: column;
 
@@ -188,13 +188,13 @@
     .product-link {
       padding: 5px 0;
       display: flex;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       align-items: center;
       cursor: default;
 
       label {
-        font-weight: $fontWeightBold;
-        color: $textColor;
+        font-weight: vars.$fontWeightBold;
+        color: vars.$textColor;
         white-space: nowrap;
       }
 
@@ -229,7 +229,7 @@
       cursor: pointer;
     }
 
-    @media screen and (max-width: $breakpoint-1300) {
+    @media screen and (max-width: vars.$breakpoint-1300) {
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
@@ -239,7 +239,7 @@
       }
     }
 
-    @media screen and (max-width: $breakpoint-400) {
+    @media screen and (max-width: vars.$breakpoint-400) {
       .actions {
         justify-content: center;
       }

@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .badge-wrapper {
   display: inline-block;
@@ -10,8 +10,8 @@
     width: 13px;
     height: 13px;
     line-height: 13px;
-    background: $primaryColor;
-    color: $mainDark;
+    background: vars.$primaryColor;
+    color: vars.$mainDark;
     position: absolute;
     top: 2px;
     right: 2px;

@@ -21,7 +21,8 @@ class TimelapseAreaPreview extends Component {
   handleGlobalClick = (event) => {
     let closeOnParentClasses = ['controls-wrapper', 'user-menu-button'];
     let foundElement = closeOnParentClasses.some((className) => event.target.closest(`.${className}`));
-    if (foundElement) {
+    if (this.state.isVisible && foundElement) {
+      this.setState({ isVisible: false });
       store.dispatch(timelapseSlice.actions.setTimelapseAreaPreview(false));
     }
   };
@@ -37,6 +38,7 @@ class TimelapseAreaPreview extends Component {
   }
 
   startTimelapse = () => {
+    this.setState({ isVisible: true });
     store.dispatch(modalSlice.actions.addModal({ modal: ModalId.TIMELAPSE }));
   };
 

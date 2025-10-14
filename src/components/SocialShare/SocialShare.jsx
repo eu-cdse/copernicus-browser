@@ -8,10 +8,12 @@ import CopyToClipboardButton from '../CopyToClipboardButton/CopyToClipboardButto
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FacebookShare, TwitterShare, LinkedInShare } from './SocialPlatforms';
 import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
+import Loader from '../../Loader/Loader';
 
 import './social.scss';
 
 const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, user }) => {
+  const [generating, setGenerating] = useState(false);
   const ref = useRef();
   const sharedLinks = getSharedLinks();
   const [shortUrl, setShortUrl] = useState('');
@@ -21,7 +23,8 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
 
   useEffect(() => {
     sharedLinks[currentUrl] ? setShortUrl(sharedLinks[currentUrl]) : setShortUrl('');
-  }, [sharedLinks, currentUrl]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUrl]);
 
   const shortenUrl = async () => {
     if (!isLoggedIn) {
@@ -30,7 +33,9 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
       );
       return;
     }
+    setGenerating(true);
     setShortUrl(await getShortUrl(currentUrl));
+    setGenerating(false);
   };
 
   useOutsideClick(ref, () => toggleSocialSharePanel());
@@ -65,7 +70,7 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
             }`}
             onClick={() => shortenUrl()}
           >
-            {t`Generate`}
+            {generating ? <Loader /> : t`Generate`}
           </button>
         </div>
       </div>

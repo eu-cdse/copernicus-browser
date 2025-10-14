@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .breadcrumb-wrapper {
   .breadcrumb-header {
@@ -12,8 +12,8 @@
     padding-bottom: 12px;
 
     .item {
-      color: $primaryColor;
-      font-weight: $fontWeightBold;
+      color: vars.$primaryColor;
+      font-weight: vars.$fontWeightBold;
       max-width: 250px;
       white-space: nowrap;
       font-size: 0.8rem;
@@ -30,7 +30,7 @@
       padding-left: 6px;
       padding-right: 6px;
       font-size: 0.8rem;
-      color: $primaryColor;
+      color: vars.$primaryColor;
     }
   }
 
@@ -43,16 +43,16 @@
       margin-bottom: 10px;
 
       .consolidation-period {
-        color: $textColor;
-        background-color: $mainMedium;
-        font-weight: $fontWeightNormal;
+        color: vars.$textColor;
+        background-color: vars.$mainMedium;
+        font-weight: vars.$fontWeightNormal;
         font-size: 12px;
         width: 30px;
         text-align: center;
 
         &.active {
-          background-color: $mainDark;
-          font-weight: $fontWeightBold;
+          background-color: vars.$mainDark;
+          font-weight: vars.$fontWeightBold;
         }
       }
     }

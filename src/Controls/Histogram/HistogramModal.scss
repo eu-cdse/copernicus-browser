@@ -1,10 +1,10 @@
-@import './../../variables.module.scss';
+@use './../../variables.module.scss' as vars;
 
 .histogram-modal {
   z-index: 1002;
   position: absolute;
-  background-color: $mainLight;
-  color: $textColor;
+  background-color: vars.$mainLight;
+  color: vars.$textColor;
 
   .loading-holder {
     display: flex;
@@ -35,7 +35,7 @@
 
   svg.visualization-layer {
     text {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
 
     path.tick-line {
@@ -46,19 +46,19 @@
 
     line.axis-baseline {
       shape-rendering: crispEdges;
-      stroke: $textColor;
+      stroke: vars.$textColor;
     }
 
     .data-visualization {
       .pieces {
-        fill: $primaryColor;
+        fill: vars.$primaryColor;
       }
     }
   }
 
   svg.background-graphics {
     text {
-      fill: $textColor;
+      fill: vars.$textColor;
     }
 
     path.tick-line {
@@ -69,20 +69,20 @@
 
     line.axis-baseline {
       shape-rendering: crispEdges;
-      stroke: $textColor;
+      stroke: vars.$textColor;
     }
   }
 
   div.annotation {
-    background-color: $mainLight;
-    color: $textColor;
-    border: 1px solid $textColor;
+    background-color: vars.$mainLight;
+    color: vars.$textColor;
+    border: 1px solid vars.$textColor;
     padding: 5px 10px;
     border-radius: 5px;
   }
 
   .recalculate-button {
-    color: $whiteColor;
+    color: vars.$whiteColor;
     float: right;
     margin-right: 20px;
   }

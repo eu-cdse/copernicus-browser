@@ -5,83 +5,69 @@ import MeasureIcon from './MeasureIcon';
 import '../EOBPanel.scss';
 import './EOBMeasurePanelButton.scss';
 
-export class EOBMeasurePanelButton extends React.Component {
-  showMeasureInfo = () => (
-    <span className="aoiCords">
-      {this.props.distance && (
-        <div className="measure-text">
-          <PrettyDistance distance={this.props.distance} />
-        </div>
-      )}
-      {this.props.area !== 0 && this.props.area ? (
-        <div className="measure-text">
-          <PrettyArea area={this.props.area} />
-        </div>
-      ) : null}
-      <span>
-        {
-          // jsx-a11y/anchor-is-valid
-          // eslint-disable-next-line
-          <a onClick={this.props.removeMeasurement} title={t`Remove measurement`}>
-            <i className={`fa fa-close`} />
-          </a>
-        }
-      </span>
+// Utility for formatting distance
+export function PrettyDistance({ value }) {
+  const kilometers = value / 1000;
+  return kilometers >= 1 ? (
+    <span>
+      {kilometers.toLocaleString(undefined, { maximumFractionDigits: 2 })} {t`km`}
+    </span>
+  ) : (
+    <span>
+      {value.toLocaleString(undefined, { maximumFractionDigits: 0 })} {t`m`}
     </span>
   );
-
-  renderMeasureIcon = () => {
-    const title = t`Measure (Click to place first vertex and double click to finish)`;
-    return (
-      // jsx-a11y/anchor-is-valid
-      // eslint-disable-next-line
-      <a
-        className={`drawGeometry ${this.props.active ? 'active' : ''}`}
-        onClick={(ev) => {
-          this.props.toggleMeasure();
-        }}
-        title={title}
-      >
-        <i>
-          <MeasureIcon />
-        </i>
-      </a>
-    );
-  };
-
-  render() {
-    return (
-      <div className="measurePanel panelButton floatItem">
-        {this.props.hasMeasurement && this.showMeasureInfo()}
-        {this.renderMeasureIcon()}
-      </div>
-    );
-  }
 }
 
-export const PrettyDistance = ({ distance }) => {
-  const divided = distance / 1000;
-  if (divided >= 1) {
-    return (
-      <span>
-        {divided.toFixed(2)} {t`km`}
-      </span>
-    );
-  } else {
-    return (
-      <span>
-        {distance.toFixed()} {t`m`}
-      </span>
-    );
-  }
-};
-
-const PrettyArea = ({ area }) => {
-  const areaKM = area / 1000000;
+// Utility for formatting area
+function FormatArea({ value }) {
+  const km2 = value / 1e6;
   return (
     <span>
-      {areaKM.toFixed(2)} {t`km`}
+      {km2.toLocaleString(undefined, { maximumFractionDigits: 2 })} {t`km`}
       <sup>2</sup>
     </span>
   );
-};
+}
+
+export function EOBMeasurePanelButton(props) {
+  const { distance, area, hasMeasurement, active, toggleMeasure } = props;
+
+  // Info about current measurement
+  const MeasurementInfo = () => (
+    <span className="aoiCords">
+      {distance > 0 && (
+        <div className="measure-text">
+          <PrettyDistance value={distance} />
+        </div>
+      )}
+      {area > 0 && (
+        <div className="measure-text">
+          <FormatArea value={area} />
+        </div>
+      )}
+    </span>
+  );
+
+  // Button to start/stop measuring
+  const MeasureButton = () => (
+    // jsx-a11y/anchor-is-valid
+    // eslint-disable-next-line
+    <a
+      className={`drawGeometry ${active ? 'active' : ''} ${active ? 'open-options' : ''}`}
+      onClick={toggleMeasure}
+      title={t`Measure (Click to start, double click to finish)`}
+    >
+      <i>
+        <MeasureIcon />
+      </i>
+    </a>
+  );
+
+  return (
+    <div className="measurePanel panelButton floatItem">
+      {hasMeasurement && <MeasurementInfo />}
+      <MeasureButton />
+    </div>
+  );
+}

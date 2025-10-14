@@ -1,4 +1,4 @@
-@import '../../../../../variables.module.scss';
+@use '../../../../../variables.module.scss' as vars;
 
 .search-panel div.data-source-group {
   label {
@@ -25,7 +25,7 @@
   }
 
   div.warning {
-    color: $orangeColor;
+    color: vars.$orangeColor;
     padding: 5px 5px 10px;
   }
 

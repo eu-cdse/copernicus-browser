@@ -1,13 +1,11 @@
-@use "sass:math";
-
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .date-picker {
-  color: $textColor;
+  color: vars.$textColor;
   display: inline-flex;
   align-items: baseline;
-  background-color: $mainLight;
-  box-shadow: $boxShadow;
+  background-color: vars.$mainLight;
+  box-shadow: vars.$boxShadow;
 
   .date-picker-input-wrapper {
     position: relative;
@@ -15,7 +13,7 @@
     align-items: center;
 
     .date-picker-input {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       font-weight: bold;
       border: none;
       width: 120px;
@@ -33,7 +31,7 @@
       }
 
       &::placeholder {
-        color: $textColor;
+        color: vars.$textColor;
       }
 
       &.disabled {
@@ -50,7 +48,7 @@
     }
 
     i.fas.fa-chevron-left {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       box-shadow: 1px 0 1px rgba(0, 0, 0, 0.15);
       line-height: 35px;
       width: 35px;
@@ -58,7 +56,7 @@
     }
 
     i.fas.fa-chevron-right {
-      color: $primaryColor;
+      color: vars.$primaryColor;
       box-shadow: -1px 0 1px rgba(0, 0, 0, 0.15);
       line-height: 35px;
       width: 35px;

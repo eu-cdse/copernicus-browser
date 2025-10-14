@@ -1,24 +1,24 @@
-@import '../../../../../variables.module.scss';
+@use '../../../../../variables.module.scss' as vars;
 
 .additional-filters {
   position: absolute;
-  left: $toolsWidth;
-  background: $mainLight;
+  left: vars.$toolsWidth;
+  background: vars.$mainLight;
   display: flex;
   flex-direction: column;
   font-size: 14px;
-  box-shadow: $boxShadow;
-  width: $additionalFiltersPanelWidth;
+  box-shadow: vars.$boxShadow;
+  width: vars.$additionalFiltersPanelWidth;
 
   .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: $primaryColor;
+    background-color: vars.$primaryColor;
     padding: 5px 10px 5px 12px;
     font-weight: bold;
-    color: $whiteColor;
+    color: vars.$whiteColor;
 
     svg {
       cursor: pointer;
@@ -26,11 +26,11 @@
       height: 36px;
 
       circle {
-        fill: $hoverPrimaryColor;
+        fill: vars.$hoverPrimaryColor;
       }
 
       path {
-        stroke: $whiteColor;
+        stroke: vars.$whiteColor;
       }
     }
   }
@@ -47,14 +47,14 @@
     span {
       display: flex;
       justify-content: center;
-      color: $textColor;
-      font-weight: $fontWeightBold;
+      color: vars.$textColor;
+      font-weight: vars.$fontWeightBold;
       text-transform: uppercase;
       text-decoration: underline;
 
       &:hover {
         cursor: pointer;
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }
@@ -92,8 +92,8 @@
       font-weight: normal;
       text-align: center;
       align-self: center;
-      background-color: $mainMedium;
-      color: $textColor;
+      background-color: vars.$mainMedium;
+      color: vars.$textColor;
       border-radius: 50px;
       user-select: none;
 
@@ -107,19 +107,19 @@
       }
 
       &.selected {
-        background-color: $primaryColor;
-        color: $whiteColor;
+        background-color: vars.$primaryColor;
+        color: vars.$whiteColor;
         font-weight: bold;
       }
 
       &.disabled {
-        opacity: $disabled;
+        opacity: vars.$disabled;
       }
     }
 
     input {
       border: none;
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
       padding: 4px 12px;
       width: 100px;
       font-size: 12px;
@@ -127,7 +127,7 @@
   }
 }
 
-@media screen and (max-width: ($additionalFiltersPanelWidth+$toolsWidth)) {
+@media screen and (max-width: (vars.$additionalFiltersPanelWidth+vars.$toolsWidth)) {
   .additional-filters {
     top: auto;
     bottom: 12px;

@@ -1,5 +1,5 @@
 import {
-  fetchInstances,
+  fetchInstancesById,
   getArrayOfInstanceIds,
   getCsvFullPath,
   OGC_REQUEST_STATE,
@@ -28,7 +28,7 @@ async function run(scriptParameters) {
   let instances = csvFullPath ? getArrayOfInstanceIds(csvFullPath) : [];
   const httpClient = await createHttpClientWithCredentials(authBaseUrl, clientId, clientSecret);
   if (instances.length === 0) {
-    instances = (await fetchInstances(httpClient, [])).map((instance) => instance.id);
+    instances = await fetchInstancesById(httpClient);
   }
 
   await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.ENABLE, httpClient);

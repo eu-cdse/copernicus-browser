@@ -98,7 +98,7 @@ export const DraggableDialogBox = ({ className, width, height, onClose, title, c
       {getModalMask()}
       <div
         ref={ref}
-        className={`draggable-dialog-box`}
+        className={`draggable-dialog-box ${dragging ? 'dragging' : ''}`}
         style={{
           top: position.y,
           left: position.x,

@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .copernicus-button {
   user-select: none;
@@ -10,62 +10,62 @@
   cursor: pointer;
 
   &.primary {
-    background-color: $primaryColor;
-    color: $whiteColor;
+    background-color: vars.$primaryColor;
+    color: vars.$whiteColor;
 
     &:hover:not(.disabled) {
-      background-color: $hoverPrimaryColor;
+      background-color: vars.$hoverPrimaryColor;
     }
 
     &.outlined {
-      border: 1px solid $primaryColor;
-      color: $primaryColor;
+      border: 1px solid vars.$primaryColor;
+      color: vars.$primaryColor;
 
       &:hover:not(.disabled) {
-        color: $whiteColor;
+        color: vars.$whiteColor;
       }
     }
   }
 
   &.danger {
-    background-color: $errorCol;
-    color: $whiteColor;
+    background-color: vars.$errorCol;
+    color: vars.$whiteColor;
 
     &:hover:not(.disabled) {
-      background-color: $hoverError;
+      background-color: vars.$hoverError;
     }
 
     &.outlined {
-      border: 1px solid $errorCol;
-      color: $errorCol;
+      border: 1px solid vars.$errorCol;
+      color: vars.$errorCol;
 
       &:hover:not(.disabled) {
-        color: $whiteColor;
+        color: vars.$whiteColor;
       }
     }
   }
 
   &.success {
-    background-color: $secondaryColor;
-    color: $whiteColor;
+    background-color: vars.$secondaryColor;
+    color: vars.$whiteColor;
 
     &:hover:not(.disabled) {
-      background-color: $hoverSecondaryColor;
+      background-color: vars.$hoverSecondaryColor;
     }
 
     &.outlined {
-      border: 1px solid $secondaryColor;
-      color: $secondaryColor;
+      border: 1px solid vars.$secondaryColor;
+      color: vars.$secondaryColor;
 
       &:hover:not(.disabled) {
-        color: $whiteColor;
+        color: vars.$whiteColor;
       }
     }
   }
 
   &.text {
     background-color: transparent;
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 
   &:not(.rounded) {
@@ -91,7 +91,7 @@
   .label {
     font-size: 13.8px;
     font-weight: 700;
-    font-family: $fontFamily;
+    font-family: vars.$fontFamily;
     text-transform: uppercase;
   }
 
@@ -104,7 +104,7 @@
   }
 
   &.disabled {
-    opacity: $disabled;
+    opacity: vars.$disabled;
     cursor: auto;
   }
 

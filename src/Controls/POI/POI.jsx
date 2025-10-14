@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
+import './POI.css';
 
 import store, { poiSlice, mainMapSlice, notificationSlice, modalSlice } from '../../store';
 import {
@@ -44,6 +45,17 @@ class POI extends Component {
       iconUrl: pin,
       iconAnchor: [13, 40],
     });
+
+    L.Marker.prototype.options.draggable = true;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.poiPosition &&
+      (!prevProps.poiPosition || this.props.poiPosition !== prevProps.poiPosition)
+    ) {
+      this.enableEdit();
+    }
   }
 
   enableEdit = () => {
@@ -52,10 +64,18 @@ class POI extends Component {
         this.POILayerRef = l;
       }
     });
-    this.POILayerRef.pm.enable({
-      preventMarkerRemoval: true,
-    });
-    this.POILayerRef.on('pm:edit', (f) => {
+
+    if (!this.POILayerRef) {
+      return;
+    }
+
+    this.POILayerRef.off('dragend');
+
+    if (this.POILayerRef.dragging) {
+      this.POILayerRef.dragging.enable();
+    }
+
+    this.POILayerRef.on('dragend', (f) => {
       const geometry = this.generateSmallBBoxAroundPOI(f.target.getLatLng());
       store.dispatch(
         poiSlice.actions.set({

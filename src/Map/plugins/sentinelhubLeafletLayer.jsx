@@ -353,7 +353,7 @@ class SentinelHubLayer extends L.TileLayer {
     const onTileImageError = this.options.onTileImageError;
     const onTileImageLoad = this.options.onTileImageLoad;
     this.layer.then(async (layer) => {
-      if (!layer) {
+      if (!layer || !this._map) {
         return;
       }
       let reqConfig = { cancelToken: cancelToken, ...reqConfigGetMap };

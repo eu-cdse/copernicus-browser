@@ -1,9 +1,9 @@
-@import './variables.module.scss';
+@use './variables.module.scss' as vars;
 
 body {
   margin: 0;
   padding: 0;
-  font-family: $fontFamily;
+  font-family: vars.$fontFamily;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,7 +18,7 @@ code {
 .leaflet-container {
   /* stylelint-disable-next-line */
   .controlsWrapper .panelButton i {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 }
 
@@ -67,12 +67,12 @@ div.rc-slider {
   width: 195px;
 
   .rc-slider-rail {
-    background-color: $iconGrayColor;
+    background-color: vars.$iconGrayColor;
   }
 
   .rc-slider-handle {
-    border-color: $primaryColor;
-    background-color: $primaryColor;
+    border-color: vars.$primaryColor;
+    background-color: vars.$primaryColor;
     // Weird workaround for rc-slider. By default margin-left is minus (half of rc-slider-handle's width).
     // https://github.com/react-component/slider/issues/433#issuecomment-397442871
     // But here margin-left somehow needs to be 0 for slider to work correctly.
@@ -81,14 +81,14 @@ div.rc-slider {
   }
 
   .rc-slider-track {
-    background: $primaryColor;
+    background: vars.$primaryColor;
   }
 }
 
 // remove after merging with eo-components
 /* stylelint-disable */
 .floatItem {
-  box-shadow: $boxShadow !important;
+  box-shadow: vars.$boxShadow !important;
 }
 
 .react-toggle {
@@ -103,13 +103,13 @@ div.rc-slider {
   .react-toggle-thumb {
     height: 16px;
     width: 16px;
-    border-color: $whiteColor;
+    border-color: vars.$whiteColor;
   }
 }
 
 .react-toggle--checked .react-toggle-track,
 .react-toggle.react-toggle--checked:hover .react-toggle-track {
-  background: $quaternaryColor;
+  background: vars.$quaternaryColor;
 }
 
 .react-toggle.react-toggle--focus .react-toggle-thumb {
@@ -129,12 +129,12 @@ div.rc-slider {
 }
 
 .react-toggle.react-toggle--checked:hover .react-toggle-track {
-  background-color: $quaternaryColor;
+  background-color: vars.$quaternaryColor;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: $mainMedium $mainLight;
+  scrollbar-color: vars.$mainMedium vars.$mainLight;
 }
 
 ::-webkit-scrollbar {
@@ -142,16 +142,16 @@ div.rc-slider {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: $primaryColor;
+  background-color: vars.$primaryColor;
 }
 /* stylelint-enable */
 
 .fa-cog {
-  color: $primaryColor;
+  color: vars.$primaryColor;
 }
 
 .uppercase-text {

@@ -163,14 +163,15 @@ function NoDataFoundAction({
         </div>
       ))}
       {loadingAvailableCollections && <Loader />}
-      {availableCollectionsWithData.length === AVAILABLE_COLLECTIONS_LIMIT && !loadingAvailableCollections && (
-        <div
-          className={`eob-btn available-collections-btn ${buttonsDisabled ? 'disabled' : ''}`}
-          onClick={loadMoreAvailableCollectionsWithData}
-        >
-          ...
-        </div>
-      )}
+      {availableCollectionsWithData.length === AVAILABLE_COLLECTIONS_LIMIT &&
+        !loadingAvailableCollections && (
+          <div
+            className={`eob-btn available-collections-btn ${buttonsDisabled ? 'disabled' : ''}`}
+            onClick={loadMoreAvailableCollectionsWithData}
+          >
+            ...
+          </div>
+        )}
       <div className="blue-triangle-topright"></div>
     </div>
   );

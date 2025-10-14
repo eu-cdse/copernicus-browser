@@ -94,31 +94,410 @@ function TerrainViewer(props) {
     }
   }
 
-  const onResize = useCallback(
-    () => setBounds({ x: x, y: y, z: z, rotH: rotH, rotV: rotV }),
-    // eslint-disable-next-line
-    [],
+  const setBounds = useCallback(
+    ({ x, y, z, rotH, rotV }) => {
+      if (!terrainViewerContainer.current) {
+        console.warn('Cannot set bounds - terrain viewer container is null');
+        return;
+      }
+
+      const containerWidth = terrainViewerContainer.current.clientWidth;
+      const containerHeight = terrainViewerContainer.current.clientHeight;
+      const { pixelBounds, bounds } = getBoundsFrom3DPosition({
+        x,
+        y,
+        z,
+        rotV,
+        rotH,
+        width: containerWidth,
+        height: containerHeight,
+      });
+      store.dispatch(
+        mainMapSlice.actions.setBounds({
+          bounds,
+          pixelBounds,
+        }),
+      );
+    },
+    [terrainViewerContainer],
   );
 
-  useEffect(() => {
-    if (is3D && terrainViewerContainer.current) {
-      setBounds({ x: x, y: y, z: z, rotH: rotH, rotV: rotV });
-    }
-    // eslint-disable-next-line
-  }, [terrainViewerContainer]);
+  const onResize = useCallback(() => {
+    setBounds({ x, y, z, rotH, rotV });
+  }, [setBounds, x, y, z, rotH, rotV]);
 
   useEffect(() => {
     if (props.is3D) {
       setDisabled(false);
-      on3DInitialized();
-    } else if (terrainViewerId) {
-      animateExit().then(() => {
-        onClose();
-        setDisabled(true);
-      });
     }
-    // eslint-disable-next-line
   }, [props.is3D]);
+
+  const on3DButtonClicked = useCallback(
+    (viewerId, buttonId) => {
+      if (buttonId === 'center3Dto2D') {
+        window.set3DPosition(viewerId, x, y, 8000);
+      }
+    },
+    [x, y],
+  );
+
+  const on3DPositionChanged = useCallback(
+    (viewerId, x, y, z, rotH, rotV) => {
+      clearTimeout(timeoutId);
+      if (!is3D) {
+        return;
+      }
+
+      const newTimeoutId = setTimeout(() => {
+        const [lng, lat] = proj4('EPSG:3857', 'EPSG:4326', [x, y]);
+        const zoom = getZoomFromEyeHeight(x, y, z);
+        store.dispatch(
+          terrainViewerSlice.actions.setTerrainViewerSettings({
+            ...terrainViewerSettings,
+            x: x,
+            y: y,
+            z: z,
+            rotH: rotH,
+            rotV: rotV,
+          }),
+        );
+        store.dispatch(
+          mainMapSlice.actions.setPosition({
+            lat: lat,
+            lng: lng,
+            zoom: zoom,
+          }),
+        );
+        setBounds({ x: x, y: y, z: z, rotH: rotH, rotV: rotV });
+      }, 500);
+      setTimeoutId(newTimeoutId);
+    },
+    [timeoutId, is3D, terrainViewerSettings, setBounds],
+  );
+
+  const onTerrainViewerLoadingStateChanged = useCallback((isLoading, type) => {
+    if (type === 'OVERALL') {
+      setLoader(isLoading);
+    }
+  }, []);
+
+  const on3DLoadingStateChanged = useCallback((viewerId, isLoading, type) => {
+    const func = window.on3DLoadingStateChangedFunctions?.[CURRENT_TERRAIN_VIEWER_ID];
+    if (func) {
+      func(isLoading, type);
+    }
+  }, []);
+
+  const on3DSettingsChanged = useCallback(
+    (viewerId) => {
+      store.dispatch(
+        terrainViewerSlice.actions.setTerrainViewerSettings({
+          ...terrainViewerSettings,
+          sunTime: window.get3DSunTime(viewerId),
+          settings: window.get3DSettings(viewerId),
+        }),
+      );
+    },
+    [terrainViewerSettings],
+  );
+
+  const on3DShadingClick = useCallback(() => {
+    if (shadingEnabled) {
+      setSunEnabled(false);
+      window.enable3DSun(terrainViewerId, false);
+    }
+    setShadingEnabled(!shadingEnabled);
+    window.enable3DShading(terrainViewerId, !shadingEnabled);
+  }, [shadingEnabled, terrainViewerId]);
+
+  const on3DSunClick = useCallback(() => {
+    if (!sunEnabled) {
+      setShadingEnabled(true);
+      window.enable3DShading(terrainViewerId, true);
+    }
+    setSunEnabled(!sunEnabled);
+    window.enable3DSun(terrainViewerId, !sunEnabled);
+    window.show3DSunTimeDialog(terrainViewerId, !sunEnabled);
+  }, [sunEnabled, terrainViewerId]);
+
+  const animateExit = useCallback(async () => {
+    if (!terrainViewerContainer.current) {
+      return Promise.resolve();
+    }
+
+    const z2D = getEyeHeightFromZoom(props.lat, props.zoom, terrainViewerContainer.current.clientWidth);
+
+    window.on3DPositionChanged = () => {};
+    window.get3DMapTileUrl = () => {};
+    cancelToken.cancel();
+
+    return await new Promise((resolve) => {
+      const closingAnimationId = 'exit-animation';
+      window.on3DAnimationCompleted = (viewerId, animationId) => {
+        if (viewerId === terrainViewerId && animationId === closingAnimationId) {
+          resolve();
+        }
+      };
+
+      try {
+        window.animate3D(terrainViewerId, closingAnimationId, {
+          isLooping: false,
+          frames: [
+            { x, y, z, rotH, rotV, duration: 0.8 },
+            { x, y, z: z2D, rotH: rotH > 180 ? 360 : 0, rotV: 0, duration: 0.2 },
+          ],
+        });
+      } catch (error) {
+        resolve();
+      }
+    });
+  }, [terrainViewerContainer, props.lat, props.zoom, cancelToken, terrainViewerId, x, y, z, rotH, rotV]);
+
+  const onClose = useCallback(() => {
+    cancelToken.cancel();
+    window.removeEventListener('resize', onResize);
+    if (terrainViewerId) {
+      window.close3DViewer(terrainViewerId);
+    }
+    store.dispatch(terrainViewerSlice.actions.resetTerrainViewerSettings());
+    store.dispatch(terrainViewerSlice.actions.setTerrainViewerId(null));
+  }, [cancelToken, onResize, terrainViewerId]);
+
+  const set3DLocation = useCallback(
+    (x, y, zoom) => {
+      const z = getHeightFromZoom(zoom);
+      window.set3DPosition(terrainViewerId, x, y, z, 0, 0);
+    },
+    [terrainViewerId],
+  );
+
+  const onTileError = useCallback(async (error) => {
+    const message = await constructPanelError(error);
+    store.dispatch(notificationSlice.actions.displayPanelError(message));
+  }, []);
+
+  const get3DMapTileUrl = useCallback((viewerId, minX, minY, maxX, maxY, width, height, callback) => {
+    const func = window.get3DMapTileUrlFunctions?.[CURRENT_TERRAIN_VIEWER_ID];
+    if (func) {
+      func(minX, minY, maxX, maxY, width, height, callback);
+    } else {
+      const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
+      const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+      callback(mapTilerUrl);
+    }
+  }, []);
+
+  const get3DDemTileUrl = useCallback(
+    async (viewerId, minX, minY, maxX, maxY, width, height, callback) => {
+      const SW = convertToWgs84([minX, minY]);
+      const NE = convertToWgs84([maxX, maxY]);
+      const bounds = L.latLngBounds(L.latLng(SW[1], SW[0]), L.latLng(NE[1], NE[0]));
+      const origZoom = getBoundsZoomLevel(bounds);
+      const zoomLevel =
+        origZoom > 2 ? origZoom - Math.log2(DEFAULT_TILE_SIZE / DEFAULT_DEM_TILE_SIZE) : origZoom;
+
+      const { tileX, tileY } = getTileXAndTileY(zoomLevel, minX, minY, maxX, maxY);
+
+      const dsh = getDataSourceHandler(DEM_3D_CUSTOM_TO_DATASOURCE[props.demSource3D]);
+      const minZoomLevel = dsh
+        ? dsh.getLeafletZoomConfig(DEM_3D_CUSTOM_TO_DATASOURCE[props.demSource3D]).min
+        : minZoom;
+
+      if (!layer || zoomLevel <= minZoomLevel) {
+        let url = `https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${zoomLevel}/${tileX}/${tileY}.png`;
+        callback(url);
+        return;
+      }
+
+      const getMapParams = {
+        bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
+        format: MimeTypes.PNG,
+        width: DEFAULT_DEM_TILE_SIZE,
+        height: DEFAULT_DEM_TILE_SIZE,
+        fromTime: fromTime && fromTime.toDate(),
+        toTime: toTime.toDate(),
+        preview: 2,
+        effects: constructGetMapParamsEffects(props),
+        tileCoord: {
+          x: tileX,
+          y: tileY,
+          z: zoomLevel,
+        },
+      };
+      const reqConfig = {
+        cancelToken: cancelToken,
+        authToken: getGetMapAuthToken(auth),
+        retries: 0,
+        ...reqConfigGetMap,
+      };
+
+      function onCallback(url) {
+        callback(url, 'png', () => URL.revokeObjectURL(url));
+      }
+
+      const demLayer = new DEMLayer({
+        demInstance: props.demSource3D,
+        evalscript: `
+        //VERSION=3
+        function setup(){
+          return {
+            input: ["DEM"],
+            output: {bands: 3, sampleType: "UINT8"}
+          }
+        }
+
+        function evaluatePixel(sample) {
+          // RGB color coded elevation data
+          var dem = sample.DEM + 32768;
+          var red = Math.floor(dem / 256);
+          var green = Math.floor(dem - 256 * red);
+          var blue = Math.floor(256 * (dem - green - 256 * red));
+          return [red, green, blue];
+        }
+      `,
+      });
+
+      getMapTile({
+        layer: demLayer,
+        params: getMapParams,
+        minX,
+        minY,
+        maxX,
+        maxY,
+        width: DEFAULT_DEM_TILE_SIZE,
+        height: DEFAULT_DEM_TILE_SIZE,
+        callback: onCallback,
+        reqConfig,
+        onTileError,
+      });
+    },
+    [
+      layer,
+      props,
+      minZoom,
+      fromTime,
+      toTime,
+      cancelToken,
+      auth,
+      onTileError,
+      DEFAULT_TILE_SIZE,
+      DEFAULT_DEM_TILE_SIZE,
+    ],
+  );
+
+  const getTerrainViewerMapTileUrl = useCallback(
+    (minX, minY, maxX, maxY, width, height, callback) => {
+      const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
+      const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+
+      if (!layer || zoomLevel <= minZoom) {
+        callback(mapTilerUrl);
+        return;
+      }
+
+      const getMapParams = {
+        bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
+        format: MimeTypes.JPEG,
+        width: width,
+        height: height,
+        fromTime: fromTime && fromTime.toDate(),
+        toTime: toTime.toDate(),
+        preview: 2,
+        effects: constructGetMapParamsEffects(props),
+        tileCoord: {
+          x: tileX,
+          y: tileY,
+          z: zoomLevel,
+        },
+      };
+      const reqConfig = {
+        cancelToken: cancelToken,
+        authToken: getGetMapAuthToken(auth),
+        retries: 0,
+        ...reqConfigGetMap,
+      };
+
+      function onCallback(url) {
+        if (url === null) {
+          callback(mapTilerUrl);
+        } else {
+          callback(url);
+        }
+      }
+
+      getMapTile({
+        layer,
+        params: getMapParams,
+        minX,
+        minY,
+        maxX,
+        maxY,
+        width,
+        height,
+        callback: onCallback,
+        reqConfig,
+        onTileError,
+      });
+    },
+    [layer, minZoom, fromTime, toTime, props, cancelToken, auth, onTileError],
+  );
+
+  useEffect(() => {
+    if (is3D) {
+      if (!window.on3DLoadingStateChangedFunctions) {
+        window.on3DLoadingStateChangedFunctions = {};
+      }
+      if (!window.get3DMapTileUrlFunctions) {
+        window.get3DMapTileUrlFunctions = {};
+      }
+      window.get3DMapTileUrl = get3DMapTileUrl;
+      window.on3DButtonClicked = on3DButtonClicked;
+      window.on3DPositionChanged = on3DPositionChanged;
+      window.on3DLoadingStateChanged = on3DLoadingStateChanged;
+      window.on3DSettingsChanged = on3DSettingsChanged;
+      window.set3DLocation = set3DLocation;
+      window.on3DLoadingStateChangedFunctions[TERRAIN_VIEWER_IDS.MAIN] = onTerrainViewerLoadingStateChanged;
+      window.get3DMapTileUrlFunctions[TERRAIN_VIEWER_IDS.MAIN] = getTerrainViewerMapTileUrl;
+      window.terrainViewerId = terrainViewerId;
+
+      if (is3DDemSourceCustom(props.demSource3D)) {
+        window.get3DDemTileUrl = get3DDemTileUrl;
+      }
+
+      return () => {
+        window.get3DMapTileUrl = undefined;
+        window.on3DButtonClicked = undefined;
+        window.on3DPositionChanged = undefined;
+        window.on3DLoadingStateChanged = () => {};
+        window.on3DSettingsChanged = undefined;
+        window.set3DLocation = undefined;
+        window.terrainViewerId = undefined;
+
+        if (window.on3DLoadingStateChangedFunctions) {
+          delete window.on3DLoadingStateChangedFunctions[TERRAIN_VIEWER_IDS.MAIN];
+        }
+        if (window.get3DMapTileUrlFunctions) {
+          delete window.get3DMapTileUrlFunctions[TERRAIN_VIEWER_IDS.MAIN];
+        }
+        if (is3DDemSourceCustom(props.demSource3D)) {
+          window.get3DDemTileUrl = undefined;
+        }
+      };
+    }
+  }, [
+    is3D,
+    terrainViewerId,
+    props.demSource3D,
+    on3DButtonClicked,
+    on3DPositionChanged,
+    on3DSettingsChanged,
+    set3DLocation,
+    getTerrainViewerMapTileUrl,
+    get3DDemTileUrl,
+    get3DMapTileUrl,
+    on3DLoadingStateChanged,
+    onTerrainViewerLoadingStateChanged,
+  ]);
 
   useEffect(() => {
     async function changeLayer() {
@@ -148,12 +527,43 @@ function TerrainViewer(props) {
           }
         } else {
           setLayer(null);
-          window.reload3DTextures(terrainViewerId);
+
+          if (terrainViewerId) {
+            try {
+              window.clearTextureCache && window.clearTextureCache(terrainViewerId);
+              window.clearTextures && window.clearTextures(terrainViewerId);
+
+              window.get3DMapTileUrl = (viewerId, minX, minY, maxX, maxY, width, height, callback) => {
+                const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
+                const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+                callback(mapTilerUrl);
+              };
+
+              window.refresh3DTiles && window.refresh3DTiles(terrainViewerId, true);
+
+              const currentPos = { x, y, z, rotH, rotV };
+              window.set3DPosition(terrainViewerId, x, y, z * 1.001, rotH, rotV);
+
+              setTimeout(() => {
+                window.set3DPosition(
+                  terrainViewerId,
+                  currentPos.x,
+                  currentPos.y,
+                  currentPos.z,
+                  currentPos.rotH,
+                  currentPos.rotV,
+                );
+              }, 50);
+            } catch (error) {
+              console.error('Error clearing textures:', error);
+            }
+          }
         }
       }
     }
     changeLayer();
-    // eslint-disable-next-line
+    // Add all relevant dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     is3D,
     terrainViewerId,
@@ -204,363 +614,138 @@ function TerrainViewer(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.demSource3D]);
 
-  function set3DLocation(x, y, zoom) {
-    const z = getHeightFromZoom(zoom);
-    window.set3DPosition(terrainViewerId, x, y, z, 0, 0);
-  }
+  useEffect(() => {
+    if (props.is3D && !terrainViewerId && terrainViewerContainer.current) {
+      const currentContainer = terrainViewerContainer.current;
 
-  async function onTileError(error) {
-    const message = await constructPanelError(error);
-    store.dispatch(notificationSlice.actions.displayPanelError(message));
-  }
+      (async () => {
+        try {
+          await getLayerFromParams(props).catch((e) => {
+            console.warn('Error initializing 3D viewer layer:', e.message);
+          });
 
-  function get3DMapTileUrl(viewerId, minX, minY, maxX, maxY, width, height, callback) {
-    const func = window.get3DMapTileUrlFunctions[CURRENT_TERRAIN_VIEWER_ID];
-    if (func) {
-      func(minX, minY, maxX, maxY, width, height, callback);
-    } else {
-      const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
-      const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
-      callback(mapTilerUrl);
-    }
-  }
+          setLayer(null);
 
-  function getTerrainViewerMapTileUrl(minX, minY, maxX, maxY, width, height, callback) {
-    const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
-    const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+          window.addEventListener('resize', onResize);
 
-    if (!layer || zoomLevel <= minZoom) {
-      callback(mapTilerUrl);
-      return;
-    }
+          window.set3DLocale(locale);
+          setCancelToken(new CancelToken());
+          const tileSize = DEFAULT_DEM_TILE_SIZE;
+          const maxZoomLevel = getDem3DMaxZoomLevel(props.demSource3D);
+          const demProviderType = getDemProviderType(props.demSource3D);
 
-    const getMapParams = {
-      bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
-      format: MimeTypes.JPEG,
-      width: width,
-      height: height,
-      fromTime: fromTime && fromTime.toDate(),
-      toTime: toTime.toDate(),
-      preview: 2,
-      effects: constructGetMapParamsEffects(props),
-      tileCoord: {
-        x: tileX,
-        y: tileY,
-        z: zoomLevel,
-      },
-    };
-    const reqConfig = {
-      cancelToken: cancelToken,
-      authToken: getGetMapAuthToken(auth),
-      retries: 0,
-      ...reqConfigGetMap,
-    };
+          const newTerrainViewerId = window.create3DViewer(
+            'terrain-map-container',
+            x,
+            y,
+            z,
+            rotH,
+            rotV,
+            demProviderType,
+            tileSize,
+            maxZoomLevel,
+          );
 
-    function onCallback(url) {
-      if (url === null) {
-        callback(mapTilerUrl);
-      } else {
-        callback(url);
-      }
-    }
-
-    getMapTile({
-      layer,
-      params: getMapParams,
-      minX,
-      minY,
-      maxX,
-      maxY,
-      width,
-      height,
-      callback: onCallback,
-      reqConfig,
-      onTileError,
-    });
-  }
-
-  async function get3DDemTileUrl(viewerId, minX, minY, maxX, maxY, width, height, callback) {
-    const SW = convertToWgs84([minX, minY]);
-    const NE = convertToWgs84([maxX, maxY]);
-    const bounds = L.latLngBounds(L.latLng(SW[1], SW[0]), L.latLng(NE[1], NE[0]));
-    const origZoom = getBoundsZoomLevel(bounds);
-    // Difference between zooms based on tile size
-    const zoomLevel =
-      origZoom > 2 ? origZoom - Math.log2(DEFAULT_TILE_SIZE / DEFAULT_DEM_TILE_SIZE) : origZoom;
-
-    const { tileX, tileY } = getTileXAndTileY(zoomLevel, minX, minY, maxX, maxY);
-
-    const dsh = getDataSourceHandler(DEM_3D_CUSTOM_TO_DATASOURCE[props.demSource3D]);
-    const minZoomLevel = dsh
-      ? dsh.getLeafletZoomConfig(DEM_3D_CUSTOM_TO_DATASOURCE[props.demSource3D]).min
-      : minZoom;
-
-    if (!layer || zoomLevel <= minZoomLevel) {
-      let url = `https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${zoomLevel}/${tileX}/${tileY}.png`;
-      callback(url);
-      return;
-    }
-
-    const getMapParams = {
-      bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
-      format: MimeTypes.PNG,
-      width: DEFAULT_DEM_TILE_SIZE,
-      height: DEFAULT_DEM_TILE_SIZE,
-      fromTime: fromTime && fromTime.toDate(),
-      toTime: toTime.toDate(),
-      preview: 2,
-      effects: constructGetMapParamsEffects(props),
-      tileCoord: {
-        x: tileX,
-        y: tileY,
-        z: zoomLevel,
-      },
-    };
-    const reqConfig = {
-      cancelToken: cancelToken,
-      authToken: getGetMapAuthToken(auth),
-      retries: 0,
-      ...reqConfigGetMap,
-    };
-
-    function onCallback(url) {
-      callback(url, 'png', () => URL.revokeObjectURL(url));
-    }
-
-    const demLayer = new DEMLayer({
-      demInstance: props.demSource3D,
-      evalscript: `
-      //VERSION=3
-      function setup(){
-        return {
-          input: ["DEM"],
-          output: {bands: 3, sampleType: "UINT8"}
+          store.dispatch(terrainViewerSlice.actions.setTerrainViewerId(newTerrainViewerId));
+          window.set3DSunTime(newTerrainViewerId, sunTime);
+          window.set3DSettings(newTerrainViewerId, settings);
+        } catch (error) {
+          console.error('Error during 3D initialization:', error);
         }
-      }
+      })();
 
-      function evaluatePixel(sample) {
-        // RGB color coded elevation data
-        var dem = sample.DEM + 32768;
-        var red = Math.floor(dem / 256);
-        var green = Math.floor(dem - 256 * red);
-        var blue = Math.floor(256 * (dem - green - 256 * red));
-        return [red, green, blue];
-      }
-    `,
-    });
-
-    getMapTile({
-      layer: demLayer,
-      params: getMapParams,
-      minX,
-      minY,
-      maxX,
-      maxY,
-      width: DEFAULT_DEM_TILE_SIZE,
-      height: DEFAULT_DEM_TILE_SIZE,
-      callback: onCallback,
-      reqConfig,
-      onTileError,
-    });
-  }
-
-  async function on3DInitialized() {
-    if (!is3D) {
-      return;
+      return () => {
+        if (currentContainer) {
+          window.removeEventListener('resize', onResize);
+        }
+      };
     }
-
-    // This is needed to initialize the 3D viewer
-    await getLayerFromParams(props).catch((e) => {
-      console.warn(e.message);
-    });
-
-    setLayer(null);
-
-    window.addEventListener('resize', onResize);
-
-    window.set3DLocale(locale);
-    setCancelToken(new CancelToken());
-    const tileSize = DEFAULT_DEM_TILE_SIZE;
-    const maxZoomLevel = getDem3DMaxZoomLevel(props.demSource3D);
-    const demProviderType = getDemProviderType(props.demSource3D);
-
-    const terrainViewerId = window.create3DViewer(
-      'terrain-map-container',
-      x,
-      y,
-      z,
-      rotH,
-      rotV,
-      demProviderType,
-      tileSize,
-      maxZoomLevel,
-    );
-    store.dispatch(terrainViewerSlice.actions.setTerrainViewerId(terrainViewerId));
-    window.set3DSunTime(terrainViewerId, sunTime);
-    window.set3DSettings(terrainViewerId, settings);
-  }
-
-  function on3DButtonClicked(viewerId, buttonId) {
-    if (buttonId === 'center3Dto2D') {
-      window.set3DPosition(viewerId, x, y, 8000);
-    }
-  }
-
-  function on3DPositionChanged(viewerId, x, y, z, rotH, rotV) {
-    clearTimeout(timeoutId);
-    if (!is3D) {
-      return;
-    }
-
-    const newTimeoutId = setTimeout(() => {
-      const [lng, lat] = proj4('EPSG:3857', 'EPSG:4326', [x, y]);
-      const zoom = getZoomFromEyeHeight(x, y, z);
-      store.dispatch(
-        terrainViewerSlice.actions.setTerrainViewerSettings({
-          ...terrainViewerSettings,
-          x: x,
-          y: y,
-          z: z,
-          rotH: rotH,
-          rotV: rotV,
-        }),
-      );
-      store.dispatch(
-        mainMapSlice.actions.setPosition({
-          lat: lat,
-          lng: lng,
-          zoom: zoom,
-        }),
-      );
-      setBounds({ x: x, y: y, z: z, rotH: rotH, rotV: rotV });
-    }, 500);
-    setTimeoutId(newTimeoutId);
-  }
-
-  function onTerrainViewerLoadingStateChanged(isLoading, type) {
-    if (type === 'OVERALL') {
-      setLoader(isLoading);
-    }
-  }
-
-  function on3DLoadingStateChanged(viewerId, isLoading, type) {
-    const func = window.on3DLoadingStateChangedFunctions[CURRENT_TERRAIN_VIEWER_ID];
-    if (func) {
-      func(isLoading, type);
-    }
-  }
-
-  function on3DSettingsChanged(viewerId) {
-    store.dispatch(
-      terrainViewerSlice.actions.setTerrainViewerSettings({
-        ...terrainViewerSettings,
-        sunTime: window.get3DSunTime(viewerId),
-        settings: window.get3DSettings(viewerId),
-      }),
-    );
-  }
-
-  function on3DShadingClick() {
-    if (shadingEnabled) {
-      setSunEnabled(false);
-      window.enable3DSun(terrainViewerId, false);
-    }
-    setShadingEnabled(!shadingEnabled);
-    window.enable3DShading(terrainViewerId, !shadingEnabled);
-  }
-
-  function on3DSunClick() {
-    if (!sunEnabled) {
-      setShadingEnabled(true);
-      window.enable3DShading(terrainViewerId, true);
-    }
-    setSunEnabled(!sunEnabled);
-    window.enable3DSun(terrainViewerId, !sunEnabled);
-    window.show3DSunTimeDialog(terrainViewerId, !sunEnabled);
-  }
-
-  function setBounds({ x, y, z, rotH, rotV }) {
-    const containerWidth = terrainViewerContainer.current.clientWidth;
-    const containerHeight = terrainViewerContainer.current.clientHeight;
-    const { pixelBounds, bounds } = getBoundsFrom3DPosition({
-      x: x,
-      y: y,
-      z: z,
-      rotV: rotV,
-      rotH: rotH,
-      width: containerWidth,
-      height: containerHeight,
-    });
-    store.dispatch(
-      mainMapSlice.actions.setBounds({
-        bounds: bounds,
-        pixelBounds: pixelBounds,
-      }),
-    );
-  }
-
-  async function animateExit() {
-    const z2D = getEyeHeightFromZoom(props.lat, props.zoom, terrainViewerContainer.current.clientWidth);
-
-    window.on3DPositionChanged = () => {};
-    window.get3DMapTileUrl = () => {};
-    cancelToken.cancel();
-
-    return await new Promise((resolve) => {
-      const closingAnimationId = 'exit-animation';
-      window.on3DAnimationCompleted = (viewerId, animationId) =>
-        viewerId === terrainViewerId && animationId === closingAnimationId && resolve();
-      window.animate3D(terrainViewerId, closingAnimationId, {
-        isLooping: false,
-        frames: [
-          { x: x, y: y, z: z, rotH: rotH, rotV: rotV, duration: 0.8 },
-          { x: x, y: y, z: z2D, rotH: rotH > 180 ? 360 : 0, rotV: 0, duration: 0.2 },
-        ],
-      });
-    });
-  }
-
-  function onClose() {
-    cancelToken.cancel();
-    window.removeEventListener('resize', onResize);
-    window.close3DViewer(terrainViewerId);
-    store.dispatch(terrainViewerSlice.actions.resetTerrainViewerSettings());
-    store.dispatch(terrainViewerSlice.actions.setTerrainViewerId(null));
-  }
-
-  if (is3D) {
-    if (!window.on3DLoadingStateChangedFunctions) {
-      window.on3DLoadingStateChangedFunctions = {};
-    }
-    if (!window.get3DMapTileUrlFunctions) {
-      window.get3DMapTileUrlFunctions = {};
-    }
-    window.get3DMapTileUrl = get3DMapTileUrl;
-    window.on3DButtonClicked = on3DButtonClicked;
-    window.on3DPositionChanged = on3DPositionChanged;
-    window.on3DLoadingStateChanged = on3DLoadingStateChanged;
-    window.on3DSettingsChanged = on3DSettingsChanged;
-    window.set3DLocation = set3DLocation;
-    window.on3DLoadingStateChangedFunctions[TERRAIN_VIEWER_IDS.MAIN] = onTerrainViewerLoadingStateChanged;
-    window.get3DMapTileUrlFunctions[TERRAIN_VIEWER_IDS.MAIN] = getTerrainViewerMapTileUrl;
-    if (is3DDemSourceCustom(props.demSource3D)) {
-      window.get3DDemTileUrl = get3DDemTileUrl;
-    }
-  }
+  }, [
+    props.is3D,
+    terrainViewerId,
+    onResize,
+    locale,
+    props.demSource3D,
+    x,
+    y,
+    z,
+    rotH,
+    rotV,
+    sunTime,
+    settings,
+    props,
+  ]);
 
   useEffect(() => {
-    if (layer) {
-      window.get3DMapTileUrl = get3DMapTileUrl;
-      window.reload3DTextures(terrainViewerId);
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      cancelToken.cancel();
+      window.removeEventListener('resize', onResize);
+      if (terrainViewerId) {
+        window.close3DViewer(terrainViewerId);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (terrainViewerId) {
+      if (layer) {
+        window.get3DMapTileUrl = get3DMapTileUrl;
+        window.reload3DTextures(terrainViewerId);
+      } else {
+        window.get3DMapTileUrl = (viewerId, minX, minY, maxX, maxY, width, height, callback) => {
+          const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
+          const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+          callback(mapTilerUrl);
+        };
+
+        try {
+          if (window.clearTextureCache) {
+            window.clearTextureCache(terrainViewerId);
+          }
+          if (window.clearTextures) {
+            window.clearTextures(terrainViewerId);
+          }
+          if (window.refresh3DTiles) {
+            window.refresh3DTiles(terrainViewerId, true);
+          }
+          window.reload3DTextures(terrainViewerId);
+        } catch (error) {
+          console.error('Error during texture clearing:', error);
+        }
+      }
     }
-    // eslint-disable-next-line
-  }, [layer]);
+  }, [layer, terrainViewerId, get3DMapTileUrl]);
 
-  window.set3DLocation = set3DLocation;
-  window.terrainViewerId = terrainViewerId;
-  window.on3DObjectInteraction = (viewerId, x, y, z, longitude, latitude, distance, isClicked) => {};
+  useEffect(() => {
+    if (!props.is3D && terrainViewerId) {
+      animateExit()
+        .then(() => {
+          onClose();
+          setDisabled(true);
+        })
+        .catch((err) => {
+          onClose();
+          setDisabled(true);
+        });
+    }
+  }, [props.is3D, terrainViewerId, animateExit, onClose]);
 
-  if (disabled) {
+  if (disabled || (!terrainViewerContainer.current && props.is3D)) {
+    if (props.is3D) {
+      return (
+        <div
+          id="terrain-map-container"
+          ref={terrainViewerContainer}
+          style={{ maxWidth: `${toolsOpen && !isMobile ? 'calc(100vw - 450px)' : '100vw'}` }}
+        >
+          <div className="loader-bar" />
+        </div>
+      );
+    }
     return null;
   }
 

@@ -343,9 +343,6 @@ msgstr "Időpont"
 msgid "Load more"
 msgstr "Továbbiak betöltése"
 
-msgid "Loading more results ..."
-msgstr "További eredmények betöltése ..."
-
 msgid "Results"
 msgstr "Eredmények"
 
@@ -550,26 +547,14 @@ msgstr "Idősor animáció létrehozása"
 msgid "Mark point of interest"
 msgstr "Célpont megjelölése"
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Center map on feature"
 msgstr "Középre igazítás"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove geometry"
-msgstr "Geometria eltávolítása"
 
 msgid "Area of interest"
 msgstr "Célterület"
 
 msgid "Select mode"
 msgstr "Üzemmód választása"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Remove measurement"
-msgstr "Mérés eltávolítása"
 
 msgid "km"
 msgstr "km"
@@ -597,11 +582,6 @@ msgstr "Összes alaphelyzetbe állítása"
 
 msgid "Copy geometry to clipboard"
 msgstr "Geometria másolása a vágólapra"
-
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
-msgid "Cancel edit."
-msgstr "Szerkesztés megszakítása."
 
 msgid "Least cloud coverage"
 msgstr "Legkisebb felhőborítás"
@@ -3585,13 +3565,9 @@ msgstr ""
 msgid "Processing parameters"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw rectangular area of interest for image downloads and timelapse"
 msgstr ""
 
-#. jsx-a11y/anchor-is-valid
-#. eslint-disable-next-line
 msgid "Draw polygonal area of interest for image downloads and timelapse"
 msgstr ""
 
@@ -4420,9 +4396,6 @@ msgid "Show products on map"
 msgstr ""
 
 msgid "Show tutorial"
-msgstr ""
-
-msgid "Measure (Click to place first vertex and double click to finish)"
 msgstr ""
 
 #. jsx-a11y/anchor-is-valid
@@ -9821,9 +9794,6 @@ msgstr ""
 msgid "Sentinel-2 Quarterly Mosaics"
 msgstr ""
 
-msgid "WorldCover Annual Cloudless Mosaics V2"
-msgstr ""
-
 msgid "Sentinel-1 DH Monthly Mosaics"
 msgstr ""
 
@@ -9911,4 +9881,13 @@ msgid ""
 "normalized NDVI estimation. The uncertainties of the normalized "
 "reflectances are estimated by propagating the uncertainties associated to "
 "the BRDF model parameters found via the inversion."
+msgstr ""
+
+msgid "WorldCover Annual Cloudless Mosaics"
+msgstr ""
+
+#. Button to start/stop measuring
+#. jsx-a11y/anchor-is-valid
+#. eslint-disable-next-line
+msgid "Measure (Click to start, double click to finish)"
 msgstr ""

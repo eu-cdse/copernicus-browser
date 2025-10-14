@@ -1,21 +1,21 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .collection-card-wrapper {
   position: relative;
-  color: $textColor;
-  background-color: $mainDark;
+  color: vars.$textColor;
+  background-color: vars.$mainDark;
   border-radius: 2px;
   margin-bottom: 25px;
   padding: 8px;
 
   &.selected-card {
-    border: 2px solid $primaryColor;
+    border: 2px solid vars.$primaryColor;
   }
 
   .open-close-button {
     position: absolute;
-    background-color: $primaryColor;
-    color: $mainDark;
+    background-color: vars.$primaryColor;
+    color: vars.$mainDark;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +40,7 @@
 
   .collection-card-title {
     width: fit-content;
-    color: $textColor;
+    color: vars.$textColor;
     padding: 5px 5px 0 5px;
     font-weight: bold;
     font-size: 16px;
@@ -48,13 +48,13 @@
 
     .fas.fa-arrow-right {
       margin-left: 10px;
-      color: $primaryColor;
+      color: vars.$primaryColor;
       cursor: pointer;
     }
   }
 
   .collection-card-description {
-    color: $textColor;
+    color: vars.$textColor;
     text-align: left;
     padding: 0 5px 5px 5px;
     font-size: 14px;
@@ -65,20 +65,20 @@
       margin-bottom: 10px;
 
       a {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }
 
   .collection-card-dataset-wrapper {
     .collection-card-dataset {
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
       border-radius: 2px;
       margin: 5px;
       padding: 5px;
 
       &.selected-dataset {
-        background-color: $mainLight;
+        background-color: vars.$mainLight;
       }
 
       .collection-card-dataset-title {
@@ -97,7 +97,7 @@
           margin: 5px 0;
 
           a {
-            color: $primaryColor;
+            color: vars.$primaryColor;
           }
         }
       }

@@ -1,26 +1,26 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 .collection-cards-container {
   max-height: 75vh;
   overflow-y: scroll;
-  background: $mainMedium;
+  background: vars.$mainMedium;
 }
 
 .sensors-satellites-selection {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  color: $primaryColor;
+  color: vars.$primaryColor;
 
   .collection-select-dropdown {
     width: 50%;
 
     /* stylelint-disable */
     .collection-select__control {
-      background-color: $mainLight;
+      background-color: vars.$mainLight;
       outline: none;
       box-shadow: none;
-      border-bottom: 1px solid $customBorderBottomColor;
+      border-bottom: 1px solid vars.$customBorderBottomColor;
 
       .collection-select__indicators {
         .collection-select__indicator {
@@ -31,51 +31,51 @@
       }
 
       .collection-select__single-value {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         font-size: 14px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
         opacity: 1;
       }
 
       .collection-select__input-container {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         font-size: 14px;
-        font-weight: $fontWeightBold;
+        font-weight: vars.$fontWeightBold;
         opacity: 1;
       }
 
       &.collection-select__control--menu-is-open {
-        background-color: $mainLight;
+        background-color: vars.$mainLight;
 
         .collection-select__single-value {
-          color: $primaryColor;
+          color: vars.$primaryColor;
           opacity: 0.5;
         }
 
         .collection-select__input-container {
-          color: $primaryColor;
+          color: vars.$primaryColor;
         }
       }
     }
 
     .collection-select__menu {
       width: 100%;
-      background-color: $mainLight;
-      color: $mainDark;
+      background-color: vars.$mainLight;
+      color: vars.$mainDark;
 
       .collection-select__menu-list {
         margin: 2px;
 
         &::-webkit-scrollbar-track {
-          background-color: $mainMedium;
+          background-color: vars.$mainMedium;
         }
 
         .collection-select__option {
-          background-color: $mainLight;
+          background-color: vars.$mainLight;
           height: 25px;
           line-height: 25px;
           font-size: 14px;
-          font-weight: $fontWeightNormal;
+          font-weight: vars.$fontWeightNormal;
           padding: 0 12px;
           margin: 2px;
           width: calc(100% - 4px);
@@ -88,8 +88,8 @@
           }
 
           &.collection-select__option--is-selected {
-            background-color: $primaryColor;
-            color: $mainLight;
+            background-color: vars.$primaryColor;
+            color: vars.$mainLight;
             font-weight: bold;
           }
         }
@@ -100,7 +100,7 @@
 }
 
 .collection-selection-container {
-  background: $mainLight;
+  background: vars.$mainLight;
 
   .descriptions {
     font-size: 14px;
@@ -109,8 +109,8 @@
   }
 
   .collection-label {
-    color: $textColor;
-    font-weight: $fontWeightBold;
+    color: vars.$textColor;
+    font-weight: vars.$fontWeightBold;
     margin-bottom: 5px;
     margin-top: 10px;
   }
@@ -139,9 +139,9 @@
           justify-content: space-between;
           align-items: center;
           flex-grow: 1;
-          color: $textColor;
-          background-color: $mainMedium;
-          font-weight: $fontWeightNormal;
+          color: vars.$textColor;
+          background-color: vars.$mainMedium;
+          font-weight: vars.$fontWeightNormal;
           text-align: left;
           /*stylelint-disable*/
           &.primary {
@@ -154,18 +154,18 @@
           }
 
           &.selected {
-            background: $mainDark;
-            font-weight: $fontWeightBold;
-            color: $textColor;
+            background: vars.$mainDark;
+            font-weight: vars.$fontWeightBold;
+            color: vars.$textColor;
 
             &:hover {
-              background: $mainDark;
-              font-weight: $fontWeightBold;
-              color: $textColor;
+              background: vars.$mainDark;
+              font-weight: vars.$fontWeightBold;
+              color: vars.$textColor;
             }
 
             path {
-              stroke: $primaryColor;
+              stroke: vars.$primaryColor;
             }
           }
         }
@@ -178,8 +178,8 @@
       .observation-scenarios-label {
         display: flex;
         align-items: center;
-        color: $textColor;
-        font-weight: $fontWeightBold;
+        color: vars.$textColor;
+        font-weight: vars.$fontWeightBold;
         margin-bottom: 5px;
         margin-top: 10px;
       }
@@ -209,9 +209,9 @@
             justify-content: space-between;
             align-items: center;
             flex-grow: 1;
-            background: $mainDark;
-            color: $textColor;
-            font-weight: $fontWeightNormal;
+            background: vars.$mainDark;
+            color: vars.$textColor;
+            font-weight: vars.$fontWeightNormal;
             text-align: left;
             transition: background-color ease 0.2s;
 
@@ -221,24 +221,24 @@
 
             &.secondary {
               font-size: 14px;
-              background: $mainMedium;
+              background: vars.$mainMedium;
               margin: 5px 0;
 
               &:hover {
-                background: $mainDark;
+                background: vars.$mainDark;
               }
             }
 
             &.selected {
-              background: $mainDark;
-              font-weight: $fontWeightBold;
+              background: vars.$mainDark;
+              font-weight: vars.$fontWeightBold;
 
               &:hover {
-                background: $mainDark;
+                background: vars.$mainDark;
               }
 
               path {
-                stroke: $secondaryColor;
+                stroke: vars.$secondaryColor;
               }
             }
           }

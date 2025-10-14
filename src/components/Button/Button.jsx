@@ -12,16 +12,16 @@ export const ButtonType = Object.freeze({
 const Button = ({
   label,
   icon,
-  type,
+  type = ButtonType.primary,
   disabled,
-  rounded,
-  outlined,
+  rounded = false,
+  outlined = false,
   className,
   iconStyle,
   styleClassName,
   style,
   labelStyle,
-  onClick,
+  onClick = () => {},
   isLoading,
   isLoadingStyle,
 }) => {
@@ -47,13 +47,6 @@ const Button = ({
       {isLoading && <Loader />}
     </div>
   );
-};
-
-Button.defaultProps = {
-  type: ButtonType.primary,
-  rounded: false,
-  outlined: false,
-  onClick: () => {},
 };
 
 export default Button;

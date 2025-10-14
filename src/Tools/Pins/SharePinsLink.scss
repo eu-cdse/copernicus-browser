@@ -1,7 +1,7 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .share-pins-link {
-  color: $textColor;
+  color: vars.$textColor;
   display: flex;
   flex-direction: column;
 

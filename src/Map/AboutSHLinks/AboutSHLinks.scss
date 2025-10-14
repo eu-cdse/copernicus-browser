@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 #map {
   #about-sh-links {
@@ -7,8 +7,8 @@
     left: calc(50%);
     transform: translateX(-50%);
     z-index: 1001;
-    background: $mainDark;
-    color: $primaryColor;
+    background: vars.$mainDark;
+    color: vars.$primaryColor;
     font-size: 11px;
     text-decoration: none;
     cursor: pointer;
@@ -21,25 +21,25 @@
       padding: 2px 5px;
       display: inline-block;
       vertical-align: middle;
-      color: $textColor;
+      color: vars.$textColor;
 
       &:first-child {
         border: none;
       }
 
       @media screen and (max-width: 450px) {
-        color: $textColor;
+        color: vars.$textColor;
       }
     }
   }
 
-  @media screen and (max-width: $breakpoint-940) {
+  @media screen and (max-width: vars.$breakpoint-940) {
     #about-sh-links {
       font-size: 10px;
     }
   }
 
-  @media screen and (max-width: $breakpoint-890) {
+  @media screen and (max-width: vars.$breakpoint-890) {
     #about-sh-links {
       transform: translateX(0);
       left: 0;

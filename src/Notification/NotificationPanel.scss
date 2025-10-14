@@ -1,4 +1,4 @@
-@import '../variables.module.scss';
+@use '../variables.module.scss' as vars;
 
 .notification-panel {
   margin: 10px auto;
@@ -6,7 +6,7 @@
   padding: 10px;
   position: relative;
   text-align: center;
-  color: $orangeColor;
+  color: vars.$orangeColor;
   font-size: 14px;
 
   .fa {
@@ -14,6 +14,6 @@
   }
 
   a {
-    color: $orangeColor;
+    color: vars.$orangeColor;
   }
 }

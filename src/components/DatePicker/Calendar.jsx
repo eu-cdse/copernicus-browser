@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
-import onClickOutside from 'react-onclickoutside';
 import DayPicker from 'react-day-picker';
 import { t } from 'ttag';
 import moment from 'moment';
@@ -13,8 +12,11 @@ import YearMonthForm from './YearMonthForm';
 import 'react-day-picker/lib/style.css';
 import './Calendar.scss';
 import { EOBCCSlider } from '../../junk/EOBCommon/EOBCCSlider/EOBCCSlider';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 function Calendar(props) {
+  const wrapperRef = useRef();
+  useOnClickOutside(wrapperRef, props.onClickOutside || (() => {}));
   const {
     selectedDay,
     minDate,
@@ -66,7 +68,7 @@ function Calendar(props) {
   };
 
   return ReactDOM.createPortal(
-    <div className="calendar-wrapper">
+    <div className="calendar-wrapper" ref={wrapperRef}>
       {hasCloudCoverFilter && !isTimeRange && (
         <div className={`cloud-cover-calendar-cc-section ${isZoomLevelOk ? '' : 'disabled'}`}>
           <div className="time-select-type cc-picker-label">{t`Max. cloud coverage:`}</div>
@@ -118,4 +120,4 @@ function Calendar(props) {
   );
 }
 
-export default onClickOutside(Calendar);
+export default Calendar;

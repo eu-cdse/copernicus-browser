@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .data-fusion {
   padding: 5px 0 5px 0;
@@ -75,10 +75,10 @@
       background-position-x: 100%;
       background-position-y: 0;
       border: none;
-      border-bottom: 1px solid $textColor;
+      border-bottom: 1px solid vars.$textColor;
       border-radius: 0;
       padding: 7px 15px 2px 0;
-      color: $textColor;
+      color: vars.$textColor;
       text-align: left;
       white-space: nowrap;
       text-overflow: ellipsis;

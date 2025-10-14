@@ -241,6 +241,7 @@ const ResultsCard = ({
           },
           bbox: item.bbox,
           geometry: item.geometry,
+          source: item.properties.metadata_source,
         }),
       );
       zoomToProduct(item);

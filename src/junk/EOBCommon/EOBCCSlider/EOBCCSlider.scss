@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 /* stylelint-disable */
 .cc-slider {
@@ -25,13 +25,13 @@
     width: 20px;
 
     &.fa-cloud {
-      color: $iconGrayColor;
+      color: vars.$iconGrayColor;
     }
   }
 
   .percentage {
     margin-left: 3px;
-    font-weight: $fontWeightBold;
-    color: $primaryColor;
+    font-weight: vars.$fontWeightBold;
+    color: vars.$primaryColor;
   }
 }

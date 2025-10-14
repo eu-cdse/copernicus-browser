@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 @keyframes fly-to-top {
   10% {
@@ -28,21 +28,21 @@
 
 @keyframes change-icon-color {
   from {
-    background-color: $blueColor;
+    background-color: vars.$blueColor;
   }
 
   to {
-    background-color: $mainDark;
+    background-color: vars.$mainDark;
   }
 }
 
 @keyframes change-input-background-color {
   from {
-    background-color: $mainDark;
+    background-color: vars.$mainDark;
   }
 
   to {
-    background-color: $mainMedium;
+    background-color: vars.$mainMedium;
   }
 }
 
@@ -50,12 +50,12 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
 
   .smart-panel-action {
     position: relative;
     padding: 15px;
-    border: 2px solid $blueColor;
+    border: 2px solid vars.$blueColor;
 
     .message {
       margin-bottom: 10px;
@@ -64,8 +64,8 @@
     }
 
     .smart-panel-action-btn {
-      background-color: $blueColor;
-      color: $textColor;
+      background-color: vars.$blueColor;
+      color: vars.$textColor;
       padding: 8px 50px;
       margin-right: 10px;
     }
@@ -103,15 +103,15 @@
       }
 
       .available-collections-btn {
-        background: $mainDark;
-        color: $textColor;
+        background: vars.$mainDark;
+        color: vars.$textColor;
         font-size: 14px;
-        font-weight: $fontWeightNormal;
+        font-weight: vars.$fontWeightNormal;
         margin: 0 5px 5px 0;
         display: inline-block;
 
         &:hover {
-          background: $primaryColor;
+          background: vars.$primaryColor;
         }
 
         &.disabled {
@@ -119,7 +119,7 @@
           pointer-events: none;
 
           &:hover {
-            background: $mainDark;
+            background: vars.$mainDark;
           }
         }
       }
@@ -137,7 +137,7 @@
   right: 0;
   width: 0;
   height: 0;
-  border-top: 30px solid $blueColor;
+  border-top: 30px solid vars.$blueColor;
   border-left: 30px solid transparent;
 }
 
@@ -167,14 +167,14 @@
   }
 
   .icon-search {
-    background-color: $blueColor;
+    background-color: vars.$blueColor;
   }
 
   .location-search-box {
     width: 100%;
     justify-content: flex-start;
 
-    @media (max-width: $toolsWidth) {
+    @media (max-width: vars.$toolsWidth) {
       width: 90%;
     }
 
@@ -188,13 +188,13 @@
       input {
         width: 100%;
         padding: 10px 4px;
-        background-color: $mainLight;
+        background-color: vars.$mainLight;
         min-width: 250px;
       }
 
       #powered-by-google-img,
       .search-item {
-        background-color: $mainLight;
+        background-color: vars.$mainLight;
       }
     }
   }

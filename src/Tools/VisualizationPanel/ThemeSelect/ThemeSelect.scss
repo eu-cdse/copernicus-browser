@@ -1,4 +1,4 @@
-@import '../../../variables.module.scss';
+@use '../../../variables.module.scss' as vars;
 
 #theme-select {
   margin: 0;
@@ -9,11 +9,11 @@
   }
 
   &.blue-border {
-    border: 2px solid $blueColor;
+    border: 2px solid vars.$blueColor;
   }
 
   .no-theme-message {
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
     margin-bottom: 10px;
   }
 
@@ -33,7 +33,7 @@
     }
 
     .fas.fa-times {
-      color: $textColor;
+      color: vars.$textColor;
       cursor: pointer;
       font-size: 18px;
     }
@@ -43,27 +43,27 @@
 
       &:hover {
         box-shadow: none;
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
 
     .show-highlights-button {
       white-space: nowrap;
       margin-left: 15px;
-      background-color: $mainMedium;
-      color: $textColor;
-      font-weight: $fontWeightNormal;
+      background-color: vars.$mainMedium;
+      color: vars.$textColor;
+      font-weight: vars.$fontWeightNormal;
       padding-right: 0;
       font-size: 14px;
 
       &.disabled-highlights {
         pointer-events: none;
-        color: $textColorGray;
+        color: vars.$textColorGray;
         opacity: 0.5;
       }
 
       &.active {
-        color: $primaryColor;
+        color: vars.$primaryColor;
       }
     }
   }
@@ -73,7 +73,7 @@
   /* stylelint-disable */
 
   .theme-select__single-value {
-    color: $primaryColor;
+    color: vars.$primaryColor;
   }
 
   .theme-select-dropdown {
@@ -81,7 +81,7 @@
       .theme-select__menu {
         .theme-select__menu-list {
           &::-webkit-scrollbar-track {
-            background-color: $mainMedium;
+            background-color: vars.$mainMedium;
           }
         }
       }
@@ -95,12 +95,12 @@
 }
 
 .theme-select-advanced-wrapper {
-  background-color: $mainMedium;
+  background-color: vars.$mainMedium;
 
   .theme-select-advanced-title {
-    font-weight: $fontWeightBold;
+    font-weight: vars.$fontWeightBold;
     font-size: 16px;
-    color: $textColor;
+    color: vars.$textColor;
     padding: 12px;
     text-transform: uppercase;
   }
@@ -126,8 +126,8 @@
   cursor: pointer;
 
   &.active {
-    color: $secondaryColor;
-    background-color: $primaryColor;
+    color: vars.$secondaryColor;
+    background-color: vars.$primaryColor;
     box-shadow: none;
   }
 }

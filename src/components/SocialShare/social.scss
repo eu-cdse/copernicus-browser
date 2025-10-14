@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .social-networks {
   display: flex;
@@ -8,7 +8,7 @@
   position: relative;
   padding: 0;
   margin: 5px 0;
-  background-color: $mainLight;
+  background-color: vars.$mainLight;
   box-shadow: none;
   z-index: 5;
 
@@ -36,11 +36,11 @@
       align-items: center;
       width: 245px;
       height: 20px;
-      background-color: $mainMedium;
+      background-color: vars.$mainMedium;
       border-radius: 1px 0 0 1px;
 
       .short-url {
-        color: $primaryColor;
+        color: vars.$primaryColor;
         font-size: 12px;
         padding-left: 4px;
       }
@@ -48,7 +48,7 @@
       .copy-to-clipboard {
         i {
           cursor: pointer;
-          color: $primaryColor;
+          color: vars.$primaryColor;
           padding-right: 4px;
         }
       }
@@ -57,11 +57,11 @@
     .create-short-url-wrapper {
       .create-short-url {
         font-size: 12px;
-        font-weight: $fontWeightBold;
-        background-color: $primaryColor;
+        font-weight: vars.$fontWeightBold;
+        background-color: vars.$primaryColor;
         border: none;
         border-radius: 0 1px 1px 0;
-        color: $whiteColor;
+        color: vars.$whiteColor;
         width: 64px;
         height: 20px;
         padding: 0;
@@ -69,6 +69,10 @@
 
         &:hover {
           background-color: #0c4eac;
+        }
+
+        .loader {
+          height: unset;
         }
       }
     }
@@ -84,7 +88,7 @@
       display: flex;
 
       svg {
-        fill: $primaryColor;
+        fill: vars.$primaryColor;
         width: 19px;
         height: 19px;
       }

@@ -1,4 +1,4 @@
-@import '../../variables.module.scss';
+@use '../../variables.module.scss' as vars;
 
 .pins-story-builder {
   width: 100%;
@@ -22,7 +22,7 @@
     height: 50px;
     padding: 0 15px;
     line-height: 40px;
-    color: $textColor;
+    color: vars.$textColor;
   }
 
   .horizontal-stack {
@@ -40,9 +40,9 @@
         padding: 10px;
         font-size: 14px;
         clear: both;
-        border-bottom: 1px solid $mainDark;
+        border-bottom: 1px solid vars.$mainDark;
         user-select: none;
-        color: $textColor;
+        color: vars.$textColor;
         min-height: 65px;
 
         &.normal-mode:hover {
@@ -76,7 +76,7 @@
 
       .info-panel {
         white-space: pre-line;
-        color: $textColor;
+        color: vars.$textColor;
         margin: 20px 10px;
         max-width: 400px;
         font-size: 14px;
@@ -98,7 +98,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        color: $primaryColor;
+        color: vars.$primaryColor;
         font-size: 26px;
         line-height: 512px;
         margin-bottom: 50px;
@@ -112,17 +112,17 @@
         flex-direction: column;
         justify-content: flex-end;
         align-items: center;
-        background-color: $mainMedium;
+        background-color: vars.$mainMedium;
         padding-top: 20px;
 
         .controls {
           margin: 20px 0;
-          color: $textColor;
+          color: vars.$textColor;
           text-align: center;
 
           button.play-pause {
             background-color: transparent;
-            color: $primaryColor;
+            color: vars.$primaryColor;
             margin: 0;
             padding: 0;
             border: none;
@@ -161,13 +161,13 @@
         margin-right: auto;
         display: flex;
         flex-direction: column;
-        background-color: $mainDark;
+        background-color: vars.$mainDark;
         padding: 7px 10px;
         padding-bottom: 15px;
 
         .react-toggle-checked .react-toggle-track,
         .react-toggle.react-toggle-checked:hover .react-toggle-track {
-          background: $primaryColor;
+          background: vars.$primaryColor;
         }
 
         .field {
@@ -181,7 +181,7 @@
           label {
             flex-grow: 1;
             margin-right: 20px;
-            color: $textColor;
+            color: vars.$textColor;
           }
           /* stylelint-enable */
         }
@@ -193,7 +193,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        background-color: $mainDark;
+        background-color: vars.$mainDark;
         padding-bottom: 20px;
 
         .eob-btn {
@@ -210,7 +210,7 @@
   }
 }
 
-@media screen and (max-width: $breakpoint-900) {
+@media screen and (max-width: vars.$breakpoint-900) {
   .pins-story-builder {
     .horizontal-stack {
       flex-direction: column;

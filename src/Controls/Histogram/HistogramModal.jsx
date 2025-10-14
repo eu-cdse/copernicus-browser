@@ -146,7 +146,7 @@ class HistogramModal extends Component {
         height={400}
         onClose={this.onHistogramModalClose}
         title={title}
-        modal={false}
+        modal={true}
       >
         {loading && (
           <div className="loading-holder">

@@ -68,7 +68,10 @@ const FisChartLink = (props) => {
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
     <a
-      onClick={() => props.openFisPopup({ layerName: layerName })}
+      onClick={(e) => {
+        e.stopPropagation();
+        props.openFisPopup({ layerName: layerName });
+      }}
       title={getStatisticalInfoMsg()}
       className={`${props.active ? 'active' : ''}`}
       style={{ height: '40px' }}
