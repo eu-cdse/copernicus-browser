@@ -30,7 +30,6 @@ import { CustomOption } from '../../../components/CustomOption/CustomOption';
 import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
-import { HLSConstellationSelection } from './HLSConstellationSelection';
 import CLMSCollectionSelection from './CLMSCollectionSelection';
 import { CCM_ROLES } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../../api/OData/assets/accessRoles';
@@ -38,8 +37,6 @@ import { ACCESS_ROLES } from '../../../api/OData/assets/accessRoles';
 const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollection, onSelect }) => {
   const { datasource } = selectedCollectionGroup;
   switch (datasource) {
-    case DATASOURCES.AWS_HLS:
-      return HLSConstellationSelection({ selected: selectedCollection, onSelect: onSelect });
     case DATASOURCES.S1:
       return (
         <Sentinel1Collection

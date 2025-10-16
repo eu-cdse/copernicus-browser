@@ -4378,6 +4378,40 @@
         ],
         "datasets": []
     },
+    "af6744-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | ba_global_300m_daily_v4",
+        "layers": [
+            {
+                "id": "BF",
+                "name": "BF",
+                "description": "Burned Fraction",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/af6744-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=BF&style=default"
+            },
+            {
+                "id": "CP",
+                "name": "CP",
+                "description": "Classification Probability",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/af6744-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CP&style=default"
+            },
+            {
+                "id": "DOB",
+                "name": "DOB",
+                "description": "Day of Burn",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/af6744-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DOB&style=default"
+            },
+            {
+                "id": "LFP",
+                "name": "LFP",
+                "description": "Large Fraction Probability",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/af6744-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LFP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "af9f44-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Urban (S2L1C) API",
         "layers": [
@@ -4821,6 +4855,40 @@
                 "description": "Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c15b45-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "c283f3-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | ba_global_300m_monthly_v4",
+        "layers": [
+            {
+                "id": "BF",
+                "name": "BF",
+                "description": "Burned Fraction",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c283f3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=BF&style=default"
+            },
+            {
+                "id": "CP",
+                "name": "CP",
+                "description": "Classification Probability",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c283f3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CP&style=default"
+            },
+            {
+                "id": "DOB",
+                "name": "DOB",
+                "description": "Day of Burn",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c283f3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DOB&style=default"
+            },
+            {
+                "id": "LFP",
+                "name": "LFP",
+                "description": "Large Fraction Probability",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c283f3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LFP&style=default"
             }
         ],
         "datasets": []

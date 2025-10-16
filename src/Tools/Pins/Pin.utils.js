@@ -669,7 +669,6 @@ export async function constructPinFromProps(props) {
     orbitDirection,
     cloudCoverage,
   } = props;
-  const isGIBS = !fromTime; //GIBS only has toTime
   const themeName = getThemeName(themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId));
   const layer = await getLayerFromParams(props);
   return {
@@ -680,7 +679,7 @@ export async function constructPinFromProps(props) {
     datasetId: datasetId,
     layerId: layerId,
     visualizationUrl: visualizationUrl,
-    fromTime: isGIBS ? null : fromTime.toISOString(),
+    fromTime: fromTime.toISOString(),
     toTime: toTime.toISOString(),
     dateMode: dateMode,
     evalscript: evalscript && !evalscripturl && customSelected ? evalscript : '',

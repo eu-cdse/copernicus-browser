@@ -12,8 +12,6 @@ import {
   DATASET_CDAS_S3OLCI,
   DATASET_CDAS_S5PL2,
   DATASET_CDAS_DEM,
-  DATASET_S2L1C,
-  DATASET_S2L2A,
   DATASET_S3SLSTR,
   DATASET_S3OLCI,
   DATASET_S5PL2,
@@ -24,7 +22,6 @@ import {
   DATASET_AWS_LETML2,
   DATASET_AWS_LOTL1,
   DATASET_AWS_LOTL2,
-  DATASET_MODIS,
   BYOCSubTypes,
   SHV3_LOCATIONS_ROOT_URL,
 } from '@sentinel-hub/sentinelhub-js';
@@ -51,16 +48,6 @@ const DATAFUSION_DATASETS = {
     additionalMosaickingOrders: [],
     additionalParameters: {},
     additionalParametersComponent: DataFusionAdditionalParametersS1,
-  },
-  [DATASET_S2L1C.id]: {
-    label: 'S-2 L1C',
-    dataset: DATASET_S2L1C,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_S2L2A.id]: {
-    label: 'S-2 L2A',
-    dataset: DATASET_S2L2A,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
   },
   [DATASET_S3SLSTR.id]: {
     label: 'S-3 SLSTR',
@@ -111,12 +98,6 @@ const DATAFUSION_DATASETS = {
     label: 'Landsat 8-9 L2',
     dataset: DATASET_AWS_LOTL2,
     additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-
-  [DATASET_MODIS.id]: {
-    label: 'MODIS',
-    dataset: DATASET_MODIS,
-    additionalMosaickingOrders: [],
   },
   [DATASET_AWS_DEM.id]: {
     label: 'DEM',

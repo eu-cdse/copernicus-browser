@@ -441,12 +441,28 @@ const ClmsGlobalBa300mV3MonthlyTooltip = () =>
     source: getClmsGlobalBa300mV3MonthlyMarkdown(),
   });
 
+const getClmsGlobalBa300mV4MonthlyMarkdown = () => t`
+  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Monthly datasets are available at global scale, in the spatial resolution of 300 m, and with a time lag of two months. They cover the period from July 2018 to present. More information _coming soon_.`;
+
+const ClmsGlobalBa300mV4MonthlyTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsGlobalBa300mV4MonthlyMarkdown(),
+  });
+
 const getClmsGlobalBa300mV3DailyMarkdown = () => t`
   Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Daily datasets are available at global scale, in the spatial resolution of 300 m, and within 24 hours after the satellite acquisition. They cover the period from July 2023 to present. More info [here](https://land.copernicus.eu/en/products/vegetation/burnt-area-v3-1-daily-300m).`;
 
 const ClmsGlobalBa300mV3DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalBa300mV3DailyMarkdown(),
+  });
+
+const getClmsGlobalBa300mV4DailyMarkdown = () => t`
+  Maps burn scars, surfaces which have been sufficiently affected by fire to display significant changes in the vegetation cover (destruction of dry material, reduction or loss of green material) and in the ground surface (temporarily darker because of ash). Daily datasets are available at global scale, in the spatial resolution of 300 m, and within 24 hours after the satellite acquisition. They cover the period from December 2024 to present. More information _coming soon_.`;
+
+const ClmsGlobalBa300mV4DailyTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsGlobalBa300mV4DailyMarkdown(),
   });
 
 const getClmsGlobalLsp300mV1YearlyMarkdown = () => t`
@@ -906,4 +922,8 @@ export {
   ClmsEuropeSwi1kmV2DailyTooltip,
   ClmsGlobalSwi125km10V4DailyTooltip,
   getClmsGlobalSwi125km10V4DailyMarkdown,
+  ClmsGlobalBa300mV4MonthlyTooltip,
+  getClmsGlobalBa300mV4MonthlyMarkdown,
+  ClmsGlobalBa300mV4DailyTooltip,
+  getClmsGlobalBa300mV4DailyMarkdown,
 };

@@ -4,10 +4,9 @@ import { BBox, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import {
   getDataSourceHandler,
   getAllAvailableCollections,
-  datasourceForDatasetId,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getBoundsAndLatLng } from '../../CommercialDataPanel/commercialData.utils';
-import { reqConfigMemoryCache, DATASOURCES, BBOX_PADDING } from '../../../const';
+import { reqConfigMemoryCache, BBOX_PADDING } from '../../../const';
 import { handleError } from '../../../utils';
 
 export async function findLatestDateWithData({
@@ -113,10 +112,6 @@ export async function findAvailableCollectionsWithData({
   }
 }
 
-export function isDatasetIdGIBS(datasetId) {
-  return datasourceForDatasetId(datasetId) === DATASOURCES.GIBS;
-}
-
 async function findLatestTileInArea({ bbox, datasetId, maxCloudCoverPercent, orbitDirection }) {
   const datasourceHandler = getDataSourceHandler(datasetId);
   if (!datasourceHandler) {
@@ -168,7 +163,7 @@ export function generateAppropriateSearchBBox(bounds, pixelBounds) {
 
 function constructLocationAndVisualizationParamsFromTile(tile, datasetId) {
   const { lat, lng, zoom } = getBoundsAndLatLng(tile.geometry);
-  const fromTime = isDatasetIdGIBS(datasetId) ? null : moment.utc(tile.sensingTime).startOf('day');
+  const fromTime = moment.utc(tile.sensingTime).startOf('day');
   const toTime = moment.utc(tile.sensingTime).endOf('day');
   return { lat: lat, lng: lng, zoom: zoom, fromTime: fromTime, toTime: toTime };
 }

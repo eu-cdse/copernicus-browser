@@ -34,6 +34,45 @@ export const COPERNICUS_CLMS_BURNT_AREA_MONTHLY_BANDS = [
     getDescription: () => ``,
   },
 ];
+
+export const COPERNICUS_CLMS_BURNT_AREA_DAILY_V4_BANDS = [
+  {
+    name: 'BF',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'DOB',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LFP',
+    getDescription: () => ``,
+  },
+];
+
+export const COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4_BANDS = [
+  {
+    name: 'BF',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'DOB',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LFP',
+    getDescription: () => ``,
+  },
+];
+
 export const COPERNICUS_CLMS_DMP_BANDS = [
   {
     name: 'DMP',

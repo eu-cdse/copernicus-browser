@@ -21,7 +21,6 @@ import {
   ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
 } from '../../../../const';
 import { getBoundsAndLatLng } from '../../../CommercialDataPanel/commercialData.utils';
-import { isDatasetIdGIBS } from '../../SmartPanel/LatestDataAction.utils';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
 import { boundsToPolygon, getLeafletBoundsFromGeoJSON, appendPolygon } from '../../../../utils/geojson.utils';
@@ -181,7 +180,7 @@ class AdvancedSearch extends Component {
     }
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
-        fromTime: isDatasetIdGIBS(tile.datasetId) ? null : fromTime,
+        fromTime: fromTime,
         toTime: toTime,
       }),
     );

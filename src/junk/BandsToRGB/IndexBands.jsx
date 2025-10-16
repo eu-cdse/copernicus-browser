@@ -197,10 +197,12 @@ export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) =
 
   return (
     <React.Fragment>
-      <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnRight">
-        <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
-      </HelpTooltip>
-      <p>{t`Drag bands into the index equation`}</p>
+      <div className="help-text-container">
+        <span>{t`Drag bands into the index equation`}</span>
+        <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+          <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+        </HelpTooltip>
+      </div>
       <div className="colors-container">
         {bands.map((band, index) => (
           <DraggableBand key={index} band={band} value={layers} onChange={onDraggableBandChange} />

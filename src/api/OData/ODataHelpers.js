@@ -138,6 +138,8 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -194,6 +196,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   fapar_global_1km_10daily_v2: COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
   ba_global_300m_daily_v3: COPERNICUS_CLMS_BURNT_AREA_DAILY,
   ba_global_300m_monthly_v3: COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+  ba_global_300m_daily_v4: COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  ba_global_300m_monthly_v4: COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   fapar_global_300m_10daily_v1: COPERNICUS_CLMS_FAPAR_300M_10DAILY,
   fcover_global_1km_10daily_v2: COPERNICUS_CLMS_FCOVER_1KM_10DAILY,
   fcover_global_300m_10daily_v1: COPERNICUS_CLMS_FCOVER_300M_10DAILY,
@@ -866,7 +870,14 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     };
   }
 
-  if ([COPERNICUS_CLMS_BURNT_AREA_DAILY, COPERNICUS_CLMS_BURNT_AREA_MONTHLY].includes(datasetId)) {
+  if (
+    [
+      COPERNICUS_CLMS_BURNT_AREA_DAILY,
+      COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+      COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+      COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+    ].includes(datasetId)
+  ) {
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'BURNT_AREA',

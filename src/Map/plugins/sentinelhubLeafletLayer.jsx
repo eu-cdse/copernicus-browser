@@ -8,8 +8,6 @@ import {
   CRS_EPSG3857,
   MimeTypes,
   S1GRDAWSEULayer,
-  S2L1CLayer,
-  S2L2ALayer,
   S3SLSTRLayer,
   S3OLCILayer,
   S3OLCIL2CDASLayer,
@@ -22,8 +20,6 @@ import {
   Landsat15AWSLMSSL1Layer,
   Landsat7AWSLETML1Layer,
   Landsat7AWSLETML2Layer,
-  HLSAWSLayer,
-  MODISLayer,
   DEMLayer,
   ProcessingDataFusionLayer,
   CancelToken,
@@ -45,8 +41,6 @@ import {
   S1_AWS_IW_VV,
   S1_AWS_EW_HHHV,
   S1_AWS_EW_HH,
-  S2L1C,
-  S2L2A,
   S3SLSTR,
   S3OLCI,
   S5_O3,
@@ -67,9 +61,7 @@ import {
   S5_AER_AI_CDAS,
   S5_CLOUD_CDAS,
   S5_OTHER_CDAS,
-  MODIS,
   AWS_L8L1C,
-  AWS_HLS,
   DEM_MAPZEN,
   DEM_COPERNICUS_30,
   DEM_COPERNICUS_90,
@@ -89,8 +81,6 @@ import {
   AWS_LMSSL1,
   AWS_LETML1,
   AWS_LETML2,
-  AWS_HLS_LANDSAT,
-  AWS_HLS_SENTINEL,
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
@@ -125,6 +115,8 @@ import {
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_DMP_1KM_10DAILY,
   COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0,
   COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1,
@@ -690,14 +682,6 @@ class SentinelHubLayer extends L.TileLayer {
           orbitDirection: orbitDirection,
         });
       }
-      case S2L1C:
-        return await new S2L1CLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
       case S2_L1C_CDAS:
         return await new S2L1CCDASLayer({
           evalscript: evalscript,
@@ -708,14 +692,6 @@ class SentinelHubLayer extends L.TileLayer {
           ...(cloudCoverage !== undefined && cloudCoverage !== null
             ? { maxCloudCoverPercent: cloudCoverage }
             : {}),
-        });
-      case S2L2A:
-        return await new S2L2ALayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
         });
       case S2_L2A_CDAS:
         return await new S2L2ACDASLayer({
@@ -846,17 +822,6 @@ class SentinelHubLayer extends L.TileLayer {
           upsampling: upsampling,
           downsampling: downsampling,
         });
-      case AWS_HLS:
-      case AWS_HLS_LANDSAT:
-      case AWS_HLS_SENTINEL:
-        return await new HLSAWSLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-          constellation: constellation,
-        });
       case AWS_LOTL1:
         return await new Landsat8AWSLOTL1Layer({
           evalscript: evalscript,
@@ -913,14 +878,6 @@ class SentinelHubLayer extends L.TileLayer {
           upsampling: upsampling,
           downsampling: downsampling,
         });
-      case MODIS:
-        return await new MODISLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
       case DEM_MAPZEN:
       case DEM_COPERNICUS_30:
       case DEM_COPERNICUS_90:
@@ -957,6 +914,8 @@ class SentinelHubLayer extends L.TileLayer {
       case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       case COPERNICUS_CLMS_BURNT_AREA_DAILY:
       case COPERNICUS_CLMS_BURNT_AREA_MONTHLY:
+      case COPERNICUS_CLMS_BURNT_AREA_DAILY_V4:
+      case COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1:

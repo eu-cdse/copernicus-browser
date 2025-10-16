@@ -815,6 +815,18 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/e5d980-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'ba_global_300m_monthly_v4',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/c283f3-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'ba_global_300m_daily_v4',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/af6744-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

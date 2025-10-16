@@ -25,10 +25,12 @@ export const BandsToRGB = ({ bands, value, onChange, areBandsClasses, datasetId 
 
   return (
     <React.Fragment>
-      <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnRight">
-        <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
-      </HelpTooltip>
-      <p>{areBandsClasses ? t`Drag classes onto RGB fields.` : t`Drag bands onto RGB fields.`}</p>
+      <div className="help-text-container">
+        <span>{areBandsClasses ? t`Drag classes onto RGB fields` : t`Drag bands onto RGB fields`}</span>
+        <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+          <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+        </HelpTooltip>
+      </div>
       <div className="colors-container">
         {bands.map((band, i) => (
           <DraggableBand key={i} band={band} value={value} onChange={onChange} />

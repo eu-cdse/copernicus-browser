@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { getShortUrl, getAppropriateHashtags, getCustomDomainFullName } from './SocialShare.utils';
-import { S2L1C, GIBS_MODIS_TERRA } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { S2_L1C_CDAS } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const mockNetwork = new MockAdapter(axios);
 const urlLocation =
@@ -72,10 +72,10 @@ describe('URL Shortening Test Cases', () => {
   });
 });
 
-test.each([
-  [S2L1C, false, 'Sentinel-2,Copernicus'],
-  [GIBS_MODIS_TERRA, true, 'GIBS,NASA,EarthObservation,RemoteSensing'],
-])('Getting appropriate hashtags', (datasetId, useDefault, expectedHashtags) => {
-  const hashtags = getAppropriateHashtags(datasetId, useDefault);
-  expect(hashtags).toBe(expectedHashtags);
-});
+test.each([[S2_L1C_CDAS, false, 'Sentinel-2,Copernicus']])(
+  'Getting appropriate hashtags',
+  (datasetId, useDefault, expectedHashtags) => {
+    const hashtags = getAppropriateHashtags(datasetId, useDefault);
+    expect(hashtags).toBe(expectedHashtags);
+  },
+);

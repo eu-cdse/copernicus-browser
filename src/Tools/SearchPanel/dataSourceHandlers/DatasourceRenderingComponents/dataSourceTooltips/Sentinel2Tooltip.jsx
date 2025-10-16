@@ -28,7 +28,7 @@ Level 1C data are data of sufficient quality for most investigations, where all 
 const Sentinel2Tooltip = () =>
   DataSourceTooltip({
     source: getSentinel2Markdown(),
-    credits: credits[DATASOURCES.S2],
+    credits: credits[DATASOURCES.S2_CDAS],
   });
 
 const S2L2ATooltip = () => <ReactMarkdown children={getS2L2AMarkdown()} />;

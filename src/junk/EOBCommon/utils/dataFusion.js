@@ -2,8 +2,6 @@ import {
   ApiType,
   parseLegacyWmsGetMapParams,
   DATASET_AWSEU_S1GRD,
-  DATASET_S2L1C,
-  DATASET_S2L2A,
   DATASET_S3OLCI,
   DATASET_S3SLSTR,
   DATASET_S5PL2,
@@ -15,12 +13,9 @@ import {
   DATASET_AWS_LETML1,
   DATASET_AWS_LETML2,
   DATASET_AWS_LMSSL1,
-  DATASET_MODIS,
   DATASET_AWS_DEM,
   DATASET_BYOC,
   S1GRDAWSEULayer,
-  S2L1CLayer,
-  S2L2ALayer,
   S3SLSTRLayer,
   S3OLCILayer,
   S5PL2Layer,
@@ -32,7 +27,6 @@ import {
   Landsat7AWSLETML1Layer,
   Landsat7AWSLETML2Layer,
   Landsat15AWSLMSSL1Layer,
-  MODISLayer,
   DEMLayer,
   BYOCLayer,
   ProcessingDataFusionLayer,
@@ -125,12 +119,8 @@ export function constructLayerFromDatasetId(datasetId, mosaickingOrder, addition
         demInstanceType: demInstanceType,
         speckleFilter: speckleFilter,
       });
-    case DATASET_S2L1C.id:
-      return new S2L1CLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S2L1C.id:
       return new S2L1CCDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_S2L2A.id:
-      return new S2L2ALayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S2L2A.id:
       return new S2L2ACDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_S3OLCI.id:
@@ -161,8 +151,6 @@ export function constructLayerFromDatasetId(datasetId, mosaickingOrder, addition
       return new Landsat8AWSLOTL1Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_AWS_LOTL2.id:
       return new Landsat8AWSLOTL2Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_MODIS.id:
-      return new MODISLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_AWS_DEM.id:
       return new DEMLayer({
         evalscript: '//VERSION=3 ---',

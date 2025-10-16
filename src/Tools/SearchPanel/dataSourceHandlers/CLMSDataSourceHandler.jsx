@@ -98,6 +98,8 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -205,6 +207,8 @@ import {
   getClmsGlobalSwi125kmV4DailyMarkdown,
   getClmsEuropeSwi1kmV2DailyMarkdown,
   getClmsGlobalSwi125km10V4DailyMarkdown,
+  getClmsGlobalBa300mV4DailyMarkdown,
+  getClmsGlobalBa300mV4MonthlyMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -261,6 +265,8 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4_BANDS,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2_BANDS,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4_BANDS,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4_BANDS,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
@@ -278,6 +284,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
   getDatasetSearchLabels = () => ({
     [COPERNICUS_CLMS_BURNT_AREA_DAILY]: t`BA 300m Daily V3`,
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: t`BA 300m Monthly V3`,
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: t`BA 300m Daily V4`,
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: t`BA 300m Monthly V4`,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY]: t`DMP 1km 10-daily V2`,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: t`DMP 1km 10-daily V2 RT0`,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: t`DMP 1km 10-daily V2 RT1`,
@@ -380,6 +388,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: [],
     [COPERNICUS_CLMS_BURNT_AREA_DAILY]: [],
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: [],
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: [],
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: [],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY]: [],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: [],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: [],
@@ -492,6 +502,14 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       max: 25,
     },
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: {
       min: 2,
       max: 25,
     },
@@ -734,6 +752,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: ['61caacdf-8a23-471c-b3d3-e5a8a537c44d'], // collection id from byoc admin account (currenlty from Max's/Maxim's account)
     [COPERNICUS_CLMS_BURNT_AREA_DAILY]: ['c698beab-cdb7-4b41-857a-63fc9a8d8c07'],
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: ['16f8b33d-9b6c-440f-bc8c-ee7b1ccb1009'],
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: ['162ee729-86a7-45bc-9cfe-c01f718e3216'],
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: ['b8b617c6-182f-427e-a86c-23fc36ac6098'],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY]: ['12a01750-273b-4ed0-bd8d-da317cdd802a'],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: ['431e908c-90c3-4d0f-9814-b2e2b815c6b0'],
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: ['3f2a6a77-5065-4a3a-be79-97188adabec1'],
@@ -835,6 +855,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_BURNT_AREA_DAILY]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: LocationIdSHv3.cdse,
@@ -943,6 +965,14 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: {
       minDate: moment.utc('2019-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: {
+      minDate: moment.utc('2024-12-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: {
+      minDate: moment.utc('2018-07-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_DMP_1KM_10DAILY]: {
@@ -1316,6 +1346,14 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       unit: 'day',
     },
     [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: {
+      amount: 1,
+      unit: 'month',
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: {
+      amount: 0,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: {
       amount: 1,
       unit: 'month',
     },
@@ -1773,6 +1811,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return COPERNICUS_CLMS_BURNT_AREA_DAILY_BANDS;
       case COPERNICUS_CLMS_BURNT_AREA_MONTHLY:
         return COPERNICUS_CLMS_BURNT_AREA_MONTHLY_BANDS;
+      case COPERNICUS_CLMS_BURNT_AREA_DAILY_V4:
+        return COPERNICUS_CLMS_BURNT_AREA_DAILY_V4_BANDS;
+      case COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4:
+        return COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4_BANDS;
       case COPERNICUS_CLMS_DMP_1KM_10DAILY:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1:
@@ -1930,6 +1972,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return getClmsGlobalBa300mV3DailyMarkdown();
       case COPERNICUS_CLMS_BURNT_AREA_MONTHLY:
         return getClmsGlobalBa300mV3MonthlyMarkdown();
+      case COPERNICUS_CLMS_BURNT_AREA_DAILY_V4:
+        return getClmsGlobalBa300mV4DailyMarkdown();
+      case COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4:
+        return getClmsGlobalBa300mV4MonthlyMarkdown();
       case COPERNICUS_CLMS_DMP_1KM_10DAILY:
       case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0:
         return getClmsGlobalDmp1kmV210dailyMarkdown();

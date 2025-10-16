@@ -12,16 +12,12 @@ import { t } from 'ttag';
 
 import store, { notificationSlice, themesSlice } from '../../../store';
 import Sentinel1DataSourceHandler from './Sentinel1DataSourceHandler';
-import Sentinel2AWSDataSourceHandler from './Sentinel2AWSDataSourceHandler';
 import Sentinel3DataSourceHandler from './Sentinel3DataSourceHandler';
 import Sentinel5PDataSourceHandler from './Sentinel5PDataSourceHandler';
 import Landsat45AWSDataSourceHandler from './Landsat45AWSDataSourceHandler';
 import Landsat15AWSDataSourceHandler from './Landsat15AWSDataSourceHandler';
 import Landsat7AWSDataSourceHandler from './Landsat7AWSDataSourceHandler';
 import Landsat8AWSDataSourceHandler from './Landsat8AWSDataSourceHandler';
-import ModisDataSourceHandler from './ModisDataSourceHandler';
-import ProbaVDataSourceHandler from './ProbaVDataSourceHandler';
-import GibsDataSourceHandler from './GibsDataSourceHandler';
 import BYOCDataSourceHandler from './BYOCDataSourceHandler';
 import DEMDataSourceHandler from './DEMDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
@@ -36,8 +32,6 @@ import {
   S1_AWS_IW_VV,
   S1_AWS_EW_HHHV,
   S1_AWS_EW_HH,
-  S2L1C,
-  S2L2A,
   S3SLSTR,
   S3OLCI,
   S5_O3,
@@ -49,9 +43,7 @@ import {
   S5_AER_AI,
   S5_CLOUD,
   S5_OTHER,
-  MODIS,
   AWS_L8L1C,
-  AWS_HLS,
   DEM_MAPZEN,
   DEM_COPERNICUS_30,
   DEM_COPERNICUS_90,
@@ -71,23 +63,7 @@ import {
   AWS_LMSSL1,
   AWS_LETML1,
   AWS_LETML2,
-  GIBS_MODIS_TERRA,
-  GIBS_MODIS_AQUA,
-  GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE,
-  GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC,
-  GIBS_CALIPSO_WWFC_V3_01,
-  GIBS_CALIPSO_WWFC_V3_02,
-  GIBS_BLUEMARBLE,
-  GIBS_LANDSAT_WELD,
-  GIBS_MISR,
-  GIBS_ASTER_GDEM,
-  GIBS_VIIRS_NOAA20_CORRECTED_REFLECTANCE,
-  PROBAV_S1,
-  PROBAV_S5,
-  PROBAV_S10,
   CUSTOM,
-  AWS_HLS_LANDSAT,
-  AWS_HLS_SENTINEL,
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
@@ -226,9 +202,10 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from './dataSourceConstants';
 
-import HLSAWSDataSourceHandler from './HLSAWSDataSourceHandler';
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
 import Sentinel3CDASDataSourceHandler from './Sentinel3CDASDataSourceHandler';
 import Sentinel5PCDASDataSourceHandler from './Sentinel5PCDASDataSourceHandler';
@@ -263,7 +240,6 @@ export function initializeDataSourceHandlers() {
   dataSourceHandlers = [
     new Sentinel1DataSourceHandler(),
     new S1MosaicDataSourceHandler(),
-    new Sentinel2AWSDataSourceHandler(),
     new Sentinel2CDASDataSourceHandler(),
     new MosaicDataSourceHandler(),
     new Sentinel3DataSourceHandler(),
@@ -274,12 +250,8 @@ export function initializeDataSourceHandlers() {
     new Landsat45AWSDataSourceHandler(),
     new Landsat7AWSDataSourceHandler(),
     new Landsat8AWSDataSourceHandler(),
-    new HLSAWSDataSourceHandler(),
-    new ModisDataSourceHandler(),
     new DEMDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
-    new ProbaVDataSourceHandler(),
-    new GibsDataSourceHandler(),
     new BYOCDataSourceHandler(),
     new OthersDataSourceHandler(),
     new AirbusDeDataSourceHandler(),
@@ -581,9 +553,6 @@ export function datasourceForDatasetId(datasetId) {
     case S1_CDAS_SM_HHHV:
     case S1_CDAS_SM_HH:
       return DATASOURCES.S1;
-    case S2L1C:
-    case S2L2A:
-      return DATASOURCES.S2;
     case S2_L1C_CDAS:
     case S2_L2A_CDAS:
       return DATASOURCES.S2_CDAS;
@@ -620,12 +589,6 @@ export function datasourceForDatasetId(datasetId) {
     case S5_CLOUD_CDAS:
     case S5_OTHER_CDAS:
       return DATASOURCES.S5_CDAS;
-    case MODIS:
-      return DATASOURCES.MODIS;
-    case PROBAV_S1:
-    case PROBAV_S5:
-    case PROBAV_S10:
-      return DATASOURCES.PROBAV;
     case AWS_L8L1C:
     case AWS_LOTL1:
     case AWS_LOTL2:
@@ -635,25 +598,9 @@ export function datasourceForDatasetId(datasetId) {
       return DATASOURCES.AWS_LANDSAT45;
     case AWS_LMSSL1:
       return DATASOURCES.AWS_LANDSAT15;
-    case AWS_HLS:
-    case AWS_HLS_LANDSAT:
-    case AWS_HLS_SENTINEL:
-      return DATASOURCES.AWS_HLS;
     case AWS_LETML1:
     case AWS_LETML2:
       return DATASOURCES.AWS_LANDSAT7_ETM;
-    case GIBS_MODIS_TERRA:
-    case GIBS_MODIS_AQUA:
-    case GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE:
-    case GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC:
-    case GIBS_CALIPSO_WWFC_V3_01:
-    case GIBS_CALIPSO_WWFC_V3_02:
-    case GIBS_BLUEMARBLE:
-    case GIBS_LANDSAT_WELD:
-    case GIBS_MISR:
-    case GIBS_ASTER_GDEM:
-    case GIBS_VIIRS_NOAA20_CORRECTED_REFLECTANCE:
-      return DATASOURCES.GIBS;
     case DEM_MAPZEN:
     case DEM_COPERNICUS_30:
     case DEM_COPERNICUS_90:
@@ -677,6 +624,8 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_BURNT_AREA_DAILY:
     case COPERNICUS_CLMS_BURNT_AREA_MONTHLY:
     case COPERNICUS_CLMS_DMP_1KM_10DAILY:
+    case COPERNICUS_CLMS_BURNT_AREA_DAILY_V4:
+    case COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4:
     case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0:
     case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1:
     case COPERNICUS_CLMS_DMP_1KM_10DAILY_RT2:
@@ -819,8 +768,6 @@ export const datasetLabels = {
   [S1_CDAS_SM_VV]: 'Sentinel-1 SM VV',
   [S1_CDAS_SM_HHHV]: 'Sentinel-1 SM HH+HV',
   [S1_CDAS_SM_HH]: 'Sentinel-1 SM HH',
-  [S2L1C]: 'Sentinel-2 L1C',
-  [S2L2A]: 'Sentinel-2 L2A',
   [S2_L1C_CDAS]: 'Sentinel-2 L1C',
   [S2_L2A_CDAS]: 'Sentinel-2 L2A',
   [S3SLSTR]: 'Sentinel-3 SLSTR',
@@ -852,10 +799,6 @@ export const datasetLabels = {
   [S5_AER_AI_CDAS]: 'Sentinel-5P AER_AI',
   [S5_CLOUD_CDAS]: 'Sentinel-5P CLOUD',
   [S5_OTHER_CDAS]: 'Sentinel-5P Other',
-  [MODIS]: 'MODIS',
-  [PROBAV_S1]: 'Proba-V 1 day (S1)',
-  [PROBAV_S5]: 'Proba-V 5 day (S5)',
-  [PROBAV_S10]: 'Proba-V 10 day (S10)',
   [AWS_L8L1C]: 'Landsat 8 (USGS archive)',
   [AWS_LOTL1]: 'Landsat 8-9 L1',
   [AWS_LOTL2]: 'Landsat 8-9 L2',
@@ -864,20 +807,6 @@ export const datasetLabels = {
   [AWS_LMSSL1]: 'Landsat 1-5 MSS L1',
   [AWS_LETML1]: 'Landsat 7 ETM+ L1',
   [AWS_LETML2]: 'Landsat 7 ETM+ L2',
-  [AWS_HLS]: 'Harmonized Landsat Sentinel (HLS)',
-  [AWS_HLS_LANDSAT]: 'Harmonized Landsat Sentinel (Landsat)',
-  [AWS_HLS_SENTINEL]: 'Harmonized Landsat Sentinel (Sentinel)',
-  [GIBS_MODIS_TERRA]: 'MODIS Terra',
-  [GIBS_MODIS_AQUA]: 'MODIS Aqua',
-  [GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE]: 'VIIRS SNPP Corrected Reflectance',
-  [GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC]: 'VIIRS SNPP DayNightBand ENCC',
-  [GIBS_CALIPSO_WWFC_V3_01]: 'CALIPSO Wide Field Camera Radiance v3-01',
-  [GIBS_CALIPSO_WWFC_V3_02]: 'CALIPSO Wide Field Camera Radiance v3-02',
-  [GIBS_BLUEMARBLE]: 'BlueMarble',
-  [GIBS_LANDSAT_WELD]: 'Landsat WELD',
-  [GIBS_MISR]: 'MISR',
-  [GIBS_ASTER_GDEM]: 'ASTER GDEM',
-  [GIBS_VIIRS_NOAA20_CORRECTED_REFLECTANCE]: 'VIIRS NOAA-20 Corrected Reflectance',
   [CUSTOM]: 'CUSTOM',
   [DEM_MAPZEN]: 'DEM MAPZEN',
   [DEM_COPERNICUS_30]: 'DEM COPERNICUS 30',
@@ -901,6 +830,8 @@ export const datasetLabels = {
   [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: 'VHR Europe 2021',
   [COPERNICUS_CLMS_BURNT_AREA_DAILY]: t`BA 300m Daily V3`,
   [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: t`BA 300m Monthly V3`,
+  [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: t`BA 300m Daily V4`,
+  [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: t`BA 300m Monthly V4`,
   [COPERNICUS_CLMS_DMP_1KM_10DAILY]: t`DMP 1km 10-daily V2`,
   [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT0]: t`DMP 1km 10-daily V2 RT0`,
   [COPERNICUS_CLMS_DMP_1KM_10DAILY_RT1]: t`DMP 1km 10-daily V2 RT1`,
@@ -1027,10 +958,6 @@ export function getEvalsource(datasetId) {
     case S1_CDAS_SM_HHHV:
     case S1_CDAS_SM_HH:
       return 'S1GRD';
-    case S2L1C:
-      return 'S2';
-    case S2L2A:
-      return 'S2L2A';
     case S2_L1C_CDAS:
       return 'S2_L1C_CDAS';
     case S2_L2A_CDAS:
@@ -1066,8 +993,6 @@ export function getEvalsource(datasetId) {
     case AWS_LOTL1:
     case AWS_LOTL2:
       return 'L8';
-    case MODIS:
-      return 'Modis';
     default:
       return null;
   }
@@ -1106,8 +1031,6 @@ export function getDataSourceHashtags(datasetId) {
     case S1_CDAS_SM_HHHV:
     case S1_CDAS_SM_HH:
       return 'Sentinel-1,Copernicus';
-    case S2L1C:
-    case S2L2A:
     case S2_L1C_CDAS:
     case S2_L2A_CDAS:
       return 'Sentinel-2,Copernicus';
@@ -1142,12 +1065,6 @@ export function getDataSourceHashtags(datasetId) {
     case S5_CLOUD_CDAS:
     case S5_OTHER_CDAS:
       return 'Sentinel-5P,Copernicus';
-    case MODIS:
-      return 'MODIS,NASA';
-    case PROBAV_S1:
-    case PROBAV_S5:
-    case PROBAV_S10:
-      return 'Proba-V,ESA';
     case AWS_L8L1C:
     case AWS_LOTL1:
     case AWS_LOTL2:
@@ -1155,18 +1072,6 @@ export function getDataSourceHashtags(datasetId) {
     case AWS_LETML1:
     case AWS_LETML2:
       return 'Landsat,NASA';
-    case GIBS_MODIS_TERRA:
-    case GIBS_MODIS_AQUA:
-    case GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE:
-    case GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC:
-    case GIBS_CALIPSO_WWFC_V3_01:
-    case GIBS_CALIPSO_WWFC_V3_02:
-    case GIBS_BLUEMARBLE:
-    case GIBS_LANDSAT_WELD:
-    case GIBS_MISR:
-    case GIBS_ASTER_GDEM:
-    case GIBS_VIIRS_NOAA20_CORRECTED_REFLECTANCE:
-      return 'GIBS,NASA';
     default:
       if (checkIfCustom(datasetId)) {
         return 'BYOC';

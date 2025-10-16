@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { t } from 'ttag';
 import { getOrbitDirectionFromList } from './VisualizationPanel.utils';
-import { findLatestDateWithData, isDatasetIdGIBS } from './LatestDataAction.utils';
+import { findLatestDateWithData } from './LatestDataAction.utils';
 import store, { visualizationSlice } from '../../../store';
 import Loader from '../../../Loader/Loader';
 
@@ -19,8 +19,7 @@ function LatestDataAction({ datasetId, bounds, pixelBounds, setShowingNoDataFoun
       orbitDirection,
     });
     if (latestDateWithAvailableData) {
-      const isGIBS = isDatasetIdGIBS(datasetId);
-      const fromTime = isGIBS ? null : moment.utc(latestDateWithAvailableData).startOf('day');
+      const fromTime = moment.utc(latestDateWithAvailableData).startOf('day');
       const toTime = moment.utc(latestDateWithAvailableData).endOf('day');
       store.dispatch(
         visualizationSlice.actions.setVisualizationParams({

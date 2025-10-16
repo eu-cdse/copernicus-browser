@@ -109,6 +109,8 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -127,7 +129,6 @@ const copernicus = {
 
 export const credits = {
   [DATASOURCES.S1]: [copernicus],
-  [DATASOURCES.S2]: [copernicus],
   [DATASOURCES.S2_CDAS]: [copernicus],
   [DATASOURCES.S3]: [creodias, copernicus],
   [DATASOURCES.S3_CDAS]: [copernicus],
@@ -167,12 +168,6 @@ export const credits = {
       link: 'https://www.usgs.gov/core-science-systems/nli/landsat/landsat-satellite-missions',
     },
   ],
-  [DATASOURCES.AWS_HLS]: [
-    {
-      title: 'USGS',
-      link: 'https://lpdaac.usgs.gov/data/get-started-data/collection-overview/missions/harmonized-landsat-sentinel-2-hls-overview/',
-    },
-  ],
   [DATASOURCES.ENVISAT_MERIS]: [
     creodias,
     {
@@ -180,20 +175,8 @@ export const credits = {
       link: 'https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/envisat/instruments/meris',
     },
   ],
-  [DATASOURCES.MODIS]: [{ title: 'NASA', link: 'https://modis.gsfc.nasa.gov/about' }],
   [DATASOURCES.DEM]: [copernicus],
-  [DATASOURCES.PROBAV]: [
-    {
-      title: 'ESA',
-      link: 'https://www.esa.int/Our_Activities/Observing_the_Earth/Proba-V/',
-    },
-  ],
-  [DATASOURCES.GIBS]: [
-    {
-      title: 'NASA',
-      link: 'https://earthdata.nasa.gov/about/science-system-description/eosdis-components/global-imagery-browse-services-gibs',
-    },
-  ],
+
   [DATASOURCES.COPERNICUS]: [{ ...copernicus, link: 'https://www.copernicus.eu/en/copernicus-services' }],
 
   [COPERNICUS_CORINE_LAND_COVER]: [
@@ -249,6 +232,18 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_BURNT_AREA_MONTHLY]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_BURNT_AREA_DAILY_V4]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

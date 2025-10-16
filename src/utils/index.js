@@ -4,9 +4,6 @@ import moment from 'moment';
 import request from 'axios';
 import {
   DATASET_AWS_L8L1C,
-  DATASET_MODIS,
-  DATASET_S2L1C,
-  DATASET_S2L2A,
   DATASET_S3OLCI,
   DATASET_S3SLSTR,
   DATASET_S5PL2,
@@ -615,10 +612,6 @@ export function ensureCorrectDataFusionFormat(dataFusion, datasetId) {
 
 const shJSdatasetIdToDataset = (datasetId) => {
   switch (datasetId) {
-    case DATASET_S2L1C.id:
-      return DATASET_S2L1C;
-    case DATASET_S2L2A.id:
-      return DATASET_S2L2A;
     case DATASET_S3OLCI.id:
       return DATASET_S3OLCI;
     case DATASET_S3SLSTR.id:
@@ -629,8 +622,6 @@ const shJSdatasetIdToDataset = (datasetId) => {
       return DATASET_AWS_L8L1C;
     case DATASET_S5PL2.id:
       return DATASET_S5PL2;
-    case DATASET_MODIS.id:
-      return DATASET_MODIS;
     case DATASET_AWS_DEM.id:
       return DATASET_AWS_DEM;
     default:

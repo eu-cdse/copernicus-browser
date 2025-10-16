@@ -1,5 +1,15 @@
 @use '../../variables.module.scss' as vars;
 
+.help-text-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+
+  span {
+    margin: 0;
+  }
+}
+
 .colors-container {
   display: flex;
   justify-content: center;

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  setAuthToken,
-  registerHostnameReplacing,
-  setDefaultRequestsConfig,
-} from '@sentinel-hub/sentinelhub-js';
+import { setAuthToken, registerHostnameReplacing } from '@sentinel-hub/sentinelhub-js';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
 import { isMobile } from 'react-device-detect';
@@ -66,26 +62,6 @@ class App extends Component {
       registerHostnameReplacing('sh.dataspace.copernicus.eu', newHostname);
       registerHostnameReplacing('services.sentinel-hub.com', newHostname);
     }
-
-    setDefaultRequestsConfig({
-      rewriteUrlFunc: (url) => {
-        // performance optimization: instead of original GetCapabilities requests, use
-        // the proxied ones: (gzipped)
-        if (
-          url.startsWith('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?') &&
-          url.includes('request=GetCapabilities')
-        ) {
-          return 'https://eob-getcapabilities-cache-prod.s3.eu-central-1.amazonaws.com/gibs.xml';
-        }
-        if (
-          url.startsWith('https://services.terrascope.be/wms/v2') &&
-          url.includes('request=GetCapabilities')
-        ) {
-          return 'https://eob-getcapabilities-cache-prod.s3.eu-central-1.amazonaws.com/probav.xml';
-        }
-        return url;
-      },
-    });
 
     if (!!isMobile) {
       store.dispatch(toolsSlice.actions.setOpen(false));

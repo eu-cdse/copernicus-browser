@@ -8,7 +8,6 @@ import {
   getLatestTileLocation,
   getNearestLocationWithData,
   findAvailableCollectionsWithData,
-  isDatasetIdGIBS,
 } from './LatestDataAction.utils';
 import store, { mainMapSlice, visualizationSlice } from '../../../store';
 
@@ -103,7 +102,7 @@ function NoDataFoundAction({
   }
 
   function onSelectAvailableCollectionWithData(datasetId, sensingTime) {
-    const fromTime = isDatasetIdGIBS(datasetId) ? null : moment.utc(sensingTime).startOf('day');
+    const fromTime = moment.utc(sensingTime).startOf('day');
     const toTime = moment.utc(sensingTime).endOf('day');
     store.dispatch(visualizationSlice.actions.setNewDatasetId({ datasetId: datasetId }));
     store.dispatch(

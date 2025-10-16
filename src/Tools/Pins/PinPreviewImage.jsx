@@ -18,7 +18,6 @@ import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion'
 import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 import { reqConfigMemoryCache, reqConfigGetMap } from '../../const';
-import { getConstellationFromDatasetId } from '../SearchPanel/dataSourceHandlers/HLSAWSDataSourceHandler.utils';
 import {
   getProcessGraph,
   isOpenEoSupported,
@@ -232,10 +231,6 @@ class PinPreviewImage extends React.Component {
         }
         if (orbitDirection) {
           layer.orbitDirection = orbitDirection;
-        }
-        const constellation = getConstellationFromDatasetId(datasetId);
-        if (constellation) {
-          layer.constellation = constellation;
         }
 
         if (isDataFusionEnabled(dataFusion)) {

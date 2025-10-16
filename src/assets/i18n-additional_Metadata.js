@@ -62,32 +62,7 @@ t`Based on bands 13, 4, 1`;
 t`Based on bands 13, 5, 2`;
 t`Based on the combination of bands (B13-B07) / (B13+B07)`;
 t`Terrestrial Chlorophyl Index`;
-t`PROBA-V 10-daily Synthesis
-Top of Canopy (Atmospherically corrected)
-temporal resolution: 10-daily
-Resolution: 333M (pixel size)
-`;
-t`PROBA-V daily Synthesis
-Top of Atmosphere
-temporal resolution: daily
-Resolution: 333M (pixel size)
-`;
-t`PROBA-V 5-daily Synthesis
-Top of Atmosphere
-temporal resolution: 5-daily
-Resolution: 100M (pixel size)
-`;
-t`PROBA-V daily Synthesis
-Top of Canopy (Atmospherically corrected)
-temporal resolution: daily
-Resolution: 333M (pixel size)
-`;
 t`OrbitTracks_Aqua_Descending`;
-t`PROBA-V 5-daily Synthesis
-Top of Canopy (Atmospherically corrected)
-temporal resolution: 5-daily
-Resolution: 100M (pixel size)
-`;
 t`OrbitTracks_Aqua_Ascending`;
 t`OrbitTracks_Aura_Ascending`;
 t`OrbitTracks_Aura_Descending`;

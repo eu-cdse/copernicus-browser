@@ -900,6 +900,8 @@ export const collections = [
   {
     id: ODataCollections.GLOBAL_MOSAICS.id,
     label: ODataCollections.GLOBAL_MOSAICS.label,
+    type: 'collection',
+    collectionName: ODataCollections.GLOBAL_MOSAICS.collection,
     supportsCloudCover: false,
     instruments: [
       {
@@ -1555,6 +1557,26 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'ba_global_300m_monthly_v3',
+                )})`,
+              },
+              {
+                id: 'ba_global_300m_daily_v4',
+                label: 'Global, Daily, 300m, (2024–present), V4',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ba_global_300m_daily_v4',
+                )})`,
+              },
+              {
+                id: 'ba_global_300m_monthly_v4',
+                label: 'Global, Monthly, 300m, (2018–present), V4',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ba_global_300m_monthly_v4',
                 )})`,
               },
             ],

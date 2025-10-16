@@ -1617,7 +1617,7 @@ describe('createAdvancedSearchQuery for DEM data', () => {
 describe('createAdvancedSearchQuery for mosaics', () => {
   const collectionS1Mosaics = {
     id: 'GLOBAL-MOSAICS',
-    label: 'GLOBAL-MOSAICS',
+    collection: 'GLOBAL-MOSAICS',
     instruments: [
       {
         id: 'S1Mosaics',
@@ -1639,7 +1639,7 @@ describe('createAdvancedSearchQuery for mosaics', () => {
   };
   const collectionS2Mosaics = {
     id: 'GLOBAL-MOSAICS',
-    label: 'GLOBAL-MOSAICS',
+    collection: 'GLOBAL-MOSAICS',
     instruments: [
       {
         id: 'S2Mosaics',
@@ -1682,7 +1682,7 @@ describe('createAdvancedSearchQuery for mosaics', () => {
     expect(filter).not.toBeNull();
     expect(filter.value).toEqual(
       `((Collection/Name eq '${
-        collectionS1Mosaics.label
+        collectionS1Mosaics.collection
       }' and ((contains(Name,'_IW_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}')) or (contains(Name,'_DH_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
@@ -1705,7 +1705,7 @@ describe('createAdvancedSearchQuery for mosaics', () => {
     expect(filter).not.toBeNull();
     expect(filter.value).toEqual(
       `((Collection/Name eq '${
-        collectionS2Mosaics.label
+        collectionS2Mosaics.collection
       }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'S2MSI_L3__MCQ') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
         geometry,
       )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,

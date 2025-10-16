@@ -1,11 +1,12 @@
 import { getImageDimensionFromBoundsWithCap, getRawBandsScalingFactor } from './ImageDownload.utils';
-import { dataSourceHandlers, S2L1C } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { dataSourceHandlers } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { DATASOURCES } from '../../const';
 
 import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
 import { getPixelCoordinates } from './ImageDownload.utils';
 import { reprojectGeometry } from '../../utils/reproject';
 import { latLngBounds } from 'leaflet';
+import { S2_L1C_CDAS, S2_L2A_CDAS } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const TESTING_BYOC_ID = 'test-byoc_id';
 
@@ -25,9 +26,9 @@ describe('Test getRawBandsScalingFactor function', () => {
     [TESTING_BYOC_ID, 'FLOAT32', [{ name: 'B01', sampleType: 'UINT8' }], undefined],
     [TESTING_BYOC_ID, 'UINT16', [{ name: 'B01', sampleType: 'UINT8' }], 257],
     [TESTING_BYOC_ID, 'UINT8', [{ name: 'B01', sampleType: 'UINT8' }], 1],
-    [S2L1C, 'FLOAT32', [], undefined],
-    [S2L1C, 'UINT16', [], 65535],
-    [S2L1C, 'UINT8', [], 255],
+    [S2_L1C_CDAS, 'FLOAT32', [], undefined],
+    [S2_L1C_CDAS, 'UINT16', [], 65535],
+    [S2_L1C_CDAS, 'UINT8', [], 255],
   ])('raw bands scaling factor', (datasetId, imageSampleType, bandsInfo, expectedFactor) => {
     const factor = getRawBandsScalingFactor({
       datasetId: datasetId,
@@ -71,13 +72,13 @@ describe('Test getPixelCoordinates function', () => {
 });
 
 const imageDimensionsFixtures = [
-  [latLngBounds([0, 2], [1, 5]), 'S2L2A', { width: 2500, height: 833.4081925979159 }],
-  [latLngBounds([2, 0], [5, 1]), 'S2L2A', { width: 831.6896778435239, height: 2500 }],
-  [latLngBounds([0, 2], [0.1, 2.3]), 'S2L2A', { width: 2500, height: 833.0838323353292 }],
-  [latLngBounds([0, 2], [0.3, 2.1]), 'S2L2A', { width: 833.0838323353294, height: 2500 }],
+  [latLngBounds([0, 2], [1, 5]), S2_L2A_CDAS, { width: 2500, height: 833.4081925979159 }],
+  [latLngBounds([2, 0], [5, 1]), S2_L2A_CDAS, { width: 831.6896778435239, height: 2500 }],
+  [latLngBounds([0, 2], [0.1, 2.3]), S2_L2A_CDAS, { width: 2500, height: 833.0838323353292 }],
+  [latLngBounds([0, 2], [0.3, 2.1]), S2_L2A_CDAS, { width: 833.0838323353294, height: 2500 }],
   [
     latLngBounds([42.45011889843056, 11.840642269235106], [42.568183944519795, 12.055390651803465]),
-    'S2L2A',
+    S2_L2A_CDAS,
     { width: 2391, height: 1783 },
   ],
 ];

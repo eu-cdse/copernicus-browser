@@ -36641,6 +36641,353 @@
             }
         }
     ],
+    "af6744-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "BF",
+            "title": "BF",
+            "description": "Burned Fraction",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000;\nconst offset = 0;\n\nfunction setup() {\n  return {\n    input: [\"BF\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  var originalValue = samples.BF;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "BF",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "af6744-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:23:49.789151Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-162ee7-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "162ee7-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "CP",
+            "title": "CP",
+            "description": "Classification Probability",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"CP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.CP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "CP",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "af6744-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:24:09.194055Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-162ee7-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "162ee7-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "DOB",
+            "title": "DOB",
+            "description": "Day of Burn",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1;\nconst offset = 0;\n\nfunction setup() {\n  return {\n    input: [\"DOB\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  var originalValue = samples.DOB;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [184, 184, 184]],\n    [1.0, [69, 50, 124]],\n    [34.18181818181818, [62, 73, 135]],\n    [67.36363636363636, [53, 95, 140]],\n    [100.54545454545453, [44, 114, 142]],\n    [133.72727272727272, [37, 133, 141]],\n    [166.9090909090909, [36, 151, 137]],\n    [200.09090909090907, [43, 170, 128]],\n    [233.27272727272725, [65, 187, 114]],\n    [266.45454545454544, [105, 203, 91]],\n    [299.6363636363636, [152, 215, 64]],\n    [332.8181818181818, [202, 224, 44]],\n    [366.0, [253, 231, 37]]\n  ];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "DOB",
+                        "gradients": [
+                            {
+                                "color": "#45327c",
+                                "position": 1
+                            },
+                            {
+                                "color": "#3e4987",
+                                "position": 34.18181818181818
+                            },
+                            {
+                                "color": "#355f8c",
+                                "position": 67.36363636363636
+                            },
+                            {
+                                "color": "#2c728e",
+                                "label": "100",
+                                "position": 100.54545454545453
+                            },
+                            {
+                                "color": "#25858d",
+                                "position": 133.72727272727272
+                            },
+                            {
+                                "color": "#249789",
+                                "position": 166.9090909090909
+                            },
+                            {
+                                "color": "#2baa80",
+                                "label": "200",
+                                "position": 200.09090909090907
+                            },
+                            {
+                                "color": "#41bb72",
+                                "position": 233.27272727272725
+                            },
+                            {
+                                "color": "#69cb5b",
+                                "position": 266.45454545454544
+                            },
+                            {
+                                "color": "#98d740",
+                                "label": "300",
+                                "position": 299.6363636363636
+                            },
+                            {
+                                "color": "#cae02c",
+                                "position": 332.8181818181818
+                            },
+                            {
+                                "color": "#fde725",
+                                "position": 366
+                            }
+                        ],
+                        "maxPosition": 366,
+                        "minPosition": 1
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "af6744-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:24:33.286397Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-162ee7-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "162ee7-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "LFP",
+            "title": "LFP",
+            "description": "Large Fraction Probability",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"LFP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.LFP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "LFP",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "af6744-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:23:27.709072Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-162ee7-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "162ee7-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "af9f44-YOUR-INSTANCEID-HERE": [
         {
             "id": "1_TRUE-COLOR",
@@ -41412,6 +41759,353 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "ab5ef5-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "c283f3-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "BF",
+            "title": "BF",
+            "description": "Burned Fraction",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000;\nconst offset = 0;\n\nfunction setup() {\n  return {\n    input: [\"BF\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  var originalValue = samples.BF;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "BF",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "c283f3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:21:19.341671Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b8b617-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b8b617-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "CP",
+            "title": "CP",
+            "description": "Classification Probability",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"CP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.CP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "CP",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "c283f3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:21:40.354224Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b8b617-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b8b617-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "DOB",
+            "title": "DOB",
+            "description": "Day of Burn",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1;\nconst offset = 0;\n\nfunction setup() {\n  return {\n    input: [\"DOB\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  var originalValue = samples.DOB;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [184, 184, 184]],\n    [1.0, [69, 50, 124]],\n    [34.18181818181818, [62, 73, 135]],\n    [67.36363636363636, [53, 95, 140]],\n    [100.54545454545453, [44, 114, 142]],\n    [133.72727272727272, [37, 133, 141]],\n    [166.9090909090909, [36, 151, 137]],\n    [200.09090909090907, [43, 170, 128]],\n    [233.27272727272725, [65, 187, 114]],\n    [266.45454545454544, [105, 203, 91]],\n    [299.6363636363636, [152, 215, 64]],\n    [332.8181818181818, [202, 224, 44]],\n    [366.0, [253, 231, 37]]\n  ];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "DOB",
+                        "gradients": [
+                            {
+                                "color": "#45327c",
+                                "position": 1
+                            },
+                            {
+                                "color": "#3e4987",
+                                "position": 34.18181818181818
+                            },
+                            {
+                                "color": "#355f8c",
+                                "position": 67.36363636363636
+                            },
+                            {
+                                "color": "#2c728e",
+                                "label": "100",
+                                "position": 100.54545454545453
+                            },
+                            {
+                                "color": "#25858d",
+                                "position": 133.72727272727272
+                            },
+                            {
+                                "color": "#249789",
+                                "position": 166.9090909090909
+                            },
+                            {
+                                "color": "#2baa80",
+                                "label": "200",
+                                "position": 200.09090909090907
+                            },
+                            {
+                                "color": "#41bb72",
+                                "position": 233.27272727272725
+                            },
+                            {
+                                "color": "#69cb5b",
+                                "position": 266.45454545454544
+                            },
+                            {
+                                "color": "#98d740",
+                                "label": "300",
+                                "position": 299.6363636363636
+                            },
+                            {
+                                "color": "#cae02c",
+                                "position": 332.8181818181818
+                            },
+                            {
+                                "color": "#fde725",
+                                "position": 366
+                            }
+                        ],
+                        "maxPosition": 366,
+                        "minPosition": 1
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "c283f3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:22:01.198455Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b8b617-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b8b617-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "LFP",
+            "title": "LFP",
+            "description": "Large Fraction Probability",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1/1000; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"LFP\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.LFP;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n    [-1.0, [255, 255, 255]],\n    [0.0, [252, 253, 191]],\n    [0.05263157894736842, [253, 229, 166]],\n    [0.10526315789473684, [254, 204, 143]],\n    [0.15789473684210525, [254, 179, 123]],\n    [0.21052631578947367, [253, 154, 106]],\n    [0.2631578947368421, [250, 129, 95]],\n    [0.3157894736842105, [244, 104, 92]],\n    [0.3684210526315789, [232, 83, 98]],\n    [0.42105263157894735, [214, 68, 109]],\n    [0.47368421052631576, [193, 59, 117]],\n    [0.5263157894736842, [171, 51, 125]],\n    [0.5789473684210527, [149, 44, 129]],\n    [0.631578947368421, [127, 36, 129]],\n    [0.6842105263157894, [107, 28, 129]],\n    [0.7368421052631579, [85, 20, 125]],\n    [0.7894736842105263, [64, 15, 115]],\n    [0.8421052631578947, [41, 17, 91]],\n    [0.894736842105263, [22, 15, 58]],\n    [0.9473684210526315, [8, 6, 29]],\n    [1.0, [0, 0, 4]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "LFP",
+                        "gradients": [
+                            {
+                                "color": "#fcfdbf",
+                                "label": "0.0",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fbe68f",
+                                "position": 0.1
+                            },
+                            {
+                                "color": "#f4815f",
+                                "label": "0.2",
+                                "position": 0.2
+                            },
+                            {
+                                "color": "#e85362",
+                                "position": 0.3
+                            },
+                            {
+                                "color": "#c13b75",
+                                "label": "0.4",
+                                "position": 0.4
+                            },
+                            {
+                                "color": "#ab337d",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "#7f2481",
+                                "label": "0.6",
+                                "position": 0.6
+                            },
+                            {
+                                "color": "#6b1c81",
+                                "position": 0.7
+                            },
+                            {
+                                "color": "#40117d",
+                                "label": "0.8",
+                                "position": 0.8
+                            },
+                            {
+                                "color": "#29115b",
+                                "position": 0.9
+                            },
+                            {
+                                "color": "#160f3a",
+                                "position": 0.95
+                            },
+                            {
+                                "color": "#000004",
+                                "label": "1.0",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "c283f3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T08:22:28.490304Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b8b617-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b8b617-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }

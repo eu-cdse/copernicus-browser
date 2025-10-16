@@ -40,10 +40,7 @@ import {
 } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 import ImageDownloadErrorPanel from './ImageDownloadErrorPanel';
 import { ImageDownloadWarningPanel } from './ImageDownloadWarningPanel';
-import {
-  getDataSourceHandler,
-  datasourceForDatasetId,
-} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
   getAnalyticalExportNotSupportedMsg,
   getLoggedInErrorMsg,
@@ -59,7 +56,7 @@ import { getGetMapAuthToken } from '../../App';
 import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 
 import './ImageDownload.scss';
-import { DATASOURCES, MAX_SH_IMAGE_SIZE } from '../../const';
+import { MAX_SH_IMAGE_SIZE } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 
@@ -764,7 +761,6 @@ function ImageDownload(props) {
 
   const hasLegendData = checkIfCurrentLayerHasLegend();
   const isUserLoggedIn = props.user && props.user.userdata;
-  const isGIBS = datasourceForDatasetId(props.datasetId) === DATASOURCES.GIBS;
   const isOnCompareTab = props.showComparePanel;
   const dsh = getDataSourceHandler(props.datasetId);
   const supportsAnalyticalImgExport = dsh && dsh.supportsAnalyticalImgExport();
@@ -868,7 +864,7 @@ function ImageDownload(props) {
             addingMapOverlaysPossible={!props.aoiGeometry} // applying map overlays currently relies on lat, lng and zoom, which aren't used when geometry is present
             aoiBounds={props.aoiBounds}
             mapBounds={props.mapBounds}
-            allowShowLogoAnalytical={!isGIBS}
+            allowShowLogoAnalytical={true}
             hasAoi={!!props.aoiGeometry}
             hasLoi={!!props.loiGeometry}
             is3D={props.is3D}

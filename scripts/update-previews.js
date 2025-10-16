@@ -10,22 +10,15 @@ import {
   DATASET_S5PL2,
   DATASET_CDAS_S5PL2,
   DATASET_CDAS_S3OLCIL2,
-  CRS_EPSG3857,
   DATASET_CDAS_S3SYNERGYL2,
 } from '@sentinel-hub/sentinelhub-js';
 import { exit } from 'process';
 import fs from 'fs';
 import { DEFAULT_THEMES } from '../src/assets/default_themes';
-import { filterLayers, filterLayersProbaV } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
+import { filterLayers } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
 import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType';
 import { md5 } from 'js-md5';
 import dotenv from 'dotenv';
-import {
-  PROBAV_S1,
-  PROBAV_S10,
-  PROBAV_S5,
-} from '../src/Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
-import { DATASOURCES } from '../src/const';
 import { getAuthToken } from './utils/auth';
 import {
   getArrayOfInstanceIds,
@@ -56,13 +49,6 @@ const interestingBBoxes = [
 const forceBBoxForDataset = {
   [DATASET_S5PL2.id]: new BBox(CRS_EPSG4326, 4, 47.5, 4.4, 47.9), // CH4
   [DATASET_CDAS_S5PL2.id]: new BBox(CRS_EPSG4326, 4, 47.5, 4.4, 47.9), // CH4
-  [DATASOURCES.PROBAV]: new BBox(
-    CRS_EPSG3857,
-    782715.1696402049,
-    5713820.738373496,
-    860986.6866042254,
-    5792092.255337515,
-  ), // Some proba-v layers return an error when using EPSG4326
   [DATASET_CDAS_S3OLCIL2.id]: new BBox(CRS_EPSG4326, 22.615356, 59.407355, 24.55719, 60.356847), // WATER layers
   //[DATASET_CDAS_S3SYNERGYL2.id]: new BBox(CRS_EPSG4326, 28.115356, 62.107355, 30.05719, 63.056847),
   [DATASET_CDAS_S3SYNERGYL2.id]: new BBox(CRS_EPSG4326, 19, 44.5, 19 + 1, 44.5 + 1),
@@ -70,19 +56,6 @@ const forceBBoxForDataset = {
 const globalMinDate = new Date(Date.UTC(1980, 1 - 1, 1));
 const now = new Date();
 const nowUtc = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0));
-
-const getProbaVDataset = (layerName) => {
-  switch (true) {
-    case layerName.startsWith(PROBAV_S1 + '_'):
-      return PROBAV_S1;
-    case layerName.startsWith(PROBAV_S5 + '_'):
-      return PROBAV_S5;
-    case layerName.startsWith(PROBAV_S10 + '_'):
-      return PROBAV_S10;
-    default:
-      console.warn(layerName + ' is not part of Proba-v');
-  }
-};
 
 async function findSomeResults(layer, nResults = 20) {
   const minDateDataset = layer.dataset && layer.dataset.minDate ? layer.dataset.minDate : globalMinDate;
@@ -167,11 +140,6 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
     for (let theme of themes) {
       const themeId = theme.id;
       for (let contentPart of theme.content) {
-        // we don't want to download previews for all of the GIBS layers, for now simply skip it:
-        if (contentPart.url.includes('gibs.earthdata.nasa.gov')) {
-          console.warn('Temporarily skipping GIBS layers - missing filtering information');
-          continue;
-        }
         if (contentPart.url.includes('api.planet.com')) {
           console.warn('Temporarily skipping Planet layers - missing stitching of');
           continue;
@@ -186,22 +154,6 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
         );
 
         layers.sort((a, b) => a.layerId.localeCompare(b.layerId));
-        if (contentPart.url.includes('services.terrascope.be')) {
-          const dataset = {
-            dataset: {
-              id: DATASOURCES.PROBAV,
-            },
-          };
-          layers = layers
-            .map((layer) => Object.assign(layer, dataset))
-            .filter((layer) => {
-              const datasetId = getProbaVDataset(layer.title);
-              if (!datasetId) {
-                return false;
-              }
-              return filterLayersProbaV(layer.title, datasetId);
-            });
-        }
 
         if (!layers) {
           console.warn(`No layers for url: ${contentPart.url}`);
@@ -252,10 +204,6 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
           let j;
           for (j = 0; j < candidates.length; j++) {
             let { bbox, fromTime, toTime } = candidates[j];
-
-            if (layer.dataset.id === DATASOURCES.PROBAV) {
-              fromTime = null;
-            }
 
             const getMapParams = {
               bbox: bbox,

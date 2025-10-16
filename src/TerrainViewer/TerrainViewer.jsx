@@ -24,13 +24,10 @@ import {
   getDemProviderType,
 } from './TerrainViewer.utils';
 import { CURRENT_TERRAIN_VIEWER_ID, TERRAIN_VIEWER_IDS } from './TerrainViewer.const';
-import {
-  datasourceForDatasetId,
-  getDataSourceHandler,
-} from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getGetMapAuthToken } from '../App';
 import { constructGetMapParamsEffects, getVisualizationEffectsFromStore } from '../utils/effectsUtils';
-import { DATASOURCES, DEM_3D_CUSTOM_TO_DATASOURCE, reqConfigGetMap, reqConfigMemoryCache } from '../const';
+import { DEM_3D_CUSTOM_TO_DATASOURCE, reqConfigGetMap, reqConfigMemoryCache } from '../const';
 import Controls from '../Controls/Controls';
 import { constructPanelError, isDataFusionEnabled } from '../utils';
 import ExternalLink from '../ExternalLink/ExternalLink';
@@ -70,8 +67,7 @@ function TerrainViewer(props) {
     terrainViewerId,
     toolsOpen,
   } = props;
-  const isGIBS = datasourceForDatasetId(datasetId) === DATASOURCES.GIBS;
-  const fromTime = isGIBS ? null : props.fromTime;
+  const fromTime = props.fromTime;
 
   const { x: defaultX, y: defaultY } = wgs84ToMercator({ lat: lat, lng: lng });
   const {

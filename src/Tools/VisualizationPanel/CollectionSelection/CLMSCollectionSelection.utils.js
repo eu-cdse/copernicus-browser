@@ -98,6 +98,8 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
+  COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -235,6 +237,8 @@ export const CLMS_OPTIONS = [
             options: [
               { label: 'ba_global_300m_daily', id: COPERNICUS_CLMS_BURNT_AREA_DAILY },
               { label: 'ba_global_300m_monthly', id: COPERNICUS_CLMS_BURNT_AREA_MONTHLY },
+              { label: 'ba_global_300m_daily_v4', id: COPERNICUS_CLMS_BURNT_AREA_DAILY_V4 },
+              { label: 'ba_global_300m_monthly_v4', id: COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4 },
             ],
           },
           {

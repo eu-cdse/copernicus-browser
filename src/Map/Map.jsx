@@ -54,7 +54,6 @@ import {
   getOrbitDirectionFromList,
   isTimespanModeSelected,
 } from '../Tools/VisualizationPanel/VisualizationPanel.utils';
-import { getConstellationFromDatasetId } from '../Tools/SearchPanel/dataSourceHandlers/HLSAWSDataSourceHandler.utils';
 import { getIntersectingFeatures } from './Map.utils';
 import { isRectangle } from '../utils/geojson.utils';
 import { COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -113,11 +112,42 @@ class Map extends React.Component {
     S2QMosaicZoom: { min: 8, max: 20 },
     RRDProcessedResults: [],
   };
-  mapInvalidateSizeTimer;
+  resizeDebounceTimer;
 
   async componentDidMount() {
-    // const accountInfo = await checkUserAccount(this.props.auth.user);
-    // this.setState({ accountInfo: accountInfo });
+    this.setupMapResizeObserver();
+  }
+
+  setupMapResizeObserver = () => {
+    const mapElement = this.mapRef?.leafletElement;
+    if (!mapElement) {
+      return;
+    }
+
+    const mapContainer = mapElement.getContainer();
+
+    this.resizeObserver = new ResizeObserver(() => {
+      // Debounce resize events to avoid excessive invalidateSize calls
+      clearTimeout(this.resizeDebounceTimer);
+
+      this.resizeDebounceTimer = setTimeout(() => {
+        if (this.mapRef?.leafletElement) {
+          this.mapRef.leafletElement.invalidateSize();
+        }
+      }, 100);
+    });
+
+    this.resizeObserver.observe(mapContainer);
+  };
+
+  componentWillUnmount() {
+    // Clean up timers and observer
+    if (this.resizeDebounceTimer) {
+      clearTimeout(this.resizeDebounceTimer);
+    }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -132,24 +162,6 @@ class Map extends React.Component {
       this.setState({
         searchResultsAreas: responseResult,
       });
-    }
-
-    if (prevProps.auth !== this.props.auth) {
-      // const accountInfo = await checkUserAccount(this.props.auth.user);
-      // this.setState({ accountInfo: accountInfo });
-    }
-
-    if (prevProps.toolsOpen !== this.props.toolsOpen) {
-      this.updateLeafletMapSize();
-    }
-
-    if (this.props.shouldAnimateControls) {
-      if (this.mapInvalidateSizeTimer) {
-        clearTimeout(this.mapInvalidateSizeTimer);
-      }
-
-      // wait a bit for the leaflet container to load, then resize the map
-      this.mapInvalidateSizeTimer = setTimeout(this.updateLeafletMapSize, 800);
     }
 
     //remove map's progress bar when  map is not displayed or on zoom limit
@@ -208,10 +220,6 @@ class Map extends React.Component {
       });
     }
   }
-
-  updateLeafletMapSize = () => {
-    this.mapRef.leafletElement.pm.map.invalidateSize();
-  };
 
   updateViewport = (viewport) => {
     if (viewport?.center) {
@@ -466,7 +474,6 @@ class Map extends React.Component {
                       progress={this.progress}
                       onTileImageError={this.onTileError}
                       onTileImageLoad={this.onTileLoad}
-                      updateLeafletMapSize={this.updateLeafletMapSize}
                       opacity={S2QMosaicTransparent ? 0.6 : 1}
                       pane={BASE_S2_MOSAIC_PANE_ID}
                     />
@@ -483,7 +490,6 @@ class Map extends React.Component {
                       maxZoom={S2QMosaicZoom.max}
                       accessToken={getAppropriateAuthToken(auth, selectedThemeId)}
                       getMapAuthToken={getGetMapAuthToken(auth)}
-                      updateLeafletMapSize={this.updateLeafletMapSize}
                       opacity={S2QMosaicTransparent ? 0.6 : 1}
                       onTileImageError={this.onTileError}
                     />
@@ -566,7 +572,6 @@ class Map extends React.Component {
                 getMapAuthToken={getGetMapAuthToken(auth)}
                 onTileImageError={this.onTileError}
                 onTileImageLoad={this.onTileLoad}
-                updateLeafletMapSize={this.updateLeafletMapSize}
                 orbitDirection={orbitDirection}
                 cloudCoverage={
                   dsh && dsh.tilesHaveCloudCoverage() && isTimespanModeSelected(fromTime, toTime)
@@ -694,7 +699,6 @@ class Map extends React.Component {
                     onTileImageError={this.onTileError}
                     onTileImageLoad={this.onTileLoad}
                     orbitDirection={orbitDirection}
-                    constellation={getConstellationFromDatasetId(datasetId)}
                     cloudCoverage={
                       dsh && dsh.tilesHaveCloudCoverage() && isTimespanModeSelected(fromTime, toTime)
                         ? cloudCoverage

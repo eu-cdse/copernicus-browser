@@ -1,11 +1,8 @@
 import {
-  MODIS,
   S1_AWS_IW_VVVH,
   S1_AWS_IW_VV,
   S1_AWS_EW_HHHV,
   S1_AWS_EW_HH,
-  S2L1C,
-  S2L2A,
   S3OLCI,
   S3SLSTR,
   AWS_L8L1C,
@@ -18,18 +15,6 @@ import {
   S5_CLOUD,
   S5_SO2,
   S5_OTHER,
-  PROBAV_S1,
-  PROBAV_S5,
-  PROBAV_S10,
-  GIBS_MODIS_TERRA,
-  GIBS_MODIS_AQUA,
-  GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE,
-  GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC,
-  GIBS_CALIPSO_WWFC_V3_01,
-  GIBS_CALIPSO_WWFC_V3_02,
-  GIBS_BLUEMARBLE,
-  GIBS_MISR,
-  GIBS_ASTER_GDEM,
   CUSTOM,
   AWS_LOTL1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -38,9 +23,6 @@ import {
   LayersFactory,
   DATASET_AWS_L8L1C,
   DATASET_BYOC,
-  DATASET_MODIS,
-  DATASET_S2L1C,
-  DATASET_S2L2A,
   DATASET_S3OLCI,
   DATASET_S3SLSTR,
   DATASET_S5PL2,
@@ -50,8 +32,6 @@ import {
 import { reqConfigMemoryCache } from '../const';
 
 export const datasourceToDatasetId = {
-  'Sentinel-2 L1C': S2L1C,
-  'Sentinel-2 L2A': S2L2A,
   'Sentinel-1 AWS (S1-AWS-IW-VVVH)': S1_AWS_IW_VVVH,
   'Sentinel-1 AWS (S1-AWS-EW-HHHV)': S1_AWS_EW_HHHV,
   'Sentinel-1 AWS (S1-AWS-IW-VV)': S1_AWS_IW_VV,
@@ -67,82 +47,17 @@ export const datasourceToDatasetId = {
   'Sentinel-3 OLCI': S3OLCI,
   'Sentinel-3 OLCI (forestry)': S3OLCI,
   'Landsat 8 USGS': AWS_L8L1C,
-  MODIS: MODIS,
-  'Proba-V 1-day (S1)': PROBAV_S1,
-  'Proba-V 5-day (S5)': PROBAV_S5,
-  'Proba-V 10-day (S10)': PROBAV_S10,
-  'GIBS MODIS Terra': GIBS_MODIS_TERRA,
-  'GIBS MODIS Aqua': GIBS_MODIS_AQUA,
-  'GIBS VIIRS SNPP Corrected Reflectance': GIBS_VIIRS_SNPP_CORRECTED_REFLECTANCE,
-  'GIBS VIIRS SNPP DayNightBand ENCC': GIBS_VIIRS_SNPP_DAYNIGHTBAND_ENCC,
-  'GIBS CALIPSO Wide Field Camera Radiance v3-01': GIBS_CALIPSO_WWFC_V3_01,
-  'GIBS CALIPSO Wide Field Camera Radiance v3-02': GIBS_CALIPSO_WWFC_V3_02,
-  'GIBS BlueMarble': GIBS_BLUEMARBLE,
-  'GIBS MISR': GIBS_MISR,
-  'GIBS ASTER GDEM': GIBS_ASTER_GDEM,
   //volcanoes (on config.js):
   'Change Detection, L8 USGS': AWS_L8L1C,
   'Landsat 8 USGS (Historical)': AWS_L8L1C,
   'Flooding/Droughts, L8 USGS': AWS_L8L1C,
   'Vegetation, L8 USGS': AWS_L8L1C,
-  'Volcanoes, S2L1C': S2L1C,
-  'Volcanoes, S2L2A': S2L2A,
-  'Sentinel-2 L2A - volcanoes': S2L2A,
-  'Sentinel-2 L1C - volcanoes': S2L1C,
   'Volcanoes, L8 USGS': AWS_L8L1C,
   'Volcanoes (L8 L1C)': AWS_L8L1C,
-  'Vegetation, S2L1C': S2L1C,
-  'Vegetation, S2L2A': S2L2A,
-  'Sentinel-2 L2A - forestry': S2L2A,
-  'Earth From Space, S2L1C': S2L1C,
-  'Earth From Space, S2L2A': S2L2A,
-  'Sentinel-2 L2A introduction': S2L2A,
-  'Sentinel-2 L1C introduction': S2L1C,
-  'Urban, S2L1C': S2L1C,
-  'Urban, S2L2A': S2L2A,
-  'Sentinel-2 L2A - urban': S2L2A,
-  'Sentinel-2 L2A urban': S2L2A,
-  'Sentinel-2 L1C - urban': S2L1C,
-  'Sentinel-2 L1C urban': S2L1C,
-  'Flooding/Droughts, S2L1C': S2L1C,
-  'Flooding/Droughts, S2L2A': S2L2A,
-  'Sentinel-2 L2A - humidity': S2L2A,
-  'Sentinel-2 L1C - humidity': S2L1C,
-  'Water Bodies, S2L1C': S2L1C,
-  'Water Bodies, S2L2A': S2L2A,
-  'Sentinel-2 L2A - water': S2L2A,
-  'Sentinel-2 L2A water': S2L2A,
-  'Sentinel-2 L1C water': S2L1C,
-  'Geology, S2L1C': S2L1C,
-  'Geology, S2L2A': S2L2A,
-  'Sentinel-2 L2A - geology': S2L2A,
-  'Sentinel-2 L1C geology': S2L2A,
-  'Agriculture, S2L1C': S2L1C,
-  'Agriculture, S2L2A': S2L2A,
-  'Sentinel-2 L2A - agriculture': S2L2A,
-  'Sentinel-2 L2A agriculture': S2L2A,
-  'Snow and Glaciers, S2L1C': S2L1C,
-  'Snow and Glaciers, S2L2A': S2L2A,
-  'Sentinel-2 L2A - snow': S2L2A,
-  'Sentinel-2 L2A snow': S2L2A,
-  'Sentinel-2 L1C - snow': S2L1C,
-  'Sentinel-2 L1C snow': S2L1C,
-  'Change Detection, S2L1C': S2L1C,
-  'Change Detection, S2L2A': S2L2A,
-  'Historical (S2L2A)': S2L2A,
-  'Historical (S2L1C)': S2L1C,
   'Vegetation, S3-OLCI': S3OLCI,
   'Wildfires, S3-SLSTR': S3SLSTR,
   'Wildfires, S3-OLCI': S3OLCI,
   //Wildfires (config.js based)
-  'Wildfires, S2L1C': S2L1C,
-  'Sentinel-2 L2A - wildfires': S2L2A,
-  'Sentinel-2 L1C - wildfires': S2L1C,
-  'Sentinel-2 L2A - wildfires - pins': S2L2A,
-  'Sentinel-2 L1C - wildfires - pins': S2L1C,
-  'Wildfires, S2L2A': S2L2A,
-  'Wildfires (S-2 L2A)': S2L2A,
-  'Wildfires (S-2 L1C)': S2L1C,
   /* Contradictory name origins from a wrongly named datasource name
    */
   'Sentinel-2 S5P - wildfires': S5_CO,
@@ -155,7 +70,6 @@ export const datasourceToDatasetId = {
   'Atmosphere HCHO': S5_HCHO,
   'Atmosphere AER': S5_AER_AI,
   'Atmosphere CLOUD': S5_CLOUD,
-  'Sentinel-2 L1C - geology': S2L1C,
 };
 
 export const dataSourceToThemeId = {
@@ -260,10 +174,6 @@ const getDatasetIdFromParamsS1 = (params) => {
 const layerToDatasetId = async (layer, instanceId) => {
   const dataset = layer.dataset.id;
   switch (dataset) {
-    case DATASET_S2L1C.id:
-      return S2L1C;
-    case DATASET_S2L2A.id:
-      return S2L2A;
     case DATASET_S3OLCI.id:
       return S3OLCI;
     case DATASET_S3SLSTR.id:
@@ -280,8 +190,6 @@ const layerToDatasetId = async (layer, instanceId) => {
       return AWS_L8L1C;
     case DATASET_S5PL2.id:
       return S5_OTHER;
-    case DATASET_MODIS.id:
-      return MODIS;
     case DATASET_BYOC.id:
       return CUSTOM;
     case 'AWS_DEM':
@@ -337,20 +245,6 @@ export const datasourceToUrl = {
   'Landsat 8 USGS': 'https://services.sentinel-hub.com/ogc/wms/950dce-YOUR-INSTANCEID-HERE',
   'Envisat Meris': 'https://eocloud.sentinel-hub.com/v1/wms/65a188-YOUR-INSTANCEID-HERE',
   MODIS: 'https://services.sentinel-hub.com/ogc/wms/a322e0-YOUR-INSTANCEID-HERE',
-  'Proba-V 1-day (S1)': 'https://proba-v-mep.esa.int/applications/geo-viewer/app/geoserver/ows',
-  'Proba-V 5-day (S5)': 'https://proba-v-mep.esa.int/applications/geo-viewer/app/geoserver/ows',
-  'Proba-V 10-day (S10)': 'https://proba-v-mep.esa.int/applications/geo-viewer/app/geoserver/ows',
-  'GIBS MODIS Terra': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS MODIS Aqua': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS VIIRS SNPP Corrected Reflectance': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS VIIRS SNPP DayNightBand ENCC': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS CALIPSO Wide Field Camera Radiance v3-01':
-    'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS CALIPSO Wide Field Camera Radiance v3-02':
-    'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS BlueMarble': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS MISR': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
-  'GIBS ASTER GDEM': 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi',
   //volcanoes
   'Change Detection, L8 USGS':
     'https://services.sentinel-hub.com/ogc/wms/a2b6e4-YOUR-INSTANCEID-HERE',
