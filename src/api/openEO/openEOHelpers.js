@@ -10,7 +10,7 @@ window.useOpenEO = true;
 
 const PARTIAL_ROLL_OUT_CHANCE = 1;
 
-const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_UINT8];
+const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_FLOAT32];
 
 export function getProcessGraph(instanceUrl, layerId) {
   if (!instanceUrl || !layerId) {

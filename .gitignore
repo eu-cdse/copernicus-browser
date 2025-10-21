@@ -14,7 +14,9 @@
 .vscode
 
 scripts/*.csv
+scripts/*.txt
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.github

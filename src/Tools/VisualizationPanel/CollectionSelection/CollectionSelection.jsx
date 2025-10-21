@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { usePrevious } from '../../../hooks/usePrevious';
-import jwt_dec from 'jwt-decode';
 
 import { connect } from 'react-redux';
 import Select from 'react-select';
@@ -31,8 +30,7 @@ import './CollectionSelection.scss';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
 import CLMSCollectionSelection from './CLMSCollectionSelection';
-import { CCM_ROLES } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
-import { ACCESS_ROLES } from '../../../api/OData/assets/accessRoles';
+import { doesUserHaveAccessToCCMVisualization } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 
 const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollection, onSelect }) => {
   const { datasource } = selectedCollectionGroup;
@@ -104,11 +102,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
       ]),
     );
 
-    const isUserCopernicusServicesUser =
-      user.access_token !== null
-        ? jwt_dec(user.access_token).realm_access?.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
-          jwt_dec(user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
-        : false;
+    const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user.access_token);
     const options = [
       ...collectionGroups
         .map((g) =>
@@ -123,7 +117,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
         )
         .flat(),
     ].filter((opt) => {
-      if (isUserCopernicusServicesUser) {
+      if (hasAccessToCCMVisualization) {
         return true;
       }
       if (opt.value === DATASOURCES.CCM || opt.parentDataset === DATASOURCES.CCM) {

@@ -4,8 +4,6 @@ import {
   Pane,
   LayersControl,
   GeoJSON,
-  Rectangle,
-  Marker,
   FeatureGroup,
   TileLayer,
   LayerGroup,
@@ -40,7 +38,6 @@ import {
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAppropriateAuthToken, getGetMapAuthToken } from '../App';
 import { getUrlParams, handleError } from '../utils';
-import TimelapseAreaPreview from '../Controls/Timelapse/TimelapseAreaPreview';
 import SearchBox from '../SearchBox/SearchBox';
 
 import {
@@ -55,7 +52,6 @@ import {
   isTimespanModeSelected,
 } from '../Tools/VisualizationPanel/VisualizationPanel.utils';
 import { getIntersectingFeatures } from './Map.utils';
-import { isRectangle } from '../utils/geojson.utils';
 import { COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { progressWithDelayedAction } from './progressWithDelayedAction';
 import { t } from 'ttag';
@@ -67,8 +63,9 @@ import { manipulateODataSearchResultsWithAntimeridianDuplicates } from '../utils
 import { getProcessGraph, isOpenEoSupported } from '../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
 import { processRRDResults } from '../hooks/useRRDProcessResults';
-import QuicklookOverlay from '../Map/plugins/QuicklookOverlay';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
+import MapPanes from './components/MapPanes';
+import MapOverlays from './components/MapOverlays';
 
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
 
@@ -438,8 +435,12 @@ class Map extends React.Component {
           }
         }}
       >
-        <Pane name={BASE_PANE_ID} style={{ zIndex: BASE_PANE_ZINDEX }} />
-        <Pane name={BASE_S2_MOSAIC_PANE_ID} style={{ zIndex: BASE_S2_MOSAIC_PANE_ZINDEX }} />
+        <MapPanes
+          BASE_PANE_ID={BASE_PANE_ID}
+          BASE_PANE_ZINDEX={BASE_PANE_ZINDEX}
+          BASE_S2_MOSAIC_PANE_ID={BASE_S2_MOSAIC_PANE_ID}
+          BASE_S2_MOSAIC_PANE_ZINDEX={BASE_S2_MOSAIC_PANE_ZINDEX}
+        />
 
         <LayersControl
           // force rerender of layers-control to reset the selected layer if google maps was selected and user logs out.
@@ -736,64 +737,34 @@ class Map extends React.Component {
           ))}
         </LayersControl>
 
-        {this.props.aoiGeometry && !isRectangle(this.props.aoiGeometry) && (
-          <GeoJSON id="aoi-layer" data={this.props.aoiGeometry} key={this.props.aoiLastEdited} />
-        )}
-        {this.props.aoiGeometry && this.props.aoiBounds && isRectangle(this.props.aoiGeometry) && (
-          <Rectangle id="aoi-layer" bounds={this.props.aoiBounds} key={this.props.aoiLastEdited} />
-        )}
-        {this.props.loiGeometry && (
-          <GeoJSON id="loi-layer" data={this.props.loiGeometry} key={this.props.loiLastEdited} />
-        )}
-        {!this.props.poiPosition ? null : <Marker id="poi-layer" position={this.props.poiPosition} />}
-
-        <Pane name={'highlightPane'} style={{ zIndex: 500 }} />
-        {this.state.searchResultsAreas && selectedTabIndex === TABS.SEARCH_TAB ? (
-          <FeatureGroup onClick={this.onPreviewClick}>
-            {this.state.searchResultsAreas.map((tile, i) => (
-              <PreviewLayer
-                isHighlighted={tile.id === highlightedTile?.id}
-                tile={tile}
-                pane={tile?.id === highlightedTile?.id ? 'highlightPane' : 'overlayPane'}
-                key={`search-result-${tile?.id}-${tile?.id === highlightedTile?.id}`}
-              />
-            ))}
-          </FeatureGroup>
-        ) : null}
-
-        {this.state.RRDProcessedResults && selectedTabIndex === TABS.RAPID_RESPONSE_DESK ? (
-          <FeatureGroup onClick={this.onPreviewRRDClick}>
-            {this.state.RRDProcessedResults.map((tile, i) => (
-              <PreviewLayer
-                isHighlighted={tile._internalId === highlightedRRDResult}
-                tile={tile}
-                pane={tile?._internalId === highlightedRRDResult ? 'highlightPane' : 'overlayPane'}
-                key={`rrd-result-${tile?._internalId}-${tile?._internalId === highlightedRRDResult}`}
-              />
-            ))}
-          </FeatureGroup>
-        ) : null}
-
-        {this.props.elevationProfileHighlightedPoint ? (
-          <GeoJSON
-            data={this.props.elevationProfileHighlightedPoint}
-            key={JSON.stringify(elevationProfileHighlightedPoint)}
-            pointToLayer={(feature, latlng) => {
-              return L.circleMarker(latlng, {
-                radius: 8,
-                fillColor: '#fff',
-                color: '#3388ff',
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 1,
-              });
-            }}
-          />
-        ) : null}
-
-        {displayTimelapseAreaPreview && selectedTabIndex === TABS.VISUALIZE_TAB && (
-          <TimelapseAreaPreview lat={lat} lng={lng} zoom={zoom} mapBounds={mapBounds} />
-        )}
+        <MapOverlays
+          // geometry overlays
+          aoiGeometry={this.props.aoiGeometry}
+          aoiBounds={this.props.aoiBounds}
+          aoiLastEdited={this.props.aoiLastEdited}
+          loiGeometry={this.props.loiGeometry}
+          loiLastEdited={this.props.loiLastEdited}
+          poiPosition={this.props.poiPosition}
+          poiLastEdited={this.props.poiLastEdited}
+          // search & RRD previews
+          selectedTabIndex={selectedTabIndex}
+          searchResultsAreas={this.state.searchResultsAreas}
+          highlightedTileId={highlightedTile?.id}
+          onPreviewClick={this.onPreviewClick}
+          RRDProcessedResults={this.state.RRDProcessedResults}
+          highlightedRRDResultId={highlightedRRDResult}
+          onPreviewRRDClick={this.onPreviewRRDClick}
+          // elevation point
+          elevationFeature={elevationProfileHighlightedPoint}
+          // timelapse
+          displayTimelapseAreaPreview={displayTimelapseAreaPreview}
+          lat={lat}
+          lng={lng}
+          zoom={zoom}
+          mapBounds={mapBounds}
+          // quicklooks
+          filteredQuicklookOverlays={filteredQuicklookOverlays}
+        />
 
         {this.props.commercialDataDisplaySearchResults && !!this.props.commercialDataHighlightedResult && (
           <GeoJSON
@@ -862,15 +833,6 @@ class Map extends React.Component {
           shouldAnimateControls={shouldAnimateControls}
           showComparePanel={this.props.showComparePanel}
         />
-
-        {Array.isArray(filteredQuicklookOverlays) &&
-          filteredQuicklookOverlays.map((overlay) => (
-            <QuicklookOverlay
-              key={overlay._internalId}
-              quicklookOverlay={overlay}
-              quicklookImages={filteredQuicklookOverlays}
-            />
-          ))}
       </LeafletMap>
     );
   }

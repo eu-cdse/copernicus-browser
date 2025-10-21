@@ -3,6 +3,11 @@ import { AttributeNames, AttributesDescriptions } from './assets/attributes';
 export const getTagsFromAttributes = (tile) => {
   const { platformShortName, attributes } = tile;
 
+  // Safety check: return empty array if tile or attributes are missing
+  if (!tile || !attributes || !Array.isArray(attributes)) {
+    return [];
+  }
+
   // Default tags for all missions
   let tags = [
     AttributeNames.platformShortName,

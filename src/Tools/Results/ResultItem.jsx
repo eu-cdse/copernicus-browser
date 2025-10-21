@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import { t } from 'ttag';
-import jwt_dec from 'jwt-decode';
 
 import store, { productDownloadSlice, notificationSlice, visualizationSlice, clmsSlice } from '../../store';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
@@ -35,8 +34,7 @@ import {
   flattenCLMSOptionsWithParent,
 } from '../VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
-import { CCM_ROLES } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
-import { ACCESS_ROLES } from '../../api/OData/assets/accessRoles';
+import { doesUserHaveAccessToCCMVisualization } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { getTagsFromAttributes } from '../../api/OData/OData.utils';
 import { handleCLMSConsolidationPeriod } from '../../utils/clms';
 
@@ -64,14 +62,10 @@ const visualizationButtonDisabled = (tile, user) => {
     return ErrorMessage.visualizeOfflineProduct();
   }
 
-  const isUserCopernicusServicesUser =
-    user.access_token !== null
-      ? jwt_dec(user.access_token).realm_access?.roles.includes(CCM_ROLES.COPERNICUS_SERVICES_CCM) ||
-        jwt_dec(user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
-      : false;
+  const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user.access_token);
   if (
     [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(datasetId) &&
-    !isUserCopernicusServicesUser
+    !hasAccessToCCMVisualization
   ) {
     return ErrorMessage.CCMAccessRoleNotEligible();
   }

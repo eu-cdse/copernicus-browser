@@ -1,3 +1,7 @@
+import jwt_dec from 'jwt-decode';
+
+import { ACCESS_ROLES } from '../../../../api/OData/assets/accessRoles';
+
 export const COPERNICUS_CONTRIBUTING_MISSIONS = 'CCM';
 
 export const CCM_ROLES = {
@@ -9,6 +13,30 @@ export const CCM_ROLES = {
   INT_ORG_NGO_CCM: 'int-org-ngo-ccm',
   PUBLIC_CCM: 'public-ccm',
   COPERNICUS_OPERATORS_CCM: 'copernicus-operators-ccm',
+};
+
+export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
+  if (accessToken === null || accessToken === undefined) {
+    return false;
+  }
+
+  const userRoles = jwt_dec(accessToken).realm_access?.roles;
+
+  if (userRoles === undefined) {
+    return false;
+  }
+
+  const ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION = [
+    CCM_ROLES.COPERNICUS_SERVICES_CCM,
+    ACCESS_ROLES.COPERNICUS_SERVICES,
+    CCM_ROLES.INT_ORG_NGO_CCM,
+    CCM_ROLES.PUBLIC_AUTH_CCM,
+    CCM_ROLES.UNION_INST_CCM,
+    CCM_ROLES.UNION_RESEARCH_PROJECTS_NON_SPACE_CCM,
+    CCM_ROLES.UNION_RESEARCH_PROJECTS_SPACE_CCM,
+  ];
+
+  return userRoles.some((role) => ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION.includes(role));
 };
 
 const VHR_COMMON_ACCESS_RIGHTS = {

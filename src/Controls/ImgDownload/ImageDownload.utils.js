@@ -294,6 +294,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     bounds,
     aoiWidthInMeters,
     mapWidthInMeters,
+    cropToAoi,
   } = params;
 
   const canvas = document.createElement('canvas');
@@ -420,6 +421,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     bounds,
     aoiWidthInMeters,
     mapWidthInMeters,
+    cropToAoi,
   );
   return {
     finalImage: finalBlob,
@@ -465,6 +467,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     mapWidthInMeters,
     selectedCrs,
     baseLayerUrl,
+    cropToAoi,
   } = params;
   const isEffectsAndOptionsSelected = isVisualizationEffectsApplied(params);
   const layer = layerFromParams ?? (await getLayerFromParams(params, cancelToken));
@@ -638,6 +641,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
           bounds,
           aoiWidthInMeters,
           mapWidthInMeters,
+          cropToAoi,
         );
 
         const nicename = getNicename(
@@ -709,6 +713,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
       bounds,
       aoiWidthInMeters,
       mapWidthInMeters,
+      cropToAoi,
     );
 
     const nicename = getNicename(
@@ -1011,6 +1016,7 @@ export async function addImageOverlays(
   bounds,
   aoiWidthInMeters,
   mapWidthInMeters,
+  cropToAoi = true,
 ) {
   if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawGeoToImg)) {
     return blob;
@@ -1027,7 +1033,7 @@ export async function addImageOverlays(
   if (showCaptions) {
     let scalebar;
     if (showScaleBar) {
-      scalebar = getScaleBarInfo(aoiWidthInMeters, mapWidthInMeters);
+      scalebar = getScaleBarInfo(cropToAoi ? aoiWidthInMeters : null, cropToAoi ? mapWidthInMeters : null);
     }
     await drawCaptions(ctx, userDescription, title, copyrightText, scalebar, logos, drawCopernicusLogo);
   }
@@ -1200,7 +1206,7 @@ const roundScaleValue = (val) => {
     return Math.round(val / 1000);
   } else if (val >= 100) {
     return Math.round(val / 100) * 100;
-  } else if (val >= 100) {
+  } else if (val >= 10) {
     return Math.round(val / 10) * 10;
   } else if (val >= 5) {
     return 5;
@@ -1223,7 +1229,6 @@ export const getScaleBarInfo = (aoiWidthInMeters = null, mapWidthInMeters = null
     const x = (val * (unit === 'km' ? 1000 : 1) * aoiWidthInMeters) / mapWidthInMeters;
     const newUnit = x >= 1000 ? 'km' : 'm';
     const newValue = roundScaleValue(x);
-
     return {
       text: `${newValue} ${newUnit}`,
       width: scaleBarEl.offsetWidth,

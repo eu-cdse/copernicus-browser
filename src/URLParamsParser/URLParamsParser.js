@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import jwt_dec from 'jwt-decode';
 
 import { getUrlParams, parsePosition, parseDataFusion, fetchEvalscriptFromEvalscripturl } from '../utils';
 import {
@@ -27,11 +26,10 @@ import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
 import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, PROCESSING_OPTIONS, SHOW_TUTORIAL_LC, TABS } from '../const';
 import { ModalId } from '../const';
-import { ACCESS_ROLES } from '../api/OData/assets/accessRoles';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins } from '../Tools/Pins/Pin.utils';
 import { decrypt } from '../utils/encrypt';
-import { CCM_ROLES } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
@@ -60,17 +58,10 @@ class URLParamsParser extends React.Component {
 
     params = await this.parseEvalscriptFromEvalscriptUrl(params);
 
-    const isUserCopernicusServicesUser =
-      this.props.user.access_token !== null
-        ? jwt_dec(this.props.user.access_token).realm_access?.roles.includes(
-            CCM_ROLES.COPERNICUS_SERVICES_CCM,
-          ) ||
-          jwt_dec(this.props.user.access_token).realm_access?.roles.includes(ACCESS_ROLES.COPERNICUS_SERVICES)
-        : false;
-
+    const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(this.props.user.access_token);
     if (
       [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(params.datasetId) &&
-      !isUserCopernicusServicesUser
+      !hasAccessToCCMVisualization
     ) {
       params.datasetId = S2_L2A_CDAS;
       params.layerId = '1_TRUE_COLOR';
