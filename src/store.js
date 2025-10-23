@@ -309,6 +309,7 @@ export const themesSlice = createSlice({
     selectedThemeId: undefined,
     selectedModeId: undefined,
     failedThemeParts: [],
+    useEvoland: false,
   },
   reducers: {
     setSelectedModeId: (state, action) => {
@@ -406,6 +407,9 @@ export const themesSlice = createSlice({
     setCurrentProjectName(state, action) {
       state.currentProjectName = action.payload;
     },
+    setUseEvoland: (state, action) => {
+      state.useEvoland = action.payload;
+    },
     reset: (state) => {
       state.themesUrl = null;
       state.selectedThemesListId = 'mode';
@@ -414,6 +418,7 @@ export const themesSlice = createSlice({
       state.selectedModeId = 'default';
       state.failedThemeParts = [];
       state.currentProjectName = null;
+      state.useEvoland = false;
     },
   },
 });

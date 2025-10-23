@@ -1,0 +1,169 @@
+/* DatasetLocationPreview.scss */
+@use '../../variables.module.scss' as vars;
+
+.observation-polygon-modal {
+  // Let Rodal handle its own positioning and animation
+  // Just ensure proper z-index and backdrop styling
+  // Make the backdrop more transparent so background is visible
+  .rodal-mask {
+    background-color: rgba(0, 0, 0, 0.3); // More transparent backdrop
+  }
+
+  .rodal-dialog {
+    z-index: 10001;
+    background-color: vars.$mainLight;
+    color: vars.$textColor;
+    font-family: vars.$fontFamily;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); // Add subtle shadow for better visibility
+    border-radius: 4px; // Add slight border radius
+  }
+}
+
+.polygon-modal-header {
+  padding: 10px;
+  border-bottom: 1px solid vars.$mainDark;
+  background-color: vars.$mainLight;
+}
+
+.polygon-modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: vars.$fontWeightBold;
+  color: vars.$textColor;
+  font-family: vars.$fontFamilyHeadline;
+}
+
+.polygon-modal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  background-color: vars.$mainLight;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ffcdd2;
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: vars.$fontWeightNormal;
+
+  span {
+    color: #c62828;
+  }
+}
+
+.polygon-metadata {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.metadata-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-size: 13px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    font-weight: vars.$fontWeightBold;
+    color: vars.$textColor;
+    min-width: 100px;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  span {
+    color: vars.$textColor;
+    flex: 1;
+    word-break: break-word;
+  }
+}
+
+.polygon-modal-actions {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid vars.$mainDark;
+}
+
+.visualize-button {
+  background: vars.$secondaryColor;
+  border: none;
+  color: vars.$whiteColor;
+  cursor: pointer;
+  display: inline-block;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-family: vars.$fontFamily;
+
+  &:hover {
+    background-color: vars.$hoverSecondaryColor;
+  }
+}
+
+.cancel-button {
+  background: vars.$mainDark;
+  border: none;
+  color: vars.$whiteColor;
+  cursor: pointer;
+  display: inline-block;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-family: vars.$fontFamily;
+
+  &:hover {
+    background: rgba(vars.$mainDark, 0.8);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: vars.$breakpoint-768) {
+  .polygon-modal-header {
+    padding: 8px;
+  }
+
+  .polygon-modal-title {
+    font-size: 14px;
+  }
+
+  .polygon-modal-content {
+    padding: 8px;
+  }
+
+  .metadata-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-size: 12px;
+
+    label {
+      margin-bottom: 2px;
+      margin-right: 0;
+      min-width: auto;
+    }
+  }
+
+  .polygon-modal-actions {
+    flex-direction: column-reverse;
+
+    .visualize-button,
+    .cancel-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

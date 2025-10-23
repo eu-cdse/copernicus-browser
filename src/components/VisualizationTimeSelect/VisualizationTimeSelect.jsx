@@ -23,6 +23,7 @@ import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers
 import Single from './icons/single.svg?react';
 import Mosaic from './icons/mosaic.svg?react';
 import TimeRange from './icons/time-range.svg?react';
+import { getFromTime } from './VisualizationTimeSelect.utils';
 
 const AdditionalTimeSelectOptions = () => {
   const mosaickingOrder = useSelector((state) => state.visualization.mosaickingOrder);
@@ -128,20 +129,6 @@ export function VisualizationTimeSelect({
     if (!showLayerPanel && setShowLayerPanel && !compareShare) {
       setShowLayerPanel(true);
     }
-  }
-
-  function getFromTime(date, minDate) {
-    let fromTime = date.clone().startOf('day');
-    if (isTimeRange) {
-      fromTime.add(-1, 'months');
-    }
-    if (isMosaic) {
-      fromTime.add(-6, 'months');
-    }
-    if (minDate && fromTime.isBefore(minDate)) {
-      fromTime = minDate.clone();
-    }
-    return fromTime;
   }
 
   function updateDate(date) {

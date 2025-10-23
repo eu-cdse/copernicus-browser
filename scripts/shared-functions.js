@@ -12,7 +12,7 @@ export const OGC_REQUEST_STATE = {
   ENABLE: 'enable',
   DISABLE: 'disable',
 };
-
+const ALL_THEMES = [...DEFAULT_THEMES];
 export const SH_SERVICE_BASE_URL = 'https://sh.dataspace.copernicus.eu';
 
 export function getArrayOfInstanceIds(fullPath) {
@@ -80,7 +80,7 @@ export async function fetchInstancesById(client) {
   return response.data
     .map((instance) => instance.id)
     .filter((instanceId) =>
-      DEFAULT_THEMES.some((t) => t.content.find((themes) => themes.url.indexOf(instanceId) > -1)),
+      ALL_THEMES.some((t) => t.content.find((themes) => themes.url.indexOf(instanceId) > -1)),
     );
 }
 
@@ -194,7 +194,7 @@ export function removeExisting(instances) {
 
   // list of all instances in default theme
   const knownInstances = [];
-  [...DEFAULT_THEMES].forEach((t) =>
+  [...ALL_THEMES].forEach((t) =>
     knownInstances.push(...t.content.map((theme) => theme.url.split('/').pop())),
   );
   //remove unused files from cache

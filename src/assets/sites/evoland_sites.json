@@ -1,0 +1,2920 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 1,
+        "location": "8 - Côte d'Ivoire",
+        "prototype": "C07, C09, C10, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": "prototype",
+        "C10_GenLC": null,
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "30NUM"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -4.808005755999926,
+                6.329894053871746,
+                0
+              ],
+              [
+                -3.815520437999951,
+                6.332401582852195,
+                0
+              ],
+              [
+                -3.814086268999967,
+                5.339211014745812,
+                0
+              ],
+              [
+                -4.804827884999958,
+                5.337099171762901,
+                0
+              ],
+              [
+                -4.808005755999926,
+                6.329894053871746,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 2,
+        "location": "8 - Côte d'Ivoire",
+        "prototype": "C07, C09, C10, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": "prototype",
+        "C10_GenLC": null,
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "30NVM"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.904479145999947,
+                6.332254223853296,
+                0
+              ],
+              [
+                -2.911754433999922,
+                6.333034611847252,
+                0
+              ],
+              [
+                -2.91190964299993,
+                5.339744151741426,
+                0
+              ],
+              [
+                -3.902888583999922,
+                5.339086908746747,
+                0
+              ],
+              [
+                -3.904479145999947,
+                6.332254223853296,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 3,
+        "location": "8 - Côte d'Ivoire",
+        "prototype": "C07, C09, C10, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": "prototype",
+        "C10_GenLC": null,
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "30NVL"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.903019098999942,
+                5.427550756030767,
+                0
+              ],
+              [
+                -2.911896906999961,
+                5.428218951025304,
+                0
+              ],
+              [
+                -2.912027729999977,
+                4.434899059196495,
+                0
+              ],
+              [
+                -3.901678429999933,
+                4.434353661201028,
+                0
+              ],
+              [
+                -3.903019098999942,
+                5.427550756030767,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 4,
+        "location": "8 - Côte d'Ivoire",
+        "prototype": "C07, C09, C10, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "30NUL"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -4.80508864899994,
+                5.425529896047058,
+                0
+              ],
+              [
+                -3.814203951999948,
+                5.427676930029676,
+                0
+              ],
+              [
+                -3.812995104999947,
+                4.434456647200161,
+                0
+              ],
+              [
+                -4.802410046999962,
+                4.432704182214905,
+                0
+              ],
+              [
+                -4.80508864899994,
+                5.425529896047058,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 5,
+        "location": "7 - French Guyana",
+        "prototype": "C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": null,
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "22NBL"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -53.70724488799991,
+                5.422162868074309,
+                0
+              ],
+              [
+                -52.716847332999826,
+                5.425786972045057,
+                0
+              ],
+              [
+                -52.71429951299993,
+                4.432914014213002,
+                0
+              ],
+              [
+                -53.70323087399994,
+                4.429955922237774,
+                0
+              ],
+              [
+                -53.70724488799991,
+                5.422162868074309,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 6,
+        "location": "7 - French Guyana",
+        "prototype": "C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": null,
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "22NCL"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -52.80508864899987,
+                5.425529896047208,
+                0
+              ],
+              [
+                -51.814203951999914,
+                5.427676930029773,
+                0
+              ],
+              [
+                -51.81299510499995,
+                4.434456647200068,
+                0
+              ],
+              [
+                -52.80241004699992,
+                4.43270418221487,
+                0
+              ],
+              [
+                -52.80508864899987,
+                5.425529896047208,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 7,
+        "location": "7 - French Guyana",
+        "prototype": "C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": null,
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "22NCK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -52.802627839999914,
+                4.521679958471613,
+                0
+              ],
+              [
+                -51.813093393999964,
+                4.523467739456695,
+                0
+              ],
+              [
+                -51.81210823299989,
+                3.53022270586098,
+                0
+              ],
+              [
+                -52.800444883999916,
+                3.528828567873004,
+                0
+              ],
+              [
+                -52.802627839999914,
+                4.521679958471613,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 8,
+        "location": "7 - French Guyana",
+        "prototype": "C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": null,
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "22NBK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -53.703557247999946,
+                4.518876315495064,
+                0
+              ],
+              [
+                -52.71450667299988,
+                4.52189401946996,
+                0
+              ],
+              [
+                -52.71243029999986,
+                3.528995495871556,
+                0
+              ],
+              [
+                -53.7002859739999,
+                3.526642243891649,
+                0
+              ],
+              [
+                -53.703557247999946,
+                4.518876315495064,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 9,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SUH"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -5.30393084299993,
+                38.82627256471084,
+                0
+              ],
+              [
+                -4.039384279999956,
+                38.84437387578271,
+                0
+              ],
+              [
+                -4.02533655899991,
+                37.85497759881452,
+                0
+              ],
+              [
+                -5.272818427999921,
+                37.83750335274382,
+                0
+              ],
+              [
+                -5.30393084299993,
+                38.82627256471084,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 10,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SVH"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -4.152751350999934,
+                38.84330999877841,
+                0
+              ],
+              [
+                -2.887525961999912,
+                38.84894427380084,
+                0
+              ],
+              [
+                -2.889046418999945,
+                37.85938962183266,
+                0
+              ],
+              [
+                -4.137172195999932,
+                37.85395058481049,
+                0
+              ],
+              [
+                -4.152751350999934,
+                38.84330999877841,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 11,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03, C06, C07, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "30SWH"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.000230479999971,
+                38.84899842380093,
+                0
+              ],
+              [
+                -1.735039884999925,
+                38.84214861277386,
+                0
+              ],
+              [
+                -1.752134590999944,
+                37.85282943980589,
+                0
+              ],
+              [
+                -3.000227363999939,
+                37.85944189583264,
+                0
+              ],
+              [
+                -3.000230479999971,
+                38.84899842380093,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 12,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03, C06, C07",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "30SWG"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.000227634999908,
+                37.94758950918946,
+                0
+              ],
+              [
+                -1.750645707999968,
+                37.94095616716269,
+                0
+              ],
+              [
+                -1.766994751999948,
+                36.95147940412766,
+                0
+              ],
+              [
+                -3.000224655999927,
+                36.95788102815398,
+                0
+              ],
+              [
+                -3.000227634999908,
+                37.94758950918946,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 13,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SVG"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -4.138529078999954,
+                37.942080853167106,
+                0
+              ],
+              [
+                -2.888913993999942,
+                37.9475370691892,
+                0
+              ],
+              [
+                -2.890368112999946,
+                36.957830421153666,
+                0
+              ],
+              [
+                -4.123629507999957,
+                36.95256480513214,
+                0
+              ],
+              [
+                -4.138529078999954,
+                37.942080853167106,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 14,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SUG"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -5.275528235999939,
+                37.925581687100525,
+                0
+              ],
+              [
+                -4.026560058999958,
+                37.94311111117141,
+                0
+              ],
+              [
+                -4.013125142999955,
+                36.953559075136205,
+                0
+              ],
+              [
+                -5.245772129999946,
+                36.93664184006682,
+                0
+              ],
+              [
+                -5.275528235999939,
+                37.925581687100525,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 15,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SUF"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -5.248379903999918,
+                37.025275710109355,
+                0
+              ],
+              [
+                -4.014302537999906,
+                37.042247167187654,
+                0
+              ],
+              [
+                -4.001451962999958,
+                36.05254092959824,
+                0
+              ],
+              [
+                -5.219917191999953,
+                36.03616761852211,
+                0
+              ],
+              [
+                -5.248379903999918,
+                37.025275710109355,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 16,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SVF"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -4.124935262999935,
+                37.041249717496086,
+                0
+              ],
+              [
+                -2.890240678999911,
+                37.046532214517775,
+                0
+              ],
+              [
+                -2.891631542999933,
+                36.05667491443781,
+                0
+              ],
+              [
+                -4.110683711999947,
+                36.0515786424167,
+                0
+              ],
+              [
+                -4.124935262999935,
+                37.041249717496086,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 17,
+        "location": "1 - Spain",
+        "prototype": "C01, C02, C03",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "30SWF"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.00022491699995,
+                37.04658298351785,
+                0
+              ],
+              [
+                -1.765561968999953,
+                37.040160837491676,
+                0
+              ],
+              [
+                -1.781199979999915,
+                36.050528144412404,
+                0
+              ],
+              [
+                -3.000222066999906,
+                36.056723894438086,
+                0
+              ],
+              [
+                -3.00022491699995,
+                37.04658298351785,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 18,
+        "location": "5 - Sweden",
+        "prototype": "C01, C02, C03, C07, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "33VVK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                13.016893407000032,
+                63.11565817545078,
+                0
+              ],
+              [
+                15.193542560000012,
+                63.1293872264587,
+                0
+              ],
+              [
+                15.187223864000035,
+                62.14385494588684,
+                0
+              ],
+              [
+                13.081588308999988,
+                62.13068970187845,
+                0
+              ],
+              [
+                13.016893407000032,
+                63.11565817545078,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 19,
+        "location": "5 - Sweden",
+        "prototype": "C01, C02, C03, C07, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "33VWK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                14.999603395000062,
+                63.12951920245865,
+                0
+              ],
+              [
+                17.176024655000038,
+                63.112828892449485,
+                0
+              ],
+              [
+                17.10504719600003,
+                62.12797654587682,
+                0
+              ],
+              [
+                14.999616343000048,
+                62.14398149788682,
+                0
+              ],
+              [
+                14.999603395000062,
+                63.12951920245865,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 20,
+        "location": "5 - Sweden",
+        "prototype": "C01, C02, C03, C07, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "33VWJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                14.999615229000039,
+                62.23177005193995,
+                0
+              ],
+              [
+                17.111155869000047,
+                62.215705869930275,
+                0
+              ],
+              [
+                17.044813576,
+                61.230685423303285,
+                0
+              ],
+              [
+                14.999627331000054,
+                61.24610368631353,
+                0
+              ],
+              [
+                14.999615229000039,
+                62.23177005193995,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 21,
+        "location": "5 - Sweden",
+        "prototype": "C01, C02, C03, C07, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": "prototype",
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": "prototype",
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "33VVJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                13.076020384000037,
+                62.21842906193187,
+                0
+              ],
+              [
+                15.187767660000073,
+                62.23164302994007,
+                0
+              ],
+              [
+                15.18186207600008,
+                61.24598177531345,
+                0
+              ],
+              [
+                13.136489577000068,
+                61.233299165304864,
+                0
+              ],
+              [
+                13.076020384000037,
+                62.21842906193187,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 22,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TCK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                0.456860517000044,
+                45.12551352392951,
+                0
+              ],
+              [
+                1.852592618000079,
+                45.148073144996935,
+                0
+              ],
+              [
+                1.871918704000066,
+                44.15979659295349,
+                0
+              ],
+              [
+                0.499651613000044,
+                44.13799670788429,
+                0
+              ],
+              [
+                0.456860517000044,
+                45.12551352392951,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 23,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TDK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                1.727450342000069,
+                45.146747149993,
+                0
+              ],
+              [
+                3.124166397000081,
+                45.153769718013926,
+                0
+              ],
+              [
+                3.122074491000039,
+                44.16530123397097,
+                0
+              ],
+              [
+                1.748882947000034,
+                44.1585152689494,
+                0
+              ],
+              [
+                1.727450342000069,
+                45.146747149993,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 24,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TEK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                2.999745560000067,
+                45.15383721301392,
+                0
+              ],
+              [
+                4.396411173000056,
+                45.14529963598869,
+                0
+              ],
+              [
+                4.372894,
+                44.15711651694508,
+                0
+              ],
+              [
+                2.999749847000049,
+                44.165366454971114,
+                0
+              ],
+              [
+                2.999745560000067,
+                45.15383721301392,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 25,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TFK"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                4.272040968000073,
+                45.14675281799305,
+                0
+              ],
+              [
+                5.667621077000035,
+                45.122671842921044,
+                0
+              ],
+              [
+                5.622741209000032,
+                44.13525068487568,
+                0
+              ],
+              [
+                4.250616925000029,
+                44.158520745949424,
+                0
+              ],
+              [
+                4.272040968000073,
+                45.14675281799305,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 26,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "31TFJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                4.25248087200004,
+                44.246550894228015,
+                0
+              ],
+              [
+                5.626645974000051,
+                44.22320970015434,
+                0
+              ],
+              [
+                5.583808280000035,
+                43.235600916944186,
+                0
+              ],
+              [
+                4.232032700000058,
+                43.25815527601946,
+                0
+              ],
+              [
+                4.25248087200004,
+                44.246550894228015,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 27,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TEJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                2.999749474000065,
+                44.25341754124971,
+                0
+              ],
+              [
+                4.374940059000046,
+                44.245142371223466,
+                0
+              ],
+              [
+                4.352494032000052,
+                43.25679425101487,
+                0
+              ],
+              [
+                2.999753565000045,
+                43.26479033404166,
+                0
+              ],
+              [
+                2.999749474000065,
+                44.25341754124971,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 28,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "31TDJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                1.747018254000074,
+                44.24654540122799,
+                0
+              ],
+              [
+                3.122256491000029,
+                44.253352120249595,
+                0
+              ],
+              [
+                3.120259900000075,
+                43.26472712004136,
+                0
+              ],
+              [
+                1.767474599000034,
+                43.2581499670196,
+                0
+              ],
+              [
+                1.747018254000074,
+                44.24654540122799,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 29,
+        "location": "2 - Southern France",
+        "prototype": "C09, C10",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "31TCJ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                0.495928593000039,
+                44.225964114162984,
+                0
+              ],
+              [
+                1.870237287000081,
+                44.24783064323205,
+                0
+              ],
+              [
+                1.88868301400005,
+                43.259391867023595,
+                0
+              ],
+              [
+                0.536772323000049,
+                43.23826250995321,
+                0
+              ],
+              [
+                0.495928593000039,
+                44.225964114162984,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 30,
+        "location": "3 - Belgium",
+        "prototype": "C04, C05, C06, C07, C08, C09, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "31UFS"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                4.438876794000065,
+                51.44235229396318,
+                0
+              ],
+              [
+                6.017025008000072,
+                51.412342631909425,
+                0
+              ],
+              [
+                5.953869713000084,
+                50.42629363605543,
+                0
+              ],
+              [
+                4.40871511000007,
+                50.45527213611253,
+                0
+              ],
+              [
+                4.438876794000065,
+                51.44235229396318,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 31,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02,C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "32UPU"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                10.360279246000083,
+                48.74498408348016,
+                0
+              ],
+              [
+                11.852438708000044,
+                48.71769472341763,
+                0
+              ],
+              [
+                11.798094715000063,
+                47.73104444706246,
+                0
+              ],
+              [
+                10.334331349,
+                47.75740970712803,
+                0
+              ],
+              [
+                10.360279246000083,
+                48.74498408348016,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 32,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02, C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "32UMU"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                7.639176802000072,
+                48.74497766048007,
+                0
+              ],
+              [
+                9.132782610000023,
+                48.75293648149828,
+                0
+              ],
+              [
+                9.130248810000097,
+                47.765092634146825,
+                0
+              ],
+              [
+                7.66513506800004,
+                47.757403501127904,
+                0
+              ],
+              [
+                7.639176802000072,
+                48.74497766048007,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 33,
+        "location": "6 - Eastern Europe",
+        "prototype": "C06, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "34TFR"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                22.29253203600007,
+                46.0462654216013,
+                0
+              ],
+              [
+                23.71054414800003,
+                46.021421707531225,
+                0
+              ],
+              [
+                23.663504208000052,
+                45.034190102655664,
+                0
+              ],
+              [
+                22.270075672000075,
+                45.05819728272784,
+                0
+              ],
+              [
+                22.29253203600007,
+                46.0462654216013,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 34,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02, C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32UNA"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                8.999717684000037,
+                50.55229208630216,
+                0
+              ],
+              [
+                10.549328147000045,
+                50.541984794282016,
+                0
+              ],
+              [
+                10.517863127000036,
+                49.554800031268826,
+                0
+              ],
+              [
+                8.99972342100008,
+                49.56475497328999,
+                0
+              ],
+              [
+                8.999717684000037,
+                50.55229208630216,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 35,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02,C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32UPA"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                10.411349506,
+                50.54373914732124,
+                0
+              ],
+              [
+                11.95938607600006,
+                50.51466998825737,
+                0
+              ],
+              [
+                11.899359688000052,
+                49.52841826498914,
+                0
+              ],
+              [
+                10.382684363000099,
+                49.5564944220564,
+                0
+              ],
+              [
+                10.411349506,
+                50.54373914732124,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 36,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02,C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32UPV"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                10.385173733000066,
+                49.644436676459044,
+                0
+              ],
+              [
+                11.904572763,
+                49.61627369539953,
+                0
+              ],
+              [
+                11.847478452000095,
+                48.629821547215485,
+                0
+              ],
+              [
+                10.357910770000023,
+                48.657027150278296,
+                0
+              ],
+              [
+                10.385173733000066,
+                49.644436676459044,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 37,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02,C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32UNV"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                8.999722923000018,
+                49.65272278847653,
+                0
+              ],
+              [
+                10.520595654,
+                49.642737039455476,
+                0
+              ],
+              [
+                10.49066964,
+                48.655385320274455,
+                0
+              ],
+              [
+                8.99972837800007,
+                48.66503138329667,
+                0
+              ],
+              [
+                8.999722923000018,
+                49.65272278847653,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 38,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02, C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32UNU"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                8.999727904000038,
+                48.75301297649846,
+                0
+              ],
+              [
+                10.493269476,
+                48.743337196476375,
+                0
+              ],
+              [
+                10.464786867000084,
+                47.7558186151238,
+                0
+              ],
+              [
+                8.99973309600007,
+                47.76516653614694,
+                0
+              ],
+              [
+                8.999727904000038,
+                48.75301297649846,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 39,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02, C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "32UMV"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                7.614272368000065,
+                49.64443004745912,
+                0
+              ],
+              [
+                9.135213596,
+                49.65264384247651,
+                0
+              ],
+              [
+                9.132551327000035,
+                48.664955123296686,
+                0
+              ],
+              [
+                7.641546225000075,
+                48.65702074727834,
+                0
+              ],
+              [
+                7.614272368000065,
+                49.64443004745912,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 40,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TES"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                20.99973715800005,
+                46.95370914707305,
+                0
+              ],
+              [
+                22.442508098000083,
+                46.944621409049105,
+                0
+              ],
+              [
+                22.416656102000026,
+                45.95676982434881,
+                0
+              ],
+              [
+                20.99974187000003,
+                45.96555111337362,
+                0
+              ],
+              [
+                20.99973715800005,
+                46.95370914707305,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 41,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TGS"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                23.626485355000018,
+                46.92357302599354,
+                0
+              ],
+              [
+                25.065657133000023,
+                46.88145962888221,
+                0
+              ],
+              [
+                24.99300216600003,
+                45.8957352161757,
+                0
+              ],
+              [
+                23.579459455000055,
+                45.93643083829108,
+                0
+              ],
+              [
+                23.626485355000018,
+                46.92357302599354,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 42,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TGR"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                23.583548840000038,
+                46.02436504053957,
+                0
+              ],
+              [
+                24.999320560000047,
+                45.98354517142441,
+                0
+              ],
+              [
+                24.930033391000055,
+                44.99758757454542,
+                0
+              ],
+              [
+                23.53870686300006,
+                45.03703436566423,
+                0
+              ],
+              [
+                23.583548840000038,
+                46.02436504053957,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 43,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TER"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                20.999741460000052,
+                46.053574334621885,
+                0
+              ],
+              [
+                22.418904144000066,
+                46.04476619159702,
+                0
+              ],
+              [
+                22.39425387100003,
+                45.056748555723445,
+                0
+              ],
+              [
+                20.999745954000055,
+                45.0652599567489,
+                0
+              ],
+              [
+                20.999741460000052,
+                46.053574334621885,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 44,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TEQ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                20.99974556000007,
+                45.15383721301397,
+                0
+              ],
+              [
+                22.396411173000057,
+                45.1452996359887,
+                0
+              ],
+              [
+                22.372894,
+                44.15711651694508,
+                0
+              ],
+              [
+                20.999749847000025,
+                44.165366454971114,
+                0
+              ],
+              [
+                20.99974556000007,
+                45.15383721301397,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 45,
+        "location": "6 - Eastern Europe",
+        "prototype": "C06, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "34TFQ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                22.272040968000052,
+                45.14675281336711,
+                0
+              ],
+              [
+                23.667621077000014,
+                45.122671838286195,
+                0
+              ],
+              [
+                23.622741209000022,
+                44.13525067986001,
+                0
+              ],
+              [
+                22.250616925,
+                44.15852074094311,
+                0
+              ],
+              [
+                22.272040968000052,
+                45.14675281336711,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 46,
+        "location": "6 - Eastern Europe",
+        "prototype": "C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "no",
+        "tile": "34TGQ"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                23.542631357000065,
+                45.12552484129558,
+                0
+              ],
+              [
+                24.936097556000043,
+                45.085956918162424,
+                0
+              ],
+              [
+                24.869986766000057,
+                44.09977087173305,
+                0
+              ],
+              [
+                23.49984878900004,
+                44.1380076418699,
+                0
+              ],
+              [
+                23.542631357000065,
+                45.12552484129558,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 47,
+        "location": "3 - Belgium",
+        "prototype": "C04, C06, C07, C09, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "31UES"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                2.999712176000068,
+                51.451182182978926,
+                0
+              ],
+              [
+                4.57954402100007,
+                51.44054114295994,
+                0
+              ],
+              [
+                4.546436442000076,
+                50.45352325410907,
+                0
+              ],
+              [
+                2.999718212000066,
+                50.463798377129294,
+                0
+              ],
+              [
+                2.999712176000068,
+                51.451182182978926,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 48,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02, C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "yes",
+        "tile": "32TPT"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                10.336600220000015,
+                47.84592102234629,
+                0
+              ],
+              [
+                11.802846683000055,
+                47.819474372281235,
+                0
+              ],
+              [
+                11.75108499900004,
+                46.83262828675262,
+                0
+              ],
+              [
+                10.311886885000021,
+                46.8581819398204,
+                0
+              ],
+              [
+                10.336600220000015,
+                47.84592102234629,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 49,
+        "location": "4 - Central Europe",
+        "prototype": "C01, C02,C09, C10, C11",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "32TNT"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                8.999732642000033,
+                47.853701812365486,
+                0
+              ],
+              [
+                10.467277377000082,
+                47.84432501634245,
+                0
+              ],
+              [
+                10.440149824000047,
+                46.8566398488164,
+                0
+              ],
+              [
+                8.999737587000046,
+                46.86569984084043,
+                0
+              ],
+              [
+                8.999732642000033,
+                47.853701812365486,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 50,
+        "location": "6 - Eastern Europe",
+        "prototype": "C06, C10",
+        "C1_FOR": "prototype",
+        "C2_FOR": "prototype",
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": "prototype",
+        "C11_GenLC": null,
+        "testing": "yes",
+        "tile": "34TFS"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                22.31403528000003,
+                46.946168221053114,
+                0
+              ],
+              [
+                23.75558491600002,
+                46.92053635598561,
+                0
+              ],
+              [
+                23.706254333000047,
+                45.93349646928283,
+                0
+              ],
+              [
+                22.29048406900006,
+                45.95826448335307,
+                0
+              ],
+              [
+                22.31403528000003,
+                46.946168221053114,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 51,
+        "location": "3 - Belgium",
+        "prototype": "C04, C07, C09, C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "31UER"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                2.999717684000085,
+                50.552292086302174,
+                0
+              ],
+              [
+                4.549328147000041,
+                50.54198479428214,
+                0
+              ],
+              [
+                4.517863127000063,
+                49.55480003126881,
+                0
+              ],
+              [
+                2.999723421000057,
+                49.56475497328989,
+                0
+              ],
+              [
+                2.999717684000085,
+                50.552292086302174,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 52,
+        "location": "3 - Belgium",
+        "prototype": "C04, C07, C09,C11",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": "prototype",
+        "C5_AGRI": "prototype",
+        "C6_AGRI": "prototype",
+        "C7_WATER": "prototype",
+        "C8_URBAN": "prototype",
+        "C9_URBAN": "prototype",
+        "C10_GenLC": "prototype",
+        "C11_GenLC": "prototype",
+        "testing": "no",
+        "tile": "31UFR"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                4.41134950600004,
+                50.543739150285546,
+                0
+              ],
+              [
+                5.959386076000055,
+                50.51466999122879,
+                0
+              ],
+              [
+                5.89935968800007,
+                49.52841826821256,
+                0
+              ],
+              [
+                4.382684363000064,
+                49.55649442527238,
+                0
+              ],
+              [
+                4.41134950600004,
+                50.543739150285546,
+                0
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 66,
+        "location": "4 - Central Europe",
+        "prototype": "C12",
+        "C1_FOR": null,
+        "C2_FOR": null,
+        "C3_FOR": null,
+        "C4_AGRI": null,
+        "C5_AGRI": null,
+        "C6_AGRI": null,
+        "C7_WATER": null,
+        "C8_URBAN": null,
+        "C9_URBAN": null,
+        "C10_GenLC": null,
+        "C11_GenLC": null,
+        "C12_Tree": "prototype",
+        "testing": "no",
+        "tile": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:EPSG::4326"
+          }
+        },
+        "coordinates": [
+          [
+            [
+              6.361497481989036,
+              46.878686750457
+            ],
+            [
+              11.770490630923597,
+              46.92544767441243
+            ],
+            [
+              12.066758091522534,
+              54.1582492091334
+            ],
+            [
+              5.753880008651108,
+              54.10235357106126
+            ],
+            [
+              6.361497481989036,
+              46.878686750457
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

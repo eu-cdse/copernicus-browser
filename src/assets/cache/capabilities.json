@@ -6081,6 +6081,236 @@
         ],
         "datasets": []
     },
+    "efcb7a-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] EvoLand Prototypes v2",
+        "layers": [
+            {
+                "id": "C01-CONTINUOUS-FOREST-MONITORING",
+                "name": "Year and month of change",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C01-CONTINUOUS-FOREST-MONITORING&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE",
+                "name": "Disturbance Agent Classification",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-BARK-BEETLE-PROBABILITY",
+                "name": "Bark Beetle Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-BARK-BEETLE-PROBABILITY&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-CLEAR-CUT-CLEARING-PROBABILITY",
+                "name": "Clear Cut Clearing Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-CLEAR-CUT-CLEARING-PROBABILITY&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-HEALTHY-TREES-PROBABILITY",
+                "name": "Healthy Trees Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-HEALTHY-TREES-PROBABILITY&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-SALVAGE-LOGGING-PROBABILITY",
+                "name": "Salvage Logging Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-SALVAGE-LOGGING-PROBABILITY&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-STORM-PROBABILITY",
+                "name": "Storm Probability ",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-STORM-PROBABILITY&style=default"
+            },
+            {
+                "id": "C02-FOREST-DISTURBANCE-WILDFIRE-PROBABILITY",
+                "name": "Wildfire Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C02-FOREST-DISTURBANCE-WILDFIRE-PROBABILITY&style=default"
+            },
+            {
+                "id": "C03-BIOMASS",
+                "name": "Biomass",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C03-BIOMASS&style=default"
+            },
+            {
+                "id": "C03-CANOPY-HEIGHT",
+                "name": "Canopy Height",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C03-CANOPY-HEIGHT&style=default"
+            },
+            {
+                "id": "C04-COVER-CROP-TYPE",
+                "name": "Cover Crop Type",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C04-COVER-CROP-TYPE&style=default"
+            },
+            {
+                "id": "C05-CROP-GRASSLAND-GPP",
+                "name": "Crop Grassland GPP",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C05-CROP-GRASSLAND-GPP&style=default"
+            },
+            {
+                "id": "C06-SMALL-LANDSCAPE-FEATURES",
+                "name": "Small Landscape Features",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C06-SMALL-LANDSCAPE-FEATURES&style=default"
+            },
+            {
+                "id": "C06-SMALL-LANDSCAPE-FEATURES-CHANGE",
+                "name": "Small Landscape Features Change",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C06-SMALL-LANDSCAPE-FEATURES-CHANGE&style=default"
+            },
+            {
+                "id": "C07-IMPROVED-WATER-BODIES-MAPPING",
+                "name": "Improved Water Bodies Mapping",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C07-IMPROVED-WATER-BODIES-MAPPING&style=default"
+            },
+            {
+                "id": "C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-CHANGE",
+                "name": "Continuous Imperviousness Monitoring Change ",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-CHANGE&style=default"
+            },
+            {
+                "id": "C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-DEGREE",
+                "name": "Continuous Imperviousness Monitoring Degree",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-DEGREE&style=default"
+            },
+            {
+                "id": "C09-01-AUTOMATED-LAND-USE-MAPPING",
+                "name": "Annual Urban Change (Selected  date vs + 1 year)",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C09-01-AUTOMATED-LAND-USE-MAPPING&style=default"
+            },
+            {
+                "id": "C09-02-AUTOMATED-LAND-USE-MAPPING-START",
+                "name": "Land Cover",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C09-02-AUTOMATED-LAND-USE-MAPPING-START&style=default"
+            },
+            {
+                "id": "C09-03-AUTOMATED-LAND-USE-MAPPING-END",
+                "name": "Land Cover (Selected date + 1 year)",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C09-03-AUTOMATED-LAND-USE-MAPPING-END&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-BARE-PROBABILITY",
+                "name": "Bare Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-BARE-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-BUILT-PROBABILITY",
+                "name": "Built Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-BUILT-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-CLOUD-PROBABILITY",
+                "name": "Cloud Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-HERBACEOUS-PROBABILITY",
+                "name": "Herbaceous Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-HERBACEOUS-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-PREDICTION",
+                "name": "Prediction",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-PREDICTION&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-SHADOW-PROBABILITY",
+                "name": "Shadow Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-SHADOW-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-SHRUB-PROBABILITY",
+                "name": "Shrub Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-SHRUB-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-SNOW-PROBABILITY",
+                "name": "Snow Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-SNOW-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-TREE-PROBABILITY",
+                "name": "Tree Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-TREE-PROBABILITY&style=default"
+            },
+            {
+                "id": "C10-LAND-SURFACE-CHARACTERISTICS-WATER-PROBABILITY",
+                "name": "Water Probability",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C10-LAND-SURFACE-CHARACTERISTICS-WATER-PROBABILITY&style=default"
+            },
+            {
+                "id": "C11-ON-DEMAND-LAND-COVER-MAPPING",
+                "name": "On-demand land cover mapping",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C11-ON-DEMAND-LAND-COVER-MAPPING&style=default"
+            },
+            {
+                "id": "C12-TREE-TYPES",
+                "name": "Tree Types",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C12-TREE-TYPES&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "efe5a3-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] ba_global_300m_monthly_v3",
         "layers": [

@@ -261,7 +261,12 @@ class ThemesProvider extends React.Component {
       return DEFAULT_MODE;
     }
     for (let mode of MODES) {
-      if (mode.themes.find((t) => t.id === themeId)) {
+      // Filter themes based on useEvoland setting
+      const modeThemes = this.props.useEvoland
+        ? mode.themes
+        : mode.themes.filter((theme) => theme.id !== 'EVOLAND-THEME');
+
+      if (modeThemes.find((t) => t.id === themeId)) {
         return mode;
       }
     }
@@ -290,8 +295,16 @@ class ThemesProvider extends React.Component {
   };
 
   setMode = (selectedMode) => {
+    const { useEvoland } = this.props;
+
+    // Filter out EVOLAND themes unless useEvoland is true
+    let modeThemes = selectedMode.themes;
+    if (!useEvoland) {
+      modeThemes = selectedMode.themes.filter((theme) => theme.id !== 'EVOLAND-THEME');
+    }
+
     store.dispatch(themesSlice.actions.setSelectedModeId(selectedMode.id));
-    store.dispatch(themesSlice.actions.setModeThemesList(selectedMode.themes));
+    store.dispatch(themesSlice.actions.setModeThemesList(modeThemes));
   };
 
   setSelectedThemeIdFromMode = (selectedMode, themeId, userInstances = null, rrdInstances = null) => {
@@ -393,5 +406,6 @@ const mapStoreToProps = (store) => ({
   selectedThemesListId: store.themes.selectedThemesListId,
   themesLists: store.themes.themesLists,
   modalId: store.modal.id,
+  useEvoland: store.themes.useEvoland,
 });
 export default connect(mapStoreToProps)(ThemesProvider);

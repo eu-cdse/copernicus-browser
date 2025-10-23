@@ -8,8 +8,6 @@ export const MIMETYPE_TO_OPENEO_FORMAT = {
 
 window.useOpenEO = true;
 
-const PARTIAL_ROLL_OUT_CHANCE = 1;
-
 const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_FLOAT32];
 
 export function getProcessGraph(instanceUrl, layerId) {
@@ -24,14 +22,6 @@ export function getProcessGraph(instanceUrl, layerId) {
   return graphs[layerId];
 }
 
-const randomNumber = Math.random(); // Simulate a random number for the example
-
-console.log(
-  `Random number generated: ${randomNumber},${
-    randomNumber < PARTIAL_ROLL_OUT_CHANCE ? 'Will use openEO' : ' Will not proceed with OpenEO support check'
-  }`,
-); // For debugging purposes
-
 export function isOpenEoSupported(
   instanceUrl,
   layerId,
@@ -41,10 +31,6 @@ export function isOpenEoSupported(
 ) {
   // enables switching between openEO and process api from developer tools
   if (!window.useOpenEO) {
-    return false;
-  }
-
-  if (randomNumber > PARTIAL_ROLL_OUT_CHANCE) {
     return false;
   }
 

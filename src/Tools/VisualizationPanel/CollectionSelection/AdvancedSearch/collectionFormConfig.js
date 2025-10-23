@@ -1872,7 +1872,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'wb_global_100m_monthly_v1',
-                label: 'Global, Monthly, 100m, (2014–present), V1',
+                label: 'Global, Monthly, 100m, (2020–present), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1892,7 +1892,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'wb_global_300m_10daily_v1',
-                label: 'Global, 10-daily, 300m, (2014–present), V1',
+                label: 'Global, 10-daily, 300m, (2014–2018), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1902,7 +1902,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'wb_global_1km_10daily_v2',
-                label: 'Global, 10-daily, 1km, (2014–present), V2',
+                label: 'Global, 10-daily, 1km, (1998–2018), V2',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,

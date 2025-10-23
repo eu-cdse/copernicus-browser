@@ -35,6 +35,23 @@ const educationThemesDefaultMode = EDUCATION_THEMES.map((t) => {
   return eduThemeNormalMode;
 });
 
+const EVOLAND_THEMES = [
+  {
+    name: () => t`Evoland`,
+    id: 'EVOLAND-THEME',
+
+    content: [
+      {
+        name: 'EvoLand Prototypes v2',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/efcb7a-YOUR-INSTANCEID-HERE`,
+      },
+    ],
+  },
+];
+
 export const DEFAULT_THEMES = [
   {
     name: () => t`Default`,
@@ -3827,4 +3844,5 @@ export const DEFAULT_THEMES = [
     ],
   },
   ...educationThemesDefaultMode,
+  ...EVOLAND_THEMES,
 ];

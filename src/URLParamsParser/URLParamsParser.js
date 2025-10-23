@@ -233,6 +233,7 @@ class URLParamsParser extends React.Component {
       clmsSelectedPath,
       clmsSelectedCollection,
       clmsSelectedConsolidationPeriodIndex,
+      useEvoland,
     } = params;
     let { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
 
@@ -273,6 +274,7 @@ class URLParamsParser extends React.Component {
       orbitDirection: orbitDirection ? JSON.parse(orbitDirection) : undefined,
       cloudCoverage: cloudCoverage && !isNaN(cloudCoverage) ? JSON.parse(cloudCoverage) : undefined,
       dateMode: dateMode,
+      useEvoland: useEvoland,
       ...getNewDatasetPropertiesIfDeprecatedDatasetId(datasetId, visualizationUrl),
       selectedProcessing: isOpenEoSupported(
         decryptedVisualisationUrl,
@@ -299,6 +301,10 @@ class URLParamsParser extends React.Component {
 
     if (themesUrl) {
       store.dispatch(themesSlice.actions.setThemesUrl(themesUrl));
+    }
+
+    if (useEvoland !== undefined) {
+      store.dispatch(themesSlice.actions.setUseEvoland(useEvoland === 'true'));
     }
 
     if (IS_3D_MODULE_ENABLED && terrainViewerSettings) {

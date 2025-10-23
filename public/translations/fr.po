@@ -12101,3 +12101,42 @@ msgid ""
 "satellite acquisition. They cover the period from December 2024 to present. "
 "More information _coming soon_."
 msgstr ""
+
+msgid "Evoland"
+msgstr ""
+
+msgid "C01 Forest"
+msgstr ""
+
+msgid "C02 Forest Disturbance"
+msgstr ""
+
+msgid "C03 Forest Biomass"
+msgstr ""
+
+msgid "C04 Cover Crop Type"
+msgstr ""
+
+msgid "C05 Forest Disturbance"
+msgstr ""
+
+msgid "C06 Small Landscape Features"
+msgstr ""
+
+msgid "C07 Improved Water Bodies Mapping"
+msgstr ""
+
+msgid "C08 Continuous Imperviousness Monitoring"
+msgstr ""
+
+msgid "C09 Automated Land Use Mapping"
+msgstr ""
+
+msgid "C10 Land Surface Characteristics"
+msgstr ""
+
+msgid "C11 On-Demand Land Cover Mapping"
+msgstr ""
+
+msgid "C12 Tree Types"
+msgstr ""

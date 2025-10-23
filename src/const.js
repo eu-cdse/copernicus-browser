@@ -206,6 +206,7 @@ export const DATASOURCES = {
   RRD_GHGSAT: 'GHGSat',
   CLMS: 'CLMS',
   CCM: 'CCM',
+  EVOLAND: 'EVOLAND',
 };
 
 export const defaultEffects = {

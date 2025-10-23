@@ -64,6 +64,8 @@ import { getProcessGraph, isOpenEoSupported } from '../api/openEO/openEOHelpers'
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
 import { processRRDResults } from '../hooks/useRRDProcessResults';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
+import DatasetLocationPreview from './components/DatasetLocationPreview';
+import { highlightedTileStyle } from './const';
 import MapPanes from './components/MapPanes';
 import MapOverlays from './components/MapOverlays';
 
@@ -75,13 +77,7 @@ const BASE_S2_MOSAIC_PANE_ID = 'baseS2MosaicMapPane';
 const BASE_S2_MOSAIC_PANE_ZINDEX = BASE_PANE_ZINDEX;
 const SENTINELHUB_LAYER_PANE_ID = 'sentinelhubPane';
 const SENTINELHUB_LAYER_PANE_ZINDEX = 6;
-const highlightedTileStyle = {
-  weight: 2,
-  color: '#57de71',
-  opacity: 1,
-  fillColor: '#57de71',
-  fillOpacity: 0.3,
-};
+
 const DEFAULT_COMPARED_LAYERS_MAX_ZOOM = 25;
 const DEFAULT_COMPARED_LAYERS_OVERZOOM = 0;
 
@@ -808,7 +804,7 @@ class Map extends React.Component {
               })}
             />
           )}
-
+        <DatasetLocationPreview />
         {/* {selectedModeId && !is3D && (
           <EOBModeSelection
             highlighted={this.props.selectedModeId === EDUCATION_MODE.id}

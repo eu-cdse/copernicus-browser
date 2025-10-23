@@ -105,17 +105,17 @@ async function createStatisticsLayer({
   const shJsDatasetId = datasourceHandler.getSentinelHubDataset(datasetId)
     ? datasourceHandler.getSentinelHubDataset(datasetId).id
     : null;
+  const layers = await LayersFactory.makeLayers(visualizationUrl, (layer, dataset) => {
+    // Handle case where there's no SentinelHub dataset ID and not using custom script
+    if (!shJsDatasetId && !customSelected) {
+      return dataset === null && layer === targetLayer;
+    }
 
-  const layers = await LayersFactory.makeLayers(visualizationUrl, (layer, dataset) =>
-    !shJsDatasetId && !customSelected
-      ? dataset === null && layer === targetLayer
-      : customSelected
-      ? dataset.id === shJsDatasetId
-      : dataset.id === shJsDatasetId && layer === targetLayer,
-  );
+    // Handle normal case - match both dataset ID and layer
+    return dataset.id === shJsDatasetId && layer === targetLayer;
+  });
 
-  const layer = layers?.[0];
-
+  const layer = layers[0];
   if (customSelected) {
     // for custom scripts just set evalscript to custom script
     layer.evalscript = evalscript;
@@ -136,7 +136,6 @@ export async function getStatisticsLayer(
     },
     outputs,
   );
-
   const statisticsLayer = await createStatisticsLayer({
     customSelected,
     datasetId,

@@ -335,4 +335,6 @@ export default class DataSourceHandler {
   supportsLowResolutionAlternativeCollection = () => false;
 
   isOnlyForBaseLayer = (datasetId) => false;
+
+  getDatasetLocationPolygons = (datasetId) => null;
 }

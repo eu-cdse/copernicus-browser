@@ -154,6 +154,18 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  EVOLAND_C01_CONTINUOUS_FOREST_MONITORING,
+  EVOLAND_C02_FOREST_DISTURBANCE,
+  EVOLAND_C03_FOREST_BIOMASS,
+  EVOLAND_C04_COVER_CROP_TYPE,
+  EVOLAND_C05_GRASSLAND_CROPLAND_GPP,
+  EVOLAND_C06_SMALL_LANDSCAPE_FEATURES,
+  EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING,
+  EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING,
+  EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING,
+  EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+  EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING,
+  EVOLAND_C12_TREE_TYPES,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -4861,5 +4873,303 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4, layerId: 'SWI100' }],
     description: () => t`Soil Water Index at different time lengths.`,
+  },
+
+  // EVOLAND
+  {
+    match: [
+      { datasourceId: EVOLAND_C01_CONTINUOUS_FOREST_MONITORING, layerId: 'C01-CONTINUOUS-FOREST-MONITORING' },
+    ],
+    description: () =>
+      `The Continuous Forest Monitoring prototype, provides pixel-based information on the location and timing of tree cover disturbances. At a spatial resolution of 10 m, the layer provides the month of the year in which a disturbance of the tree population was detected.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C02_FOREST_DISTURBANCE, layerId: 'C02-FOREST-DISTURBANCE' }],
+    description: () =>
+      `The Disturbance Agent classification maps the cause, i.e. the driver or agent of a tree cover disturbance. The following classes are detected on a pixel level with 10 m spatial resolution:`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-BARK-BEETLE-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-CLEAR-CUT-CLEARING-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-HEALTHY-TREES-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-SALVAGE-LOGGING-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-STORM-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C02_FOREST_DISTURBANCE,
+        layerId: 'C02-FOREST-DISTURBANCE-WILDFIRE-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The Disturbance Agent probability layer provides information about the probability of the assigned classes. As the agent classification is not always unambiguous (due to the spectral similarity of classes), the probabilities provide additional information to interpret the results of the hard classification by showing to which classes the probabilities for different agents might tend, whether clearly towards a certain class or similar for more than one class.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C03_FOREST_BIOMASS, layerId: 'C03-BIOMASS' }],
+    description: () =>
+      `The Above-Ground Woody Biomass (AGB) is a pixel-based mapping of the biomass of tree covered areas in t/ha and with a 10 m spatial resolution. The AGB is mapped on an annual basis.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C03_FOREST_BIOMASS, layerId: 'C03-CANOPY-HEIGHT' }],
+    description: () =>
+      `The Forest Canopy Height (FCH; alternatively: Tree Cover Canopy Height) maps the height of the tree canopy above ground in meters. The pixel-based product has a spatial resolution of 10 m and is implemented on an annual basis.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C04_COVER_CROP_TYPE, layerId: 'C04-COVER-CROP-TYPE' }],
+    description: () =>
+      `The Cover Crop Type distinguishes two broad classes of cover crops: "grass-like" species, such as oats and rye, and "leaf-rich & mixed" types, including mustard, oilseed crops, and seed blends. Based on the Copernicus High-Resolution Layers on Vegetated Land Cover Characteristics, the map distinguishes parcels with "winter crops" and with "no secondary crop". The two actual cover crop classes are classified based on Sentinel-2 NDVI time series.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C05_GRASSLAND_CROPLAND_GPP, layerId: 'C05-CROP-GRASSLAND-GPP' }],
+    description: () =>
+      `Gross Primary Production (GPP, [gC/m²/day]) is modelled at 10 m resolution for each decade in cropland and grassland. GPP is modelled using the same Light Use Efficiency model as used for the CLMS GPP (1). However, the model was adjusted to improve resolution (from 300 m to 10 m) and performance in grassland and cropland (i.e. by calibrating the LUE term). In addition, the temperature stress term was adjusted to reduce the model bias in spring, and a drought stress factor based on soil water content and the ratio of actual versus potential evapotranspiration was used to incorporate the effect of drought on photosynthesis. 
+    [1](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m)`,
+  },
+  {
+    match: [
+      { datasourceId: EVOLAND_C06_SMALL_LANDSCAPE_FEATURES, layerId: 'C06-SMALL-LANDSCAPE-FEATURES-CHANGE' },
+    ],
+    description: () =>
+      `This layer tracks changes in small landscape features between two points in time, at a 5 m spatial resolution. Each pixel is classified based on whether an SLF appeared or disappeared during the time period.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C06_SMALL_LANDSCAPE_FEATURES, layerId: 'C06-SMALL-LANDSCAPE-FEATURES' }],
+    description: () =>
+      `This layer maps small landscape features at a 5-meter spatial resolution, providing pixel-level information about the presence and type of SLF.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING,
+        layerId: 'C07-IMPROVED-WATER-BODIES-MAPPING',
+      },
+    ],
+    description: () =>
+      `Water body mapping at a spatial resolution of 10 m. Provides pixel-based information on the presence of ephemeral water bodies (1) and permanent water bodies (2) or land/no data (0).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING,
+        layerId: 'C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-DEGREE',
+      },
+    ],
+    description: () =>
+      `The continuous imperviousness monitoring prototype provides at a spatial resolution of 5 m, the sealing density in the range from 0% to 100%. Values near 0% indicate permeable surfaces such as natural soils, while values approaching 100% represent highly impervious, densely built-up artificial surfaces. This continuous imperviousness monitoring prototype helps monitoring urban growth, managing flood risk, protecting biodiversity, or planning greener cities.`,
+  },
+
+  {
+    match: [
+      { datasourceId: EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING, layerId: 'C09-01-AUTOMATED-LAND-USE-MAPPING' },
+    ],
+    description:
+      () => `This layer represents areas where land cover has changed between two dates. It contains three bands, each providing specific information:  
+    `,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING,
+        layerId: 'C09-02-AUTOMATED-LAND-USE-MAPPING-START',
+      },
+    ],
+    description: () => `Shows the land cover classification of each pixel at the start of the time period  
+    `,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING,
+        layerId: 'C09-03-AUTOMATED-LAND-USE-MAPPING-END',
+      },
+    ],
+    description: () => `Shows the land cover classification of each pixel at the end of the time period  
+    `,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-BARE-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the bare class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-BUILT-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the built-up class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-HERBACEOUS-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the herbaceous vegetation class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-PREDICTION',
+      },
+    ],
+    description: () =>
+      `The LSC map distinguishes between 9 classes that are mapped at a 10 m resolution for individual Sentinel-2 scenes: tree, shrubs, herbaceous vegetation, B-bare, water, snow/Ice, built-up,  shadow, and clouds`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-SNOW-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the snow and ice class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-WATER-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the water class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-WOODY-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the tree class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-SNOW-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the snow and ice class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-WATER-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the water class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-TREE-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the tree class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-SHRUB-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the shrub class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-CLOUD-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the cloud class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+        layerId: 'C10-LAND-SURFACE-CHARACTERISTICS-SHADOW-PROBABILITY',
+      },
+    ],
+    description: () =>
+      `The probability of the shadow class. Values range between 0 (low probability) and 1 (high probability).`,
+  },
+  {
+    match: [
+      { datasourceId: EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING, layerId: 'C11-ON-DEMAND-LAND-COVER-MAPPING' },
+    ],
+    description: () =>
+      `The forest management type layer consists of 9 forest management classes that are mapped for the year 2020 at a 10 m resolution.`,
+  },
+  {
+    match: [{ datasourceId: EVOLAND_C12_TREE_TYPES, layerId: 'C12-TREE-TYPES' }],
+    description: () =>
+      `The Tree Types Mapping prototype provides information on the dominant tree species for a demonstration site in Central Europe`,
   },
 ];

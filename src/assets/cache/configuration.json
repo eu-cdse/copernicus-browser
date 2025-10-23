@@ -52125,6 +52125,2104 @@
             }
         }
     ],
+    "efcb7a-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "C01-CONTINUOUS-FOREST-MONITORING",
+            "title": "Year and month of change",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"ContForestMonitoring\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          // { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n  };\n}\n\nconst classes = {\n  1901: [0, 0, 4], \n  1902: [6, 5, 24], \n  1903: [17, 12, 48], \n  1904: [31, 17, 74],\n  1905: [48, 17, 100], \n  1906: [67, 15, 117], \n  1907: [84, 20, 125], \n  1908: [102, 27, 129], \n  1909: [119, 33, 130], \n  1910: [137, 40, 129], \n  1911: [154, 46, 128], \n  1912: [173, 52, 124],\n  2001: [191, 58, 118], \n  2002: [209, 65, 112], \n  2003: [224, 76, 103], \n  2004: [237, 90, 95],\n  2005: [245, 109, 92], \n  2006: [250, 130, 95], \n  2007: [253, 151, 105], \n  2008: [254, 171, 117], \n  2009: [254, 192, 133], \n  2010: [254, 212, 151], \n  2011: [253, 233, 170], \n  2012: [252, 253, 191]\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.ContForestMonitoring] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n  return {\n      default: imgVals,\n     // eobrowserStats: [samples.ContForestMonitoring],\n      dataMask: [samples.dataMask]\n   };\n}\n",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#000004",
+                                "label": "2019-01"
+                            },
+                            {
+                                "color": "#060518",
+                                "label": "2019-02"
+                            },
+                            {
+                                "color": "#110c30",
+                                "label": "2019-03"
+                            },
+                            {
+                                "color": "#1f114a",
+                                "label": "2019-04"
+                            },
+                            {
+                                "color": "#301164",
+                                "label": "2019-05"
+                            },
+                            {
+                                "color": "#430f75",
+                                "label": "2019-06"
+                            },
+                            {
+                                "color": "#54147d",
+                                "label": "2019-07"
+                            },
+                            {
+                                "color": "#661b81",
+                                "label": "2019-08"
+                            },
+                            {
+                                "color": "#772182",
+                                "label": "2019-09"
+                            },
+                            {
+                                "color": "#892881",
+                                "label": "2019-10"
+                            },
+                            {
+                                "color": "#9a2e80",
+                                "label": "2019-11"
+                            },
+                            {
+                                "color": "#ad347c",
+                                "label": "2019-12"
+                            },
+                            {
+                                "color": "#bf3a76",
+                                "label": "2020-01"
+                            },
+                            {
+                                "color": "#d14170",
+                                "label": "2020-02"
+                            },
+                            {
+                                "color": "#e04c67",
+                                "label": "2020-03"
+                            },
+                            {
+                                "color": "#ed5a5f",
+                                "label": "2020-04"
+                            },
+                            {
+                                "color": "#f56d5c",
+                                "label": "2020-05"
+                            },
+                            {
+                                "color": "#fa825f",
+                                "label": "2020-06"
+                            },
+                            {
+                                "color": "#fd9769",
+                                "label": "2020-07"
+                            },
+                            {
+                                "color": "#feab75",
+                                "label": "2020-08"
+                            },
+                            {
+                                "color": "#fec085",
+                                "label": "2020-09"
+                            },
+                            {
+                                "color": "#fed497",
+                                "label": "2020-10"
+                            },
+                            {
+                                "color": "#fde9aa",
+                                "label": "2020-11"
+                            },
+                            {
+                                "color": "#fcfdbf",
+                                "label": "2020-12"
+                            },
+                            {
+                                "color": "#faffc8",
+                                "label": "2021-01"
+                            },
+                            {
+                                "color": "#f5ffd2",
+                                "label": "2021-02"
+                            },
+                            {
+                                "color": "#ebffdc",
+                                "label": "2021-03"
+                            },
+                            {
+                                "color": "#dcffe6",
+                                "label": "2021-04"
+                            },
+                            {
+                                "color": "#c8ffeb",
+                                "label": "2021-05"
+                            },
+                            {
+                                "color": "#affff0",
+                                "label": "2021-06"
+                            },
+                            {
+                                "color": "#96fff5",
+                                "label": "2021-07"
+                            },
+                            {
+                                "color": "#7dfffa",
+                                "label": "2021-08"
+                            },
+                            {
+                                "color": "#64ffff",
+                                "label": "2021-09"
+                            },
+                            {
+                                "color": "#4bf5ff",
+                                "label": "2021-10"
+                            },
+                            {
+                                "color": "#32ebff",
+                                "label": "2021-11"
+                            },
+                            {
+                                "color": "#19e1ff",
+                                "label": "2021-12"
+                            },
+                            {
+                                "color": "#00d7ff",
+                                "label": "2022-01"
+                            },
+                            {
+                                "color": "#00c8fa",
+                                "label": "2022-02"
+                            },
+                            {
+                                "color": "#00b9f5",
+                                "label": "2022-03"
+                            },
+                            {
+                                "color": "#00aaf0",
+                                "label": "2022-04"
+                            },
+                            {
+                                "color": "#009beb",
+                                "label": "2022-05"
+                            },
+                            {
+                                "color": "#008ce6",
+                                "label": "2022-06"
+                            },
+                            {
+                                "color": "#007de1",
+                                "label": "2022-07"
+                            },
+                            {
+                                "color": "#006edc",
+                                "label": "2022-08"
+                            },
+                            {
+                                "color": "#005fd7",
+                                "label": "2022-09"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:39:33.137769Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4c71e0-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4c71e0-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE",
+            "title": "Disturbance Agent Classification",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"Prediction\", \"dataMask\"],\n    output: \n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n        \n  };\n}\n\nconst classes = {\n  0: [0, 0, 0, 0], \t// No input data available\n  1: [220, 16, 16],  \t// Bark Beetle\n  2: [0, 4, 222], \t// Clear Cut/Clearing\n  3: [191, 191, 191],  \t// healthy Trees\n  4: [128, 191, 255],  \t// Salvage Logging\n  5: [255, 128, 128],  \t// Wildfire\n  6: [27, 239, 52],  \t// Storm\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.Prediction] || [0, 0, 0];\n  return imgVals.concat(samples.dataMask * 255);\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00000000",
+                                "label": "0: No input data available"
+                            },
+                            {
+                                "color": "#0004de",
+                                "label": "1: Clear Cut/Clearing"
+                            },
+                            {
+                                "color": "#dc1010",
+                                "label": "2: Bark Beetle"
+                            },
+                            {
+                                "color": "#bfbfbf",
+                                "label": "3: Healthy Trees"
+                            },
+                            {
+                                "color": "#80c0ff",
+                                "label": "4: Salvage Logging"
+                            },
+                            {
+                                "color": "#ff8080",
+                                "label": "5: Wildfire"
+                            },
+                            {
+                                "color": "#1bef34",
+                                "label": "6: Storm"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-10T10:54:38.039199Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-BARK-BEETLE-PROBABILITY",
+            "title": "Bark Beetle Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Bark_Beetle_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Bark_Beetle_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Bark Beetle Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:12:03.435805Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-CLEAR-CUT-CLEARING-PROBABILITY",
+            "title": "Clear Cut Clearing Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Wildfire_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Wildfire_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Clear Cut Clearing Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "position": 90
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:10:06.013527Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-HEALTHY-TREES-PROBABILITY",
+            "title": "Healthy Trees Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Healthy_Trees_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Healthy_Trees_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Healthy Trees Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:10:26.703959Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-SALVAGE-LOGGING-PROBABILITY",
+            "title": "Salvage Logging Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Salvage_Logging_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Salvage_Logging_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Salvage Logging Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:10:53.977275Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-STORM-PROBABILITY",
+            "title": "Storm Probability ",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Storm_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Storm_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Storm Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:11:20.734078Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C02-FOREST-DISTURBANCE-WILDFIRE-PROBABILITY",
+            "title": "Wildfire Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Bark_Beetle_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Bark_Beetle_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Wildfire Probability",
+                        "gradients": [
+                            {
+                                "color": "#fef0d9",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#fdcc8a",
+                                "position": 20
+                            },
+                            {
+                                "color": "#fc8d59",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#e34a33",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b30000",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-13T13:11:41.574169Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a982a4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C03-BIOMASS",
+            "title": "Biomass",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"AGB\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],    \n  };\n}\n\nfunction evaluatePixel(samples) {\n  let value = samples.AGB\n  let imgVals = [0, 0, 0, samples.dataMask*255]\n\nif(value > 150){\n  imgVals = [37, 52, 148, samples.dataMask*255]\n}\n\nif(value <= 150){\n  imgVals = [44, 127, 184, samples.dataMask*255]\n}\n\nif(value <=100){\n  imgVals = [65, 182, 196, samples.dataMask*255]\n}\n\nif(value <=50){\n  imgVals = [161, 218, 180, samples.dataMask*255]\n}\n\nif(value <=25){\n  imgVals = [255, 255, 204, samples.dataMask*255]\n}\n  \nif(value <=0){\n  imgVals = [0, 0, 0, 0]\n}\n\n return {\n      default: imgVals,\n      //eobrowserStats: [samples.AGB],\n      dataMask: [samples.dataMask]\n   };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#253494",
+                                "label": "> 150 t/ha"
+                            },
+                            {
+                                "color": "#2c7fb8",
+                                "label": "100 – 150 t/ha"
+                            },
+                            {
+                                "color": "#41b6c4",
+                                "label": "50 – 100 t/ha"
+                            },
+                            {
+                                "color": "#a1dab4",
+                                "label": "25 – 50 t/ha"
+                            },
+                            {
+                                "color": "#ffffcc",
+                                "label": "< 25 t/ha"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-16T06:05:23.780921Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-6f77ff-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "6f77ff-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C03-CANOPY-HEIGHT",
+            "title": "Canopy Height",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"FCH\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],    \n  };\n}\n\nfunction evaluatePixel(samples) {\n  let value = samples.FCH\n  let imgVals = [0, 0, 0, samples.dataMask*255]\n\nif(value > 15){\n  imgVals = [0, 68, 27, samples.dataMask*255]\n}\n\nif(value <= 15){\n  imgVals = [61, 167, 90, samples.dataMask*255]\n}\n\nif(value <=10){\n  imgVals = [178, 224, 171, samples.dataMask*255]\n}\n\nif(value <=5){\n  imgVals = [247, 252, 245, samples.dataMask*255]\n}\n  \nif(value <=0){\n  imgVals = [0, 0, 0, 0]\n}\n\n return {\n      default: imgVals,\n      //eobrowserStats: [samples.FCH],\n      dataMask: [samples.dataMask]\n   };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00441b",
+                                "label": "> 15 m"
+                            },
+                            {
+                                "color": "#3da75a",
+                                "label": "10 – 15 m"
+                            },
+                            {
+                                "color": "#b2e0ab",
+                                "label": "5 – 10 m"
+                            },
+                            {
+                                "color": "#f7fcf5",
+                                "label": "< 5 m"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-16T06:05:36.770249Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-6f77ff-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "6f77ff-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C04-COVER-CROP-TYPE",
+            "title": "Cover Crop Type",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"CoverCropType\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n         // { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],    \n  };\n}\n\nconst classes = {\n  0: [0,0,0],\n  11: [131, 195, 141], // Grass-like (Rye, Oats, Clover...)\n  12: [147, 128, 184], // Leaf-rich & Seed mixes\n  21: [230, 213, 125], // Winter crop\n  65: [227, 227, 227], // No second crop season detected\n  65525: [215, 192, 215], // Inconsistency flag\n  65526: [204, 204, 204], // HRL VLCC quality flag\n  65527: [204, 204, 204], // HRL VLCC quality flag\n  65528: [204, 204, 204], // HRL VLCC quality flag\n  65529: [204, 204, 204], // HRL VLCC quality flag\n  65530: [204, 204, 204], // HRL VLCC quality flag\n  65531: [204, 204, 204], // HRL VLCC quality flag\n  65532: [204, 204, 204], // HRL VLCC quality flag\n  65533: [204, 204, 204], // HRL VLCC quality flag\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.CoverCropType] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n\n return {\n      default: imgVals,\n      //eobrowserStats: [samples.CoverCropType],\n      dataMask: [samples.dataMask]\n   };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#83c38d",
+                                "label": "Grass-like (Rye, Oats, Clover...)"
+                            },
+                            {
+                                "color": "#9380b8",
+                                "label": "Leaf-rich & Seed mixes (mustard, oilseed crops...)"
+                            },
+                            {
+                                "color": "#e6d57d",
+                                "label": "Winter crop"
+                            },
+                            {
+                                "color": "#e3e3e3",
+                                "label": "No second crop season detected"
+                            },
+                            {
+                                "color": "#d7c0d7",
+                                "label": "Inconsistency flag"
+                            },
+                            {
+                                "color": "#cccccc",
+                                "label": "HRL VLCC quality flag"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:40:17.650721Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-d45077-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "d45077-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C05-CROP-GRASSLAND-GPP",
+            "title": "Crop Grassland GPP",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "// VERSION=3\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"CropGrasslandGPP\",\n          \"dataMask\"\n        ]\n      }],\n     output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xff5000],\n    [2, 0xfe8d01],\n    [5, 0xae903], \n    [9, 0xa6f907],\n    [14, 0x28f00d],\n    [20, 0x005b00 ],\n    [35, 0x005b00 ],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n  const scaleFactor = 0.001\n  \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = (samples.CropGrasslandGPP * scaleFactor);\n    let imgVals = visualizer.process(val);    \n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n   return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "gradients": [
+                            {
+                                "color": "#ff5000",
+                                "label": "0 (gC/m²/day)",
+                                "position": 0
+                            },
+                            {
+                                "color": "#a6f907",
+                                "label": "9 (gC/m²/day)",
+                                "position": 10
+                            },
+                            {
+                                "color": "#005b00",
+                                "label": "20 (gC/m²/day)",
+                                "position": 19
+                            },
+                            {
+                                "color": "#005b00",
+                                "label": "35 (gC/m²/day)",
+                                "position": 21
+                            }
+                        ],
+                        "maxPosition": 21,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T13:22:50.252850Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-aa56e5-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "aa56e5-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C06-SMALL-LANDSCAPE-FEATURES",
+            "title": "Small Landscape Features",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"Status\", \"dataMask\"],\n        output: [{\n                id: \"default\",\n                bands: 4,\n                sampleType: 'UINT8'\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1,\n                sampleType: 'FLOAT32'\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            }\n        ],\n    };\n}\n\nconst classes = {\n    0: [255, 255, 255, 0], // No SLF\n    1: [126, 252, 0], //  SLF with 0-meter height\n    2: [34, 139, 34], // SLF with 0 to 1 meter height\n    3: [1, 84, 1], //  SLF with height greater than 1 \n    4: [30, 143, 255], // Pond\n}\n\nfunction evaluatePixel(samples) {\n    // return black if key not available\n    let imgVals = classes[samples.Status] || [0, 0, 0, 0];\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n        default: imgVals,\n        eobrowserStats: [samples.Status],\n        dataMask: [samples.dataMask]\n    };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#000000",
+                                "label": "0: No SLF present"
+                            },
+                            {
+                                "color": "#7CFC00",
+                                "label": "1: SLF with 0-meter height"
+                            },
+                            {
+                                "color": "#228B22",
+                                "label": "2: SLF with 0 to 1 meter height"
+                            },
+                            {
+                                "color": "#015401",
+                                "label": "3: SLF with height greater than 1 meter"
+                            },
+                            {
+                                "color": "#1E90FF",
+                                "label": "4: Ponds"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-16T07:39:27.841080Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-6f4bb0-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "6f4bb0-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C06-SMALL-LANDSCAPE-FEATURES-CHANGE",
+            "title": "Small Landscape Features Change",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"Change\", \"dataMask\"],\n    output: \n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n        \n  };\n}\n\nfunction evaluatePixel(samples) {\n  const val = samples.Change;\n\n  let imgVals = [0, 0, 0, 0]; // No Change\n  // SLF disappeared between first and second date\n  if(val === 1){ \n    imgVals = [255, 0, 0, 255]\n  }\n  // SLF appeared between first and second date\n  if(val === 2){\n    imgVals = [0, 0, 255, 255]\n  }\n  return imgVals.concat(samples.dataMask * 255);\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00000000",
+                                "label": "No input data available"
+                            },
+                            {
+                                "color": "#FF0000",
+                                "label": "SLF disappeared "
+                            },
+                            {
+                                "color": "#0000FF",
+                                "label": "SLF appeared "
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-16T07:39:34.317896Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-6f4bb0-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "6f4bb0-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C07-IMPROVED-WATER-BODIES-MAPPING",
+            "title": "Improved Water Bodies Mapping",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "// VERSION=3\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"ImprovedWaterBodies\",\n          \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n// Create color map\nconst classes = {\n  0: [0, 0, 0, 0],\n  1: [82, 176, 243],\n  2: [47, 118, 225],\n  255: [222, 221, 222, 180],\n};\n\n  \n  \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.ImprovedWaterBodies;\n  // return transparent pixel if key not available\n  let imgVals = classes[val] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n\n  return {\n      default: imgVals,\n      //eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n   };\n  }",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#52aff3",
+                                "label": "Temporary"
+                            },
+                            {
+                                "color": "#2f76e1",
+                                "label": "Permanent"
+                            },
+                            {
+                                "color": "#E4E2E2",
+                                "label": "Excluded data"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:40:48.117606Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-8abdd7-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "8abdd7-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-CHANGE",
+            "title": "Continuous Imperviousness Monitoring Change ",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "// VERSION=3\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Change\",\n          \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map for imperviousness change\n  const ramps = [\n    [0, 0x036600],   // 100% imperviousness decrease\n    [50, 0x3FB200],  // 50% imperviousness decrease\n    [99, 0x7FFF00],  // 1% imperviousness decrease\n    [100, 0xB2B2B2], // sealed in both years (stable built-up)\n    [101, 0xFFFF00], // 1% imperviousness increase\n    [150, 0xFFBF00], // 50% imperviousness increase\n    [200, 0xFF0000], // 100% imperviousness increase\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n  \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Change;\n    let imgVals = visualizer.process(val);\n    \n    // Handle special values that are outside the ramp\n    if (val == 201) {\n      imgVals = [240, 240, 240, 255]; // #F0F0F0 - non sealed in both years (stable non-built up)\n    } else if (val == 254) {\n      imgVals = [168, 0, 229, 255];   // #A800E5 - unclassifiable (no satellite image available, or clouds, shadows, or snow)\n    } else if (val == 255) {\n      imgVals = [0, 0, 0, 255];       // #000000 - outside area\n    } else {\n      // Use the color ramp and add alpha channel\n      imgVals = imgVals.concat(samples.dataMask * 255);\n    }\n\n    return {\n      default: imgVals,\n      //eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Impreviousness degree",
+                        "gradients": [
+                            {
+                                "color": "#FF0000",
+                                "label": "+100%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#FFBF00",
+                                "label": "+50%",
+                                "position": 25
+                            },
+                            {
+                                "color": "#FFFF00",
+                                "label": "",
+                                "position": 49.5
+                            },
+                            {
+                                "color": "#B2B2B2",
+                                "label": "0% (stable)",
+                                "position": 50
+                            },
+                            {
+                                "color": "#7FFF00",
+                                "label": "",
+                                "position": 50.5
+                            },
+                            {
+                                "color": "#3FB200",
+                                "label": "-50%",
+                                "position": 75
+                            },
+                            {
+                                "color": "#036600",
+                                "label": "-100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T13:59:37.813543Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-8f8f94-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "8f8f94-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-DEGREE",
+            "title": "Continuous Imperviousness Monitoring Degree",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "// VERSION=3\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"ImperviousnessDegree\",\n          \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xf0f0f0],\n    [50, 0xaf4a33],\n    [100, 0x710c02],\n  ];\n\n \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n  \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.ImperviousnessDegree;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n    if (val == 0){\n      imgVals = [0, 0, 0, 0]\n    }\n\n    return {\n      default: imgVals,\n      //eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Impreviousness degree",
+                        "gradients": [
+                            {
+                                "color": "#f0f0f0",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#af4a33",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#710c02",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T13:59:49.717290Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-8f8f94-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "8f8f94-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C09-01-AUTOMATED-LAND-USE-MAPPING",
+            "title": "Annual Urban Change (Selected  date vs + 1 year)",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"LUC\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n  };\n}\n\nconst classes = {\n  0: [0, 0, 0, 0], // No urban change detected\n  11: [252, 89, 89], // Urban renewal\n  12: [125, 217, 59], // Renaturation\n  21: [101, 214, 224], // Urban sprawl\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.LUC] || [0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n  return {\n      default: imgVals,\n      //eobrowserStats: [samples.LUC],\n      dataMask: [samples.dataMask]\n   };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00000000",
+                                "label": "No urban change detected"
+                            },
+                            {
+                                "color": "#fc5959",
+                                "label": "Urban renewal "
+                            },
+                            {
+                                "color": "#7dd93b",
+                                "label": "Renaturation"
+                            },
+                            {
+                                "color": "#65d6e0",
+                                "label": "Urban sprawl"
+                            }
+                        ],
+                        "title": "Urban change"
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:41:12.567626Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-26ca0c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "26ca0c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C09-02-AUTOMATED-LAND-USE-MAPPING-START",
+            "title": "Land Cover",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"LUC_START\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: 'UINT8' },\n      //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n      { id: \"dataMask\", bands: 1 }\n    ],\n  };\n}\n\nconst classes = {\n  255: [0, 0, 0, 0], // No urban change detected\n  0: [160, 81, 45], //  construction/landfill  \n  1: [128, 128, 128], // sealed\n  2: [153, 205, 50], // natural/agricultural\n  3: [34, 139, 34], // woody\n  4: [30, 143, 255], // water\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.LUC_START] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n\n  return {\n    default: imgVals,\n    //eobrowserStats: [samples.LUC_START],\n    dataMask: [samples.dataMask]\n  };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00000000",
+                                "label": "No urban change detected"
+                            },
+                            {
+                                "color": "#A0522D",
+                                "label": "Construction/Landfill  "
+                            },
+                            {
+                                "color": "#808080",
+                                "label": "Sealed"
+                            },
+                            {
+                                "color": "#9ACD32",
+                                "label": "Natural/Agricultural"
+                            },
+                            {
+                                "color": "#228B22",
+                                "label": "Woody"
+                            },
+                            {
+                                "color": "#1E90FF",
+                                "label": "Water"
+                            }
+                        ],
+                        "title": "Land Classification(Start year)"
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:41:26.530963Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-26ca0c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "26ca0c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C09-03-AUTOMATED-LAND-USE-MAPPING-END",
+            "title": "Land Cover (Selected date + 1 year)",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"LUC_END\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: 'UINT8' },\n      //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n      { id: \"dataMask\", bands: 1 }\n    ],\n  };\n}\n\nconst classes = {\n  255: [0, 0, 0, 0], // No urban change detected\n  0: [160, 81, 45], //  construction/landfill  \n  1: [128, 128, 128], // sealed\n  2: [153, 205, 50], // natural/agricultural\n  3: [34, 139, 34], // woody\n  4: [30, 143, 255], // water\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.LUC_END] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n\n  return {\n    default: imgVals,\n    //eobrowserStats: [samples.LUC_END],\n    dataMask: [samples.dataMask]\n  };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#00000000",
+                                "label": "No urban change detected"
+                            },
+                            {
+                                "color": "#A0522D",
+                                "label": "Construction/Landfill  "
+                            },
+                            {
+                                "color": "#808080",
+                                "label": "Sealed"
+                            },
+                            {
+                                "color": "#9ACD32",
+                                "label": "Natural/Agricultural"
+                            },
+                            {
+                                "color": "#228B22",
+                                "label": "Woody"
+                            },
+                            {
+                                "color": "#1E90FF",
+                                "label": "Water"
+                            }
+                        ],
+                        "title": "Land Classification(Last year)"
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:41:38.100884Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-26ca0c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "26ca0c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-BARE-PROBABILITY",
+            "title": "Bare Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "###True color optimized\n\nThis optimized True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a product with natural colours that represents the Earth as humans would naturally see it. The visualisation uses highlight compression and improves the contrast and color vividness through minor contrast and saturation enhancement. More info for L1C and for L2A.",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Bare\", \"dataMask\"\n        ]\n      }],\n    output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Bare;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "description": "test test test",
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T09:02:50.040249Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-BUILT-PROBABILITY",
+            "title": "Built Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Built\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Built;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T09:05:11.843465Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-CLOUD-PROBABILITY",
+            "title": "Cloud Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Clouds\", \"dataMask\"\n        ]\n      }],\n    output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Clouds;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-16T06:19:50.618301Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-HERBACEOUS-PROBABILITY",
+            "title": "Herbaceous Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Herbaceous\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Herbaceous;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T09:05:21.586831Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-PREDICTION",
+            "title": "Prediction",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"MAP\", \"dataMask\"],\n        output: [{\n                id: \"default\",\n                bands: 4,\n                sampleType: 'UINT8'\n            },\n            {\n                id: \"eobrowserStats\",\n                bands: 1,\n                sampleType: 'FLOAT32'\n            },\n            {\n                id: \"dataMask\",\n                bands: 1\n            }\n        ],\n    };\n}\n\nconst classes = {\n    0: [0, 0, 0],\n    1: [15, 100, 15],  \n    2: [255, 195, 67], \n    3: [255, 255, 103],\n    4: [180, 180, 180],\n    5: [30, 115, 200],\n    6: [240, 240, 240],\n    7: [250, 38, 38], \n    254: [124, 56, 148],\n    255: [194, 88, 232] \n}\n\nfunction evaluatePixel(samples) {\n    // return black if key not available\n    let imgVals = classes[samples.MAP] || [0, 0, 0];\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n        default: imgVals,\n        eobrowserStats: [samples.MAP],\n        dataMask: [samples.dataMask]\n    };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "rgb(15, 100, 15)",
+                                "label": "Tree"
+                            },
+                            {
+                                "color": "rgb(255, 195, 67)",
+                                "label": "Shrub"
+                            },
+                            {
+                                "color": "rgb(255, 255, 103)",
+                                "label": "Herbaceous"
+                            },
+                            {
+                                "color": "rgb(180, 180, 180)",
+                                "label": "Bare"
+                            },
+                            {
+                                "color": "rgb(30, 115, 200)",
+                                "label": "Water"
+                            },
+                            {
+                                "color": "rgb(240, 240, 240)",
+                                "label": "Snow"
+                            },
+                            {
+                                "color": "rgb(250, 38, 38)",
+                                "label": "Built"
+                            },
+                            {
+                                "color": "rgb(124, 56, 148)",
+                                "label": "Shadow"
+                            },
+                            {
+                                "color": "rgb(194, 88, 232)",
+                                "label": "Cloud"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T12:54:42.703267Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-SHADOW-PROBABILITY",
+            "title": "Shadow Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Shadow\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Shadow;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "description": "test test test",
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-07T12:19:49.947216Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-SHRUB-PROBABILITY",
+            "title": "Shrub Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Shrub\", \"dataMask\"\n        ]\n      }],\n    output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Shrub;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "description": "test test test",
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-07T12:20:04.403146Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-SNOW-PROBABILITY",
+            "title": "Snow Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Snow\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Snow;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T09:05:40.206868Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-TREE-PROBABILITY",
+            "title": "Tree Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Tree\", \"dataMask\"\n        ]\n      }],\n    output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Tree;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "description": "test test test",
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-07T12:20:26.607718Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C10-LAND-SURFACE-CHARACTERISTICS-WATER-PROBABILITY",
+            "title": "Water Probability",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Water\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0x440154],\n    [10, 0x430657],\n    [20, 0x3f296f],\n    [30, 0x3b4c87],\n    [40, 0x2f6b8e],\n    [50, 0x25858e],\n    [60, 0x1f9f88],\n    [70, 0x37b878],\n    [80, 0x6ece58],\n    [90, 0xb6de2b],\n    [100, 0xfde725],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Water;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Classification probability",
+                        "gradients": [
+                            {
+                                "color": "#440154",
+                                "label": "0%",
+                                "position": 0
+                            },
+                            {
+                                "color": "#430657",
+                                "position": 10
+                            },
+                            {
+                                "color": "#3f296f",
+                                "position": 20
+                            },
+                            {
+                                "color": "#3b4c87",
+                                "position": 30
+                            },
+                            {
+                                "color": "#2f6b8e",
+                                "position": 40
+                            },
+                            {
+                                "color": "#25858e",
+                                "label": "50%",
+                                "position": 50
+                            },
+                            {
+                                "color": "#1f9f88",
+                                "position": 60
+                            },
+                            {
+                                "color": "#37b878",
+                                "position": 70
+                            },
+                            {
+                                "color": "#6ece58",
+                                "position": 80
+                            },
+                            {
+                                "color": "#b6de2b",
+                                "position": 90
+                            },
+                            {
+                                "color": "#fde725",
+                                "label": "100%",
+                                "position": 100
+                            }
+                        ],
+                        "maxPosition": 100,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-09-18T09:05:50.731059Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-116634-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "116634-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C11-ON-DEMAND-LAND-COVER-MAPPING",
+            "title": "On-demand land cover mapping",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"OnDemandLC\", \"dataMask\"],\n        output: [{\n                id: \"default\",\n                bands: 4,\n                sampleType: 'UINT8'\n            },\n            //{\n              //  id: \"eobrowserStats\",\n               // bands: 1,\n               // sampleType: 'FLOAT32'\n            // },\n            {\n                id: \"dataMask\",\n                bands: 1\n            }\n        ],\n    };\n}\n\nconst classes = {\n    0: [255, 255, 255], // No trees\n    11: [0, 38, 115], // forest no managment \n    20: [76, 230, 0], // forest managment\n    31: [0, 110, 255], // Planted\n    32: [230, 153, 0], // Plantation\n    33: [0, 255, 255], // Rubber\n    40: [255, 115, 222], // Oil palm\n    50: [250, 0, 0], // Fruit tree\n    53: [255, 255, 0], // Agroforestry\n    100: [242, 193, 247], // Other\n    255: [0, 0, 0] // no data\n}\n\nfunction evaluatePixel(samples) {\n    // return black if key not available\n    let imgVals = classes[samples.OnDemandLC] || [0, 0, 0];\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n        default: imgVals,\n        //eobrowserStats: [samples.OnDemandLC],\n        dataMask: [samples.dataMask]\n    };\n}",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "rgb(255, 255, 255)",
+                                "label": "No tree"
+                            },
+                            {
+                                "color": "rgb(0, 38, 115)",
+                                "label": "Naturally regenerating forests without any signs of management"
+                            },
+                            {
+                                "color": "rgb(76, 230, 0)",
+                                "label": "Naturally regenerating forests with signs of management"
+                            },
+                            {
+                                "color": "rgb(0, 110, 255)",
+                                "label": "Planted"
+                            },
+                            {
+                                "color": "rgb(230, 153, 0)",
+                                "label": "Plantation"
+                            },
+                            {
+                                "color": "rgb(0, 255, 255)",
+                                "label": "Rubber"
+                            },
+                            {
+                                "color": "rgb(255, 115, 222)",
+                                "label": "Oil palm"
+                            },
+                            {
+                                "color": "rgb(250, 0, 0)",
+                                "label": "Fruit tree"
+                            },
+                            {
+                                "color": "rgb(255, 255, 0)",
+                                "label": "Agroforestry"
+                            },
+                            {
+                                "color": "rgb(242, 193, 247)",
+                                "label": "Other"
+                            },
+                            {
+                                "color": "rgb(0,0,0)",
+                                "label": "No data"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:46:43.917191Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-ec62cc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "ec62cc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C12-TREE-TYPES",
+            "title": "Tree Types",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"TreeTypes\", \"dataMask\"],\n    output: [\n          { id: \"default\", bands: 4, sampleType: 'UINT8' }, \n          //{ id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ], \n  };\n}\n\nconst classes = {\n   0: [191, 191, 191], \t// No tree cover\n  21: [213, 255, 128], \t// Fagus\n  22: [128, 0, 0],  \t// Quercus\n  23: [0, 255, 170], \t// Betula\n  24: [140, 79, 28],  \t// Alnus\n  25: [102, 125, 237],  // Populus\n  26: [70, 158, 74],  \t// Other Broadleaved\n  31: [128, 128, 64],  \t// Picea\n  32: [0, 128, 128],  \t// Pinus\n  33: [28, 92, 36]  \t// Other Coniferous\n}\n\nfunction evaluatePixel(samples) {\n  // return black if key not available\n  let imgVals = classes[samples.TreeTypes] || [0, 0, 0, 0];\n  imgVals = imgVals.concat(samples.dataMask * 255);\n  return {\n      default: imgVals,\n      //eobrowserStats: [samples.TreeTypes],\n      dataMask: [samples.dataMask]\n   };\n}\n",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "#bfbfbf",
+                                "label": "0: No Tree cover"
+                            },
+                            {
+                                "color": "#d5ff80",
+                                "label": "21: Fagus"
+                            },
+                            {
+                                "color": "#800000",
+                                "label": "22: Quercus"
+                            },
+                            {
+                                "color": "#00ffaa",
+                                "label": "23: Betula"
+                            },
+                            {
+                                "color": "#8c4e1c",
+                                "label": "24: Alnus"
+                            },
+                            {
+                                "color": "#667ced",
+                                "label": "25: Populus"
+                            },
+                            {
+                                "color": "#469e4a",
+                                "label": "26: Other Broadleaved"
+                            },
+                            {
+                                "color": "#808040",
+                                "label": "31: Picea"
+                            },
+                            {
+                                "color": "#008080",
+                                "label": "32: Pinus"
+                            },
+                            {
+                                "color": "#1c5c24",
+                                "label": "33: Other Coniferous"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-14T10:48:25.280358Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-970aa1-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "970aa1-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "efe5a3-YOUR-INSTANCEID-HERE": [
         {
             "id": "day_of_burn",

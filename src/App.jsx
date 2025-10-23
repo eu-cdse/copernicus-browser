@@ -295,6 +295,7 @@ const mapStoreToProps = (store) => ({
   compareSharedPinsId: store.compare.compareSharedPinsId,
   comparedOpacity: store.compare.comparedOpacity,
   comparedClipping: store.compare.comparedClipping,
+  useEvoland: store.themes.useEvoland,
 });
 
 export default connect(mapStoreToProps, null)(App);

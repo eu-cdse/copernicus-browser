@@ -201,6 +201,18 @@ import {
   COPERNICUS_CLMS_LIE_500M_DAILY_V2,
   COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
+  EVOLAND_C01_CONTINUOUS_FOREST_MONITORING,
+  EVOLAND_C02_FOREST_DISTURBANCE,
+  EVOLAND_C03_FOREST_BIOMASS,
+  EVOLAND_C04_COVER_CROP_TYPE,
+  EVOLAND_C05_GRASSLAND_CROPLAND_GPP,
+  EVOLAND_C06_SMALL_LANDSCAPE_FEATURES,
+  EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING,
+  EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING,
+  EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING,
+  EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
+  EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING,
+  EVOLAND_C12_TREE_TYPES,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
@@ -232,6 +244,7 @@ import { datasourceForRRDDatasetId } from './dataSourceRRDHandlers';
 import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 import GHGSatDatasourceHandler from './RRDDataSources/GHGSatDatasourceHandler';
+import EvolandDataSourceHandler from './EvolandDataSourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -270,6 +283,7 @@ export function initializeDataSourceHandlers() {
     new GHGSatDatasourceHandler(),
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
+    new EvolandDataSourceHandler(),
   ];
 }
 
@@ -526,6 +540,7 @@ export async function prepareDataSourceHandlers(theme) {
   }
 
   const failedThemeParts = await prepareThemeDataSourceHandlers(theme);
+  console.error(`Could not retrieve data for theme: ${failedThemeParts}`);
   store.dispatch(themesSlice.actions.setDataSourcesInitialized(true));
   return failedThemeParts;
 }
@@ -724,6 +739,19 @@ export function datasourceForDatasetId(datasetId) {
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       return DATASOURCES.CCM;
+    case EVOLAND_C01_CONTINUOUS_FOREST_MONITORING:
+    case EVOLAND_C02_FOREST_DISTURBANCE:
+    case EVOLAND_C03_FOREST_BIOMASS:
+    case EVOLAND_C04_COVER_CROP_TYPE:
+    case EVOLAND_C05_GRASSLAND_CROPLAND_GPP:
+    case EVOLAND_C06_SMALL_LANDSCAPE_FEATURES:
+    case EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING:
+    case EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING:
+    case EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING:
+    case EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS:
+    case EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING:
+    case EVOLAND_C12_TREE_TYPES:
+      return DATASOURCES.EVOLAND;
     default:
       return null;
   }
@@ -928,6 +956,18 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: t`SWI Global 12.5km Daily V4`,
   [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: t`SWI Europe 1km Daily V2`,
   [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: t`SWI Global 12.5km 10-daily V4`,
+  [EVOLAND_C01_CONTINUOUS_FOREST_MONITORING]: t`C01 Forest`,
+  [EVOLAND_C02_FOREST_DISTURBANCE]: t`C02 Forest Disturbance`,
+  [EVOLAND_C03_FOREST_BIOMASS]: t`C03 Forest Biomass`,
+  [EVOLAND_C04_COVER_CROP_TYPE]: t`C04 Cover Crop Type`,
+  [EVOLAND_C05_GRASSLAND_CROPLAND_GPP]: t`C05 Forest Disturbance`,
+  [EVOLAND_C06_SMALL_LANDSCAPE_FEATURES]: t`C06 Small Landscape Features`,
+  [EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING]: t`C07 Improved Water Bodies Mapping`,
+  [EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING]: t`C08 Continuous Imperviousness Monitoring`,
+  [EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING]: t`C09 Automated Land Use Mapping`,
+  [EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS]: t`C10 Land Surface Characteristics`,
+  [EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING]: t`C11 On-Demand Land Cover Mapping`,
+  [EVOLAND_C12_TREE_TYPES]: t`C12 Tree Types`,
 };
 
 export function getDatasetLabel(datasetId) {

@@ -7,3 +7,4 @@ src/assets/cache/configuration.json
 src/assets/cache/rrd_capabilities.json
 src/assets/cache/rrd_configuration.json
 /build
+src/assets/sites/evoland_sites.json

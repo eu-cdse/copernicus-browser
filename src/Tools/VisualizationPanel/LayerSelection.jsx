@@ -208,12 +208,20 @@ function LayerSelection({
     const layer = layers.find((l) => l.layerId === layerId);
     if (layer) {
       const supportsOpenEO = isOpenEoSupported(layer.url, layer.layerId);
+
+      // Update local state as well
+      setEvalscript(layer.evalscript);
+      setCustomEvalscript(layer.evalscript);
+
       store.dispatch(
         visualizationSlice.actions.setVisualizationParams({
           evalscript: layer.evalscript,
-          layerId: layer.id,
+          layerId: layer.layerId,
+          visualizationUrl: layer.url,
           customSelected: true,
           visibleOnMap: true,
+          evalscripturl: null,
+          dataFusion: [],
           selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
         }),
       );
@@ -268,7 +276,6 @@ function LayerSelection({
   if (loadingLayersInProgress) {
     return <Loader />;
   }
-
   if (customSelected && CUSTOM_VISUALIZATION_URL_ROUTES.includes(locationHash)) {
     return (
       <CustomVisualizationLayer

@@ -122,6 +122,7 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     clmsSelectedPath,
     clmsSelectedCollection,
     clmsSelectedConsolidationPeriodIndex,
+    useEvoland,
   } = props;
   currentLat = Math.round(100000 * currentLat) / 100000;
   currentLng = Math.round(100000 * currentLng) / 100000;
@@ -260,6 +261,10 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
   }
   if (clmsSelectedConsolidationPeriodIndex) {
     params.clmsSelectedConsolidationPeriodIndex = clmsSelectedConsolidationPeriodIndex;
+  }
+
+  if (useEvoland) {
+    params.useEvoland = useEvoland;
   }
 
   const escapedParams = Object.keys(params)
