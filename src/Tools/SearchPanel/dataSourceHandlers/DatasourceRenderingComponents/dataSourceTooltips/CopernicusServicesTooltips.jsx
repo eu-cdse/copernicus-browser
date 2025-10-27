@@ -32,7 +32,7 @@ const getCorineLandCoverMarkdown = () => t`
 **Coverage**: Most of Europe.
 
 **Data availability**:
-CLC data is updated every 6 years. In EO Browser, data is available on the following dates:
+CLC data is updated every 6 years. In Copernicus Browser, data is available on the following dates:
 01-01-1990, 01-01-2000, 01-01-2006, 01-01-2012, 01-01-2018.
 
 **Common Usage**:
@@ -45,7 +45,7 @@ const getGlobalLandCoverMarkdown = () => t`
 **Coverage**: Global.
 
 **Data availability**:
-Updated on a yearly basis. In EO Browser, data is available on the following dates:
+Updated on a yearly basis. In Copernicus Browser, data is available on the following dates:
 01-01-2015, 01-01-2016, 01-01-2017, 01-01-2018, 01-01-2019.
 
 **Common Usage**: 

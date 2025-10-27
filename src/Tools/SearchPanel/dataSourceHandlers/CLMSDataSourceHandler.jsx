@@ -100,6 +100,7 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -209,6 +210,7 @@ import {
   getClmsGlobalSwi125km10V4DailyMarkdown,
   getClmsGlobalBa300mV4DailyMarkdown,
   getClmsGlobalBa300mV4MonthlyMarkdown,
+  getClmsBalticLie250mV1DailyMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -267,6 +269,7 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4_BANDS,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4_BANDS,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4_BANDS,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
@@ -382,6 +385,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: t`SWI Global 12.5km Daily V4`,
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: t`SWI Europe 1km Daily V2`,
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: t`SWI Global 12.5km 10-daily V4`,
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: t`LIE Baltic 250m Daily V1`,
   });
 
   urls = {
@@ -485,6 +489,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: [],
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: [],
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: [],
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: [],
   };
   datasets = [];
   allLayers = [];
@@ -746,6 +751,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: { min: 2, max: 25 },
   };
 
   KNOWN_COLLECTIONS = {
@@ -849,6 +855,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: ['59c08cd0-762b-4b8a-9eaa-0d55d054a732'],
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: ['4bd995a1-dc49-4176-a285-b1d0084ba51a'],
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: ['d0413fe0-46dc-4c2c-96a2-437e726d89a3'],
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: ['bfebf889-ca5c-4baa-abbc-04907f1e8de8'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -952,6 +959,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1333,6 +1341,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: {
       minDate: moment.utc('2025-07-01'),
       maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: {
+      minDate: moment.utc('2017-03-01'),
+      maxDate: moment.utc('2024-06-30'),
     },
   };
 
@@ -1717,6 +1729,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       amount: 10,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: {
+      amount: 0,
+      unit: 'day',
+    },
   };
 
   willHandle(service, url, name, layers, preselected) {
@@ -1959,6 +1975,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return COPERNICUS_CLMS_SWI_1KM_DAILY_V2_BANDS;
       case COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4:
         return COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4_BANDS;
+      case COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1:
+        return COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1_BANDS;
       default:
         return null;
     }
@@ -2161,6 +2179,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return getClmsEuropeSwi1kmV2DailyMarkdown();
       case COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4:
         return getClmsGlobalSwi125km10V4DailyMarkdown();
+      case COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1:
+        return getClmsBalticLie250mV1DailyMarkdown();
       default:
         return null;
     }

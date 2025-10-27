@@ -21,6 +21,7 @@ import {
   S1_CDAS_IW_HHHV,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
 } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
@@ -64,7 +65,11 @@ const visualizationButtonDisabled = (tile, user) => {
 
   const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user.access_token);
   if (
-    [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(datasetId) &&
+    [
+      CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+      CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+      CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+    ].includes(datasetId) &&
     !hasAccessToCCMVisualization
   ) {
     return ErrorMessage.CCMAccessRoleNotEligible();

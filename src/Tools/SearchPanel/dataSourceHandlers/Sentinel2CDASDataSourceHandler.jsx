@@ -7,7 +7,6 @@ import {
   DATASET_CDAS_S2L2A,
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
-import moment from 'moment';
 
 import DataSourceHandler from './DataSourceHandler';
 import Sentinel2SearchGroup from './DatasourceRenderingComponents/searchGroups/Sentinel2SearchGroup';
@@ -23,10 +22,6 @@ import HelpTooltip from './DatasourceRenderingComponents/HelpTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { BAND_UNIT, S2_L1C_CDAS, S2_L2A_CDAS } from './dataSourceConstants';
 import { DATASOURCES } from '../../../const';
-
-const IMAGE_DOWNLOAD_COPYRIGHT_TEXT = `Credit: European Union, contains modified Copernicus Sentinel data ${moment
-  .utc()
-  .format('YYYY')}`;
 
 export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
   L1C_BANDS = [
@@ -360,8 +355,6 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
         return null;
     }
   };
-
-  getCopyrightText = () => IMAGE_DOWNLOAD_COPYRIGHT_TEXT;
 
   supportsFindProductsForCurrentView = () => true;
 

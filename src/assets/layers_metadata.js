@@ -56,6 +56,7 @@ import {
   S3OLCIL2_LAND,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
@@ -168,6 +169,7 @@ import {
   EVOLAND_C12_TREE_TYPES,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -3847,81 +3849,29 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
   },
   {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '1_TRUE_COLOR' }],
+    match: [
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '1_TRUE_COLOR' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '1_TRUE_COLOR' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2024_COLLECTION, layerId: '1_TRUE_COLOR' },
+    ],
     description: () =>
       t`# True color optimized\n\nThis optimized True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a product with natural colours that represents the Earth as humans would naturally see it. The visualisation uses highlight compression and improves the contrast and color vividness through minor contrast and saturation enhancement.`,
   },
   {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '2_FALSE_COLOR' }],
+    match: [
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '2_FALSE_COLOR' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '2_FALSE_COLOR' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2024_COLLECTION, layerId: '2_FALSE-COLOR' },
+    ],
     description: () =>
       t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/).`,
   },
   {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '3_NDVI' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -0.2,
-      maxPosition: 1.1,
-      gradients: [
-        { position: -0.2, color: 'rgb(5%,5%,5%)', label: '- 1' },
-        { position: -0.1, color: 'rgb(5%,5%,5%)', label: '- 0.5' },
-        { position: -0.1, color: 'rgb(75%,75%,75%)' },
-        { position: 0, color: 'rgb(75%,75%,75%)', label: '- 0.2' },
-        { position: 0, color: 'rgb(86%,86%,86%)' },
-        { position: 0.1, color: 'rgb(86%,86%,86%)', label: '- 0.1' },
-        { position: 0.1, color: 'rgb(92%,92%,92%)' },
-        { position: 0.2, color: 'rgb(92%,92%,92%)', label: ' 0' },
-        { position: 0.2, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(57%,75%,32%)' },
-        { position: 0.6, color: 'rgb(57%,75%,32%)', label: ' 0.2' },
-        { position: 0.6, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(0%,27%,0%)', label: ' 0.6' },
-        { position: 1.1, color: 'rgb(0%,27%,0%)', label: ' 1' },
-      ],
-    },
-    description: () =>
-      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/).`,
-  },
-  {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '1_TRUE_COLOR' }],
-    description: () =>
-      t`# True color optimized\n\nThis optimized True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a product with natural colours that represents the Earth as humans would naturally see it. The visualisation uses highlight compression and improves the contrast and color vividness through minor contrast and saturation enhancement.`,
-  },
-  {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '2_FALSE_COLOR' }],
-    description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/).`,
-  },
-  {
-    match: [{ datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '3_NDVI' }],
+    match: [
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2018_COLLECTION, layerId: '3_NDVI' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '3_NDVI' },
+      { datasourceId: CDSE_CCM_VHR_IMAGE_2024_COLLECTION, layerId: '3_NDVI' },
+    ],
     legend: {
       type: 'continuous',
       minPosition: -0.2,
@@ -4995,6 +4945,16 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [
       {
         datasourceId: EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING,
+        layerId: 'C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-CHANGE',
+      },
+    ],
+    description: () =>
+      `The imperviousness density change monitoring prototype provides in the spatial resolution of 5 m the degree of imperviousness change (-100% - +100%). Negative values indicate a reduction in imperviousness, such as the removal of buildings or paved surfaces. A value of 0% signifies no change between the two observation periods; whether the area remained sealed or unsealed. Positive values reflect new artificial constructions or sealed surfaces. This prototype supports urban development monitoring and promotes planning for greener, more sustainable cities.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING,
         layerId: 'C08-CONTINUOUS-IMPERVIOUSNESS-MONITORING-DEGREE',
       },
     ],
@@ -5068,7 +5028,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () =>
-      `The LSC map distinguishes between 9 classes that are mapped at a 10 m resolution for individual Sentinel-2 scenes: tree, shrubs, herbaceous vegetation, B-bare, water, snow/Ice, built-up,  shadow, and clouds`,
+      `The LSC map distinguishes between 9 classes that are mapped at a 10 m resolution for individual Sentinel-2 scenes: tree, shrubs, herbaceous vegetation, bare, water, snow/Ice, built-up, shadow, and cloud.`,
   },
   {
     match: [
@@ -5171,5 +5131,10 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: EVOLAND_C12_TREE_TYPES, layerId: 'C12-TREE-TYPES' }],
     description: () =>
       `The Tree Types Mapping prototype provides information on the dominant tree species for a demonstration site in Central Europe`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1, layerId: 'LIE' }],
+    description: () =>
+      `The Lake Ice Coverage (LIE) is monitored using optical satellite data and it classifies a section of the freshwater body as 1) Fully snow covered ice; 2) Partially snow covered ice/clear ice; 3) Open water. Classification is provided only for cloud free pixels, with dedicated cloud mask. The gridded data product covers Northern-Europe with 250m (0.0025 degree) resolution. The LIE product can have several important applications from climate change monitoring and hydrological forecasting to winter transport and recreational activity on lakes.`,
   },
 ];

@@ -733,6 +733,11 @@ const getClmsGlobalSwi125km10V4DailyMarkdown = () =>
 const ClmsGlobalSwi125km10V4DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsGlobalSwi125km10V4DailyMarkdown() });
 
+const getClmsBalticLie250mV1DailyMarkdown = () =>
+  t`On daily basis for the Northern Europe classifies, in pixels, inland/freshwater bodies as 1) Fully snow-covered ice, 2) Partially snow-covered or snow-free ice, 3) Open water. The data is available in near real time in the spatial resolution of 250 m and with the temporal extent from March 2017 to 30 June 2024. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-baltic-v1-250m).`;
+const ClmsBalticLie250mV1DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsBalticLie250mV1DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -926,4 +931,6 @@ export {
   getClmsGlobalBa300mV4MonthlyMarkdown,
   ClmsGlobalBa300mV4DailyTooltip,
   getClmsGlobalBa300mV4DailyMarkdown,
+  ClmsBalticLie250mV1DailyTooltip,
+  getClmsBalticLie250mV1DailyMarkdown,
 };

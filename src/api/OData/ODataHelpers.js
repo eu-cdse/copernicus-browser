@@ -40,6 +40,7 @@ import {
   S3SYNERGY_L2_VG1,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
@@ -140,6 +141,7 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -190,6 +192,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S1SAR_L3_DH_MCM: S1_MONTHLY_MOSAIC_DH,
   VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   VHR_IMAGE_2021: CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  VHR_IMAGE_2024: CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   ndvi_global_1km_10daily_v3: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   dmp_global_1km_10daily_v2: COPERNICUS_CLMS_DMP_1KM_10DAILY,
   lai_global_1km_10daily_v2: COPERNICUS_CLMS_LAI_1KM_10DAILY,
@@ -244,6 +247,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'swi_global_12.5km_daily_v4': COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4,
   swi_europe_1km_daily_v2: COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   'swi_global_12.5km_10daily_v4': COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
+  lie_baltic_250m_daily_v1: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -606,6 +610,14 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     return PRODUCT_TYPE_TO_DATASETID['VHR_IMAGE_2021'];
   }
 
+  if (
+    ['HRS_MS2_1D_0476-COG', 'PHR_MS___3_0476-COG', 'PNE_MS2__3_0476-COG', 'S14_MS2__3_0476-COG'].includes(
+      productType,
+    )
+  ) {
+    return PRODUCT_TYPE_TO_DATASETID['VHR_IMAGE_2024'];
+  }
+
   return PRODUCT_TYPE_TO_DATASETID[productType];
 };
 
@@ -764,6 +776,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
 
   if (
     [
+      COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
       COPERNICUS_CLMS_LIE_250M_DAILY_V2,
       COPERNICUS_CLMS_LIE_500M_DAILY_V1,
       COPERNICUS_CLMS_LIE_500M_DAILY_V2,
@@ -1118,15 +1131,13 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     };
   }
 
-  if (datasetId === CDSE_CCM_VHR_IMAGE_2018_COLLECTION) {
-    return {
-      id: ODataCollections.OPTICAL.id,
-      instrument: 'VHR_EUROPE',
-      productType: getProductTypeFromDatasetId(datasetId),
-    };
-  }
-
-  if (datasetId === CDSE_CCM_VHR_IMAGE_2021_COLLECTION) {
+  if (
+    [
+      CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+      CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+      CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+    ].includes(datasetId)
+  ) {
     return {
       id: ODataCollections.OPTICAL.id,
       instrument: 'VHR_EUROPE',

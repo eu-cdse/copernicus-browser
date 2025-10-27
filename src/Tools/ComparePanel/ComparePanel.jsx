@@ -20,7 +20,7 @@ import './ComparePanel.scss';
 const NO_COMPARE_LAYERS_MESSAGE = () => t`No layers to compare.`;
 
 const ComparePanel = (props) => {
-  const [displaySocialShareOptions, setDisplaySocialShareOptions] = useState(null);
+  const [displaySocialShareOptions, setDisplaySocialShareOptions] = useState(false);
 
   const { compareMode, comparedLayers, comparedOpacity, comparedClipping, pins, compareShare } = props;
 
@@ -43,7 +43,7 @@ const ComparePanel = (props) => {
   };
 
   const removeAll = () => {
-    store.dispatch(compareLayersSlice.actions.setComparedLayers([]));
+    store.dispatch(compareLayersSlice.actions.resetComparedLayers());
   };
 
   const onDrop = (oldIndex, newIndex) => {
@@ -61,27 +61,23 @@ const ComparePanel = (props) => {
   const getCompareOptions = () =>
     Object.values(COMPARE_OPTIONS).map((v) => ({ value: v.value, label: v.label() }));
 
-  const shareCompare = () => {
-    (async () => {
+  useEffect(() => {
+    const getAndSetCompareSharedPinsId = async () => {
       try {
         const sharedPinsId = await saveSharedPinsToServer(comparedLayers);
-
-        setDisplaySocialShareOptions(true);
         store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(sharedPinsId));
       } catch (e) {}
-    })();
-  };
+    };
+
+    if (comparedLayers.length > 0) {
+      getAndSetCompareSharedPinsId();
+    } else {
+      store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(null));
+    }
+  }, [comparedLayers]);
 
   const toggleSocialSharePanel = () => {
-    setDisplaySocialShareOptions(!displaySocialShareOptions);
-  };
-
-  const onShareClickHandler = () => {
-    if (displaySocialShareOptions) {
-      toggleSocialSharePanel();
-    } else {
-      shareCompare();
-    }
+    setDisplaySocialShareOptions((prevState) => !prevState);
   };
 
   return (
@@ -115,7 +111,10 @@ const ComparePanel = (props) => {
           </div>
           <div
             className={`compare-panel-button ${comparedLayers.length === 0 && 'disabled'} `}
-            onClick={onShareClickHandler}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleSocialSharePanel();
+            }}
           >{t`Share`}</div>
           <div className={`compare-panel-button ${pins.length === 0 && 'disabled'}`} onClick={addAllPins}>
             {t`Add all pins`}
@@ -125,7 +124,7 @@ const ComparePanel = (props) => {
 
       <SocialShare
         displaySocialShareOptions={displaySocialShareOptions}
-        toggleSocialSharePanel={toggleSocialSharePanel}
+        onHandleOutsideClick={() => setDisplaySocialShareOptions(false)}
       />
 
       <div className="compare-layers-list">

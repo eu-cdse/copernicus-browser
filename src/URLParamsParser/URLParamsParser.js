@@ -33,6 +33,7 @@ import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPane
 import {
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   S2_L2A_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
@@ -60,7 +61,11 @@ class URLParamsParser extends React.Component {
 
     const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(this.props.user.access_token);
     if (
-      [CDSE_CCM_VHR_IMAGE_2018_COLLECTION, CDSE_CCM_VHR_IMAGE_2021_COLLECTION].includes(params.datasetId) &&
+      [
+        CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
+        CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+        CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+      ].includes(params.datasetId) &&
       !hasAccessToCCMVisualization
     ) {
       params.datasetId = S2_L2A_CDAS;

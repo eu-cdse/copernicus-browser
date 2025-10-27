@@ -472,7 +472,7 @@ export const visualizationSlice = createSlice({
     toTime: undefined,
     datasetId: undefined,
     visualizationUrl: undefined,
-    visibleOnMap: true,
+    visibleOnMap: false,
     layerId: undefined,
     customSelected: false,
     evalscript: undefined,
@@ -834,10 +834,10 @@ export const compareLayersSlice = createSlice({
     setCompareMode: (state, action) => {
       state.compareMode = action.payload;
     },
-    setComparedLayers: (state, action) => {
-      state.comparedLayers = action.payload;
-      state.comparedOpacity = new Array(action.payload.length).fill(1.0);
-      state.comparedClipping = new Array(action.payload.length).fill([0, 1]);
+    resetComparedLayers: (state) => {
+      state.comparedLayers = [];
+      state.comparedOpacity = [];
+      state.comparedClipping = [];
     },
     addComparedLayers: (state, action) => {
       const layers = action.payload.map((l) => ({ id: uuid(), ...l }));

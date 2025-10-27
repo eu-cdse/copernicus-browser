@@ -244,6 +244,12 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/5ead11-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'CCM VHR Europe 2024',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/9bfc0e-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'CLMS Vegetation indices NDVI',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -843,6 +849,12 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/af6744-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lie_baltic_250m_daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/ede4cc-YOUR-INSTANCEID-HERE`,
       },
     ],
   },
@@ -3582,7 +3594,7 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/150710-YOUR-INSTANCEID-HERE`,
         description:
-          "On 6 March, Mexico's most active volcano increased its ash and gas emissions, posing a threat to Mexico City. It is located around 70 kilometres south-east of the city and threatens around 25 million people. There are 1500 active volcanoes worldwide, most of them along the Pacific Rim, known as the [Ring of Fire](https://en.wikipedia.org/wiki/Ring_of_Fire), of which around 50 erupt every year. Timely detection of dangerous volcanoes is crucial for over 500 million people living nearby. Space monitoring detects subtle changes, assesses the risks and supports response measures. EO Browser offers several preset band combinations, such as [True Color Composite](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/), which uses the visible light bands - red, green, and blue - in the corresponding red, green and blue color channels, resulting in a naturally coloured output that depicts the Earth as humans would naturally see it.",
+          "On 6 March, Mexico's most active volcano increased its ash and gas emissions, posing a threat to Mexico City. It is located around 70 kilometres south-east of the city and threatens around 25 million people. There are 1500 active volcanoes worldwide, most of them along the Pacific Rim, known as the [Ring of Fire](https://en.wikipedia.org/wiki/Ring_of_Fire), of which around 50 erupt every year. Timely detection of dangerous volcanoes is crucial for over 500 million people living nearby. Space monitoring detects subtle changes, assesses the risks and supports response measures. Copernicus Browser offers several preset band combinations, such as [True Color Composite](https://custom-scripts.sentinel-hub.com/sentinel-2/true_color/), which uses the visible light bands - red, green, and blue - in the corresponding red, green and blue color channels, resulting in a naturally coloured output that depicts the Earth as humans would naturally see it.",
       },
       {
         title: 'Yasur Volcano, Vanatu (IR Highlights)',

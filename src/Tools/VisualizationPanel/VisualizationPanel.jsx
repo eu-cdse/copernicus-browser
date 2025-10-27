@@ -336,7 +336,7 @@ function VisualizationPanel({
                   {!!displaySocialShareOptions && (
                     <SocialShare
                       displaySocialShareOptions={displaySocialShareOptions}
-                      toggleSocialSharePanel={() => toggleSocialShareOptions(false)}
+                      onHandleOutsideClick={() => toggleSocialShareOptions(false)}
                       datasetId={datasetId}
                     />
                   )}

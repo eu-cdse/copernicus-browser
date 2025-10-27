@@ -426,7 +426,7 @@ export function drawLegendImage(ctx, legendImage, left, showCaptions) {
 
 export const SENTINEL_COPYRIGHT_TEXT = `Credit: European Union, contains modified Copernicus Sentinel data ${moment
   .utc()
-  .format('YYYY')}, processed with EO Browser`;
+  .format('YYYY')}, processed with Copernicus Browser`;
 
 async function getImgObject(
   customObject = {},

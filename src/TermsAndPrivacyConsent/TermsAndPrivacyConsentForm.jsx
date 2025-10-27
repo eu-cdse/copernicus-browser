@@ -55,9 +55,9 @@ export default function TermsAndPrivacyConsentForm() {
               <div className="learn-more">
                 {t`Learn more about`}{' '}
                 <ExternalLink
-                  href="https://www.sentinel-hub.com/explore/eobrowser/"
+                  href="https://dataspace.copernicus.eu/"
                   className="link-external"
-                >{t`EO Browser`}</ExternalLink>
+                >{t`Copernicus Browser`}</ExternalLink>
                 .
               </div>
             </div>

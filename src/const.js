@@ -66,14 +66,14 @@ export const MODES = [DEFAULT_MODE];
 
 export const EXPIRED_ACCOUNT = {
   instanceId: 'expired_account_dummy_instance_id',
-  errorMessage: t`Your user instances could not be loaded as your Sentinel Hub account was not set up/expired. You can still use EO Browser but you will not be able to use personal user instances. To be able to set up personal user instances you can apply for a 30-days free trial or consider subscribing to one of the plans: `,
-  errorLink: 'https://apps.sentinel-hub.com/dashboard/#/account/billing',
+  errorMessage: t`Your user instances could not be loaded as your Sentinel Hub account was not set up/expired. You can still use Copernicus Browser but you will not be able to use personal user instances. To be able to set up personal user instances you can apply for a 30-days free trial or consider subscribing to one of the plans: `,
+  errorLink: 'https://shapps.dataspace.copernicus.eu/dashboard/#/',
 };
 
 export const NOT_LOGGED_IN = {
   instanceId: 'not_logged_in_dummy_instance_id',
   errorMessage: () => t`Login to use custom configuration instances.`,
-  errorLink: 'https://apps.sentinel-hub.com/dashboard/#/account/billing',
+  errorLink: 'https://shapps.dataspace.copernicus.eu/dashboard/#/',
 };
 
 export const AOI_SHAPE = {

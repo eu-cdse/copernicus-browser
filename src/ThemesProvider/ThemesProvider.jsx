@@ -33,7 +33,11 @@ const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
   : DEFAULT_MODE;
 
-const EXCLUDED_CONFIG_NAMES_FOR_NON_COP_SERVICES_USERS = ['CCM VHR Europe 2018', 'CCM VHR Europe 2021'];
+const EXCLUDED_CONFIG_NAMES_FOR_USERS_WITHOUT_ACCESS = [
+  'CCM VHR Europe 2018',
+  'CCM VHR Europe 2021',
+  'CCM VHR Europe 2024',
+];
 
 function getAllowedIdentifiersForProject(identifier) {
   const allowed = ['GENERAL'];
@@ -372,7 +376,7 @@ class ThemesProvider extends React.Component {
       selectedTheme = {
         ...selectedTheme,
         content: selectedTheme.content.filter(
-          (t) => !EXCLUDED_CONFIG_NAMES_FOR_NON_COP_SERVICES_USERS.includes(t.name),
+          (t) => !EXCLUDED_CONFIG_NAMES_FOR_USERS_WITHOUT_ACCESS.includes(t.name),
         ),
       };
     }

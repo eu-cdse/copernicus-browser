@@ -11,6 +11,7 @@ import {
   IO_LULC_10M_ANNUAL,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
@@ -111,6 +112,7 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -550,6 +552,12 @@ export const credits = {
       link: 'https://www.copernicus.eu/en/contributing-missions',
     },
   ],
+  [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: [
+    {
+      ...copernicus,
+      link: 'https://www.copernicus.eu/en/contributing-missions',
+    },
+  ],
   [COPERNICUS_CLMS_DMP_300M_10DAILY_RT0]: [
     {
       ...copernicus,
@@ -840,6 +848,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

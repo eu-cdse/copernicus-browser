@@ -4014,6 +4014,33 @@
         ],
         "datasets": []
     },
+    "9bfc0e-YOUR-INSTANCEID-HERE": {
+        "title": "CCM VHR 2024",
+        "layers": [
+            {
+                "id": "1_TRUE_COLOR",
+                "name": "True color",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "2_FALSE-COLOR",
+                "name": "False color",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "3_NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "9ccb92-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fapar_global_1km_10daily_v2_RT2",
         "layers": [
@@ -5960,6 +5987,19 @@
                 ]
             }
         ]
+    },
+    "ede4cc-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | LIE Baltic 250m Daily V1",
+        "layers": [
+            {
+                "id": "LIE",
+                "name": "LIE",
+                "description": "Classification of lake ice extent",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ede4cc-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LIE&style=default"
+            }
+        ],
+        "datasets": []
     },
     "ef19b6-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-3-SLSTR",

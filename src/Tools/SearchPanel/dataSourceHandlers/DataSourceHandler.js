@@ -15,7 +15,7 @@ import { DEFAULT_CLOUD_COVER_PERCENT } from '../../../const';
 
 export const SENTINEL_COPYRIGHT_TEXT = `Credit: European Union, contains modified Copernicus Sentinel data ${moment
   .utc()
-  .format('YYYY')}, processed with EO Browser`;
+  .format('YYYY')}, processed with Copernicus Browser`;
 
 export default class DataSourceHandler {
   fetchingFunctions = [];

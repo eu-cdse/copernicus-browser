@@ -804,7 +804,7 @@ class Map extends React.Component {
               })}
             />
           )}
-        <DatasetLocationPreview />
+        {selectedTabIndex === TABS.VISUALIZE_TAB && <DatasetLocationPreview />}
         {/* {selectedModeId && !is3D && (
           <EOBModeSelection
             highlighted={this.props.selectedModeId === EDUCATION_MODE.id}

@@ -12,7 +12,7 @@ import Loader from '../../Loader/Loader';
 
 import './social.scss';
 
-const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datasetId, user }) => {
+const SocialShare = ({ displaySocialShareOptions, onHandleOutsideClick, datasetId, user }) => {
   const [generating, setGenerating] = useState(false);
   const ref = useRef();
   const sharedLinks = getSharedLinks();
@@ -38,7 +38,7 @@ const SocialShare = ({ displaySocialShareOptions, toggleSocialSharePanel, datase
     setGenerating(false);
   };
 
-  useOutsideClick(ref, () => toggleSocialSharePanel());
+  useOutsideClick(ref, () => onHandleOutsideClick());
 
   if (!displaySocialShareOptions) {
     return null;

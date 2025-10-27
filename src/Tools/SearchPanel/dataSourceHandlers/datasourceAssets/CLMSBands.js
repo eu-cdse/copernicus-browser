@@ -1608,3 +1608,9 @@ export const COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1_BANDS = [
+  {
+    name: 'LIE',
+    getDescription: () => ``,
+  },
+];

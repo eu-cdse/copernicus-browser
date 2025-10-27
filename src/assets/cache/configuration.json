@@ -34188,6 +34188,83 @@
             }
         }
     ],
+    "9bfc0e-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "1_TRUE_COLOR",
+            "title": "True color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nlet minVal = 0;\nlet maxVal = 300;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B1, samples.B2, samples.B3];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B3\",\n        \"B2\",\n        \"B1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "9bfc0e-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-23T08:47:30.888605Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b016cf-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b016cf-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "2_FALSE-COLOR",
+            "title": "False color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nlet minVal = 0;\nlet maxVal = 500;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B4, samples.B1, samples.B2];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B4\",\n        \"B1\",\n        \"B2\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "9bfc0e-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-23T08:47:36.418147Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b016cf-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b016cf-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "3_NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nfunction evaluatePixel(samples) {\n  if (samples.dataMask == 0) return [0,0,0,0];\n  \n  var ndvi = index(samples.B4, samples.B1);\n  \n  if (ndvi<-0.2) return [0.75,0.75,0.75,1];\n  else if (ndvi<-0.1) return [0.86,0.86,0.86,1];\n  else if (ndvi<0) return [1,1,0.88,1];\n  else if (ndvi<0.025) return [1,0.98,0.8,1];\n  else if (ndvi<0.05) return [0.93,0.91,0.71,1];\n  else if (ndvi<0.075) return [0.87,0.85,0.61,1];\n  else if (ndvi<0.1) return [0.8,0.78,0.51,1];\n  else if (ndvi<0.125) return [0.74,0.72,0.42,1];\n  else if (ndvi<0.15) return [0.69,0.76,0.38,1];\n  else if (ndvi<0.175) return [0.64,0.8,0.35,1];\n  else if (ndvi<0.2) return [0.57,0.75,0.32,1];\n  else if (ndvi<0.25) return [0.5,0.7,0.28,1];\n  else if (ndvi<0.3) return [0.44,0.64,0.25,1];\n  else if (ndvi<0.35) return [0.38,0.59,0.21,1];\n  else if (ndvi<0.4) return [0.31,0.54,0.18,1];\n  else if (ndvi<0.45) return [0.25,0.49,0.14,1];\n  else if (ndvi<0.5) return [0.19,0.43,0.11,1];\n  else if (ndvi<0.55) return [0.13,0.38,0.07,1];\n  else if (ndvi<0.6) return [0.06,0.33,0.04,1];\n  else return [0,0.27,0,1];\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B4\",\n        \"B1\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "9bfc0e-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-23T08:50:23.691557Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b016cf-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b016cf-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "9ccb92-YOUR-INSTANCEID-HERE": [
         {
             "id": "FAPAR",
@@ -51716,6 +51793,65 @@
             }
         }
     ],
+    "ede4cc-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "LIE",
+            "title": "LIE",
+            "description": "Classification of lake ice extent",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"LIE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.LIE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val, dataMask],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [\n  [0.0, [100, 100, 100]],\n  [1.0, [255, 255, 255]],\n  [2.0, [171, 217, 233]],\n  [3.0, [69, 117, 180]],\n  [4.0, [1, 102, 94]],\n  [5.0, [254, 224, 144]],\n  [6.0, [173, 154, 142]],\n];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "rgb(39.22%,39.22%,39.22%)",
+                                "label": "No data"
+                            },
+                            {
+                                "color": "rgb(100.0%,100.0%,100.0%)",
+                                "label": "Snow-covered ice"
+                            },
+                            {
+                                "color": "rgb(67.06%,85.1%,91.37%)",
+                                "label": "Partially snow-covered or snow-free ice"
+                            },
+                            {
+                                "color": "rgb(27.06%,45.88%,70.59%)",
+                                "label": "Open water"
+                            },
+                            {
+                                "color": "rgb(0.39%,40.0%,36.86%)",
+                                "label": "Sea"
+                            },
+                            {
+                                "color": "rgb(99.61%,87.84%,56.47%)",
+                                "label": "Cloud"
+                            },
+                            {
+                                "color": "rgb(67.84%,60.39%,55.69%)",
+                                "label": "Land"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ede4cc-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-10-15T09:27:08.450202Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-bfebf8-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "bfebf8-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "ef19b6-YOUR-INSTANCEID-HERE": [
         {
             "id": "F1_VISUALIZED",
@@ -54086,7 +54222,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"OnDemandLC\", \"dataMask\"],\n        output: [{\n                id: \"default\",\n                bands: 4,\n                sampleType: 'UINT8'\n            },\n            //{\n              //  id: \"eobrowserStats\",\n               // bands: 1,\n               // sampleType: 'FLOAT32'\n            // },\n            {\n                id: \"dataMask\",\n                bands: 1\n            }\n        ],\n    };\n}\n\nconst classes = {\n    0: [255, 255, 255], // No trees\n    11: [0, 38, 115], // forest no managment \n    20: [76, 230, 0], // forest managment\n    31: [0, 110, 255], // Planted\n    32: [230, 153, 0], // Plantation\n    33: [0, 255, 255], // Rubber\n    40: [255, 115, 222], // Oil palm\n    50: [250, 0, 0], // Fruit tree\n    53: [255, 255, 0], // Agroforestry\n    100: [242, 193, 247], // Other\n    255: [0, 0, 0] // no data\n}\n\nfunction evaluatePixel(samples) {\n    // return black if key not available\n    let imgVals = classes[samples.OnDemandLC] || [0, 0, 0];\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n        default: imgVals,\n        //eobrowserStats: [samples.OnDemandLC],\n        dataMask: [samples.dataMask]\n    };\n}",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"OnDemandLC\", \"dataMask\"],\n        output: [{\n                id: \"default\",\n                bands: 4,\n                sampleType: 'UINT8'\n            },\n            //{\n              //  id: \"eobrowserStats\",\n               // bands: 1,\n               // sampleType: 'FLOAT32'\n            // },\n            {\n                id: \"dataMask\",\n                bands: 1\n            }\n        ],\n    };\n}\n\nconst classes = {\n    0: [255, 255, 255], // No trees\n    11: [38, 115, 0], // forest no managment \n    20: [76, 230, 0], // forest managment\n    31: [0, 110, 255], // Planted\n    32: [230, 153, 0], // Plantation\n    33: [0, 255, 255], // Rubber\n    40: [255, 115, 222], // Oil palm\n    50: [250, 0, 0], // Fruit tree\n    53: [255, 255, 0], // Agroforestry\n    100: [242, 193, 247], // Other\n    255: [0, 0, 0] // no data\n}\n\nfunction evaluatePixel(samples) {\n    // return black if key not available\n    let imgVals = classes[samples.OnDemandLC] || [0, 0, 0];\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n        default: imgVals,\n        //eobrowserStats: [samples.OnDemandLC],\n        dataMask: [samples.dataMask]\n    };\n}",
                     "legend": {
                         "type": "discrete",
                         "items": [
@@ -54095,7 +54231,7 @@
                                 "label": "No tree"
                             },
                             {
-                                "color": "rgb(0, 38, 115)",
+                                "color": "rgb(38, 115, 0)",
                                 "label": "Naturally regenerating forests without any signs of management"
                             },
                             {
@@ -54140,7 +54276,7 @@
             ],
             "orderHint": 0,
             "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-10-14T10:46:43.917191Z",
+            "lastUpdated": "2025-10-27T09:43:44.827299Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-ec62cc-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,

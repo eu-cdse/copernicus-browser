@@ -100,6 +100,7 @@ import {
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
+  COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -675,6 +676,7 @@ export const CLMS_OPTIONS = [
             id: 'River and Lake Ice Extent',
             options: [
               // { label: 'lie-agg_europe_vector_daily', id: 'lie-agg_europe_vector_daily' },
+              { label: 'lie_baltic_250m_daily_v1', id: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1 },
               { label: 'clms_global_lie_250m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_250M_DAILY_V2 },
               { label: 'clms_global_lie_500m_v1_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V1 },
               { label: 'clms_global_lie_500m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V2 },

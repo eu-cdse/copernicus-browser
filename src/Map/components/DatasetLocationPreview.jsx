@@ -76,7 +76,7 @@ const DatasetLocationPreview = ({
   const [modalOpened, setModalOpened] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const getDataSourceZoomThreshold = useCallback(() => {
+  const getDataSourceMinZoom = useCallback(() => {
     const dsh = getDataSourceHandler(datasetId);
     if (dsh && typeof dsh.getLeafletZoomConfig === 'function') {
       const zoomConfig = dsh.getLeafletZoomConfig(datasetId);
@@ -85,8 +85,7 @@ const DatasetLocationPreview = ({
     return 7; // Default fallback
   }, [datasetId]);
 
-  const shouldRender =
-    zoom >= minZoom && zoom <= maxZoom && (!visibleOnMap || zoom < getDataSourceZoomThreshold());
+  const shouldRender = zoom >= minZoom && zoom <= maxZoom && (!visibleOnMap || zoom < getDataSourceMinZoom());
 
   const loadPolygonsForDataset = useCallback(async (datasetId) => {
     try {

@@ -172,8 +172,8 @@ class SearchPanel extends Component {
   handleSelectTheme = async (e, themes) => {
     const { id: selectedThemeId, list: selectedThemesListId, highlights } = themes[e.target.value];
     if (selectedThemeId === EXPIRED_ACCOUNT_DUMMY_INSTANCE_ID) {
-      const errorMessage = t`Your user instances could not be loaded as your Sentinel Hub account was not set up/expired. You can still use EO Browser but you will not be able to use personal user instances. To be able to set up personal user instances you can apply for a 30-days free trial or consider subscribing to one of the plans: `;
-      const errorLink = 'https://apps.sentinel-hub.com/dashboard/#/account/billing';
+      const errorMessage = t`Your user instances could not be loaded as your Sentinel Hub account was not set up/expired. You can still use Copernicus Browser but you will not be able to use personal user instances. To be able to set up personal user instances you can apply for a 30-days free trial or consider subscribing to one of the plans: `;
+      const errorLink = 'https://shapps.dataspace.copernicus.eu/dashboard/#/';
       store.dispatch(notificationSlice.actions.displayPanelError({ message: errorMessage, link: errorLink }));
     } else {
       store.dispatch(notificationSlice.actions.displayPanelError(null));
