@@ -252,6 +252,7 @@ class URLParamsParser extends React.Component {
         ? decrypt(visualizationUrl)
         : visualizationUrl;
 
+    const customSelected = evalscript || evalscripturl ? true : undefined;
     const newVisualizationParams = {
       datasetId: datasetId,
       fromTime: fromTime ? moment.utc(fromTime) : null,
@@ -259,7 +260,7 @@ class URLParamsParser extends React.Component {
       visualizationUrl: decryptedVisualisationUrl,
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
-      customSelected: evalscript || evalscripturl ? true : undefined,
+      customSelected: customSelected,
       evalscripturl,
       gainEffect: gain ? parseFloat(gain) : undefined,
       gammaEffect: gamma ? parseFloat(gamma) : undefined,
@@ -280,6 +281,7 @@ class URLParamsParser extends React.Component {
       cloudCoverage: cloudCoverage && !isNaN(cloudCoverage) ? JSON.parse(cloudCoverage) : undefined,
       dateMode: dateMode,
       useEvoland: useEvoland,
+      visibleOnMap: (layerId || customSelected) && datasetId && decryptedVisualisationUrl,
       ...getNewDatasetPropertiesIfDeprecatedDatasetId(datasetId, visualizationUrl),
       selectedProcessing: isOpenEoSupported(
         decryptedVisualisationUrl,

@@ -270,8 +270,6 @@ const CollectionSelection = ({
         }),
       );
 
-      store.dispatch(visualizationSlice.actions.setLayerId(layerId));
-
       if (dsh && dsh.supportsDisplayLatestDateOnSelect(selectedDatasetId)) {
         await displayLatestDateOnSelect({
           datasetId: selectedDatasetId,
