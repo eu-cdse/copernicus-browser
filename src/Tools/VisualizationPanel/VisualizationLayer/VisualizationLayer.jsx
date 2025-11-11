@@ -14,6 +14,8 @@ import LayerDetails from './LayerDetails';
 import { createLayerActions } from './createLayerActions';
 import { getVisualizationEffectsFromStore } from '../../../utils/effectsUtils';
 import { getOrbitDirectionFromList } from '../VisualizationPanel.utils';
+import { PROCESSING_OPTIONS } from '../../../const';
+import { getProcessGraph } from '../../../api/openEO/openEOHelpers';
 
 class VisualizationLayer extends Component {
   state = { detailsOpen: false };
@@ -35,6 +37,7 @@ class VisualizationLayer extends Component {
       visualizationUrl,
       toggleLayerActions,
       layerActionsOpen,
+      selectedProcessing,
     } = this.props;
 
     const { detailsOpen } = this.state;
@@ -50,7 +53,18 @@ class VisualizationLayer extends Component {
     const legend = getLegendDefinitionFromMetadata(layerMetadata) || viz.legend;
 
     const hasDetails = viz.legendUrl || legend || longDescription;
-    const layerActions = createLayerActions(this.props);
+
+    // Prepare props for createLayerActions
+    // When in OpenEO mode we set evalscripts to null and add processGraph
+    const layerActionsProps = { ...this.props };
+    if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
+      layerActionsProps.evalscript = null; // Don't pass evalscript in OpenEO mode
+      layerActionsProps.evalscripturl = null;
+      layerActionsProps.selectedProcessing = selectedProcessing;
+      layerActionsProps.processGraph = getProcessGraph(visualizationUrl, selectedVisualizationId);
+    }
+
+    const layerActions = createLayerActions(layerActionsProps);
 
     return (
       <div
@@ -98,6 +112,7 @@ const mapStoreToProps = (store) => ({
   selectedVisualizationId: store.visualization.layerId,
   visualizationUrl: store.visualization.visualizationUrl,
   datasetId: store.visualization.datasetId,
+  selectedProcessing: store.visualization.selectedProcessing,
   selectedThemeId: store.themes.selectedThemeId,
   selectedModeId: store.themes.selectedModeId,
   is3D: store.mainMap.is3D,

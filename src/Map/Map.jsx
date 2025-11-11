@@ -362,7 +362,7 @@ class Map extends React.Component {
       constellationProp = datasetParams?.constellation;
     }
 
-    const showSingleShLayer =
+    const showSingleShLayer = !!(
       authenticated &&
       dataSourcesInitialized &&
       selectedTabIndex === TABS.VISUALIZE_TAB &&
@@ -370,7 +370,8 @@ class Map extends React.Component {
       !showComparePanel &&
       (visualizationLayerId || customSelected) &&
       datasetId &&
-      visualizationUrl;
+      visualizationUrl
+    );
 
     const showCompareShLayers =
       comparedLayers.length && selectedTabIndex === TABS.VISUALIZE_TAB && showComparePanel;
@@ -631,11 +632,13 @@ class Map extends React.Component {
                 }
                 const index = comparedLayers.length - 1 - i;
                 const areEffectsAppliedForComparedLayer = isVisualizationEffectsApplied(p);
+                const isCustomVisualisation = evalscript != null && evalscript.length > 0;
                 const supportsOpenEoComparedLayer = isOpenEoSupported(
                   visualizationUrl,
                   layerId,
                   IMAGE_FORMATS.PNG,
                   areEffectsAppliedForComparedLayer,
+                  isCustomVisualisation,
                 );
 
                 if (supportsOpenEoComparedLayer && selectedProcessing === PROCESSING_OPTIONS.OPENEO) {

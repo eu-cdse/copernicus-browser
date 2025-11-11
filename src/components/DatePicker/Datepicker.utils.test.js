@@ -6,6 +6,7 @@ import {
   isPreviousMonthAvailable,
   getNextBestDate,
   checkAndSetWithinAvailableRange,
+  fetchAvailableDaysInRange,
 } from './Datepicker.utils';
 
 describe('isNextMonthAvailable', () => {
@@ -155,6 +156,15 @@ function fetchDatesMock(date) {
   } else if (month === 10) {
     return [];
   }
+  return [];
+}
+
+async function fetchDatesInRangeMock(fromDate, toDate) {
+  return await fetchAvailableDaysInRange({
+    fromDate,
+    toDate,
+    fetchDatesForMonth: fetchDatesMock,
+  });
 }
 
 test.each([
@@ -166,14 +176,14 @@ test.each([
   ['prev', 5, 2, moment.utc('2021-07-27')],
   ['prev', 70, 2, moment.utc('2021-09-11')],
   ['prev', 0, 2, moment.utc('2021-07-16')],
-  ['prev', 0, 1, moment.utc('2021-09-18')],
-])('Test getNextBestDate method', async (direction, maxCC, limitMonths, expectedDate) => {
+  ['prev', 0, 1, moment.utc('2021-07-16')],
+])('Test getNextBestDate method', async (direction, maxCC, maxSearchIterations, expectedDate) => {
   const newDate = await getNextBestDate({
     selectedDay: selectedDayMock,
     direction: direction,
     maxCC: maxCC,
-    fetchDates: fetchDatesMock,
-    limitMonths: limitMonths,
+    fetchDatesInRange: fetchDatesInRangeMock,
+    maxSearchIterations: maxSearchIterations,
   });
   const datesEqual = newDate.isSame(expectedDate);
   expect(datesEqual).toBe(true);
@@ -191,13 +201,13 @@ test.each([
   ['prev', 0, 1, moment.utc('2021-09-18')],
 ])(
   'Test getNextBestDate method with minDate and maxDate',
-  async (direction, maxCC, limitMonths, expectedDate) => {
+  async (direction, maxCC, maxSearchIterations, expectedDate) => {
     const newDate = await getNextBestDate({
       selectedDay: selectedDayMock,
       direction: direction,
       maxCC: maxCC,
-      fetchDates: fetchDatesMock,
-      limitMonths: limitMonths,
+      fetchDatesInRange: fetchDatesInRangeMock,
+      maxSearchIterations: maxSearchIterations,
       minDate: moment.utc('2021-07-28'),
       maxDate: moment.utc('2021-09-25'),
     });

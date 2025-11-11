@@ -13,7 +13,7 @@ import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
 import { usePrevious } from '../../hooks/usePrevious';
 
 import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';
-import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
+import { getProcessGraph, isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
@@ -168,6 +168,7 @@ function LayerSelection({
         visibleOnMap: true,
         dataFusion: [],
         selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
+        processGraph: supportsOpenEO ? JSON.stringify(getProcessGraph(layer.url, layer.layerId)) : '',
       }),
     );
   }
@@ -200,6 +201,7 @@ function LayerSelection({
         visualizationUrl: layers[0].url,
         evalscript: customEvalscript || datasourceHandler.generateEvalscript(selectedBands, datasetId),
         selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
+        processGraph: '',
       }),
     );
   }
@@ -223,6 +225,7 @@ function LayerSelection({
           evalscripturl: null,
           dataFusion: [],
           selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
+          processGraph: supportsOpenEO ? JSON.stringify(getProcessGraph(layer.url, layer.layerId)) : '',
         }),
       );
       setLocationHash(CUSTOM_VISUALIZATION_URL_ROUTES[2]);
@@ -294,6 +297,7 @@ function LayerSelection({
         onCompositeChange={onCompositeChange}
         onIndexScriptChange={onIndexScriptChange}
         savePin={savePin}
+        processGraph={''}
       />
     );
   }

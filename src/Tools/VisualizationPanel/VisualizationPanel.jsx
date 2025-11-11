@@ -51,9 +51,9 @@ const getActions = ({
   effects,
   displayLayer,
   toggleLayer,
+  datasetId,
 }) => {
-  const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
-
+  const haveEffectsChanged = haveEffectsChangedFromDefault(effects, datasetId);
   return [
     {
       id: 'showEffects',
@@ -144,7 +144,7 @@ function VisualizationPanel({
   const visualizationActionsRef = useRef();
   const selectedTimeRef = useRef(toTime);
 
-  const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
+  const haveEffectsChanged = haveEffectsChangedFromDefault(effects, datasetId);
   const supportsOpenEo = isOpenEoSupported(
     visualizationUrl,
     layerId,
@@ -252,6 +252,7 @@ function VisualizationPanel({
     effects: effects,
     displayLayer: visibleOnMap,
     toggleLayer: toggleLayer,
+    datasetId: datasetId,
   });
 
   useEffect(() => {

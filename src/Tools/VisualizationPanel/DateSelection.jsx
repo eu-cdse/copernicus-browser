@@ -110,13 +110,22 @@ function DateSelection({
 
   async function onFetchAvailableDates(fromMoment, toMoment) {
     const bbox = generateAppropriateSearchBBox(mapBounds, pixelBounds);
-    const dates = await dsh.findDates({
+    const response = await dsh.findTiles({
       datasetId: datasetId,
       bbox: bbox,
       fromTime: fromMoment.toDate(),
       toTime: toMoment.toDate(),
       orbitDirection: orbitDirection,
     });
+    // Transform findTiles response to expected format
+    const dates = response.tiles.map((tile) => ({
+      fromTime: tile.sensingTime,
+      meta: {
+        minimalCloudCoverPercent: tile.meta.cloudCoverPercent,
+        averageCloudCoverPercent: tile.meta.cloudCoverPercent,
+      },
+    }));
+
     return dates;
   }
 
@@ -195,6 +204,7 @@ function DateSelection({
       showNextPrev={true}
       updateSelectedTime={updateSelectedTime}
       onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
+      onQueryDatesForRange={onFetchAvailableDates}
       onQueryFlyoversForActiveMonth={fetchAvailableFlyovers}
       getLatestAvailableDate={getLatestAvailableDate}
       limitMonthsSearch={limitMonthsSearch}

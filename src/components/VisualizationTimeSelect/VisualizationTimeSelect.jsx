@@ -52,6 +52,7 @@ export function VisualizationTimeSelect({
   maxDate,
   minDate,
   onQueryDatesForActiveMonth,
+  onQueryDatesForRange,
   showNextPrev,
   fromTime,
   toTime,
@@ -208,6 +209,7 @@ export function VisualizationTimeSelect({
           onQueryDatesForActiveMonth={
             hasCloudCoverage && isZoomLevelOk ? onQueryFlyoversForActiveMonth : onQueryDatesForActiveMonth
           }
+          onQueryDatesForRange={onQueryDatesForRange}
           hasCloudCoverFilter={hasCloudCoverage}
           maxCloudCover={maxCloudCover}
           setMaxCloudCover={setMaxCloudCover}

@@ -148,6 +148,7 @@ class Tools extends Component {
       selectedThemeId,
       newPinsCount,
       evalscripturl,
+      processGraph,
     } = this.props;
     if (!import.meta.env.VITE_CDSE_BACKEND) {
       store.dispatch(notificationSlice.actions.displayError(FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG));
@@ -158,7 +159,7 @@ class Tools extends Component {
         datasetId &&
         selectedThemeId &&
         visualizationUrl &&
-        (layerId || (customSelected && (evalscript || evalscripturl)))
+        (layerId || (customSelected && (evalscript || evalscripturl || processGraph)))
       )
     ) {
       return null;
@@ -332,6 +333,8 @@ const mapStoreToProps = (store) => ({
   is3D: store.mainMap.is3D,
   searchResults: store.searchResults.searchResults,
   newPinsCount: store.pins.newPinsCount,
+  selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
 });
 
 export default connect(mapStoreToProps, null)(Tools);

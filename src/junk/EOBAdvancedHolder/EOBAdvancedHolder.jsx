@@ -116,7 +116,7 @@ class EOBAdvancedHolder extends React.Component {
         ? activeDatasource.groupChannels(activeDatasource.datasetId)
         : null;
 
-    const haveEffectsChanged = haveEffectsChangedFromDefault(effects);
+    const haveEffectsChanged = haveEffectsChangedFromDefault(effects, activeDatasource?.datasetId);
     const supportsOpenEO = isOpenEoSupported(
       visualizationUrl,
       selectedVisualizationId,

@@ -9,6 +9,7 @@ import {
   checkAndSetWithinAvailableRange,
   getNextBestDate,
   momentToDateWithUTCValues,
+  fetchAvailableDaysInRange,
 } from './Datepicker.utils';
 
 import './DatePicker.scss';
@@ -52,9 +53,10 @@ class DatePicker extends Component {
     const { displayedDayMonth } = this.state;
     const { selectedDay, maxDate, setSelectedDay, displayCalendar } = this.props;
     if (!!displayCalendar) {
-      const days = await this.fetchAvailableDaysInMonth(
-        displayedDayMonth ? moment(displayedDayMonth).utc(true) : selectedDay,
-      );
+      const targetMonth = displayedDayMonth ? moment(displayedDayMonth).utc(true) : selectedDay;
+      const fromDate = targetMonth.clone().startOf('month');
+      const toDate = targetMonth.clone().endOf('month');
+      const days = await this.fetchAvailableDaysInRange(fromDate, toDate);
       if (!selectedDay) {
         if (days.length > 0) {
           setSelectedDay(moment.utc(days[0].date));
@@ -100,7 +102,9 @@ class DatePicker extends Component {
       selectedDay.clone().month(date.getMonth()).year(date.getFullYear()),
     );
 
-    this.fetchAvailableDaysInMonth(newSelectedDay).then((dates) => this.setState({ availableDays: dates }));
+    const fromDate = newSelectedDay.clone().startOf('month');
+    const toDate = newSelectedDay.clone().endOf('month');
+    this.fetchAvailableDaysInRange(fromDate, toDate).then((dates) => this.setState({ availableDays: dates }));
   };
 
   onMonthOrYearDropdownChange = (month, year) => {
@@ -111,40 +115,71 @@ class DatePicker extends Component {
       maxDate,
     );
 
-    this.fetchAvailableDaysInMonth(newSelectedDay).then((dates) => this.setState({ availableDays: dates }));
+    const fromDate = newSelectedDay.clone().startOf('month');
+    const toDate = newSelectedDay.clone().endOf('month');
+    this.fetchAvailableDaysInRange(fromDate, toDate).then((dates) => this.setState({ availableDays: dates }));
   };
 
-  fetchAvailableDaysInMonth = async (date) => {
-    const { setDateLoading } = this.props;
+  fetchAvailableDaysInRange = async (fromDate, toDate) => {
+    const { setDateLoading, hasCloudCoverFilter, isZoomLevelOk } = this.props;
 
-    if (!this.props.onQueryDatesForActiveMonth) {
-      return [];
-    }
-    let dateArray = [];
-    try {
-      if (setDateLoading) {
-        setDateLoading(true);
+    // If parent provides a range fetcher, use it directly
+    if (this.props.onQueryDatesForRange) {
+      let dateArray = [];
+      try {
+        if (setDateLoading) {
+          setDateLoading(true);
+        }
+        this.setState({ loading: true });
+
+        dateArray = await this.props.onQueryDatesForRange(fromDate, toDate);
+
+        if (hasCloudCoverFilter && isZoomLevelOk) {
+          dateArray = dateArray.map((date) => ({
+            date: moment.utc(date.fromTime),
+            cloudCoverPercent: date.meta.minimalCloudCoverPercent ?? date.meta.averageCloudCoverPercent,
+          }));
+        } else {
+          dateArray = dateArray.map((date) => ({
+            date: moment.utc(date.fromTime || date.sensingTime || date),
+            cloudCoverPercent: null,
+          }));
+        }
+      } catch (err) {
+        handleError(err, 'Unable to fetch available days in range', (msg) => console.error(msg));
+      } finally {
+        if (setDateLoading) {
+          setDateLoading(false);
+        }
+        this.setState({ loading: false });
       }
-      this.setState({ loading: true });
-      const { hasCloudCoverFilter, isZoomLevelOk } = this.props;
-      dateArray = await this.props.onQueryDatesForActiveMonth(date);
-      if (hasCloudCoverFilter && isZoomLevelOk) {
-        dateArray = dateArray.map((date) => ({
-          date: moment.utc(date.fromTime),
-          cloudCoverPercent: date.meta.minimalCloudCoverPercent ?? date.meta.averageCloudCoverPercent,
-        }));
-      } else {
-        dateArray = dateArray.map((date) => ({ date: moment.utc(date), cloudCoverPercent: null }));
-      }
-    } catch (err) {
-      handleError(err, 'Unable to fetch available days in month', (msg) => console.error(msg));
-    } finally {
-      if (setDateLoading) {
-        setDateLoading(false);
-      }
-      this.setState({ loading: false });
       return dateArray;
     }
+
+    // Fallback: use the utility function that calls month-by-month using onQueryDatesForActiveMonth
+    return await fetchAvailableDaysInRange({
+      fromDate,
+      toDate,
+      fetchDatesForMonth: async (date) => {
+        if (!this.props.onQueryDatesForActiveMonth) {
+          return [];
+        }
+
+        const dateArray = await this.props.onQueryDatesForActiveMonth(date);
+
+        if (hasCloudCoverFilter && isZoomLevelOk) {
+          return dateArray.map((date) => ({
+            date: moment.utc(date.fromTime),
+            cloudCoverPercent: date.meta.minimalCloudCoverPercent ?? date.meta.averageCloudCoverPercent,
+          }));
+        } else {
+          return dateArray.map((date) => ({
+            date: moment.utc(date.fromTime || date.sensingTime || date),
+            cloudCoverPercent: null,
+          }));
+        }
+      },
+    });
   };
 
   checkAndSetWithinAvailableRange = (newSelectedDay) => {
@@ -160,15 +195,7 @@ class DatePicker extends Component {
 
   handleGetAndSetNextPrevDate = async (direction) => {
     let { loading } = this.state;
-    let {
-      selectedDay,
-      setSelectedDay,
-      minDate,
-      maxDate,
-      maxCloudCover,
-      limitMonthsSearch = 3,
-      dateLoading,
-    } = this.props;
+    let { selectedDay, setSelectedDay, minDate, maxDate, maxCloudCover, dateLoading } = this.props;
 
     if (loading || dateLoading) {
       return;
@@ -198,11 +225,10 @@ class DatePicker extends Component {
       selectedDay: selectedDay,
       direction: direction,
       maxCC: maxCloudCover,
-      fetchDates: this.fetchAvailableDaysInMonth,
+      fetchDatesInRange: this.fetchAvailableDaysInRange,
       minDate: minDate,
       maxDate: maxDate,
-      limitMonths: limitMonthsSearch,
-      limitMonthsSearch: limitMonthsSearch,
+      maxSearchIterations: 5,
     });
 
     if (newSelectedDay.isSame(selectedDay)) {

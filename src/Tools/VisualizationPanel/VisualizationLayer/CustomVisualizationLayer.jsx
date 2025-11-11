@@ -9,6 +9,8 @@ import { parseEvalscriptBands, parseIndexEvalscript } from '../../../utils';
 import ActionBar from '../../../components/ActionBar/ActionBar';
 import { createLayerActions } from './createLayerActions';
 import { getVisualizationEffectsFromStore } from '../../../utils/effectsUtils';
+import { PROCESSING_OPTIONS } from '../../../const';
+import { getProcessGraph } from '../../../api/openEO/openEOHelpers';
 
 const CustomVisualizationLayer = (props) => {
   const {
@@ -66,8 +68,18 @@ const CustomVisualizationLayer = (props) => {
     },
   };
 
-  const layerActions = createLayerActions(cloneDeep(props));
-
+  // Prepare props for createLayerActions
+  // When in OpenEO mode we set evalscripts to null.
+  // TODO: When processGraphs can be changed we will need to add the new processGraph to the visualisation or layer in compare mode
+  // for now we do not set anything as the editor is read-only
+  const layerActionsProps = cloneDeep({ ...props, ...effects });
+  if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
+    layerActionsProps.evalscript = null; // Don't pass evalscript in OpenEO mode
+    layerActionsProps.evalscripturl = null;
+    layerActionsProps.selectedProcessing = selectedProcessing;
+    layerActionsProps.processGraph = getProcessGraph(visualizationUrl, selectedVisualizationId);
+  }
+  const layerActions = createLayerActions(layerActionsProps);
   return (
     <div className="custom-visualization">
       <ActionBar actionsOpen={true} actions={layerActions} />

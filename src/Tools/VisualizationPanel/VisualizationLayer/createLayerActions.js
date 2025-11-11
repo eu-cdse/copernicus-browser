@@ -40,6 +40,8 @@ const addVisualizationToComponent = (
     customSelected,
     selectedThemeId,
     orbitDirection,
+    selectedProcessing,
+    processGraph,
   },
 ) => {
   const title = `${getDatasetLabel(datasetId)}: ${customSelected ? 'Custom' : selectedVisualizationId}`;
@@ -70,6 +72,8 @@ const addVisualizationToComponent = (
     orthorectification,
     themeId: selectedThemeId,
     orbitDirection,
+    processGraph: processGraph,
+    selectedProcessing: selectedProcessing,
   };
 
   store.dispatch(dispatchAction(visualizationProps));

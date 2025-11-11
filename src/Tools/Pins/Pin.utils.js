@@ -27,7 +27,7 @@ import {
   isEffectRangeSetAndNotDefault,
 } from '../../utils/effectsUtils';
 import { getLayerFromParams } from '../../Controls/ImgDownload/ImageDownload.utils';
-import { DEFAULT_THEME_ID, TABS } from '../../const';
+import { DEFAULT_THEME_ID, PROCESSING_OPTIONS, TABS } from '../../const';
 import { SAVED_PINS, UNSAVED_PINS } from './PinPanel';
 import {
   S3OLCI,
@@ -668,6 +668,8 @@ export async function constructPinFromProps(props) {
     terrainViewerSettings,
     orbitDirection,
     cloudCoverage,
+    selectedProcessing,
+    processGraph,
   } = props;
   const themeName = getThemeName(themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId));
   const layer = await getLayerFromParams(props);
@@ -682,8 +684,14 @@ export async function constructPinFromProps(props) {
     fromTime: fromTime.toISOString(),
     toTime: toTime.toISOString(),
     dateMode: dateMode,
-    evalscript: evalscript && !evalscripturl && customSelected ? evalscript : '',
-    evalscripturl: evalscripturl && customSelected ? evalscripturl : '',
+    evalscript:
+      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscript && !evalscripturl && customSelected
+        ? evalscript
+        : '',
+    evalscripturl:
+      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscripturl && customSelected
+        ? evalscripturl
+        : '',
     themeId: selectedThemeId,
     dataFusion: dataFusion,
     tag: VERSION_INFO.tag,
@@ -703,6 +711,8 @@ export async function constructPinFromProps(props) {
     terrainViewerSettings: terrainViewerSettings,
     orbitDirection: orbitDirection,
     cloudCoverage: cloudCoverage,
+    selectedProcessing: selectedProcessing,
+    processGraph: processGraph,
   };
 }
 

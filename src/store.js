@@ -496,6 +496,7 @@ export const visualizationSlice = createSlice({
     cloudCoverage: DEFAULT_CLOUD_COVER_PERCENT,
     dateMode: DATE_MODES.SINGLE.value,
     selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
+    processGraph: '',
   },
   reducers: {
     setVisualizationTime: (state, action) => {
@@ -753,6 +754,9 @@ export const visualizationSlice = createSlice({
       }
       if (action.payload.selectedProcessing !== undefined) {
         state.selectedProcessing = action.payload.selectedProcessing;
+      }
+      if (action.payload.processGraph !== undefined) {
+        state.processGraph = action.payload.processGraph;
       }
     },
     reset: (state) => {

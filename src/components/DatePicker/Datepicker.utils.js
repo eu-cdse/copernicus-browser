@@ -71,29 +71,6 @@ function orderAvailableDates(availableDays, direction, selectedDay) {
   return availableDays;
 }
 
-function getNextMonthDay(day, direction, nMonths) {
-  if (direction === 'prev') {
-    return day.clone().subtract(nMonths, 'month');
-  }
-  if (direction === 'next') {
-    return day.clone().add(nMonths, 'month');
-  }
-}
-
-function isMonthOutsideTemporalExtent(dayInMonth, minDate, maxDate, direction) {
-  if (direction === 'prev') {
-    if (minDate && dayInMonth.clone().endOf('month').isBefore(minDate)) {
-      return true;
-    }
-  }
-  if (direction === 'next') {
-    if (maxDate && dayInMonth.clone().startOf('month').isAfter(maxDate)) {
-      return true;
-    }
-  }
-  return false;
-}
-
 function filterDatesOutsideTemporalExtent(availableDays, minDate, maxDate) {
   return availableDays.filter(
     (d) =>
@@ -105,25 +82,62 @@ export async function getNextBestDate({
   selectedDay,
   direction,
   maxCC = DEFAULT_CLOUD_COVER_PERCENT,
-  fetchDates,
+  fetchDatesInRange,
   minDate,
   maxDate,
-  limitMonths = 3,
+  maxSearchIterations,
 }) {
   let availableDays;
 
-  for (let nMonths = 0; nMonths <= limitMonths; nMonths++) {
-    const nextMonthDay = getNextMonthDay(selectedDay, direction, nMonths);
-    if (isMonthOutsideTemporalExtent(nextMonthDay, minDate, maxDate, direction)) {
-      break;
-    }
-    availableDays = await fetchDates(nextMonthDay);
-    availableDays = filterDatesOutsideTemporalExtent([...availableDays], minDate, maxDate);
-    availableDays = orderAvailableDates([...availableDays], direction, selectedDay);
+  // If fetchDatesInRange is provided, use expanding window approach
+  if (fetchDatesInRange) {
+    let searchedUpTo = selectedDay.clone(); // Track how far we've searched
 
-    for (let day of availableDays) {
-      if (day.cloudCoverPercent === null || day.cloudCoverPercent <= maxCC) {
-        return day.date;
+    for (let nMonths = 0; nMonths <= maxSearchIterations; nMonths++) {
+      // Calculate the search window with exponential expansion (3^n)
+      // nMonths = 0: 1 month (3^0)
+      // nMonths = 1: 3 months (3^1)
+      // nMonths = 2: 9 months (3^2)
+      // nMonths = 3: 27 months (3^3)
+      // nMonths = 4: 81 months (3^4), etc.
+      const searchRange = Math.pow(3, nMonths);
+
+      let fromDate, toDate;
+      if (direction === 'prev') {
+        // Search from searchedUpTo going backwards
+        toDate = searchedUpTo.clone().subtract(1, 'day').endOf('month');
+        fromDate = toDate.clone().subtract(searchRange, 'months').add(1, 'month').startOf('month');
+        // Update searchedUpTo for next iteration
+        searchedUpTo = fromDate.clone();
+      } else {
+        // Search from searchedUpTo going forwards
+        fromDate = searchedUpTo.clone().add(1, 'day').startOf('month');
+        toDate = fromDate.clone().add(searchRange, 'months').subtract(1, 'month').endOf('month');
+        // Update searchedUpTo for next iteration
+        searchedUpTo = toDate.clone();
+      }
+
+      // Clamp to minDate/maxDate boundaries
+      if (minDate && fromDate.isBefore(minDate)) {
+        fromDate = minDate.clone();
+      }
+      if (maxDate && toDate.isAfter(maxDate)) {
+        toDate = maxDate.clone();
+      }
+
+      // Check if search window is outside temporal extent
+      if ((minDate && toDate.isBefore(minDate)) || (maxDate && fromDate.isAfter(maxDate))) {
+        break;
+      }
+
+      availableDays = await fetchDatesInRange(fromDate, toDate);
+      availableDays = filterDatesOutsideTemporalExtent([...availableDays], minDate, maxDate);
+
+      availableDays = orderAvailableDates([...availableDays], direction, selectedDay);
+      for (let day of availableDays) {
+        if (day.cloudCoverPercent === null || day.cloudCoverPercent <= maxCC) {
+          return day.date;
+        }
       }
     }
   }
@@ -139,4 +153,27 @@ export function checkAndSetWithinAvailableRange(date, minDate, maxDate) {
     date = maxDate.clone();
   }
   return date;
+}
+
+/**
+ * Fetches available days for a date range by iterating through each month in the range.
+ *
+ * @param {Object} params - The parameters object
+ * @param {moment.Moment} params.fromDate - Start date of the range
+ * @param {moment.Moment} params.toDate - End date of the range
+ * @param {Function} params.fetchDatesForMonth - Function to fetch dates for a single month
+ * @returns {Promise<Array>} Combined array of all dates in the range
+ */
+export async function fetchAvailableDaysInRange({ fromDate, toDate, fetchDatesForMonth }) {
+  let allDates = [];
+  let currentDate = fromDate.clone().startOf('month');
+  const endDate = toDate.clone().endOf('month');
+
+  while (currentDate.isSameOrBefore(endDate, 'month')) {
+    const monthDates = await fetchDatesForMonth(currentDate);
+    allDates = allDates.concat(monthDates);
+    currentDate.add(1, 'month');
+  }
+
+  return allDates;
 }

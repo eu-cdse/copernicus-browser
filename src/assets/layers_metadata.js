@@ -917,7 +917,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-7-etm/true-color//)`,
+      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-7-etm/true-color/)`,
   },
   {
     match: [{ datasourceId: ENVISAT_MERIS, layerId: '1_TRUE_COLOR' }],
@@ -1050,7 +1050,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '4_NDSI' },
     ],
     description: () =>
-      t`# Normalised Difference Snow Index (NDSI)\n\nThe Sentinel-2 normalised difference snow index can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. Snow cover is represented in bright vivid blue.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndsi-visualized/).`,
+      t`# Normalised Difference Snow Index (NDSI)\n\nThe Sentinel-2 normalised difference snow index can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. Snow cover is represented in bright vivid blue.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndsi/).`,
   },
 
   {
@@ -1728,7 +1728,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Corine Land Cover (CLC)\n\n\n\nIn this Corine Land Cover layer, all 44 classes are shown. Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      t`# Corine Land Cover (CLC)\n\n\n\nIn this Corine Land Cover layer, all 44 classes are shown. Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -1784,7 +1784,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Corine Land Cover (CLC) - Artificial Surfaces\n\n\n\nIn this Corine Land Cover layer, only the 11 artificial surface classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      t`# Corine Land Cover (CLC) - Artificial Surfaces\n\n\n\nIn this Corine Land Cover layer, only the 11 artificial surface classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -1840,7 +1840,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Corine Land Cover (CLC) - Agricultural Areas\n\n\n\nIn this Corine Land Cover layer, only the 11 agricultural classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      t`# Corine Land Cover (CLC) - Agricultural Areas\n\n\n\nIn this Corine Land Cover layer, only the 11 agricultural classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -1900,7 +1900,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Corine Land Cover (CLC) - Forest and Seminatural Areas\n\n\n\nIn this Corine Land Cover layer, only the 12 Forest and Seminatural Area classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      t`# Corine Land Cover (CLC) - Forest and Seminatural Areas\n\n\n\nIn this Corine Land Cover layer, only the 12 Forest and Seminatural Area classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -1933,7 +1933,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
     description: () =>
       t`# Corine Land Cover (CLC) - Wetlands\n\n\n\nIn this Corine Land Cover layer, only the 5 Wetland classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). 
-      Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -1969,7 +1969,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Corine Land Cover (CLC) - Water Bodies\n\n\n\nIn this Corine Land Cover layer, only the 6 Water body classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover/).`,
+      t`# Corine Land Cover (CLC) - Water Bodies\n\n\n\nIn this Corine Land Cover layer, only the 6 Water body classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
   },
 
   {
@@ -2161,7 +2161,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`#  Corine Land Cover - Accounting\n\n\n\nThis script visualises CORINE Land Cover (CLC) Accounting Layers according to the official CORINE Land Cover color scheme. CLC Accounting Layers are CLC status layers modified for the purpose of consistent statistical analysis in the land cover change accounting system at EEA. For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/copernicus_services/corine_land_cover_accounting_layer/).`,
+      t`#  Corine Land Cover - Accounting\n\n\n\nThis script visualises CORINE Land Cover (CLC) Accounting Layers according to the official CORINE Land Cover color scheme. CLC Accounting Layers are CLC status layers modified for the purpose of consistent statistical analysis in the land cover change accounting system at EEA. For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover_accounting_layer/).`,
   },
 
   {
@@ -2174,7 +2174,7 @@ export const PREDEFINED_LAYERS_METADATA = [
 
       This script visualises the built-up probabilities stretched to 0-255.
 
-      For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/copernicus_services/global-human-settlement-layer-ghs-built-s2/).`,
+      For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/other_collections/global-human-settlement-layer/global-human-settlement-layer-ghs-built-s2/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_WATER_BODIES, layerId: 'WATER-BODIES-OCCURENCE' }],
@@ -2239,7 +2239,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       },
     ],
     description: () =>
-      t`# Global Surface Water - Occurrence\n\n\n\nThe layer shows the (intra- and inter-annual) variations of surface water presence in the time range between March 1984 and December 2021. Permanent water areas with 100% occurrence over the 38 years are shown in blue, while lighter shades of pink and purple indicate lower degrees of water presence. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_occurrence/).`,
+      t`# Global Surface Water - Occurrence\n\n\n\nThe layer shows the (intra- and inter-annual) variations of surface water presence in the time range between March 1984 and December 2021. Permanent water areas with 100% occurrence over the 38 years are shown in blue, while lighter shades of pink and purple indicate lower degrees of water presence. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_occurrence/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '2_CHANGE-INTENSITY' }],
@@ -2273,7 +2273,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       },
     ],
     description: () =>
-      t`# Global Surface Water - Occurrence Change Intensity\n\n\n\nThe layer visualises changes in water occurrence between two different epochs, the first ranging from March 1984 to December 1999, and the other covering the period from January 2000 to December 2021. Areas with increase in water occurrence are visualised in different shades of green, areas with no change are colored black and areas with decrease are shown in shades of red. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_change/).`,
+      t`# Global Surface Water - Occurrence Change Intensity\n\n\n\nThe layer visualises changes in water occurrence between two different epochs, the first ranging from March 1984 to December 1999, and the other covering the period from January 2000 to December 2021. Areas with increase in water occurrence are visualised in different shades of green, areas with no change are colored black and areas with decrease are shown in shades of red. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global_surface_water_change/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '3_SEASONALITY' }],
@@ -2302,7 +2302,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       },
     ],
     description: () =>
-      t`# Global Surface Water - Seasonality\n\n\n\nThe Seasonality layer provides information on the distribution of surface water in 2021. Permanent water bodies (water was present for 12 months) are colored in dark blue and seasonal water (water was present for less than 12 months) in gradually lighter shades of blue, with the lightest blue showing areas where water was present for only 1 month. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_seasonality/).`,
+      t`# Global Surface Water - Seasonality\n\n\n\nThe Seasonality layer provides information on the distribution of surface water in 2021. Permanent water bodies (water was present for 12 months) are colored in dark blue and seasonal water (water was present for less than 12 months) in gradually lighter shades of blue, with the lightest blue showing areas where water was present for only 1 month. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_seasonality/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '4_RECURRENCE' }],
@@ -2331,7 +2331,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       },
     ],
     description: () =>
-      t`# Global Surface Water - Recurrence\n\n\n\nThe Recurrence layer shows how frequently water returned to a particular location in a defined water period between 1984 and 2021. Orange color indicates low recurrence (water returned to the area infrequently), and light blue color indicates high recurrence (water returned to the area frequently). Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_recurrence/).`,
+      t`# Global Surface Water - Recurrence\n\n\n\nThe Recurrence layer shows how frequently water returned to a particular location in a defined water period between 1984 and 2021. Orange color indicates low recurrence (water returned to the area infrequently), and light blue color indicates high recurrence (water returned to the area frequently). Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_recurrence/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '5_TRANSITIONS' }],
@@ -2389,7 +2389,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Global Surface Water - Transitions\n\n\n\nThe Transitions layer is derived from a comparison between the first and last year in the 38-year time period. It visualises conversions between seasonal and permanent water. For example, "lost seasonal" means, that previously seasonal water was converted to land, "new seasonal" means that land has been converted to seasonal waters and so on. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_transitions/) and learn what each class means [here](https://global-surface-water.appspot.com/faq).`,
+      t`# Global Surface Water - Transitions\n\n\n\nThe Transitions layer is derived from a comparison between the first and last year in the 38-year time period. It visualises conversions between seasonal and permanent water. For example, "lost seasonal" means, that previously seasonal water was converted to land, "new seasonal" means that land has been converted to seasonal waters and so on. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_transitions/) and learn what each class means [here](https://global-surface-water.appspot.com/faq).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '6_EXTENT' }],
@@ -2411,7 +2411,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Global Surface Water - Extent\n\n\n\nThis layer visualizes water in blue. It combines all the other layers and visualizes all the locations for which water presence has ever been detected over the 38-year period. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global_surface_water_extent/).`,
+      t`# Global Surface Water - Extent\n\n\n\nThis layer visualizes water in blue. It combines all the other layers and visualizes all the locations for which water presence has ever been detected over the 38-year period. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_extent/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_WATER_BODIES, layerId: 'WATER-BODIES' }],
@@ -2426,7 +2426,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Water Bodies\n\n\n\nThis layer visualizes the Water Bodies detection layer (WB), which shows water bodies detected using the Modified Normalized Difference Water Index (MNDWI) derived from Sentinel-2 Level 1C data. More information [here](https://collections.sentinel-hub.com/water-bodies/readme.html), and [here](https://custom-scripts.sentinel-hub.com/copernicus_services/water-bodies/).`,
+      t`# Water Bodies\n\n\n\nThis layer visualizes the Water Bodies detection layer (WB), which shows water bodies detected using the Modified Normalized Difference Water Index (MNDWI) derived from Sentinel-2 Level 1C data. More information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/water-bodies/).`,
   },
   {
     match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-CLASSIFICATION' }],
@@ -2528,7 +2528,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# CNES Land cover map\n\n\n\nThe CNES Land Cover Map (Occupation des Sols, OSO) produces land classification for Metropolitan France at 10 m spatial resolution based on Sentinel-2 L2A data within the Theia Land Cover CES framework. Maps for 2020, 2019, and 2018 use a 23-categories nomenclature. For earlier maps in 2017 and 2016, a fully compatible 17-classes nomenclature is employed.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes_land_cover_classification/).`,
+      t`# CNES Land cover map\n\n\n\nThe CNES Land Cover Map (Occupation des Sols, OSO) produces land classification for Metropolitan France at 10 m spatial resolution based on Sentinel-2 L2A data within the Theia Land Cover CES framework. Maps for 2020, 2019, and 2018 use a 23-categories nomenclature. For earlier maps in 2017 and 2016, a fully compatible 17-classes nomenclature is employed.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_classification/).`,
   },
   {
     match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-CLASSIFIER-CONFIDENCE' }],
@@ -2546,7 +2546,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# CNES land cover classifier confidence visualisation\n\n\n\nThe script visualises the information on the classifier confidence with values ranging from 1 to 100.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes_land_cover_confidence/).`,
+      t`# CNES land cover classifier confidence visualisation\n\n\n\nThe script visualises the information on the classifier confidence with values ranging from 1 to 100.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_confidence/).`,
   },
   {
     match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-VALIDITY' }],
@@ -2564,7 +2564,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# CNES land cover validity visualisation\n\n\n\nThe script visualises the information on the number of cloudless images for validity.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes_land_cover_validity/).`,
+      t`# CNES land cover validity visualisation\n\n\n\nThe script visualises the information on the number of cloudless images for validity.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_validity/).`,
   },
   {
     match: [{ datasourceId: ESA_WORLD_COVER, layerId: 'WORLDCOVER-MAP' }],
@@ -2618,7 +2618,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# ESA WorldCover Map\n\n\n\nThe WorldCover product displays a global land cover map with 11 different land cover classes produced at 10m resolution based on combination of both Sentinel-1 and Sentinel-2 data. In areas where Sentinel-2 images are covered by clouds for an extended period of time, Sentinel-1 data provides complimentary information on the structural characteristics of the observed land cover. Therefore, the combination of Sentinel-1 and Sentinel-2 data makes it possible to update the land cover map almost in real time. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/worldcover/).`,
+      t`# ESA WorldCover Map\n\n\n\nThe WorldCover product displays a global land cover map with 11 different land cover classes produced at 10m resolution based on combination of both Sentinel-1 and Sentinel-2 data. In areas where Sentinel-2 images are covered by clouds for an extended period of time, Sentinel-1 data provides complimentary information on the structural characteristics of the observed land cover. Therefore, the combination of Sentinel-1 and Sentinel-2 data makes it possible to update the land cover map almost in real time. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/esa-worldcover/).`,
   },
   {
     match: [{ datasourceId: IO_LULC_10M_ANNUAL, layerId: 'IO-LAND-USE-LAND-COVER-MAP' }],
@@ -2664,7 +2664,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# 10m Annual Land Use Land Cover (9-class)\n\n\n\nThe 10m Annual Land Use Land Cover (LULC) Map is produced by Impact Observatory, Microsoft, and Esri collaboratively. The data collection is derived from ESA Sentinel-2 imagery at 10m resolution globally using Impact Ovservatory's state of the art deep learning AI land classification model which is trained by billions of human-labeled image pixels. There are 9 LULC classes generated by the algorithm, including Built, Crops, Trees, Water, Rangeland, Flooded Vegetation, Snow/Ice, Bare Ground, and Clouds. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/impact-observatory-lulc/).`,
+      t`# 10m Annual Land Use Land Cover (9-class)\n\n\n\nThe 10m Annual Land Use Land Cover (LULC) Map is produced by Impact Observatory, Microsoft, and Esri collaboratively. The data collection is derived from ESA Sentinel-2 imagery at 10m resolution globally using Impact Ovservatory's state of the art deep learning AI land classification model which is trained by billions of human-labeled image pixels. There are 9 LULC classes generated by the algorithm, including Built, Crops, Trees, Water, Rangeland, Flooded Vegetation, Snow/Ice, Bare Ground, and Clouds. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/impact-observatory/impact-observatory-lulc/).`,
   },
   {
     match: [
