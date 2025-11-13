@@ -1892,7 +1892,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'wb_global_300m_10daily_v1',
-                label: 'Global, 10-daily, 300m, (2014–2018), V1',
+                label: 'Global, 10-daily, 300m, (2014–2020), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
