@@ -110,21 +110,13 @@ function DateSelection({
 
   async function onFetchAvailableDates(fromMoment, toMoment) {
     const bbox = generateAppropriateSearchBBox(mapBounds, pixelBounds);
-    const response = await dsh.findTiles({
+    const dates = await dsh.findDates({
       datasetId: datasetId,
       bbox: bbox,
       fromTime: fromMoment.toDate(),
       toTime: toMoment.toDate(),
       orbitDirection: orbitDirection,
     });
-    // Transform findTiles response to expected format
-    const dates = response.tiles.map((tile) => ({
-      fromTime: tile.sensingTime,
-      meta: {
-        minimalCloudCoverPercent: tile.meta.cloudCoverPercent,
-        averageCloudCoverPercent: tile.meta.cloudCoverPercent,
-      },
-    }));
 
     return dates;
   }
@@ -174,6 +166,19 @@ function DateSelection({
     return flyovers;
   }
 
+  async function fetchAvailableFlyoversInRange(fromMoment, toMoment) {
+    const { bbox, layer } = await getLayerAndBBoxSetup();
+    let flyovers = [];
+    try {
+      const { tiles } = await layer.findTiles(bbox, fromMoment, toMoment);
+      flyovers = await layer.findFlyovers(bbox, fromMoment, toMoment);
+      setMinimalFlyoverCloudCoverage(tiles, flyovers);
+    } catch (err) {
+      handleError(err, 'Unable to fetch available flyovers in range!\n', (msg) => console.error(msg));
+    }
+    return flyovers;
+  }
+
   async function getLatestAvailableDate() {
     const date = await findLatestDateWithData({
       datasetId: datasetId,
@@ -206,6 +211,7 @@ function DateSelection({
       onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
       onQueryDatesForRange={onFetchAvailableDates}
       onQueryFlyoversForActiveMonth={fetchAvailableFlyovers}
+      onQueryFlyoversForRange={fetchAvailableFlyoversInRange}
       getLatestAvailableDate={getLatestAvailableDate}
       limitMonthsSearch={limitMonthsSearch}
       maxCloudCover={maxCloudCoverTemp}

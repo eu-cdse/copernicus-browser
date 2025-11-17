@@ -48,7 +48,7 @@ function TerrainViewer(props) {
   const [shadingEnabled, setShadingEnabled] = useState(true);
   const [sunEnabled, setSunEnabled] = useState(false);
   const [disabled, setDisabled] = useState(!props.is3D);
-  const [cancelToken, setCancelToken] = useState(new CancelToken());
+  const cancelTokenRef = useRef(new CancelToken());
   const [timeoutId, setTimeoutId] = useState(null);
   const [loader, setLoader] = useState();
   const terrainViewerContainer = useRef();
@@ -225,7 +225,7 @@ function TerrainViewer(props) {
 
     window.on3DPositionChanged = () => {};
     window.get3DMapTileUrl = () => {};
-    cancelToken.cancel();
+    cancelTokenRef.current.cancel();
 
     return await new Promise((resolve) => {
       const closingAnimationId = 'exit-animation';
@@ -247,17 +247,17 @@ function TerrainViewer(props) {
         resolve();
       }
     });
-  }, [terrainViewerContainer, props.lat, props.zoom, cancelToken, terrainViewerId, x, y, z, rotH, rotV]);
+  }, [terrainViewerContainer, props.lat, props.zoom, terrainViewerId, x, y, z, rotH, rotV]);
 
   const onClose = useCallback(() => {
-    cancelToken.cancel();
+    cancelTokenRef.current.cancel();
     window.removeEventListener('resize', onResize);
     if (terrainViewerId) {
       window.close3DViewer(terrainViewerId);
     }
     store.dispatch(terrainViewerSlice.actions.resetTerrainViewerSettings());
     store.dispatch(terrainViewerSlice.actions.setTerrainViewerId(null));
-  }, [cancelToken, onResize, terrainViewerId]);
+  }, [onResize, terrainViewerId]);
 
   const set3DLocation = useCallback(
     (x, y, zoom) => {
@@ -321,7 +321,7 @@ function TerrainViewer(props) {
         },
       };
       const reqConfig = {
-        cancelToken: cancelToken,
+        cancelToken: cancelTokenRef.current,
         authToken: getGetMapAuthToken(auth),
         retries: 0,
         ...reqConfigGetMap,
@@ -367,18 +367,7 @@ function TerrainViewer(props) {
         onTileError,
       });
     },
-    [
-      layer,
-      props,
-      minZoom,
-      fromTime,
-      toTime,
-      cancelToken,
-      auth,
-      onTileError,
-      DEFAULT_TILE_SIZE,
-      DEFAULT_DEM_TILE_SIZE,
-    ],
+    [layer, props, minZoom, fromTime, toTime, auth, onTileError, DEFAULT_TILE_SIZE, DEFAULT_DEM_TILE_SIZE],
   );
 
   const getTerrainViewerMapTileUrl = useCallback(
@@ -407,7 +396,7 @@ function TerrainViewer(props) {
         },
       };
       const reqConfig = {
-        cancelToken: cancelToken,
+        cancelToken: cancelTokenRef.current,
         authToken: getGetMapAuthToken(auth),
         retries: 0,
         ...reqConfigGetMap,
@@ -435,7 +424,7 @@ function TerrainViewer(props) {
         onTileError,
       });
     },
-    [layer, minZoom, fromTime, toTime, props, cancelToken, auth, onTileError],
+    [layer, minZoom, fromTime, toTime, props, auth, onTileError],
   );
 
   useEffect(() => {
@@ -518,8 +507,11 @@ function TerrainViewer(props) {
                 newLayer.collectionId,
               );
             }
+            // Cancel in-flight requests before setting new layer
+            cancelTokenRef.current.cancel();
+            cancelTokenRef.current = new CancelToken();
+
             setLayer(newLayer);
-            window.reload3DTextures(terrainViewerId);
           }
         } else {
           setLayer(null);
@@ -558,7 +550,6 @@ function TerrainViewer(props) {
       }
     }
     changeLayer();
-    // Add all relevant dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     is3D,
@@ -625,7 +616,7 @@ function TerrainViewer(props) {
           window.addEventListener('resize', onResize);
 
           window.set3DLocale(locale);
-          setCancelToken(new CancelToken());
+          cancelTokenRef.current = new CancelToken();
           const tileSize = DEFAULT_DEM_TILE_SIZE;
           const maxZoomLevel = getDem3DMaxZoomLevel(props.demSource3D);
           const demProviderType = getDemProviderType(props.demSource3D);
@@ -677,7 +668,7 @@ function TerrainViewer(props) {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-      cancelToken.cancel();
+      cancelTokenRef.current.cancel();
       window.removeEventListener('resize', onResize);
       if (terrainViewerId) {
         window.close3DViewer(terrainViewerId);
@@ -688,6 +679,10 @@ function TerrainViewer(props) {
 
   useEffect(() => {
     if (terrainViewerId) {
+      // Cancel in-flight requests and clear pending queue
+      cancelTokenRef.current.cancel();
+      cancelTokenRef.current = new CancelToken();
+
       if (layer) {
         window.get3DMapTileUrl = get3DMapTileUrl;
         window.reload3DTextures(terrainViewerId);

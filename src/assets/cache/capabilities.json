@@ -5070,6 +5070,208 @@
         ],
         "datasets": []
     },
+    "cc9150-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | LSP 300m Yearly V2",
+        "layers": [
+            {
+                "id": "A_TPROD_S1",
+                "name": "Total Productivity - S1",
+                "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=A_TPROD_S1&style=default"
+            },
+            {
+                "id": "B_TPROD_S2",
+                "name": "Total Productivity - S2",
+                "description": "Provides the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. ",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=B_TPROD_S2&style=default"
+            },
+            {
+                "id": "C_SPROD_S1",
+                "name": "Seasonal Productivity - S1",
+                "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C_SPROD_S1&style=default"
+            },
+            {
+                "id": "D_SPROD_S2",
+                "name": "Seasonal Productivity - S2",
+                "description": "Provides the growing season integral computed as sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=D_SPROD_S2&style=default"
+            },
+            {
+                "id": "E_LENGTH_S1",
+                "name": "Season Length - S1",
+                "description": "Provides the number of days between the start and end dates of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=E_LENGTH_S1&style=default"
+            },
+            {
+                "id": "F_LENGTH_S2",
+                "name": "Season Length - S2",
+                "description": "Provides the number of days between the start and end dates of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=F_LENGTH_S2&style=default"
+            },
+            {
+                "id": "G_AMPL_S1",
+                "name": "Season Amplitude - S1",
+                "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=G_AMPL_S1&style=default"
+            },
+            {
+                "id": "H_AMPL_S2",
+                "name": "Season Amplitude - S2",
+                "description": "Provides the difference between the maximum and minimum Plant Phenology Index values reached during the season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=H_AMPL_S2&style=default"
+            },
+            {
+                "id": "I_LSLOPE_S1",
+                "name": "Slope of the Green-up Period - S1",
+                "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=I_LSLOPE_S1&style=default"
+            },
+            {
+                "id": "J_LSLOPE_S2",
+                "name": "Slope of the Green-up Period - S2",
+                "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=J_LSLOPE_S2&style=default"
+            },
+            {
+                "id": "K_RSLOPE_S1",
+                "name": "Slope of the Green-down Period - S1",
+                "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=K_RSLOPE_S1&style=default"
+            },
+            {
+                "id": "L_RSLOPE_S2",
+                "name": "Slope of the Green-down Period - S2",
+                "description": "Provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=L_RSLOPE_S2&style=default"
+            },
+            {
+                "id": "M_SOSD_S1",
+                "name": "Start-of-season Date - S1",
+                "description": "Provides the date when the vegetation growing season starts in the time profile of the Plant Phenology Index.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=M_SOSD_S1&style=default"
+            },
+            {
+                "id": "N_SOSD_S2",
+                "name": "Start-of-season Date - S2",
+                "description": "Provides the date when the vegetation growing season starts in the time profile of the Plant Phenology Index.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=N_SOSD_S2&style=default"
+            },
+            {
+                "id": "O_MAXD_S1",
+                "name": "Season Maximum Date - S1",
+                "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=O_MAXD_S1&style=default"
+            },
+            {
+                "id": "P_MAXD_S2",
+                "name": "Season Maximum Date - S2",
+                "description": "Provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. ",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=P_MAXD_S2&style=default"
+            },
+            {
+                "id": "Q_EOSD_S1",
+                "name": "End-of-season Date - S1",
+                "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Q_EOSD_S1&style=default"
+            },
+            {
+                "id": "R_EOSD_S2",
+                "name": "End-of-season Date - S2",
+                "description": "Provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=R_EOSD_S2&style=default"
+            },
+            {
+                "id": "S_SOSV_S1",
+                "name": "Start-of-season Value - S1",
+                "description": "Provides the value of the Plant Phenology Index at the start of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=S_SOSV_S1&style=default"
+            },
+            {
+                "id": "T_SOSV_S2",
+                "name": "Start-of-season Value - S2",
+                "description": "Provides the value of the Plant Phenology Index at the start of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=T_SOSV_S2&style=default"
+            },
+            {
+                "id": "U_MAXV_S1",
+                "name": "Season Maximum Value - S1",
+                "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=U_MAXV_S1&style=default"
+            },
+            {
+                "id": "V_MAXV_S2",
+                "name": "Season Maximum Value - S2",
+                "description": "Provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=V_MAXV_S2&style=default"
+            },
+            {
+                "id": "W_MINV_S1",
+                "name": "Season Minimum Value S1",
+                "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=W_MINV_S1&style=default"
+            },
+            {
+                "id": "X_MINV_S2",
+                "name": "Season Minimum Value S2",
+                "description": "Provides the average Plant Phenology Index value of the minima on left and right sides of each season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=X_MINV_S2&style=default"
+            },
+            {
+                "id": "Y_EOSV_S1",
+                "name": "End-of-season Value - S1",
+                "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Y_EOSV_S1&style=default"
+            },
+            {
+                "id": "ZA_EOSV_S2",
+                "name": "End-of-season Value - S2",
+                "description": "Provides the value of the Plant Phenology Index at the end of the vegetation growing season.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=ZA_EOSV_S2&style=default"
+            },
+            {
+                "id": "ZB_QA_S1",
+                "name": "Quality Flag - S1",
+                "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=ZB_QA_S1&style=default"
+            },
+            {
+                "id": "ZC_QA_S2",
+                "name": "Quality Flag - S2",
+                "description": "Indicates the quality of the global Vegetation Phenology and Productivity Parameters, in the form of a confidence level.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cc9150-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=ZC_QA_S2&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "ce3273-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Wildfires (S2L1C) API",
         "layers": [

@@ -1764,6 +1764,16 @@ export const recursiveCollectionCLMS = [
                   'lsp_global_300m_yearly_v1',
                 )})`,
               },
+              {
+                id: 'lsp_global_300m_yearly_v2',
+                label: 'LSP, Global, Yearly, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lsp_global_300m_yearly_v2',
+                )})`,
+              },
             ],
           },
           {

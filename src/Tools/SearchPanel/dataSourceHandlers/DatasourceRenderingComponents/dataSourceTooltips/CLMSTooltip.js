@@ -473,6 +473,14 @@ const ClmsGlobalLsp300mV1YearlyTooltip = () =>
     source: getClmsGlobalLsp300mV1YearlyMarkdown(),
   });
 
+const getClmsGlobalLsp300mV2YearlyMarkdown = () => t`
+  Provides at global scale and for Europe information on vegetation phenology and productivity gathering 13 parameters for two growing seasons. More information [here](https://land.copernicus.eu/en/products/vegetation?tab=vegetation_phenology_and_productivity_parameters).`;
+
+const ClmsGlobalLsp300mV2YearlyTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsGlobalLsp300mV2YearlyMarkdown(),
+  });
+
 const getClmsGlobalGpp300mV110dailyRt0Markdown = () => t`
   Provides the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time. 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v1-0-300m).`;
 
@@ -848,6 +856,8 @@ export {
   getClmsGlobalBa300mV3DailyMarkdown,
   ClmsGlobalBa300mV3DailyTooltip,
   getClmsGlobalLsp300mV1YearlyMarkdown,
+  ClmsGlobalLsp300mV2YearlyTooltip,
+  getClmsGlobalLsp300mV2YearlyMarkdown,
   ClmsGlobalLsp300mV1YearlyTooltip,
   getClmsGlobalGpp300mV110dailyRt0Markdown,
   ClmsGlobalGpp300mV110dailyRt0Tooltip,

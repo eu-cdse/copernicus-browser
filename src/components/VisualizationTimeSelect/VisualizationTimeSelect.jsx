@@ -58,6 +58,7 @@ export function VisualizationTimeSelect({
   toTime,
   timespanSupported,
   onQueryFlyoversForActiveMonth,
+  onQueryFlyoversForRange,
   hasCloudCoverage,
   isZoomLevelOk,
   updateSelectedTime,
@@ -209,7 +210,9 @@ export function VisualizationTimeSelect({
           onQueryDatesForActiveMonth={
             hasCloudCoverage && isZoomLevelOk ? onQueryFlyoversForActiveMonth : onQueryDatesForActiveMonth
           }
-          onQueryDatesForRange={onQueryDatesForRange}
+          onQueryDatesForRange={
+            hasCloudCoverage && isZoomLevelOk ? onQueryFlyoversForRange : onQueryDatesForRange
+          }
           hasCloudCoverFilter={hasCloudCoverage}
           maxCloudCover={maxCloudCover}
           setMaxCloudCover={setMaxCloudCover}
@@ -269,6 +272,7 @@ export function VisualizationTimeSelect({
               maxDate={maxDate}
               showNextPrevDateArrows={showNextPrev}
               onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
+              onQueryDatesForRange={onQueryDatesForRange}
               maxCloudCover={maxCloudCover}
               setMaxCloudCover={setMaxCloudCover}
               setMaxCloudCoverAfterChange={setMaxCloudCoverAfterChange}
@@ -364,6 +368,9 @@ export function VisualizationTimeSelect({
                     onQueryDatesForActiveMonth={
                       isZoomLevelOk ? onQueryFlyoversForActiveMonth : onQueryDatesForActiveMonth
                     }
+                    onQueryDatesForRange={
+                      hasCloudCoverage && isZoomLevelOk ? onQueryFlyoversForRange : onQueryDatesForRange
+                    }
                     hasCloudCoverFilter={hasCloudCoverage}
                     maxCloudCover={maxCloudCover}
                     setMaxCloudCover={setMaxCloudCover}
@@ -399,6 +406,7 @@ export function VisualizationTimeSelect({
                   maxDate={maxDate}
                   showNextPrevDateArrows={showNextPrev}
                   onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
+                  onQueryDatesForRange={onQueryDatesForRange}
                   getLatestAvailableDate={getLatestAvailableDate}
                   limitMonthsSearch={limitMonthsSearch}
                   displayCalendar={displayCalendarFrom}

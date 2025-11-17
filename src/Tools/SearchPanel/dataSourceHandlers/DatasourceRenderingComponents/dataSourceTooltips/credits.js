@@ -75,6 +75,7 @@ import {
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
   COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
+  COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
   COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
@@ -637,6 +638,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

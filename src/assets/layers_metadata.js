@@ -120,6 +120,7 @@ import {
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
   COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
+  COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
   COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
@@ -4131,6 +4132,146 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V1, layerId: 'B_TPROD_S2' }],
     description: () =>
       t`Season 2: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2023 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'A_TPROD_S1' }],
+    description: () =>
+      t`Season 1: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'B_TPROD_S2' }],
+    description: () =>
+      t`Season 2: the growing season integral computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'C_SPROD_S1' }],
+    description: () =>
+      t`Season 1: the growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'D_SPROD_S2' }],
+    description: () =>
+      t`Season 2: the growing season integral that is computed as the sum of all daily Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'E_LENGTH_S1' }],
+    description: () =>
+      t`Season 1: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'F_LENGTH_S2' }],
+    description: () =>
+      t`Season 2: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'G_AMPL_S1' }],
+    description: () =>
+      t`Season 1: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'H_AMPL_S2' }],
+    description: () =>
+      t`Season 2: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'I_LSLOPE_S1' }],
+    description: () =>
+      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'J_LSLOPE_S2' }],
+    description: () =>
+      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'K_RSLOPE_S1' }],
+    description: () =>
+      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'L_RSLOPE_S2' }],
+    description: () =>
+      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'M_SOSD_S1' }],
+    description: () =>
+      t`Season 1: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'N_SOSD_S2' }],
+    description: () =>
+      t`Season 2: marks the date when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'O_MAXD_S1' }],
+    description: () =>
+      t`Season 1: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'P_MAXD_S2' }],
+    description: () =>
+      t`Season 2: provides the date in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'Q_EOSD_S1' }],
+    description: () =>
+      t`Season 1: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'R_EOSD_S2' }],
+    description: () =>
+      t`Season 2: provides the date when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'S_SOSV_S1' }],
+    description: () =>
+      t`Season 1: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'T_SOSV_S2' }],
+    description: () =>
+      t`Season 2: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'U_MAXV_S1' }],
+    description: () =>
+      t`Season 1: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'V_MAXV_S2' }],
+    description: () =>
+      t`Season 2: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'W_MINV_S1' }],
+    description: () =>
+      t`Season 1: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'X_MINV_S2' }],
+    description: () =>
+      t`Season 2: provides the average Plant Phenology Index value of the minima before the growing season. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'Y_EOSV_S1' }],
+    description: () =>
+      t`Season 1: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'ZA_EOSV_S2' }],
+    description: () =>
+      t`Season 2: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data at pan-European level are updated in the first quarter of each year. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'ZB_QA_S1' }],
+    description: () =>
+      t`Season 1: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'ZC_QA_S2' }],
+    description: () =>
+      t`Season 2: indicates the quality of the pan-European Vegetation Phenology and Productivity Parameters, in the form of a confidence level. The data at pan-European level are updated in the first quarter of each year. The data are available at 10 m x 10 m spatial resolution with the temporal extent from 2014 to present.`,
   },
 
   {

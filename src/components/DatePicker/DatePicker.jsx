@@ -54,9 +54,7 @@ class DatePicker extends Component {
     const { selectedDay, maxDate, setSelectedDay, displayCalendar } = this.props;
     if (!!displayCalendar) {
       const targetMonth = displayedDayMonth ? moment(displayedDayMonth).utc(true) : selectedDay;
-      const fromDate = targetMonth.clone().startOf('month');
-      const toDate = targetMonth.clone().endOf('month');
-      const days = await this.fetchAvailableDaysInRange(fromDate, toDate);
+      const days = await this.fetchAvailableDaysForMonth(targetMonth);
       if (!selectedDay) {
         if (days.length > 0) {
           setSelectedDay(moment.utc(days[0].date));
@@ -103,8 +101,7 @@ class DatePicker extends Component {
     );
 
     const fromDate = newSelectedDay.clone().startOf('month');
-    const toDate = newSelectedDay.clone().endOf('month');
-    this.fetchAvailableDaysInRange(fromDate, toDate).then((dates) => this.setState({ availableDays: dates }));
+    this.fetchAvailableDaysForMonth(fromDate).then((dates) => this.setState({ availableDays: dates }));
   };
 
   onMonthOrYearDropdownChange = (month, year) => {
@@ -116,14 +113,51 @@ class DatePicker extends Component {
     );
 
     const fromDate = newSelectedDay.clone().startOf('month');
-    const toDate = newSelectedDay.clone().endOf('month');
-    this.fetchAvailableDaysInRange(fromDate, toDate).then((dates) => this.setState({ availableDays: dates }));
+    this.fetchAvailableDaysForMonth(fromDate).then((dates) => this.setState({ availableDays: dates }));
+  };
+
+  fetchAvailableDaysForMonth = async (date) => {
+    const { setDateLoading, hasCloudCoverFilter, isZoomLevelOk } = this.props;
+
+    if (!this.props.onQueryDatesForActiveMonth) {
+      return [];
+    }
+
+    let dateArray = [];
+    try {
+      if (setDateLoading) {
+        setDateLoading(true);
+      }
+      this.setState({ loading: true });
+
+      dateArray = await this.props.onQueryDatesForActiveMonth(date);
+
+      if (hasCloudCoverFilter && isZoomLevelOk) {
+        dateArray = dateArray.map((date) => ({
+          date: moment.utc(date.fromTime),
+          cloudCoverPercent: date.meta.minimalCloudCoverPercent ?? date.meta.averageCloudCoverPercent,
+        }));
+      } else {
+        dateArray = dateArray.map((date) => ({
+          date: moment.utc(date.fromTime || date.sensingTime || date),
+          cloudCoverPercent: null,
+        }));
+      }
+    } catch (err) {
+      handleError(err, 'Unable to fetch available days for month', (msg) => console.error(msg));
+    } finally {
+      if (setDateLoading) {
+        setDateLoading(false);
+      }
+      this.setState({ loading: false });
+    }
+    return dateArray;
   };
 
   fetchAvailableDaysInRange = async (fromDate, toDate) => {
     const { setDateLoading, hasCloudCoverFilter, isZoomLevelOk } = this.props;
 
-    // If parent provides a range fetcher, use it directly
+    // Use the range fetcher for next/prev buttons (expanding time window)
     if (this.props.onQueryDatesForRange) {
       let dateArray = [];
       try {

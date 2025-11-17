@@ -737,6 +737,121 @@ export const COPERNICUS_CLMS_LSP_300M_YEARLY_V1_BANDS = [
     getDescription: () => ``,
   },
 ];
+// TODO: check bands
+export const COPERNICUS_CLMS_LSP_300M_YEARLY_V2_BANDS = [
+  {
+    name: 'AMPL_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'AMPL_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'EOSD_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'EOSD_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'EOSV_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'EOSV_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LSLOPE_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LSLOPE_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MAXD_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MAXD_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MAXV_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MAXV_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MINV_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MINV_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QA_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QA_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RSLOPE_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RSLOPE_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SOSD_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SOSD_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SOSV_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SOSV_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SPROD_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SPROD_S2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TPROD_S1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TPROD_S2',
+    getDescription: () => ``,
+  },
+];
 export const COPERNICUS_CLMS_LCC_100M_YEARLY_V3_BANDS = [
   {
     name: 'Bare_Cover_Fraction',
