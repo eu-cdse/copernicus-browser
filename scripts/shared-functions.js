@@ -2,9 +2,9 @@ import path from 'path';
 import fs from 'fs';
 import Papa from 'papaparse';
 import axios from 'axios';
-import { DEFAULT_THEMES } from '../src/assets/default_themes';
+import { DEFAULT_THEMES } from '../src/assets/default_themes.js';
 import dotenv from 'dotenv';
-import { getAuthToken } from './utils/auth';
+import { getAuthToken } from './utils/auth.js';
 
 dotenv.config({ path: './.env' });
 

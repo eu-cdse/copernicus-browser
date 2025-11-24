@@ -1,4 +1,4 @@
-const RRD_DATASOURCE_KEYWORD_RULES = [
+export const RRD_DATASOURCE_KEYWORD_RULES = [
   // WORLDVIEW (EUSI)
   { keyword: 'WORLDVIEW', value: 'EUSI' },
   { keyword: 'WV1', value: 'EUSI' },
@@ -71,7 +71,3 @@ const RRD_DATASOURCE_KEYWORD_RULES = [
   // GHGSAT
   { keyword: 'GHGSAT', value: 'GHGSAT' },
 ];
-
-module.exports = {
-  RRD_DATASOURCE_KEYWORD_RULES,
-};

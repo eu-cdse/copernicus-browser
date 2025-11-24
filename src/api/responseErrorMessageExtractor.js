@@ -4,10 +4,10 @@ export const extractResponseErrorMessage = async (error) => {
   let errorMsg;
 
   if (error?.response?.data) {
-    let errorResponseData = error.response.data;
+    let errorResponseData = error.response?.data;
 
-    if (error.response.data instanceof Blob) {
-      errorResponseData = await readBlob(error.response.data);
+    if (error.response?.data instanceof Blob) {
+      errorResponseData = await readBlob(error.response?.data);
     }
 
     if (errorResponseData?.detail) {

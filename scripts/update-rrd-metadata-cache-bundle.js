@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 import {
   getArrayOfInstanceIds,
   getCsvFullPath,
@@ -10,7 +11,11 @@ import {
   printOut,
   removeExisting,
   createHttpClientWithCredentials,
-} from './shared-functions';
+} from './shared-functions.js';
+
+// Define __dirname for ES Module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 

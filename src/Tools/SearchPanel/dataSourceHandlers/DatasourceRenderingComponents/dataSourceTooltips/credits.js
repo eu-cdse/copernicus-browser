@@ -3,12 +3,7 @@ import {
   COPERNICUS_CORINE_LAND_COVER,
   COPERNICUS_GLOBAL_LAND_COVER,
   COPERNICUS_WATER_BODIES,
-  COPERNICUS_GLOBAL_SURFACE_WATER,
   COPERNICUS_CLC_ACCOUNTING,
-  CNES_LAND_COVER,
-  ESA_WORLD_COVER,
-  GLOBAL_HUMAN_SETTLEMENT,
-  IO_LULC_10M_ANNUAL,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -171,15 +166,6 @@ export const credits = {
       link: 'https://www.usgs.gov/core-science-systems/nli/landsat/landsat-satellite-missions',
     },
   ],
-  [DATASOURCES.ENVISAT_MERIS]: [
-    creodias,
-    {
-      title: 'ESA',
-      link: 'https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/envisat/instruments/meris',
-    },
-  ],
-  [DATASOURCES.DEM]: [copernicus],
-
   [DATASOURCES.COPERNICUS]: [{ ...copernicus, link: 'https://www.copernicus.eu/en/copernicus-services' }],
 
   [COPERNICUS_CORINE_LAND_COVER]: [
@@ -187,39 +173,10 @@ export const credits = {
   ],
   [COPERNICUS_GLOBAL_LAND_COVER]: [{ ...copernicus, link: 'https://land.copernicus.eu/global/products/lc' }],
   [COPERNICUS_WATER_BODIES]: [{ ...copernicus, link: 'https://land.copernicus.eu/global/products/wb' }],
-  [COPERNICUS_GLOBAL_SURFACE_WATER]: [{ ...copernicus, link: 'https://global-surface-water.appspot.com/' }],
   [COPERNICUS_CLC_ACCOUNTING]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-snow-and-ice-monitoring/snow-products/snow-state-conditions',
-    },
-  ],
-  [CNES_LAND_COVER]: [
-    {
-      title: 'Theia',
-      link: 'https://www.theia-land.fr/en/product/land-cover-map/',
-    },
-    {
-      title: 'CESBIO',
-      link: 'https://www.cesbio.cnrs.fr/',
-    },
-  ],
-  [ESA_WORLD_COVER]: [
-    {
-      title: 'ESA',
-      link: 'https://esa-worldcover.org/',
-    },
-  ],
-  [GLOBAL_HUMAN_SETTLEMENT]: [
-    {
-      title: 'European Commission, Joint Research Centre (JRC)',
-      link: 'https://ghsl.jrc.ec.europa.eu/index.php',
-    },
-  ],
-  [IO_LULC_10M_ANNUAL]: [
-    {
-      title: 'Impact Observatory',
-      link: 'https://www.impactobservatory.com/',
     },
   ],
   [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: [

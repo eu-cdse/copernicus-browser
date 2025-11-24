@@ -2,9 +2,10 @@ import path from 'path';
 import fs from 'fs';
 import util from 'util';
 import { exit } from 'process';
-import { SUPPORTED_LANGUAGES } from '../src/LanguageSelector/const';
+import { exec as execCallback } from 'child_process';
+import { SUPPORTED_LANGUAGES } from '../src/LanguageSelector/const.js';
 
-const exec = util.promisify(require('child_process').exec);
+const exec = util.promisify(execCallback);
 const readdir = util.promisify(fs.readdir);
 
 //joining path of directory

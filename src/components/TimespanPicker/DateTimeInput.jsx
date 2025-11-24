@@ -30,6 +30,7 @@ export const DateTimeInput = (props) => {
     isDisabled,
     setSelectedTime,
     datePickerInputStyle,
+    cloudCoverageSliderRef,
   } = props;
 
   const setDay = (day) => {
@@ -122,6 +123,7 @@ export const DateTimeInput = (props) => {
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
           datePickerInputStyle={datePickerInputStyle}
+          cloudCoverageSliderRef={cloudCoverageSliderRef}
         />
       </div>
       <div className={`time-input ${isTimeless || isDisabled ? 'disabled' : ''}`}>

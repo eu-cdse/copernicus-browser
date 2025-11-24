@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { t } from 'ttag';
 import moment from 'moment';
 
@@ -12,6 +12,8 @@ export class TimespanPicker extends Component {
     toTime: null,
     cloudCoverage: this.props.maxCloudCover,
   };
+
+  cloudCoverageSliderRef = createRef();
 
   componentDidMount() {
     this.handleTimespan();
@@ -117,6 +119,7 @@ export class TimespanPicker extends Component {
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
           datePickerInputStyle={datePickerInputStyle}
+          cloudCoverageSliderRef={this.cloudCoverageSliderRef}
         />
         <DateTimeInput
           id={`${id}-until`}
@@ -144,9 +147,10 @@ export class TimespanPicker extends Component {
           isTimeRange={isTimeRange}
           isDisabled={isDisabled}
           datePickerInputStyle={datePickerInputStyle}
+          cloudCoverageSliderRef={this.cloudCoverageSliderRef}
         />
         {hasCloudCoverage && (
-          <div className={`timespan-picker-cc-slider`}>
+          <div className={`timespan-picker-cc-slider`} ref={this.cloudCoverageSliderRef}>
             <div className="timespan-picker-cc-slider-text">{t`Max. cloud coverage:`}</div>
             <EOBCCSlider
               sliderWidth={'100%'}

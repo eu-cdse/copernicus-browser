@@ -1,6 +1,8 @@
-const { getAuthToken } = require('../utils/auth');
-const { fetchCollections, fetchCollectionData } = require('../utils/byoc-api');
-require('dotenv').config();
+import { getAuthToken } from '../utils/auth.js';
+import { fetchCollections, fetchCollectionData } from '../utils/byoc-api.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const tokenEndpointUrl = process.env.APP_ADMIN_AUTH_BASEURL;
 const apiEndpoint = process.env.RRD_COLLECTION_BASE_URL;

@@ -38,7 +38,7 @@ export async function addProductsToWorkspace(products) {
 
   const extractErrorMsg = (error) => {
     if (Array.isArray(error?.response?.data?.detail)) {
-      return error.response.data.detail.at(0)?.msg;
+      return error.response?.data.detail.at(0)?.msg;
     }
 
     return error?.response?.data?.detail;

@@ -1,4 +1,4 @@
-import { OGC_REQUEST_STATE, setOgcRequestsStates } from './shared-functions';
+import { OGC_REQUEST_STATE, setOgcRequestsStates } from './shared-functions.js';
 import { exit } from 'process';
 
 // examples

@@ -316,6 +316,7 @@ class DatePicker extends Component {
       isTimeRange,
       isDisabled,
       datePickerInputStyle,
+      cloudCoverageSliderRef,
     } = this.props;
 
     const { availableDays, loading, displayedDayMonth } = this.state;
@@ -372,6 +373,7 @@ class DatePicker extends Component {
             setDisplayedDayMonth={this.setDisplayedDayMonth}
             isZoomLevelOk={isZoomLevelOk}
             isTimeRange={isTimeRange}
+            cloudCoverageSliderRef={cloudCoverageSliderRef}
           />
         )}
       </>

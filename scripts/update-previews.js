@@ -14,19 +14,19 @@ import {
 } from '@sentinel-hub/sentinelhub-js';
 import { exit } from 'process';
 import fs from 'fs';
-import { DEFAULT_THEMES } from '../src/assets/default_themes';
+import { DEFAULT_THEMES } from '../src/assets/default_themes.js';
 import { filterLayers } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
 import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType';
 import { md5 } from 'js-md5';
 import dotenv from 'dotenv';
-import { getAuthToken } from './utils/auth';
+import { getAuthToken } from './utils/auth.js';
 import {
   getArrayOfInstanceIds,
   getCsvFullPath,
   OGC_REQUEST_STATE,
   setOgcRequestsStates,
   createHttpClientWithCredentials,
-} from './shared-functions';
+} from './shared-functions.js';
 
 dotenv.config({ path: './.env' });
 

@@ -14,8 +14,8 @@ import { t } from 'ttag';
 import { DEFAULT_THEMES } from './assets/default_themes.js';
 import { EDUCATION_THEMES } from './assets/education_themes.js';
 import {
-  DEM_COPERNICUS_30,
-  DEM_COPERNICUS_90,
+  DEM_COPERNICUS_30_CDAS,
+  DEM_COPERNICUS_90_CDAS,
 } from './Tools/SearchPanel/dataSourceHandlers/dataSourceConstants.js';
 
 export const ModalId = {
@@ -146,8 +146,8 @@ export const DEM_3D_SOURCES = {
 };
 
 export const DEM_3D_CUSTOM_TO_DATASOURCE = {
-  [DEMInstanceType.COPERNICUS_30]: DEM_COPERNICUS_30,
-  [DEMInstanceType.COPERNICUS_90]: DEM_COPERNICUS_90,
+  [DEMInstanceType.COPERNICUS_30]: DEM_COPERNICUS_30_CDAS,
+  [DEMInstanceType.COPERNICUS_90]: DEM_COPERNICUS_90_CDAS,
 };
 
 export const DEM_3D_MAX_ZOOM = {
@@ -179,9 +179,7 @@ export const DATASOURCES = {
   AWS_LANDSAT8: 'Landsat8AWS',
   AWS_LANDSAT15: 'Landsat15AWS',
   AWS_LANDSAT45: 'Landsat45AWS',
-  ENVISAT_MERIS: 'Envisat Meris',
   AWS_LANDSAT7_ETM: 'Landsat7ETMAWS',
-  DEM: 'DEM',
   DEM_CDAS: 'DEM CDAS',
   COPERNICUS_HRSI: 'Copernicus Snow & Ice',
   COPERNICUS_HRVPP: 'Copernicus Vegetation',
@@ -319,3 +317,14 @@ export const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
 export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
 export const OSM_BACKGROUND_NAME = 'osm-background';
 export const SELECTED_BASE_LAYER_KEY = 'selectedBaseLayerId';
+
+export const XmlParserOptions = Object.freeze({
+  attributesGroupName: '$',
+  attributeNamePrefix: '',
+  textNodeName: '_',
+  ignoreAttributes: false,
+  isArray: (name, jpath, isLeafNode, isAttribute) => {
+    const isA = !isAttribute && !['Capabilities', 'WMS_Capabilities', 'WMT_MS_Capabilities'].includes(name);
+    return isA;
+  },
+});

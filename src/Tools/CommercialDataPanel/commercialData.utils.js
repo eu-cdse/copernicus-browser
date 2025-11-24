@@ -48,31 +48,31 @@ export const extractErrorMessage = (error) => {
   if (
     error &&
     error.response &&
-    error.response.data &&
-    error.response.data.error &&
-    error.response.data.error.code
+    error.response?.data &&
+    error.response?.data.error &&
+    error.response?.data.error.code
   ) {
-    errors.push(error.response.data.error.code);
+    errors.push(error.response?.data.error.code);
   }
 
   if (
     error &&
     error.response &&
-    error.response.data &&
-    error.response.data.error &&
-    error.response.data.error.message
+    error.response?.data &&
+    error.response?.data.error &&
+    error.response?.data.error.message
   ) {
-    errors.push(error.response.data.error.message);
+    errors.push(error.response?.data.error.message);
   }
 
   if (
     error &&
     error.response &&
-    error.response.data &&
-    error.response.data.error &&
-    error.response.data.error.errors
+    error.response?.data &&
+    error.response?.data.error &&
+    error.response?.data.error.errors
   ) {
-    errors.push(JSON.stringify(error.response.data.error.errors));
+    errors.push(JSON.stringify(error.response?.data.error.errors));
   }
 
   return errors.join('\n');

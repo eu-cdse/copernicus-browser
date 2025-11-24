@@ -1,6 +1,6 @@
-const dotenv = require('dotenv');
-const { getAuthToken } = require('../utils/auth');
-const { fetchData, fetchLayersFromConfiguration } = require('../utils/byoc-api');
+import dotenv from 'dotenv';
+import { getAuthToken } from '../utils/auth.js';
+import { fetchData, fetchLayersFromConfiguration } from '../utils/byoc-api.js';
 
 dotenv.config();
 

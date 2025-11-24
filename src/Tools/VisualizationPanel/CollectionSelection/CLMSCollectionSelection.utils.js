@@ -63,7 +63,7 @@ import {
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
   COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
-  COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
+  // COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
   COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
@@ -460,10 +460,10 @@ export const CLMS_OPTIONS = [
                 label: 'lsp_global_300m_yearly_v1',
                 id: COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
               },
-              {
-                label: 'lsp_global_300m_yearly_v2',
-                id: COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
-              },
+              // {
+              //   label: 'lsp_global_300m_yearly_v2',
+              //   id: COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
+              // },
             ],
           },
           {

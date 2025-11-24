@@ -1,8 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const dotenv = require('dotenv');
-const { getAuthToken } = require('../utils/auth');
+import fs from 'fs';
+import path from 'path';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { getAuthToken } from '../utils/auth.js';
+
+// Define __dirname for ES Module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 // Determine the environment (training or production) based on the command-line argument

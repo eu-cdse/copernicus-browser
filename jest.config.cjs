@@ -8,7 +8,7 @@ module.exports = {
     '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
   moduleNameMapper: {
-    '\\.(css|scss)$': '<rootDir>/config/jest/cssTransform.js',
-    '\\.(svg(\\?react)?|png)$': '<rootDir>/config/jest/fileTransform.js',
+    '\\.(css|scss)$': '<rootDir>/config/jest/cssTransform.cjs',
+    '\\.(svg(\\?react)?|png)$': '<rootDir>/config/jest/fileTransform.cjs',
   },
 };

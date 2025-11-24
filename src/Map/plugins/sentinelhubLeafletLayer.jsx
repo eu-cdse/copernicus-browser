@@ -20,7 +20,6 @@ import {
   Landsat15AWSLMSSL1Layer,
   Landsat7AWSLETML1Layer,
   Landsat7AWSLETML2Layer,
-  DEMLayer,
   ProcessingDataFusionLayer,
   CancelToken,
   isCancelled,
@@ -62,18 +61,10 @@ import {
   S5_CLOUD_CDAS,
   S5_OTHER_CDAS,
   AWS_L8L1C,
-  DEM_MAPZEN,
-  DEM_COPERNICUS_30,
-  DEM_COPERNICUS_90,
   COPERNICUS_CORINE_LAND_COVER,
   COPERNICUS_GLOBAL_LAND_COVER,
   COPERNICUS_WATER_BODIES,
   COPERNICUS_CLC_ACCOUNTING,
-  CNES_LAND_COVER,
-  GLOBAL_HUMAN_SETTLEMENT,
-  ESA_WORLD_COVER,
-  COPERNICUS_GLOBAL_SURFACE_WATER,
-  IO_LULC_10M_ANNUAL,
   AWS_LOTL1,
   AWS_LOTL2,
   AWS_LTML1,
@@ -232,7 +223,7 @@ import {
   checkIfCustom,
   getDataSourceHandler,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import DEMDataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/DEMDataSourceHandler';
+import DEMCDASDataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/DEMCDASDataSourceHandler';
 import { constructLayerFromDatasetId } from '../../junk/EOBCommon/utils/dataFusion';
 import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
@@ -893,21 +884,9 @@ class SentinelHubLayer extends L.TileLayer {
           upsampling: upsampling,
           downsampling: downsampling,
         });
-      case DEM_MAPZEN:
-      case DEM_COPERNICUS_30:
-      case DEM_COPERNICUS_90:
-        const { demInstance } = DEMDataSourceHandler.getDatasetParams(datasetId);
-        return await new DEMLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-          demInstance: demInstance,
-        });
       case DEM_COPERNICUS_30_CDAS:
       case DEM_COPERNICUS_90_CDAS:
-        const { demInst } = DEMDataSourceHandler.getDatasetParams(datasetId);
+        const { demInst } = DEMCDASDataSourceHandler.getDatasetParams(datasetId);
         return await new DEMCDASLayer({
           evalscript: evalscript,
           evalscriptUrl: evalscripturl,
@@ -920,11 +899,6 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_GLOBAL_LAND_COVER:
       case COPERNICUS_WATER_BODIES:
       case COPERNICUS_CLC_ACCOUNTING:
-      case CNES_LAND_COVER:
-      case ESA_WORLD_COVER:
-      case COPERNICUS_GLOBAL_SURFACE_WATER:
-      case IO_LULC_10M_ANNUAL:
-      case GLOBAL_HUMAN_SETTLEMENT:
       case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
       case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       case CDSE_CCM_VHR_IMAGE_2024_COLLECTION:

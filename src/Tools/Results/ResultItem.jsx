@@ -9,7 +9,7 @@ import moment from 'moment';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import { useODataDownload } from '../../hooks/useODataDownload';
 import { ResultItemFooter } from './ResultItemFooter';
-import axios from 'axios';
+
 import {
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
@@ -117,13 +117,14 @@ const checkProductVisualization = async (datasetId, { geometry, sensingTime, att
   return null;
 };
 
-const createNewCancelToken = () => axios.CancelToken.source();
+const createNewAbortController = () => new AbortController();
 
-const setNewCancelToken = (productId) => {
+const setNewAbortController = (productId) => {
+  const controller = createNewAbortController();
   store.dispatch(
     productDownloadSlice.actions.setCancelToken({
       productId: productId,
-      cancelToken: createNewCancelToken(),
+      cancelToken: controller,
     }),
   );
 };
@@ -159,7 +160,7 @@ const ResultItem = ({
 
   useEffect(() => {
     if (!productDownloadCancelTokens[tile.id]) {
-      setNewCancelToken(tile.id);
+      setNewAbortController(tile.id);
     }
   }, [tile.id, productDownloadCancelTokens]);
 
@@ -301,8 +302,8 @@ const ResultItem = ({
         <ProgressBar
           value={productDownloadProgress[tile.id]}
           onCancel={() => {
-            productDownloadCancelTokens[tile.id].cancel('Download request was cancelled by user');
-            setNewCancelToken(tile.id);
+            productDownloadCancelTokens[tile.id].abort();
+            setNewAbortController(tile.id);
           }}
         />
       )}

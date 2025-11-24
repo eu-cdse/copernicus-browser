@@ -1,5 +1,4 @@
 import {
-  fetchInstancesById,
   getArrayOfInstanceIds,
   getCsvFullPath,
   OGC_REQUEST_STATE,
@@ -8,7 +7,8 @@ import {
   getConfigurationLayers,
   printOut,
   createHttpClientWithCredentials,
-} from './shared-functions';
+  fetchInstancesById,
+} from './shared-functions.js';
 import { exit } from 'process';
 import fs from 'fs';
 import path from 'path';

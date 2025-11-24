@@ -1,7 +1,7 @@
-const axios = require('axios');
-const dotenv = require('dotenv');
-const { getAuthToken } = require('../utils/auth');
-const { fetchCollections, fetchData, fetchLayersFromConfiguration } = require('../utils/byoc-api');
+import axios from 'axios';
+import dotenv from 'dotenv';
+import { getAuthToken } from '../utils/auth.js';
+import { fetchCollections, fetchData, fetchLayersFromConfiguration } from '../utils/byoc-api.js';
 
 dotenv.config();
 

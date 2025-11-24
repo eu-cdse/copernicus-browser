@@ -1,7 +1,13 @@
 import semver from 'semver';
 import { execSync } from 'child_process';
-import pckg from '../package.json';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const pckg = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
 const requiredNodeVersion = pckg.engines.node;
 const actualNodeVersion = process.version;
 const redTextColor = '\x1b[31m';

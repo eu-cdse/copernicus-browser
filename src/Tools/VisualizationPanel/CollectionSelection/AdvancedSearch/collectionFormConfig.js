@@ -753,94 +753,6 @@ export const collections = [
     ],
   },
   {
-    id: ODataCollections.DEM.id,
-    label: ODataCollections.DEM.label,
-    collectionName: ODataCollections.DEM.collection,
-    supportsCloudCover: false,
-    instruments: [
-      {
-        id: 'open',
-        label: 'Copernicus DEM (Global Coverage)',
-        supportsInstrumentName: false,
-        productTypes: [
-          {
-            id: 'COP-DEM_GLO-30-DGED',
-            label: 'COP-DEM_GLO-30-DGED',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-          {
-            id: 'COP-DEM_GLO-30-DTED',
-            label: 'COP-DEM_GLO-30-DTED',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-          {
-            id: 'COP-DEM_GLO-90-DGED',
-            label: 'COP-DEM_GLO-90-DGED',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-          {
-            id: 'COP-DEM_GLO-90-DTED',
-            label: 'COP-DEM_GLO-90-DTED',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-        ],
-      },
-      {
-        id: 'restricted',
-        label: 'Copernicus DEM (EEA Coverage)',
-        supportsInstrumentName: false,
-        productTypes: [
-          {
-            id: 'COP-DEM_EEA-10-DGED',
-            label: 'COP-DEM_EEA-10-DGED',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-          {
-            id: 'COP-DEM_EEA-10-INSP',
-            label: 'COP-DEM_EEA-10-INSP',
-            customFilterQueryByDatasetFull: true,
-            productTypes: [],
-          },
-        ],
-      },
-    ],
-    additionalFilters: [
-      {
-        id: AttributeNames.eopIdentifier,
-        render: DefaultInput,
-        type: 'text',
-        placeholder: FormatedAttributeNames.eopIdentifier(),
-      },
-      {
-        id: AttributeNames.deliveryId,
-        render: MultiSelectInput,
-        defaultValue: AttributeDEMDatasetVersions.slice(-1),
-        getOptions: ({ userToken }) => AttributeDEMDatasetVersions,
-        selectionLimit: 5,
-        preProcessFilters: (filters) => {
-          return filters.flatMap((filter) => {
-            return AttributeDEMDatasetsMap.flatMap((dataset) => {
-              return dataset.productTypes.map((productType) => ({
-                value: `${productType.id}/${filter.value}`,
-              }));
-            });
-          });
-        },
-      },
-      {
-        id: AttributeNames.gridId,
-        render: DefaultInput,
-        type: 'text',
-        placeholder: FormatedAttributeNames.gridId(),
-      },
-    ],
-  },
-  {
     id: ODataCollections.CCM_SAR.id,
     label: ODataCollections.CCM_SAR.label,
     collectionName: ODataCollections.CCM_SAR.collection,
@@ -894,6 +806,94 @@ export const collections = [
         render: DefaultInput,
         type: 'text',
         placeholder: FormatedAttributeNames.productType(),
+      },
+    ],
+  },
+  {
+    id: ODataCollections.DEM.id,
+    label: ODataCollections.DEM.label,
+    collectionName: ODataCollections.DEM.collection,
+    supportsCloudCover: false,
+    instruments: [
+      {
+        id: 'open',
+        label: 'Global Coverage',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'COP-DEM_GLO-30-DGED',
+            label: 'COP-DEM_GLO-30-DGED',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-30-DTED',
+            label: 'COP-DEM_GLO-30-DTED',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-90-DGED',
+            label: 'COP-DEM_GLO-90-DGED',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_GLO-90-DTED',
+            label: 'COP-DEM_GLO-90-DTED',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+        ],
+      },
+      {
+        id: 'restricted',
+        label: 'EEA Coverage',
+        supportsInstrumentName: false,
+        productTypes: [
+          {
+            id: 'COP-DEM_EEA-10-DGED',
+            label: 'COP-DEM_EEA-10-DGED',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+          {
+            id: 'COP-DEM_EEA-10-INSP',
+            label: 'COP-DEM_EEA-10-INSP',
+            customFilterQueryByDatasetFull: true,
+            productTypes: [],
+          },
+        ],
+      },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.eopIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.eopIdentifier(),
+      },
+      {
+        id: AttributeNames.deliveryId,
+        render: MultiSelectInput,
+        defaultValue: AttributeDEMDatasetVersions.slice(-1),
+        getOptions: ({ userToken }) => AttributeDEMDatasetVersions,
+        selectionLimit: 5,
+        preProcessFilters: (filters) => {
+          return filters.flatMap((filter) => {
+            return AttributeDEMDatasetsMap.flatMap((dataset) => {
+              return dataset.productTypes.map((productType) => ({
+                value: `${productType.id}/${filter.value}`,
+              }));
+            });
+          });
+        },
+      },
+      {
+        id: AttributeNames.gridId,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.gridId(),
       },
     ],
   },
@@ -1764,16 +1764,16 @@ export const recursiveCollectionCLMS = [
                   'lsp_global_300m_yearly_v1',
                 )})`,
               },
-              {
-                id: 'lsp_global_300m_yearly_v2',
-                label: 'LSP, Global, Yearly, 300m, (2014–present), V2',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lsp_global_300m_yearly_v2',
-                )})`,
-              },
+              // {
+              //   id: 'lsp_global_300m_yearly_v2',
+              //   label: 'LSP, Global, Yearly, 300m, (2014–present), V2',
+              //   type: 'productType',
+              //   customFilterExpression: `(${FilterElement.Attribute(
+              //     ODataAttributes.datasetIdentifier,
+              //     ODataFilterOperator.eq,
+              //     'lsp_global_300m_yearly_v2',
+              //   )})`,
+              // },
             ],
           },
           {
@@ -1967,16 +1967,6 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
-                id: 'lwq-reproc_global_1km_10daily_v1',
-                label: 'Global Reproc, 10-daily, 1km, (2002–2012), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lwq-reproc_global_1km_10daily_v1',
-                )})`,
-              },
-              {
                 id: 'lwq-reproc_global_300m_10daily_v1',
                 label: 'Global Reproc, 10-daily, 300m, (2002–2012), V1',
                 type: 'productType',
@@ -1984,16 +1974,6 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'lwq-reproc_global_300m_10daily_v1',
-                )})`,
-              },
-              {
-                id: 'lwq-nrt_global_1km_10daily_v1',
-                label: 'Global NRT, 10-daily, 1km, (2002–2012), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lwq-nrt_global_1km_10daily_v1',
                 )})`,
               },
               {

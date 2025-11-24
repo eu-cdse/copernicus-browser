@@ -68,7 +68,7 @@ const ODataCollections = {
   S6: { id: 'S6', label: 'SENTINEL-6' },
   GLOBAL_MOSAICS: { id: 'GLOBAL-MOSAICS', label: 'SENTINEL-MOSAICS', collection: 'GLOBAL-MOSAICS' },
   OPTICAL: { id: 'OPTICAL', label: 'CCM Optical', collection: 'CCM' },
-  DEM: { id: 'DEM', label: 'CCM DEM', collection: 'CCM' },
+  DEM: { id: 'DEM', label: 'Copernicus DEM', collection: 'CCM' },
   CCM_SAR: { id: 'CCM_SAR', label: 'CCM SAR', collection: 'CCM' },
   CLMS_BIOGEOPHYSICAL_PARAMETERS: {
     id: 'CLMS_BIOGEOPHYSICAL_PARAMETERS',

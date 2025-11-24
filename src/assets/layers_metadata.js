@@ -30,7 +30,6 @@ import {
   COPERNICUS_WATER_BODIES,
   AWS_LTML1,
   AWS_LTML2,
-  ENVISAT_MERIS,
   AWS_LMSSL1,
   COPERNICUS_GLOBAL_SURFACE_WATER,
   DEM_MAPZEN,
@@ -869,14 +868,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page6.php)`,
   },
-
-  {
-    match: [{ datasourceId: ENVISAT_MERIS, layerId: 'FALSE_COLOR' }],
-
-    description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here.](https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/meris/)`,
-  },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '1_TRUE_COLOR' },
@@ -920,13 +911,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-7-etm/true-color/)`,
   },
-  {
-    match: [{ datasourceId: ENVISAT_MERIS, layerId: '1_TRUE_COLOR' }],
-
-    description: () =>
-      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/meris/)`,
-  },
-
   {
     match: [
       { datasourceId: S3OLCI, layerId: '1_TRUE_COLOR' },

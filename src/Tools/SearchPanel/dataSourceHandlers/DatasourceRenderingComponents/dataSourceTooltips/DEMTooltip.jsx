@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
-import { DATASOURCES } from '../../../../../const';
-import { credits } from './credits';
 import DataSourceTooltip from './DataSourceTooltip';
 
 const COPERNICUS_CREDITS_URL =
@@ -21,7 +19,6 @@ const getCopernicus90Markdown = () =>
 const DEMTooltip = () =>
   DataSourceTooltip({
     source: getDEMMarkdown(),
-    credits: credits[DATASOURCES.DEM],
   });
 
 const MapzenTooltip = () => <ReactMarkdown children={getMapzenMarkdown()} />;

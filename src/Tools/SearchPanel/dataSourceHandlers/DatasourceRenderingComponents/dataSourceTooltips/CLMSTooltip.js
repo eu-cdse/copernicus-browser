@@ -32,7 +32,7 @@ const ClmsGlobalLst5kmV110DailyDailyCycleTooltip = () =>
   DataSourceTooltip({ source: getClmsGlobalLst5kmV110DailyDailyCycleMarkdown() });
 
 const getClmsGlobalLst5kmV1HourlyMarkdown = () => t`
-  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from July 2010 to January 2021. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v1-0-5km).`;
+  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from July 2010 to January 2021. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v1-0-5km). \n\n *Please note that under default settings, the dataset displayed for each day is the latest image available, which typically reflects the data captured up to midnight. To access data from a specific hour, use the "Date: time range" mode.`;
 
 const ClmsGlobalLst5kmV1HourlyTooltip = () =>
   DataSourceTooltip({
@@ -48,7 +48,7 @@ const ClmsGlobalLst5kmV210dailytciTooltip = () =>
   });
 
 const getClmsGlobalLst5kmV2HourlyMarkdown = () => t`
-  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v2-0-5km).`;
+  Provides hourly land surface temperature from geostationary sensors observations. The data are available at global scale in the spatial resolution of about 5 km and covers the period from January 2021 to January 2023 with version 2.0 and from January 2023 onwards with version 2.1. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/hourly-land-surface-temperature-global-v2-0-5km). \n\n *Please note that under default settings, the dataset displayed for each day is the latest image available, which typically reflects the data captured up to midnight. To access data from a specific hour, use the "Date: time range" mode.`;
 
 const ClmsGlobalLst5kmV2HourlyTooltip = () =>
   DataSourceTooltip({

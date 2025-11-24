@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { SHV3_LOCATIONS_ROOT_URL } from '@sentinel-hub/sentinelhub-js';
+import axios from 'axios';
 
 import store from '../store';
 
@@ -12,8 +12,11 @@ export function getCollectionInformation(collectionId, locationId, subType) {
   };
   const requestConfig = {
     headers: headers,
+    retries: 3, // Retry failed requests up to 3 times
+    timeout: 5000, // Set a timeout of 5 seconds
   };
   const baseUrl = SHV3_LOCATIONS_ROOT_URL[locationId];
+
   return axios.get(
     `${baseUrl}api/v1/catalog/1.0.0/collections/${subType === 'BATCH' ? 'batch' : 'byoc'}-${collectionId}`,
     requestConfig,

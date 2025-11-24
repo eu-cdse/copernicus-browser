@@ -16,7 +16,6 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 function Calendar(props) {
   const wrapperRef = useRef();
-  useOnClickOutside(wrapperRef, props.onClickOutside || (() => {}));
   const {
     selectedDay,
     minDate,
@@ -36,7 +35,11 @@ function Calendar(props) {
     setDisplayedDayMonth,
     isZoomLevelOk,
     isTimeRange,
+    handleClickOutside,
+    cloudCoverageSliderRef,
   } = props;
+
+  useOnClickOutside(wrapperRef, handleClickOutside || (() => {}), cloudCoverageSliderRef);
 
   const modifiers = {
     highlighted: highlightedDays.map((d) => momentToDateWithUTCValues(d)),

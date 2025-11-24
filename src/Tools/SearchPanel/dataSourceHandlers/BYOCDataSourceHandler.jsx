@@ -3,7 +3,6 @@ import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-h
 import { t } from 'ttag';
 
 import DataSourceHandler from './DataSourceHandler';
-import OthersDataSourceHandler from './OthersDataSourceHandler';
 import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { filterLayers } from './filter';
@@ -37,7 +36,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
     CUSTOM: { min: 0, max: 25 },
   };
 
-  OTHER_KNOWN_COLLECTIONS = new OthersDataSourceHandler().getKnownCollectionsList();
   MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
   MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
   RRD_KNOWN_COLLECTIONS = RRD_COLLECTIONS;
@@ -51,7 +49,6 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
       (l) =>
         l instanceof BYOCLayer &&
         l.collectionId &&
-        !this.OTHER_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.RRD_KNOWN_COLLECTIONS.includes(l.collectionId) &&

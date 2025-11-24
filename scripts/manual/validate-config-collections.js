@@ -1,6 +1,6 @@
-const axios = require('axios');
-const dotenv = require('dotenv');
-const { getAuthToken } = require('../utils/auth');
+import axios from 'axios';
+import dotenv from 'dotenv';
+import { getAuthToken } from '../utils/auth.js';
 
 dotenv.config();
 

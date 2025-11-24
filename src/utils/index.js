@@ -508,17 +508,17 @@ export function isQuotaError({ status, code }) {
 
 export async function constructPanelError(error) {
   const DEFAULT_ERROR = JSON.stringify(error);
-  if (error.response && error.response.data) {
+  if (error.response && error.response?.data) {
     let errorObj;
 
-    if (error.response.data instanceof Blob) {
-      const errorJson = await readBlob(error.response.data);
+    if (error.response?.data instanceof Blob) {
+      const errorJson = await readBlob(error.response?.data);
       errorObj = errorJson?.error;
       if (!errorObj) {
         return { message: DEFAULT_ERROR };
       }
     } else {
-      errorObj = error.response.data.error;
+      errorObj = error.response?.data.error;
     }
 
     let errorMsg = '';

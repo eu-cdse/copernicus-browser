@@ -1,11 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const dotenv = require('dotenv');
+import { RRD_DATASOURCE_KEYWORD_RULES } from './rrd/datasource_rules.js';
+import { getAuthToken } from './utils/auth.js';
+import { fetchCollections } from './utils/byoc-api.js';
+
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 dotenv.config();
 
-const { RRD_DATASOURCE_KEYWORD_RULES } = require('./rrd/datasource_rules.js');
-const { getAuthToken } = require('./utils/auth');
-const { fetchCollections } = require('./utils/byoc-api.js');
+// Define __dirname for ES Module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const outputConstantsFilePath = path.join(
   __dirname,
@@ -221,7 +226,7 @@ const updateRRDHandlers = (handlersFilePath, groupedMap, constants) => {
   }
 
   const finalHandlersContent = `
-import { DATASOURCES } from '../../../const';
+import { DATASOURCES } from '../../../const.js';
 import {
 ${constantsForImport}
 } from './RRDDataSources/dataSourceRRDConstants';

@@ -7,7 +7,7 @@ import {
   DEMLayer,
   BYOCSubTypes,
 } from '@sentinel-hub/sentinelhub-js';
-import { parseStringPromise } from 'xml2js';
+import { XMLParser } from 'fast-xml-parser';
 import { t } from 'ttag';
 
 import store, { notificationSlice, themesSlice } from '../../../store';
@@ -19,14 +19,11 @@ import Landsat15AWSDataSourceHandler from './Landsat15AWSDataSourceHandler';
 import Landsat7AWSDataSourceHandler from './Landsat7AWSDataSourceHandler';
 import Landsat8AWSDataSourceHandler from './Landsat8AWSDataSourceHandler';
 import BYOCDataSourceHandler from './BYOCDataSourceHandler';
-import DEMDataSourceHandler from './DEMDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
-
-import OthersDataSourceHandler from './OthersDataSourceHandler';
 
 import { getCollectionInformation } from '../../../utils/collections';
 
-import { DATASOURCES } from '../../../const';
+import { DATASOURCES, XmlParserOptions } from '../../../const';
 import {
   S1_AWS_IW_VVVH,
   S1_AWS_IW_VV,
@@ -44,18 +41,10 @@ import {
   S5_CLOUD,
   S5_OTHER,
   AWS_L8L1C,
-  DEM_MAPZEN,
-  DEM_COPERNICUS_30,
-  DEM_COPERNICUS_90,
   COPERNICUS_CORINE_LAND_COVER,
   COPERNICUS_GLOBAL_LAND_COVER,
   COPERNICUS_WATER_BODIES,
   COPERNICUS_CLC_ACCOUNTING,
-  CNES_LAND_COVER,
-  GLOBAL_HUMAN_SETTLEMENT,
-  ESA_WORLD_COVER,
-  COPERNICUS_GLOBAL_SURFACE_WATER,
-  IO_LULC_10M_ANNUAL,
   AWS_LOTL1,
   AWS_LOTL2,
   AWS_LTML1,
@@ -266,10 +255,8 @@ export function initializeDataSourceHandlers() {
     new Landsat45AWSDataSourceHandler(),
     new Landsat7AWSDataSourceHandler(),
     new Landsat8AWSDataSourceHandler(),
-    new DEMDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
     new BYOCDataSourceHandler(),
-    new OthersDataSourceHandler(),
     new AirbusDeDataSourceHandler(),
     new EUSIDataSourceHandler(),
     new GeosatDatasourceHandler(),
@@ -446,7 +433,6 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
 // try to get collection name from datasource handler for known collections (Copernicus&friends)
 const checkKnownCollections = (collectionId) => {
   const datasourceHandlers = [
-    new OthersDataSourceHandler(),
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
     new MosaicDataSourceHandler(),
@@ -469,6 +455,8 @@ const checkKnownCollections = (collectionId) => {
   return collectionTitle;
 };
 
+const xmlParser = new XMLParser(XmlParserOptions);
+
 async function prepareThemeDataSourceHandlers(theme) {
   const allLayers = await Promise.all(
     theme.content.map(async (dataSource) => {
@@ -480,7 +468,7 @@ async function prepareThemeDataSourceHandlers(theme) {
       try {
         const layers = await LayersFactory.makeLayers(dataSourceUrl, null, null, {
           timeout: 30000,
-          responseType: 'text',
+          responseType: 'json',
           cache: {
             expiresIn: 0,
           },
@@ -494,8 +482,10 @@ async function prepareThemeDataSourceHandlers(theme) {
         }
 
         if (e?.response?.status === 403 && e?.response?.headers['content-type'] === 'application/xml') {
-          const responseData = await parseStringPromise(e.response.data);
-          const responseText = responseData?.ServiceExceptionReport?.ServiceException[0].trim();
+          const responseData = xmlParser.parse(e.response.data);
+
+          const serviceException = responseData?.ServiceExceptionReport?.ServiceException;
+          const responseText = serviceException[0]?.trim();
           store.dispatch(notificationSlice.actions.displayPanelError({ message: responseText }));
         }
         console.warn(e);
@@ -619,19 +609,9 @@ export function datasourceForDatasetId(datasetId) {
     case AWS_LETML1:
     case AWS_LETML2:
       return DATASOURCES.AWS_LANDSAT7_ETM;
-    case DEM_MAPZEN:
-    case DEM_COPERNICUS_30:
-    case DEM_COPERNICUS_90:
-      return DATASOURCES.DEM;
     case DEM_COPERNICUS_30_CDAS:
     case DEM_COPERNICUS_90_CDAS:
       return DATASOURCES.DEM_CDAS;
-    case CNES_LAND_COVER:
-    case ESA_WORLD_COVER:
-    case COPERNICUS_GLOBAL_SURFACE_WATER:
-    case IO_LULC_10M_ANNUAL:
-    case GLOBAL_HUMAN_SETTLEMENT:
-      return DATASOURCES.OTHER;
     case COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC:
     case COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC:
       return DATASOURCES.MOSAIC;
@@ -842,20 +822,12 @@ export const datasetLabels = {
   [AWS_LETML1]: 'Landsat 7 ETM+ L1',
   [AWS_LETML2]: 'Landsat 7 ETM+ L2',
   [CUSTOM]: 'CUSTOM',
-  [DEM_MAPZEN]: 'DEM MAPZEN',
-  [DEM_COPERNICUS_30]: 'DEM COPERNICUS 30',
-  [DEM_COPERNICUS_90]: 'DEM COPERNICUS 90',
   [DEM_COPERNICUS_30_CDAS]: 'DEM COPERNICUS 30',
   [DEM_COPERNICUS_90_CDAS]: 'DEM COPERNICUS 90',
   [COPERNICUS_CORINE_LAND_COVER]: 'CORINE Land Cover',
   [COPERNICUS_GLOBAL_LAND_COVER]: 'Global Land Cover',
-  [CNES_LAND_COVER]: 'CNES Land Cover',
-  [ESA_WORLD_COVER]: 'ESA WorldCover',
-  [COPERNICUS_GLOBAL_SURFACE_WATER]: 'Global Surface Water',
-  [IO_LULC_10M_ANNUAL]: 'IO Land Use Land Cover Map',
   [COPERNICUS_WATER_BODIES]: 'Water Bodies',
   [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
-  [GLOBAL_HUMAN_SETTLEMENT]: 'Global Human Settlement',
   [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics',
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
