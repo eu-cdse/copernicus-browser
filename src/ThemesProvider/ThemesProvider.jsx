@@ -63,6 +63,14 @@ class ThemesProvider extends React.Component {
   async componentDidMount() {
     const { themesUrl } = this.props;
 
+    // Check if we need to trigger login after logout
+    const shouldTriggerLogin = sessionStorage.getItem('triggerLoginAfterLogout');
+    if (shouldTriggerLogin === 'true') {
+      sessionStorage.removeItem('triggerLoginAfterLogout');
+      await openLogin();
+      return;
+    }
+
     if (themesUrl) {
       const themesFromThemesUrl = await this.fetchThemesFromUrl(themesUrl);
       if (themesFromThemesUrl) {
@@ -75,19 +83,31 @@ class ThemesProvider extends React.Component {
   async privateConfigurationAlert(selectedMode, loginAsDifferentUser = false, currentThemeId) {
     try {
       store.dispatch(modalSlice.actions.addModal({ modal: ModalId.PRIVATE_THEMEID_LOGIN }));
-      const shouldExecuteLogin = await confirm(t`Please login to gain access to it`, {
-        title: t`The configuration you are trying to access is private`,
-        okLabel: loginAsDifferentUser ? t`Login as a different user` : t`Login`,
-        cancelLabel: t`Continue without logging in`,
+      const isUserLoggedIn = this.props.user && this.props.user.access_token;
+
+      const modalText = isUserLoggedIn
+        ? t`The configuration you are trying to access is private. Do you want to switch to another account to access this content?`
+        : t`The configuration you are trying to access is private. Please log in to continue.`;
+
+      const shouldExecuteLogin = await confirm(modalText, {
+        title: t`Authentication Required`,
+        okLabel: isUserLoggedIn ? t`Login as a different user` : t`Log in`,
+        cancelLabel: isUserLoggedIn ? t`Cancel` : t`Continue without logging in`,
       });
+
+      store.dispatch(modalSlice.actions.removeModal());
+
       if (shouldExecuteLogin) {
-        if (loginAsDifferentUser) {
+        if (isUserLoggedIn && loginAsDifferentUser) {
+          // Set flag to trigger login after logout redirect
+          sessionStorage.setItem('triggerLoginAfterLogout', 'true');
           await logoutUser();
+          return;
         }
-        store.dispatch(modalSlice.actions.removeModal());
         await openLogin();
       }
     } catch (err) {
+      console.error('Error in privateConfigurationAlert:', err);
       store.dispatch(visualizationSlice.actions.reset());
       store.dispatch(themesSlice.actions.reset());
     } finally {

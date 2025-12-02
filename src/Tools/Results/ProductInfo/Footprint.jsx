@@ -1,28 +1,29 @@
+import React, { useEffect, useRef } from 'react';
 import { GeoJSON, Map, TileLayer } from 'react-leaflet';
 
-import './Footprint.scss';
-import React, { useEffect, useRef, useState } from 'react';
 import { getBoundsAndLatLng } from '../../CommercialDataPanel/commercialData.utils';
 
+import './Footprint.scss';
+
 const Footprint = ({ product, lat, lng }) => {
-  const [center, setCenter] = useState([lat, lng]);
-  const [zoom, setZoom] = useState(10);
   const mapRef = useRef();
 
   useEffect(() => {
     setTimeout(() => {
       if (mapRef?.current?.leafletElement) {
-        mapRef.current.leafletElement.invalidateSize();
+        const map = mapRef.current.leafletElement;
+        // Invalidate size first so map knows its actual dimensions
+        map.invalidateSize();
+
+        // Then fit bounds after the map size is correct
+        if (product?.geometry) {
+          const { bounds } = getBoundsAndLatLng(product.geometry);
+          map.fitBounds(bounds, {
+            padding: [30, 30],
+          });
+        }
       }
     }, 250);
-  }, []);
-
-  useEffect(() => {
-    if (product?.geometry) {
-      const { zoom, lat, lng } = getBoundsAndLatLng(product.geometry);
-      setCenter([lat, lng]);
-      setZoom(Math.max(3, zoom - 2));
-    }
   }, [product]);
 
   if (!product) {
@@ -36,8 +37,8 @@ const Footprint = ({ product, lat, lng }) => {
   return (
     <div className="footprint-container">
       <Map
-        center={center}
-        zoom={zoom}
+        center={[lat, lng]}
+        zoom={3}
         zoomControl={false}
         className="footprint-map"
         ref={mapRef}

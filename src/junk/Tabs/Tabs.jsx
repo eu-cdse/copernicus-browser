@@ -113,7 +113,7 @@ const Tabs = (props) => {
           title={t`Sentinel Hub Dashboard`}
         >
           <FontAwesomeIcon icon={faUpRightFromSquare} className="fa-icon" />
-          SH DASHBOARD
+          {t`SH DASHBOARD`}
         </a>
         <a
           href="https://workspace.dataspace.copernicus.eu/workspace/my-products"
@@ -123,7 +123,7 @@ const Tabs = (props) => {
           title={t`Data Workspace`}
         >
           <FontAwesomeIcon icon={faUpRightFromSquare} className="fa-icon" />
-          WORKSPACE
+          {t`WORKSPACE`}
           {workspacesCount !== null && workspacesCount > 0 ? (
             <span className="counter-badge">{Math.min(workspacesCount, 99)}</span>
           ) : null}
