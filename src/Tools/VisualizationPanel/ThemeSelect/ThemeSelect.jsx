@@ -21,7 +21,6 @@ import {
   NOT_LOGGED_IN,
   RRD_INSTANCES_THEMES_LIST,
 } from '../../../const';
-import CollapsiblePanel from '../../../components/CollapsiblePanel/CollapsiblePanel';
 
 import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
 
@@ -53,7 +52,6 @@ function ThemeSelect({
   setShowLayerPanel,
   setShowHighlightPanel,
   highlightsAvailable,
-  themePanelExpanded,
   compareShare,
 }) {
   const previousVisualizationDate = usePrevious(visualizationDate);
@@ -106,7 +104,7 @@ function ThemeSelect({
 
   const groupedOptions = [
     {
-      label: t`Themes`,
+      label: t`Configurations`,
       options: createSelectOptions(!urlThemesList.length ? modeThemesList : urlThemesList),
     },
     { label: t`User configurations`, divider: true, options: createSelectOptions(userInstancesThemesList) },
@@ -148,21 +146,6 @@ function ThemeSelect({
 
   const themesGroupLabel = ({ label }) => <span>{label}</span>;
 
-  const themePanelContent = () => (isExpanded) => {
-    if (!isExpanded) {
-      return null;
-    }
-
-    return (
-      <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
-        {!selectedThemeId && <div className="no-theme-message">{t`Please select a configuration`}:</div>}
-        <div className="theme-select-highlights-wrapper">
-          <div className="theme-label-select-wrapper">{themeSelectionDropdown()}</div>
-        </div>
-      </div>
-    );
-  };
-
   const themeSelectionDropdown = () => (
     <div className="theme-search">
       <div className="theme-search-header">
@@ -186,22 +169,16 @@ function ThemeSelect({
     </div>
   );
 
-  const themeHeaderCollapsed = () => (
-    <>
-      <div className="title-text">{t`Configurations:`}</div>
-    </>
-  );
-
   return (
-    <CollapsiblePanel
-      title={themeSelectionDropdown()}
-      headerComponent={themeHeaderCollapsed()}
-      expanded={themePanelExpanded}
-      toggleExpanded={(v) => store.dispatch(collapsiblePanelSlice.actions.setThemePanelExpanded(v))}
-      className="theme-select-container"
-    >
-      {themePanelContent()}
-    </CollapsiblePanel>
+    <div className="theme-select-panel-wrapper">
+      <div className="theme-title">{t`Configuration`}:</div>
+
+      <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
+        <div className="theme-select-highlights-wrapper">
+          <div className="theme-label-select-wrapper">{themeSelectionDropdown()}</div>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -6312,12 +6312,6 @@ msgstr ""
 msgid "No configuration selected"
 msgstr "Конфігурація не вибрана"
 
-msgid "Please select a configuration"
-msgstr "Будь ласка, виберіть конфігурацію"
-
-msgid "Configurations:"
-msgstr "Конфігурації:"
-
 msgid "Reset filters"
 msgstr "Скинути фільтри"
 
@@ -6795,9 +6789,6 @@ msgstr "Одиничний"
 
 msgid "Mosaic"
 msgstr "Мозаїка"
-
-msgid "Themes"
-msgstr "Теми"
 
 msgid "User configurations"
 msgstr "Користувацькі налаштування"
@@ -11255,4 +11246,106 @@ msgid ""
 "Plant Phenology Index values between the dates of the season start and end. "
 "The data are available at 300 m spatial resolution with the temporal extent "
 "from 2023 to present."
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid ""
+"The Lake Ice Coverage (LIE) is monitored using optical satellite data and "
+"it classifies a section of the freshwater body as 1) Fully snow covered "
+"ice; 2) Partially snow covered ice/clear ice; 3) Open water. Classification "
+"is provided only for cloud free pixels, with dedicated cloud mask. The "
+"gridded data product covers Northern-Europe with 250m (0.0025 degree) "
+"resolution. The LIE product can have several important applications from "
+"climate change monitoring and hydrological forecasting to winter transport "
+"and recreational activity on lakes."
+msgstr ""
+
+msgid "Sensible heat flux calculated by the TSEB-PT model. Unit: W/m2"
+msgstr ""
+
+msgid "Latent heat flux calculated by the TSEB-PT model. Unit: W/m2"
+msgstr ""
+
+msgid "Actual evapotranspiration calculated by the Ensemble model. Unit: mm/day"
+msgstr ""
+
+msgid "Soil evaporation calculated by the Ensemble model. Unit: mm/day"
+msgstr ""
+
+msgid "Canopy transpiration calculated by the Ensemble model. Unit: mm/day"
+msgstr ""
+
+msgid ""
+"Per pixel standard deviation between TSEB-PT and ETLook model ET. Unit: "
+"mm/day"
+msgstr ""
+
+msgid ""
+"Per pixel standard deviation between TSEB-PT and ETLook model E. Unit: "
+"mm/day"
+msgstr ""
+
+msgid ""
+"Per pixel standard deviation  between TSEB-PT and ETLook model T. Unit: "
+"mm/day"
+msgstr ""
+
+msgid "Per pixel number of cloud free observations in a given dekad."
+msgstr ""
+
+msgid ""
+"Per pixel average gap-filling distance (in days) for cloudy pixels in a "
+"given dekad. Unit in days"
+msgstr ""
+
+msgid "Per pixel annotation flag indicating quality or other limitations"
+msgstr ""
+
+msgid "Actual evapotranspiration calculated by the ETLook model. Unit: mm/day"
+msgstr ""
+
+msgid "Soil evaporation calculated by the ETLook model. Unit: mm/day"
+msgstr ""
+
+msgid "Canopy transpiration calculated by the ETLook model. Unit: mm/day"
+msgstr ""
+
+msgid "Actual evapotranspiration calculated by the TSEB-PT model. Unit: mm/day"
+msgstr ""
+
+msgid "Soil evaporation calculated by the TSEB-PT model. Unit: mm/day"
+msgstr ""
+
+msgid "Canopy transpiration calculated by the TSEB-PT model. Unit: mm/day"
+msgstr ""
+
+msgid "ETA Global 300m 10-daily V1"
+msgstr ""
+
+msgid "HF Global 300m Daily V1"
+msgstr ""
+
+msgid ""
+"Provides actual evapotranspiration, soil evaporation and canopy "
+"transpiration with some quality indicators. Estimates are provided for two "
+"evapotranspiration schemes and an Ensemble of models. Every 10-days "
+"estimate are available in near real time at global scale in the spatial "
+"resolution of about 300 m from November 2025 onwards in version 1.0. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/evapotranspiration/"
+"evapotranspiration-2025-present-raster-300m-global-10-daily-version-1)."
+msgstr ""
+
+msgid ""
+"Provides latent and sensible heat fluxes with one auxiliary information. "
+"Estimates are provided for each Sentinel-3 overpass in near real time at "
+"global scale in the spatial resolution of about 300 m from November 2025 "
+"onwards in version 1.0. More information "
+"[here](https://land.copernicus.eu/en/products/evapotranspiration/heat-flux-2"
+"025-present-raster-300-m-global-daily-version-1)."
 msgstr ""

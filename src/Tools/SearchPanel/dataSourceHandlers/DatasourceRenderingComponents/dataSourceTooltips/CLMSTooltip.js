@@ -746,6 +746,16 @@ const getClmsBalticLie250mV1DailyMarkdown = () =>
 const ClmsBalticLie250mV1DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsBalticLie250mV1DailyMarkdown() });
 
+const getClmsGlobalEta300mV110dailyMarkdown = () =>
+  t`Provides actual evapotranspiration, soil evaporation and canopy transpiration with some quality indicators. Estimates are provided for two evapotranspiration schemes and an Ensemble of models. Every 10-days estimate are available in near real time at global scale in the spatial resolution of about 300 m from November 2025 onwards in version 1.0. More information [here](https://land.copernicus.eu/en/products/evapotranspiration/evapotranspiration-2025-present-raster-300m-global-10-daily-version-1).`;
+const ClmsGlobalEta300mV110dailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalEta300mV110dailyMarkdown() });
+
+const getClmsGlobalHf300mV1DailyMarkdown = () =>
+  t`Provides latent and sensible heat fluxes with one auxiliary information. Estimates are provided for each Sentinel-3 overpass in near real time at global scale in the spatial resolution of about 300 m from November 2025 onwards in version 1.0. More information [here](https://land.copernicus.eu/en/products/evapotranspiration/heat-flux-2025-present-raster-300-m-global-daily-version-1).`;
+const ClmsGlobalHf300mV1DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalHf300mV1DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -943,4 +953,8 @@ export {
   getClmsGlobalBa300mV4DailyMarkdown,
   ClmsBalticLie250mV1DailyTooltip,
   getClmsBalticLie250mV1DailyMarkdown,
+  ClmsGlobalEta300mV110dailyTooltip,
+  getClmsGlobalEta300mV110dailyMarkdown,
+  ClmsGlobalHf300mV1DailyTooltip,
+  getClmsGlobalHf300mV1DailyMarkdown,
 };

@@ -1729,3 +1729,75 @@ export const COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1_BANDS = [
+  {
+    name: 'H_TSEBPT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LE_TSEBPT',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1_BANDS = [
+  {
+    name: 'E_ENSEMBLE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'E_ETLOOK',
+    getDescription: () => ``,
+  },
+  {
+    name: 'E_STD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'E_TSEBPT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'ET_ENSEMBLE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'ET_ETLOOK',
+    getDescription: () => ``,
+  },
+  {
+    name: 'ET_STD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'ET_TSEBPT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GFD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'T_ENSEMBLE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'T_ETLOOK',
+    getDescription: () => ``,
+  },
+  {
+    name: 'T_STD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'T_TSEBPT',
+    getDescription: () => ``,
+  },
+];

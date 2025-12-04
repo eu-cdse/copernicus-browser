@@ -143,6 +143,8 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -250,6 +252,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   swi_europe_1km_daily_v2: COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   'swi_global_12.5km_10daily_v4': COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   lie_baltic_250m_daily_v1: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  eta_global_300m_10daily_v1: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  hf_global_300m_daily_v1: COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -324,6 +328,11 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
   }
 
   if (productType === 'dynamic_land_cover' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'evapotranspiration' && checkProductTypeFileFormat(attributes)) {
     const { datasetIdentifier } = attributesObject;
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
   }
@@ -771,6 +780,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     return {
       id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
       instrument: 'VEGETATION_PHENOLOGY_AND_PRODUCTIVITY_PARAMETERS',
+      productType: getProductTypeFromDatasetId(datasetId),
+      selectedFilters: {},
+    };
+  }
+
+  if (
+    [COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1].includes(datasetId)
+  ) {
+    return {
+      id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+      instrument: 'EVAPOTRANSPIRATION',
       productType: getProductTypeFromDatasetId(datasetId),
       selectedFilters: {},
     };

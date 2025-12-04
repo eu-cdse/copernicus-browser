@@ -862,6 +862,18 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/ede4cc-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'eta_global_300m_10daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/65a056-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'hf_global_300m_daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/b3bf08-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

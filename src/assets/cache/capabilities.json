@@ -2696,6 +2696,117 @@
         ],
         "datasets": []
     },
+    "65a056-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | ETA 300m 10-Daily V1",
+        "layers": [
+            {
+                "id": "A_ET_ENSEMBLE",
+                "name": "ET-ENSEMBLE",
+                "description": "ET from Ensemble (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=A_ET_ENSEMBLE&style=default"
+            },
+            {
+                "id": "B_E_ENSEMBLE",
+                "name": "E-ENSEMBLE",
+                "description": "Soil evaporation from Ensemble (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=B_E_ENSEMBLE&style=default"
+            },
+            {
+                "id": "C_T_ENSEMBLE",
+                "name": "T-ENSEMBLE",
+                "description": "Canopy transpiration from ETLook (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=C_T_ENSEMBLE&style=default"
+            },
+            {
+                "id": "D_ET_STD",
+                "name": "ET-STD",
+                "description": "ET standard deviation (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=D_ET_STD&style=default"
+            },
+            {
+                "id": "E_E_STD",
+                "name": "E-STD",
+                "description": "E standard deviation (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=E_E_STD&style=default"
+            },
+            {
+                "id": "F_T_STD",
+                "name": "T-STD",
+                "description": "T standard deviation (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=F_T_STD&style=default"
+            },
+            {
+                "id": "G_NOBS",
+                "name": "NOBS",
+                "description": "Cloud-free observations count",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=G_NOBS&style=default"
+            },
+            {
+                "id": "H_GFD",
+                "name": "GFD",
+                "description": "Gap-filling distance (days)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=H_GFD&style=default"
+            },
+            {
+                "id": "I_FLAG",
+                "name": "FLAG",
+                "description": "Quality flag",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=I_FLAG&style=default"
+            },
+            {
+                "id": "J_ET_ETLOOK",
+                "name": "ET-ETLOOK",
+                "description": "ET from ETLook (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=J_ET_ETLOOK&style=default"
+            },
+            {
+                "id": "K_E_ETLOOK",
+                "name": "E-ETLOOK",
+                "description": "Soil evaporation from ETLook (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=K_E_ETLOOK&style=default"
+            },
+            {
+                "id": "L_T_ETLOOK",
+                "name": "T-ETLOOK",
+                "description": "Canopy transpiration from Ensemble (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=L_T_ETLOOK&style=default"
+            },
+            {
+                "id": "M_ET_TSEBPT",
+                "name": "ET-TSEBPT",
+                "description": "ET from TSEB-PT (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=M_ET_TSEBPT&style=default"
+            },
+            {
+                "id": "N_E_TSEBPT",
+                "name": "E-TSEBPT",
+                "description": "Soil evaporation from TSEB-PT (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=N_E_TSEBPT&style=default"
+            },
+            {
+                "id": "O_T_TSEBPT",
+                "name": "T-TSEBPT",
+                "description": "Canopy transpiration from TSEB-PT (mm/day)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/65a056-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=O_T_TSEBPT&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "67d7b1-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lst-tci_global_5km_10daily_v2",
         "layers": [
@@ -4556,6 +4667,26 @@
                 "description": "Net Primary Production",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b36fef-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "b3bf08-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | HF 300m Daily V1",
+        "layers": [
+            {
+                "id": "H_TSEBPT",
+                "name": "H-TSEBPT",
+                "description": "Sensible heat flux (W/m²)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b3bf08-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=H_TSEBPT&style=default"
+            },
+            {
+                "id": "LE_TSEBPT",
+                "name": "LE-TSEBPT",
+                "description": "Latent heat flux (W/m²)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b3bf08-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LE_TSEBPT&style=default"
             }
         ],
         "datasets": []

@@ -23148,6 +23148,866 @@
             }
         }
     ],
+    "65a056-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "A_ET_ENSEMBLE",
+            "title": "ET-ENSEMBLE",
+            "description": "ET from Ensemble (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:35.660294Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "B_E_ENSEMBLE",
+            "title": "E-ENSEMBLE",
+            "description": "Soil evaporation from Ensemble (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:15.863185Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "C_T_ENSEMBLE",
+            "title": "T-ENSEMBLE",
+            "description": "Canopy transpiration from ETLook (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:54.830198Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "D_ET_STD",
+            "title": "ET-STD",
+            "description": "ET standard deviation (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-std_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "0.5",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "1",
+                                "position": 1
+                            },
+                            {
+                                "color": "rgb(53%,34%,65%)",
+                                "label": "1.5",
+                                "position": 1.5
+                            },
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "2",
+                                "position": 2
+                            }
+                        ],
+                        "maxPosition": 2,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:46.145Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "E_E_STD",
+            "title": "E-STD",
+            "description": "E standard deviation (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-std_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "0.5",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "1",
+                                "position": 1
+                            },
+                            {
+                                "color": "rgb(53%,34%,65%)",
+                                "label": "1.5",
+                                "position": 1.5
+                            },
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "2",
+                                "position": 2
+                            }
+                        ],
+                        "maxPosition": 2,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:26.873174Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "F_T_STD",
+            "title": "T-STD",
+            "description": "T standard deviation (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-std_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "0.5",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "1",
+                                "position": 1
+                            },
+                            {
+                                "color": "rgb(53%,34%,65%)",
+                                "label": "1.5",
+                                "position": 1.5
+                            },
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "2",
+                                "position": 2
+                            }
+                        ],
+                        "maxPosition": 2,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:46:01.029453Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "G_NOBS",
+            "title": "NOBS",
+            "description": "Cloud-free observations count",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"NOBS\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.NOBS;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [129, 15, 124]],\n  [2.5, [136, 86, 167]],\n  [5.0, [140, 150, 198]],\n  [7.5, [179, 205, 227]],\n  [10.0, [237, 248, 251]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-nobs_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(53%,34%,65%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:42:43.594178Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "H_GFD",
+            "title": "GFD",
+            "description": "Gap-filling distance (days)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"GFD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.GFD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [15.0, [179, 205, 227]],\n  [30.0, [140, 150, 198]],\n  [45.0, [136, 86, 167]],\n  [60.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-gfd_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "15",
+                                "position": 15
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "30",
+                                "position": 30
+                            },
+                            {
+                                "color": "rgb(53%,34%,65%)",
+                                "label": "45",
+                                "position": 45
+                            },
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "60",
+                                "position": 60
+                            }
+                        ],
+                        "maxPosition": 60,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:42:32.963295Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "I_FLAG",
+            "title": "FLAG",
+            "description": "Quality flag",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"FLAG\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.FLAG;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = getColor(originalValue);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// LOOKUP TABLE FOR COLOURS, TO BE ADAPTED\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [1.0, [179, 205, 227]],\n  [2.0, [140, 150, 198]],\n  [4.0, [129, 15, 124]],\n];\n\n// Function to fetch color for a given value\nfunction getColor(value) {\n  // Find the entry with the closest value\n  const closestEntry = ColorBar.reduce((prev, curr) => {\n    return Math.abs(curr[0] - value) < Math.abs(prev[0] - value) ? curr : prev;\n  });\n\n  // Return the color from the closest entry\n  const [_, color] = closestEntry;\n  return [color[0], color[1], color[2]];\n}\n",
+                    "legend": {
+                        "type": "discrete",
+                        "items": [
+                            {
+                                "color": "rgb(93%,97%,98%)",
+                                "label": "ET modelled with nominal uncertainty"
+                            },
+                            {
+                                "color": "rgb(70%,80%,89%)",
+                                "label": "ET not modelled – cloud, snow, or model non-convergence "
+                            },
+                            {
+                                "color": "rgb(55%,59%,78%)",
+                                "label": "ET not modelled  - Inland open-water pixel "
+                            },
+                            {
+                                "color": "rgb(51%,6%,49%)",
+                                "label": "ET modelled but with very high uncertainty - urban pixel "
+                            }
+                        ]
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:42:22.025452Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "J_ET_ETLOOK",
+            "title": "ET-ETLOOK",
+            "description": "ET from ETLook (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:41.152202Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "K_E_ETLOOK",
+            "title": "E-ETLOOK",
+            "description": "Soil evaporation from ETLook (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:22.765623Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "L_T_ETLOOK",
+            "title": "T-ETLOOK",
+            "description": "Canopy transpiration from Ensemble (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:58.010411Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "M_ET_TSEBPT",
+            "title": "ET-TSEBPT",
+            "description": "ET from TSEB-PT (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:49.417810Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "N_E_TSEBPT",
+            "title": "E-TSEBPT",
+            "description": "Soil evaporation from TSEB-PT (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:45:30.835005Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "O_T_TSEBPT",
+            "title": "T-TSEBPT",
+            "description": "Canopy transpiration from TSEB-PT (mm/day)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "clms_global_eta-wf_300m_v1_10daily",
+                        "gradients": [
+                            {
+                                "color": "rgb(95%,93%,96%)",
+                                "label": "0",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(74%,79%,88%)",
+                                "label": "2.5",
+                                "position": 2.5
+                            },
+                            {
+                                "color": "rgb(45%,66%,81%)",
+                                "label": "5",
+                                "position": 5
+                            },
+                            {
+                                "color": "rgb(17%,55%,75%)",
+                                "label": "7.5",
+                                "position": 7.5
+                            },
+                            {
+                                "color": "rgb(2%,35%,55%)",
+                                "label": "10",
+                                "position": 10
+                            }
+                        ],
+                        "maxPosition": 10,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "65a056-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:46:07.116883Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "24fd5f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "67d7b1-YOUR-INSTANCEID-HERE": [
         {
             "id": "TCI",
@@ -37416,6 +38276,124 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "2785e4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "b3bf08-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "H_TSEBPT",
+            "title": "H-TSEBPT",
+            "description": "Sensible heat flux (W/m²)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"H_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.H_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0, [254, 240, 217]],\n  [100, [253, 204, 138]],\n  [200, [252, 141, 89]],\n  [300, [227, 74, 51]],\n  [400, [179, 0, 0]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "H_TSEBPT",
+                        "gradients": [
+                            {
+                                "color": "rgb(100%,94%,85%)",
+                                "label": 0,
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(99%,80%,54%)",
+                                "label": "",
+                                "position": 100
+                            },
+                            {
+                                "color": "rgb(99%,55%,35%)",
+                                "label": "",
+                                "position": 200
+                            },
+                            {
+                                "color": "rgb(89%,29%,20%)",
+                                "label": "",
+                                "position": 300
+                            },
+                            {
+                                "color": "rgb(70%,0%,0%)",
+                                "label": 400,
+                                "position": 400
+                            }
+                        ],
+                        "maxPosition": 400,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "b3bf08-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:47:02.935021Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-5e1624-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "5e1624-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "LE_TSEBPT",
+            "title": "LE-TSEBPT",
+            "description": "Latent heat flux (W/m²)",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"LE_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.LE_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0, [179, 0, 0]],\n  [100, [227, 74, 51]],\n  [200, [252, 141, 89]],\n  [300, [253, 204, 138]],\n  [400, [254, 240, 217]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "NPP",
+                        "gradients": [
+                            {
+                                "color": "rgb(70%,0%,0%)",
+                                "label": 0,
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(89%,29%,20%)",
+                                "label": "",
+                                "position": 100
+                            },
+                            {
+                                "color": "rgb(99%,55%,35%)",
+                                "label": "",
+                                "position": 200
+                            },
+                            {
+                                "color": "rgb(99%,80%,54%)",
+                                "label": "",
+                                "position": 300
+                            },
+                            {
+                                "color": "rgb(100%,94%,85%)",
+                                "label": 400,
+                                "position": 400
+                            }
+                        ],
+                        "maxPosition": 400,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "b3bf08-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-02T13:47:10.710373Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-5e1624-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "5e1624-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }

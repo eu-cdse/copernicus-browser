@@ -102,6 +102,8 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -143,6 +145,17 @@ export const CLMS_OPTIONS = [
     label: 'CLMS Bio-geophysical Parameters',
     id: 'CLMS Bio-geophysical Parameters',
     options: [
+      {
+        label: 'Evapotranspiration',
+        id: 'Evapotranspiration',
+        options: [
+          {
+            label: 'clms_global_eta_300m_v1_10daily_geotiff',
+            id: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+          },
+          { label: 'clms_global_hf_300m_v1_daily_geotiff', id: COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1 },
+        ],
+      },
       {
         label: 'Snow',
         id: 'Snow',

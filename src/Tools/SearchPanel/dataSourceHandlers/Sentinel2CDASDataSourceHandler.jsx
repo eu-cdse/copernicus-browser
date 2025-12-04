@@ -7,6 +7,7 @@ import {
   DATASET_CDAS_S2L2A,
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
+import moment from 'moment';
 
 import DataSourceHandler from './DataSourceHandler';
 import Sentinel2SearchGroup from './DatasourceRenderingComponents/searchGroups/Sentinel2SearchGroup';
@@ -150,6 +151,17 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
     },
   };
 
+  MIN_MAX_DATES = {
+    [S2_L1C_CDAS]: {
+      minDate: moment.utc('2015-07-01'),
+      maxDate: moment.utc(),
+    },
+    [S2_L2A_CDAS]: {
+      minDate: moment.utc('2015-07-01'),
+      maxDate: moment.utc(),
+    },
+  };
+
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     const usesS2L2ADataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S2L2A.id);
     const usesS2L1CDataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S2L1C.id);
@@ -225,6 +237,13 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
         renderOptionsHelpTooltips={this.renderOptionsHelpTooltips}
       />
     );
+  }
+
+  getMinMaxDates(datasetId) {
+    if (this.MIN_MAX_DATES[datasetId] == null) {
+      return { minDate: null, maxDate: null };
+    }
+    return this.MIN_MAX_DATES[datasetId];
   }
 
   getDescription = () => getSentinel2Markdown();

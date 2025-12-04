@@ -170,6 +170,8 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5260,6 +5262,75 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1, layerId: 'LIE' }],
     description: () =>
-      `The Lake Ice Coverage (LIE) is monitored using optical satellite data and it classifies a section of the freshwater body as 1) Fully snow covered ice; 2) Partially snow covered ice/clear ice; 3) Open water. Classification is provided only for cloud free pixels, with dedicated cloud mask. The gridded data product covers Northern-Europe with 250m (0.0025 degree) resolution. The LIE product can have several important applications from climate change monitoring and hydrological forecasting to winter transport and recreational activity on lakes.`,
+      t`The Lake Ice Coverage (LIE) is monitored using optical satellite data and it classifies a section of the freshwater body as 1) Fully snow covered ice; 2) Partially snow covered ice/clear ice; 3) Open water. Classification is provided only for cloud free pixels, with dedicated cloud mask. The gridded data product covers Northern-Europe with 250m (0.0025 degree) resolution. The LIE product can have several important applications from climate change monitoring and hydrological forecasting to winter transport and recreational activity on lakes.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1, layerId: 'H_TSEBPT' }],
+    description: () => t`Sensible heat flux calculated by the TSEB-PT model. Unit: W/m2`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1, layerId: 'LE_TSEBPT' }],
+    description: () => t`Latent heat flux calculated by the TSEB-PT model. Unit: W/m2`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'A_ET_ENSEMBLE' }],
+    description: () => t`Actual evapotranspiration calculated by the Ensemble model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'B_E_ENSEMBLE' }],
+    description: () => t`Soil evaporation calculated by the Ensemble model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'C_T_ENSEMBLE' }],
+    description: () => t`Canopy transpiration calculated by the Ensemble model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'D_ET_STD' }],
+    description: () => t`Per pixel standard deviation between TSEB-PT and ETLook model ET. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'E_E_STD' }],
+    description: () => t`Per pixel standard deviation between TSEB-PT and ETLook model E. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'F_T_STD' }],
+    description: () => t`Per pixel standard deviation  between TSEB-PT and ETLook model T. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'G_NOBS' }],
+    description: () => t`Per pixel number of cloud free observations in a given dekad.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'H_GFD' }],
+    description: () =>
+      t`Per pixel average gap-filling distance (in days) for cloudy pixels in a given dekad. Unit in days`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'I_FLAG' }],
+    description: () => t`Per pixel annotation flag indicating quality or other limitations`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'J_ET_ETLOOK' }],
+    description: () => t`Actual evapotranspiration calculated by the ETLook model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'K_E_ETLOOK' }],
+    description: () => t`Soil evaporation calculated by the ETLook model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'L_T_ETLOOK' }],
+    description: () => t`Canopy transpiration calculated by the ETLook model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'M_ET_TSEBPT' }],
+    description: () => t`Actual evapotranspiration calculated by the TSEB-PT model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'N_E_TSEBPT' }],
+    description: () => t`Soil evaporation calculated by the TSEB-PT model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'O_T_TSEBPT' }],
+    description: () => t`Canopy transpiration calculated by the TSEB-PT model. Unit: mm/day`,
   },
 ];

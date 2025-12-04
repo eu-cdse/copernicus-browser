@@ -109,6 +109,8 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -818,6 +820,18 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

@@ -540,12 +540,8 @@ export const collections = [
         supportsInstrumentName: false,
         productTypes: [
           { id: 'AUX_CTMANA', name: 'AUX_CTMANA', label: 'AUX_CTMANA', supportsGeometry: false },
-          {
-            id: 'AUX_CTMFCT',
-            name: 'AUX_CTMFCT',
-            label: 'AUX_CTMFCT',
-            supportsGeometry: false,
-          },
+          { id: 'AUX_CTMFCT', name: 'AUX_CTMFCT', label: 'AUX_CTMFCT', supportsGeometry: false },
+          { id: 'AUXDEM', name: 'AUXDEM', label: 'AUXDEM' },
         ],
       },
     ],

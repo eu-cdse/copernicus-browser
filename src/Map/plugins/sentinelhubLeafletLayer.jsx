@@ -218,6 +218,8 @@ import {
   EVOLAND_C12_TREE_TYPES,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -1015,7 +1017,9 @@ class SentinelHubLayer extends L.TileLayer {
       case EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS:
       case EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING:
       case EVOLAND_C12_TREE_TYPES:
-      case COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1: {
+      case COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1:
+      case COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1:
+      case COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1: {
         const dsh = getDataSourceHandler(datasetId);
         const layer = await this.createBYOCLayer(
           url,
