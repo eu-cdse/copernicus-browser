@@ -23157,7 +23157,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23195,7 +23195,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:35.660294Z",
+            "lastUpdated": "2025-12-05T10:27:21.220284Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23215,7 +23215,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23253,7 +23253,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:15.863185Z",
+            "lastUpdated": "2025-12-05T10:26:24.289567Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23273,7 +23273,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ENSEMBLE\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ENSEMBLE;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23311,7 +23311,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:54.830198Z",
+            "lastUpdated": "2025-12-05T10:28:20.491296Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23331,7 +23331,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-std_300m_v1_10daily",
@@ -23369,7 +23369,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:46.145Z",
+            "lastUpdated": "2025-12-05T10:27:52.743669Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23389,7 +23389,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-std_300m_v1_10daily",
@@ -23427,7 +23427,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:26.873174Z",
+            "lastUpdated": "2025-12-05T10:26:48.264014Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23447,7 +23447,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_STD\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_STD;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [237, 248, 251]],\n  [0.5, [179, 205, 227]],\n  [1.0, [140, 150, 198]],\n  [1.5, [136, 86, 167]],\n  [2.0, [129, 15, 124]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-std_300m_v1_10daily",
@@ -23485,7 +23485,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:46:01.029453Z",
+            "lastUpdated": "2025-12-05T10:28:41.363203Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23667,7 +23667,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23705,7 +23705,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:41.152202Z",
+            "lastUpdated": "2025-12-05T10:27:43.496347Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23725,7 +23725,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23763,7 +23763,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:22.765623Z",
+            "lastUpdated": "2025-12-05T10:26:37.230969Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23783,7 +23783,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_ETLOOK\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_ETLOOK;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23821,7 +23821,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:58.010411Z",
+            "lastUpdated": "2025-12-05T10:28:30.954234Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23841,7 +23841,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"ET_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.ET_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23879,7 +23879,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:49.417810Z",
+            "lastUpdated": "2025-12-05T10:28:01.054001Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23899,7 +23899,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"E_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.E_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23937,7 +23937,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:45:30.835005Z",
+            "lastUpdated": "2025-12-05T10:26:58.681300Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -23957,7 +23957,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nconst factor = 1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
+                    "evalScript": "//VERSION=3\nconst factor = 0.1; // EDIT FACTOR\nconst offset = 0; // EDIT OFFSET\n\nfunction setup() {\n  return {\n    // EDIT VARIABLE NAME\n    input: [\"T_TSEBPT\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4, sampleType: \"UINT8\" },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  // EDIT VARIABLE NAME\n  var originalValue = samples.T_TSEBPT;\n\n  let val = originalValue * factor + offset;\n\n  let dataMask = samples.dataMask;\n\n  const indexVal = dataMask === 1 ? val : NaN;\n  const imgVals = visualizer.process(val);\n\n  return {\n    default: imgVals.concat(dataMask * 255),\n    index: [indexVal],\n    eobrowserStats: [val],\n    dataMask: [dataMask],\n  };\n}\n\n// EDIT COLOR BAR\nconst ColorBar = [\n  [0.0, [241, 238, 246]],\n  [2.5, [189, 201, 225]],\n  [5.0, [116, 169, 207]],\n  [7.5, [43, 140, 190]],\n  [10.0, [4, 90, 141]],\n];\nconst visualizer = new ColorRampVisualizer(ColorBar);\n",
                     "legend": {
                         "type": "continuous",
                         "title": "clms_global_eta-wf_300m_v1_10daily",
@@ -23995,7 +23995,7 @@
             ],
             "orderHint": 0,
             "instanceId": "65a056-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-12-02T13:46:07.116883Z",
+            "lastUpdated": "2025-12-05T10:28:51.658830Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-24fd5f-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -58447,19 +58447,19 @@
                                 "label": "0: No input data available"
                             },
                             {
-                                "color": "#0004de",
-                                "label": "1: Clear Cut/Clearing"
+                                "color": "#DC1010",
+                                "label": "1: Bark Beetle"
                             },
                             {
-                                "color": "#dc1010",
-                                "label": "2: Bark Beetle"
+                                "color": "#0004DE",
+                                "label": "2: Clear Cut/Clearing"
                             },
                             {
                                 "color": "#bfbfbf",
                                 "label": "3: Healthy Trees"
                             },
                             {
-                                "color": "#80c0ff",
+                                "color": "#80BFFF",
                                 "label": "4: Salvage Logging"
                             },
                             {
@@ -58476,7 +58476,7 @@
             ],
             "orderHint": 0,
             "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-10-10T10:54:38.039199Z",
+            "lastUpdated": "2025-12-04T11:30:34.396197Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -58552,7 +58552,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Wildfire_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Wildfire_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Clear_Cut_Clearing_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Clear_Cut_Clearing_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
                     "legend": {
                         "type": "continuous",
                         "title": "Clear Cut Clearing Probability",
@@ -58592,7 +58592,7 @@
             ],
             "orderHint": 0,
             "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-10-13T13:10:06.013527Z",
+            "lastUpdated": "2025-12-04T11:37:49.691889Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -58780,7 +58780,7 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Bark_Beetle_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Bark_Beetle_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
+                    "evalScript": "//VERSION=3\n\n// This script visualise the confidence of classifier\n\n// Set up input and output settings\nfunction setup() {\n    return {\n      input: [{\n        bands: [\n          \"Wildfire_Probability\", \"dataMask\"\n        ]\n      }],\n      output: [\n          { id: \"default\", bands: 4 }, \n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' }, \n          { id: \"dataMask\", bands: 1 }\n        ],\n    }\n  }\n  \n  // Create color map\n  const ramps = [\n    [0, 0xfef0d9],\n    [0.2, 0xfdcc8a],\n    [0.5, 0xfc8d59],\n    [0.8, 0xe34a33],\n    [1, 0xb30000],\n  ];\n  \n  // Create visualiser\n  const visualizer = new ColorRampVisualizer(ramps);\n    \n  //EvaluatePixel function\n  function evaluatePixel(samples) {\n    let val = samples.Wildfire_Probability;\n    let imgVals = visualizer.process(val);\n    imgVals = imgVals.concat(samples.dataMask * 255);\n\n    return {\n      default: imgVals,\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n     };\n  }",
                     "legend": {
                         "type": "continuous",
                         "title": "Wildfire Probability",
@@ -58816,7 +58816,7 @@
             ],
             "orderHint": 0,
             "instanceId": "efcb7a-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-10-13T13:11:41.574169Z",
+            "lastUpdated": "2025-12-04T11:38:54.459472Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-a982a4-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
