@@ -17,6 +17,7 @@ import {
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { appendPolygon, boundsToPolygon, getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
 import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
+import { aoiStyle } from '../../Map/const';
 
 class AOI extends Component {
   state = {
@@ -29,6 +30,23 @@ class AOI extends Component {
     L.DomEvent.disableScrollPropagation(this.ref);
     L.DomEvent.disableClickPropagation(this.ref);
     const { map } = this.props;
+
+    // Set global styles for Leaflet Geoman drawing
+    if (map.pm) {
+      map.pm.setGlobalOptions({
+        templineStyle: {
+          color: aoiStyle.color,
+          weight: aoiStyle.weight,
+          dashArray: aoiStyle.dashArray,
+        },
+        hintlineStyle: {
+          color: aoiStyle.color,
+          weight: aoiStyle.weight,
+          dashArray: aoiStyle.dashArray,
+        },
+      });
+    }
+
     map.on('pm:create', (e) => {
       if (e.shape && e.shape === this.props.aoiShape) {
         // e.layer.toGeoJSON() is a GeoJSON Feature, we convert it to a GeoJSON geometry type
@@ -141,6 +159,7 @@ class AOI extends Component {
     }
     this.AOILayerRef.pm.enable({
       allowSelfIntersection: false,
+      pathOptions: aoiStyle,
     });
     this.AOILayerRef.on('pm:edit', (f) => {
       const layer = f.target;
@@ -170,6 +189,7 @@ class AOI extends Component {
     map.pm.enableDraw(shape, {
       finishOn: 'contextmenu',
       allowSelfIntersection: false,
+      pathOptions: aoiStyle,
     });
   };
 

@@ -19,6 +19,9 @@ const fixtures = [
   ['GHGSat', 'GHGSat-C1', false, 19],
   ['ICEYE', 'ICEYE-X2', false, 10],
   ['ICEYE', 'ICEYE-X200', false, 10],
+  ['skysat', 'skysat', false, 12],
+  ['PNEO', 'PNEO4', false, 18],
+  ['PNEO', 'PNEO4', true, 18],
 ];
 
 describe("'add' utility", () => {

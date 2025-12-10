@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import store, { loiSlice } from '../../store';
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
+import { loiStyle } from '../../Map/const';
 
 export const useLoi = (map, { onEndDrawing }) => {
   useEffect(() => {
@@ -27,6 +28,7 @@ export const useLoi = (map, { onEndDrawing }) => {
     map.pm.enableDraw('Line', {
       finishOn: 'contextmenu',
       allowSelfIntersection: true,
+      pathOptions: loiStyle,
     });
   };
 

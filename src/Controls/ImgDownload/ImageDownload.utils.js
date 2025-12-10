@@ -69,6 +69,7 @@ import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
 import { ensureMercatorBBox, metersPerPixel } from '../../utils/coords';
 import { isVisualizationEffectsApplied } from '../../utils/effectsUtils';
+import { warningColor } from '../../variables.module.scss';
 
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
@@ -1372,7 +1373,7 @@ function calculateXYScale(imageWidth, imageHeight, realWorldWidth, realWorldHeig
 }
 
 const lineStyle = {
-  strokeColor: '#3388ff',
+  strokeColor: warningColor,
   lineWidth: 3,
 };
 

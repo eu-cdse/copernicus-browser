@@ -164,7 +164,7 @@ const opticalProvidersCollection = [
         stacConstellation: ['skysat'],
         stacPlatform: ['skysat'],
         taskingSupported: false,
-        archiveSupported: false,
+        archiveSupported: true,
         description: {
           body: 'The SkySat constellation of 21 high-resolution Earth imaging satellites collects thousands of square kilometres of imagery. Each satellite is three-axis stabilised and agile enough to slew between different targets of interest.',
           footer: '',
@@ -182,10 +182,10 @@ const opticalProvidersCollection = [
         id: 16,
         name: 'Spot',
         stacConstellation: ['SPOT'],
-        stacPlatform: ['SPOT6', 'SPOT7'],
+        stacPlatform: ['SPOT', 'SPOT6', 'SPOT7'],
         label: 'Spot',
-        taskingSupported: true,
-        archiveSupported: true,
+        taskingSupported: false,
+        archiveSupported: false,
         description: {
           body: "The goal of the SPOT series is to improve the knowledge and management of Earth by exploring the planet's resources, detecting and forecasting phenomena involving climatology and oceanography, and monitoring human activities and natural phenomena.",
           footer: '',
@@ -197,9 +197,9 @@ const opticalProvidersCollection = [
         name: 'Pléiades-1A/B',
         label: 'Pléiades-1A/B',
         stacConstellation: ['PHR'],
-        stacPlatform: ['PHR1A', 'PHR1B'],
-        taskingSupported: true,
-        archiveSupported: true,
+        stacPlatform: ['PHR', 'PHR1A', 'PHR1B'],
+        taskingSupported: false,
+        archiveSupported: false,
         description: {
           body: 'The Pléiades system is designed for a range of very-high-resolution (VHR) remote sensing applications in the field of cartography, agriculture, forestry, hydrology, and geological prospecting.',
           footer: '',
@@ -210,7 +210,7 @@ const opticalProvidersCollection = [
         id: 18,
         name: 'Pléiades Neo',
         stacConstellation: ['PNEO'],
-        stacPlatform: ['PNE03', 'PNE04'],
+        stacPlatform: ['PNEO', 'PNEO3', 'PNEO4'],
         label: 'Pléiades Neo',
         taskingSupported: true,
         archiveSupported: true,
@@ -221,7 +221,7 @@ const opticalProvidersCollection = [
         logo: AirbusLogo,
       },
     ],
-    active: false,
+    active: true,
   },
 ];
 

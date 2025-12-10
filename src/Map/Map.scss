@@ -6,6 +6,13 @@
   min-height: 406px;
   z-index: 0;
 
+  .leaflet-pane > .leaflet-marker-icon.marker-icon {
+    border: 2px solid vars.$warningColor !important;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+
   .leaflet-control-container {
     .leaflet-top.leaflet-right {
       .leaflet-control-layers {
