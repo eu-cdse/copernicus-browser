@@ -164,7 +164,7 @@ const radarProvidersCollection = [
         label: 'RADARSAT-2',
         stacConstellation: ['RADARSAT'],
         stacPlatform: ['RS02'],
-        taskingSupported: false,
+        taskingSupported: true,
         archiveSupported: true,
         description: {
           body: 'The aim of the RADARSAT missions is provide useful information to both commercial and scientific users in such fields as disaster management, interferometry, agriculture, cartography, hydrology, forestry, oceanography, ice studies and coastal monitoring.',

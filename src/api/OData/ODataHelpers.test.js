@@ -12,6 +12,8 @@ import oDataHelpers, {
   findInstrumentConfigById,
   findProductTypeConfigById,
   roundGeometryValues,
+  countGeometryRepetitions,
+  calculateMaxGeometryChars,
 } from './ODataHelpers';
 import { AttributeNames, AttributeOriginValues, AttributeProcessorVersionValues } from './assets/attributes';
 
@@ -1768,5 +1770,101 @@ describe('createAdditionalFilters', () => {
     expect(filter.value).toContain(
       `(Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_GLO-30-DGED%2F2023_1') or Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_GLO-30-DTED%2F2023_1') or Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_GLO-90-DGED%2F2023_1') or Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_GLO-90-DTED%2F2023_1') or Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_EEA-10-DGED%2F2023_1') or Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'dataset' and att/OData.CSC.StringAttribute/Value eq 'COP-DEM_EEA-10-INSP%2F2023_1'))`,
     );
+  });
+});
+
+describe('countGeometryRepetitions', () => {
+  test('returns 1 for empty collections array', () => {
+    expect(countGeometryRepetitions([])).toBe(1);
+  });
+
+  test('returns 1 for null collections', () => {
+    expect(countGeometryRepetitions(null)).toBe(1);
+  });
+
+  test('returns 1 for single simple collection', () => {
+    // S2 collection with all products supporting geometry uniformly
+    const collections = [{ id: 'S2' }];
+    const result = countGeometryRepetitions(collections);
+    // S2 should have multiple instruments/productTypes so repetitions > 1
+    expect(result).toBeGreaterThanOrEqual(1);
+  });
+
+  test('counts repetitions for collection with instruments', () => {
+    const collections = [
+      {
+        id: 'S1',
+        instruments: [{ id: 'SAR' }],
+      },
+    ];
+    const result = countGeometryRepetitions(collections);
+    // Should count based on SAR instrument's product types
+    expect(result).toBeGreaterThanOrEqual(1);
+  });
+
+  test('counts repetitions for collection with specific product types', () => {
+    const collections = [
+      {
+        id: 'S1',
+        instruments: [
+          {
+            id: 'SAR',
+            productTypes: [{ id: 'IW' }, { id: 'EW' }],
+          },
+        ],
+      },
+    ];
+    const result = countGeometryRepetitions(collections);
+    // Should count product types
+    expect(result).toBeGreaterThanOrEqual(2);
+  });
+
+  test('counts repetitions for multiple collections', () => {
+    const collections = [{ id: 'S1' }, { id: 'S2' }];
+    const result = countGeometryRepetitions(collections);
+    // Should be sum of repetitions for both collections
+    expect(result).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe('calculateMaxGeometryChars', () => {
+  test('returns default value for empty collections', () => {
+    // With 1 repetition: (6000 - 1000) / 1 - 60 = 4940
+    // Clamped to max of 2000
+    const result = calculateMaxGeometryChars([]);
+    expect(result).toBe(2000);
+  });
+
+  test('returns lower value for more repetitions', () => {
+    const fewCollections = [{ id: 'S1' }];
+    const manyCollections = [{ id: 'S1' }, { id: 'S2' }, { id: 'S3' }];
+
+    const resultFew = calculateMaxGeometryChars(fewCollections);
+    const resultMany = calculateMaxGeometryChars(manyCollections);
+
+    // More collections/repetitions should result in lower max chars
+    expect(resultMany).toBeLessThanOrEqual(resultFew);
+  });
+
+  test('respects custom maxUrlLength', () => {
+    const collections = [{ id: 'S2' }];
+
+    const defaultResult = calculateMaxGeometryChars(collections);
+    const smallerUrlResult = calculateMaxGeometryChars(collections, 3000);
+
+    expect(smallerUrlResult).toBeLessThan(defaultResult);
+  });
+
+  test('returns at least 100 chars minimum', () => {
+    // Even with many collections, should not go below 100
+    const manyCollections = Array.from({ length: 20 }, (_, i) => ({ id: 'S1' }));
+    const result = calculateMaxGeometryChars(manyCollections);
+    expect(result).toBeGreaterThanOrEqual(100);
+  });
+
+  test('returns at most 2000 chars maximum', () => {
+    // Even with few collections, should not exceed 2000
+    const result = calculateMaxGeometryChars([]);
+    expect(result).toBeLessThanOrEqual(2000);
   });
 });

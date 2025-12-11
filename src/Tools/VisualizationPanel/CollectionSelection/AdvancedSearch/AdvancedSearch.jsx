@@ -23,8 +23,12 @@ import {
 import { getBoundsAndLatLng } from '../../../CommercialDataPanel/commercialData.utils';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
-import { boundsToPolygon, getLeafletBoundsFromGeoJSON, appendPolygon } from '../../../../utils/geojson.utils';
-import oDataHelpers, { findCollectionConfigById, MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
+import { buildSearchGeometry } from '../../../../utils/geojson.utils';
+import oDataHelpers, {
+  findCollectionConfigById,
+  MIN_SEARCH_DATE,
+  calculateMaxGeometryChars,
+} from '../../../../api/OData/ODataHelpers';
 
 import { withODataSearchHOC } from './withODataSearchHOC';
 
@@ -58,6 +62,10 @@ const ErrorMessage = {
   [ErrorCode.invalidDateRange]: () => t`Invalid date range!`,
 };
 
+const WarningMessage = {
+  geometrySimplified: () => t`Your search geometry was simplified to fit the search query limits.`,
+};
+
 class AdvancedSearch extends Component {
   state = {
     fromMoment: moment.utc().subtract(1, 'month').startOf('day'),
@@ -70,6 +78,7 @@ class AdvancedSearch extends Component {
     searchCriteria: '',
     formValidationError: '',
     additionFiltersPositionTop: 0,
+    geometrySimplified: false,
   };
 
   calendarHolder = React.createRef();
@@ -426,7 +435,7 @@ class AdvancedSearch extends Component {
 
   getQuery = () => {
     const { collectionForm, fromMoment, toMoment, searchCriteria, filterMonths } = this.state;
-    const { mapBounds, aoiBounds, poiBounds } = this.props;
+    const { mapBounds, aoiBounds, poiBounds, aoiGeometry } = this.props;
     const params = {};
 
     if (!searchCriteria && !Object.keys(collectionForm.selectedCollections).length) {
@@ -625,10 +634,22 @@ class AdvancedSearch extends Component {
 
     // if any of the collection is selected with the checkbox, automatically append any geometry to the query (map, aoi, poi)
     // if none of the collections are selected (querying via search criteria), append the geometry to the query only if aoi or poi is selected.
-    if (params['collections'] || aoiBounds || poiBounds) {
-      params['geometry'] = boundsToPolygon(
-        this.getBoundsFromMapAoiPoiBounds(mapBounds, aoiBounds, poiBounds),
-      );
+    if (params['collections'] || aoiBounds || poiBounds || aoiGeometry) {
+      // Calculate optimal geometry character limit based on how many times geometry will be repeated in the query
+      const maxGeometryChars = params['collections']
+        ? calculateMaxGeometryChars(params['collections'])
+        : undefined;
+      const { geometry, wasSimplified } = buildSearchGeometry({
+        mapBounds,
+        aoiBounds,
+        poiBounds,
+        aoiGeometry,
+        maxGeometryChars,
+      });
+      params['geometry'] = geometry;
+      this.setState({ geometrySimplified: wasSimplified });
+    } else {
+      this.setState({ geometrySimplified: false });
     }
     return oDataHelpers.createAdvancedSearchQuery(params);
   };
@@ -650,24 +671,6 @@ class AdvancedSearch extends Component {
 
   handleStateUpdate = (searchCriteria) => {
     this.setState({ searchCriteria: searchCriteria });
-  };
-
-  getBoundsFromMapAoiPoiBounds = (mapBounds, aoiBounds, poiBounds) => {
-    if (aoiBounds && poiBounds) {
-      return getLeafletBoundsFromGeoJSON(
-        appendPolygon(boundsToPolygon(aoiBounds), boundsToPolygon(poiBounds)),
-      );
-    }
-
-    if (aoiBounds) {
-      return aoiBounds;
-    }
-
-    if (poiBounds) {
-      return poiBounds;
-    }
-
-    return mapBounds;
   };
 
   render() {
@@ -707,6 +710,12 @@ class AdvancedSearch extends Component {
         ? { message: ErrorMessage.noProductsFound() }
         : null;
 
+    const geometrySimplifiedWarning = this.state.geometrySimplified
+      ? {
+          message: WarningMessage.geometrySimplified(),
+        }
+      : null;
+
     const displayingResults = resultsAvailable && resultsPanelSelected;
     const error = this.getFormValidationError() || oDataSearchError;
     const { selectedCollections, maxCc, selectedFilters } = this.state.collectionForm;
@@ -725,6 +734,7 @@ class AdvancedSearch extends Component {
             backToSearch={this.backToSearch}
             isAuthenticated={!!this.props.user}
             savedWorkspaceProducts={this.props.savedWorkspaceProducts}
+            geometrySimplifiedWarning={geometrySimplifiedWarning?.message}
           />
         )}
 
@@ -820,6 +830,7 @@ const mapStoreToProps = (store) => ({
   mapBounds: store.mainMap.bounds,
   aoiBounds: store.aoi.bounds,
   poiBounds: store.poi.bounds,
+  aoiGeometry: store.aoi.geometry,
   is3D: store.mainMap.is3D,
   datasetId: store.visualization.datasetId,
   dateMode: store.visualization.dateMode,

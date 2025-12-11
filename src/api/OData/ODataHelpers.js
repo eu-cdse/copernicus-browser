@@ -1361,6 +1361,123 @@ export const checkAllProductsInCollectionSupport = (collectionId, supportedPrope
   );
 };
 
+/**
+ * Counts how many times the geometry filter will be repeated in an OData query.
+ * This is important for URL length estimation, as complex geometries multiplied
+ * by many repetitions can exceed browser URL limits.
+ *
+ * The geometry is repeated based on the query structure:
+ * - If all products in a collection support geometry uniformly, it may be applied once at collection level
+ * - Otherwise, it's applied at instrument or product type level
+ *
+ * @param {Array} collections - Array of collection objects with optional instruments and productTypes
+ * @returns {number} - Estimated number of geometry filter repetitions
+ */
+export const countGeometryRepetitions = (collections) => {
+  if (!collections || !collections.length) {
+    return 1; // At least one occurrence for basic search
+  }
+
+  let repetitions = 0;
+
+  collections.forEach((collection) => {
+    const collectionConfig = findCollectionConfigById(collection.id);
+    if (!collectionConfig) {
+      repetitions += 1;
+      return;
+    }
+
+    const hasInstrumentFilter =
+      collection.instruments?.length > 0 || getCollectionInstruments(collectionConfig)?.length > 0;
+    const allProductsSupportGeometry = checkAllProductsInCollectionSupport(
+      collection.id,
+      SUPPORTED_PROPERTIES.Geometry,
+    );
+    const allInstrumentsSupportInstrumentName = checkAllInstrumentsInCollectionSupport(
+      collection.id,
+      SUPPORTED_PROPERTIES.InstrumentName,
+    );
+
+    // Optimization case: geometry can be applied at top level
+    if (!hasInstrumentFilter && allInstrumentsSupportInstrumentName && allProductsSupportGeometry) {
+      repetitions += 1;
+      return;
+    }
+
+    // Need to count instrument/productType level repetitions
+    const instruments =
+      collection.instruments?.length > 0
+        ? collection.instruments
+        : getCollectionInstruments(collectionConfig);
+
+    instruments.forEach((instrument) => {
+      const instrumentConfig = findInstrumentConfigById(instrument.id);
+      const hasProductTypeFilter =
+        instrument.productTypes?.length > 0 || getInstrumentProductTypes(instrumentConfig).length > 0;
+      const allProductsInInstrumentSupportGeometry = checkAllProductsInInstrumentSupport(
+        instrument.id,
+        SUPPORTED_PROPERTIES.Geometry,
+      );
+      const instrumentSupportsInstrumentName = checkInstrumentSupports(
+        instrument.id,
+        SUPPORTED_PROPERTIES.InstrumentName,
+      );
+
+      // Optimization case: geometry can be applied at instrument level
+      if (
+        !hasProductTypeFilter &&
+        instrumentSupportsInstrumentName &&
+        allProductsInInstrumentSupportGeometry
+      ) {
+        repetitions += 1;
+        return;
+      }
+
+      // Need to count product type level repetitions
+      const productTypes =
+        instrument.productTypes?.length > 0
+          ? instrument.productTypes
+          : getInstrumentProductTypes(instrumentConfig);
+
+      productTypes.forEach((productType) => {
+        const productTypeConfig = findProductTypeConfigById(productType.id);
+        if (productTypeConfig?.productTypeIds?.length > 0) {
+          // Multiple product type IDs means multiple repetitions
+          repetitions += productTypeConfig.productTypeIds.length;
+        } else {
+          repetitions += 1;
+        }
+      });
+    });
+  });
+
+  return Math.max(1, repetitions);
+};
+
+/**
+ * Calculates the maximum allowed WKT geometry characters based on the number of
+ * geometry repetitions in the query. This helps ensure the total URL stays within
+ * browser limits (typically ~8000 characters for GET requests).
+ *
+ * @param {Array} collections - Array of collection objects
+ * @param {number} maxUrlLength - Maximum URL length to target (default: 6000 to leave headroom)
+ * @param {number} baseQueryLength - Estimated base query length without geometry (default: 1000)
+ * @returns {number} - Maximum allowed characters per geometry occurrence
+ */
+export const calculateMaxGeometryChars = (collections, maxUrlLength = 6000, baseQueryLength = 1000) => {
+  const repetitions = countGeometryRepetitions(collections);
+  const availableChars = maxUrlLength - baseQueryLength;
+
+  // Each geometry occurrence includes wrapper text like "OData.CSC.Intersects(area=geography'SRID=4326;...}')"
+  // which adds ~60 chars of overhead
+  const GEOMETRY_WRAPPER_OVERHEAD = 60;
+
+  const maxCharsPerGeometry = Math.floor(availableChars / repetitions) - GEOMETRY_WRAPPER_OVERHEAD;
+
+  // Minimum of 100 chars (enough for a simple bbox), maximum of 2000 chars
+  return Math.max(100, Math.min(2000, maxCharsPerGeometry));
+};
+
 //creates timeIntervals filter
 //(((date>=interval1From && date<interval1To) or (date>=interval2From && date<interval2To))...)
 const createTimeIntervalsFilter = (timeIntervals) => {

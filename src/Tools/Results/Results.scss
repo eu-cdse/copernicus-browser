@@ -20,6 +20,38 @@ $headerPadding: 10px;
     background-color: vars.$mainLight;
     box-shadow: vars.$boxShadow;
 
+    .message-panel {
+      background-color: vars.$mainLight;
+      margin-bottom: 10px;
+      border: 1px solid vars.$orangeColor;
+      border-radius: 4px;
+
+      .message-panel-header {
+        color: vars.$orangeColor;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        justify-content: center;
+        font-size: 18px;
+        padding: 5px;
+
+        .close-message-panel {
+          cursor: pointer;
+          position: absolute;
+          right: 10px;
+        }
+      }
+
+      .message-panel-messages {
+        .notification {
+          color: vars.$textColor;
+          padding: 10px;
+          font-size: 13px;
+          text-align: center;
+        }
+      }
+    }
+
     &-top,
     &-bottom {
       width: 100%;

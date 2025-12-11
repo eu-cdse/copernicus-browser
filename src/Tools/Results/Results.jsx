@@ -21,6 +21,7 @@ class Results extends Component {
     displayModal: false,
     checkedResults: [],
     savedWorkspaceProductsMap: new Map(),
+    warningDismissed: false,
   };
 
   loadWorkspaceProductsMap = () => {
@@ -54,7 +55,19 @@ class Results extends Component {
       const savedWorkspaceProductsMap = this.loadWorkspaceProductsMap();
       this.setState({ savedWorkspaceProductsMap });
     }
+
+    // Reset warning dismissed state when a new warning comes in
+    if (
+      this.props.geometrySimplifiedWarning &&
+      prevProps.geometrySimplifiedWarning !== this.props.geometrySimplifiedWarning
+    ) {
+      this.setState({ warningDismissed: false });
+    }
   }
+
+  dismissWarning = () => {
+    this.setState({ warningDismissed: true });
+  };
 
   loadMore = async () => {
     this.setState({
@@ -136,12 +149,37 @@ class Results extends Component {
   };
 
   render() {
-    const { results: products, hasMore, selectedTiles, totalCount, isAuthenticated } = this.props;
-    const { savedWorkspaceProductsMap, checkedResults, loadingMore, displayModal } = this.state;
+    const {
+      results: products,
+      hasMore,
+      selectedTiles,
+      totalCount,
+      isAuthenticated,
+      geometrySimplifiedWarning,
+    } = this.props;
+    const { savedWorkspaceProductsMap, checkedResults, loadingMore, displayModal, warningDismissed } =
+      this.state;
+    const showWarning = geometrySimplifiedWarning && !warningDismissed;
+
     return (
       products && (
         <div className="results">
           <div className="results-heading">
+            {showWarning && (
+              <div className="message-panel">
+                <div className="message-panel-header">
+                  <div className="message-panel-icon">
+                    <i className="fa fa-exclamation-triangle" />
+                  </div>
+                  <div onClick={this.dismissWarning} className="close-message-panel">
+                    <i className="fas fa-times" />
+                  </div>
+                </div>
+                <div className="message-panel-messages">
+                  <div className="notification">{geometrySimplifiedWarning}</div>
+                </div>
+              </div>
+            )}
             <div className="results-heading-top">
               <div className="results-heading-top-left">
                 <EOBButton

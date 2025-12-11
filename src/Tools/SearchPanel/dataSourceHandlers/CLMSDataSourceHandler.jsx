@@ -1359,7 +1359,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4]: {
-      minDate: moment.utc('2025-07-01'),
+      minDate: moment.utc('2007-01-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_1KM_DAILY_V2]: {
