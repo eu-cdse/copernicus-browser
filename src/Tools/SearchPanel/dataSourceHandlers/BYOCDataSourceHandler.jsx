@@ -16,6 +16,7 @@ import { RRD_COLLECTIONS } from './RRDDataSources/dataSourceRRDConstants';
 import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 import EvolandDataSourceHandler from './EvolandDataSourceHandler';
+import ComplementaryDataDataSourceHandler from './ComplementaryDataDataSourceHandler';
 
 const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
 
@@ -42,6 +43,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   CLMS_KNOWN_COLLECTIONS = new CLMSDataSourceHandler().getKnownCollectionsList();
   CDSE_CCM_KNOWN_COLLECTIONS = new CCMDataSourceHandler().getKnownCollectionsList();
   EVOLAND_KNOWN_COLLECTIONS = new EvolandDataSourceHandler().getKnownCollectionsList();
+  COMPLEMENTARY_KNOWN_COLLECTIONS = new ComplementaryDataDataSourceHandler().getKnownCollectionsList();
 
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
     name = isFunction(name) ? name() : name;
@@ -54,7 +56,8 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
         !this.RRD_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.CLMS_KNOWN_COLLECTIONS.includes(l.collectionId) &&
         !this.CDSE_CCM_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.EVOLAND_KNOWN_COLLECTIONS.includes(l.collectionId),
+        !this.EVOLAND_KNOWN_COLLECTIONS.includes(l.collectionId) &&
+        !this.COMPLEMENTARY_KNOWN_COLLECTIONS.includes(l.collectionId),
     );
     if (customLayers.length === 0) {
       return false;

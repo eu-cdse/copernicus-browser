@@ -21,6 +21,7 @@ import {
   AWS_L8L1C,
   AWS_LOTL1,
   AWS_LOTL2,
+  CDAS_L8_L9_LOTL1,
   S3OLCI,
   S3OLCI_CDAS,
   COPERNICUS_GLOBAL_LAND_COVER,
@@ -172,6 +173,7 @@ import {
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
+  CDAS_LANDSAT_MOSAIC,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -479,6 +481,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       { datasourceId: AWS_L8L1C, layerId: 'THERMAL' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '9_THERMAL' },
       { datasourceId: AWS_LOTL1, layerId: 'THERMAL' },
       { datasourceId: AWS_LOTL2, layerId: 'THERMAL' },
     ],
@@ -502,7 +505,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Thermal band 10\n\nThis thermal visualization is based on band 10 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10895 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, band 10 reports on the ground itself, which is often much hotter. Thermal band 10 is useful in providing surface temperatures and is collected with a 100-meter resolution.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products) and [here.](https://landsat.gsfc.nasa.gov/landsat-8/landsat-8-bands/)`,
+      t`# Thermal band 10\n\nThis thermal visualization is based on band 10 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10895 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, band 10 reports on the ground itself, which is often much hotter. Thermal band 10 is useful in providing surface temperatures and is collected with a 100-meter resolution.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products).`,
   },
 
   {
@@ -624,6 +627,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '3_NDVI' },
       { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
       { datasourceId: S2_L2A_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '5_NDVI' },
     ],
     legend: {
       type: 'continuous',
@@ -675,7 +679,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/) and [here.](https://eos.com/ndvi/)`,
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/).`,
   },
   {
     match: [
@@ -768,6 +772,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '99_MOISTURE-INDEX' },
       { datasourceId: AWS_LETML2, layerId: 'MOISTURE-INDEX' },
       { datasourceId: AWS_LETML1, layerId: 'MOISTURE-INDEX' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '8_NDMI' },
     ],
     legend: {
       type: 'continuous',
@@ -799,6 +804,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: AWS_LETML1, layerId: 'NDWI' },
       { datasourceId: AWS_LETML2, layerId: 'NDWI' },
       { datasourceId: AWS_LMSSL1, layerId: 'NDWI' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '7_NDWI' },
     ],
     legend: {
       type: 'continuous',
@@ -853,12 +859,13 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       { datasourceId: AWS_L8L1C, layerId: '3_FALSE_COLOR' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '4_FALSE_COLOR' },
       { datasourceId: AWS_LOTL1, layerId: '3_FALSE_COLOR' },
       { datasourceId: AWS_LOTL2, layerId: '3_FALSE_COLOR' },
     ],
 
     description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/) and [here.](https://gisgeography.com/landsat-8-bands-combinations/)`,
+      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/).`,
   },
 
   {
@@ -891,6 +898,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       { datasourceId: AWS_L8L1C, layerId: '1_TRUE_COLOR' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '1_TRUE_COLOR' },
       { datasourceId: AWS_L8L1C, layerId: '1_TRUE-COLOR' },
       { datasourceId: AWS_L8L1C, layerId: 'TRUE-COLOR' },
       { datasourceId: AWS_LOTL1, layerId: '1_TRUE_COLOR' },
@@ -902,7 +910,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. Landsat 8-9 has 11 bands. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/landsat-8/composites/) and [here.](https://landsat.gsfc.nasa.gov/landsat-8/landsat-8-bands/)`,
+      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. Landsat 8-9 has 11 bands. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/landsat-8/composites/).`,
   },
   {
     match: [
@@ -936,11 +944,12 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [
       { datasourceId: AWS_L8L1C, layerId: '2_TRUE_COLOR_PANSHARPENED' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '2_TRUE_COLOR_PANSHARPENED' },
       { datasourceId: AWS_LOTL1, layerId: '2_TRUE_COLOR_PANSHARPENED' },
     ],
 
     description: () =>
-      t`# Pansharpened True Color\n\nThe pansharpened true color composite is done by using the usual true color data (red, green and blue (RGB)) and enhancing them by using the panchromatic band 8, or pan band (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). An image from the pan band is similar to black-and-white film: it combines light from the red, green, and blue parts of the spectrum into a single measure of overall visible reflectance. Pansharpened images have 4x the resolution of the usual true color composite, greatly enhancing the usefulness of Landsat imagery.\n\n\n\nMore info [here](https://blog.mapbox.com/pansharpening-for-higher-resolution-in-landsat-live-e4717cd7c356) and [here.](https://landsat.gsfc.nasa.gov/landsat-8/landsat-8-bands/)`,
+      t`# Pansharpened True Color\n\nThe pansharpened true color composite is done by using the usual true color data (red, green and blue (RGB)) and enhancing them by using the panchromatic band 8, or pan band (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). An image from the pan band is similar to black-and-white film: it combines light from the red, green, and blue parts of the spectrum into a single measure of overall visible reflectance. Pansharpened images have 4x the resolution of the usual true color composite, greatly enhancing the usefulness of Landsat imagery.\n\n\n\nMore info [here](https://blog.mapbox.com/pansharpening-for-higher-resolution-in-landsat-live-e4717cd7c356).`,
   },
   {
     match: [
@@ -1039,7 +1048,11 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Normalised Difference Snow Index (NDSI)\n\nThe Sentinel-2 normalised difference snow index can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. Snow cover is represented in bright vivid blue.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndsi/).`,
   },
-
+  {
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '6_NDSI' }],
+    description: () =>
+      t`# Normalised Difference Snow Index (NDSI)\n\nThe normalised difference snow index (NDSI) can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. Snow cover is represented in bright vivid blue.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndsi/).`,
+  },
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '3_TONEMAPPED-NATURAL-COLOR' },
@@ -1054,6 +1067,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: AWS_LETML2, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: AWS_LOTL1, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: AWS_LOTL2, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
+      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '3_TONEMAPPED_NATURAL_COLOR' },
     ],
 
     description: () =>
@@ -5332,5 +5346,41 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1, layerId: 'O_T_TSEBPT' }],
     description: () => t`Canopy transpiration calculated by the TSEB-PT model. Unit: mm/day`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '2-FALSE-COLOUR' }],
+    description: () =>
+      t`This is a simple RGB composite with NIR band B04 in the red channel, red band B03 in the green channel and green band B02 in the blue channel. The script is useful for plant density and health monitoring, as vegetation (displayed in red) heavily reflects NIR light while absorbing red. The band 4 also penetrates atmospheric haze, and distinguishes between land and water. Cities and exposed ground are grey or tan, and water appears blue or black.`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '4-NDMI' }],
+    description: () =>
+      t`The NDMI is a normalised difference moisture index, that uses NIR and SWIR bands to display moisture. The SWIR band reflects changes in both the vegetation water content and the spongy mesophyll structure in vegetation canopies, while the NIR reflectance is affected by leaf internal structure and leaf dry matter content but not by water content. The combination of the NIR with the SWIR removes variations induced by leaf internal structure and leaf dry matter content, improving the accuracy in retrieving the vegetation water content. The amount of water available in the internal leaf structure largely controls the spectral reflectance in the SWIR interval of the electromagnetic spectrum. SWIR reflectance is therefore negatively related to leaf water content.`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '7-NDSI' }],
+    description: () =>
+      t`The Landsat normalized difference snow index is a ratio of two bands: the Green band (B02) and the SWIR Band (B05). Values above 0.42 are usually snow. NDSI can be used to differentiate between cloud and snow cover as snow absorbs in the short-wave infrared light, but reflects the visible light, whereas cloud is generally reflective in both wavelengths. In the visualisation script snow cover is represented in bright vivid blue.`,
+  },
+
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '3-NDVI' }],
+    description: () =>
+      t`The normalised difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '6-NDWI' }],
+    description: () =>
+      t`The NDWI is used to monitor changes related to water content in water bodies. As water bodies strongly absorb light in visible to infrared electromagnetic spectrum, NDWI uses green and near infrared bands to highlight water bodies. It is sensitive to built-up land and can result in over-estimation of water bodies.`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '5-SWIR' }],
+    description: () =>
+      t`Short wave infrared (SWIR) measurements can help scientists estimate how much water is present in plants and soil, as water absorbs SWIR wavelengths. Short wave infrared bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) are also useful for distinguishing between cloud types (water clouds versus ice clouds), snow and ice, all of which appear white in visible light. In this composite vegetation appears in shades of green, soils and built-up areas are in various shades of brown, and water appears black. Newly burned land reflects strongly in SWIR bands, making them valuable for mapping fire damages. Each rock type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light.`,
+  },
+  {
+    match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '1-TRUE-COLOUR' }],
+    description: () =>
+      t`The true colour product maps Landsat bi-monthly mosaic band values B03, B02, and B01 which roughly correspond to red, green, and blue part of the spectrum, respectively, to R, G, and B components. The result is a true colour product, that is a good representation of the Earth as humans would see it naturally.`,
   },
 ];

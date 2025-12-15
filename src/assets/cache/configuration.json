@@ -12222,6 +12222,345 @@
             }
         }
     ],
+    "3bdae8-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "1-TRUE-COLOUR",
+            "title": "True Color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nconst factor = 0.005;\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B03 * factor, samples.B02 * factor, samples.B01 * factor];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B02\",\n        \"B03\",\n        \"B01\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:07:39.698687Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "2-FALSE-COLOUR",
+            "title": "False Color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nconst factor = 0.004;\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B04 * factor, samples.B03 * factor, samples.B02 * factor];\n    val = viz.processList(val);\n    val.push(samples.dataMask);\n    return val;\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"B02\",\n        \"B03\",\n        \"B04\",\n        \"dataMask\"\n      ]\n    }],\n    output: {\n      bands: 4\n    }\n  }\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:06:16.663955Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "3-NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n    return {\n        input: [\"B03\", \"B04\", \"dataMask\"],\n        output: [\n            { id: \"default\", bands: 4 },\n            { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n            { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n            { id: \"dataMask\", bands: 1 }\n        ]\n    };\n}\n\nconst ramp = [\n    [-0.5, 0x0c0c0c],\n    [-0.2, 0xbfbfbf],\n    [-0.1, 0xdbdbdb],\n    [0, 0xeaeaea],\n    [0.025, 0xfff9cc],\n    [0.05, 0xede8b5],\n    [0.075, 0xddd89b],\n    [0.1, 0xccc682],\n    [0.125, 0xbcb76b],\n    [0.15, 0xafc160],\n    [0.175, 0xa3cc59],\n    [0.2, 0x91bf51],\n    [0.25, 0x7fb247],\n    [0.3, 0x70a33f],\n    [0.35, 0x609635],\n    [0.4, 0x4f892d],\n    [0.45, 0x3f7c23],\n    [0.5, 0x306d1c],\n    [0.55, 0x216011],\n    [0.6, 0x0f540a],\n    [1, 0x004400],\n];\n\nconst factor = 0.004;\nconst visualizer = new ColorRampVisualizer(ramp);\n\nfunction evaluatePixel(samples) {\n    let val = index(samples.B04 * factor, samples.B03 * factor);\n    // The library for tiffs works well only if there is only one channel returned.\n    // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n    const indexVal = samples.dataMask === 1 ? val : NaN;\n    const imgVals = visualizer.process(val);\n\n    return {\n        default: imgVals.concat(samples.dataMask),\n        index: [indexVal],\n        eobrowserStats: [val],\n        dataMask: [samples.dataMask]\n    };\n}",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "NDVI",
+                        "gradients": [
+                            {
+                                "color": "rgb(5%,5%,5%)",
+                                "label": -0.5,
+                                "position": -0.5
+                            },
+                            {
+                                "color": "rgb(75%,75%,75%)",
+                                "label": -0.2,
+                                "position": -0.2
+                            },
+                            {
+                                "color": "rgb(86%,86%,86%)",
+                                "label": -0.1,
+                                "position": -0.1
+                            },
+                            {
+                                "color": "rgb(92%,92%,92%)",
+                                "label": 0,
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(100%,98%,80%)",
+                                "position": 0.025
+                            },
+                            {
+                                "color": "rgb(93%,91%,71%)",
+                                "position": 0.05
+                            },
+                            {
+                                "color": "rgb(87%,85%,61%)",
+                                "position": 0.075
+                            },
+                            {
+                                "color": "rgb(80%,78%,51%)",
+                                "label": 0.1,
+                                "position": 0.1
+                            },
+                            {
+                                "color": "rgb(74%,72%,42%)",
+                                "position": 0.125
+                            },
+                            {
+                                "color": "rgb(69%,76%,38%)",
+                                "position": 0.15
+                            },
+                            {
+                                "color": "rgb(64%,80%,35%)",
+                                "position": 0.175
+                            },
+                            {
+                                "color": "rgb(57%,75%,32%)",
+                                "label": 0.2,
+                                "position": 0.2
+                            },
+                            {
+                                "color": "rgb(50%,70%,28%)",
+                                "position": 0.25
+                            },
+                            {
+                                "color": "rgb(44%,64%,25%)",
+                                "label": 0.3,
+                                "position": 0.3
+                            },
+                            {
+                                "color": "rgb(38%,59%,21%)",
+                                "position": 0.35
+                            },
+                            {
+                                "color": "rgb(31%,54%,18%)",
+                                "label": 0.4,
+                                "position": 0.4
+                            },
+                            {
+                                "color": "rgb(25%,49%,14%)",
+                                "position": 0.45
+                            },
+                            {
+                                "color": "rgb(19%,43%,11%)",
+                                "label": 0.5,
+                                "position": 0.5
+                            },
+                            {
+                                "color": "rgb(13%,38%,7%)",
+                                "position": 0.55
+                            },
+                            {
+                                "color": "rgb(6%,33%,4%)",
+                                "label": 0.6,
+                                "position": 0.6
+                            },
+                            {
+                                "color": "rgb(0%,27%,0%)",
+                                "label": 1,
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": -0.5
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:25:22.190346Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "4-NDMI",
+            "title": "NDMI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst moistureRamps = [\n  [-0.8, 0x800000],\n  [-0.24, 0xff0000],\n  [-0.032, 0xffff00],\n  [0.032, 0x00ffff],\n  [0.24, 0x0000ff],\n  [0.8, 0x000080]\n];\n\nconst viz = new ColorRampVisualizer(moistureRamps);\n\nfunction setup() {\n  return {\n      input: [\"B04\", \"B05\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B04, samples.B05);\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n  let imgVals = viz.process(val);\n\n  return {\n      default: imgVals.concat(samples.dataMask),\n      index: [indexVal],\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n  };\n}\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "Moisture",
+                        "gradients": [
+                            {
+                                "color": "rgb(50%,0%,0%)",
+                                "label": -0.8,
+                                "position": -0.8
+                            },
+                            {
+                                "color": "rgb(100%,0%,0%)",
+                                "label": -0.24,
+                                "position": -0.24
+                            },
+                            {
+                                "color": "rgb(100%,100%,0%)",
+                                "position": -0.032
+                            },
+                            {
+                                "color": "rgb(0%,100%,100%)",
+                                "position": 0.032
+                            },
+                            {
+                                "color": "rgb(0%,0%,100%)",
+                                "label": 0.24,
+                                "position": 0.24
+                            },
+                            {
+                                "color": "rgb(0%,0%,50%)",
+                                "label": 0.8,
+                                "position": 0.8
+                            }
+                        ],
+                        "maxPosition": 0.8,
+                        "minPosition": -0.8
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:25:56.150831Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "5-SWIR",
+            "title": "SWIR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nconst factor = 0.004;\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction setup() {\n  return {\n    input: [\"B07\", \"B05\", \"B03\",\"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B07 * factor, samples.B05 * factor, samples.B03 * factor, samples.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-10T12:25:43.669060Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "6-NDWI",
+            "title": "NDWI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//ndwi\nconst ramp = [\n  [-0.8, 0x008000],\n  [0, 0xFFFFFF],\n  [0.8, 0x0000CC]\n];\n\nlet viz = new ColorRampVisualizer(ramp);\n\nfunction setup() {\n  return {\n      input: [\"B02\", \"B04\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B02, samples.B04);\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n  let imgVals = viz.process(val);\n\n  return {\n      default: imgVals.concat(samples.dataMask),\n      index: [indexVal],\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n  };\n}\n",
+                    "legend": {
+                        "type": "continuous",
+                        "title": "NDWI",
+                        "gradients": [
+                            {
+                                "color": "rgb(0%,50%,0%)",
+                                "label": -0.8,
+                                "position": -0.8
+                            },
+                            {
+                                "color": "rgb(100%,100%,100%)",
+                                "label": 0,
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(0%,0%,80%)",
+                                "label": 0.8,
+                                "position": 0.8
+                            }
+                        ],
+                        "maxPosition": 0.8,
+                        "minPosition": -0.8
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:25:33.893408Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "7-NDSI",
+            "title": "NDSI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n      input: [ \"B01\", \"B02\", \"B03\", \"B05\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 1, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nconst factor = 0.004;\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B02 * factor, samples.B05 * factor);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n\n  if (val > 0.42)\n      imgVals = [0, 0.8, 1, samples.dataMask];\n  else\n      imgVals = [2.5 * samples.B03 * factor, 2.5 * samples.B02 * factor, 2.5 * samples.B01 * factor, samples.dataMask];\n\n  return {\n      default: imgVals,\n      index: [indexVal],\n      eobrowserStats: [val],\n      dataMask: [samples.dataMask]\n  };\n}\n\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3bdae8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-12-11T12:25:14.088123Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-13bdbc-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "13bdbc-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "3d4b9f-YOUR-INSTANCEID-HERE": [
         {
             "id": "FAPAR",
@@ -57268,6 +57607,242 @@
                 "temporal": false,
                 "collectionId": "ba17bf-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
+            }
+        }
+    ],
+    "ed94c7-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "1_TRUE_COLOR",
+            "title": "True color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3 (auto-converted from 1)\n\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B04, samples.B03, samples.B02, samples.dataMask];\n    return viz.processList(val);\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [ \"B02\", \"B03\", \"B04\", \"dataMask\" ]\n    }],\n    output: { bands: 4 }  }\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T07:42:41.867346Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 20,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "2_TRUE_COLOR_PANSHARPENED",
+            "title": "True color - pansharpened",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3 (auto-converted from 1)\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let sudoPanW = (samples.B04 + samples.B03 + samples.B02 * 0.4) / 2.4;\n    let ratioW = samples.B08 / sudoPanW;\n    let val = [samples.B04 * ratioW, samples.B03 * ratioW, samples.B02 * ratioW, samples.dataMask];\n    return viz.processList(val);\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [ \"B02\", \"B03\", \"B04\", \"B08\", \"dataMask\" ]\n    }],\n    output: { bands: 4 }  }\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T07:42:46.724220Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 20,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "3_TONEMAPPED_NATURAL_COLOR",
+            "title": "Highlight Optimized Natural Color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n   return {\n    input: [\"B04\", \"B03\", \"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n \nfunction evaluatePixel(samples) {\n    var R = samples.B04 > 0.19595917942 ? Math.cbrt(0.6 * samples.B04) : 2.5 * samples.B04;\n    var G = samples.B03 > 0.19595917942 ? Math.cbrt(0.6 * samples.B03) : 2.5 * samples.B03;\n    var B = samples.B02 > 0.19595917942 ? Math.cbrt(0.6 * samples.B02) : 2.5 * samples.B02;\n    return [R, G, B, samples.dataMask];\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T07:42:36.313647Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "4_FALSE_COLOR",
+            "title": "False color",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3 (auto-converted from 1)\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B05, samples.B04, samples.B03, samples.dataMask];\n    return viz.processList(val);\n}\n\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"B03\",\"B04\",\"B05\",\"dataMask\"]\n    }],\n    output: { bands: 4 }  }\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T07:42:27.983742Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 20,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "5_NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B05\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 2 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B05, samples.B04);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 && val >= -1 && val <= 1 ? val : NaN;\n\n  if (val < -1.1) imgVals = [0, 0, 0, samples.dataMask];\n  else if (val < -0.2) imgVals = [0.75, 0.75, 0.75, samples.dataMask];\n  else if (val < -0.1) imgVals = [0.86, 0.86, 0.86, samples.dataMask];\n  else if (val < 0) imgVals = [1, 1, 0.88, samples.dataMask];\n  else if (val < 0.025) imgVals = [1, 0.98, 0.8, samples.dataMask];\n  else if (val < 0.05) imgVals = [0.93, 0.91, 0.71, samples.dataMask];\n  else if (val < 0.075) imgVals = [0.87, 0.85, 0.61, samples.dataMask];\n  else if (val < 0.1) imgVals = [0.8, 0.78, 0.51, samples.dataMask];\n  else if (val < 0.125) imgVals = [0.74, 0.72, 0.42, samples.dataMask];\n  else if (val < 0.15) imgVals = [0.69, 0.76, 0.38, samples.dataMask];\n  else if (val < 0.175) imgVals = [0.64, 0.8, 0.35, samples.dataMask];\n  else if (val < 0.2) imgVals = [0.57, 0.75, 0.32, samples.dataMask];\n  else if (val < 0.25) imgVals = [0.5, 0.7, 0.28, samples.dataMask];\n  else if (val < 0.3) imgVals = [0.44, 0.64, 0.25, samples.dataMask];\n  else if (val < 0.35) imgVals = [0.38, 0.59, 0.21, samples.dataMask];\n  else if (val < 0.4) imgVals = [0.31, 0.54, 0.18, samples.dataMask];\n  else if (val < 0.45) imgVals = [0.25, 0.49, 0.14, samples.dataMask];\n  else if (val < 0.5) imgVals = [0.19, 0.43, 0.11, samples.dataMask];\n  else if (val < 0.55) imgVals = [0.13, 0.38, 0.07, samples.dataMask];\n  else if (val < 0.6) imgVals = [0.06, 0.33, 0.04, samples.dataMask];\n  else imgVals = [0, 0.27, 0, samples.dataMask];\n\n  return {\n    default: imgVals,\n    index: [indexVal],\n    eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-19T08:39:59.505836Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 20,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "6_NDSI",
+            "title": "NDSI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n      input: [\"B02\", \"B03\", \"B04\", \"B06\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 2, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B03, samples.B06);\n  let imgVals = null;\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n\n  if (val > 0.42)\n      imgVals = [0, 0.8, 1, samples.dataMask];\n  else\n      imgVals = [2.5 * samples.B04, 2.5 * samples.B03, 2.5 * samples.B02, samples.dataMask];\n\n  return {\n      default: imgVals,\n      index: [indexVal],\n      eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n      dataMask: [samples.dataMask]\n  };\n}\n\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T08:59:36.754315Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "7_NDWI",
+            "title": "NDWI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//ndwi\nconst ramp = [\n  [-0.8, 0x008000],\n  [0, 0xFFFFFF],\n  [0.8, 0x0000CC]\n];\n\nlet viz = new ColorRampVisualizer(ramp);\n\nfunction setup() {\n  return {\n      input: [\"B03\", \"B04\", \"B05\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 2, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B03, samples.B05);\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n  let imgVals = viz.process(val);\n\n  return {\n      default: imgVals.concat(samples.dataMask),\n      index: [indexVal],\n      eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n      dataMask: [samples.dataMask]\n  };\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T08:48:14.567533Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "8_NDMI",
+            "title": "NDMI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nconst moistureRamps = [\n  [-0.8, 0x800000],\n  [-0.24, 0xff0000],\n  [-0.032, 0xffff00],\n  [0.032, 0x00ffff],\n  [0.24, 0x0000ff],\n  [0.8, 0x000080]\n];\n\nconst viz = new ColorRampVisualizer(moistureRamps);\n\nfunction setup() {\n  return {\n      input: [\"B03\", \"B04\", \"B05\", \"B06\", \"dataMask\"],\n      output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 2, sampleType: 'FLOAT32' },\n          { id: \"dataMask\", bands: 1 }\n      ]\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n\nfunction evaluatePixel(samples) {\n  let val = index(samples.B05, samples.B06);\n  // The library for tiffs works well only if there is only one channel returned.\n  // So we encode the \"no data\" as NaN here and ignore NaNs on frontend.\n  const indexVal = samples.dataMask === 1 ? val : NaN;\n  let imgVals = viz.process(val);\n\n  return {\n      default: imgVals.concat(samples.dataMask),\n      index: [indexVal],\n      eobrowserStats: [val, isCloud(samples) ? 1 : 0],\n      dataMask: [samples.dataMask]\n  };\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T08:46:12.308492Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "9_THERMAL",
+            "title": "Thermal",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3 (auto-converted from 1)\n\nconst blue_red = [\n  [223, 0x003d99],\n  [253, 0x2e82ff],\n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xfde191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n  [363, 0x650401],\n  [373, 0x3d0200],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction setup() {\n  return {\n    input: [\"B03\", \"B04\", \"B10\", \"dataMask\"],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"eobrowserStats\", bands: 2 },\n      { id: \"dataMask\", bands: 1 },\n    ],\n  };\n}\n\nfunction evaluatePixel(samples) {\n  let val = samples.B10;\n  return {\n    default: [...viz.process(val), samples.dataMask],\n    eobrowserStats: [val - 273, isCloud(samples) ? 1 : 0],\n    dataMask: [samples.dataMask],\n  };\n}\n\nfunction isCloud(samples) {\n  const NGDR = index(samples.B03, samples.B04);\n  const bRatio = (samples.B03 - 0.175) / (0.39 - 0.175);\n  return bRatio > 1 || (bRatio > 0 && NGDR > 0);\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2025-11-26T08:03:15.958401Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
             }
         }
     ],

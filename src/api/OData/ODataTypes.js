@@ -85,6 +85,9 @@ const ODataCollections = {
     label: 'CLMS Priority Area Monitoring',
     collection: 'CLMS',
   },
+  LANDSAT8: { id: 'LANDSAT-8', label: 'LANDSAT-8', collection: 'LANDSAT-8' },
+  LANDSAT9: { id: 'LANDSAT-9', label: 'LANDSAT-9', collection: 'LANDSAT-9' },
+  COMPLEMENTARY_DATA: { id: 'COMPLEMENTARY_DATA', label: 'Complementary Data' },
 };
 
 export {

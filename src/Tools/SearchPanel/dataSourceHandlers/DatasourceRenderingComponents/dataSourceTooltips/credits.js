@@ -109,8 +109,10 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  CDAS_L8_L9_LOTL1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  CDAS_LANDSAT_MOSAIC,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -160,6 +162,18 @@ export const credits = {
     {
       title: 'USGS - L9',
       link: 'https://www.usgs.gov/landsat-missions/landsat-9',
+    },
+  ],
+  [CDAS_L8_L9_LOTL1]: [
+    {
+      title: 'USGS - L8',
+      link: 'https://www.usgs.gov/landsat-missions/landsat-8',
+    },
+  ],
+  [CDAS_LANDSAT_MOSAIC]: [
+    {
+      title: 'OpenGeoHub (2025)',
+      link: 'https://peerj.com/articles/18585/',
     },
   ],
   [DATASOURCES.EOCLOUD_LANDSAT]: [

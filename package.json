@@ -18,7 +18,7 @@
     "@mapbox/togeojson": "^0.16.0",
     "@reduxjs/toolkit": "^1.0.4",
     "@sentinel-hub/evalscript-code-editor": "^1.0.45",
-    "@sentinel-hub/sentinelhub-js": "0.9.0",
+    "@sentinel-hub/sentinelhub-js": "^0.12.1",
     "@turf/area": "^6.3.0",
     "@turf/bbox": "^6.5.0",
     "@turf/bbox-polygon": "^6.5.0",

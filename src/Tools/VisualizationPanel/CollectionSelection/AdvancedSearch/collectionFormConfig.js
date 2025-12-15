@@ -938,6 +938,148 @@ export const collections = [
   },
 ];
 
+export const collectionsComplementaryData = [
+  {
+    id: ODataCollections.COMPLEMENTARY_DATA.id,
+    label: ODataCollections.COMPLEMENTARY_DATA.label,
+    type: 'group',
+    items: [
+      {
+        id: ODataCollections.LANDSAT8.id,
+        label: ODataCollections.LANDSAT8.label,
+        collectionName: ODataCollections.LANDSAT8.collection,
+        type: 'collection',
+        items: [
+          {
+            id: 'OLI_TIRS',
+            label: 'OLI_TIRS',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1TP',
+                name: 'L1TP',
+                label: 'L1TP',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+          {
+            id: 'OLI',
+            label: 'OLI',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1TP',
+                name: 'L1TP',
+                label: 'L1TP',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+          {
+            id: 'TIRS',
+            label: 'TIRS',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+        ],
+        // additionalFilters: [],
+        supportsCloudCover: false,
+      },
+      {
+        id: ODataCollections.LANDSAT9.id,
+        label: ODataCollections.LANDSAT9.label,
+        collectionName: ODataCollections.LANDSAT9.collection,
+        type: 'collection',
+        items: [
+          {
+            id: 'OLI_TIRS',
+            label: 'OLI_TIRS',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1TP',
+                name: 'L1TP',
+                label: 'L1TP',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+          {
+            id: 'OLI',
+            label: 'OLI',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1TP',
+                name: 'L1TP',
+                label: 'L1TP',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+          {
+            id: 'TIRS',
+            label: 'TIRS',
+            type: 'instrument',
+            items: [
+              {
+                id: 'L1GT',
+                name: 'L1GT',
+                label: 'L1GT',
+                customFilterQueryByProductType: true,
+                type: 'productType',
+              },
+            ],
+          },
+        ],
+        // additionalFilters: [],
+        supportsCloudCover: false,
+      },
+    ],
+  },
+];
+
 export const recursiveCollectionCLMS = [
   {
     id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
@@ -1927,7 +2069,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lwq-nrt_global_100m_10daily_v1',
-                label: 'Global NRT, 10-daily, 100m, (2002–2012), V1',
+                label: 'Global NRT, 10-daily, 100m, (2019–2024), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2175,4 +2317,5 @@ function transformToRecursive(collections) {
 
 const recursiveCollections = transformToRecursive(collections);
 recursiveCollections.push(...recursiveCollectionCLMS);
+recursiveCollections.push(...collectionsComplementaryData);
 export { recursiveCollections };

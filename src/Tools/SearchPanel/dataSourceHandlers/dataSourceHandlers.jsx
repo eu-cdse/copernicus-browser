@@ -14,10 +14,7 @@ import store, { notificationSlice, themesSlice } from '../../../store';
 import Sentinel1DataSourceHandler from './Sentinel1DataSourceHandler';
 import Sentinel3DataSourceHandler from './Sentinel3DataSourceHandler';
 import Sentinel5PDataSourceHandler from './Sentinel5PDataSourceHandler';
-import Landsat45AWSDataSourceHandler from './Landsat45AWSDataSourceHandler';
-import Landsat15AWSDataSourceHandler from './Landsat15AWSDataSourceHandler';
-import Landsat7AWSDataSourceHandler from './Landsat7AWSDataSourceHandler';
-import Landsat8AWSDataSourceHandler from './Landsat8AWSDataSourceHandler';
+import ComplementaryDataDataSourceHandler from './ComplementaryDataDataSourceHandler';
 import BYOCDataSourceHandler from './BYOCDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
 
@@ -208,8 +205,10 @@ import {
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  CDAS_L8_L9_LOTL1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  CDAS_LANDSAT_MOSAIC,
 } from './dataSourceConstants';
 
 import Sentinel2CDASDataSourceHandler from './Sentinel2CDASDataSourceHandler';
@@ -253,10 +252,6 @@ export function initializeDataSourceHandlers() {
     new Sentinel3CDASDataSourceHandler(),
     new Sentinel5PDataSourceHandler(),
     new Sentinel5PCDASDataSourceHandler(),
-    new Landsat15AWSDataSourceHandler(),
-    new Landsat45AWSDataSourceHandler(),
-    new Landsat7AWSDataSourceHandler(),
-    new Landsat8AWSDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
     new BYOCDataSourceHandler(),
     new AirbusDeDataSourceHandler(),
@@ -276,6 +271,7 @@ export function initializeDataSourceHandlers() {
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
     new EvolandDataSourceHandler(),
+    new ComplementaryDataDataSourceHandler(),
   ];
 }
 
@@ -611,6 +607,9 @@ export function datasourceForDatasetId(datasetId) {
     case AWS_LETML1:
     case AWS_LETML2:
       return DATASOURCES.AWS_LANDSAT7_ETM;
+    case CDAS_L8_L9_LOTL1:
+    case CDAS_LANDSAT_MOSAIC:
+      return DATASOURCES.COMPLEMENTARY_DATA;
     case DEM_COPERNICUS_30_CDAS:
     case DEM_COPERNICUS_90_CDAS:
       return DATASOURCES.DEM_CDAS;
@@ -817,6 +816,8 @@ export const datasetLabels = {
   [S5_AER_AI_CDAS]: 'Sentinel-5P AER_AI',
   [S5_CLOUD_CDAS]: 'Sentinel-5P CLOUD',
   [S5_OTHER_CDAS]: 'Sentinel-5P Other',
+  [CDAS_L8_L9_LOTL1]: t`Landsat 8-9 L1`,
+  [CDAS_LANDSAT_MOSAIC]: 'Landsat Mosaics',
   [AWS_L8L1C]: 'Landsat 8 (USGS archive)',
   [AWS_LOTL1]: 'Landsat 8-9 L1',
   [AWS_LOTL2]: 'Landsat 8-9 L2',
@@ -1098,6 +1099,8 @@ export function getDataSourceHashtags(datasetId) {
     case AWS_LMSSL1:
     case AWS_LETML1:
     case AWS_LETML2:
+    case CDAS_L8_L9_LOTL1:
+    case CDAS_LANDSAT_MOSAIC:
       return 'Landsat,NASA';
     default:
       if (checkIfCustom(datasetId)) {

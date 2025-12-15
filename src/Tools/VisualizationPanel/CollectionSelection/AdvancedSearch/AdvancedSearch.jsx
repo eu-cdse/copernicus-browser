@@ -25,9 +25,10 @@ import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
 import { buildSearchGeometry } from '../../../../utils/geojson.utils';
 import oDataHelpers, {
-  findCollectionConfigById,
-  MIN_SEARCH_DATE,
   calculateMaxGeometryChars,
+  findCollectionConfigById,
+  findGroupConfigById,
+  MIN_SEARCH_DATE,
 } from '../../../../api/OData/ODataHelpers';
 
 import { withODataSearchHOC } from './withODataSearchHOC';
@@ -447,14 +448,30 @@ class AdvancedSearch extends Component {
     }
 
     if (Object.keys(collectionForm.selectedCollections).length) {
-      const collections = Object.keys(collectionForm.selectedCollections).map((collectionId) => ({
-        id: collectionId,
-      }));
+      const collections = Object.keys(collectionForm.selectedCollections).flatMap((collectionId) => {
+        if (collectionId === ODataCollections.COMPLEMENTARY_DATA.id) {
+          const selectedComplementary = collectionForm.selectedCollections[collectionId];
+          if (Object.keys(selectedComplementary).length === 0) {
+            const complementaryDataConfig = findGroupConfigById(collectionId);
+            return complementaryDataConfig.items.map((item) => ({ id: item.id }));
+          }
+
+          return Object.keys(selectedComplementary).map((complementaryCollectionId) => ({
+            id: complementaryCollectionId,
+          }));
+        }
+
+        return {
+          id: collectionId,
+        };
+      });
 
       //add instruments
       collections.forEach((collection) => {
         const instruments = [];
-        const selectedCollectionData = collectionForm.selectedCollections[collection.id];
+        const selectedCollectionData =
+          collectionForm.selectedCollections[ODataCollections.COMPLEMENTARY_DATA.id]?.[collection.id] ??
+          collectionForm.selectedCollections[collection.id];
 
         const getInstrumentCloudCover = (instrumentId) => {
           if (!collectionForm.maxCc || !collectionForm.maxCc[collection.id]) {

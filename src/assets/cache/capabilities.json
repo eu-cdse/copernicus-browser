@@ -1543,6 +1543,61 @@
             }
         ]
     },
+    "3bdae8-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] Landsat bi-monthly mosaics",
+        "layers": [
+            {
+                "id": "1-TRUE-COLOUR",
+                "name": "True Color",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "2-FALSE-COLOUR",
+                "name": "False Color",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "3-NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=3-NDVI&style=default"
+            },
+            {
+                "id": "4-NDMI",
+                "name": "NDMI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4-NDMI&style=default"
+            },
+            {
+                "id": "5-SWIR",
+                "name": "SWIR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "6-NDWI",
+                "name": "NDWI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=6-NDWI&style=default"
+            },
+            {
+                "id": "7-NDSI",
+                "name": "NDSI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "3d4b9f-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fapar_global_300m_10daily_v1_RT6",
         "layers": [
@@ -6237,6 +6292,75 @@
                 "description": "Water Bodies detection layer",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ec7dc0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=WB&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "ed94c7-YOUR-INSTANCEID-HERE": {
+        "title": "CDSE Landsat 8-9 L1",
+        "layers": [
+            {
+                "id": "1_TRUE_COLOR",
+                "name": "True color",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "2_TRUE_COLOR_PANSHARPENED",
+                "name": "True color - pansharpened",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "3_TONEMAPPED_NATURAL_COLOR",
+                "name": "Highlight Optimized Natural Color",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "4_FALSE_COLOR",
+                "name": "False color",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "5_NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "6_NDSI",
+                "name": "NDSI",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "7_NDWI",
+                "name": "NDWI",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "8_NDMI",
+                "name": "NDMI",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "9_THERMAL",
+                "name": "Thermal",
+                "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
             }
         ],
         "datasets": []

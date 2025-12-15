@@ -32,6 +32,7 @@ import {
   S5PL2CDASLayer,
   S1GRDCDASLayer,
   DEMCDASLayer,
+  Landsat89CDASLOTL1Layer,
 } from '@sentinel-hub/sentinelhub-js';
 
 import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
@@ -218,8 +219,10 @@ import {
   EVOLAND_C12_TREE_TYPES,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4,
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
+  CDAS_L8_L9_LOTL1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  CDAS_LANDSAT_MOSAIC,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -822,6 +825,27 @@ class SentinelHubLayer extends L.TileLayer {
           upsampling: upsampling,
           downsampling: downsampling,
         });
+      case CDAS_L8_L9_LOTL1:
+        return await new Landsat89CDASLOTL1Layer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscripturl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+        });
+      case CDAS_LANDSAT_MOSAIC:
+        const dsh = getDataSourceHandler(datasetId);
+        const layer = await this.createBYOCLayer(
+          url,
+          dsh.KNOWN_COLLECTIONS[datasetId],
+          evalscript,
+          evalscripturl,
+          accessToken,
+          upsampling,
+          downsampling,
+          mosaickingOrder,
+        );
+        return layer;
       case AWS_L8L1C:
         return await new Landsat8AWSLayer({
           evalscript: evalscript,

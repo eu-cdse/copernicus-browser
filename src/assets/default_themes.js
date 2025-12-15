@@ -232,6 +232,20 @@ export const DEFAULT_THEMES = [
         preselected: true,
       },
       {
+        name: 'Landsat-8/9 L1',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/ed94c7-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'Landsat Mosaics',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'CCM VHR Europe 2018',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

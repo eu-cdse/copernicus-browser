@@ -1,184 +1,63 @@
-import React from 'react';
-import {
-  DATASET_AWS_L8L1C,
-  DATASET_AWS_LOTL1,
-  DATASET_AWS_LOTL2,
-  DATASET_AWS_LTML1,
-  DATASET_AWS_LTML2,
-  DATASET_AWS_LMSSL1,
-  DATASET_AWS_LETML1,
-  DATASET_AWS_LETML2,
-  Landsat8AWSLayer,
-  Landsat8AWSLOTL1Layer,
-  Landsat8AWSLOTL2Layer,
-  Landsat45AWSLTML1Layer,
-  Landsat45AWSLTML2Layer,
-  Landsat15AWSLMSSL1Layer,
-  Landsat7AWSLETML1Layer,
-  Landsat7AWSLETML2Layer,
-} from '@sentinel-hub/sentinelhub-js';
+import { LinkType, Landsat89CDASLOTL1Layer, DATASET_CDAS_L8_L9_LOTL1 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 
 import DataSourceHandler from './DataSourceHandler';
-import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
-import LandsatTooltip, {
-  renderLandsatOptionsHelpTooltips,
-} from './DatasourceRenderingComponents/dataSourceTooltips/LandsatTooltip';
+import { getLandsat89Markdown } from './DatasourceRenderingComponents/dataSourceTooltips/LandsatTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { constructV3Evalscript } from '../../../utils';
-import {
-  AWS_L8L1C,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  AWS_LTML1,
-  AWS_LTML2,
-  AWS_LMSSL1,
-  AWS_LETML1,
-  AWS_LETML2,
-} from './dataSourceConstants';
+import { CDAS_L8_L9_LOTL1 } from './dataSourceConstants';
 import { getLandsatBandForDataset, getGroupedBands } from './datasourceAssets/landsatBands';
 import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';
+import { DATASOURCES } from '../../../const';
 
 export const LANDSAT_COPYRIGHT_TEXT = (number) =>
-  `Landsat ${number} image courtesy of the U.S. Geological Survey`;
+  `Credit: Landsat ${number} image courtesy of the U.S. Geological Survey, processed with Copernicus Browser`;
 
 export default class LandsatDataSourceHandler extends DataSourceHandler {
   urls = {
-    [AWS_L8L1C]: [],
-    [AWS_LOTL1]: [],
-    [AWS_LOTL2]: [],
-    [AWS_LMSSL1]: [],
-    [AWS_LETML1]: [],
-    [AWS_LETML2]: [],
+    [CDAS_L8_L9_LOTL1]: [],
   };
-  datasetSearchLabels = {
-    [AWS_L8L1C]: t`Landsat 8 (USGS archive)`,
-    [AWS_LOTL1]: t`Landsat 8-9 L1`,
-    [AWS_LOTL2]: t`Landsat 8-9 L2`,
-    [AWS_LMSSL1]: t`Landsat 1-5 MSS L1`,
-    [AWS_LETML1]: t`Landsat 7 ETM+ L1`,
-    [AWS_LETML2]: t`Landsat 7 ETM+ L2`,
-  };
-  allLayers = [];
+  getDatasetSearchLabels = () => ({
+    [CDAS_L8_L9_LOTL1]: t`Landsat 8-9 L1`,
+  });
+
   datasets = [];
-  preselectedDatasets = new Set();
-  searchFilters = {};
-  isChecked = false;
-  datasource = 'Landsat';
+  allLayers = [];
+  datasource = DATASOURCES.LANDSAT_8_9_CDAS;
   searchGroupLabel = 'Landsat';
-  searchGroupKey = 'landsat';
+  limitMonthsSearch = 3;
 
   leafletZoomConfig = {
-    [AWS_L8L1C]: {
-      min: 9,
-      max: 18,
-    },
-    [AWS_LOTL1]: {
-      min: 9,
-      max: 18,
-    },
-    [AWS_LOTL2]: {
-      min: 9,
-      max: 18,
-    },
-    [AWS_LMSSL1]: {
-      min: 8,
-      max: 18,
-    },
-    [AWS_LETML1]: {
-      min: 8,
-      max: 18,
-    },
-    [AWS_LETML2]: {
-      min: 8,
+    [CDAS_L8_L9_LOTL1]: {
+      min: 7,
       max: 18,
     },
   };
 
-  knownDatasets = [
-    { shDataset: DATASET_AWS_L8L1C, datasetId: AWS_L8L1C, urlId: AWS_L8L1C },
-    { shDataset: DATASET_AWS_LOTL1, datasetId: AWS_LOTL1, urlId: AWS_LOTL1 },
-    { shDataset: DATASET_AWS_LOTL2, datasetId: AWS_LOTL2, urlId: AWS_LOTL2 },
-    { shDataset: DATASET_AWS_LMSSL1, datasetId: AWS_LMSSL1, urlId: AWS_LMSSL1 },
-    { shDataset: DATASET_AWS_LETML1, datasetId: AWS_LETML1, urlId: AWS_LETML1 },
-    { shDataset: DATASET_AWS_LETML2, datasetId: AWS_LETML2, urlId: AWS_LETML2 },
-  ];
-
-  initializeDatasets(layers, url, preselected) {
-    this.knownDatasets.forEach((ds) => {
-      if (layers.find((l) => l.dataset === ds.shDataset)) {
-        this.datasets.push(ds.datasetId);
-        this.urls[ds.urlId].push(url);
-        if (preselected) {
-          this.preselectedDatasets.add(ds.datasetId);
-        }
-      }
-    });
-  }
-
   willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
-    //check if any of layers is handled by landsat datasets
-    const hasLandsatDatasets = this.knownDatasets.some((ds) =>
-      layers.find((l) => l.dataset === ds.shDataset),
-    );
+    const usesL8L9Dataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_L8_L9_LOTL1.id);
 
-    if (!hasLandsatDatasets) {
-      return;
-    }
-
-    this.initializeDatasets(layers, url, preselected);
-
-    if (this.datasets.length === 0) {
+    if (!usesL8L9Dataset) {
       return false;
+    }
+    if (usesL8L9Dataset && !this.datasets.includes(CDAS_L8_L9_LOTL1)) {
+      this.datasets.push(CDAS_L8_L9_LOTL1);
+      this.urls[CDAS_L8_L9_LOTL1].push(url);
+    }
+    if (preselected) {
+      if (usesL8L9Dataset) {
+        this.preselectedDatasets.add(CDAS_L8_L9_LOTL1);
+      }
     }
 
     this.datasets = Array.from(new Set(this.datasets)); // make datasets unique
-    this.allLayers.push(
-      ...layers.filter((l) =>
-        [
-          DATASET_AWS_L8L1C,
-          DATASET_AWS_LOTL1,
-          DATASET_AWS_LOTL2,
-          DATASET_AWS_LTML1,
-          DATASET_AWS_LTML2,
-          DATASET_AWS_LMSSL1,
-          DATASET_AWS_LETML1,
-          DATASET_AWS_LETML2,
-        ].includes(l.dataset),
-      ),
-    );
+    this.allLayers.push(...layers.filter((l) => [DATASET_CDAS_L8_L9_LOTL1].includes(l.dataset)));
     this.saveFISLayers(url, layers);
     return true;
   }
 
   isHandlingAnyUrl() {
     return Object.values(this.urls).flat().length > 0;
-  }
-
-  getDataSourceTooltip() {
-    return <LandsatTooltip />;
-  }
-
-  getSearchFormComponents() {
-    if (!this.isHandlingAnyUrl()) {
-      return null;
-    }
-    const preselected = false;
-    return (
-      <GenericSearchGroup
-        key={this.searchGroupKey}
-        label={this.searchGroupLabel}
-        preselected={preselected}
-        saveCheckedState={this.saveCheckedState}
-        dataSourceTooltip={this.getDataSourceTooltip()}
-        saveFiltersValues={this.saveSearchFilters}
-        options={this.datasets}
-        optionsLabels={this.datasetSearchLabels}
-        preselectedOptions={Array.from(this.preselectedDatasets)}
-        hasMaxCCFilter={true}
-        renderOptionsHelpTooltips={renderLandsatOptionsHelpTooltips}
-      />
-    );
   }
 
   getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
@@ -221,9 +100,9 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
         datasource: this.datasource,
         datasetId,
         metadata: {
-          previewUrl: this.getUrl(t.links, 'preview'),
-          AWSPath: this.getUrl(t.links, 'aws'),
-          EOCloudPath: this.getUrl(t.links, 'eocloud'),
+          previewUrl: this.getUrl(t.links, LinkType.PREVIEW),
+          AWSPath: this.getUrl(t.links, LinkType.AWS),
+          EOCloudPath: this.getUrl(t.links, LinkType.EOCLOUD),
           sunElevation: t.meta.sunElevation,
           cloudCoverage: t.meta.cloudCoverPercent,
         },
@@ -231,28 +110,23 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
     return tiles;
   };
 
-  getUrlsForDataset = (datasetId) => this.urls[datasetId] || [];
-
   getBands = (datasetId) => getLandsatBandForDataset(datasetId);
+
+  getUrlsForDataset = (datasetId) => this.urls[datasetId] || [];
 
   getSentinelHubDataset = (datasetId) => {
     switch (datasetId) {
-      case AWS_L8L1C:
-        return DATASET_AWS_L8L1C;
-      case AWS_LOTL1:
-        return DATASET_AWS_LOTL1;
-      case AWS_LOTL2:
-        return DATASET_AWS_LOTL2;
-      case AWS_LTML1:
-        return DATASET_AWS_LTML1;
-      case AWS_LTML2:
-        return DATASET_AWS_LTML2;
-      case AWS_LMSSL1:
-        return DATASET_AWS_LMSSL1;
-      case AWS_LETML1:
-        return DATASET_AWS_LETML1;
-      case AWS_LETML2:
-        return DATASET_AWS_LETML2;
+      case CDAS_L8_L9_LOTL1:
+        return DATASET_CDAS_L8_L9_LOTL1;
+      default:
+        return null;
+    }
+  };
+
+  getDescriptionForDataset = (datasetId) => {
+    switch (datasetId) {
+      case CDAS_L8_L9_LOTL1:
+        return getLandsat89Markdown();
       default:
         return null;
     }
@@ -268,33 +142,19 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
 
   getResolutionLimits(datasetId) {
     switch (datasetId) {
-      case AWS_L8L1C:
-      case AWS_LOTL2:
-      case AWS_LETML1:
-      case AWS_LETML2:
+      case CDAS_L8_L9_LOTL1:
         return { resolution: 30, fisResolutionCeiling: 1490 };
-      case AWS_LOTL1:
-        return { resolution: 15, fisResolutionCeiling: 1490 };
-      case AWS_LMSSL1:
-        return { resolution: 60, fisResolutionCeiling: 1490 };
       default:
         return {};
     }
   }
 
-  supportsInterpolation() {
-    return true;
-  }
+  supportsInterpolation = () => true;
+
+  supportsIndex = () => true;
 
   supportsV3Evalscript(datasetId) {
-    if (
-      datasetId === AWS_L8L1C ||
-      datasetId === AWS_LOTL1 ||
-      datasetId === AWS_LOTL2 ||
-      datasetId === AWS_LMSSL1 ||
-      datasetId === AWS_LETML1 ||
-      datasetId === AWS_LETML2
-    ) {
+    if (datasetId === CDAS_L8_L9_LOTL1) {
       return true;
     }
     return false;
@@ -306,33 +166,21 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
 
   groupChannels = (datasetId) => getGroupedBands(datasetId);
 
-  getSibling = (datasetId) => {
+  getCopyrightText = (datasetId) => {
     switch (datasetId) {
-      case AWS_LOTL1:
-        return { siblingId: AWS_LOTL2 };
-      case AWS_LOTL2:
-        return { siblingId: AWS_LOTL1 };
+      case CDAS_L8_L9_LOTL1:
+        return LANDSAT_COPYRIGHT_TEXT('8/9');
       default:
-        return {};
+        return '';
     }
   };
 
-  getCopyrightText = (datasetId) => {
+  getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
     switch (datasetId) {
-      case AWS_L8L1C:
-      case AWS_LOTL1:
-      case AWS_LOTL2:
-        return LANDSAT_COPYRIGHT_TEXT('8');
-      case AWS_LTML1:
-      case AWS_LTML2:
-        return LANDSAT_COPYRIGHT_TEXT('4-5');
-      case AWS_LMSSL1:
-        return LANDSAT_COPYRIGHT_TEXT('1-5');
-      case AWS_LETML1:
-      case AWS_LETML2:
-        return LANDSAT_COPYRIGHT_TEXT('7 ETM+');
+      case CDAS_L8_L9_LOTL1:
+        return new Landsat89CDASLOTL1Layer({ maxCloudCoverPercent, evalscript: true });
       default:
-        return '';
+        return null;
     }
   };
 
@@ -340,28 +188,7 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
 
   isSentinelHub = () => true;
 
-  getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
-    switch (datasetId) {
-      case AWS_L8L1C:
-        return new Landsat8AWSLayer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LOTL1:
-        return new Landsat8AWSLOTL1Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LOTL2:
-        return new Landsat8AWSLOTL2Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LTML1:
-        return new Landsat45AWSLTML1Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LTML2:
-        return new Landsat45AWSLTML2Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LMSSL1:
-        return new Landsat15AWSLMSSL1Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LETML1:
-        return new Landsat7AWSLETML1Layer({ maxCloudCoverPercent, evalscript: true });
-      case AWS_LETML2:
-        return new Landsat7AWSLETML2Layer({ maxCloudCoverPercent, evalscript: true });
-      default:
-        return null;
-    }
-  };
+  supportsFindProductsForCurrentView = () => true;
 
   isSpectralExplorerSupported = () => true;
 }

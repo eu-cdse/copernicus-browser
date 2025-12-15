@@ -25,31 +25,33 @@ const CLOUD_COVER_PERCENT = 100;
 export const createCollectionFormFromDatasetId = (datasetId, params) => {
   const oDataCollectionInfo = getODataCollectionInfoFromDatasetId(datasetId, params);
 
-  if (!oDataCollectionInfo) {
+  if (oDataCollectionInfo === null) {
     return null;
   }
 
   const collectionForm = cloneDeep(CollectionFormInitialState);
 
-  collectionForm.selectedCollections[oDataCollectionInfo.id] = oDataCollectionInfo.instrument
-    ? {
-        [oDataCollectionInfo.instrument]: {
-          ...(oDataCollectionInfo.productType ? { [oDataCollectionInfo.productType]: {} } : {}),
-        },
-      }
-    : {};
+  oDataCollectionInfo.forEach((collectionInfo) => {
+    collectionForm.selectedCollections[collectionInfo.id] = collectionInfo.instrument
+      ? {
+          [collectionInfo.instrument]: {
+            ...(collectionInfo.productType ? { [collectionInfo.productType]: {} } : {}),
+          },
+        }
+      : {};
 
-  if (oDataCollectionInfo.maxCC) {
-    collectionForm.maxCc = {
-      [oDataCollectionInfo.id]: { [oDataCollectionInfo.instrument]: oDataCollectionInfo.maxCC },
-    };
-  }
+    if (collectionInfo.maxCC) {
+      collectionForm.maxCc = {
+        [collectionInfo.id]: { [collectionInfo.instrument]: collectionInfo.maxCC },
+      };
+    }
 
-  if (oDataCollectionInfo.selectedFilters) {
-    collectionForm.selectedFilters = {
-      [oDataCollectionInfo.id]: oDataCollectionInfo.selectedFilters,
-    };
-  }
+    if (collectionInfo.selectedFilters) {
+      collectionForm.selectedFilters = {
+        [collectionInfo.id]: collectionInfo.selectedFilters,
+      };
+    }
+  });
 
   return collectionForm;
 };

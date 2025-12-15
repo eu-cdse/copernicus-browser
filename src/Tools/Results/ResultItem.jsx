@@ -51,6 +51,7 @@ export const ErrorMessage = {
     t`You are not eligible to use this feature. More info [here](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/ccm-how-to-register).`,
   atleastOneProductSelected: () => t`At least one product needs to be selected.`,
   productAlreadySavedToWorkspace: () => t`This product has already been saved to the workspace.`,
+  landsatAccessRoleNotEligible: () => t`You are not eligible to use this feature.`,
 };
 
 const visualizationButtonDisabled = (tile, user) => {
@@ -61,6 +62,18 @@ const visualizationButtonDisabled = (tile, user) => {
 
   if (!tile.online) {
     return ErrorMessage.visualizeOfflineProduct();
+  }
+
+  // Some Landsat-8/9 products have cloudCoverLand === -1 and cloudCover === undefined
+  // which means that the sensingTime is at night, so visualization is not possible
+  const cloudCoverAttribute = tile.attributes.find((attr) => attr.Name === 'cloudCover');
+  const cloudCoverLandAttribute = tile.attributes.find((attr) => attr.Name === 'cloudCoverLand');
+  if (
+    cloudCoverLandAttribute !== undefined &&
+    cloudCoverLandAttribute.Value === -1 &&
+    cloudCoverAttribute === undefined
+  ) {
+    return ErrorMessage.visualizationNotSupported();
   }
 
   const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user.access_token);

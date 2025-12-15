@@ -17,18 +17,12 @@ import {
   S5_AER_AI,
   S5_CLOUD,
   S5_OTHER,
-  AWS_L8L1C,
-  DEM_COPERNICUS_30_CDAS,
-  DEM_COPERNICUS_90_CDAS,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  AWS_LTML1,
-  AWS_LTML2,
-  AWS_LMSSL1,
-  AWS_LETML1,
-  AWS_LETML2,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
+  CDAS_L8_L9_LOTL1,
+  CDAS_LANDSAT_MOSAIC,
+  DEM_COPERNICUS_30_CDAS,
+  DEM_COPERNICUS_90_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
@@ -96,16 +90,10 @@ const allDatasetIds = [
   S5_AER_AI,
   S5_CLOUD,
   S5_OTHER,
-  AWS_L8L1C,
+  CDAS_L8_L9_LOTL1,
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  AWS_LTML1,
-  AWS_LTML2,
-  AWS_LMSSL1,
-  AWS_LETML1,
-  AWS_LETML2,
+  CDAS_LANDSAT_MOSAIC,
 ];
 
 test.each(allDatasetIds.map((d) => [d]))(

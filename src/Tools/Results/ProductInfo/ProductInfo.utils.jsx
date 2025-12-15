@@ -8,6 +8,7 @@ import { getLoggedInErrorMsg } from '../../../junk/ConstMessages';
 import BrowseProduct from '../BrowseProduct/BrowseProduct';
 import { ErrorMessage } from '../ResultItem';
 import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import { LANDSAT_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/landsatAccessRightsConfig';
 
 export const commonProductAttributes = [
   'name',
@@ -132,6 +133,8 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
     errorMessage = ErrorMessage.downloadOfflineProduct();
   } else if (shouldShowCCMAccessError(userToken, product)) {
     errorMessage = ErrorMessage.CCMAccessRoleNotEligible();
+  } else if (shouldShowLandsatAccessError(userToken, product)) {
+    errorMessage = ErrorMessage.landsatAccessRoleNotEligible();
   }
 
   if (errorMessage) {
@@ -160,6 +163,30 @@ export const hasCCMDownloadAccess = (userToken, { productType }) => {
   try {
     const roles = jwt_dec(userToken).realm_access?.roles;
     const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
+
+    return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));
+  } catch (error) {
+    console.error('Error decoding JWT token:', error);
+    return false;
+  }
+};
+
+export const shouldShowLandsatAccessError = (userToken, product) =>
+  isProductLandsat(product) && !hasLandsatDownloadAccess(userToken, product);
+
+export const isProductLandsat = ({ platformShortName }) => {
+  const downloadProductRoles = LANDSAT_ACCESS_RIGHTS[platformShortName]?.DOWNLOAD_PRODUCT_ROLES;
+  return downloadProductRoles !== undefined;
+};
+
+export const hasLandsatDownloadAccess = (userToken, { platformShortName }) => {
+  if (!userToken) {
+    return false;
+  }
+
+  try {
+    const roles = jwt_dec(userToken).realm_access?.roles;
+    const downloadProductRoles = LANDSAT_ACCESS_RIGHTS[platformShortName]?.DOWNLOAD_PRODUCT_ROLES;
 
     return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));
   } catch (error) {

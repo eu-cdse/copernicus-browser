@@ -65,6 +65,22 @@ describe('findCollectionConfigById', () => {
     expect(collection.items).toBeDefined();
     expect(collection.items.length).toBeGreaterThan(0);
   });
+
+  test('LANDSAT-8', () => {
+    const collection = findCollectionConfigById('LANDSAT-8');
+    expect(collection.id).toEqual('LANDSAT-8');
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
+  });
+
+  test('LANDSAT-9', () => {
+    const collection = findCollectionConfigById('LANDSAT-9');
+    expect(collection.id).toEqual('LANDSAT-9');
+    expect(collection.type).toEqual('collection');
+    expect(collection.items).toBeDefined();
+    expect(collection.items.length).toBeGreaterThan(0);
+  });
 });
 
 describe('findInstrumentConfigById', () => {
@@ -103,6 +119,30 @@ describe('findInstrumentConfigById', () => {
   test('HR-MR', () => {
     const instrument = findInstrumentConfigById('HR-MR');
     expect(instrument.id).toEqual('HR-MR');
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
+  });
+
+  test('OLI_TIRS', () => {
+    const instrument = findInstrumentConfigById('OLI_TIRS');
+    expect(instrument.id).toEqual('OLI_TIRS');
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
+  });
+
+  test('OLI', () => {
+    const instrument = findInstrumentConfigById('OLI');
+    expect(instrument.id).toEqual('OLI');
+    expect(instrument.type).toEqual('instrument');
+    expect(instrument.items).toBeDefined();
+    expect(instrument.items.length).toBeGreaterThan(0);
+  });
+
+  test('TIRS', () => {
+    const instrument = findInstrumentConfigById('TIRS');
+    expect(instrument.id).toEqual('TIRS');
     expect(instrument.type).toEqual('instrument');
     expect(instrument.items).toBeDefined();
     expect(instrument.items.length).toBeGreaterThan(0);
@@ -232,6 +272,12 @@ describe('findProductTypeConfigById', () => {
     expect(productType.id).toEqual(id);
     expect(productType.label).toBeDefined();
   });
+
+  test.each([['L1TP'], ['L1GT']])('Landsat-8/9 %p', (id) => {
+    const productType = findProductTypeConfigById(id);
+    expect(productType.id).toEqual(id);
+    expect(productType.label).toBeDefined();
+  });
 });
 
 describe('checkInstrumentSupports', () => {
@@ -242,6 +288,21 @@ describe('checkInstrumentSupports', () => {
 
   test('MSI InstrumentName', () => {
     const sg = checkInstrumentSupports('MSI', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeTruthy();
+  });
+
+  test('OLI_TIRS InstrumentName', () => {
+    const sg = checkInstrumentSupports('OLI_TIRS', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeTruthy();
+  });
+
+  test('OLI InstrumentName', () => {
+    const sg = checkInstrumentSupports('OLI', SUPPORTED_PROPERTIES.InstrumentName);
+    expect(sg).toBeTruthy();
+  });
+
+  test('TIRS InstrumentName', () => {
+    const sg = checkInstrumentSupports('TIRS', SUPPORTED_PROPERTIES.InstrumentName);
     expect(sg).toBeTruthy();
   });
 
