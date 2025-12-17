@@ -111,6 +111,12 @@ async function createStatisticsLayer({
       return dataset === null && layer === targetLayer;
     }
 
+    // Handle case where statistical API is supported, custom layer is selected (layerId === null)
+    // and native Sentinel Hub dataset is used
+    if (supportStatisticalApi && targetLayer === null && layerId === null) {
+      return dataset.id === shJsDatasetId;
+    }
+
     // Handle normal case - match both dataset ID and layer
     return dataset.id === shJsDatasetId && layer === targetLayer;
   });

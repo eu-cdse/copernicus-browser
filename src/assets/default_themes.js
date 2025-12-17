@@ -646,7 +646,7 @@ export const DEFAULT_THEMES = [
         name: 'clms_global_lsp_300m_v2_yearly_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/cc9150-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/9038e3-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_lcc_100m_v3_yearly_geotiff',
@@ -887,6 +887,12 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/b3bf08-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'ndvi_global_300m_daily_v3',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3825e2-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

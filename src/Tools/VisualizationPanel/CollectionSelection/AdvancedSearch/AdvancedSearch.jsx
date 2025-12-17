@@ -287,7 +287,7 @@ class AdvancedSearch extends Component {
         selectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS'] &&
         newSelectedCollections[ODataCollections.S2.id]?.['MSI']?.['MSI_L1B_DS'] === undefined
       ) {
-        if (newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType] !== undefined) {
+        if (newSelectedFilters[ODataCollections.S2.id]?.[AttributeNames.productType] !== undefined) {
           const idx = newSelectedFilters[ODataCollections.S2.id][AttributeNames.productType].findIndex(
             (pt) => pt.value === 'MSI_L1B_DS',
           );

@@ -174,6 +174,7 @@ import {
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   CDAS_LANDSAT_MOSAIC,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5382,5 +5383,10 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: CDAS_LANDSAT_MOSAIC, layerId: '1-TRUE-COLOUR' }],
     description: () =>
       t`The true colour product maps Landsat bi-monthly mosaic band values B03, B02, and B01 which roughly correspond to red, green, and blue part of the spectrum, respectively, to R, G, and B components. The result is a true colour product, that is a good representation of the Earth as humans would see it naturally.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3, layerId: 'NDVI' }],
+    description: () =>
+      t`NDVI is computed after atmospheric correction and BRDF normalization done with Sentinel-3 TOC V2.3 and PROBA-V C2 S1 TOC data, using ReBeLS v1.6.`,
   },
 ];

@@ -146,6 +146,7 @@ import {
   CDAS_L8_L9_LOTL1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -224,6 +225,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   ndvi_global_1km_10daily_v2: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   ndvi_global_300m_10daily_v1: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   ndvi_global_300m_10daily_v2: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+  ndvi_global_300m_10daily_v3: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
   ssm_europe_1km_daily_v1: COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
   lsp_global_300m_yearly_v1: COPERNICUS_CLMS_LSP_300M_YEARLY_V1,
   lsp_global_300m_yearly_v2: COPERNICUS_CLMS_LSP_300M_YEARLY_V2,
@@ -918,6 +920,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
       COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
       COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
+      COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
     ].includes(datasetId)
   ) {
     return [

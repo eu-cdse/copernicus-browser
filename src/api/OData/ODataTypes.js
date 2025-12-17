@@ -58,6 +58,8 @@ const ODataProductTypeExtension = {
   SR___POE_AX: ODataProductFileExtension.TGZ,
   SR_2_TDP_LI: ODataProductFileExtension.EOF,
   SR_2_TDP_HY: ODataProductFileExtension.EOF,
+  MSI_L1B_GR: ODataProductFileExtension.TAR,
+  MSI_L1B_DS: ODataProductFileExtension.TAR,
 };
 
 const ODataCollections = {

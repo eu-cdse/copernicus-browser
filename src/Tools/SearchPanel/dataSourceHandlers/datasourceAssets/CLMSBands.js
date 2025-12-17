@@ -613,6 +613,24 @@ export const COPERNICUS_CLMS_NDVI_300M_10DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_NDVI_300M_10DAILY_V3_BANDS = [
+  {
+    name: 'NDVI',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'UNC',
+    getDescription: () => ``,
+  },
+];
 export const COPERNICUS_CLMS_SSM_1KM_DAILY_V1_BANDS = [
   {
     name: 'SSM_NOISE',

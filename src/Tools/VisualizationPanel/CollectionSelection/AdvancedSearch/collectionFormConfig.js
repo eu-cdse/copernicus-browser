@@ -1867,6 +1867,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'ndvi_global_300m_10daily_v3',
+                label: 'NDVI, Global, 10-daily, 300m, (2014–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'ndvi_global_300m_10daily_v3',
+                )})`,
+              },
+              {
                 id: 'ndvi_global_300m_10daily_v2',
                 label: 'NDVI, Global, 10-daily, 300m, (2020–present), V2',
                 type: 'productType',
@@ -1929,16 +1939,16 @@ export const recursiveCollectionCLMS = [
                   'lsp_global_300m_yearly_v1',
                 )})`,
               },
-              // {
-              //   id: 'lsp_global_300m_yearly_v2',
-              //   label: 'LSP, Global, Yearly, 300m, (2014–present), V2',
-              //   type: 'productType',
-              //   customFilterExpression: `(${FilterElement.Attribute(
-              //     ODataAttributes.datasetIdentifier,
-              //     ODataFilterOperator.eq,
-              //     'lsp_global_300m_yearly_v2',
-              //   )})`,
-              // },
+              {
+                id: 'lsp_global_300m_yearly_v2',
+                label: 'LSP, Global, Yearly, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lsp_global_300m_yearly_v2',
+                )})`,
+              },
             ],
           },
           {

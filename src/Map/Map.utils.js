@@ -68,7 +68,29 @@ const getIntersectingFeatures = (point, features, { zoom }) => {
         toCrs: 'EPSG:3857',
       });
 
-      if (reprojectedBufferedPoint && reprojectedGeometry) {
+      // Check if reprojected geometries contain invalid values (null/NaN)
+      // This happens when coordinates are outside EPSG:3857 valid range (e.g., poles at ±90°)
+      const hasValidReprojection = (geometry) => {
+        if (!geometry?.coordinates) {
+          return false;
+        }
+
+        const checkCoords = (coords) => {
+          if (Array.isArray(coords[0])) {
+            return coords.every(checkCoords);
+          }
+
+          return coords.every((c) => c !== null && !isNaN(c) && isFinite(c));
+        };
+
+        return checkCoords(geometry.coordinates);
+      };
+
+      const reprojectedPointValid =
+        reprojectedBufferedPoint && hasValidReprojection(reprojectedBufferedPoint);
+      const reprojectedGeometryValid = reprojectedGeometry && hasValidReprojection(reprojectedGeometry);
+
+      if (reprojectedPointValid && reprojectedGeometryValid) {
         hasIntersection = intersectFunction(reprojectedBufferedPoint, reprojectedGeometry);
       } else {
         hasIntersection = intersectFunction(bufferedPoint.geometry, feature.geometry);

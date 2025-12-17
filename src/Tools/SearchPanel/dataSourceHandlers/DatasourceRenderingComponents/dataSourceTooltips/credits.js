@@ -112,6 +112,7 @@ import {
   CDAS_L8_L9_LOTL1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
   CDAS_LANDSAT_MOSAIC,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
@@ -599,6 +600,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

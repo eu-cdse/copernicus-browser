@@ -104,6 +104,7 @@ import {
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -217,6 +218,7 @@ import {
   getClmsGlobalLsp300mV2YearlyMarkdown,
   getClmsGlobalEta300mV110dailyMarkdown,
   getClmsGlobalHf300mV1DailyMarkdown,
+  getClmsGlobalNdvi300mV310dailyMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -279,6 +281,7 @@ import {
   COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1_BANDS,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1_BANDS,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1_BANDS,
+  COPERNICUS_CLMS_NDVI_300M_10DAILY_V3_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
@@ -357,6 +360,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: t`NDVI 1km 10-daily V2`,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: t`NDVI 300m 10-daily V1`,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: t`NDVI 300m 10-daily V2`,
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: t`NDVI 300m 10-daily V3`,
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: t`SSM 1km Daily V1`,
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: t`LSP 300m Yearly V1`,
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: t`LSP 300m Yearly V2`,
@@ -464,6 +468,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: [],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: [],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: [],
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: [],
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: [],
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: [],
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: [],
@@ -729,6 +734,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: { min: 2, max: 25 },
@@ -836,6 +842,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: ['93f4493e-be2a-43c7-8aa2-53820985280d'],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: ['41f33765-18a0-4e1a-ade2-b4093254ce68'],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: ['ab0e1e8e-508c-4faa-9b5b-c9c4734ef29e'],
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: ['6303088f-3c19-4967-9038-119267c6d090'],
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: ['df9e9783-f580-433a-b798-3acd2760b94e'],
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: ['3c49e431-5d28-4920-a6ef-684fc7617df6'],
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: ['bd57d759-b39b-4066-90ff-041bf183f411'],
@@ -943,6 +950,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LSP_300M_YEARLY_V2]: LocationIdSHv3.cdse,
@@ -1237,6 +1245,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: {
       minDate: moment.utc('2020-07-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: {
+      minDate: moment.utc('2014-01-01'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: {
@@ -1638,6 +1650,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       amount: 10,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: {
+      amount: 10,
+      unit: 'day',
+    },
     [COPERNICUS_CLMS_SSM_1KM_DAILY_V1]: {
       amount: 0,
       unit: 'day',
@@ -1957,6 +1973,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return COPERNICUS_CLMS_NDVI_300M_10DAILY_V1_BANDS;
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V2:
         return COPERNICUS_CLMS_NDVI_300M_10DAILY_V2_BANDS;
+      case COPERNICUS_CLMS_NDVI_300M_10DAILY_V3:
+        return COPERNICUS_CLMS_NDVI_300M_10DAILY_V3_BANDS;
       case COPERNICUS_CLMS_SSM_1KM_DAILY_V1:
         return COPERNICUS_CLMS_SSM_1KM_DAILY_V1_BANDS;
       case COPERNICUS_CLMS_LSP_300M_YEARLY_V1:
@@ -2159,6 +2177,8 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return getClmsGlobalNdvi300mV110dailyMarkdown();
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V2:
         return getClmsGlobalNdvi300mV210dailyMarkdown();
+      case COPERNICUS_CLMS_NDVI_300M_10DAILY_V3:
+        return getClmsGlobalNdvi300mV310dailyMarkdown();
       case COPERNICUS_CLMS_SSM_1KM_DAILY_V1:
         return getClmsGlobalSsm1kmV1DailyMarkdown();
       case COPERNICUS_CLMS_LSP_300M_YEARLY_V1:
