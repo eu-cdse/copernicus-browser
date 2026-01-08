@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 import './Button.scss';
 import Loader from '../../Loader/Loader';
 
@@ -9,20 +9,39 @@ export const ButtonType = Object.freeze({
   text: 'text',
 });
 
-const Button = ({
+export type ButtonTypeValue = (typeof ButtonType)[keyof typeof ButtonType];
+
+interface ButtonProps {
+  label?: ReactNode;
+  icon?: string;
+  type?: ButtonTypeValue;
+  disabled?: boolean;
+  rounded?: boolean;
+  outlined?: boolean;
+  className?: string;
+  iconStyle?: CSSProperties;
+  styleClassName?: string;
+  style?: CSSProperties;
+  labelStyle?: CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  isLoading?: boolean;
+  isLoadingStyle?: CSSProperties;
+}
+
+const Button: React.FC<ButtonProps> = ({
   label,
   icon,
   type = ButtonType.primary,
-  disabled,
+  disabled = false,
   rounded = false,
   outlined = false,
-  className,
+  className = '',
   iconStyle,
-  styleClassName,
+  styleClassName = '',
   style,
   labelStyle,
   onClick = () => {},
-  isLoading,
+  isLoading = false,
   isLoadingStyle,
 }) => {
   const buttonClass = `copernicus-button ${type}${rounded ? ` rounded` : ''}${outlined ? ` outlined` : ''}${
@@ -33,7 +52,7 @@ const Button = ({
     <div
       style={isLoadingStyle ? isLoadingStyle : style}
       className={buttonClass}
-      onClick={!disabled ? onClick : null}
+      onClick={!disabled ? onClick : undefined}
     >
       {!icon ? (
         <span style={{ visibility: isLoading ? 'hidden' : 'visible', ...labelStyle }} className="label">

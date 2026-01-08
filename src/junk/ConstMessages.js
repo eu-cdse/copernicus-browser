@@ -18,4 +18,4 @@ export const getNotAvailableForErrorMsg = (target) => t`not available for ` + ta
 export const getHowToConfigLayersStatInfoMsg = () =>
   t`More info [here](https://documentation.dataspace.copernicus.eu/FAQ.html#how-can-i-configure-my-layers-for-statistical-information-in-copernicus-browser).`;
 export const getFinishDrawingMsg = () => t`Please finish drawing the area of interest.`;
-export const getStatisticalInfoMsg = () => t`Statistical Info / Feature Info Service chart`;
+export const getStatisticalInfoMsg = () => t`Statistical Info chart`;

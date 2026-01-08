@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { t } from 'ttag';
 import L from 'leaflet';
 import store, { loiSlice, modalSlice } from '../../store';
@@ -13,15 +13,15 @@ import LoiIcon from './loi-icon.svg?react';
 import { ModalId } from '../../const';
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
 
-const LOIPanelWrapper = ({ className, children }) => {
+const LOIPanelWrapper = memo(({ className, children, title }) => {
   return (
     <div className={`loi-wrapper ${className}`}>
-      <div className={`loiPanel panelButton floatItem`} title={t`Draw a line`}>
+      <div className={`loiPanel panelButton floatItem`} title={title}>
         {children}
       </div>
     </div>
   );
-};
+});
 
 const MenuItem = ({ title, className, onClick, iconClassName }) => {
   return (
@@ -112,8 +112,13 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
     },
   ];
 
+  const panelTitle = t`Draw a line`;
+  const panelTitleRemove = t`Remove line`;
+  const panelTitleClose = t`Close line options`;
+  const title = menuExpanded ? (loiGeometry ? panelTitleRemove : panelTitleClose) : panelTitle;
+
   return (
-    <LOIPanelWrapper className={className} setMenuExpanded={setMenuExpanded} menuExpanded={menuExpanded}>
+    <LOIPanelWrapper className={className} title={title}>
       <div className="loiMenu">
         {menuItems
           .filter((item) => item.displayed)
@@ -129,7 +134,6 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
           setMenuExpanded(!menuExpanded);
           resetLoi();
         }}
-        title={t`Draw a line`}
       >
         <LoiIcon />
       </a>

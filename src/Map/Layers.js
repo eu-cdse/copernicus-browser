@@ -85,8 +85,8 @@ export const overlayTileLayers = () => [
           layout: { visibility: 'visible' },
           paint: {
             'line-color': '#000000',
-            'line-width': 1,
-            'line-opacity': 0.4,
+            'line-width': ['interpolate', ['linear'], ['zoom'], 2, 0.5, 6, 1.2, 12, 2.6],
+            'line-opacity': 0.5,
           },
           minzoom: 2,
         },

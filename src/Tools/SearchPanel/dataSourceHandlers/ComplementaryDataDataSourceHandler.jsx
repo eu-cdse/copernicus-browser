@@ -293,6 +293,13 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
     }
   }
 
+  getMinMaxDates(datasetId) {
+    if (this.MIN_MAX_DATES[datasetId] == null) {
+      return { minDate: null, maxDate: null };
+    }
+    return this.MIN_MAX_DATES[datasetId];
+  }
+
   getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
     switch (datasetId) {
       case CDAS_L8_L9_LOTL1:

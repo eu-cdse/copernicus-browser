@@ -33,6 +33,10 @@ function FormatArea({ value }) {
 export function EOBMeasurePanelButton(props) {
   const { distance, area, hasMeasurement, active, toggleMeasure } = props;
 
+  const panelTitle = t`Measure (Click to start, double click to finish)`;
+  const panelTitleRemove = t`Remove measurement`;
+  const panelTitleClose = t`Close measurement option`;
+
   // Info about current measurement
   const MeasurementInfo = () => (
     <span className="aoiCords">
@@ -56,7 +60,6 @@ export function EOBMeasurePanelButton(props) {
     <a
       className={`drawGeometry ${active ? 'active' : ''} ${active ? 'open-options' : ''}`}
       onClick={toggleMeasure}
-      title={t`Measure (Click to start, double click to finish)`}
     >
       <i>
         <MeasureIcon />
@@ -65,7 +68,10 @@ export function EOBMeasurePanelButton(props) {
   );
 
   return (
-    <div className="measurePanel panelButton floatItem">
+    <div
+      className="measurePanel panelButton floatItem"
+      title={active ? (hasMeasurement ? panelTitleRemove : panelTitleClose) : panelTitle}
+    >
       {hasMeasurement && <MeasurementInfo />}
       <MeasureButton />
     </div>

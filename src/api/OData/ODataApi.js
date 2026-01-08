@@ -98,7 +98,7 @@ const ODataApi = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      ...(cancelToken ? { cancelToken: cancelToken.token } : {}),
+      ...(cancelToken ? { signal: cancelToken.signal } : {}),
       responseType: 'blob',
       onDownloadProgress: (progressEvent) => {
         if (updateProgress) {

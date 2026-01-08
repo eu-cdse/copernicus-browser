@@ -1,4 +1,5 @@
 module.exports = {
+  preset: 'ts-jest',
   setupFiles: ['./jest.setup.js'],
   collectCoverage: false,
   testEnvironment: 'jsdom',
@@ -11,4 +12,22 @@ module.exports = {
     '\\.(css|scss)$': '<rootDir>/config/jest/cssTransform.cjs',
     '\\.(svg(\\?react)?|png)$': '<rootDir>/config/jest/fileTransform.cjs',
   },
+  testEnvironmentOptions: {
+    customExportConditions: ['node', 'node-addons'],
+  },
+  globals: {
+    'ts-jest': {
+      tsconfig: {
+        module: 'es2020',
+        target: 'es2020',
+        jsx: 'react-jsx',
+      },
+    },
+  },
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': 'babel-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$))'],
 };

@@ -65,6 +65,13 @@ const ResultsSection = ({
   }, [results]);
 
   useEffect(() => {
+    const defaultSort = isTaskingEnabled
+      ? ResultsSectionSortProperties[1].value
+      : ResultsSectionSortProperties[0].value;
+    store.dispatch(resultsSectionSlice.actions.setSortState(defaultSort));
+  }, [isTaskingEnabled]);
+
+  useEffect(() => {
     if (selectedTiles?.length > 0) {
       setDisplayModal(true);
     }

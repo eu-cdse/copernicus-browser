@@ -21,7 +21,7 @@ The **Sentinel-2 Quarterly Mosaics** product offers an almost cloud-free image o
 
 **Coverage:** Global Coverage.
 
-**Data availability:** 2019 – Jul 2025
+**Data availability:** 2017 – Jul 2025
 
 Data for each quarter is available in the catalog on the 1st day of the corresponding quarter (e.g. 1.1. or 1.4.).
 

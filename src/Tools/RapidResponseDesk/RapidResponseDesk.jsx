@@ -303,7 +303,11 @@ const RapidResponseDesk = ({
           }
           store.dispatch(resultsSectionSlice.actions.setResults(result));
           store.dispatch(resultsSectionSlice.actions.setFilterState(getResultsSectionFilterDefaultValue()));
-          store.dispatch(resultsSectionSlice.actions.setSortState(ResultsSectionSortProperties.at(0).value));
+
+          const defaultSort = isTaskingEnabled
+            ? ResultsSectionSortProperties[1].value
+            : ResultsSectionSortProperties[0].value;
+          store.dispatch(resultsSectionSlice.actions.setSortState(defaultSort));
           store.dispatch(resultsSectionSlice.actions.setFiltersForSearch(searchRequestBody));
           store.dispatch(collapsiblePanelSlice.actions.setResultsExpanded(true));
           scrollToResults();

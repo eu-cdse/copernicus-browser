@@ -37,6 +37,8 @@ export function EOBAOIPanelButton(props) {
   const errorMsg = disabled ? getLoggedInErrorMsg() : null;
   const isEnabled = errorMsg === null;
   const panelTitle = t`Create an area of interest`;
+  const panelTitleRemove = t`Remove area of interest`;
+  const panelTitleClose = t`Close area of interest options`;
 
   function renderOptionButtons() {
     return (
@@ -117,7 +119,7 @@ export function EOBAOIPanelButton(props) {
           props.onErrorMessage(panelTitle);
         }
       }}
-      title={panelTitle}
+      title={showOptionsMenu ? (aoiGeometry ? panelTitleRemove : panelTitleClose) : panelTitle}
     >
       {hasAOI && !disabled && renderAoiInfo()}
       {showOptionsMenu && renderOptionButtons()}

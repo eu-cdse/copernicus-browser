@@ -11,10 +11,14 @@ function EOBPOIPanelButton(props) {
   const errMsg = props.disabled ? getLoggedInErrorMsg() : null;
   const isEnabled = errMsg === null;
   const errorMessage = errMsg ? `\n(${errMsg})` : '';
-  const title = t`Mark point of interest` + ` ${errorMessage}`;
+  const panelTitle = t`Mark point of interest`;
+  const panelTitleRemove = t`Remove point of interest`;
+
+  const panelTitleFinal = props.poi ? panelTitleRemove : panelTitle;
+  const title = panelTitleFinal + ` ${errorMessage}`;
 
   const renderMarkerIcon = () => (
-    <span title={title}>
+    <span>
       {/* jsx-a11y/anchor-is-valid */}
       {/* eslint-disable-next-line */}
       <a
@@ -69,7 +73,7 @@ function EOBPOIPanelButton(props) {
 
   const { poi } = props;
   return (
-    <div className="poiPanel panelButton floatItem" title={t`Area of interest`}>
+    <div className="poiPanel panelButton floatItem" title={title}>
       <PixelExplorer />
       {poi && !props.disabled && renderMarkerInfo()}
       {renderMarkerIcon()}

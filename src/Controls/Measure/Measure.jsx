@@ -51,7 +51,7 @@ class Measure extends Component {
             }
           }}
           removeMeasurement={() => this.ruler.removeMeasurement()}
-          hasMeasurement={this.state.isMeasuring}
+          hasMeasurement={this.state.distance !== null || this.state.area !== null}
           distance={this.state.distance}
           area={this.state.area}
           onErrorMessage={(msg) => store.dispatch(notificationSlice.actions.displayError(msg))}

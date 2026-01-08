@@ -1,5 +1,12 @@
 {
-  "extends": ["react-app","plugin:prettier/recommended"],
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "plugins": ["html"],
   "rules": {
     "curly": ["error", "all"]

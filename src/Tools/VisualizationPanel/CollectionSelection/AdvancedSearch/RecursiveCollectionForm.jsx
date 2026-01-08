@@ -152,9 +152,11 @@ function RecursiveCollectionForm({
 
         if (
           selectedInstruments.length === 0 &&
-          collection.items.filter((item) => item.type === 'instrument').length === 1
+          collection.items.length === 1 &&
+          collection.items[0].type === 'instrument' &&
+          collection.items[0].selected === true
         ) {
-          selectedInstruments = collection.items.filter((item) => item.type === 'instrument');
+          selectedInstruments = [collection.items[0]];
         }
 
         // Apply selected instruments
