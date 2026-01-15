@@ -138,8 +138,8 @@ import {
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
-  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
-  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
   COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
@@ -175,6 +175,10 @@ import {
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   CDAS_LANDSAT_MOSAIC,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
+  COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
+  COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -4391,14 +4395,22 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       t`Snow Water Equivalent (SWE) is the measure of the amount of water frozen within the snow pack per unit area. In principle, it gives the height of the water column that would form, if the snow pack would melt completely. It is measured and indicated in millimetres [mm]. The retrieval algorithm used here combines information from satellite-based microwave radiometer and optical spectrometer observations with ground based weather station snow depth measurements and produces daily hemispherical scale SWE estimates. `,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SCE_500M_DAILY_V1, layerId: 'SCE' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1, layerId: 'SCE' }],
     description: () =>
       t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SCE_1KM_DAILY_V1, layerId: 'SCE' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1, layerId: 'SCE' }],
     description: () =>
       t`The Snow Cover Extent (SCE) product provides information on the Fraction of Snow Cover (FSC) per pixel in percentage (0% – 100%). The SCE is derived from medium resolution optical satellite data. The dataset has the following classes: Outside area of interest (0), Water bodies (20), Cloud mask (30), Polar night (251), Input data error (254), No data (255), and Snow Cover Extent (values between 100 and 200, where the percentage of snow cover can be derived using the formula: SCE = value – 100).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1, layerId: 'SCE' }],
+    description: () => t`Daily global snow cover extent at 1km resolution from VIIRS and SLSTR sensors.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1, layerId: 'UNC' }],
+    description: () => t`Unbiased Root Mean Square Error for Snow Cover Extent at 1km resolution.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_WB_300M_MONTHLY_V2, layerId: 'WB' }],
@@ -5388,5 +5400,88 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3, layerId: 'NDVI' }],
     description: () =>
       t`NDVI is computed after atmospheric correction and BRDF normalization done with Sentinel-3 TOC V2.3 and PROBA-V C2 S1 TOC data, using ReBeLS v1.6.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1, layerId: 'LSWT' }],
+    description: () => t`Lake surface skin temperature, weighted average over the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1, layerId: 'LSWT' }],
+    description: () => t`Lake surface skin temperature, weighted average over the aggregation period.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'CHLAMEAN' }],
+    description: () => t`Mean concentration of chlorophyll-a (in the observation period).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'FCBPROB' }],
+    description: () =>
+      t`Probability of floating cyanobacteria (with a range of values from 0 to 1 indicating probability of cyanobacteria presence – the closer the value is to 1, the higher the probability).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW1375' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 1375nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW1610' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 1610nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW2190' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 2190nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW443' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 443nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW490' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 490nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW560' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 560nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW665' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 665nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW705' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 705nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW740' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 740nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW783' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 783nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW842' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 842nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW865' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 865nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'RW945' }],
+    description: () => t`Representative spectrum of fully normalised water-leaving reflectance at 945nm.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'TMEAN' }],
+    description: () =>
+      t`Mean of turbidity in Nephelometric Turbidity Units (NTU) (in the observation period).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'TSI' }],
+    description: () =>
+      t`Trophic state index (TSI) obtained from chlorophyll-a observations, averaged over the observation period. The TSI has a value of 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, or 100 corresponding to the classes given in Carlson (1977), where 0-40 are oligotrophic, 40-60 mesotrophic, 60-80 eutrophic, and 80-100 hypereutrophic.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'TSMMEAN' }],
+    description: () => t`Mean of concentration of total suspended matter (in the observation period).`,
   },
 ];

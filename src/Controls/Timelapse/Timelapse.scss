@@ -79,6 +79,12 @@
           flex-flow: column;
           margin: 5px 10px 20px 10px;
 
+          .select-period-label {
+            .help-tooltip-icon {
+              margin-left: 5px;
+            }
+          }
+
           .select-period-options {
             display: flex;
             flex-direction: row;
@@ -88,6 +94,18 @@
             .period {
               display: flex;
               align-items: center;
+            }
+          }
+
+          .orbit-warning {
+            margin: 15px 0 0 auto;
+            padding: 0 10px;
+            text-align: center;
+            font-size: 12px;
+            color: vars.$orangeColor;
+
+            .fa {
+              margin-right: 6px;
             }
           }
         }

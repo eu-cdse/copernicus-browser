@@ -49,6 +49,10 @@ import {
 } from '../../TerrainViewer/TerrainViewer.utils';
 import { md5 } from 'js-md5';
 import { IMAGE_FORMATS } from '../ImgDownload/consts';
+import {
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const TIME_UNITS = {
   SECONDS: 'seconds',
@@ -311,7 +315,7 @@ class Timelapse extends Component {
       images: null,
       activeImageIndex: null,
     });
-    const { mapBounds, fromTime, toTime, filterMonths, selectedPeriod, aoi } = this.props;
+    const { mapBounds, fromTime, toTime, filterMonths, selectedPeriod, aoi, datasetId } = this.props;
 
     const bbox = constructBBoxFromBounds(getTimelapseBounds(mapBounds, aoi));
     const intervals = applyFilterMonthsToDateRange(fromTime, toTime, filterMonths);
@@ -326,6 +330,13 @@ class Timelapse extends Component {
     if (layer instanceof ProcessingDataFusionLayer) {
       searchLayer = layer.layers[0].layer;
     }
+
+    const overrideOrbitTimeMinutes = [
+      COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+      COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+    ].includes(datasetId)
+      ? 59
+      : null;
     for (const interval of intervals) {
       try {
         flyovers = [
@@ -337,6 +348,7 @@ class Timelapse extends Component {
             100,
             100,
             reqConfig,
+            overrideOrbitTimeMinutes,
           )),
         ];
         if (layer instanceof ProcessingDataFusionLayer) {
@@ -1004,6 +1016,7 @@ class Timelapse extends Component {
 
   onCloseModal = () => {
     store.dispatch(modalSlice.actions.removeModal());
+    store.dispatch(timelapseSlice.actions.setSelectedPeriod('day'));
     this.timelapseSharePreviewModeDisable();
   };
 

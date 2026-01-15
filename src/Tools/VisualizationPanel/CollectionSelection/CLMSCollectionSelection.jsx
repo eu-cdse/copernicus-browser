@@ -52,7 +52,6 @@ const updatePathAndCollection = (targetId, menus, parentDataset) => {
       targetId,
       clmsOptionsWithParent,
     );
-
     store.dispatch(clmsSlice.actions.setSelectedCollection(baseDatasetId));
     if (consolidationPeriodIndex !== undefined) {
       store.dispatch(clmsSlice.actions.setSelectedConsolidationPeriodIndex(consolidationPeriodIndex));

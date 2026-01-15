@@ -122,8 +122,8 @@ import {
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
-  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
-  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
   COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
@@ -147,6 +147,10 @@ import {
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
+  COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
+  COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -238,8 +242,9 @@ const PRODUCT_TYPE_TO_DATASETID = {
   wb_global_1km_10daily_v2: COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   swe_northernhemisphere_5km_daily_v1: COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
   swe_northernhemisphere_5km_daily_v2: COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
-  sce_europe_500m_daily_v1: COPERNICUS_CLMS_SCE_500M_DAILY_V1,
-  sce_northernhemisphere_1km_daily_v1: COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  sce_europe_500m_daily_v1: COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+  sce_northernhemisphere_1km_daily_v1: COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
+  sce_global_1km_daily_v1: COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
   wb_global_300m_monthly_v2: COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   lie_northernhemisphere_500m_daily_v1: COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   lie_global_500m_daily_v2: COPERNICUS_CLMS_LIE_500M_DAILY_V2,
@@ -259,6 +264,9 @@ const PRODUCT_TYPE_TO_DATASETID = {
   lie_baltic_250m_daily_v1: COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1,
   eta_global_300m_10daily_v1: COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   hf_global_300m_daily_v1: COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
+  'lswt-offline_global_1km_10daily_v1': COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
+  'lswt-nrt_global_1km_10daily_v1': COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1,
+  'lwq-nrt_global_100m_10daily_v2': COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -361,6 +369,11 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
   }
 
   if (productType === 'land_surface_temperature' && checkProductTypeFileFormat(attributes)) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'lake_surface_water_temperature' && checkProductTypeFileFormat(attributes)) {
     const { datasetIdentifier } = attributesObject;
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
   }
@@ -788,7 +801,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
       COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
       COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
-      COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+      COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
       COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
       COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
     ].includes(datasetId)
@@ -797,6 +810,21 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       {
         id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
         instrument: 'LAND_SURFACE_TEMPERATURE',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if (
+    [COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1, COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1].includes(
+      datasetId,
+    )
+  ) {
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'LAKE_SURFACE_WATER_TEMPERATURE',
         productType: getProductTypeFromDatasetId(datasetId),
         selectedFilters: {},
       },
@@ -860,6 +888,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
       COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
       COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+      COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
     ].includes(datasetId)
   ) {
     return [
@@ -872,7 +901,13 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     ];
   }
 
-  if ([COPERNICUS_CLMS_SCE_1KM_DAILY_V1, COPERNICUS_CLMS_SCE_500M_DAILY_V1].includes(datasetId)) {
+  if (
+    [
+      COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
+      COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+      COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
+    ].includes(datasetId)
+  ) {
     return [
       {
         id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,

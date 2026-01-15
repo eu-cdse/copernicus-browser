@@ -1032,15 +1032,25 @@ export const COPERNICUS_CLMS_SWE_5KM_DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
-export const COPERNICUS_CLMS_SCE_500M_DAILY_V1_BANDS = [
+export const COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1_BANDS = [
   {
     name: 'SCE',
     getDescription: () => ``,
   },
 ];
-export const COPERNICUS_CLMS_SCE_1KM_DAILY_V1_BANDS = [
+export const COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1_BANDS = [
   {
     name: 'SCE',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1_BANDS = [
+  {
+    name: 'SCE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'UNC',
     getDescription: () => ``,
   },
 ];
@@ -1816,6 +1826,152 @@ export const COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1_BANDS = [
   },
   {
     name: 'T_TSEBPT',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1_BANDS = [
+  {
+    name: 'LSWT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QLEVEL',
+    getDescription: () => ``,
+  },
+  {
+    name: 'STDEV',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'UNC',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1_BANDS = [
+  {
+    name: 'LSWT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QLEVEL',
+    getDescription: () => ``,
+  },
+  {
+    name: 'STDEV',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'UNC',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2_BANDS = [
+  {
+    name: 'CHLAMEAN',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FCBPROB',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW1375',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW1610',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW2190',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW443',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW490',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW560',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW665',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW705',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW740',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW783',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW842',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW865',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RW945',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TMEAN',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TSI',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TSMMEAN',
     getDescription: () => ``,
   },
 ];

@@ -18,7 +18,15 @@ for var in "${required_vars[@]}"; do
   fi
 done
 
-source_path="/cdse-browser/build/otc/latest"
+# Check if tag is provided as an argument
+if [ $# -eq 0 ]; then
+  echo "Error: 'tag' is not provided. Use -- tag"
+  exit 1
+fi
+
+tag="$1"
+
+source_path="/cdse-browser/build/otc/$tag"
 target_path="browser"
 temp_local_path="deploy/otc"
 

@@ -1,6 +1,93 @@
 import SphericalMercator from '@mapbox/sphericalmercator';
 import axios from 'axios';
 
+const TILE_CACHE_NAME = 'XYZ-tile-cache-v1';
+const TILE_CACHE_EXPIRATION_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+/*
+ * Cleans up stale cache entries based on expiration
+ */
+async function cleanUpTileCache(cache) {
+  const keys = await cache.keys();
+  keys.forEach(async (request) => {
+    const cachedResponse = await cache.match(request);
+    if (isTileCacheExpired(cachedResponse)) {
+      await cache.delete(request);
+    }
+  });
+}
+
+/*
+ * Checks if the cache entry is expired
+ */
+function isTileCacheExpired(cachedResponse) {
+  if (!cachedResponse) {
+    return true;
+  }
+
+  const dateHeader = cachedResponse.headers.get('cached_time');
+  if (dateHeader) {
+    return Number(dateHeader) + TILE_CACHE_EXPIRATION_MS < Date.now();
+  }
+  return false;
+}
+
+/*
+ * Returns cache response if url matches
+ * Checks if the cache entry is expired, returns null if expired or no match
+ */
+async function getCachedTileResponse(url) {
+  const cache = await caches.open(TILE_CACHE_NAME);
+  const cachedResponse = await cache.match(url);
+
+  if (cachedResponse) {
+    if (isTileCacheExpired(cachedResponse)) {
+      await cache.delete(url);
+      return null;
+    }
+    return cachedResponse;
+  }
+
+  return null;
+}
+
+/*
+ * Fetches tile with caching using browser Cache API
+ */
+async function fetchTileWithCache(url, axiosConfig) {
+  try {
+    const cachedResponse = await getCachedTileResponse(url);
+    if (cachedResponse !== null) {
+      // Return cached blob
+      return await cachedResponse.blob();
+    }
+
+    // Fetch new tile
+    const response = await axios.get(url, axiosConfig);
+    const blob = response.data;
+
+    // Store the blob in cache
+    const cache = await caches.open(TILE_CACHE_NAME);
+    const newHeaders = new Headers();
+    newHeaders.set('cached_time', Date.now().toString());
+    newHeaders.set('Content-Type', response.headers['content-type'] || 'image/png');
+
+    cache.put(
+      url,
+      new Response(blob, {
+        headers: newHeaders,
+      }),
+    );
+
+    // Clean up old cache entries (don't await to avoid blocking)
+    cleanUpTileCache(cache).catch((err) => console.warn('Cache cleanup error:', err));
+
+    return blob;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getGlOverlay(layerPane) {
   try {
     const canvasElement = document
@@ -152,12 +239,12 @@ const generateProcessTileFunction =
           formattedUrl = formattedUrl.replace('{s}', subdomains[(x + y) % subdomains.length]);
         }
 
-        const response = await axios.get(formattedUrl, {
+        const response = await fetchTileWithCache(formattedUrl, {
           responseType: 'blob',
           timeout: 5000,
         });
 
-        const blobUrl = URL.createObjectURL(response.data);
+        const blobUrl = URL.createObjectURL(response);
         const img = new Image();
         img.crossOrigin = 'anonymous';
 

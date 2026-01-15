@@ -81,8 +81,8 @@ import {
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
-  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
-  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
   COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
@@ -105,6 +105,10 @@ import {
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
+  COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
+  COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -165,10 +169,15 @@ export const CLMS_OPTIONS = [
             label: 'Snow Cover Extent',
             id: 'Snow Cover Extent',
             options: [
-              { label: 'clms_global_sce_500m_v1_daily_geotiff', id: COPERNICUS_CLMS_SCE_500M_DAILY_V1 },
-              { label: 'clms_global_sce_1km_v1_daily_geotiff', id: COPERNICUS_CLMS_SCE_1KM_DAILY_V1 },
+              {
+                label: 'clms_global_sce_500m_v1_daily_geotiff',
+                id: COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+              },
+              { label: 'clms_nh_sce_1km_v1_daily_geotiff', id: COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1 },
+              { label: 'sce_global_1km_daily_v1', id: COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1 },
             ],
           },
+
           // { label: 'Snow State', id: 'Snow State 1' },
           // { label: 'Snow State', id: 'Snow State 2' },
           {
@@ -210,14 +219,6 @@ export const CLMS_OPTIONS = [
         label: 'Temperature and Reflectance',
         id: 'Temperature and Reflectance',
         options: [
-          // {
-          //   label: 'Lake Water Surface Temperature',
-          //   id: 'Lake Water Surface Temperature',
-          //   options: [
-          //     { label: 'lswt-nrt_global_1km_10daily', id: 'lswt-nrt_global_1km_10daily' },
-          //     { label: 'lswt-offline_global_1km_10daily', id: 'lswt-offline_global_1km_10daily' },
-          //   ],
-          // },
           {
             label: 'Land Surface Temperature',
             id: 'Land Surface Temperature',
@@ -234,6 +235,14 @@ export const CLMS_OPTIONS = [
                 label: 'clms_global_lst_5km_v2_10daily-daily-cycle_geotiff',
                 id: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
               },
+            ],
+          },
+          {
+            label: 'Lake Water Surface Temperature',
+            id: 'Lake Water Surface Temperature',
+            options: [
+              { label: 'lswt-offline_global_1km_10daily', id: COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1 },
+              { label: 'lswt-nrt_global_1km_10daily', id: COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1 },
             ],
           },
           // {
@@ -657,6 +666,10 @@ export const CLMS_OPTIONS = [
               {
                 label: 'clms_global_lwq_100m_v1_10daily-nrt_geotiff',
                 id: COPERNICUS_CLMS_LWQ_100M_10DAILY_NRT_V1,
+              },
+              {
+                label: 'clms_global_lwq_100m_v2_10daily-nrt_geotiff',
+                id: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
               },
               {
                 label: 'clms_global_lwq_300m_v1_10daily-nrt_geotiff',

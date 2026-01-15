@@ -88,8 +88,8 @@ import {
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V1,
   COPERNICUS_CLMS_SWE_5KM_DAILY_V2,
-  COPERNICUS_CLMS_SCE_500M_DAILY_V1,
-  COPERNICUS_CLMS_SCE_1KM_DAILY_V1,
+  COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
+  COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
   COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
   COPERNICUS_CLMS_LIE_500M_DAILY_V1,
   COPERNICUS_CLMS_LIE_250M_DAILY_V2,
@@ -114,6 +114,9 @@ import {
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
   CDAS_LANDSAT_MOSAIC,
+  COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
+  COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 import logoCreodias from './images/logo-tooltips-creodias.png';
@@ -731,13 +734,19 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_SCE_500M_DAILY_V1]: [
+  [COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_SCE_1KM_DAILY_V1]: [
+  [COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
@@ -853,6 +862,24 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

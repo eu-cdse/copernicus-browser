@@ -664,15 +664,22 @@ const ClmsGlobalSwe5kmV2DailyTooltip = () =>
     source: getClmsGlobalSwe5kmV2DailyMarkdown(),
   });
 
-const getClmsGlobalSce500mV1DailyMarkdown = () =>
+const getClmsGlobalSceEurope500mV1DailyMarkdown = () =>
   t`Provides for Europe daily updates of the fraction of snow cover on the ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time in the spatial resolution of 500 m and with the temporal extent from March 2017 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-europe-v1-0-500m).`;
 const ClmsGlobalSce500mV1DailyTooltip = () =>
   DataSourceTooltip({
-    source: getClmsGlobalSce500mV1DailyMarkdown(),
+    source: getClmsGlobalSceEurope500mV1DailyMarkdown(),
+  });
+
+const getClmsNorthernHemisphereSce1kmV1DailyMarkdown = () =>
+  t`Provides for Northern Hemisphere daily maps of the fraction of snow cover on ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from January 2018 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-northern-hemisphere-v1-0-1km).`;
+const ClmsNorthernHemisphereSce1kmV1DailyTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsNorthernHemisphereSce1kmV1DailyMarkdown(),
   });
 
 const getClmsGlobalSce1kmV1DailyMarkdown = () =>
-  t`Provides for Northern Hemisphere daily maps of the fraction of snow cover on ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from January 2018 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-extent-northern-hemisphere-v1-0-1km).`;
+  t`Provides global daily updates of the fraction of snow cover on the ground (also in forested areas) and uncertainty per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from December 2025 to present.`;
 const ClmsGlobalSce1kmV1DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalSce1kmV1DailyMarkdown(),
@@ -763,6 +770,21 @@ const getClmsGlobalHf300mV1DailyMarkdown = () =>
   t`Provides latent and sensible heat fluxes with one auxiliary information. Estimates are provided for each Sentinel-3 overpass in near real time at global scale in the spatial resolution of about 300 m from November 2025 onwards in version 1.0. More information [here](https://land.copernicus.eu/en/products/evapotranspiration/heat-flux-2025-present-raster-300-m-global-daily-version-1).`;
 const ClmsGlobalHf300mV1DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsGlobalHf300mV1DailyMarkdown() });
+
+const getClmsLswtOffline1kmV110DailyMarkdown = () =>
+  t`Provides the temperature of the water at the lake surface. The LSWT observations (every 10 days) are available at global scale at spatial resolution of ~1 km and with the temporal extent from 2002 to 2012. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/lake-surface-water-temperature-offline-1km).`;
+const ClmsLswtOffline1kmV110DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsLswtOffline1kmV110DailyMarkdown() });
+
+const getClmsLswtNrt1kmV110DailyMarkdown = () =>
+  t`Provides the temperature of the water at the lake surface. The near real time observations (every 10 days) are available at global scale at spatial resolution of ~1 km and with the temporal extent from 2016 to present. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/lake-surface-water-temperature-near-real-time-v1-0-1km).`;
+const ClmsLswtNrt1kmV110DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsLswtNrt1kmV110DailyMarkdown() });
+
+const getClmsLwqNrt100mV210DailyMarkdown = () =>
+  t`Provides semi-continuous observations for a large number of medium and large-sized lakes, according to the Global Lakes and Wetlands Database (GLWD) or otherwise of specific environmental monitoring interest. 10-daily observations are available in near real time at 100 m spatial resolution from September 2024 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-water-quality-v2-0-100m).`;
+const ClmsLwqNrt100mV210DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsLwqNrt100mV210DailyMarkdown() });
 
 export {
   getCLMSCollectionMarkdown,
@@ -923,10 +945,12 @@ export {
   ClmsGlobalSwe5kmV1DailyTooltip,
   getClmsGlobalSwe5kmV2DailyMarkdown,
   ClmsGlobalSwe5kmV2DailyTooltip,
-  getClmsGlobalSce500mV1DailyMarkdown,
+  getClmsGlobalSceEurope500mV1DailyMarkdown,
   ClmsGlobalSce500mV1DailyTooltip,
-  getClmsGlobalSce1kmV1DailyMarkdown,
+  getClmsNorthernHemisphereSce1kmV1DailyMarkdown,
+  ClmsNorthernHemisphereSce1kmV1DailyTooltip,
   ClmsGlobalSce1kmV1DailyTooltip,
+  getClmsGlobalSce1kmV1DailyMarkdown,
   getClmsGlobalLie500mV1DailyMarkdown,
   ClmsGlobalLie500mV1DailyTooltip,
   getClmsGlobalLie250mV2DailyMarkdown,
@@ -967,4 +991,10 @@ export {
   getClmsGlobalEta300mV110dailyMarkdown,
   ClmsGlobalHf300mV1DailyTooltip,
   getClmsGlobalHf300mV1DailyMarkdown,
+  ClmsLswtOffline1kmV110DailyTooltip,
+  getClmsLswtOffline1kmV110DailyMarkdown,
+  ClmsLswtNrt1kmV110DailyTooltip,
+  getClmsLswtNrt1kmV110DailyMarkdown,
+  ClmsLwqNrt100mV210DailyTooltip,
+  getClmsLwqNrt100mV210DailyMarkdown,
 };

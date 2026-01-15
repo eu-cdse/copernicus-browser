@@ -3871,6 +3871,138 @@
             }
         ]
     },
+    "82a8cb-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | LWQ NRT Global 100m 10-Daily V2",
+        "layers": [
+            {
+                "id": "CHLAMEAN",
+                "name": "CHLAMEAN",
+                "description": "Mean concentration of chlorophyll-a",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CHLAMEAN&style=default"
+            },
+            {
+                "id": "FCBPROB",
+                "name": "FCBPROB",
+                "description": "Probability of Floating Cyanobacteria",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCBPROB&style=default"
+            },
+            {
+                "id": "RW1375",
+                "name": "RW1375",
+                "description": "Fully normalized water leaving reflectance at 1375 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW1375&style=default"
+            },
+            {
+                "id": "RW1610",
+                "name": "RW1610",
+                "description": "Fully normalized water leaving reflectance at 1610 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW1610&style=default"
+            },
+            {
+                "id": "RW2190",
+                "name": "RW2190",
+                "description": "Fully normalized water leaving reflectance at 2190 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW2190&style=default"
+            },
+            {
+                "id": "RW443",
+                "name": "RW443",
+                "description": "Fully normalized water leaving reflectance at 443 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW443&style=default"
+            },
+            {
+                "id": "RW490",
+                "name": "RW490",
+                "description": "Fully normalized water leaving reflectance at 490 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW490&style=default"
+            },
+            {
+                "id": "RW560",
+                "name": "RW560",
+                "description": "Fully normalized water leaving reflectance at 560 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW560&style=default"
+            },
+            {
+                "id": "RW665",
+                "name": "RW665",
+                "description": "Fully normalized water leaving reflectance at 665 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW665&style=default"
+            },
+            {
+                "id": "RW705",
+                "name": "RW705",
+                "description": "Fully normalized water leaving reflectance at 705 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW705&style=default"
+            },
+            {
+                "id": "RW740",
+                "name": "RW740",
+                "description": "Fully normalized water leaving reflectance at 740 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW740&style=default"
+            },
+            {
+                "id": "RW783",
+                "name": "RW783",
+                "description": "Fully normalized water leaving reflectance at 783 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW783&style=default"
+            },
+            {
+                "id": "RW842",
+                "name": "RW842",
+                "description": "Fully normalized water leaving reflectance at 842 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW842&style=default"
+            },
+            {
+                "id": "RW865",
+                "name": "RW865",
+                "description": "Fully normalized water leaving reflectance at 865 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW865&style=default"
+            },
+            {
+                "id": "RW945",
+                "name": "RW945",
+                "description": "Fully normalized water leaving reflectance at 945 nm",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW945&style=default"
+            },
+            {
+                "id": "TMEAN",
+                "name": "TMEAN",
+                "description": "Mean of turbidity in water body",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TMEAN&style=default"
+            },
+            {
+                "id": "TSI",
+                "name": "TSI",
+                "description": "Trophic state index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TSI&style=default"
+            },
+            {
+                "id": "TSMMEAN",
+                "name": "TSMMEAN",
+                "description": "Mean concentration of total suspended matter",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TSMMEAN&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "85f0f9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fapar_global_300m_10daily_v1",
         "layers": [
@@ -3927,6 +4059,26 @@
                 "description": "Gross Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/89a110-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "8e2010-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | SCE Global 1km Daily V1",
+        "layers": [
+            {
+                "id": "SCE",
+                "name": "Snow Cover Extent",
+                "description": "Daily global snow cover extent at 1km resolution from VIIRS and SLSTR sensors.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/8e2010-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SCE&style=default"
+            },
+            {
+                "id": "UNC",
+                "name": "Snow Cover Extent Uncertainty",
+                "description": "Unbiased Root Mean Square Error for Snow Cover Extent at 1km resolution.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/8e2010-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=UNC&style=default"
             }
         ],
         "datasets": []
@@ -4238,6 +4390,19 @@
                 ]
             }
         ]
+    },
+    "9893a0-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | LSWT NRT Global 1km 10-Daily V1",
+        "layers": [
+            {
+                "id": "LSWT",
+                "name": "LSWT",
+                "description": "Near-real-time lake surface water temperature derived from SLSTR sensor.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9893a0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LSWT&style=default"
+            }
+        ],
+        "datasets": []
     },
     "992f36-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] npp_global_300m_10daily_v1_RT2",
@@ -4593,6 +4758,19 @@
                 ]
             }
         ]
+    },
+    "a6c316-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | LSWT Offline 1km 10-Daily V1",
+        "layers": [
+            {
+                "id": "LSWT",
+                "name": "LSWT",
+                "description": "Lake surface water temperature derived from AATSR sensor.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a6c316-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LSWT&style=default"
+            }
+        ],
+        "datasets": []
     },
     "a8d372-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lai_global_1km_10daily_v2_RT2",

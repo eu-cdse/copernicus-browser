@@ -8011,12 +8011,6 @@ msgstr ""
 msgid "SWE 5km Daily V2"
 msgstr ""
 
-msgid "SCE 500m Daily V1"
-msgstr ""
-
-msgid "SCE 1km Daily V1"
-msgstr ""
-
 msgid "WB 300m Monthly V2"
 msgstr ""
 
@@ -11091,4 +11085,183 @@ msgid ""
 msgstr ""
 
 msgid "Statistical Info chart"
+msgstr ""
+
+msgid ""
+"**orbit**: selects one image* per satellite orbit (only available for "
+"datasets with orbit-based or hourly acquisition)\n"
+"\n"
+"**day**: selects one image* per calendar day\n"
+"\n"
+"**week**: selects one image* per ISO week (weeks start on Monday)\n"
+"\n"
+"**month**: selects one image* per calendar month\n"
+"\n"
+"**year**: selects one image* per calendar year\n"
+"\n"
+"*with highest coverage of the selected area and lowest cloud coverage (if "
+"available)"
+msgstr ""
+
+#, javascript-format
+msgid ""
+"This dataset supports a maximum time range of ${ ORBIT_HOURLY_LIMIT_IN_DAYS "
+"} days for the \"orbit\" selection."
+msgstr ""
+
+msgid "Lake surface skin temperature, weighted average over the aggregation period."
+msgstr ""
+
+msgid "LSWT Offline 1km 10-daily V1"
+msgstr ""
+
+msgid "LSWT NRT Global 1km 10-daily V1"
+msgstr ""
+
+msgid ""
+"Provides the temperature of the water at the lake surface. The LSWT "
+"observations (every 10 days) are available at global scale at spatial "
+"resolution of ~1 km and with the temporal extent from 2002 to 2012. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/"
+"lake-surface-water-temperature-offline-1km)."
+msgstr ""
+
+msgid ""
+"Provides the temperature of the water at the lake surface. The near real "
+"time observations (every 10 days) are available at global scale at spatial "
+"resolution of ~1 km and with the temporal extent from 2016 to present. More "
+"information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/"
+"lake-surface-water-temperature-near-real-time-v1-0-1km)."
+msgstr ""
+
+msgid ""
+"Daily global snow cover extent at 1km resolution from VIIRS and SLSTR "
+"sensors."
+msgstr ""
+
+msgid "Unbiased Root Mean Square Error for Snow Cover Extent at 1km resolution."
+msgstr ""
+
+msgid "SCE Europe 500m Daily V1"
+msgstr ""
+
+msgid "SCE Northern Hemisphere 1km Daily V1"
+msgstr ""
+
+msgid "SCE Global 1km Daily V1"
+msgstr ""
+
+msgid "SCE NH 1km Daily V1"
+msgstr ""
+
+msgid ""
+"Provides global daily updates of the fraction of snow cover on the ground "
+"(also in forested areas) and uncertainty per pixel in percentage (0% – "
+"100%). The data is available in near real time with a pixel spacing of "
+"about 1 km and with the temporal extent from December 2025 to present."
+msgstr ""
+
+msgid "Mean concentration of chlorophyll-a (in the observation period)."
+msgstr ""
+
+msgid ""
+"Probability of floating cyanobacteria (with a range of values from 0 to 1 "
+"indicating probability of cyanobacteria presence – the closer the value is "
+"to 1, the higher the probability)."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"1375nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"1610nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"2190nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"443nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"490nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"560nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"665nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"705nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"740nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"783nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"842nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"865nm."
+msgstr ""
+
+msgid ""
+"Representative spectrum of fully normalised water-leaving reflectance at "
+"945nm."
+msgstr ""
+
+msgid ""
+"Mean of turbidity in Nephelometric Turbidity Units (NTU) (in the "
+"observation period)."
+msgstr ""
+
+msgid ""
+"Trophic state index (TSI) obtained from chlorophyll-a observations, "
+"averaged over the observation period. The TSI has a value of 0, 10, 20, 30, "
+"40, 50, 60, 70, 80, 90, or 100 corresponding to the classes given in "
+"Carlson (1977), where 0-40 are oligotrophic, 40-60 mesotrophic, 60-80 "
+"eutrophic, and 80-100 hypereutrophic."
+msgstr ""
+
+msgid "Mean of concentration of total suspended matter (in the observation period)."
+msgstr ""
+
+msgid "LWQ NRT 100m 10-daily V2"
+msgstr ""
+
+msgid ""
+"Provides semi-continuous observations for a large number of medium and "
+"large-sized lakes, according to the Global Lakes and Wetlands Database "
+"(GLWD) or otherwise of specific environmental monitoring interest. 10-daily "
+"observations are available in near real time at 100 m spatial resolution "
+"from September 2024 to present. More information "
+"[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
+"quality-v2-0-100m)."
 msgstr ""

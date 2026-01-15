@@ -302,6 +302,10 @@
           align-items: center;
           margin-bottom: 0;
 
+          .collection-tooltip-icon {
+            margin-right: 10px;
+          }
+
           .collection-select-dropdown {
             width: calc(50% + 50px);
           }

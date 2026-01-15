@@ -1394,13 +1394,16 @@ function handleDrawGeometryOnImg(ctx, geometryToDraw, mercatorBBox, imageWidth, 
     case 'Polygon':
       drawPolygon(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
       break;
+    case 'MultiLineString':
+      drawMultiLine(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
+      break;
     case 'MultiPolygon':
       drawMultiPolygon(ctx, geometryToDraw, mercatorBBox, imageWidth, imageHeight, lineStyle);
       break;
 
     default:
       throw new Error(
-        `${geometryToDraw.type} not supported. Only LineString, Polygon or MultiPolygon are supported`,
+        `${geometryToDraw.type} not supported. Only LineString, MultiLineString, Polygon or MultiPolygon are supported`,
       );
   }
 }
@@ -1437,6 +1440,12 @@ function drawMultiPolygon(ctx, geometry, mercatorBBox, imageWidth, imageHeight, 
     for (const coords of polygonCoords) {
       drawPathSections(ctx, coords, mercatorBBox, imageWidth, imageHeight, lineStyle);
     }
+  }
+}
+
+function drawMultiLine(ctx, geometry, mercatorBBox, imageWidth, imageHeight, lineStyle) {
+  for (const coords of geometry.coordinates) {
+    drawPathSections(ctx, coords, mercatorBBox, imageWidth, imageHeight, lineStyle);
   }
 }
 

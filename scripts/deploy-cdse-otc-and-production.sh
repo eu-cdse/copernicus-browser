@@ -14,7 +14,7 @@ tag="$1"
 echo "=========================================="
 echo "Starting deployment to OTC (backup)..."
 echo "=========================================="
-bash scripts/deploy-cdse-otc.sh
+bash scripts/deploy-cdse-otc.sh "$tag"
 otc_exit_code=$?
 
 if [ $otc_exit_code -ne 0 ]; then

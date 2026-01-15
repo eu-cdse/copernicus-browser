@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+import { isMobile } from 'react-device-detect';
 import { t } from 'ttag';
 
 import DatePicker from '../../components/DatePicker/DatePicker';
 import EOBFilterSearchByMonths from '../../junk/EOBCommon/EOBFilterSearchByMonths/EOBFilterSearchByMonths';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import { getDatasetLabel } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { isMobile } from 'react-device-detect';
+import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
+import ReactMarkdown from 'react-markdown';
+import {
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+  COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const getPeriodsForBestImg = () => [
   { value: 'orbit', text: t`orbit` },
@@ -14,6 +20,22 @@ const getPeriodsForBestImg = () => [
   { value: 'month', text: t`month` },
   { value: 'year', text: t`year` },
 ];
+
+const getTooltipContent = () => t`
+**orbit**: selects one image\* per satellite orbit (only available for datasets with orbit-based or hourly acquisition)
+
+**day**: selects one image\* per calendar day
+
+**week**: selects one image\* per ISO week (weeks start on Monday)
+
+**month**: selects one image\* per calendar month
+
+**year**: selects one image\* per calendar year
+
+\*with highest coverage of the selected area and lowest cloud coverage (if available)
+`;
+
+const ORBIT_HOURLY_LIMIT_IN_DAYS = 5;
 
 export class TimelapseControls extends Component {
   calendarHolder = React.createRef();
@@ -46,6 +68,13 @@ export class TimelapseControls extends Component {
       onRemovePin,
       onSidebarPopupToggle,
     } = this.props;
+
+    const isHourlyDatasetWithOrbit =
+      selectedPeriod === 'orbit' &&
+      [COPERNICUS_CLMS_LST_5KM_HOURLY_V1, COPERNICUS_CLMS_LST_5KM_HOURLY_V2].includes(datasetId);
+    const fromToDiff = toTime !== null && fromTime !== null ? toTime.diff(fromTime, 'hours') : 0;
+    const shouldShowOrbitWarning = isHourlyDatasetWithOrbit && fromToDiff > ORBIT_HOURLY_LIMIT_IN_DAYS * 24;
+
     return (
       <div className="controls">
         <div className="timespan-wrapper">
@@ -88,6 +117,9 @@ export class TimelapseControls extends Component {
         <div className="select-period-container">
           <div className="select-period-label">
             <span>{t`Select 1 image per:`}</span>
+            <HelpTooltip direction="right" closeOnClickOutside={true}>
+              <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+            </HelpTooltip>
           </div>
 
           <div className="select-period-options">
@@ -103,6 +135,12 @@ export class TimelapseControls extends Component {
               </label>
             ))}
           </div>
+          {shouldShowOrbitWarning && (
+            <div className="orbit-warning">
+              <i className="fa fa-exclamation-circle" />
+              {t`This dataset supports a maximum time range of ${ORBIT_HOURLY_LIMIT_IN_DAYS} days for the "orbit" selection.`}
+            </div>
+          )}
         </div>
 
         <div className="visualisations">
@@ -122,7 +160,7 @@ export class TimelapseControls extends Component {
 
         <EOBButton
           className="search-button"
-          disabled={loadingLayer}
+          disabled={loadingLayer || shouldShowOrbitWarning}
           onClick={() => this.props.onSearch()}
           text={t`Search`}
           icon={'search'}

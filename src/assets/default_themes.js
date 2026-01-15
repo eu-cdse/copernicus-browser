@@ -751,7 +751,7 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/51f9c7-YOUR-INSTANCEID-HERE`,
       },
       {
-        name: 'clms_global_sce_1km_v1_daily_geotiff',
+        name: 'clms_nh_sce_1km_v1_daily_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/f2bbdd-YOUR-INSTANCEID-HERE`,
@@ -893,6 +893,30 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/3825e2-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lswt_offline_1km_10daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/a6c316-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lswt_nrt_global_1km_10daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/9893a0-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'sce_global_1km_daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/8e2010-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lwq-nrt_global_100m_10daily_v2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

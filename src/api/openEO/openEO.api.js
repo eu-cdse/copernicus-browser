@@ -20,7 +20,6 @@ async function cleanUpCache(cache) {
     const cachedResponse = await cache.match(request);
     if (isCacheExpired(cachedResponse)) {
       await cache.delete(request);
-      console.log(`Deleted stale cache: ${request.url}`);
     }
   });
 }

@@ -603,8 +603,8 @@ export const collections = [
             hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S5P_EXPERT),
           },
           {
-            id: 'AUX_NISE',
-            name: 'AUX_NISE',
+            id: 'NISE',
+            name: 'NISE',
             label: 'AUX_NISE',
             supportsGeometry: false,
             hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S5P_EXPERT),
@@ -1450,6 +1450,16 @@ export const recursiveCollectionCLMS = [
                   'sce_northernhemisphere_1km_daily_v1',
                 )})`,
               },
+              {
+                id: 'sce_global_1km_daily_v1',
+                label: 'Global, Daily, 1km, (2025–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'sce_global_1km_daily_v1',
+                )})`,
+              },
             ],
           },
           // {
@@ -1629,39 +1639,6 @@ export const recursiveCollectionCLMS = [
         type: 'group',
         items: [
           {
-            id: 'LAKE_SURFACE_WATER_TEMPERATURE',
-            label: 'Lake Surface Water Temperature',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'lake_surface_water_temperature',
-            )})`,
-            items: [
-              {
-                id: 'lswt-offline_global_1km_10daily_v1',
-                label: 'Offline, Global, 10-daily, 1km, (2002–2012), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lswt-offline_global_1km_10daily_v1',
-                )})`,
-              },
-              {
-                id: 'lswt-nrt_global_1km_10daily_v1',
-                label: 'NRT, Global, 10-daily, 1km, (2016–present), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lswt-nrt_global_1km_10daily_v1',
-                )})`,
-              },
-            ],
-          },
-          {
             id: 'LAND_SURFACE_TEMPERATURE',
             label: 'Land Surface Temperature',
             type: 'instrument',
@@ -1730,6 +1707,39 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'lst-daily-cycle_global_5km_10daily_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'LAKE_SURFACE_WATER_TEMPERATURE',
+            label: 'Lake Surface Water Temperature',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'lake_surface_water_temperature',
+            )})`,
+            items: [
+              {
+                id: 'lswt-offline_global_1km_10daily_v1',
+                label: 'Offline, Global, 10-daily, 1km, (2002–2012), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lswt-offline_global_1km_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lswt-nrt_global_1km_10daily_v1',
+                label: 'NRT, Global, 10-daily, 1km, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lswt-nrt_global_1km_10daily_v1',
                 )})`,
               },
             ],
@@ -2127,13 +2137,23 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
-                id: 'lwq-reproc_global_300m_10daily_v1',
-                label: 'Global Reproc, 10-daily, 300m, (2002–2012), V1',
+                id: 'lwq-nrt_global_100m_10daily_v1',
+                label: 'Global NRT, 10-daily, 100m, (2019–2024), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
-                  'lwq-reproc_global_300m_10daily_v1',
+                  'lwq-nrt_global_100m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lwq-nrt_global_100m_10daily_v2',
+                label: 'Global NRT, 10-daily, 100m, (2024–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lwq-nrt_global_100m_10daily_v2',
                 )})`,
               },
               {
@@ -2147,16 +2167,6 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
-                id: 'lwq-nrt_global_100m_10daily_v1',
-                label: 'Global NRT, 10-daily, 100m, (2019–2024), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'lwq-nrt_global_100m_10daily_v1',
-                )})`,
-              },
-              {
                 id: 'lwq-nrt_global_300m_10daily_v2',
                 label: 'Global NRT, 10-daily, 300m, (2024–present), V2',
                 type: 'productType',
@@ -2167,13 +2177,13 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
-                id: 'lwq-nrt_global_100m_10daily_v2',
-                label: 'Global NRT, 10-daily, 100m, (2024–present), V2',
+                id: 'lwq-reproc_global_300m_10daily_v1',
+                label: 'Global Reproc, 10-daily, 300m, (2002–2012), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
-                  'lwq-nrt_global_100m_10daily_v2',
+                  'lwq-reproc_global_300m_10daily_v1',
                 )})`,
               },
             ],

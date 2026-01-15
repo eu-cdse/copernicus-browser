@@ -23,10 +23,10 @@ class Histogram extends Component {
         { orient: 'left', ticks: 5, label: t`Frequency`, dynamicLabelPosition: true },
         {
           orient: 'bottom',
-          ticks: 10,
+          ticks: 5,
           tickFormat: (d) => {
             const pos = Math.round((this.props.data.length - 1) * d);
-            return this.props.data[pos].value.toFixed(2);
+            return this.props.data[pos].value.toFixed(3);
           },
           label: t`Value`,
           dynamicLabelPosition: true,

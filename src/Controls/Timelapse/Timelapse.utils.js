@@ -12,7 +12,6 @@ import {
 } from '../ImgDownload/ImageDownload.utils';
 import {
   getDataSourceHandler,
-  checkIfCustom,
   getDatasetLabel,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
@@ -24,6 +23,41 @@ import store, { timelapseSlice } from '../../store';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 
 export const DEFAULT_IMAGE_DIMENSION = 512;
+
+// Cache the Copernicus logo to avoid reloading it repeatedly
+let cachedCopernicusLogo = null;
+let copernicusLogoPromise = null;
+
+function getCopernicusLogo() {
+  if (cachedCopernicusLogo) {
+    return Promise.resolve(cachedCopernicusLogo);
+  }
+
+  if (copernicusLogoPromise) {
+    return copernicusLogoPromise;
+  }
+
+  copernicusLogoPromise = new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = '';
+
+    img.onload = () => {
+      cachedCopernicusLogo = img;
+      copernicusLogoPromise = null;
+      resolve(img);
+    };
+
+    img.onerror = () => {
+      console.warn('Failed to load Copernicus logo');
+      copernicusLogoPromise = null;
+      reject(new Error('Copernicus logo failed to load'));
+    };
+
+    img.src = copernicus;
+  });
+
+  return copernicusLogoPromise;
+}
 
 export function getTimelapseBounds(mapBounds, aoi) {
   if (aoi && aoi.bounds) {
@@ -192,7 +226,6 @@ export async function fetchTimelapseImage(params) {
       L.latLng(bounds.getSouth(), bounds.getEast()),
     ),
     dsh?.isCopernicus(),
-    dsh?.isSentinelHub() || checkIfCustom(datasetId),
   );
   URL.revokeObjectURL(objectURL);
 
@@ -207,7 +240,7 @@ export function dateTimeDisplayFormat(datetime, period) {
     : datetime.clone().format('YYYY-MM-DD');
 }
 
-export function addLabelsAndLogos(
+export async function addLabelsAndLogos(
   dateToBeShown,
   objectUrl,
   width,
@@ -216,14 +249,24 @@ export function addLabelsAndLogos(
   showCopernicusLogos = true,
 ) {
   const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  // Load Copernicus logo once and cache it
+  let cpImg = null;
+  if (showCopernicusLogos) {
+    try {
+      cpImg = await getCopernicusLogo();
+    } catch (err) {
+      // Logo failed to load, continue without it
+      cpImg = null;
+    }
+  }
 
   return new Promise((resolve, reject) => {
     const mainImg = new Image();
-    const cpImg = new Image();
-    cpImg.crossOrigin = '';
     mainImg.crossOrigin = '';
-    canvas.width = width;
-    canvas.height = height;
+
     mainImg.onload = () => {
       try {
         const ctx = canvas.getContext('2d');
@@ -280,7 +323,7 @@ export function addLabelsAndLogos(
         ctx.shadowOffsetY = 0;
 
         let startXpos = canvas.width;
-        if (showCopernicusLogos) {
+        if (cpImg && cpImg.width > 0 && cpImg.height > 0) {
           //copernicus logo
           const cpImgResizeFactor = 0.8;
           const cpImgWidth = cpImg.width * cpImgResizeFactor;
@@ -294,15 +337,15 @@ export function addLabelsAndLogos(
         URL.revokeObjectURL(mainImg.src);
         resolve(dataUrl);
       } catch (e) {
-        reject('Error generating image');
+        reject('Error generating image: ' + e.message);
       }
     };
 
     mainImg.onerror = (err) => {
       reject(err);
     };
+
     mainImg.src = objectUrl;
-    cpImg.src = copernicus;
   });
 }
 
