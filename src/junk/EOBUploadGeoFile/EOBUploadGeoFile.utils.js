@@ -290,6 +290,7 @@ const loadFileContent = async (file, format) => {
           .then((data) => resolve(data));
       });
     } else if (format === 'zip') {
+      // do nothing
     } else {
       const reader = new FileReader();
       reader.onload = (e) => resolve(e.target.result);
@@ -324,7 +325,7 @@ async function checkIfValidShapeFile(file) {
             const fileType = tempFile.split('.').pop();
             await isEPSG4326UsedInPrjFile(zip, tempFile, fileType);
           } catch (error) {
-            throw error;
+            throw new Error(`Error validating file ${tempFile}: ${error.message}`);
           }
         }),
       );
@@ -356,7 +357,7 @@ async function isEPSG4326UsedInPrjFile(zip, tempFile, fileType) {
       throw uploadGeoFileErrorMessages.INVALID_PROJECTION();
     }
   } catch (error) {
-    throw error;
+    throw new Error(`Error reading projection file ${tempFile}: ${error.message}`);
   }
 }
 

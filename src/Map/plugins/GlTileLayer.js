@@ -73,7 +73,7 @@ const MaplibreGL = L.Layer.extend({
     }
   },
 
-  onRemove: function (map) {
+  onRemove: function () {
     if (this._map._proxy && this._map.options.zoomAnimation) {
       L.DomEvent.off(this._map._proxy, L.DomUtil.TRANSITION_END, this._transitionEnd, this);
     }
@@ -170,7 +170,7 @@ const MaplibreGL = L.Layer.extend({
     }
   },
 
-  _update: function (e) {
+  _update: function () {
     // update the offset so we can correct for it later when we zoom
     this._offset = this._map.containerPointToLayerPoint([0, 0]);
 
@@ -214,7 +214,7 @@ const MaplibreGL = L.Layer.extend({
   },
 
   // update the map constantly during a pinch zoom
-  _pinchZoom: function (e) {
+  _pinchZoom: function () {
     this._glMap.jumpTo({
       zoom: this._map.getZoom() - 1,
       center: this._map.getCenter(),
@@ -239,7 +239,7 @@ const MaplibreGL = L.Layer.extend({
     L.DomUtil.setTransform(this._glMap._actualCanvas, offset.subtract(this._offset), scale);
   },
 
-  _zoomStart: function (e) {
+  _zoomStart: function () {
     this._zooming = true;
   },
 
@@ -258,7 +258,7 @@ const MaplibreGL = L.Layer.extend({
     this._update();
   },
 
-  _transitionEnd: function (e) {
+  _transitionEnd: function () {
     L.Util.requestAnimFrame(function () {
       var zoom = this._map.getZoom();
       var center = this._map.getCenter();

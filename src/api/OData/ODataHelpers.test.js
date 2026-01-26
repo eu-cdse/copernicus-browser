@@ -1918,7 +1918,7 @@ describe('calculateMaxGeometryChars', () => {
 
   test('returns at least 100 chars minimum', () => {
     // Even with many collections, should not go below 100
-    const manyCollections = Array.from({ length: 20 }, (_, i) => ({ id: 'S1' }));
+    const manyCollections = Array.from({ length: 20 }, () => ({ id: 'S1' }));
     const result = calculateMaxGeometryChars(manyCollections);
     expect(result).toBeGreaterThanOrEqual(100);
   });

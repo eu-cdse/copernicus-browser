@@ -33,7 +33,7 @@ export default class DEMCDASDataSourceHandler extends DataSourceHandler {
     [DEM_COPERNICUS_90_CDAS]: 'COPERNICUS_90',
   };
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected, _onlyForBaseLayer) {
     const demLayers = layers.filter((l) => l.dataset && l.dataset.id === this.shDataset.id);
 
     if (demLayers.length === 0) {

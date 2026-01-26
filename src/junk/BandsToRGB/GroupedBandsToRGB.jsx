@@ -10,7 +10,7 @@ export class GroupedBandsToRGB extends React.Component {
   static defaultProps = {
     groupedBands: undefined,
     value: undefined,
-    onChange: (value) => {},
+    onChange: () => {},
   };
 
   componentDidMount() {

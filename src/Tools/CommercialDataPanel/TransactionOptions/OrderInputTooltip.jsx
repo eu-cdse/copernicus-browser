@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 import HelpTooltip from '../../SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../rehypeConfig';
 
 const orderInputHelp = {
   name: () => t`Order name
@@ -43,7 +44,7 @@ export const OrderInputTooltip = ({ inputId }) => {
 
   return (
     <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-      <ReactMarkdown children={orderInputHelp[inputId]()} />
+      <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{orderInputHelp[inputId]()}</ReactMarkdown>
     </HelpTooltip>
   );
 };

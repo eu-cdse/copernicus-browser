@@ -39,7 +39,7 @@ export async function getLatestTileLocation(datasetId) {
   const bbox = new BBox(CRS_EPSG4326, -180, -90, 180, 90);
   const results = await findLatestTileInArea({ bbox, datasetId });
   if (results && results.tiles && results.tiles.length > 0) {
-    return constructLocationAndVisualizationParamsFromTile(getLatestTile(results.tiles), datasetId);
+    return constructLocationAndVisualizationParamsFromTile(getLatestTile(results.tiles));
   }
   return null;
 }
@@ -58,7 +58,7 @@ export async function getNearestLocationWithData(datasetId, bounds) {
     );
     const results = await findLatestTileInArea({ bbox, datasetId });
     if (results && results.tiles && results.tiles.length > 0) {
-      return constructLocationAndVisualizationParamsFromTile(getLatestTile(results.tiles), datasetId);
+      return constructLocationAndVisualizationParamsFromTile(getLatestTile(results.tiles));
     }
   }
   return null;
@@ -66,7 +66,6 @@ export async function getNearestLocationWithData(datasetId, bounds) {
 
 export async function findAvailableCollectionsWithData({
   bounds,
-  pixelBounds,
   nCollectionsLimit,
   setAvailableCollectionsWithData,
   nDays,
@@ -88,13 +87,7 @@ export async function findAvailableCollectionsWithData({
       setAlreadyCheckedAvailableCollections(shuffledCollections.slice(0, i));
       break;
     }
-    const results = await findLatestTileInTimeRange(
-      shuffledCollections[i],
-      bounds,
-      pixelBounds,
-      fromTime,
-      toTime,
-    );
+    const results = await findLatestTileInTimeRange(shuffledCollections[i], bounds, fromTime, toTime);
     if (results && results.tiles && results.tiles.length > 0) {
       const dsh = getDataSourceHandler(shuffledCollections[i]);
       if (dsh) {
@@ -133,12 +126,12 @@ async function findLatestTileInArea({ bbox, datasetId, maxCloudCoverPercent, orb
   });
 }
 
-async function findLatestTileInTimeRange(datasetId, bounds, pixelBounds, fromTime, toTime) {
+async function findLatestTileInTimeRange(datasetId, bounds, fromTime, toTime) {
   const datasourceHandler = getDataSourceHandler(datasetId);
   if (!datasourceHandler) {
     throw new Error(`No datasource handler for datasetId ${datasetId}`);
   }
-  const bbox = generateAppropriateSearchBBox(bounds, pixelBounds);
+  const bbox = generateAppropriateSearchBBox(bounds);
   return await datasourceHandler.findTiles({
     datasetId: datasetId,
     bbox: bbox,
@@ -150,7 +143,7 @@ async function findLatestTileInTimeRange(datasetId, bounds, pixelBounds, fromTim
   });
 }
 
-export function generateAppropriateSearchBBox(bounds, pixelBounds) {
+export function generateAppropriateSearchBBox(bounds) {
   const minLng = bounds.getWest() + BBOX_PADDING * (bounds.getEast() - bounds.getWest());
   const maxLng = bounds.getEast() - BBOX_PADDING * (bounds.getEast() - bounds.getWest());
 
@@ -161,7 +154,7 @@ export function generateAppropriateSearchBBox(bounds, pixelBounds) {
   return new BBox(CRS_EPSG4326, minLng, minLat, maxLng, maxLat);
 }
 
-function constructLocationAndVisualizationParamsFromTile(tile, datasetId) {
+function constructLocationAndVisualizationParamsFromTile(tile) {
   const { lat, lng, zoom } = getBoundsAndLatLng(tile.geometry);
   const fromTime = moment.utc(tile.sensingTime).startOf('day');
   const toTime = moment.utc(tile.sensingTime).endOf('day');

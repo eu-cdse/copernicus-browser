@@ -80,7 +80,7 @@ export class EvalScriptInput extends React.Component {
     return (isEvalUrl && !evalscripturl) || (!isEvalUrl && !evalscript) || evalscript === this.prevEvalscript;
   };
 
-  handleRefreshClick = (e) => {
+  handleRefreshClick = () => {
     if (this.refreshEvalscriptDisabled()) {
       return;
     }

@@ -134,8 +134,8 @@ export async function getDataForLayer(props, cancelToken) {
     }
 
     const blobs = await getTiffImages(layer, props, cancelToken);
-    const histogram = await getHistogramFromTiffs(blobs);
-    return { histogram: histogram };
+    const { histogram } = await getHistogramFromTiffs(blobs);
+    return { histogram };
   } catch (e) {
     const errMessage = await constructErrorMessage(e);
     console.error(e);
@@ -168,8 +168,8 @@ export async function getDataForIndex(props, cancelToken) {
     // add minQa, upsampling, downsampling, but no effects (they are only for visualization)
 
     const blobs = await getTiffImages(layer, props, cancelToken);
-    const histogram = await getHistogramFromTiffs(blobs);
-    return { histogram: histogram };
+    const { histogram } = await getHistogramFromTiffs(blobs);
+    return { histogram };
   } catch (e) {
     const errMessage = await constructErrorMessage(e);
     console.error(e);
@@ -191,6 +191,15 @@ async function getHistogramFromTiffs(blobs) {
   let min = Number.POSITIVE_INFINITY;
   let max = Number.NEGATIVE_INFINITY;
   for (let v of combinedData) {
+    if (isNaN(v)) {
+      continue;
+    }
+    if (v === Number.POSITIVE_INFINITY) {
+      continue;
+    }
+    if (v === Number.NEGATIVE_INFINITY) {
+      continue;
+    }
     if (v < min) {
       min = v;
     }
@@ -198,9 +207,18 @@ async function getHistogramFromTiffs(blobs) {
       max = v;
     }
   }
+  // Handle edge case where no valid (finite) values exist
+  if (!isFinite(min) || !isFinite(max)) {
+    return { histogram: [] };
+  }
 
   const nBins = 10000;
   const step = (max - min) / nBins;
+
+  // Handle edge case where all values are the same (step === 0)
+  if (step === 0) {
+    return [{ value: parseFloat(min.toFixed(numOfDigits)), occurrences: combinedData.length }];
+  }
 
   let histogramArray = new Array(nBins);
   for (let i = 0; i < nBins; i++) {
@@ -208,7 +226,7 @@ async function getHistogramFromTiffs(blobs) {
   }
 
   for (let v of combinedData) {
-    if (isNaN(v)) {
+    if (!isFinite(v)) {
       continue;
     }
     let histogramArrayIndex = Math.floor((v - min) / step);
@@ -217,8 +235,7 @@ async function getHistogramFromTiffs(blobs) {
     }
     histogramArray[histogramArrayIndex].occurrences++;
   }
-
-  return histogramArray;
+  return { histogram: histogramArray };
 }
 
 export async function checkIfIndexOutputPresent(props, cancelToken) {

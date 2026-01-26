@@ -45,7 +45,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   EVOLAND_KNOWN_COLLECTIONS = new EvolandDataSourceHandler().getKnownCollectionsList();
   COMPLEMENTARY_KNOWN_COLLECTIONS = new ComplementaryDataDataSourceHandler().getKnownCollectionsList();
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, _preselected, _onlyForBaseLayer) {
     name = isFunction(name) ? name() : name;
     const customLayers = layers.filter(
       (l) =>
@@ -183,7 +183,7 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
     return { minDate: null, maxDate: null };
   }
 
-  getLayers = (data, datasetId, url, layersExclude, layersInclude) => {
+  getLayers = (data, datasetId, url, _layersExclude, _layersInclude) => {
     let layers = data.filter((layer) => layer.collectionId === datasetId && filterLayers(layer.layerId));
     layers.forEach((l) => {
       l.url = url;

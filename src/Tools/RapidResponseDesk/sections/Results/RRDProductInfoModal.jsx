@@ -76,10 +76,7 @@ const RRDProductInfoModal = ({ selectedResult, params, lng, lat, previewImageUrl
     }
   });
 
-  const allAttributes = getAllProductAttributes(
-    attributesToMapped,
-    selectedResult.properties.metadata_source,
-  );
+  const allAttributes = getAllProductAttributes(attributesToMapped);
 
   const { onDownload, downloadInProgress } = params;
   return (

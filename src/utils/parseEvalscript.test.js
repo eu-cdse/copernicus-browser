@@ -165,10 +165,10 @@ const getNewEvaluatePixel = (scaleFactor) =>
 `.replace(/\s/g, '');
 
 test.each([
-  [inputEvalscript1, 0.1, true],
-  [inputEvalscript2, 2 ** 16, true],
-  [inputEvalscript3, 42, false],
-])('Test setEvalscriptOutputScale method', (evalscript, scaleFactor, hasDataMask) => {
+  [inputEvalscript1, 0.1],
+  [inputEvalscript2, 2 ** 16],
+  [inputEvalscript3, 42],
+])('Test setEvalscriptOutputScale method', (evalscript, scaleFactor) => {
   const newEvalscript = setEvalscriptOutputScale(evalscript, scaleFactor).replace(/\s/g, '');
   const newEvaluatePixel = getNewEvaluatePixel(scaleFactor);
   expect(newEvalscript.endsWith(newEvaluatePixel)).toEqual(true);

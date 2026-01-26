@@ -568,7 +568,7 @@ export function setTerrainViewerFromPin({ terrainViewerSettings, is3D, lat, lng,
   }
 }
 
-export function getBoundsFrom3DPosition({ x, y, z, rotH, rotV, width, height }) {
+export function getBoundsFrom3DPosition({ x, y, z, rotV, width, height }) {
   const N = Math.ceil(Math.min(Math.tan(Math.min(Math.PI / 4 + toRad(rotV), Math.PI / 2)), 10));
   const closeX = x - N * z;
   const closeY = y - N * z;

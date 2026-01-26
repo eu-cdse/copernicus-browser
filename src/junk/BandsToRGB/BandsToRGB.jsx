@@ -8,6 +8,7 @@ import './BandsToRGB.scss';
 import { SelectedBand } from './SelectedBand';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 const link1 = 'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/composites/';
 const link2 = 'https://www.usgs.gov/media/images/common-landsat-band-rgb-composites';
@@ -18,7 +19,7 @@ bands) or False Colour (near-infrared, red and green bands).\n\nMore info [here]
 `;
 
 // value = { r:'B01', g:'B02', b: 'B03' }
-export const BandsToRGB = ({ bands, value, onChange, areBandsClasses, datasetId }) => {
+export const BandsToRGB = ({ bands, value, onChange, areBandsClasses }) => {
   if (!bands) {
     return null;
   }
@@ -28,7 +29,7 @@ export const BandsToRGB = ({ bands, value, onChange, areBandsClasses, datasetId 
       <div className="help-text-container">
         <span>{areBandsClasses ? t`Drag classes onto RGB fields` : t`Drag bands onto RGB fields`}</span>
         <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-          <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getTooltipContent()}</ReactMarkdown>
         </HelpTooltip>
       </div>
       <div className="colors-container">

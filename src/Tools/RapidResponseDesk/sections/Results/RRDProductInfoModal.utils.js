@@ -86,10 +86,10 @@ const ATTRIBUTES_ORDER = [
   'sar:polarizations',
 ];
 
-export const getAllProductAttributes = (product, metadataSource) => {
+export const getAllProductAttributes = (product) => {
   const allAttributes = [
-    ...product
-      ?.filter((attr) => !UNSUPPORTED_ATTRIBUTES.includes(attr.name))
+    ...(product ?? [])
+      .filter((attr) => !UNSUPPORTED_ATTRIBUTES.includes(attr.name))
       .map((attr) => {
         return {
           key: attr.name,

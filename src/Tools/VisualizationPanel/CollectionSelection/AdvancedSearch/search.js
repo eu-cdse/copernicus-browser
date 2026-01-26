@@ -83,16 +83,19 @@ export class Query {
     let results = [];
     let nMissing = nResults;
 
-    while (true) {
+    let runWhile = true;
+    while (runWhile) {
       if (!this.currentInterval.hasMore) {
         this.currentInterval = this.getNextInterval();
         if (!this.currentInterval) {
+          runWhile = false;
           break;
         }
       }
       const newResults = await this.currentInterval.nextNTiles(nMissing);
       results.push(...newResults);
       if (results.length === nResults) {
+        runWhile = false;
         break;
       }
       nMissing -= newResults.length;

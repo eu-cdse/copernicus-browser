@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 import { isFunction } from '../../utils';
 
@@ -33,7 +34,7 @@ const RadioButton = ({
       </label>
       {getTooltipContent && isFunction(getTooltipContent) && (
         <HelpTooltip direction="right" closeOnClickOutside={true}>
-          <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getTooltipContent()}</ReactMarkdown>
         </HelpTooltip>
       )}
     </div>

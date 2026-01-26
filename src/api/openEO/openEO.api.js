@@ -104,7 +104,10 @@ async function fetchWithCache(url, init) {
     cleanUpCache(cache);
     return response;
   } catch (error) {
-    throw error;
+    if (error.name === 'AbortError') {
+      throw error; // Re-throw AbortError to preserve its type
+    }
+    throw new Error(`Failed to fetch from ${url}: ${error.message}`);
   }
 }
 
@@ -125,7 +128,10 @@ async function getResult(processGraph, token, signal) {
     });
     return await response.blob();
   } catch (error) {
-    throw error;
+    if (error.name === 'AbortError') {
+      throw error; // Re-throw AbortError to be handled by the caller
+    }
+    throw new Error(`Failed to get OpenEO result: ${error.message}`);
   }
 }
 

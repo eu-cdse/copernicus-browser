@@ -618,7 +618,7 @@ export function downloadOne(
         dataFusion,
         effects,
       )
-        .then((blob) => {
+        .then(() => {
           resolve();
         })
         .catch((err) => {

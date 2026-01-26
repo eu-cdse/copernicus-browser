@@ -177,7 +177,7 @@ const ResultItem = ({
     }
   }, [tile.id, productDownloadCancelTokens]);
 
-  const visualize = async ({ onResultSelected, tile, currentZoom }) => {
+  const visualize = async ({ onResultSelected, tile }) => {
     const datasetId = getDatasetIdFromProductType(tile?.productType, tile?.attributes);
     const collectionName = tile?.attributes.find((att) => att.Name === 'collectionName');
     if (collectionName?.Value === DATASOURCES.CLMS) {
@@ -231,7 +231,7 @@ const ResultItem = ({
 
   const visualizeButtonDisabled = visualizationButtonDisabled(tile, user);
   return (
-    <div onMouseEnter={(e) => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
+    <div onMouseEnter={() => onHover(tile)} onMouseLeave={onStopHover} className="result-item">
       <div className="container">
         {onResultCheck && (
           <CustomCheckbox

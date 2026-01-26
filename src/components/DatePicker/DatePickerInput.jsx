@@ -78,7 +78,7 @@ function DatePickerInput(props) {
       return;
     }
 
-    await getAndSetNextPrevDate('prev', selectedDay).catch((err) => setPrevDateDisabled(true));
+    await getAndSetNextPrevDate('prev', selectedDay).catch(() => setPrevDateDisabled(true));
 
     if (setNextDateBtnDisabled) {
       setNextDateBtnDisabled(false);
@@ -90,7 +90,7 @@ function DatePickerInput(props) {
       return;
     }
 
-    await getAndSetNextPrevDate('next', selectedDay).catch((err) => setNextDateDisabled(true));
+    await getAndSetNextPrevDate('next', selectedDay).catch(() => setNextDateDisabled(true));
   }
 
   return (

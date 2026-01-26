@@ -60,6 +60,7 @@ export function constructGetMapParamsAdvancedOptions(options) {
     orthorectification,
     backscatterCoeff,
     demSource3D,
+    mosaickingOrder,
   } = options;
 
   const getMapParamsAdvancedOptions = {};
@@ -80,6 +81,9 @@ export function constructGetMapParamsAdvancedOptions(options) {
   }
   if (demSource3D != null && demSource3D !== defaultEffects.demSource3D) {
     getMapParamsAdvancedOptions.demSource3D = demSource3D;
+  }
+  if (mosaickingOrder != null && mosaickingOrder !== defaultEffects.mosaickingOrder) {
+    getMapParamsAdvancedOptions.mosaickingOrder = mosaickingOrder;
   }
 
   if (speckleFilter != null && speckleFilter.type !== defaultEffects.speckleFilter) {

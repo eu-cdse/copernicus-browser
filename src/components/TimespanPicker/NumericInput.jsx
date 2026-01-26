@@ -48,7 +48,7 @@ export const NumericInput = ({ label, value, min, max, disableSpecificButtonFunc
         min={min}
         max={max}
         value={currentValue}
-        onKeyUp={(e) => {
+        onKeyUp={() => {
           clearTimeout(timeOut.current);
           timeOut.current = setTimeout(() => {
             if (setValue(currentValue) === null) {

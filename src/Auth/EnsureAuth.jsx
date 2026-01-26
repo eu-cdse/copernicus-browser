@@ -7,6 +7,7 @@ import UserAuth from './UserAuth';
 
 import './EnsureAuth.scss';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../rehypeConfig';
 import { getRecaptchaConsentFromLocalStorage } from './authHelpers';
 
 const AnonAuthButton = ({ executeAnonAuth }) => {
@@ -40,7 +41,7 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
       <AnonAuthButton executeAnonAuth={executeAnonAuth} />
     </div>
     <div className="recaptcha-cookie-notice">
-      <ReactMarkdown linkTarget="_blank">
+      <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>
         {t`By continuing anonymously, you consent to the use of cookies by recaptcha.net and related collection, sharing and use of personal data by recaptcha.net. Alternatively, you can sign-in. See also [Terms and conditions](https://dataspace.copernicus.eu/terms-and-conditions)`}
       </ReactMarkdown>
     </div>

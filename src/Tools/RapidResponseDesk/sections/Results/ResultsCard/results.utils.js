@@ -59,7 +59,7 @@ export const isImageLoading = (itemId) => {
   return loadingStates.get(itemId) || false;
 };
 
-export const fetchThumbnailImage = async (item, accessToken, imageType, isTasking) => {
+export const fetchThumbnailImage = async (item, accessToken) => {
   const itemId = item._internalId;
   if (imageCache.has(itemId + '_thumbnail')) {
     return imageCache.get(itemId + '_thumbnail');

@@ -104,7 +104,6 @@ class Sentinel1SearchGroup extends React.Component {
               <CheckboxesWithChildren
                 choices={this.props.acquisitionModes}
                 initiallyChecked={this.state.acquisitionModes}
-                children={this.props.polarizations}
                 initiallyCheckedChildren={this.getInitiallyCheckedPolarization({
                   ...this.props.polarizations,
                 })}

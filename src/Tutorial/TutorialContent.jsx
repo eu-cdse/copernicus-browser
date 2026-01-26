@@ -327,11 +327,7 @@ export const TUTORIAL_STEPS = () => [
   {
     content: (
       <div className="content-div-style" style={{ textAlign: 'center', paddingBottom: '40px' }}>
-        <ReactMarkdown
-          children={welcomeMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{welcomeMd()}</ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -344,11 +340,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`About Copernicus Browser`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={overviewMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{overviewMd()}</ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -361,11 +353,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`User Account`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={userAccountMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{userAccountMd()}</ReactMarkdown>
       </div>
     ),
     target: '.user-panel',
@@ -378,11 +366,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Visualise Tab`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={visualizationTabMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{visualizationTabMd()}</ReactMarkdown>
       </div>
     ),
     target: '#visualization-tabButton',
@@ -395,11 +379,7 @@ export const TUTORIAL_STEPS = () => [
     title: `![active-layers](${LayersActive}) ${t`Layers Panel`}`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={layersPanelMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{layersPanelMd()}</ReactMarkdown>
       </div>
     ),
     target: '#layers-panel-button',
@@ -412,11 +392,7 @@ export const TUTORIAL_STEPS = () => [
     title: `![active-highlights](${HighlightsActive}) ${t`Highlights Panel`}`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={highlightsPanelMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{highlightsPanelMd()}</ReactMarkdown>
       </div>
     ),
     target: '#highlights-panel-button',
@@ -429,11 +405,7 @@ export const TUTORIAL_STEPS = () => [
     title: `![active-compare](${CompareActive}) ${t`Compare Panel`}`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={comparePanelMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{comparePanelMd()}</ReactMarkdown>
       </div>
     ),
     target: '#compare-panel-button',
@@ -446,11 +418,7 @@ export const TUTORIAL_STEPS = () => [
     title: `![active-pins](${PinsActive}) ${t`Pins Panel`}`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={pinsPanelMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{pinsPanelMd()}</ReactMarkdown>
       </div>
     ),
     target: '#pins-panel-button',
@@ -463,11 +431,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Search Tab`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={searchTabMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{searchTabMd()}</ReactMarkdown>
       </div>
     ),
     target: '#search-tabButton',
@@ -480,11 +444,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Search Places`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={searchPlacesMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{searchPlacesMd()}</ReactMarkdown>
       </div>
     ),
     target: '#location-search-box',
@@ -497,11 +457,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Basemaps and Overlays`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={overlaysMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{overlaysMd()}</ReactMarkdown>
       </div>
     ),
     target: '.leaflet-control-layers-toggle',
@@ -514,11 +470,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Information and Tutorial`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={tutorialMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{tutorialMd()}</ReactMarkdown>
       </div>
     ),
     target: '#infoButton',
@@ -531,7 +483,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Draw Area of Interest`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown children={aoiMd()} rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS} linkTarget="_blank" />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{aoiMd()}</ReactMarkdown>
       </div>
     ),
     target: '.aoiPanel',
@@ -544,11 +496,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Draw a Line`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={drawLineMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{drawLineMd()}</ReactMarkdown>
       </div>
     ),
     target: '.loiPanel',
@@ -561,7 +509,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Mark Point of Interest`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown children={poiMd()} rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS} linkTarget="_blank" />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{poiMd()}</ReactMarkdown>
       </div>
     ),
     target: '.poiPanel',
@@ -574,11 +522,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Measure Distances`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={measurementMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{measurementMd()}</ReactMarkdown>
       </div>
     ),
     target: '.measurePanel',
@@ -591,11 +535,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Download Image`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={downloadImageMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{downloadImageMd()}</ReactMarkdown>
       </div>
     ),
     target: '.img-download-btn-wrapper',
@@ -608,11 +548,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Create Timelapse Animation`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={timelapseMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{timelapseMd()}</ReactMarkdown>
       </div>
     ),
     target: '.timelapsePanelButton',
@@ -625,11 +561,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Visualise Terrain in 3D`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={visualize3dMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{visualize3dMd()}</ReactMarkdown>
       </div>
     ),
     target: '.terrain-viewer-button',
@@ -642,11 +574,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Histogram`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={histogramMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{histogramMd()}</ReactMarkdown>
       </div>
     ),
     target: '.histogram-button-wrapper',
@@ -659,11 +587,7 @@ export const TUTORIAL_STEPS = () => [
     title: t`Happy Browsing!`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={happyBrowsingMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{happyBrowsingMd()}</ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -679,11 +603,7 @@ export const TUTORIAL_STEPS_MOBILE = () => [
     title: t`Welcome To Copernicus Browser!`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown
-          children={mobileMd()}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{mobileMd()}</ReactMarkdown>
       </div>
     ),
     target: 'body',

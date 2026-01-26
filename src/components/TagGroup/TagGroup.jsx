@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './TagGroup.scss';
 import Tag from '../Tag/Tag';
 
-const TagGroup = ({ wrapMode = true, style, width = 'auto', items }) => {
+const TagGroup = ({ wrapMode = true, width = 'auto', items }) => {
   const [showEllipsis, setShowEllipsis] = useState(false);
 
   const refOuterContainer = useRef(null);
@@ -14,7 +14,7 @@ const TagGroup = ({ wrapMode = true, style, width = 'auto', items }) => {
       let totalWidth = 0;
       let containerWidth = refOuterContainer.current.clientWidth;
 
-      refChildren.current?.forEach((tag, index) => {
+      refChildren.current?.forEach((tag) => {
         totalWidth += tag?.offsetWidth + 5;
 
         if (totalWidth > containerWidth && !wrapMode) {

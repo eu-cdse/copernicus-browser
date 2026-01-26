@@ -48,7 +48,7 @@ class MouseCoordsControl extends MapControl {
 
   createLeafletElement(props) {
     const MouseCoordsControl = L.Control.extend({
-      onAdd: (map) => {
+      onAdd: () => {
         this.panelDiv = L.DomUtil.create('div', 'leaflet-control-map-coordinates no-coordinates');
         return this.panelDiv;
       },

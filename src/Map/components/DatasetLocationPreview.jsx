@@ -63,7 +63,6 @@ const getPolygonBounds = (geometry) => {
 const DatasetLocationPreview = ({
   datasetId,
   zoom,
-  datasource,
   maxCloudCover,
   orbitDirection,
   visibleOnMap,
@@ -298,7 +297,6 @@ const DatasetLocationPreview = ({
 
 const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
-  datasource: store.visualization.datasource,
   zoom: store.mainMap.zoom,
   maxCloudCover: store.visualization.cloudCoverage,
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

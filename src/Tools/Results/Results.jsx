@@ -43,7 +43,7 @@ class Results extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedTiles && prevProps.selectedTiles !== this.props.selectedTiles) {
-      this.setState((prevState) => ({
+      this.setState(() => ({
         displayModal: true,
       }));
     }
@@ -74,7 +74,7 @@ class Results extends Component {
       loadingMore: true,
     });
     await this.props.getNextNResults();
-    this.setState((prevState) => ({
+    this.setState(() => ({
       loadingMore: false,
     }));
   };

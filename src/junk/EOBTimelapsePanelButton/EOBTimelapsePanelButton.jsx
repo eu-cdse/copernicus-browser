@@ -52,7 +52,7 @@ export function EOBTimelapsePanelButton(props) {
     <div
       className={`timelapsePanelButton panelButton floatItem ${props.is3D ? 'is3d' : ''}`}
       title={title}
-      onClick={(ev) => {
+      onClick={() => {
         if (!isEnabled) {
           props.onErrorMessage(title);
           return;

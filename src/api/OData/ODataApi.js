@@ -139,8 +139,11 @@ const ODataApi = () => {
       const { data } = await axios.get(nodesUri, requestConfig);
 
       return [
-        ...data?.result?.filter((n) => n.ChildrenNumber > 0).sort((a, b) => a.Name.localeCompare(b.Name)),
-        ...data?.result?.filter((n) => n.ChildrenNumber === 0).sort((a, b) => a.Name.localeCompare(b.Name)),
+        ...(data?.result?.filter((n) => n.ChildrenNumber > 0).sort((a, b) => a.Name.localeCompare(b.Name)) ??
+          []),
+        ...(data?.result
+          ?.filter((n) => n.ChildrenNumber === 0)
+          .sort((a, b) => a.Name.localeCompare(b.Name)) ?? []),
       ];
     } catch (e) {
       if (axios.isCancel(e)) {

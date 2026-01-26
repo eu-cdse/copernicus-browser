@@ -228,7 +228,7 @@ export const fetchTransactions = async (transactionType, user) => {
 
 //fetch all user BYOC layers
 export const fetchUserBYOCLayers = async (user, instances = []) => {
-  const layersForInstancePromise = instances.map((instance, index) => {
+  const layersForInstancePromise = instances.map((instance) => {
     try {
       const headers = {
         Authorization: `Bearer ${user.access_token}`,
@@ -281,7 +281,7 @@ export const getBestMatchingLayer = (layers, collectionId, layerName) => {
 };
 
 // try to display purchased data on map
-export async function showDataOnMap(order, layer, closeCommercialData) {
+export async function showDataOnMap(order, layer) {
   const instanceId = layer.instance['@id'].substr(layer.instance['@id'].lastIndexOf('/') + 1);
 
   // It is not possible to get dates from order as order contains only list of products and geometry

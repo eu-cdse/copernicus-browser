@@ -317,7 +317,9 @@ function evaluatePixel(samples) {
   const maxIndex = ${values[values.length - 1]};
   let visVal = null;
 
-  if(index > maxIndex || index < minIndex) {
+  const isValid = samples.dataMask === 1 && index >= minIndex && index <= maxIndex;
+
+  if(!isValid) {
     visVal = [0, 0, 0, 0];
   }
   else {
@@ -326,7 +328,7 @@ function evaluatePixel(samples) {
 
   // The library for tiffs only works well if there is one channel returned.
   // So here we encode "no data" as NaN and ignore NaNs on the frontend.  
-  const indexVal = samples.dataMask === 1 ? index : NaN;
+  const indexVal = isValid ? index : NaN;
 
   return { default: visVal, index: [indexVal] };
 }`;

@@ -718,7 +718,7 @@ function TerrainViewer(props) {
           onClose();
           setDisabled(true);
         })
-        .catch((err) => {
+        .catch(() => {
           onClose();
           setDisabled(true);
         });

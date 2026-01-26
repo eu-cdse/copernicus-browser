@@ -7,7 +7,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B04", "B03", "B02"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "trueColor": {
@@ -45,7 +46,8 @@
         "spatial_extent": {},
         "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
         "bands": ["B04", "B08"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "save": {
@@ -104,7 +106,8 @@
         "id": "sentinel-2-l2a",
         "spatial_extent": {},
         "temporal_extent": null,
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "applydimension2": {
@@ -335,7 +338,8 @@
         "spatial_extent": {},
         "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
         "bands": ["B08", "B04", "B03"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -368,7 +372,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B12", "B11", "B04"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -401,7 +406,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B8A", "B11"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "save": {
@@ -453,7 +459,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B12", "B8A", "B04"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "highlight": {
@@ -534,7 +541,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B04", "B03", "B02", "B11"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "applydimension1": {
@@ -736,7 +744,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["SCL"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "color1": {

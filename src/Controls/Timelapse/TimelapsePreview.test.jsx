@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { TimelapsePreview } from './TimelapsePreview';
-import * as rrd from 'react-device-detect';
 
-beforeEach(() => {
-  rrd.isMobile = false;
-});
+// Mock react-device-detect
+jest.mock('react-device-detect', () => ({
+  isMobile: false,
+}));
 
 describe('TimelapsePreview', () => {
   // it('should render timelapse preview', () => {
@@ -52,11 +52,18 @@ describe('TimelapsePreview', () => {
     expect(document.querySelector('img')).toBeInTheDocument();
   });
 
-  it('should render shared timelapse preview mobile', () => {
-    rrd.isMobile = true;
+  it('should render shared timelapse preview mobile', async () => {
+    // Temporarily override the mock for this test
+    jest.resetModules();
+    jest.doMock('react-device-detect', () => ({
+      isMobile: true,
+    }));
+
+    // Re-import the component to get the new mock
+    const { TimelapsePreview: TimelapsePreviewMobile } = await import('./TimelapsePreview');
 
     render(
-      <TimelapsePreview
+      <TimelapsePreviewMobile
         images={[{}]}
         size={{}}
         activeImageIndex={0}

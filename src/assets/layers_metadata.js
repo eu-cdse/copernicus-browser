@@ -179,6 +179,14 @@ import {
   COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1,
   COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
   COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
+  COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5483,5 +5491,81 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2, layerId: 'TSMMEAN' }],
     description: () => t`Mean of concentration of total suspended matter (in the observation period).`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'LAFTER' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'LAFTER' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'LAFTER' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'LAFTER' },
+    ],
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'LAI' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'LAI' },
+    ],
+    description: () =>
+      t`LAI (Leaf Area Index) is defined as half the total area of green elements of the canopy per unit horizontal ground area. It is expressed in m²/m².`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'LBEFORE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'LBEFORE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'LBEFORE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'LBEFORE' },
+    ],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'NOBS' },
+    ],
+    description: () => t`Number of available valid instantaneous LAI values in the compositing window.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'RMSE' },
+    ],
+    description: () =>
+      t`RMSE is computed between the final dekadal LAI value and the available valid instantaneous values in the compositing window. It is expressed in [m²/m²].`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0, layerId: 'FAPAR' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1, layerId: 'FAPAR' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'FAPAR' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'FAPAR' },
+    ],
+    description: () => t`Fraction of Absorbed Photosynthetically Active Radiation.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0, layerId: 'LENGTH_AFTER' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1, layerId: 'LENGTH_AFTER' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'LENGTH_AFTER' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'LENGTH_AFTER' },
+    ],
+    description: () =>
+      t`Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0, layerId: 'LENGTH_BEFORE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1, layerId: 'LENGTH_BEFORE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'LENGTH_BEFORE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'LENGTH_BEFORE' },
+    ],
+    description: () =>
+      t`Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation.`,
   },
 ];

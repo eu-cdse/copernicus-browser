@@ -135,7 +135,7 @@ const Tabs = (props) => {
   const renderContent = () => {
     return props.children
       .filter((t) => t)
-      .map((panel, index) => {
+      .map((panel) => {
         return (
           <div
             onScroll={handleScrollOnSidePanel}

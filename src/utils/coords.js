@@ -8,7 +8,7 @@ export const EQUATOR_RADIUS = 6378137.0;
 
 export function isCoordsEmpty(geojsonFeature) {
   let coordsEmpty = false;
-  coordEach(geojsonFeature, (currentCoord, coordIndex, featureIndex, multiFeatureIndex, geometryIndex) => {
+  coordEach(geojsonFeature, (currentCoord) => {
     if (!currentCoord) {
       coordsEmpty = true;
     }

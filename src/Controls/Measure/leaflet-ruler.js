@@ -60,13 +60,13 @@ L.Ruler = L.LayerGroup.extend({
     },
   },
 
-  initialize: function (options) {
+  initialize: function () {
     this.initLayers();
     this.active = false;
     this.points = [];
   },
 
-  onAdd: function (map) {
+  onAdd: function () {
     this._defaultCursor = this._map._container.style.cursor;
   },
 

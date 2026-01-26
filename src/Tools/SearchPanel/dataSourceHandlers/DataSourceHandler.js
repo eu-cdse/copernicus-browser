@@ -24,7 +24,7 @@ export default class DataSourceHandler {
   defaultPreselectedDataset = null;
   limitMonthsSearch = 3;
 
-  willHandle(service, url, name, configs, preselected, onlyForBaseLayer) {
+  willHandle(_service, _url, _name, _configs, _preselected, _onlyForBaseLayer) {
     // Returns boolean, indicating if the protocol (typically WMS / WMTS) and URL are
     // supported by this class; that is, this class knows how to handle them.
     // Should remember protocol / url so it can handle the subsequent method invocations.
@@ -73,7 +73,7 @@ export default class DataSourceHandler {
     return this.fetchingFunctions;
   }
 
-  getUrlsForDataset(datasetId) {
+  getUrlsForDataset(_datasetId) {
     return [];
   }
 
@@ -113,7 +113,7 @@ export default class DataSourceHandler {
     return false;
   }
 
-  getDefaultMinQa(datasetId) {
+  getDefaultMinQa() {
     return null;
   }
 
@@ -188,7 +188,7 @@ export default class DataSourceHandler {
     return { minDate, maxDate };
   }
 
-  getTemporalResolution(datasetId) {
+  getTemporalResolution() {
     return null;
   }
 
@@ -324,17 +324,17 @@ export default class DataSourceHandler {
   supportsAnalyticalImgExport = () => true;
 
   // returns dataset specific parameters which should be used by sentinelhub-js layer to make getMap request and can't be set/overriden in UI
-  getAdditionalParamsForGetMap = (datasetId) => {};
+  getAdditionalParamsForGetMap = () => {};
 
   isSpectralExplorerSupported = () => false;
 
   getLimitMonthsSearch = () => this.limitMonthsSearch;
 
-  supportsDisplayLatestDateOnSelect = (datasetId) => false;
+  supportsDisplayLatestDateOnSelect = () => false;
 
   supportsLowResolutionAlternativeCollection = () => false;
 
-  isOnlyForBaseLayer = (datasetId) => false;
+  isOnlyForBaseLayer = () => false;
 
-  getDatasetLocationPolygons = (datasetId) => null;
+  getDatasetLocationPolygons = () => null;
 }

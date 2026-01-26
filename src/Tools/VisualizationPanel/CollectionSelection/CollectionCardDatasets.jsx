@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 
 const CollectionCardDatasets = ({ collectionGroup, selected, onSelect, defaultSelected }) => {
   const [orderedCollectionDatasets, setOrderedCollectionDatasets] = useState([]);
@@ -36,7 +37,7 @@ const CollectionCardDatasets = ({ collectionGroup, selected, onSelect, defaultSe
       </div>
       {selected.dataset === col.dataset && (
         <div className="collection-card-dataset-description">
-          <ReactMarkdown children={col.description} />
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{col.description}</ReactMarkdown>
         </div>
       )}
     </div>

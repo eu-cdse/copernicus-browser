@@ -171,7 +171,7 @@ const getDatasetIdFromParamsS1 = (params) => {
   }
 };
 
-const layerToDatasetId = async (layer, instanceId) => {
+const layerToDatasetId = async (layer) => {
   const dataset = layer.dataset.id;
   switch (dataset) {
     case DATASET_S3OLCI.id:

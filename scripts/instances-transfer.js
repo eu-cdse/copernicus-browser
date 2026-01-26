@@ -60,12 +60,12 @@ const fetchInstance = async (clients, platformsMapping, platform, ids) => {
               );
 
               const {
-                userId,
-                domainAccountId,
-                '@id': scrubbedId,
-                layers,
-                created,
-                lastUpdated,
+                userId: _userId,
+                domainAccountId: _domainAccountId,
+                '@id': _scrubbedId,
+                layers: _layers,
+                created: _created,
+                lastUpdated: _lastUpdated,
                 ...rest
               } = response.data;
 
@@ -99,7 +99,14 @@ const getLayersConfiguration = async (clients, endpoint, httpClient, instance) =
 
     return Promise.all(
       response.data.map(async (d) => {
-        const { '@id': scrubbedId, instance, lastUpdated, orderHint, datasetSource, ...rest } = d;
+        const {
+          '@id': _scrubbedId,
+          instance: _instance,
+          lastUpdated: _lastUpdated,
+          orderHint: _orderHint,
+          datasetSource,
+          ...rest
+        } = d;
         const { data } = await clients[httpClient].get(datasetSource['@id']);
 
         return {

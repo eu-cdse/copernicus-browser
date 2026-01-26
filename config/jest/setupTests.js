@@ -13,3 +13,7 @@ jest.mock('rehype-raw', () => {
 jest.mock('rehype-sanitize', () => {
   return {};
 });
+
+jest.mock('rehype-external-links', () => {
+  return {};
+});

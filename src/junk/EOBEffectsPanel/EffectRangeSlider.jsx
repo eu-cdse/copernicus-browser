@@ -40,7 +40,7 @@ const EffectRangeSlider = ({ name, min, max, step, value, onChange }) => {
             const newRange = { min: newMinRange, max: newMaxRange };
             setRange(newRange);
           }}
-          onAfterChange={(e) => {
+          onAfterChange={() => {
             onChange([range.min, range.max]);
           }}
           allowCross={false}

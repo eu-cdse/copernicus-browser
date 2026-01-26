@@ -80,7 +80,7 @@ class ThemesProvider extends React.Component {
     await this.setThemes();
   }
 
-  async privateConfigurationAlert(selectedMode, loginAsDifferentUser = false, currentThemeId) {
+  async privateConfigurationAlert(selectedMode, loginAsDifferentUser = false) {
     try {
       store.dispatch(modalSlice.actions.addModal({ modal: ModalId.PRIVATE_THEMEID_LOGIN }));
       const isUserLoggedIn = this.props.user && this.props.user.access_token;
@@ -178,7 +178,7 @@ class ThemesProvider extends React.Component {
       const isThemeIdInModeThemesList = !!allThemes.find((t) => t.id === currentThemeId);
 
       if (selectedMode.themes.length > 0 && !isThemeIdInModeThemesList && currentThemeId) {
-        await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token, currentThemeId);
+        await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token);
       }
     }
   };

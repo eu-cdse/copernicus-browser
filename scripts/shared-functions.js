@@ -24,7 +24,12 @@ export function getArrayOfInstanceIds(fullPath) {
     header: true,
     complete: (results) => {
       if (results.meta.fields.length === 1 && results.meta.fields[0] === 'INSTANCE') {
-        results.data.forEach((currentData) => instancesMap.set(currentData.INSTANCE, currentData.INSTANCE));
+        results.data.forEach((currentData) => {
+          // Filter out empty/null/undefined values
+          if (currentData.INSTANCE && currentData.INSTANCE.trim()) {
+            instancesMap.set(currentData.INSTANCE, currentData.INSTANCE);
+          }
+        });
         console.log('CSV file successfully processed.');
       } else {
         throw new Error('Use only header name INSTANCE');
@@ -35,7 +40,7 @@ export function getArrayOfInstanceIds(fullPath) {
     },
   });
 
-  return Array.from(instancesMap, ([name, value]) => value);
+  return Array.from(instancesMap, ([, value]) => value);
 }
 
 export async function createHttpClientWithCredentials(authBaseUrl, clientId, clientSecret) {
@@ -64,13 +69,23 @@ export async function createHttpClient(authBaseUrl) {
 }
 
 export async function fetchInstances(client, scriptParameters) {
-  const response = await client.get(`${SH_SERVICE_BASE_URL}/api/v2/configuration/instances`);
-  // Removes enable | disable from script parameters
+  // If specific instance IDs are provided, fetch them individually
   if (scriptParameters && scriptParameters.length > 0) {
-    return response.data.filter((utility) =>
-      scriptParameters.some((instanceName) => instanceName === utility.id),
-    );
+    const instances = [];
+    for (const instanceId of scriptParameters) {
+      try {
+        const response = await client.get(
+          `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceId}`,
+        );
+        instances.push(response.data);
+      } catch (error) {
+        console.warn(`Failed to fetch instance ${instanceId}: ${error.message}`);
+      }
+    }
+    return instances;
   } else {
+    // Fetch all instances (requires admin permissions)
+    const response = await client.get(`${SH_SERVICE_BASE_URL}/api/v2/configuration/instances`);
     return response.data;
   }
 }
@@ -87,14 +102,14 @@ export async function fetchInstancesById(client) {
 async function changeOgcRequestsState(client, instances, isOgcRequestsDisable) {
   for (const instance of instances) {
     try {
-      const { layers, ...instanceWithoutLayers } = instance;
+      const { layers: _layers, ...instanceWithoutLayers } = instance;
       instanceWithoutLayers.additionalData.disabled = isOgcRequestsDisable;
       await client.put(
         `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceWithoutLayers.id}`,
         instanceWithoutLayers,
       );
     } catch (error) {
-      throw error;
+      throw new Error(`Failed to update instance ${instance.id}: ${error.message}`);
     }
   }
 }
@@ -158,7 +173,7 @@ export async function getConfigurationLayers(client, instanceId) {
 
 export async function getCapabilities(client, instanceId) {
   const { data } = await client.get(
-    `${SH_SERVICE_BASE_URL}/ogc/wms/${instanceId}?request=GetCapabilities&format=application%2Fjson`,
+    `${SH_SERVICE_BASE_URL}/ogc/wms/${instanceId}?request=GetCapabilities&format=application%2Fjson&endpoint_filter=false`,
   );
 
   if (data && data.layers && data.layers.length) {

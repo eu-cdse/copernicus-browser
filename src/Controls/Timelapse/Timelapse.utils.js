@@ -737,7 +737,7 @@ async function addOverlays(imgBlob, bbox, overlayLayers, timelapseWidth, timelap
     );
 
     //export canvas back to blob
-    const blob = await new Promise((resolve, reject) => {
+    const blob = await new Promise((resolve) => {
       canvas.toBlob((blob) => {
         resolve(blob);
       }, 'image/jpeg');

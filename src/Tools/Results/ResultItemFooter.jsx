@@ -60,7 +60,7 @@ const openProductDetailsModal = ({ tile, downloadInProgress, onDownload }) => {
   );
 };
 
-const getFileNameWithExtensionForProductType = ({ name, productType, attributes, sensingTime }) => {
+const getFileNameWithExtensionForProductType = ({ name, productType, attributes }) => {
   const extension = ODataProductTypeExtension[productType];
 
   // Explanation for this hack: https://hello.planet.com/code/sentinel-hub/sentinel-frontend/cdse/copernicus-browser/-/issues/256
@@ -85,7 +85,6 @@ export const ResultItemFooter = ({
   downloadInProgress,
   downloadProduct,
   cancelToken,
-  isAuthenticated,
 }) => {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const accessValidation = {

@@ -34,7 +34,7 @@ const mapCollectionNamesToIds = (collections) =>
 
 // Remove unnecessary fields data before adding a layer to a configuration
 const cleanLayerData = (layer, newInstanceId) => {
-  const { lastUpdated, instanceId, ...cleanedLayerData } = layer;
+  const { lastUpdated: _lastUpdated, instanceId: _instanceId, ...cleanedLayerData } = layer;
   return {
     ...cleanedLayerData,
     instanceId: newInstanceId,
@@ -72,7 +72,7 @@ const createConfiguration = async (
   stagingCollections,
 ) => {
   try {
-    const { id, created, lastUpdated, ...cleanedConfigData } = configuration;
+    const { id: _id, created: _created, lastUpdated: _lastUpdated, ...cleanedConfigData } = configuration;
 
     const payload = {
       ...cleanedConfigData,

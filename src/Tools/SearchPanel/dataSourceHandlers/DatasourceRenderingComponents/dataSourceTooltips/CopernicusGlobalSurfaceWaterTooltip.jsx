@@ -2,6 +2,7 @@ import React from 'react';
 import { t } from 'ttag';
 import ReactMarkdown from 'react-markdown';
 import ExternalLink from '../../../../../ExternalLink/ExternalLink';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const CopernicusGlobalSurfaceWaterMarkdown = () => t`
 The **Global Surface Water** collection is derived from Landsat 5, 7 and 8 imagery and shows various aspects of the spatio-temporal distribution of surface water between 1984 and 2021 (with annual revisions) at a global scale in six different layers. Surface water is considered as any uncovered stretch of water (fresh and salt water areas) greater than 30m² visible from space, including natural and artificial water bodies. More information [here](https://collections.sentinel-hub.com/global-surface-water/).
@@ -18,7 +19,9 @@ The **Global Surface Water** collection is derived from Landsat 5, 7 and 8 image
 const CopernicusGlobalSurfaceWaterTooltip = () => (
   <div>
     <div className="data-source-group-tooltip-description">
-      <ReactMarkdown children={CopernicusGlobalSurfaceWaterMarkdown()} linkTarget="_blank" />
+      <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>
+        {CopernicusGlobalSurfaceWaterMarkdown()}
+      </ReactMarkdown>
     </div>
     <div className="data-source-group-tooltip-credits">
       <div>{t`Credits:`}</div>

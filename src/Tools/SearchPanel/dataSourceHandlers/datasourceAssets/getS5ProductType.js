@@ -15,7 +15,7 @@ import {
   S5_O3_CDAS,
   S5_SO2,
   S5_SO2_CDAS,
-} from '../dataSourceConstants';
+} from '../dataSourceConstants.js';
 
 // function is used by Sentinel5PDataSourceHandler and update-previews
 export const getS5ProductType = (datasetId) => {

@@ -40,7 +40,6 @@ const ResultsCard = ({
   user,
   aoi,
   mapBounds,
-  currentZoom,
   areaAndTimeSection,
   providerSection,
   advancedSection,
@@ -55,7 +54,7 @@ const ResultsCard = ({
   const [requestInProgress, setHttpRequest] = useRRDHttpRequest();
   const [previewImageUrl, setPreviewImageUrl] = useState(null);
 
-  const openProductDetailsModal = ({ tile, downloadInProgress, onDownload }) => {
+  const openProductDetailsModal = ({ downloadInProgress, onDownload }) => {
     store.dispatch(searchResultsSlice.actions.setSelectedResult(item));
     store.dispatch(
       modalSlice.actions.addModal({
@@ -98,12 +97,7 @@ const ResultsCard = ({
       // 2. Try thumbnail first (if available)
       const thumbnailHref = item.assets?.thumbnail?.href;
       if (thumbnailHref) {
-        const thumbnailUrl = await fetchThumbnailImage(
-          item,
-          user.access_token,
-          providerSection.imageType,
-          isTaskingEnabled,
-        );
+        const thumbnailUrl = await fetchThumbnailImage(item, user.access_token);
         if (thumbnailUrl) {
           onImageLoad(item._internalId + '_thumbnail', thumbnailUrl);
           setPreviewImageUrl(thumbnailUrl);
@@ -467,7 +461,6 @@ const mapStoreToProps = (store) => ({
   anonToken: store.auth.anonToken,
   aoi: store.aoi,
   mapBounds: store.mainMap.bounds,
-  currentZoom: store.mainMap.zoom,
   areaAndTimeSection: store.areaAndTimeSection,
   providerSection: store.imageQualityAndProviderSection,
   advancedSection: store.advancedSection,

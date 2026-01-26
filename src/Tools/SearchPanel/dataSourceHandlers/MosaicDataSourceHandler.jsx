@@ -224,7 +224,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     return this.MIN_MAX_DATES[collectionId];
   }
 
-  getLayers = (data, datasetId, url, layersExclude, layersInclude) => {
+  getLayers = (data, datasetId, url, _layersExclude, _layersInclude) => {
     let layers = data.filter((layer) => layer.collectionId === datasetId && filterLayers(layer.layerId));
     layers.forEach((l) => {
       l.url = url;
@@ -350,7 +350,7 @@ function evaluatePixel(sample) {
     return Object.values(this.KNOWN_COLLECTIONS).flat();
   }
 
-  supportsDisplayLatestDateOnSelect = (datasetId) => true;
+  supportsDisplayLatestDateOnSelect = () => true;
 
   supportsLowResolutionAlternativeCollection = (collectionId) => {
     return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];

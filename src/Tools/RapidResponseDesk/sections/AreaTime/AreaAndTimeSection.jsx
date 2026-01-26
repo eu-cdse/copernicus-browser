@@ -215,7 +215,7 @@ const AreaAndTimeSection = ({
 
   const closeAllCalendarDialogs = () => {
     setTimespanArray((prevState) => {
-      return prevState.map((item, index) => ({
+      return prevState.map((item) => ({
         ...item,
         displayCalendarFrom: false,
         displayCalendarTo: false,

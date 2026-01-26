@@ -2,7 +2,6 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 
-import ExternalLink from '../../ExternalLink/ExternalLink';
 import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPanel';
 
 import PencilIcon from './icons/pencil-icon.svg?react';
@@ -50,13 +49,7 @@ class Description extends React.Component {
         ) : content === '' || !content ? (
           <NotificationPanel type="info" msg={t`This pin currently has no description.`} />
         ) : (
-          <ReactMarkdown
-            rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-            children={content || ''}
-            components={{
-              link: (props) => <ExternalLink href={props.href}>{props.children}</ExternalLink>,
-            }}
-          />
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{content || ''}</ReactMarkdown>
         )}
         <div className="description-edit-controls">
           {this.state.editing ? (

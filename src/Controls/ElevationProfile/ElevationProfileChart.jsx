@@ -17,7 +17,7 @@ const getFrameProps = ({ data, width, height }) => {
 
     xAccessor: (d) => d.distance,
     yAccessor: (d) => d.elevation,
-    lineStyle: (d) => {
+    lineStyle: () => {
       return {
         stroke: mainDarkest,
         strokeWidth: 1,

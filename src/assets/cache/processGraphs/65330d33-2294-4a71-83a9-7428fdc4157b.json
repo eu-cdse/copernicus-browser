@@ -7,7 +7,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B04", "B03", "B02"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "save": {
@@ -67,7 +68,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B08", "B04", "B03"],
-        "resampling": "BICUBIC"
+        "upsampling": "BICUBIC",
+        "downsampling": "BICUBIC"
       }
     },
     "save": {
@@ -122,7 +124,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B04", "B08"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "save": {
@@ -188,7 +191,8 @@
         },
         "temporal_extent": ["2025-01-01T00:00:00.000Z", "2025-01-01T23:59:59.999Z"],
         "bands": ["B03", "B08"],
-        "resampling": "NEAREST"
+        "upsampling": "NEAREST",
+        "downsampling": "NEAREST"
       }
     },
     "index": {

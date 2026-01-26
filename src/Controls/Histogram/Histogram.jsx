@@ -11,6 +11,8 @@ class Histogram extends Component {
   }
 
   render() {
+    const histogramData = this.props.data || [];
+
     const semioticProps = {
       size: [520, 300],
       oAccessor: 'value',
@@ -25,8 +27,11 @@ class Histogram extends Component {
           orient: 'bottom',
           ticks: 5,
           tickFormat: (d) => {
-            const pos = Math.round((this.props.data.length - 1) * d);
-            return this.props.data[pos].value.toFixed(3);
+            if (!histogramData || histogramData.length === 0) {
+              return '';
+            }
+            const pos = Math.round((histogramData.length - 1) * d);
+            return histogramData[pos].value.toFixed(3);
           },
           label: t`Value`,
           dynamicLabelPosition: true,
@@ -35,11 +40,11 @@ class Histogram extends Component {
 
       hoverAnnotation: true,
       tooltipContent: (d) => d.column.name,
-      margin: { bottom: 50, left: 90, top: 30, right: 30 }, // otherwise axis labels are clipped on edges
+      margin: { bottom: 60, left: 90, top: 30, right: 50 }, // otherwise axis labels are clipped on edges
     };
     return (
       <div className="histogram">
-        <OrdinalFrame {...semioticProps} data={this.props.data} />
+        <OrdinalFrame {...semioticProps} data={histogramData} />
       </div>
     );
   }

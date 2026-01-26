@@ -16,7 +16,7 @@ class Measure extends Component {
     L.DomEvent.disableScrollPropagation(this.ref);
     L.DomEvent.disableClickPropagation(this.ref);
     this.ruler = L.ruler().addTo(this.props.map);
-    this.props.map.on('measure:startMeasure', (e) => {
+    this.props.map.on('measure:startMeasure', () => {
       this.setState({ isMeasuring: true, distance: null, area: null });
     });
     this.props.map.on('measure:move', (e) => {
@@ -28,7 +28,7 @@ class Measure extends Component {
     this.props.map.on('measure:finish', (e) => {
       this.setState({ distance: e.distance, area: e.area });
     });
-    this.props.map.on('measure:removed', (e) => {
+    this.props.map.on('measure:removed', () => {
       this.setState({ isMeasuring: false, distance: null, area: null });
     });
   }

@@ -79,7 +79,7 @@ class SearchPanel extends Component {
   };
 
   setTimeFrom = (selectedFromMoment) => {
-    this.setState((oldState) => {
+    this.setState(() => {
       let newState = {
         fromMoment: selectedFromMoment.clone().startOf('day'),
       };
@@ -88,7 +88,7 @@ class SearchPanel extends Component {
   };
 
   setTimeTo = (selectedToMoment) => {
-    this.setState((oldState) => {
+    this.setState(() => {
       let newState = {
         toMoment: selectedToMoment.clone().endOf('day'),
       };
@@ -152,7 +152,7 @@ class SearchPanel extends Component {
   backToSearch = () => {
     this.props.resetSearch();
     this.setState(
-      (prevState) => ({
+      () => ({
         resultsPanelSelected: false,
       }),
       this.props.shouldDisplayTileGeometries(false),

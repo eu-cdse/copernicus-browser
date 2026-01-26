@@ -47,6 +47,7 @@ import { recursiveCollections } from './collectionFormConfig';
 import RecursiveCollectionForm from './RecursiveCollectionForm';
 import { AttributeNames } from '../../../../api/OData/assets/attributes';
 import { ODataCollections } from '../../../../api/OData/ODataTypes';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 
 const ErrorCode = {
   noProductsFound: 'noProductsFound',
@@ -833,7 +834,12 @@ class AdvancedSearch extends Component {
             <EOBButton loading={searchInProgress} onClick={this.doSearch} fluid text={t`Search`} />
           </div>
           {error ? (
-            <NotificationPanel msg={<ReactMarkdown children={error.message}></ReactMarkdown>} type="error" />
+            <NotificationPanel
+              msg={
+                <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{error.message}</ReactMarkdown>
+              }
+              type="error"
+            />
           ) : null}
         </div>
       </>

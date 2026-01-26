@@ -18,8 +18,8 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsconfig: {
-        module: 'es2020',
-        target: 'es2020',
+        module: 'es2022',
+        target: 'es2022',
         jsx: 'react-jsx',
       },
     },

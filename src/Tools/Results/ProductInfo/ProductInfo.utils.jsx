@@ -9,6 +9,7 @@ import BrowseProduct from '../BrowseProduct/BrowseProduct';
 import { ErrorMessage } from '../ResultItem';
 import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { LANDSAT_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/landsatAccessRightsConfig';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../rehypeConfig';
 
 export const commonProductAttributes = [
   'name',
@@ -25,7 +26,7 @@ export const getAllProductAttributes = (product) => {
     ...commonProductAttributes
       .map((key) => ({ key: key, value: product[key] }))
       .filter((attr) => !(attr.key === 'size' && attr.value === '0MB')),
-    ...product?.attributes.map((attr) => ({
+    ...(product?.attributes ?? []).map((attr) => ({
       key: attr.Name,
       value: attr.Value,
     })),
@@ -96,7 +97,9 @@ export const productAttributesSections = [
 
       if (errorMessage) {
         return (
-          <div className="error-message">{<ReactMarkdown children={errorMessage} linkTarget="_blank" />}</div>
+          <div className="error-message">
+            {<ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{errorMessage}</ReactMarkdown>}
+          </div>
         );
       }
 

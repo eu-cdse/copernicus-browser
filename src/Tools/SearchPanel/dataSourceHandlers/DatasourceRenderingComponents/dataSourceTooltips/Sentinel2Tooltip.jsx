@@ -4,6 +4,7 @@ import { t } from 'ttag';
 import { DATASOURCES } from '../../../../../const';
 import { credits } from './credits';
 import DataSourceTooltip from './DataSourceTooltip';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const getSentinel2Markdown = () => t`
 **Sentinel-2** provides high-resolution images in the visible and infrared wavelengths, to monitor vegetation, soil and water cover, inland waterways and coastal areas.
@@ -31,9 +32,13 @@ const Sentinel2Tooltip = () =>
     credits: credits[DATASOURCES.S2_CDAS],
   });
 
-const S2L2ATooltip = () => <ReactMarkdown children={getS2L2AMarkdown()} />;
+const S2L2ATooltip = () => (
+  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS2L2AMarkdown()}</ReactMarkdown>
+);
 
-const S2L1CTooltip = () => <ReactMarkdown children={getS2L1CMarkdown()} />;
+const S2L1CTooltip = () => (
+  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS2L1CMarkdown()}</ReactMarkdown>
+);
 
 export {
   Sentinel2Tooltip,

@@ -109,7 +109,7 @@ const addLayerToCollection = async (instanceId, layerData, token) => {
 };
 
 const cleanLayerData = (layer, newInstanceId) => {
-  const { lastUpdated, instanceId, ...cleanedLayerData } = layer;
+  const { lastUpdated: _lastUpdated, instanceId: _instanceId, ...cleanedLayerData } = layer;
   return {
     ...cleanedLayerData,
     instanceId: newInstanceId,
@@ -122,7 +122,7 @@ const cleanLayerData = (layer, newInstanceId) => {
 
 const createConfiguration = async (token, parentConfig, newCollection) => {
   // 1. Prepare new configuration data (remove fields that shouldn't be copied)
-  const { id, created, lastUpdated, ...configData } = parentConfig;
+  const { id: _id, created: _created, lastUpdated: _lastUpdated, ...configData } = parentConfig;
   configData.name = newCollection.name;
   // Optionally update the name or other fields here if needed
 

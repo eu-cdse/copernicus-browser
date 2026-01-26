@@ -15,8 +15,8 @@ import {
 import { exit } from 'process';
 import fs from 'fs';
 import { DEFAULT_THEMES } from '../src/assets/default_themes.js';
-import { filterLayers } from '../src/Tools/SearchPanel/dataSourceHandlers/filter';
-import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType';
+import { filterLayers } from '../src/Tools/SearchPanel/dataSourceHandlers/filter.js';
+import { getS5ProductType } from '../src/Tools/SearchPanel/dataSourceHandlers/datasourceAssets/getS5ProductType.js';
 import { md5 } from 'js-md5';
 import dotenv from 'dotenv';
 import { getAuthToken } from './utils/auth.js';
@@ -34,6 +34,14 @@ const scriptParameters = process.argv.slice(2);
 
 const BBOX_SIZE = 0.03;
 const interestingBBoxes = [
+  // Central Europe - good coverage for CLMS data
+  new BBox(CRS_EPSG4326, 14.4, 50.08, 14.4 + BBOX_SIZE * 8, 50.08 + BBOX_SIZE * 8), // Prague, Czech Republic
+  new BBox(CRS_EPSG4326, 11.5, 48.1, 11.5 + BBOX_SIZE * 8, 48.1 + BBOX_SIZE * 8), // Bavaria, Germany
+  new BBox(CRS_EPSG4326, 14.5, 46.05, 14.5 + BBOX_SIZE * 8, 46.05 + BBOX_SIZE * 8), // Slovenia/Austria
+  new BBox(CRS_EPSG4326, 19.05, 47.5, 19.05 + BBOX_SIZE * 8, 47.5 + BBOX_SIZE * 8), // Hungary
+  new BBox(CRS_EPSG4326, 16.37, 48.2, 16.37 + BBOX_SIZE * 8, 48.2 + BBOX_SIZE * 8), // Vienna, Austria
+
+  // legacy interesting boxes for other datasets:
   new BBox(CRS_EPSG4326, -4.24, 57.5, -4.24 + BBOX_SIZE, 57.5 + BBOX_SIZE), // S-1 GRD SM HH+HV
   new BBox(CRS_EPSG4326, 15, 45.95, 15 + BBOX_SIZE, 45.95 + BBOX_SIZE),
 
@@ -124,6 +132,12 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
   }
 
   await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.ENABLE, httpClient);
+
+  // Wait for OGC requests to be fully enabled (propagation delay)
+  if (csvFullPath) {
+    console.log('Waiting 5 seconds for OGC request state to propagate...');
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+  }
 
   // fetch new previews:
   let previews = [];

@@ -34,7 +34,7 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected, onlyForBaseLayer) {
+  willHandle(service, url, name, layers, preselected, _onlyForBaseLayer) {
     const usesL8L9Dataset = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_L8_L9_LOTL1.id);
 
     if (!usesL8L9Dataset) {
@@ -160,7 +160,7 @@ export default class LandsatDataSourceHandler extends DataSourceHandler {
     return false;
   }
 
-  getSupportedImageFormats(datasetId) {
+  getSupportedImageFormats() {
     return Object.values(IMAGE_FORMATS);
   }
 

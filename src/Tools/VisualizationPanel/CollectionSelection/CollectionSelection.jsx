@@ -144,7 +144,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
       return false;
     };
 
-    function setValue({ label, value, type, parentDataset }) {
+    const setValue = ({ value, type, parentDataset }) => {
       if (type === 'datasource') {
         onSelect({
           datasource: value,
@@ -160,7 +160,7 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
         });
         store.dispatch(clmsSlice.actions.setSelectedCollection(value));
       }
-    }
+    };
 
     const value = options.find((o) => o.value === selectedCollection.datasource);
     return (
@@ -208,7 +208,6 @@ const CollectionSelection = ({
   bounds,
   showLayerPanel,
   setShowLayerPanel,
-  shouldShowLayerList,
   showHighlightPanel,
   setShowHighlightPanel,
   highlightsAvailable,
@@ -222,7 +221,6 @@ const CollectionSelection = ({
   pixelBounds,
   maxCloudCover,
   user,
-  layerId,
 }) => {
   const [advanced] = useState(false);
   const [selectedCollection, setSelected] = useState({});
@@ -312,7 +310,7 @@ const CollectionSelection = ({
     return <>{renderCollections(collectionGroups, selectedCollection, onSelect, isExpanded, user)}</>;
   };
 
-  const renderCollectionSelectionTitle = (collectionGroups, selectedCollection, onSelect) => {
+  const renderCollectionSelectionTitle = (collectionGroups, selectedCollection) => {
     const selectedCollectionGroup = collectionGroups.find(
       (d) => d.datasource === selectedCollection.datasource,
     );
@@ -399,7 +397,7 @@ const CollectionSelection = ({
           />
         )
       }
-      title={renderCollectionSelectionTitle(collectionGroups, selectedCollection, onSelect)}
+      title={renderCollectionSelectionTitle(collectionGroups, selectedCollection)}
       expanded={collectionPanelExpanded}
       toggleExpanded={(v) => store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(v))}
       className="collection-selection-container"
@@ -419,7 +417,6 @@ const mapStoreToProps = (store) => ({
   collectionPanelExpanded: store.collapsiblePanel.collectionPanelExpanded,
   maxCloudCover: store.visualization.cloudCoverage,
   user: store.auth.user,
-  layerId: store.visualization.layerId,
 });
 
 export default connect(mapStoreToProps, null)(CollectionSelection);

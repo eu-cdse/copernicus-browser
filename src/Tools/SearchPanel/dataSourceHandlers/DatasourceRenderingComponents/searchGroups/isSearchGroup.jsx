@@ -24,7 +24,7 @@ export const isSearchGroup = (WrappedComponent) => {
     };
 
     render() {
-      const { label, preselected, dataSourceTooltip, ...passThroughProps } = this.props;
+      const { label, dataSourceTooltip, ...passThroughProps } = this.props;
       const { checked } = this.state;
 
       return (

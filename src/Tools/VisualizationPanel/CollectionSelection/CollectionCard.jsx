@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 import './CollectionCard.scss';
 import CollectionCardDatasets from './CollectionCardDatasets';
@@ -27,7 +28,9 @@ export const CollectionCard = ({ collectionGroup, selected, onSelect, defaultSel
         <i className="fas fa-arrow-right"></i>
       </div>
       <div className="collection-card-description" onClick={onCardSelect}>
-        <ReactMarkdown children={isCardExpanded ? cardDescription : cardDescription.split('\n\n')[0]} />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>
+          {isCardExpanded ? cardDescription : cardDescription.split('\n\n')[0]}
+        </ReactMarkdown>
       </div>
       <div className="collection-card-dataset-wrapper">
         {isCardExpanded && (

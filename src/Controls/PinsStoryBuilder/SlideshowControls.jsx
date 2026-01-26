@@ -39,7 +39,7 @@ export default class SlideshowControls extends React.Component {
           onBeforeChange={stopPlay}
           onChange={onSlideshowIndexChange}
           value={slideshowIndex}
-          tipFormatter={(value) => currentSlideLabel}
+          tipFormatter={() => currentSlideLabel}
           className="timeline-slider"
         />
 

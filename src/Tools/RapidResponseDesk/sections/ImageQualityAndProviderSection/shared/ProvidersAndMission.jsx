@@ -47,7 +47,7 @@ const ProvidersAndMission = ({
     const provider = providersAndMissions.find((provider) => provider.id === selectedProvider.id);
     const currentMissions = provider?.missions?.find((mission) => mission.id === selectedMission.id);
 
-    let newArray = provider?.missions ? [...provider?.missions] : [];
+    let newArray = provider?.missions ? [...provider.missions] : [];
     if (currentMissions) {
       newArray = newArray.filter((mission) => mission.id !== selectedMission.id);
     } else {

@@ -139,7 +139,7 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
 
   supportsFindProductsForCurrentView = (datasetId) => this.SUPPORTS_FIND_PRODUCTS_FOR_CURRENT_VIEW[datasetId];
 
-  areBandsClasses = (datasetId) => {
+  areBandsClasses = () => {
     return false;
   };
 
@@ -149,7 +149,7 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
 
   supportsInterpolation = () => true;
 
-  getSupportedImageFormats(datasetId) {
+  getSupportedImageFormats() {
     return Object.values(IMAGE_FORMATS);
   }
 

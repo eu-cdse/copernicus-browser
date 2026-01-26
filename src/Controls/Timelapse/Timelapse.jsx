@@ -522,31 +522,27 @@ class Timelapse extends Component {
         }
       }
 
-      await new Promise(async (resolve) => {
-        await getTimelapsePreviewsFromTerrainViewer({
-          containerId: 'terrain-map-container',
-          z: z,
-          rotV: rotV,
-          sunTime: sunTime,
-          settings: settings,
-          images: imagesToFetch,
-          getMapParams: {
-            ...this.props,
-            format: MimeTypes.JPEG,
-          },
-          width: size.width,
-          height: size.height,
-          reqConfig: {
-            cancelToken: this.cancelToken,
-          },
-          callback: (img, flyover) =>
-            this.onImageLoad({ img: img, flyover: flyover, setDeferredImages: true }),
-          progress: (percent) => {
-            this.updateFetchAndEncodeProgress(percent, true);
-          },
-          timelapseTerrainViewerId: terrainViewerId,
-        });
-        resolve();
+      await getTimelapsePreviewsFromTerrainViewer({
+        containerId: 'terrain-map-container',
+        z: z,
+        rotV: rotV,
+        sunTime: sunTime,
+        settings: settings,
+        images: imagesToFetch,
+        getMapParams: {
+          ...this.props,
+          format: MimeTypes.JPEG,
+        },
+        width: size.width,
+        height: size.height,
+        reqConfig: {
+          cancelToken: this.cancelToken,
+        },
+        callback: (img, flyover) => this.onImageLoad({ img: img, flyover: flyover, setDeferredImages: true }),
+        progress: (percent) => {
+          this.updateFetchAndEncodeProgress(percent, true);
+        },
+        timelapseTerrainViewerId: terrainViewerId,
       });
     } else {
       await Promise.all(

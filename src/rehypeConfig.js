@@ -1,5 +1,6 @@
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import rehypeExternalLinks from 'rehype-external-links';
 
 // setting React Markdown plugins:
 // https://github.com/remarkjs/react-markdown?tab=readme-ov-file#use-remark-and-rehype-plugins-math
@@ -13,4 +14,5 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 export const REACT_MARKDOWN_REHYPE_PLUGINS = [
   rehypeRaw,
   [rehypeSanitize, { ...defaultSchema, attributes: { ...defaultSchema?.attributes, '*': ['className'] } }],
+  [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }],
 ];

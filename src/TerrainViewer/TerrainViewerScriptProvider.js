@@ -17,7 +17,7 @@ export default function TerrainViewerScriptProvider({ children }) {
     window.set3DTheme('CDSE');
 
     // Set up default object interaction handler
-    window.on3DObjectInteraction = (viewerId, x, y, z, longitude, latitude, distance, isClicked) => {
+    window.on3DObjectInteraction = () => {
       // You can customize this handler based on your needs
     };
   }

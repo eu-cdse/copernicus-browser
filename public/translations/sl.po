@@ -11087,3 +11087,94 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/water-bodies/lake-water-"
 "quality-v2-0-100m)."
 msgstr ""
+
+msgid "Fraction of Absorbed Photosynthetically Active Radiation."
+msgstr ""
+
+msgid ""
+"Length of semi-period after product date on Fraction of Absorbed "
+"Photosynthetically Active Radiation."
+msgstr ""
+
+msgid ""
+"Length of semi-period before product date on Fraction of Absorbed "
+"Photosynthetically Active Radiation."
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V2"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V2 RT1"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V2 RT2"
+msgstr ""
+
+msgid "FAPAR 300m 10-daily V2 RT6"
+msgstr ""
+
+msgid ""
+"Length of the semi-period after the dekadal date of the compositing window "
+"[days]."
+msgstr ""
+
+msgid ""
+"LAI (Leaf Area Index) is defined as half the total area of green elements "
+"of the canopy per unit horizontal ground area. It is expressed in m²/m²."
+msgstr ""
+
+msgid ""
+"Length of the semi-period before the dekadal date of the compositing window "
+"[days]."
+msgstr ""
+
+msgid ""
+"Number of available valid instantaneous LAI values in the compositing "
+"window."
+msgstr ""
+
+msgid ""
+"RMSE is computed between the final dekadal LAI value and the available "
+"valid instantaneous values in the compositing window. It is expressed in "
+"[m²/m²]."
+msgstr ""
+
+msgid "LAI 300m 10-daily V2"
+msgstr ""
+
+msgid "LAI 300m 10-daily V2 RT1"
+msgstr ""
+
+msgid "LAI 300m 10-daily V2 RT2"
+msgstr ""
+
+msgid "LAI 300m 10-daily V2 RT6"
+msgstr ""
+
+msgid "LAI 300m 10-daily V2 RT0"
+msgstr ""
+
+msgid ""
+"Provides information about Leaf Area Index, defined as half the total area "
+"of green elements of the canopy per unit horizontal ground area. Every "
+"10-days estimates are available at global scale in the spatial resolution "
+"of ~300 m from January 2014 to the present. More information "
+"[here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-"
+"0-300m).\n"
+"\n"
+"*Please note that the temporal extent varies between RT versions: RT0 is "
+"available from 2025-09-10 to present, RT1 is available from 2025-08-31 to "
+"present, RT2 is available from 2025-08-20 to present, and RT6 is available "
+"from 2014-01-10 to present."
+msgstr ""
+
+msgid ""
+"Quantifies the fraction of the solar radiation absorbed by live plants for "
+"photosynthesis. Every 10-days estimates are available in near real time at "
+"global scale in the spatial resolution of about 300 m.\n"
+"\n"
+"*Please note that the temporal extent varies between RT versions: RT0 is "
+"available from 2025-09-10 to present, RT1 is available from 2025-08-31 to "
+"present, RT2 is available from 2025-08-20 to present, and RT6 is available "
+"from 2014-01-10 to present."
+msgstr ""

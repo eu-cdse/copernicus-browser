@@ -96,7 +96,7 @@ class FIS extends Component {
     this.fetchFISData(fromTime, this.state.toTime);
   }
 
-  fetchFISData = async (fromTime, toTime) => {
+  fetchFISData = async (fromTime) => {
     if (!fromTime.isBefore(this.availableData.fromTime)) {
       return;
     }
@@ -177,7 +177,9 @@ class FIS extends Component {
               }
             });
           }
-        } catch (e) {}
+        } catch (e) {
+          // do nothing
+        }
 
         this.handleRequestError(`${getErrorFetchingDataMsg()}. ${Array.from(errors).join(' ')}`);
         break;
@@ -309,7 +311,7 @@ class FIS extends Component {
       // prettier-ignore
       const currentLineData = {
         title: channelId,
-        coordinates: validStats.map((stat, index) => ({  // eslint-disable-line no-loop-func
+        coordinates: validStats.map((stat) => ({  // eslint-disable-line no-loop-func
           date: stat.date,
           seriesIndex,
           ...stat.basicStats,
@@ -551,7 +553,7 @@ class FIS extends Component {
     );
   }
 
-  getTooltipContent(dataPoint, drawDistribution) {
+  getTooltipContent(dataPoint) {
     return (
       <div>
         <div>{moment(dataPoint.date).format('ddd, DD. MMM YYYY')}</div>

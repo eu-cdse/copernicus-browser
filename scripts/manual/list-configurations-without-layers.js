@@ -47,7 +47,7 @@ const listConfigurationsWithoutLayers = async () => {
 
     // Check for repeated configuration names
     const repeatedNames = Object.entries(nameCount)
-      .filter(([name, count]) => count > 1)
+      .filter(([, count]) => count > 1)
       .map(([name, count]) => ({ name, count }));
 
     console.log('\n=== Configurations WITHOUT layers ===');

@@ -89,7 +89,7 @@ export default class CCMDataSourceHandler extends DataSourceHandler {
     },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers) {
     let handlesAny = false;
 
     for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
@@ -247,7 +247,7 @@ export default class CCMDataSourceHandler extends DataSourceHandler {
 
   supportsFindProductsForCurrentView = () => true;
 
-  areBandsClasses = (datasetId) => {
+  areBandsClasses = () => {
     return false;
   };
 

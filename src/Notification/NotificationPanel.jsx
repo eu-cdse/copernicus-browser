@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../rehypeConfig';
 
 import './NotificationPanel.scss';
 
@@ -26,7 +27,11 @@ export const NotificationPanel = ({ type, msg, className, children }) => {
       {icon && <i className={`fas fa-${icon}`} />}
 
       {paragraphs &&
-        paragraphs.map((item, i) => <ReactMarkdown key={i} children={item} linkTarget="_blank" />)}
+        paragraphs.map((item, i) => (
+          <ReactMarkdown key={i} rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>
+            {item}
+          </ReactMarkdown>
+        ))}
 
       {children && <p>{children}</p>}
     </div>

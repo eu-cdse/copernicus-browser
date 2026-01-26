@@ -32,7 +32,7 @@ export default class AbstractRRDDataSourceHandler extends DataSourceHandler {
     CUSTOM: { min: 0, max: 25 },
   };
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, _preselected) {
     let handlesAny = false;
 
     for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
@@ -175,7 +175,7 @@ export default class AbstractRRDDataSourceHandler extends DataSourceHandler {
     return { minDate: null, maxDate: null };
   }
 
-  getLayers = (data, datasetId, url, layersExclude, layersInclude) => {
+  getLayers = (data, datasetId, url, _layersExclude, _layersInclude) => {
     let layers = data.filter((layer) => layer.collectionId === datasetId && filterLayers(layer.layerId));
     layers.forEach((l) => {
       l.url = url;

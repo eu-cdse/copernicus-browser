@@ -132,7 +132,7 @@ const Radar = ({
         <MultiSelectInput
           input={{
             id: 'polarization-options',
-            getOptions: (userToken) => polarizationFilterOptions,
+            getOptions: () => polarizationFilterOptions,
             selectionLimit: isTaskingEnabled ? 1 : undefined,
           }}
           titleEnabled={false}
@@ -162,7 +162,7 @@ const Radar = ({
         <MultiSelectInput
           input={{
             id: 'instrument-filters-options',
-            getOptions: (_) => instrumentFilterOptionsCalculated,
+            getOptions: () => instrumentFilterOptionsCalculated,
             selectionLimit: isTaskingEnabled ? 1 : undefined,
           }}
           titleEnabled={false}
@@ -179,7 +179,7 @@ const Radar = ({
       <div className="orbit-direction-container">
         <label className="orbit-direction-label-text">{`${t`Orbit direction`}:`}</label>
         <MultiSelectInput
-          input={{ id: 'orbit-direction-options', getOptions: (_) => orbitDirectionOptions }}
+          input={{ id: 'orbit-direction-options', getOptions: () => orbitDirectionOptions }}
           titleEnabled={false}
           value={radarOrbitDirectionArray}
           inputStyle={{ minWidth: '40px' }}

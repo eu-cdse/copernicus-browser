@@ -24,7 +24,6 @@ const FindProductsButton = ({
   orbitDirection,
   mapBounds,
   aoiBounds,
-  selectedLanguage,
   userToken,
   maxCC,
   hasProductsWithinSelectedRange,
@@ -160,7 +159,6 @@ const mapStoreToProps = (store) => ({
   orbitDirection: store.visualization.orbitDirection,
   mapBounds: store.mainMap.bounds,
   aoiBounds: store.aoi.bounds,
-  selectedLanguage: store.language.selectedLanguage,
   userToken: store.auth.user.access_token,
   maxCC: store.visualization.cloudCoverage,
 });

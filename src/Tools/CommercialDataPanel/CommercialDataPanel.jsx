@@ -35,6 +35,7 @@ import store, { commercialDataSlice } from '../../store';
 import moment from 'moment';
 import { usePrevious } from '../../hooks/usePrevious';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 export const Tabs = {
   SEARCH_OPTIONS: 0,
@@ -117,7 +118,7 @@ const pageSize = {
   [TPDICollections.MAXAR_WORLDVIEW]: 50,
 };
 
-const getCommercialHelpText = (quotas) => t`
+const getCommercialHelpText = () => t`
 **General**  
 The "Commercial data" tab allows you to search, purchase, and visualise Commercial Third-Party data.
 
@@ -480,7 +481,7 @@ const CommercialDataPanel = ({
         toggleOpen={() => toggleAccordion(Tabs.HELP)}
         disabled={true}
       >
-        <ReactMarkdown children={getCommercialHelpText(quotas)} />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getCommercialHelpText()}</ReactMarkdown>
       </Accordion>
       {confirmAction ? (
         <ConfirmationDialog confirmAction={confirmAction} setConfirmAction={setConfirmAction} />

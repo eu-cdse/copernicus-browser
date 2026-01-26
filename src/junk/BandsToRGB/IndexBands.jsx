@@ -13,6 +13,7 @@ import { parseIndexEvalscript } from '../../utils';
 import './BandsToRGB.scss';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 export const GRADIENTS = [
   ['0x000000', '0xffffff'],
@@ -39,7 +40,7 @@ which uses the near-infrared and red bands or the Normalized Difference Water In
 which uses the near-infrared and shortwave infrared bands.\n\nMore info [here](${link1}) or [here](${link2}).
 `;
 
-export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) => {
+export const IndexBands = ({ bands, layers, onChange, evalscript }) => {
   const [equation, setEquation] = React.useState(EQUATIONS[0]);
   const [values, setValues] = React.useState(DEFAULT_VALUES); //
   const [min, setMin] = React.useState(DEFAULT_DOMAIN.min);
@@ -200,7 +201,7 @@ export const IndexBands = ({ bands, layers, onChange, evalscript, datasetId }) =
       <div className="help-text-container">
         <span>{t`Drag bands into the index equation`}</span>
         <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-          <ReactMarkdown linkTarget="_blank">{getTooltipContent()}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getTooltipContent()}</ReactMarkdown>
         </HelpTooltip>
       </div>
       <div className="colors-container">

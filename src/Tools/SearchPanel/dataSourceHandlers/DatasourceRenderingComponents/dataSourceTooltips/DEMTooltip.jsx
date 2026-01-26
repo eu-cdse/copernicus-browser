@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 import DataSourceTooltip from './DataSourceTooltip';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const COPERNICUS_CREDITS_URL =
   'https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model';
@@ -21,9 +22,15 @@ const DEMTooltip = () =>
     source: getDEMMarkdown(),
   });
 
-const MapzenTooltip = () => <ReactMarkdown children={getMapzenMarkdown()} />;
-const Copernicus30Tooltip = () => <ReactMarkdown children={getCopernicus30Markdown()} />;
-const Copernicus90Tooltip = () => <ReactMarkdown children={getCopernicus90Markdown()} />;
+const MapzenTooltip = () => (
+  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getMapzenMarkdown()}</ReactMarkdown>
+);
+const Copernicus30Tooltip = () => (
+  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getCopernicus30Markdown()}</ReactMarkdown>
+);
+const Copernicus90Tooltip = () => (
+  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getCopernicus90Markdown()}</ReactMarkdown>
+);
 
 export {
   DEMTooltip,

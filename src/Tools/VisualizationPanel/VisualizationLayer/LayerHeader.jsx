@@ -10,7 +10,7 @@ import { isOpenEoSupported } from '../../../api/openEO/openEOHelpers';
 
 const EMPTY_IMAGE_DATA_URI = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
-const getIconSrc = (selectedThemeId, viz, datasetId) => {
+const getIconSrc = (selectedThemeId, viz) => {
   const { instanceId, url } = viz;
   const urlHash = instanceId ? instanceId.substr(0, 6) : md5(url).substr(0, 8);
   let layerId = viz.layerId;
@@ -36,7 +36,6 @@ const getTranslatedDynamicString = (x) => {
 
 const LayerHeader = ({
   selectedThemeId,
-  datasetId,
   viz,
   title,
   shortDescription,
@@ -54,12 +53,7 @@ const LayerHeader = ({
   return (
     <div className="layer-header" onClick={onClick}>
       <div className="preview">
-        <img
-          className="icon"
-          crossOrigin="Anonymous"
-          src={getIconSrc(selectedThemeId, viz, datasetId)}
-          alt=""
-        />
+        <img className="icon" crossOrigin="Anonymous" src={getIconSrc(selectedThemeId, viz)} alt="" />
       </div>
       <div className="title">
         <span className={`${isActive ? 'active-title' : ''}`}>{getTranslatedDynamicString(title)}</span>

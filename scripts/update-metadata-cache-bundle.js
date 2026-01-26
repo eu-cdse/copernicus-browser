@@ -33,6 +33,12 @@ async function run(scriptParameters) {
 
   await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.ENABLE, httpClient);
 
+  // Wait for OGC requests to be fully enabled (propagation delay)
+  if (instances.length > 0) {
+    console.log('Waiting 5 seconds for OGC request state to propagate...');
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+  }
+
   // Prepare objects to collect all data
   const rootDir = './src/assets/cache/';
   if (!fs.existsSync(rootDir)) {

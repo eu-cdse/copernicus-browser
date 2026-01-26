@@ -35,7 +35,7 @@ export const MultipleSelection = ({
                 className={`collection-button secondary option-toggle ${
                   defaultOptions[option.value] ? 'selected' : ''
                 }`}
-                onClick={(e) => {
+                onClick={() => {
                   const newSelectedOptions = {
                     ...defaultOptions,
                     [option.value]: !defaultOptions[option.value],

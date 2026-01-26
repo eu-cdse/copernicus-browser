@@ -1975,3 +1975,55 @@ export const COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_BANDS = [
+  {
+    name: 'FAPAR',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_AFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LENGTH_BEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_BANDS = [
+  {
+    name: 'LAFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LAI',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LBEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+];

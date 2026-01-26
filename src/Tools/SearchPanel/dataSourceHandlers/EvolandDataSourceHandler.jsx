@@ -260,7 +260,7 @@ export default class EvolandDataSourceHandler extends DataSourceHandler {
     return fetchingFunctions;
   }
 
-  willHandle(service, url, name, layers, preselected) {
+  willHandle(service, url, name, layers, _preselected) {
     let handlesAny = false;
     for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
       const layersWithDataset = layers.filter((l) =>

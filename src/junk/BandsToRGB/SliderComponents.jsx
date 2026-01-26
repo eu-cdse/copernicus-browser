@@ -32,7 +32,6 @@ export const SliderRail = ({ getRailProps, gradient }) => {
 export const KeyboardHandle = ({
   domain: [min, max],
   handle: { id, value, percent },
-  disabled = false,
   getHandleProps,
   pointingToColor,
   rampValue,
@@ -84,7 +83,7 @@ export const KeyboardHandle = ({
 /**
  * Track Component
  */
-export const Track = ({ source, target, getTrackProps, disabled = false, first, last }) => {
+export const Track = ({ source, target, getTrackProps, first, last }) => {
   return (
     <React.Fragment>
       {first && (

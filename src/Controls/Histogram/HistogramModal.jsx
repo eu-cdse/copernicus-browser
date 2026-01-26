@@ -142,8 +142,8 @@ class HistogramModal extends Component {
     return (
       <DraggableDialogBox
         className="histogram-modal"
-        width={550}
-        height={400}
+        width={580}
+        height={430}
         onClose={this.onHistogramModalClose}
         title={title}
         modal={true}
@@ -177,11 +177,7 @@ class HistogramModal extends Component {
 const mapStoreToProps = (store) => ({
   bounds: store.aoi.bounds ? store.aoi.bounds : store.mainMap.bounds,
   pixelBounds: store.mainMap.pixelBounds,
-  aoiGeometry: store.aoi.geometry
-    ? store.aoi.geometry.features
-      ? store.aoi.geometry.features[0].geometry
-      : store.aoi.geometry.geometry
-    : null,
+  aoiGeometry: store.aoi.geometry ?? null,
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   layerId: store.visualization.layerId,

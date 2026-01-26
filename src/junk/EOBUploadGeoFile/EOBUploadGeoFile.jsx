@@ -36,7 +36,7 @@ export class EOBUploadGeoFile extends Component {
     inputGeometry: null,
   };
 
-  onDrop = (ok, noOk) => {
+  onDrop = (ok) => {
     this.setState({ error: null });
     if (ok.length > 0) {
       this.setState({ allowedFiles: ok }, async () => {
@@ -47,7 +47,7 @@ export class EOBUploadGeoFile extends Component {
             const data = await loadFileContent(file, format);
             this.handleParseContent(data, this.props.type, format);
           } else {
-            this.handleParseZip(file, this.props.type, format);
+            this.handleParseZip(file, this.props.type);
           }
         } catch (e) {
           this.setState({ error: e.message });
@@ -65,7 +65,7 @@ export class EOBUploadGeoFile extends Component {
     }
   };
 
-  handleParseZip = async (content, type = UPLOAD_GEOMETRY_TYPE.POLYGON, format = null) => {
+  handleParseZip = async (content, type = UPLOAD_GEOMETRY_TYPE.POLYGON) => {
     try {
       await checkIfValidShapeFile(content);
 

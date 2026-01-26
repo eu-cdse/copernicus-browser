@@ -786,6 +786,23 @@ const getClmsLwqNrt100mV210DailyMarkdown = () =>
 const ClmsLwqNrt100mV210DailyTooltip = () =>
   DataSourceTooltip({ source: getClmsLwqNrt100mV210DailyMarkdown() });
 
+const getClmsGlobalLai300mV210dailyMarkdown = () => t`
+Provides information about Leaf Area Index, defined as half the total area of green elements of the canopy per unit horizontal ground area. Every 10-days estimates are available at global scale in the spatial resolution of ~300 m from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-300m).
+
+*Please note that the temporal extent varies between RT versions: RT0 is available from 2025-09-10 to present, RT1 is available from 2025-08-31 to present, RT2 is available from 2025-08-20 to present, and RT6 is available from 2014-01-10 to present.
+`;
+const ClmsGlobalLai300mV210dailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsGlobalLai300mV210dailyMarkdown() });
+
+const getClmsFapar300mV210DailyMarkdown = () =>
+  t`
+Quantifies the fraction of the solar radiation absorbed by live plants for photosynthesis. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m.
+
+*Please note that the temporal extent varies between RT versions: RT0 is available from 2025-09-10 to present, RT1 is available from 2025-08-31 to present, RT2 is available from 2025-08-20 to present, and RT6 is available from 2014-01-10 to present.
+`;
+const ClmsFapar300mV210DailyTooltip = () =>
+  DataSourceTooltip({ source: getClmsFapar300mV210DailyMarkdown() });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -997,4 +1014,8 @@ export {
   getClmsLswtNrt1kmV110DailyMarkdown,
   ClmsLwqNrt100mV210DailyTooltip,
   getClmsLwqNrt100mV210DailyMarkdown,
+  ClmsGlobalLai300mV210dailyTooltip,
+  getClmsGlobalLai300mV210dailyMarkdown,
+  ClmsFapar300mV210DailyTooltip,
+  getClmsFapar300mV210DailyMarkdown,
 };

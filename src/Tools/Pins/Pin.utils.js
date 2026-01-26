@@ -471,7 +471,7 @@ const pinPropertiesSubset = (pin) => ({
 });
 
 export function getPinsFromStorage(user) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (user) {
       getPinsFromServer().then((pins) => resolve(pins));
     } else {

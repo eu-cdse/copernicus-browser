@@ -218,7 +218,7 @@ export const notificationSlice = createSlice({
       state.type = 'info';
       state.msg = action.payload;
     },
-    removeNotification: (state, action) => {
+    removeNotification: (state) => {
       state.type = null;
       state.msg = null;
     },
@@ -273,7 +273,7 @@ export const authSlice = createSlice({
       state.user.token_expiration = action.payload.token_expiration;
       state.user.error = null;
     },
-    resetUser: (state, action) => {
+    resetUser: (state) => {
       state.user.userdata = null;
       state.user.access_token = null;
       state.user.token_expiration = null;
@@ -433,7 +433,7 @@ export const modalSlice = createSlice({
       state.id = action.payload.modal;
       state.params = action.payload.params;
     },
-    removeModal: (state, action) => {
+    removeModal: (state) => {
       state.id = null;
       state.params = null;
     },
@@ -864,7 +864,7 @@ export const compareLayersSlice = createSlice({
       newState[index] = value;
       state.comparedClipping[index] = value;
     },
-    resetOpacityAndClipping: (state, action) => {
+    resetOpacityAndClipping: (state) => {
       state.comparedOpacity = new Array(state.comparedLayers.length).fill(1.0);
       state.comparedClipping = new Array(state.comparedLayers.length).fill([0, 1]);
     },
@@ -1147,7 +1147,7 @@ export const terrainViewerSlice = createSlice({
     setTerrainViewerSettings: (state, action) => {
       state.settings = action.payload;
     },
-    resetTerrainViewerSettings: (state, action) => {
+    resetTerrainViewerSettings: (state) => {
       state.settings = null;
     },
     setTerrainViewerId: (state, action) => {
@@ -1280,7 +1280,7 @@ export const imageQualityAndProviderSectionSlice = createSlice({
       state.selectedOpticalProvidersAndMissions = action.payload;
     },
 
-    resetOpticalSection: (state, action) => {
+    resetOpticalSection: (state) => {
       state.selectedOpticalProvidersAndMissions = [];
       state.cloudCoverage = 0.3;
     },
@@ -1289,7 +1289,7 @@ export const imageQualityAndProviderSectionSlice = createSlice({
       state.selectedRadarProvidersAndMissions = action.payload;
     },
 
-    resetRadarSection: (state, action) => {
+    resetRadarSection: (state) => {
       state.selectedRadarProvidersAndMissions = [];
       state.radarPolarizationFilterArray = [];
       state.radarInstrumentFilterArray = [];
@@ -1320,7 +1320,7 @@ export const imageQualityAndProviderSectionSlice = createSlice({
       state.selectedAtmosProvidersAndMissions = action.payload;
     },
 
-    resetAtmosSection: (state, action) => {
+    resetAtmosSection: (state) => {
       state.selectedAtmosProvidersAndMissions = [];
     },
 

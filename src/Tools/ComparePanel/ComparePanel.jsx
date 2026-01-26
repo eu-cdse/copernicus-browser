@@ -66,7 +66,9 @@ const ComparePanel = (props) => {
       try {
         const sharedPinsId = await saveSharedPinsToServer(comparedLayers);
         store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(sharedPinsId));
-      } catch (e) {}
+      } catch (e) {
+        console.warn(e);
+      }
     };
 
     if (comparedLayers.length > 0) {

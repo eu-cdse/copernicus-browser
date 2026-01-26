@@ -918,6 +918,54 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'lai_global_300m_10daily_v2_RT0',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/0a5986-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lai_global_300m_10daily_v2_RT1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lai_global_300m_10daily_v2_RT2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/14e975-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lai_global_300m_10daily_v2_RT6',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fapar_global_300m_10daily_v2_RT0',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/4758e6-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fapar_global_300m_10daily_v2_RT1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/98dadb-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fapar_global_300m_10daily_v2_RT2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/1ced90-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fapar_global_300m_10daily_v2_RT6',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/93e884-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {
@@ -1053,7 +1101,7 @@ export const DEFAULT_THEMES = [
       },
       {
         lat: 38.7931301,
-        lng: 15.211227399999984,
+        lng: 15.2112274,
         zoom: 14,
         title: 'Stromboli, Province of Messina, Italy (SWIR)',
         toTime: '2019-02-07',
@@ -1503,7 +1551,7 @@ export const DEFAULT_THEMES = [
           'The air quality in and around New Delhi has reached alarming levels and is affecting the well-being of residents. The region has been experiencing high concentrations of pollutants from various sources such as vehicular emissions, industrial activities, burning of crops and other sources, forming a thick layer of smog, especially during winters. These pollutants can have serious effects on health by causing respiratory problems, aggravating pre-existing conditions and posing risks to cardiovascular health. Sentinel-5P plays a crucial role in monitoring and visualising the extent of air pollution with its spatial resolution of 3.5×5.5 km, daily revisit and advanced atmospheric monitoring capabilities by capturing the distribution of key pollutants in the atmosphere. The satellite data reveals the spatial and temporal patterns of pollution, allowing authorities to identify pollution hotspots and track the movement of pollutants in the region.',
       },
       {
-        lat: 13.790071437194856,
+        lat: 13.7900714372,
         lng: -129.649658203125,
         zoom: 7,
         title: 'Hurricane Dora’s Historic Journey (Cloud Base Pressure)',
@@ -1854,7 +1902,7 @@ export const DEFAULT_THEMES = [
       {
         title: 'Agriculture in Italy, 2020 (NDVI)',
         lat: 45.706898546777,
-        lng: 12.983779907226562,
+        lng: 12.983779907226,
         zoom: 11,
         datasetId: 'S2_L2A_CDAS',
         layerId: '3_NDVI',
@@ -1900,7 +1948,7 @@ export const DEFAULT_THEMES = [
       // },
       {
         title: 'Xingu River, 2019 (False Color)',
-        lat: -3.367429183298769,
+        lat: -3.3674291833,
         lng: -51.52313232421875,
         zoom: 10,
         datasetId: 'S2_L2A_CDAS',
@@ -2425,8 +2473,8 @@ export const DEFAULT_THEMES = [
       },
       {
         title: 'Richat Structure, Mauretania',
-        lat: 21.136065481691592,
-        lng: -11.301498413085938,
+        lat: 21.1360654817,
+        lng: -11.3014984131,
         zoom: 11,
         datasetId: 'S2_L2A_CDAS',
         layerId: '1_TRUE_COLOR',
@@ -3678,7 +3726,7 @@ export const DEFAULT_THEMES = [
       {
         title: 'Stromboli, Province of Messina, Italy (IR Highlights)',
         lat: 38.7931301,
-        lng: 15.211227399999985,
+        lng: 15.2112274,
         zoom: 14,
         datasetId: 'S2_L2A_CDAS',
         layerId: 'TRUE-COLOR-LAVA-FLOW',

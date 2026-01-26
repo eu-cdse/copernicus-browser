@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 import CommercialDataPanel from './CommercialDataPanel';
 
@@ -57,7 +58,9 @@ const CommercialData = ({ user, userAccountInfo, displayVideo, closeCommercialDa
             allowFullScreen
           ></iframe>
         )}
-        <ReactMarkdown children={getCommercialDataDescription()} linkTarget="_blank" />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>
+          {getCommercialDataDescription()}
+        </ReactMarkdown>
       </div>
     );
   }

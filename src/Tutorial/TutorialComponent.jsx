@@ -21,11 +21,7 @@ const TutorialComponent = ({
         <span className="rodal-close" />
       </button>
       <h4 className="tutorial-title">
-        <ReactMarkdown
-          children={step.title}
-          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{step.title}</ReactMarkdown>
       </h4>
       <div className="content-wrapper">{step.content}</div>
       <div className="tutorial-footer">

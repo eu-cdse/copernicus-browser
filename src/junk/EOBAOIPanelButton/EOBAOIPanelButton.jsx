@@ -114,7 +114,7 @@ export function EOBAOIPanelButton(props) {
   return (
     <div
       className="aoiPanel panelButton floatItem"
-      onClick={(ev) => {
+      onClick={() => {
         if (!isEnabled) {
           props.onErrorMessage(panelTitle);
         }

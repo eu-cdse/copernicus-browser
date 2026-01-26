@@ -133,10 +133,7 @@ export const collections = [
       {
         id: AttributeNames.orbitDirection,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
-          AttributeOrbitDirectionValues.ASCENDING,
-          AttributeOrbitDirectionValues.DESCENDING,
-        ],
+        getOptions: () => [AttributeOrbitDirectionValues.ASCENDING, AttributeOrbitDirectionValues.DESCENDING],
       },
       {
         id: AttributeNames.relativeOrbitNumber,
@@ -149,7 +146,7 @@ export const collections = [
       {
         id: AttributeNames.operationalMode,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributeOperationalModeValues.SM,
           AttributeOperationalModeValues.IW,
           AttributeOperationalModeValues.EW,
@@ -165,7 +162,7 @@ export const collections = [
       {
         id: AttributeNames.polarisationChannels,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributePolarisationChannelsValues.HH,
           AttributePolarisationChannelsValues.VV,
           AttributePolarisationChannelsValues.VV_VH,
@@ -178,13 +175,13 @@ export const collections = [
         render: MultiSelectInput,
         filterElement: FilterElement.Expression,
         defaultValue: [AttributeOnlineValues.online],
-        getOptions: ({ userToken }) => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
+        getOptions: () => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
       },
       {
         id: AttributeNames.resolution,
         title: 'Resolution',
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributeProductResolution.FULL,
           AttributeProductResolution.HIGH,
           AttributeProductResolution.MEDIUM,
@@ -198,7 +195,7 @@ export const collections = [
         title: 'Product class',
         render: MultiSelectInput,
         defaultValue: [AttributeProductClassValues.STANDARD],
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributeProductClassValues.STANDARD,
           AttributeProductClassValues.CALIBRATION,
           AttributeProductClassValues.NOISE,
@@ -265,7 +262,7 @@ export const collections = [
       {
         id: AttributeNames.origin,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
+        getOptions: () => [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
         filterElement: FilterElement.CustomFilter,
         customFilter: (key, value) => createOriginFilter(key, value),
       },
@@ -280,7 +277,7 @@ export const collections = [
         render: MultiSelectInput,
         filterElement: FilterElement.Expression,
         defaultValue: [AttributeOnlineValues.online],
-        getOptions: ({ userToken }) => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
+        getOptions: () => [AttributeOnlineValues.online, AttributeOnlineValues.offline],
       },
     ],
   },
@@ -394,7 +391,7 @@ export const collections = [
       {
         id: AttributeNames.timeliness,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributeTimelinessValues.NR,
           AttributeTimelinessValues.ST,
           AttributeTimelinessValues.NT,
@@ -403,7 +400,7 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributePlatformSerialIdentifierValues.S3A,
           AttributePlatformSerialIdentifierValues.S3B,
         ],
@@ -411,10 +408,7 @@ export const collections = [
       {
         id: AttributeNames.orbitDirection,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
-          AttributeOrbitDirectionValues.ASCENDING,
-          AttributeOrbitDirectionValues.DESCENDING,
-        ],
+        getOptions: () => [AttributeOrbitDirectionValues.ASCENDING, AttributeOrbitDirectionValues.DESCENDING],
       },
       {
         id: AttributeNames.relativeOrbitNumber,
@@ -618,7 +612,7 @@ export const collections = [
       {
         id: AttributeNames.processingMode,
         render: MultiSelectInput,
-        getOptions: ({ userToken }) => [
+        getOptions: () => [
           AttributeProcessingModeValues.NRTI,
           AttributeProcessingModeValues.OFFL,
           AttributeProcessingModeValues.RPRO,
@@ -941,7 +935,7 @@ export const collections = [
         id: AttributeNames.deliveryId,
         render: MultiSelectInput,
         defaultValue: AttributeDEMDatasetVersions.slice(-1),
-        getOptions: ({ userToken }) => AttributeDEMDatasetVersions,
+        getOptions: () => AttributeDEMDatasetVersions,
         selectionLimit: 5,
         preProcessFilters: (filters) => {
           return filters.flatMap((filter) => {
@@ -2042,6 +2036,39 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
+                id: 'fapar_global_300m_10daily_v1',
+                label:
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fapar_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'fapar_global_300m_10daily_v2',
+                label:
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fapar_global_300m_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'fapar_global_1km_10daily_v2',
+                label:
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 1km, (1999–2020), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fapar_global_1km_10daily_v2',
+                )})`,
+              },
+              {
                 id: 'fcover_global_1km_10daily_v2',
                 label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 1km, (1999–2020), V2',
                 type: 'productType',
@@ -2062,28 +2089,6 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
-                id: 'fapar_global_1km_10daily_v2',
-                label:
-                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 1km, (1999–2020), V2',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'fapar_global_1km_10daily_v2',
-                )})`,
-              },
-              {
-                id: 'fapar_global_300m_10daily_v1',
-                label:
-                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–present), V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'fapar_global_300m_10daily_v1',
-                )})`,
-              },
-              {
                 id: 'lai_global_1km_10daily_v2',
                 label: 'Leaf Area Index, Global, 10-daily, 1km, (1999–2020), V2',
                 type: 'productType',
@@ -2101,6 +2106,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'lai_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'lai_global_300m_10daily_v2',
+                label: 'Leaf Area Index, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lai_global_300m_10daily_v2',
                 )})`,
               },
             ],

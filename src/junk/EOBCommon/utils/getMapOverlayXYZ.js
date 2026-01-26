@@ -84,7 +84,7 @@ async function fetchTileWithCache(url, axiosConfig) {
 
     return blob;
   } catch (error) {
-    throw error;
+    throw new Error(`Failed to fetch tile from ${url}: ${error.message}`);
   }
 }
 
@@ -226,7 +226,7 @@ const generateProcessTileFunction =
       return null;
     }
 
-    return new Promise(async (resolve) => {
+    return (async () => {
       try {
         let formattedUrl = overlayUrl
           .replace('{z}', effectiveZoom)
@@ -245,27 +245,30 @@ const generateProcessTileFunction =
         });
 
         const blobUrl = URL.createObjectURL(response);
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
 
-        img.onload = () => {
-          ctx.drawImage(img, canvasX, canvasY, canvasWidth, canvasHeight);
-          URL.revokeObjectURL(blobUrl);
-          resolve();
-        };
+        // Return a Promise only for the callback-based image loading
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
 
-        img.onerror = () => {
-          console.warn(`Failed to load tile at zoom ${effectiveZoom}, x=${wrappedX}, y=${y}`);
-          URL.revokeObjectURL(blobUrl);
-          resolve();
-        };
+          img.onload = () => {
+            ctx.drawImage(img, canvasX, canvasY, canvasWidth, canvasHeight);
+            URL.revokeObjectURL(blobUrl);
+            resolve();
+          };
 
-        img.src = blobUrl;
+          img.onerror = () => {
+            console.warn(`Failed to load tile at zoom ${effectiveZoom}, x=${wrappedX}, y=${y}`);
+            URL.revokeObjectURL(blobUrl);
+            resolve();
+          };
+
+          img.src = blobUrl;
+        });
       } catch (error) {
         console.warn(`Error fetching tile: ${error.message}`);
-        resolve();
       }
-    });
+    })();
   };
 
 function makeImageReadable(canvas, ctx) {

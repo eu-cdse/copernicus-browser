@@ -21,6 +21,7 @@ import Button, { ButtonType } from '../../../../components/Button/Button';
 import { ITEMS_PER_PAGE } from './constants';
 import { NotificationPanel } from '../../../../junk/NotificationPanel/NotificationPanel';
 import ReactMarkdown from 'react-markdown';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 
 export const ResultsSectionAttributes = Object.freeze({
   id: 'results-time',
@@ -29,13 +30,11 @@ export const ResultsSectionAttributes = Object.freeze({
 });
 
 const ResultsSection = ({
-  isSearchProcessing,
   resultsExpanded,
   sortState,
   filterState,
   results,
   selectedTiles,
-  auth,
   isTaskingEnabled,
   currentPage,
   quicklookImages,
@@ -77,7 +76,7 @@ const ResultsSection = ({
     }
   }, [selectedTiles]);
 
-  const handleImageLoad = (id, image, source) => {
+  const handleImageLoad = (id, image) => {
     store.dispatch(resultsSectionSlice.actions.addQuicklookImage({ id, url: image }));
   };
 
@@ -145,10 +144,9 @@ const ResultsSection = ({
             emptyResult ? (
               <NotificationPanel
                 msg={
-                  <ReactMarkdown
-                    children={t`No results found with your current filters (might be related to access rights).\n
-Try adjusting the date range, data providers, advanced fields, or select a bigger area on the map to see more results.`}
-                  ></ReactMarkdown>
+                  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{t`
+No results found with your current filters (might be related to access rights).\n
+Try adjusting the date range, data providers, advanced fields, or select a bigger area on the map to see more results.`}</ReactMarkdown>
                 }
                 type="error"
               />
@@ -229,7 +227,6 @@ const mapStoreToProps = (store) => ({
   currentPage: store.resultsSection.currentPage,
   results: store.resultsSection.results,
   selectedTiles: store.searchResults.selectedTiles,
-  auth: store.auth,
   isTaskingEnabled: store.areaAndTimeSection.isTaskingEnabled,
   quicklookImages: store.resultsSection.quicklookImages,
   quicklookOverlays: store.mainMap.quicklookOverlays,
