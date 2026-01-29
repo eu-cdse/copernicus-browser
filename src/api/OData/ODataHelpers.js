@@ -159,6 +159,10 @@ import {
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -277,6 +281,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'lwq-nrt_global_100m_10daily_v2': COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2,
   lai_global_300m_10daily_v2: COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0,
   fapar_global_300m_10daily_v2: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0,
+  fcover_global_300m_10daily_v2: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -583,6 +588,24 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
           return COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6;
         default:
           return COPERNICUS_CLMS_FCOVER_300M_10DAILY;
+      }
+    }
+    if (
+      metricGridSpacing === 300 &&
+      datasetShortName === 'fgvc' &&
+      datasetIdentifier === 'fcover_global_300m_10daily_v2'
+    ) {
+      switch (consolidationPeriod) {
+        case 0:
+          return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0;
+        case 1:
+          return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1;
+        case 2:
+          return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2;
+        case 6:
+          return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6;
+        default:
+          return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0;
       }
     }
     if (
@@ -1346,6 +1369,27 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
         id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
         instrument: 'VEGETATION_PROPERTIES',
         productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FCOVER_300M_10DAILY),
+        selectedFilters: {
+          ...props,
+        },
+      },
+    ];
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+      COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+      COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+      COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+    ].includes(datasetId)
+  ) {
+    const props = getConsolidationPeriodProps(datasetId);
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'VEGETATION_PROPERTIES',
+        productType: getProductTypeFromDatasetId(COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0),
         selectedFilters: {
           ...props,
         },

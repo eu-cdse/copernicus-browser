@@ -236,12 +236,15 @@ import {
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
   getDataSourceHandler,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import DEMCDASDataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/DEMCDASDataSourceHandler';
 import { constructLayerFromDatasetId } from '../../junk/EOBCommon/utils/dataFusion';
 import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
@@ -924,7 +927,8 @@ class SentinelHubLayer extends L.TileLayer {
         });
       case DEM_COPERNICUS_30_CDAS:
       case DEM_COPERNICUS_90_CDAS:
-        const { demInst } = DEMCDASDataSourceHandler.getDatasetParams(datasetId);
+        const demDsh = getDataSourceHandler(datasetId);
+        const { demInst } = demDsh.getDatasetParams(datasetId);
         return await new DEMCDASLayer({
           evalscript: evalscript,
           evalscriptUrl: evalscripturl,
@@ -1068,6 +1072,10 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0:
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1:
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6: {
         const dsh = getDataSourceHandler(datasetId);
         const layer = await this.createBYOCLayer(

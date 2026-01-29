@@ -2027,3 +2027,107 @@ export const COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0_BANDS = [
+  {
+    name: 'FCOVER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LBEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LAFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1_BANDS = [
+  {
+    name: 'FCOVER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LBEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LAFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2_BANDS = [
+  {
+    name: 'FCOVER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LBEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LAFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
+  {
+    name: 'FCOVER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'RMSE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LBEFORE',
+    getDescription: () => ``,
+  },
+  {
+    name: 'LAFTER',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];

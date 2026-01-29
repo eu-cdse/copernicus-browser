@@ -22,7 +22,6 @@ function parseCollectionParams(params) {
   const collectionInfo = params.collection_information;
   const contentInfo = params.content_information;
   const registration = params.registration;
-  const bucketInfo = params.bucket_information;
 
   // Convert collection_name to constant format
   const constant = 'COPERNICUS_CLMS_' + registration.collection_name.toUpperCase();
@@ -47,9 +46,8 @@ function parseCollectionParams(params) {
   // Build hierarchy for CLMS options
   const hierarchy = collectionInfo.hierarchy || [];
 
-  // Extract technical name from base_path (last part of the path)
-  const basePath = bucketInfo?.base_path || '';
-  const technicalName = basePath.split('/').pop() || registration.collection_name;
+  // Extract technical name from collectionInfo
+  const technicalName = collectionInfo.technicalName || registration.collection_name;
 
   // Parse temporal resolution from technicalName
   let temporalResolution = 1;
@@ -86,6 +84,7 @@ function parseCollectionParams(params) {
     hierarchy,
     description: collectionInfo.description || '',
     technicalName,
+    officialDocs: collectionInfo.official_docs || '',
   };
 }
 
@@ -270,9 +269,9 @@ function updateCLMSTooltip(config) {
   const exportMatch = content.match(/export\s+\{[^}]*\};?\s*$/s);
   if (exportMatch) {
     const insertPos = exportMatch.index;
-    const newFunction = `const ${funcName} = () => t\`\n  ${
-      config.description
-    } More information [here]()\`;\n\nconst ${funcName
+    const newFunction = `const ${funcName} = () => t\`\n  ${config.description} More information [here](${
+      config.officialDocs
+    }).\`;\n\nconst ${funcName
       .replace('get', '')
       .replace('Markdown', 'Tooltip')} = () =>\n  DataSourceTooltip({\n    source: ${funcName}(),\n  });\n\n`;
 
@@ -779,7 +778,7 @@ async function main() {
     try {
       execSync('npm run prettier', {
         cwd: PROJECT_ROOT,
-        stdio: 'inherit',
+        stdio: 'ignore',
       });
       console.log('✓ Code formatted successfully');
     } catch (error) {

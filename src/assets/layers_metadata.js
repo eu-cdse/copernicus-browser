@@ -187,6 +187,10 @@ import {
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5546,7 +5550,8 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'FAPAR' },
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'FAPAR' },
     ],
-    description: () => t`Fraction of Absorbed Photosynthetically Active Radiation.`,
+    description: () =>
+      t`FAPAR represents the fraction of photosynthetically active radiation [0.4-0.7 μm] that is absorbed by vegetation. FAPAR is defined as instantaneous at 10:00 local time.`,
   },
   {
     match: [
@@ -5555,8 +5560,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'LENGTH_AFTER' },
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'LENGTH_AFTER' },
     ],
-    description: () =>
-      t`Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation.`,
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
   },
   {
     match: [
@@ -5565,7 +5569,113 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'LENGTH_BEFORE' },
       { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'LENGTH_BEFORE' },
     ],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'NOBS' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'NOBS' },
+    ],
+    description: () => t`Number of available valid instantaneous FAPAR values in the compositing window.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2, layerId: 'RMSE' },
+      { datasourceId: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6, layerId: 'RMSE' },
+    ],
     description: () =>
-      t`Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation.`,
+      t`RMSE is computed between the final dekadal FAPAR value and the available valid instantaneous values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'FCOVER' }],
+    description: () =>
+      t`FCOVER is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'RMSE' }],
+    description: () =>
+      t`RMSE is computed between the final dekadal FCOVER value and the available valid instantaneous values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'NOBS' }],
+    description: () => t`Number of available valid instantaneous FCOVER values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'LBEFORE' }],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'LAFTER' }],
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'FCOVER' }],
+    description: () =>
+      t`FCOVER is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'RMSE' }],
+    description: () =>
+      t`RMSE is computed between the final dekadal FCOVER value and the available valid instantaneous values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'NOBS' }],
+    description: () => t`Number of available valid instantaneous FCOVER values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'LBEFORE' }],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'LAFTER' }],
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'FCOVER' }],
+    description: () =>
+      t`FCOVER is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'RMSE' }],
+    description: () =>
+      t`RMSE is computed between the final dekadal FCOVER value and the available valid instantaneous values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'NOBS' }],
+    description: () => t`Number of available valid instantaneous FCOVER values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'LBEFORE' }],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'LAFTER' }],
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'FCOVER' }],
+    description: () =>
+      t`FCOVER is defined as the fraction of ground surface covered by green vegetation as seen from the nadir direction.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'RMSE' }],
+    description: () =>
+      t`RMSE is computed between the final dekadal FCOVER value and the available valid instantaneous values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'NOBS' }],
+    description: () => t`Number of available valid instantaneous FCOVER values in the compositing window.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'LBEFORE' }],
+    description: () => t`Length of the semi-period before the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'LAFTER' }],
+    description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
   },
 ];

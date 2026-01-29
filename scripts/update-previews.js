@@ -150,126 +150,131 @@ async function updatePreviews(previewsDir, previewsIndexFile, scriptParameters) 
     throw new Error(`Error while reading previews file, ${error}`);
   }
 
-  for (let themes of [DEFAULT_THEMES]) {
-    for (let theme of themes) {
-      const themeId = theme.id;
-      for (let contentPart of theme.content) {
-        if (contentPart.url.includes('api.planet.com')) {
-          console.warn('Temporarily skipping Planet layers - missing stitching of');
-          continue;
-        }
-
-        if (instances.length > 0 && !instances.some((instance) => contentPart.url.includes(instance))) {
-          continue;
-        }
-
-        let layers = await LayersFactory.makeLayers(contentPart.url, (layerId) =>
-          filterLayers(layerId, contentPart.layersExclude, contentPart.layersInclude),
-        );
-
-        layers.sort((a, b) => a.layerId.localeCompare(b.layerId));
-
-        if (!layers) {
-          console.warn(`No layers for url: ${contentPart.url}`);
-          continue;
-        }
-
-        const layer = layers[0];
-
-        if (/(S5PL2)/.test(layer.dataset.id)) {
-          layer.productType = getS5ProductType(layer.dataset);
-        }
-
-        // We need something that will help us save previews for the layers with the same name but from different datasets.
-        // Ideally, we can use the first few chars of instanceId, otherwise we need to calculate the hash from the URL:
-        const urlHash = layer.instanceId ? layer.instanceId.substr(0, 6) : md5(contentPart.url).substr(0, 8);
-
-        // We assume that all the layers within the same group will be able to use the same bbox and time from/to:
-        let candidates = [];
-        try {
-          candidates = await findSomeResults(layer);
-        } catch (e) {
-          console.warn(`Error occured for: ${contentPart.url} (${contentPart.name})`);
-        }
-
-        if (candidates.length === 0) {
-          console.warn(`No results in the pre-defined areas for: ${contentPart.url} (${contentPart.name})`);
-          continue;
-        }
-
-        // for each layer, download its image:
-        setDebugEnabled(true);
-        for (let layer of layers) {
-          const fileName = `${themeId}-${urlHash}-${layer.layerId}.png`;
-          const fullFileName = `${previewsDir}/${fileName}`;
-          console.log(
-            `Working on: ${themeId} / ${contentPart.url} / ${layer.layerId} (${layer.constructor.name}) / ${fileName}`,
-          );
-
-          if (fs.existsSync(fullFileName)) {
-            if (!instances.length) {
-              previews.push(fileName);
-            }
-            console.log('  ...exists, skipping.');
+  try {
+    for (let themes of [DEFAULT_THEMES]) {
+      for (let theme of themes) {
+        const themeId = theme.id;
+        for (let contentPart of theme.content) {
+          if (contentPart.url.includes('api.planet.com')) {
+            console.warn('Temporarily skipping Planet layers - missing stitching of');
             continue;
           }
 
-          const apiType = layer.supportsApiType(ApiType.PROCESSING) ? ApiType.PROCESSING : ApiType.WMS;
-          let j;
-          for (j = 0; j < candidates.length; j++) {
-            let { bbox, fromTime, toTime } = candidates[j];
+          if (instances.length > 0 && !instances.some((instance) => contentPart.url.includes(instance))) {
+            continue;
+          }
 
-            const getMapParams = {
-              bbox: bbox,
-              fromTime: fromTime,
-              toTime: toTime,
-              width: 50,
-              height: 50,
-              format: MimeTypes.PNG,
-            };
-            try {
-              const imageBytes = await layer.getMap(getMapParams, apiType);
-              fs.writeFileSync(fullFileName, imageBytes);
-              // sometimes even the valid dates return transparent images, let's remove them:
-              const fileSizeInBytes = fs.statSync(fullFileName).size;
-              if (fileSizeInBytes < 200) {
-                // exceptions which simply produce small images:
-                if (
-                  !['TESTING-LAYER', '3-NDVI', 'FALSE_COLOR', 'RED_EDGE_1', 'RED_EDGE_2'].includes(
-                    layer.layerId,
-                  )
-                ) {
-                  fs.unlinkSync(fullFileName);
-                  console.log(`  ...image was empty (size ${fileSizeInBytes}), skipping...`);
-                  continue;
-                }
+          let layers = await LayersFactory.makeLayers(contentPart.url, (layerId) =>
+            filterLayers(layerId, contentPart.layersExclude, contentPart.layersInclude),
+          );
+
+          layers.sort((a, b) => a.layerId.localeCompare(b.layerId));
+
+          if (!layers) {
+            console.warn(`No layers for url: ${contentPart.url}`);
+            continue;
+          }
+
+          const layer = layers[0];
+
+          if (/(S5PL2)/.test(layer.dataset.id)) {
+            layer.productType = getS5ProductType(layer.dataset);
+          }
+
+          // We need something that will help us save previews for the layers with the same name but from different datasets.
+          // Ideally, we can use the first few chars of instanceId, otherwise we need to calculate the hash from the URL:
+          const urlHash = layer.instanceId
+            ? layer.instanceId.substr(0, 6)
+            : md5(contentPart.url).substr(0, 8);
+
+          // We assume that all the layers within the same group will be able to use the same bbox and time from/to:
+          let candidates = [];
+          try {
+            candidates = await findSomeResults(layer);
+          } catch (e) {
+            console.warn(`Error occured for: ${contentPart.url} (${contentPart.name})`);
+          }
+
+          if (candidates.length === 0) {
+            console.warn(`No results in the pre-defined areas for: ${contentPart.url} (${contentPart.name})`);
+            continue;
+          }
+
+          // for each layer, download its image:
+          setDebugEnabled(true);
+          for (let layer of layers) {
+            const fileName = `${themeId}-${urlHash}-${layer.layerId}.png`;
+            const fullFileName = `${previewsDir}/${fileName}`;
+            console.log(
+              `Working on: ${themeId} / ${contentPart.url} / ${layer.layerId} (${layer.constructor.name}) / ${fileName}`,
+            );
+
+            if (fs.existsSync(fullFileName)) {
+              if (!instances.length) {
+                previews.push(fileName);
               }
-              previews.push(fileName);
-              console.log('  ...ok.');
-              break;
-            } catch (err) {
-              if (j === candidates.length - 1) {
-                console.log('  ...FAILED!');
-                throw err;
-              }
-              console.log('  ...failed, retrying with another date...', err);
+              console.log('  ...exists, skipping.');
               continue;
             }
+
+            const apiType = layer.supportsApiType(ApiType.PROCESSING) ? ApiType.PROCESSING : ApiType.WMS;
+            let j;
+            for (j = 0; j < candidates.length; j++) {
+              let { bbox, fromTime, toTime } = candidates[j];
+
+              const getMapParams = {
+                bbox: bbox,
+                fromTime: fromTime,
+                toTime: toTime,
+                width: 50,
+                height: 50,
+                format: MimeTypes.PNG,
+              };
+              try {
+                const imageBytes = await layer.getMap(getMapParams, apiType);
+                fs.writeFileSync(fullFileName, imageBytes);
+                // sometimes even the valid dates return transparent images, let's remove them:
+                const fileSizeInBytes = fs.statSync(fullFileName).size;
+                if (fileSizeInBytes < 200) {
+                  // exceptions which simply produce small images:
+                  if (
+                    !['TESTING-LAYER', '3-NDVI', 'FALSE_COLOR', 'RED_EDGE_1', 'RED_EDGE_2'].includes(
+                      layer.layerId,
+                    )
+                  ) {
+                    fs.unlinkSync(fullFileName);
+                    console.log(`  ...image was empty (size ${fileSizeInBytes}), skipping...`);
+                    continue;
+                  }
+                }
+                previews.push(fileName);
+                console.log('  ...ok.');
+                break;
+              } catch (err) {
+                if (j === candidates.length - 1) {
+                  console.log('  ...FAILED!');
+                  throw err;
+                }
+                console.log('  ...failed, retrying with another date...', err);
+                continue;
+              }
+            }
+            if (j === candidates.length) {
+              console.log('  ...FAILED!');
+              console.error('No image found!');
+            }
           }
-          if (j === candidates.length) {
-            console.log('  ...FAILED!');
-            console.error('No image found!');
-          }
+          setDebugEnabled(false);
         }
-        setDebugEnabled(false);
       }
     }
+  } finally {
+    // Always write previews.json even if errors occurred, so we save partial progress
+    fs.writeFileSync(previewsIndexFile, JSON.stringify(previews, null, 2).concat('\n'));
+
+    // Always disable OGC requests even if errors occurred
+    await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.DISABLE, httpClient);
   }
-
-  await setOgcRequestsStates(csvFullPath, OGC_REQUEST_STATE.DISABLE, httpClient);
-
-  // write an index file so we know (in Playground app) which files exist:
-  fs.writeFileSync(previewsIndexFile, JSON.stringify(previews, null, 2).concat('\n'));
 }
 
 if (scriptParameters.length > 1) {

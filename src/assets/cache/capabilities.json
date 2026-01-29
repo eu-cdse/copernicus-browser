@@ -146,47 +146,6 @@
         ],
         "datasets": []
     },
-    "0a5986-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW]  CLMS | LAI Global 300m 10-Daily V2 RT0",
-        "layers": [
-            {
-                "id": "LAFTER",
-                "name": "LAFTER",
-                "description": "Length of the semi-period after the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a5986-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
-            },
-            {
-                "id": "LAI",
-                "name": "LAI",
-                "description": "Leaf Area Index (m²/m²)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a5986-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
-            },
-            {
-                "id": "LBEFORE",
-                "name": "LBEFORE",
-                "description": "Length of the semi-period before the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a5986-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
-            },
-            {
-                "id": "NOBS",
-                "name": "NOBS",
-                "description": "Number of available valid instantaneous LAI",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a5986-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
-            },
-            {
-                "id": "RMSE",
-                "name": "RMSE",
-                "description": "Root Mean Square Error on Leaf Area Index",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a5986-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
-            }
-        ],
-        "datasets": []
-    },
     "0b0f5a-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-5P",
         "layers": [
@@ -413,47 +372,6 @@
                 "description": "Minimum of the physical NDVI values",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/148ba1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MIN_LTS&style=default"
-            }
-        ],
-        "datasets": []
-    },
-    "14e975-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW]  CLMS | LAI Global 300m 10-Daily V2 RT2",
-        "layers": [
-            {
-                "id": "LAFTER",
-                "name": "LAFTER",
-                "description": "Length of the semi-period after the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/14e975-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
-            },
-            {
-                "id": "LAI",
-                "name": "LAI",
-                "description": "Leaf Area Index (m²/m²)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/14e975-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
-            },
-            {
-                "id": "LBEFORE",
-                "name": "LBEFORE",
-                "description": "Length of the semi-period before the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/14e975-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
-            },
-            {
-                "id": "NOBS",
-                "name": "NOBS",
-                "description": "Number of available valid instantaneous LAI",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/14e975-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
-            },
-            {
-                "id": "RMSE",
-                "name": "RMSE",
-                "description": "Root Mean Square Error on Leaf Area Index",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/14e975-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -875,33 +793,6 @@
         ],
         "datasets": []
     },
-    "1ced90-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] CLMS | FAPAR Global 300m 10-Daily V2 RT2",
-        "layers": [
-            {
-                "id": "FAPAR",
-                "name": "FAPAR",
-                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/1ced90-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
-            },
-            {
-                "id": "LENGTH_AFTER",
-                "name": "LENGTH_AFTER",
-                "description": "Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/1ced90-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
-            },
-            {
-                "id": "LENGTH_BEFORE",
-                "name": "LENGTH_BEFORE",
-                "description": "Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/1ced90-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
-            }
-        ],
-        "datasets": []
-    },
     "1ddb62-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] wb_global_300m_10daily_v1",
         "layers": [
@@ -951,6 +842,47 @@
                 "description": "Fraction of green vegetation cover",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/22c171-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "236fa1-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT0",
+        "layers": [
+            {
+                "id": "FAPAR",
+                "name": "FAPAR",
+                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/236fa1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+            },
+            {
+                "id": "LENGTH_AFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/236fa1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
+            },
+            {
+                "id": "LENGTH_BEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/236fa1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/236fa1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FAPAR",
+                "description": "Root Mean Square Error on FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/236fa1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -1283,6 +1215,47 @@
             }
         ]
     },
+    "2cbc94-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT2",
+        "layers": [
+            {
+                "id": "FAPAR",
+                "name": "FAPAR",
+                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+            },
+            {
+                "id": "LENGTH_AFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
+            },
+            {
+                "id": "LENGTH_BEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FAPAR",
+                "description": "Root Mean Square Error on FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "2d2b27-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] gdmp_global_300m_10daily_v1_RT2",
         "layers": [
@@ -1561,6 +1534,47 @@
                 "description": "Minimum LST values observed during the 10-day compositing period",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36a9b6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MIN&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "36ed5a-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | FCOVER Global 300m 10-Daily V2 RT1",
+        "layers": [
+            {
+                "id": "FCOVER",
+                "name": "FCOVER",
+                "description": "Fraction of Green Vegetation Cover",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            },
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FCOVER",
+                "description": "Root Mean Square Error on FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -2122,6 +2136,47 @@
             }
         ]
     },
+    "40401f-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | LAI Global 300m 10-Daily V2 RT6",
+        "layers": [
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40401f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LAI",
+                "name": "LAI",
+                "description": "Leaf Area Index (m²/m²)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40401f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40401f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous LAI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40401f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on LAI",
+                "description": "Root Mean Square Error on Leaf Area Index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40401f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "40c16f-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] ndvi_global_300m_10daily_v2",
         "layers": [
@@ -2379,6 +2434,47 @@
         ],
         "datasets": []
     },
+    "434460-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | FCOVER Global 300m 10-Daily V2 RT2",
+        "layers": [
+            {
+                "id": "FCOVER",
+                "name": "FCOVER",
+                "description": "Fraction of Green Vegetation Cover",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/434460-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            },
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/434460-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/434460-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/434460-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FCOVER",
+                "description": "Root Mean Square Error on FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/434460-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "43af66-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] swi_global_12.5km_10daily_v3",
         "layers": [
@@ -2454,29 +2550,43 @@
         ],
         "datasets": []
     },
-    "4758e6-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] CLMS | FAPAR Global 300m 10-Daily V2 RT0",
+    "48c7bb-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | LAI Global 300m 10-Daily V2 RT1",
         "layers": [
             {
-                "id": "FAPAR",
-                "name": "FAPAR",
-                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/4758e6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
-            },
-            {
-                "id": "LENGTH_AFTER",
+                "id": "LAFTER",
                 "name": "LENGTH_AFTER",
-                "description": "Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation",
+                "description": "Length of the semi-period after the date [days]",
                 "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/4758e6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
             },
             {
-                "id": "LENGTH_BEFORE",
-                "name": "LENGTH_BEFORE",
-                "description": "Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation",
+                "id": "LAI",
+                "name": "LAI",
+                "description": "Leaf Area Index (m²/m²)",
                 "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/4758e6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous LAI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on LAI",
+                "description": "Root Mean Square Error on Leaf Area Index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -2720,6 +2830,47 @@
         ],
         "datasets": []
     },
+    "57f9bd-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT6",
+        "layers": [
+            {
+                "id": "FAPAR",
+                "name": "FAPAR",
+                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+            },
+            {
+                "id": "LENGTH_AFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
+            },
+            {
+                "id": "LENGTH_BEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FAPAR",
+                "description": "Root Mean Square Error on FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "5a5bad-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fcover_global_1km_10daily_v2_RT0",
         "layers": [
@@ -2742,47 +2893,6 @@
                 "description": "Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5aab70-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
-            }
-        ],
-        "datasets": []
-    },
-    "5bbdbb-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW]  CLMS | LAI Global 300m 10-Daily V2 RT1",
-        "layers": [
-            {
-                "id": "LAFTER",
-                "name": "LAFTER",
-                "description": "Length of the semi-period after the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
-            },
-            {
-                "id": "LAI",
-                "name": "LAI",
-                "description": "Leaf Area Index (m²/m²)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
-            },
-            {
-                "id": "LBEFORE",
-                "name": "LBEFORE",
-                "description": "Length of the semi-period before the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
-            },
-            {
-                "id": "NOBS",
-                "name": "NOBS",
-                "description": "Number of available valid instantaneous LAI",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
-            },
-            {
-                "id": "RMSE",
-                "name": "RMSE",
-                "description": "Root Mean Square Error on Leaf Area Index",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -3513,6 +3623,88 @@
                 "description": "Fraction of green vegetation cover",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75537a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "75c925-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | FCOVER Global 300m 10-Daily V2 RT0",
+        "layers": [
+            {
+                "id": "FCOVER",
+                "name": "FCOVER",
+                "description": "Fraction of Green Vegetation Cover",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            },
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FCOVER",
+                "description": "Root Mean Square Error on FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "7718e2-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | LAI Global 300m 10-Daily V2 RT0",
+        "layers": [
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7718e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LAI",
+                "name": "LAI",
+                "description": "Leaf Area Index (m²/m²)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7718e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7718e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous LAI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7718e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on LAI",
+                "description": "Root Mean Square Error on Leaf Area Index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/7718e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -4538,33 +4730,6 @@
             }
         ]
     },
-    "93e884-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] CLMS | FAPAR Global 300m 10-Daily V2 RT6",
-        "layers": [
-            {
-                "id": "FAPAR",
-                "name": "FAPAR",
-                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/93e884-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
-            },
-            {
-                "id": "LENGTH_AFTER",
-                "name": "LENGTH_AFTER",
-                "description": "Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/93e884-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
-            },
-            {
-                "id": "LENGTH_BEFORE",
-                "name": "LENGTH_BEFORE",
-                "description": "Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/93e884-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
-            }
-        ],
-        "datasets": []
-    },
     "96ac73-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-1-EW_VV",
         "layers": [
@@ -4604,33 +4769,6 @@
                 "description": "Near-real-time lake surface water temperature derived from SLSTR sensor.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9893a0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LSWT&style=default"
-            }
-        ],
-        "datasets": []
-    },
-    "98dadb-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] CLMS | FAPAR Global 300m 10-Daily V2 RT1",
-        "layers": [
-            {
-                "id": "FAPAR",
-                "name": "FAPAR",
-                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/98dadb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
-            },
-            {
-                "id": "LENGTH_AFTER",
-                "name": "LENGTH_AFTER",
-                "description": "Length of semi-period after product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/98dadb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
-            },
-            {
-                "id": "LENGTH_BEFORE",
-                "name": "LENGTH_BEFORE",
-                "description": "Length of semi-period before product date on Fraction of Absorbed Photosynthetically Active Radiation",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/98dadb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
             }
         ],
         "datasets": []
@@ -5350,6 +5488,47 @@
         ],
         "datasets": []
     },
+    "b37c85-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT1",
+        "layers": [
+            {
+                "id": "FAPAR",
+                "name": "FAPAR",
+                "description": "Fraction of Absorbed Photosynthetically Active Radiation",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b37c85-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+            },
+            {
+                "id": "LENGTH_AFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b37c85-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_AFTER&style=default"
+            },
+            {
+                "id": "LENGTH_BEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b37c85-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LENGTH_BEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b37c85-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FAPAR",
+                "description": "Root Mean Square Error on FAPAR",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b37c85-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "b3bf08-YOUR-INSTANCEID-HERE": {
         "title": "[NEW]  CLMS | HF 300m Daily V1",
         "layers": [
@@ -5692,6 +5871,47 @@
                 "description": "Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c15b45-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "c232e4-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | LAI Global 300m 10-Daily V2 RT2",
+        "layers": [
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c232e4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LAI",
+                "name": "LAI",
+                "description": "Leaf Area Index (m²/m²)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c232e4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c232e4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous LAI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c232e4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on LAI",
+                "description": "Root Mean Square Error on Leaf Area Index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c232e4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []
@@ -6705,6 +6925,47 @@
             }
         ]
     },
+    "eb4d54-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | FCOVER Global 300m 10-Daily V2 RT6",
+        "layers": [
+            {
+                "id": "FCOVER",
+                "name": "FCOVER",
+                "description": "Fraction of Green Vegetation Cover",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCOVER&style=default"
+            },
+            {
+                "id": "LAFTER",
+                "name": "LENGTH_AFTER",
+                "description": "Length of the semi-period after the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
+            },
+            {
+                "id": "LBEFORE",
+                "name": "LENGTH_BEFORE",
+                "description": "Length of the semi-period before the date [days]",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of available valid instantaneous FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
+            },
+            {
+                "id": "RMSE",
+                "name": "RMSE on FCOVER",
+                "description": "Root Mean Square Error on FCOVER",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "ec7dc0-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] wb_global_1km_10daily_v2",
         "layers": [
@@ -7382,47 +7643,6 @@
                 "description": "Provides information on the relative water content of the top few centimeters soil, describing how wet or dry the soil is in its topmost layer, expressed in percent saturation.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fc0140-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SSM&style=default"
-            }
-        ],
-        "datasets": []
-    },
-    "fe9df6-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW]  CLMS | LAI Global 300m 10-Daily V2 RT6",
-        "layers": [
-            {
-                "id": "LAFTER",
-                "name": "LAFTER",
-                "description": "Length of the semi-period after the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAFTER&style=default"
-            },
-            {
-                "id": "LAI",
-                "name": "LAI",
-                "description": "Leaf Area Index (m²/m²)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LAI&style=default"
-            },
-            {
-                "id": "LBEFORE",
-                "name": "LBEFORE",
-                "description": "Length of the semi-period before the date (days)",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LBEFORE&style=default"
-            },
-            {
-                "id": "NOBS",
-                "name": "NOBS",
-                "description": "Number of available valid instantaneous LAI",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
-            },
-            {
-                "id": "RMSE",
-                "name": "RMSE",
-                "description": "Root Mean Square Error on Leaf Area Index",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RMSE&style=default"
             }
         ],
         "datasets": []

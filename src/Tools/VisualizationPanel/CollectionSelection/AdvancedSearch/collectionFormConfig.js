@@ -2089,6 +2089,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'fcover_global_300m_10daily_v2',
+                label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'fcover_global_300m_10daily_v2',
+                )})`,
+              },
+              {
                 id: 'lai_global_1km_10daily_v2',
                 label: 'Leaf Area Index, Global, 10-daily, 1km, (1999–2020), V2',
                 type: 'productType',

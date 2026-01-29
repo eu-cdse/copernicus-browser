@@ -117,6 +117,10 @@ import {
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -237,6 +241,10 @@ import {
   getClmsLwqNrt100mV210DailyMarkdown,
   getClmsGlobalLai300mV210dailyMarkdown,
   getClmsFapar300mV210DailyMarkdown,
+  getCopernicusClmsFcoverGlobal300m10dailyV2RT0Markdown,
+  getCopernicusClmsFcoverGlobal300m10dailyV2RT1Markdown,
+  getCopernicusClmsFcoverGlobal300m10dailyV2RT2Markdown,
+  getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -306,6 +314,10 @@ import {
   COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2_BANDS,
   COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_BANDS,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_BANDS,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0_BANDS,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
 
@@ -438,6 +450,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: t`FAPAR 300m 10-daily V2 RT1`,
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: t`FAPAR 300m 10-daily V2 RT2`,
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: t`FAPAR 300m 10-daily V2 RT6`,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: t`FCOVER 300m 10-daily V2`,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: t`FCOVER 300m 10-daily V2 RT1`,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: t`FCOVER 300m 10-daily V2 RT2`,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: t`FCOVER 300m 10-daily V2 RT6`,
   });
 
   urls = {
@@ -558,6 +574,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: [],
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: [],
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: [],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: [],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: [],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: [],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: [],
   };
   datasets = [];
   allLayers = [];
@@ -836,6 +856,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: {
+      min: 2,
+      max: 25,
+    },
   };
 
   KNOWN_COLLECTIONS = {
@@ -948,14 +984,18 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1]: ['db5aea5e-a0d1-487f-adff-ad8831933208'],
     [COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1]: ['401ca642-a169-4783-b1cf-cbd33e98eccb'],
     [COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2]: ['0a19176d-1c7b-420a-9dd4-2b8ef4acb153'],
-    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0]: ['2c8f1025-7737-4ed5-96c8-8a42e68c2f63'],
-    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1]: ['1626d93f-c2be-4ecb-9264-4717b2c7a63a'],
-    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2]: ['33d7248e-28b8-4f4a-aff7-b3d01b2a0c65'],
-    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6]: ['2357c932-ad98-4703-811a-ac7a906e6adb'],
-    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0]: ['5d085748-ac97-417c-a8ca-5398bba4a470'],
-    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: ['d414f9e7-22e1-4eca-a692-8a57ae47fcf2'],
-    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: ['e2d88317-d977-4d4f-9964-17a19b215c73'],
-    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: ['69257ec7-085d-4587-9603-46acc3c62cc2'],
+    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT0]: ['eed53a75-ea34-4f62-a369-142ff15e2da2'],
+    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT1]: ['06a928b8-70cd-4524-9490-a23a3e0af5b8'],
+    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT2]: ['03c8cc35-dff3-4446-9989-92d1e24287a7'],
+    [COPERNICUS_CLMS_LAI_GLOBAL_300M_10DAILY_V2_RT6]: ['4046945c-968d-4411-882e-5842599613e5'],
+    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0]: ['0dfe26be-b9ca-4286-b624-37591ea2addf'],
+    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: ['5e850ca5-2925-40b2-b377-d2410cb7fa21'],
+    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: ['98358a1f-474e-45b0-abd8-7a543cbfe1ea'],
+    [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: ['f3d558b9-7f12-46ff-aaef-7ea0dab397ed'],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: ['4fea1f4f-7438-4e19-9890-2674347a278d'],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: ['b5617f5b-69a0-4054-a14b-d831fd43babf'],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: ['47f6a6cc-0a44-4561-a6dc-05433be56d07'],
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: ['23bfb3d0-a265-4e3a-8203-23e4f09de82c'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -1076,6 +1116,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1523,6 +1567,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: {
+      minDate: moment.utc('2014-01-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: {
+      minDate: moment.utc('2025-08-31'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: {
+      minDate: moment.utc('2025-08-20'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: {
       minDate: moment.utc('2014-01-10'),
       maxDate: moment.utc(),
     },
@@ -1974,6 +2034,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       amount: 10,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: {
+      amount: 10,
+      unit: 'day',
+    },
   };
 
   willHandle(service, url, name, layers) {
@@ -2244,6 +2320,14 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6:
         return COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_BANDS;
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0:
+        return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0_BANDS;
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1:
+        return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1_BANDS;
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2:
+        return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
+        return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
       default:
         return null;
     }
@@ -2474,6 +2558,14 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6:
         return getClmsFapar300mV210DailyMarkdown();
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0:
+        return getCopernicusClmsFcoverGlobal300m10dailyV2RT0Markdown();
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1:
+        return getCopernicusClmsFcoverGlobal300m10dailyV2RT1Markdown();
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2:
+        return getCopernicusClmsFcoverGlobal300m10dailyV2RT2Markdown();
+      case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
+        return getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown();
       default:
         return null;
     }

@@ -922,49 +922,73 @@ export const DEFAULT_THEMES = [
         name: 'lai_global_300m_10daily_v2_RT0',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/0a5986-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/7718e2-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'lai_global_300m_10daily_v2_RT1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/5bbdbb-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/48c7bb-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'lai_global_300m_10daily_v2_RT2',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/14e975-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/c232e4-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'lai_global_300m_10daily_v2_RT6',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/fe9df6-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/40401f-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'fapar_global_300m_10daily_v2_RT0',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/4758e6-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/236fa1-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'fapar_global_300m_10daily_v2_RT1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/98dadb-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/b37c85-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'fapar_global_300m_10daily_v2_RT2',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/1ced90-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/2cbc94-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'fapar_global_300m_10daily_v2_RT6',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/93e884-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/57f9bd-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fcover_global_300m_10daily_v2_rt0',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/75c925-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fcover_global_300m_10daily_v2_rt1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/36ed5a-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fcover_global_300m_10daily_v2_rt2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/434460-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'fcover_global_300m_10daily_v2_rt6',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

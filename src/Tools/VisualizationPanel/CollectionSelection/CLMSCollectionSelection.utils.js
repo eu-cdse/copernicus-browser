@@ -117,6 +117,10 @@ import {
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -596,6 +600,28 @@ export const CLMS_OPTIONS = [
                   {
                     label: AttributeConsolidationPeriodValues.RT6.label,
                     id: COPERNICUS_CLMS_FCOVER_300M_10DAILY_RT6,
+                  },
+                ],
+              },
+              {
+                label: 'fcover_global_300m_10daily_v2',
+                id: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+                consolidationPeriods: [
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
                   },
                 ],
               },
