@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { t } from 'ttag';
 import { getDataSourceHandler } from '../../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import store, { searchResultsSlice, visualizationSlice, mainMapSlice, tabsSlice } from '../../../../store';
+import { getSavedWorkspaceProducts } from '../../../../api/OData/workspace';
 import {
   MODE_THEMES_LIST,
   USER_INSTANCES_THEMES_LIST,
@@ -99,8 +100,30 @@ class AdvancedSearch extends Component {
         });
         store.dispatch(searchResultsSlice.actions.setSearchFormData(searchConfigFromSession.searchFormData));
       }
-      if (searchConfigFromSession.searchResult) {
-        store.dispatch(searchResultsSlice.actions.setSearchResult(searchConfigFromSession.searchResult));
+
+      // Restore cached results immediately for instant UI and trigger background refresh
+      if (searchConfigFromSession.cachedResults && searchConfigFromSession.resultsAvailable) {
+        const cachedResultObject = {
+          allResults: searchConfigFromSession.cachedResults,
+          totalCount: searchConfigFromSession.cachedTotalCount || 0,
+          hasMore: searchConfigFromSession.cachedHasMore || false,
+          next: null, // Will be restored by re-running the search
+        };
+        store.dispatch(searchResultsSlice.actions.setSearchResult(cachedResultObject));
+
+        // Re-run the search in background to restore the next() function.
+        // Regenerate query from current state (session-stored query loses methods).
+        if (this.props.userToken) {
+          setTimeout(() => {
+            try {
+              const freshQuery = this.getQuery();
+              this.props.setODataSearchAuthToken(this.props.userToken);
+              this.props.productSearch(freshQuery);
+            } catch (e) {
+              // Swallow to avoid blocking UI; error will be shown via searchError if relevant.
+            }
+          }, 0);
+        }
       }
     }
   }
@@ -117,6 +140,22 @@ class AdvancedSearch extends Component {
       this.shouldDisplayTileGeometries(true);
     }
 
+    // If user token just became available and we have cached results, trigger background search.
+    if (!prevProps.userToken && this.props.userToken) {
+      const searchConfigFromSession = JSON.parse(
+        sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+      );
+      if (searchConfigFromSession?.cachedResults && searchConfigFromSession?.resultsAvailable) {
+        try {
+          const freshQuery = this.getQuery();
+          this.props.setODataSearchAuthToken(this.props.userToken);
+          this.props.productSearch(freshQuery);
+        } catch (e) {
+          // Ignore regeneration errors here; user can trigger manual search.
+        }
+      }
+    }
+
     if (this.props.oDataSearchResult !== prevProps?.oDataSearchResult) {
       const newSearchFormData = {
         fromMoment: this.state.fromMoment,
@@ -125,16 +164,25 @@ class AdvancedSearch extends Component {
         searchCriteria: this.state.searchCriteria,
       };
 
+      // Use the latest hook result for initial display.
       store.dispatch(searchResultsSlice.actions.setSearchResult(this.props.oDataSearchResult));
       store.dispatch(searchResultsSlice.actions.setSearchFormData(newSearchFormData));
+
+      // Cache only serializable data (without non-serializable functions like result.next() or query.skip())
+      const cachedResults = this.props.oDataSearchResult?.allResults || [];
+      const cachedTotalCount = this.props.oDataSearchResult?.totalCount || 0;
+      const cachedHasMore = this.props.oDataSearchResult?.hasMore || false;
+
       sessionStorage.setItem(
         ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
         JSON.stringify({
-          searchResult: this.props.oDataSearchResult,
           searchFormData: newSearchFormData,
           resultsAvailable: true,
           resultsPanelSelected: true,
           shouldShowAdvancedSearchTab: true,
+          cachedResults: cachedResults,
+          cachedTotalCount: cachedTotalCount,
+          cachedHasMore: cachedHasMore,
         }),
       );
     }
@@ -397,13 +445,17 @@ class AdvancedSearch extends Component {
     this.setState({ toMoment: newToMoment });
   };
 
-  doSearch = () => {
+  doSearch = async () => {
     this.setState({
       formValidationError: '',
     });
     try {
       const ODataQuery = this.getQuery();
       this.props.setODataSearchAuthToken(this.props.userToken);
+
+      const productSaved = await getSavedWorkspaceProducts();
+      store.dispatch(tabsSlice.actions.setSavedWorkspaceProducts(productSaved));
+
       this.props.productSearch(ODataQuery);
     } catch (e) {
       this.setState({
@@ -423,7 +475,6 @@ class AdvancedSearch extends Component {
         ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
         JSON.stringify({
           ...searchConfigFromSession,
-          searchResult: null,
           resultsAvailable: false,
           resultsPanelSelected: false,
         }),
@@ -432,6 +483,10 @@ class AdvancedSearch extends Component {
   };
 
   getNextNResults = async () => {
+    if (!this.props.searchResult?.next) {
+      // If next() isn't available yet (still restoring from cache), do nothing
+      return;
+    }
     await this.props.searchResult.next();
   };
 
@@ -744,6 +799,7 @@ class AdvancedSearch extends Component {
             userToken={userToken}
             results={searchResult?.allResults}
             hasMore={searchResult?.hasMore}
+            canLoadMore={!!searchResult?.next}
             totalCount={searchResult?.totalCount}
             getNextNResults={this.getNextNResults}
             onResultSelected={this.onResultSelected}

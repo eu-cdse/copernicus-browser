@@ -5,15 +5,18 @@ import { t, ngettext, msgid } from 'ttag';
 import ResultItem, { ErrorMessage } from './ResultItem';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import WorkspacePlus from '../../icons/workspace-plus.svg?react';
+import { v4 as uuid } from 'uuid';
 
 import './Results.scss';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
-import { addProductsToWorkspace } from '../../api/OData/workspace';
+import { addProductsToWorkspace, BATCH_SIZE } from '../../api/OData/workspace';
 import { ResultItemLabels } from './ResultItemFooter';
-import store, { notificationSlice } from '../../store';
+import store, { floatingPanelNotificationSlice, notificationSlice } from '../../store';
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
 import isEqual from 'lodash/isEqual';
 import Loader from '../../Loader/Loader';
+
+const MAX_PRODUCTS_TO_ADD_AT_ONCE = 1000;
 
 class Results extends Component {
   state = {
@@ -81,6 +84,10 @@ class Results extends Component {
 
   onResultCheck = (tile) => {
     this.setState((prevState) => {
+      if (prevState.savedWorkspaceProductsMap.get(tile.name)) {
+        return prevState;
+      }
+
       const checkedResults = prevState.checkedResults.find((t) => t.id === tile.id)
         ? prevState.checkedResults.filter((t) => t.id !== tile.id)
         : [...prevState.checkedResults, tile];
@@ -129,6 +136,15 @@ class Results extends Component {
       return null;
     }
 
+    if (checkedResults.length > MAX_PRODUCTS_TO_ADD_AT_ONCE) {
+      const maxProductsMsg = t`Maximum number of products that can be added at once to Workspace is`;
+      const selectLessMsg = t`Please select less than`;
+      const notificationMsg = `${maxProductsMsg} ${MAX_PRODUCTS_TO_ADD_AT_ONCE}. ${selectLessMsg} ${MAX_PRODUCTS_TO_ADD_AT_ONCE} ${t`products`}.`;
+
+      store.dispatch(notificationSlice.actions.displayError(notificationMsg));
+      return null;
+    }
+
     for (let tile of checkedResults) {
       // Check if the product is valid
       accessValidation.product = tile;
@@ -144,6 +160,17 @@ class Results extends Component {
       }
     }
 
+    const processingMsg = t`Processing products in batches of`;
+    const notificationMsg = `${processingMsg} ${BATCH_SIZE}... (${checkedResults.length} ${t`products`})`;
+
+    store.dispatch(
+      floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
+        notificationUniqueId: uuid(),
+        notificationAlertType: 'warning',
+        notificationMsg,
+      }),
+    );
+
     await addProductsToWorkspace(checkedResults);
     this.setState({ checkedResults: [] });
   };
@@ -152,6 +179,7 @@ class Results extends Component {
     const {
       results: products,
       hasMore,
+      canLoadMore = true,
       selectedTiles,
       totalCount,
       isAuthenticated,
@@ -244,7 +272,7 @@ class Results extends Component {
             </div>
             {hasMore ? (
               <div className="load-more-btn-wrapper">
-                {loadingMore ? (
+                {loadingMore || !canLoadMore ? (
                   <div className="eob-btn">
                     <Loader />
                   </div>

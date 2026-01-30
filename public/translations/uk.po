@@ -11374,3 +11374,30 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/vegetation/fraction-of-green-"
 "vegetation-cover-v2-0-300m)."
 msgstr ""
+
+msgid "Unknown error occurred"
+msgstr ""
+
+msgid "All items failed to be added to the workspace."
+msgstr ""
+
+msgid "products added successfully."
+msgstr ""
+
+msgid "Some failed to be added:"
+msgstr ""
+
+msgid "Products were successfully added to the "
+msgstr ""
+
+msgid "Maximum number of products that can be added at once to Workspace is"
+msgstr ""
+
+msgid "Please select less than"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "Processing products in batches of"
+msgstr ""
