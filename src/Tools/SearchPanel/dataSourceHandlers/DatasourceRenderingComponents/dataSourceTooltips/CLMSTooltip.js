@@ -679,7 +679,7 @@ const ClmsNorthernHemisphereSce1kmV1DailyTooltip = () =>
   });
 
 const getClmsGlobalSce1kmV1DailyMarkdown = () =>
-  t`Provides global daily updates of the fraction of snow cover on the ground (also in forested areas) and uncertainty per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from December 2025 to present.`;
+  t`Provides for global land areas (excluding Antarctica) daily maps of the fraction of snow cover on ground (also in forested areas) per pixel in percentage (0% – 100%). The data is available in near real time with a pixel spacing of about 1 km and with the temporal extent from December 2025 to present. More information [here](https://land.copernicus.eu/en/products/snow/snow-cover-global-v1-0-1km).`;
 const ClmsGlobalSce1kmV1DailyTooltip = () =>
   DataSourceTooltip({
     source: getClmsGlobalSce1kmV1DailyMarkdown(),

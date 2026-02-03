@@ -29,8 +29,6 @@ export default class LegendFromSpec extends React.Component {
     const { minPosition, maxPosition, gradients } = createGradients(legend);
     const gradientsWithLabels = legend.gradients.filter((g) => g.label !== undefined && g.label !== null);
 
-    console.log(legend);
-    console.log(gradientsWithLabels);
     return (
       <div className="legend-item continuous">
         <div className="gradients">

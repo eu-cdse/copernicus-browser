@@ -120,13 +120,19 @@ async function getTiffImages(layer, props, cancelToken) {
 
 export async function getDataForLayer(props, cancelToken) {
   try {
-    const { visualizationUrl, layerId } = props;
+    const { visualizationUrl, layerId, evalscript } = props;
+
     let layer = await LayersFactory.makeLayer(visualizationUrl, layerId, null, {
       cancelToken: cancelToken,
       ...reqConfigMemoryCache,
     });
+
     await layer.updateLayerFromServiceIfNeeded({ cancelToken: cancelToken, ...reqConfigMemoryCache });
     // add minQa, upsampling, downsampling, but no effects (they are only for visualization)
+
+    if (evalscript) {
+      layer.evalscript = evalscript;
+    }
 
     const isIndexOutputPresent = checkIfIndexOutputPresent(props);
     if (!isIndexOutputPresent) {
