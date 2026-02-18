@@ -121,6 +121,22 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
 } from './dataSourceConstants';
 import moment from 'moment';
 import {
@@ -245,6 +261,22 @@ import {
   getCopernicusClmsFcoverGlobal300m10dailyV2RT1Markdown,
   getCopernicusClmsFcoverGlobal300m10dailyV2RT2Markdown,
   getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown,
+  getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown,
+  getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown,
+  getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown,
+  getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown,
+  getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown,
+  getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown,
+  getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown,
+  getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { reprojectGeometry } from '../../../utils/reproject';
@@ -318,8 +350,25 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS,
 } from './datasourceAssets/CLMSBands';
 import { constructV3Evalscript } from '../../../utils';
+import { generateFallbackEvalscript } from './datasourceAssets/evalscriptTemplates';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: {
@@ -454,6 +503,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: t`FCOVER 300m 10-daily V2 RT1`,
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: t`FCOVER 300m 10-daily V2 RT2`,
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: t`FCOVER 300m 10-daily V2 RT6`,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: t`DMP 300m 10-daily V2`,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: t`DMP 300m 10-daily V2 RT1`,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: t`DMP 300m 10-daily V2 RT2`,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: t`DMP 300m 10-daily V2 RT6`,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: t`GPP 300m 10-daily V2`,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: t`GPP 300m 10-daily V2 RT1`,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: t`GPP 300m 10-daily V2 RT2`,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: t`GPP 300m 10-daily V2 RT6`,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: t`NPP 300m 10-Daily V2`,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: t`NPP 300m 10-Daily V2 RT1`,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: t`NPP 300m 10-Daily V2 RT2`,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: t`NPP 300m 10-Daily V2 RT6`,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: t`GDMP 300m 10-daily v2`,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: t`GDMP 300m 10-daily v2 RT1`,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: t`GDMP 300m 10-daily v2 RT2`,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: t`GDMP 300m 10-daily v2 RT6`,
   });
 
   urls = {
@@ -578,6 +643,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: [],
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: [],
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: [],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: [],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: [],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: [],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: [],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: [],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: [],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: [],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: [],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: [],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: [],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: [],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: [],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: [],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: [],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: [],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: [],
   };
   datasets = [];
   allLayers = [];
@@ -872,6 +953,70 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       min: 2,
       max: 25,
     },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      min: 2,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      min: 2,
+      max: 25,
+    },
   };
 
   KNOWN_COLLECTIONS = {
@@ -996,6 +1141,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: ['b5617f5b-69a0-4054-a14b-d831fd43babf'],
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: ['47f6a6cc-0a44-4561-a6dc-05433be56d07'],
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: ['23bfb3d0-a265-4e3a-8203-23e4f09de82c'],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: ['de3e1b9c-58c4-457a-a3e7-917ec20fc29b'],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: ['9d27c360-674c-44e2-b846-4be236c39c7e'],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: ['d8bbfd31-82da-4a02-bc1c-8f34387954f7'],
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: ['d888548d-2c56-47ed-847c-17c654e61a03'],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: ['eacf6c34-a3db-4b3b-bdf9-0feba8eed996'],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: ['f37f3647-c076-4dc1-9b0e-3ad129521bf4'],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: ['42d86587-3a2b-4394-8588-7d5e0238574d'],
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: ['7e2d31f2-80ef-4d9c-bd81-da59e40b0eea'],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: ['40fdc188-1ba7-4c62-a2f8-5d057451dcf9'],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: ['4c50c693-ff8f-4a44-a095-ef4dfec3e234'],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: ['48ada5a5-b721-4181-b87b-68957e7b1c8a'],
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: ['c1390928-f7ee-4d50-af81-b0872e0aceff'],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: ['b30949ba-bde1-4ac8-adf7-1126b9473b51'],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: ['2f76a954-18ff-4207-ab17-0ee6f78f7a76'],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: ['949eecb5-7592-4812-9c76-5f8995626358'],
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: ['bfc9927a-9cb9-4c15-bb7e-4cd85c24b008'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -1120,6 +1281,22 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1511,7 +1688,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_SWI_12_5KM_10DAILY_V4]: {
-      minDate: moment.utc('2025-07-01'),
+      minDate: moment.utc('2007-01-11'),
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_LIE_BALTIC_250M_DAILY_V1]: {
@@ -1584,6 +1761,70 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: {
       minDate: moment.utc('2014-01-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      minDate: moment.utc('2013-11-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      minDate: moment.utc('2013-11-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      minDate: moment.utc('2013-11-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      minDate: moment.utc('2025-09-10'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      minDate: moment.utc('2013-11-10'),
       maxDate: moment.utc(),
     },
   };
@@ -2050,6 +2291,70 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       amount: 10,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: {
+      amount: 10,
+      unit: 'day',
+    },
   };
 
   willHandle(service, url, name, layers) {
@@ -2328,6 +2633,38 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
       case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
         return COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0:
+        return COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS;
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1:
+        return COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS;
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2:
+        return COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6:
+        return COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0:
+        return COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS;
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1:
+        return COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS;
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2:
+        return COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6:
+        return COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0:
+        return COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS;
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1:
+        return COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS;
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2:
+        return COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6:
+        return COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0:
+        return COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS;
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1:
+        return COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS;
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
+        return COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS;
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
+        return COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS;
       default:
         return null;
     }
@@ -2566,6 +2903,38 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
         return getCopernicusClmsFcoverGlobal300m10dailyV2RT2Markdown();
       case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
         return getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown();
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0:
+        return getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown();
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1:
+        return getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown();
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2:
+        return getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown();
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6:
+        return getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown();
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0:
+        return getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown();
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1:
+        return getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown();
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2:
+        return getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown();
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6:
+        return getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown();
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0:
+        return getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown();
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1:
+        return getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown();
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2:
+        return getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown();
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6:
+        return getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown();
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0:
+        return getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown();
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1:
+        return getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown();
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
+        return getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown();
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
+        return getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown();
       default:
         return null;
     }
@@ -2641,7 +3010,7 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
       return constructV3Evalscript(bands, config);
     }
 
-    return this.defaultEvalscript(bands, 1 / 1000);
+    return this.defaultEvalscript(bands);
   };
 
   supportsLowResolutionAlternativeCollection = (collectionId) => {
@@ -2656,20 +3025,10 @@ export default class CLMSDataSourceHandler extends DataSourceHandler {
     return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
   };
 
-  defaultEvalscript = (bands, factor) => {
-    return `//VERSION=3
-function setup() {
-  return {
-    input: ["${[...new Set(Object.values(bands))].join('","')}", "dataMask"],
-    output: { bands: 4 }
-  };
-}
-let factor = ${factor};
-function evaluatePixel(sample) {
-  // This comment is required for evalscript parsing to work
-  return [${Object.values(bands)
-    .map((e) => 'factor * sample.' + e)
-    .join(',')}, sample.dataMask ];
-}`;
+  defaultEvalscript = (bands) => {
+    const bandNames = Object.values(bands);
+    const uniqueBands = [...new Set(bandNames)];
+    const factor = 1 / 1000;
+    return generateFallbackEvalscript(bandNames, uniqueBands, factor);
   };
 }

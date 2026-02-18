@@ -3,8 +3,7 @@ import {
   CacheTarget,
   LayersFactory,
   BYOCLayer,
-  S1GRDAWSEULayer,
-  DEMLayer,
+  S1GRDCDASLayer,
   BYOCSubTypes,
 } from '@sentinel-hub/sentinelhub-js';
 import { XMLParser } from 'fast-xml-parser';
@@ -12,8 +11,6 @@ import { t } from 'ttag';
 
 import store, { notificationSlice, themesSlice } from '../../../store';
 import Sentinel1DataSourceHandler from './Sentinel1DataSourceHandler';
-import Sentinel3DataSourceHandler from './Sentinel3DataSourceHandler';
-import Sentinel5PDataSourceHandler from './Sentinel5PDataSourceHandler';
 import ComplementaryDataDataSourceHandler from './ComplementaryDataDataSourceHandler';
 import BYOCDataSourceHandler from './BYOCDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
@@ -22,20 +19,11 @@ import { getCollectionInformation } from '../../../utils/collections';
 
 import { DATASOURCES, XmlParserOptions } from '../../../const';
 import {
-  AWS_L8L1C,
-  AWS_LETML1,
-  AWS_LETML2,
-  AWS_LMSSL1,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  AWS_LTML1,
-  AWS_LTML2,
   CDAS_L8_L9_LOTL1,
   CDAS_LANDSAT_MOSAIC,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
-  COPERNICUS_CLC_ACCOUNTING,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
   COPERNICUS_CLMS_BURNT_AREA_DAILY_V4,
   COPERNICUS_CLMS_BURNT_AREA_MONTHLY,
@@ -50,6 +38,10 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT2,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT5,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_ETA_GLOBAL_300M_10DAILY_V1,
   COPERNICUS_CLMS_FAPAR_1KM_10DAILY,
   COPERNICUS_CLMS_FAPAR_1KM_10DAILY_RT0,
@@ -89,10 +81,18 @@ import {
   COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT2,
   COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT5,
   COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
   COPERNICUS_CLMS_GPP_300M_10DAILY_RT1,
   COPERNICUS_CLMS_GPP_300M_10DAILY_RT2,
   COPERNICUS_CLMS_GPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_HF_GLOBAL_300M_DAILY_V1,
   COPERNICUS_CLMS_LAI_1KM_10DAILY,
   COPERNICUS_CLMS_LAI_1KM_10DAILY_RT0,
@@ -139,6 +139,10 @@ import {
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT1,
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT2,
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
   COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
   COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
@@ -157,9 +161,6 @@ import {
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
   COPERNICUS_CLMS_WB_300M_10DAILY_V1,
   COPERNICUS_CLMS_WB_300M_MONTHLY_V2,
-  COPERNICUS_CORINE_LAND_COVER,
-  COPERNICUS_GLOBAL_LAND_COVER,
-  COPERNICUS_WATER_BODIES,
   COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   CUSTOM,
@@ -177,10 +178,6 @@ import {
   EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS,
   EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING,
   EVOLAND_C12_TREE_TYPES,
-  S1_AWS_EW_HH,
-  S1_AWS_EW_HHHV,
-  S1_AWS_IW_VV,
-  S1_AWS_IW_VVVH,
   S1_CDAS_EW_HH,
   S1_CDAS_EW_HHHV,
   S1_CDAS_EW_VV,
@@ -197,34 +194,23 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
-  S3OLCI,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
   S3OLCI_CDAS,
-  S3SLSTR,
   S3SLSTR_CDAS,
   S3SYNERGY_L2_AOD,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_V10,
   S3SYNERGY_L2_VG1,
   S3SYNERGY_L2_VGP,
-  S5_AER_AI,
   S5_AER_AI_CDAS,
-  S5_CH4,
   S5_CH4_CDAS,
-  S5_CLOUD,
   S5_CLOUD_CDAS,
-  S5_CO,
   S5_CO_CDAS,
-  S5_HCHO,
   S5_HCHO_CDAS,
-  S5_NO2,
   S5_NO2_CDAS,
-  S5_O3,
   S5_O3_CDAS,
-  S5_OTHER,
   S5_OTHER_CDAS,
-  S5_SO2,
   S5_SO2_CDAS,
 } from './dataSourceConstants';
 
@@ -265,9 +251,7 @@ export function initializeDataSourceHandlers() {
     new S1MosaicDataSourceHandler(),
     new Sentinel2CDASDataSourceHandler(),
     new MosaicDataSourceHandler(),
-    new Sentinel3DataSourceHandler(),
     new Sentinel3CDASDataSourceHandler(),
-    new Sentinel5PDataSourceHandler(),
     new Sentinel5PCDASDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
     new BYOCDataSourceHandler(),
@@ -337,11 +321,7 @@ const collectionTitles = {};
 
 async function updateLayersFromServiceIfNeeded(layers) {
   const updateLayersFromService = layers.filter(
-    (l) =>
-      l instanceof BYOCLayer ||
-      l instanceof S1GRDAWSEULayer ||
-      l instanceof DEMLayer ||
-      l instanceof DEMCDASLayer,
+    (l) => l instanceof BYOCLayer || l instanceof S1GRDCDASLayer || l instanceof DEMCDASLayer,
   );
 
   await Promise.all(
@@ -559,10 +539,6 @@ export function datasourceForDatasetId(datasetId) {
     return rrdDatasource;
   }
   switch (datasetId) {
-    case S1_AWS_IW_VVVH:
-    case S1_AWS_IW_VV:
-    case S1_AWS_EW_HHHV:
-    case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
     case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
@@ -579,9 +555,6 @@ export function datasourceForDatasetId(datasetId) {
     case S2_L1C_CDAS:
     case S2_L2A_CDAS:
       return DATASOURCES.S2_CDAS;
-    case S3SLSTR:
-    case S3OLCI:
-      return DATASOURCES.S3;
     case S3SLSTR_CDAS:
     case S3OLCI_CDAS:
     case S3OLCIL2_LAND:
@@ -592,16 +565,6 @@ export function datasourceForDatasetId(datasetId) {
     case S3SYNERGY_L2_VG1:
     case S3SYNERGY_L2_V10:
       return DATASOURCES.S3_CDAS;
-    case S5_O3:
-    case S5_NO2:
-    case S5_SO2:
-    case S5_CO:
-    case S5_HCHO:
-    case S5_CH4:
-    case S5_AER_AI:
-    case S5_CLOUD:
-    case S5_OTHER:
-      return DATASOURCES.S5;
     case S5_O3_CDAS:
     case S5_NO2_CDAS:
     case S5_SO2_CDAS:
@@ -612,18 +575,6 @@ export function datasourceForDatasetId(datasetId) {
     case S5_CLOUD_CDAS:
     case S5_OTHER_CDAS:
       return DATASOURCES.S5_CDAS;
-    case AWS_L8L1C:
-    case AWS_LOTL1:
-    case AWS_LOTL2:
-      return DATASOURCES.AWS_LANDSAT8;
-    case AWS_LTML1:
-    case AWS_LTML2:
-      return DATASOURCES.AWS_LANDSAT45;
-    case AWS_LMSSL1:
-      return DATASOURCES.AWS_LANDSAT15;
-    case AWS_LETML1:
-    case AWS_LETML2:
-      return DATASOURCES.AWS_LANDSAT7_ETM;
     case CDAS_L8_L9_LOTL1:
     case CDAS_LANDSAT_MOSAIC:
       return DATASOURCES.COMPLEMENTARY_DATA;
@@ -757,6 +708,22 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1:
     case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2:
     case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
+    case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0:
+    case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1:
+    case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2:
+    case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6:
+    case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0:
+    case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1:
+    case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2:
+    case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6:
+    case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0:
+    case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1:
+    case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2:
+    case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6:
+    case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0:
+    case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1:
+    case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
+    case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
       return DATASOURCES.CLMS;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
@@ -803,10 +770,6 @@ export function checkIfCustom(datasetId) {
 }
 
 export const datasetLabels = {
-  [S1_AWS_IW_VVVH]: 'Sentinel-1 AWS-IW-VVVH',
-  [S1_AWS_IW_VV]: 'Sentinel-1 AWS-IW-VV',
-  [S1_AWS_EW_HHHV]: 'Sentinel-1 AWS-EW-HHHV',
-  [S1_AWS_EW_HH]: 'Sentinel-1 AWS-EW-HH',
   [S1_CDAS_IW_VVVH]: 'Sentinel-1 IW VV+VH',
   [S1_CDAS_IW_HHHV]: 'Sentinel-1 IW HH+HV',
   [S1_CDAS_IW_VV]: 'Sentinel-1 IW VV',
@@ -821,8 +784,6 @@ export const datasetLabels = {
   [S1_CDAS_SM_HH]: 'Sentinel-1 SM HH',
   [S2_L1C_CDAS]: 'Sentinel-2 L1C',
   [S2_L2A_CDAS]: 'Sentinel-2 L2A',
-  [S3SLSTR]: 'Sentinel-3 SLSTR',
-  [S3OLCI]: 'Sentinel-3 OLCI',
   [S3SLSTR_CDAS]: 'Sentinel-3 SLSTR',
   [S3OLCI_CDAS]: 'Sentinel-3 OLCI',
   [S3OLCIL2_LAND]: 'Sentinel-3 OLCI L2 Land',
@@ -832,15 +793,6 @@ export const datasetLabels = {
   [S3SYNERGY_L2_VGP]: 'Sentinel-3 Synergy L2 VGP',
   [S3SYNERGY_L2_VG1]: 'Sentinel-3 Synergy L2 VG1',
   [S3SYNERGY_L2_V10]: 'Sentinel-3 Synergy L2 V10',
-  [S5_O3]: 'Sentinel-5P O3',
-  [S5_NO2]: 'Sentinel-5P NO2',
-  [S5_SO2]: 'Sentinel-5P SO2',
-  [S5_CO]: 'Sentinel-5P CO',
-  [S5_HCHO]: 'Sentinel-5P HCHO',
-  [S5_CH4]: 'Sentinel-5P CH4',
-  [S5_AER_AI]: 'Sentinel-5P AER_AI',
-  [S5_CLOUD]: 'Sentinel-5P CLOUD',
-  [S5_OTHER]: 'Sentinel-5P Other',
   [S5_O3_CDAS]: 'Sentinel-5P O3',
   [S5_NO2_CDAS]: 'Sentinel-5P NO2',
   [S5_SO2_CDAS]: 'Sentinel-5P SO2',
@@ -852,21 +804,9 @@ export const datasetLabels = {
   [S5_OTHER_CDAS]: 'Sentinel-5P Other',
   [CDAS_L8_L9_LOTL1]: t`Landsat 8-9 L1`,
   [CDAS_LANDSAT_MOSAIC]: 'Landsat Mosaics',
-  [AWS_L8L1C]: 'Landsat 8 (USGS archive)',
-  [AWS_LOTL1]: 'Landsat 8-9 L1',
-  [AWS_LOTL2]: 'Landsat 8-9 L2',
-  [AWS_LTML1]: 'Landsat 4-5 TM L1',
-  [AWS_LTML2]: 'Landsat 4-5 TM L2',
-  [AWS_LMSSL1]: 'Landsat 1-5 MSS L1',
-  [AWS_LETML1]: 'Landsat 7 ETM+ L1',
-  [AWS_LETML2]: 'Landsat 7 ETM+ L2',
   [CUSTOM]: 'CUSTOM',
   [DEM_COPERNICUS_30_CDAS]: 'DEM COPERNICUS 30',
   [DEM_COPERNICUS_90_CDAS]: 'DEM COPERNICUS 90',
-  [COPERNICUS_CORINE_LAND_COVER]: 'CORINE Land Cover',
-  [COPERNICUS_GLOBAL_LAND_COVER]: 'Global Land Cover',
-  [COPERNICUS_WATER_BODIES]: 'Water Bodies',
-  [COPERNICUS_CLC_ACCOUNTING]: 'CORINE Land Cover Accounting Layers',
   [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: 'WorldCover Annual Cloudless Mosaics',
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: 'Sentinel-2 Quarterly Mosaics',
   [S1_MONTHLY_MOSAIC_DH]: 'Sentinel-1 DH',
@@ -995,6 +935,22 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_LSWT_OFFLINE_1KM_10DAILY_V1]: t`LSWT Offline 1km 10-daily V1`,
   [COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1]: t`LSWT NRT Global 1km 10-daily V1`,
   [COPERNICUS_CLMS_LWQ_NRT_GLOBAL_100M_10DAILY_V2]: t`LWQ NRT 100m 10-daily V2`,
+  [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6]: t`GDMP 300m 10-daily v2 RT6`,
+  [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2]: t`GDMP 300m 10-daily v2 RT2`,
+  [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1]: t`GDMP 300m 10-daily v2 RT1`,
+  [COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0]: t`GDMP 300m 10-daily v2 RT0`,
+  [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6]: t`GPP 300m 10-daily V2 RT6`,
+  [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2]: t`GPP 300m 10-daily V2 RT2`,
+  [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1]: t`GPP 300m 10-daily V2 RT1`,
+  [COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0]: t`GPP 300m 10-daily V2 RT0`,
+  [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6]: t`NPP 300m 10-daily V2 RT6`,
+  [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2]: t`NPP 300m 10-daily V2 RT2`,
+  [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1]: t`NPP 300m 10-daily V2 RT1`,
+  [COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0]: t`NPP 300m 10-daily V2 RT0`,
+  [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6]: t`DMP 300m 10-daily V2 RT6`,
+  [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2]: t`DMP 300m 10-daily V2 RT2`,
+  [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1]: t`DMP 300m 10-daily V2 RT1`,
+  [COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0]: t`DMP 300m 10-daily V2 RT0`,
   [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6]: t`FCOVER 300m 10-daily V2 RT6`,
   [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2]: t`FCOVER 300m 10-daily V2 RT2`,
   [COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1]: t`FCOVER 300m 10-daily V2 RT1`,
@@ -1020,10 +976,6 @@ export function getDatasetLabel(datasetId) {
 
 export function getEvalsource(datasetId) {
   switch (datasetId) {
-    case S1_AWS_IW_VVVH:
-    case S1_AWS_IW_VV:
-    case S1_AWS_EW_HHHV:
-    case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
     case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
@@ -1041,23 +993,10 @@ export function getEvalsource(datasetId) {
       return 'S2_L1C_CDAS';
     case S2_L2A_CDAS:
       return 'S2_L2A_CDAS';
-    case S3SLSTR:
-      return 'S3SLSTR';
-    case S3OLCI:
-      return 'S3OLCI';
     case S3SLSTR_CDAS:
       return 'S3SLSTR_CDAS';
     case S3OLCI_CDAS:
       return 'S3OLCI_CDAS';
-    case S5_O3:
-    case S5_NO2:
-    case S5_SO2:
-    case S5_CO:
-    case S5_HCHO:
-    case S5_CH4:
-    case S5_AER_AI:
-    case S5_CLOUD:
-    case S5_OTHER:
     case S5_O3_CDAS:
     case S5_NO2_CDAS:
     case S5_SO2_CDAS:
@@ -1068,10 +1007,6 @@ export function getEvalsource(datasetId) {
     case S5_CLOUD_CDAS:
     case S5_OTHER_CDAS:
       return 'S5P_L2';
-    case AWS_L8L1C:
-    case AWS_LOTL1:
-    case AWS_LOTL2:
-      return 'L8';
     default:
       return null;
   }
@@ -1093,10 +1028,6 @@ export function datasetHasAnyFISLayer(datasetId) {
 
 export function getDataSourceHashtags(datasetId) {
   switch (datasetId) {
-    case S1_AWS_IW_VVVH:
-    case S1_AWS_IW_VV:
-    case S1_AWS_EW_HHHV:
-    case S1_AWS_EW_HH:
     case S1_CDAS_IW_VVVH:
     case S1_CDAS_IW_HHHV:
     case S1_CDAS_IW_VV:
@@ -1113,8 +1044,6 @@ export function getDataSourceHashtags(datasetId) {
     case S2_L1C_CDAS:
     case S2_L2A_CDAS:
       return 'Sentinel-2,Copernicus';
-    case S3SLSTR:
-    case S3OLCI:
     case S3SLSTR_CDAS:
     case S3OLCI_CDAS:
     case S3OLCIL2_LAND:
@@ -1125,15 +1054,6 @@ export function getDataSourceHashtags(datasetId) {
     case S3SYNERGY_L2_VGP:
     case S3SYNERGY_L2_AOD:
       return 'Sentinel-3,Copernicus';
-    case S5_O3:
-    case S5_NO2:
-    case S5_SO2:
-    case S5_CO:
-    case S5_HCHO:
-    case S5_CH4:
-    case S5_AER_AI:
-    case S5_CLOUD:
-    case S5_OTHER:
     case S5_O3_CDAS:
     case S5_NO2_CDAS:
     case S5_SO2_CDAS:
@@ -1144,12 +1064,6 @@ export function getDataSourceHashtags(datasetId) {
     case S5_CLOUD_CDAS:
     case S5_OTHER_CDAS:
       return 'Sentinel-5P,Copernicus';
-    case AWS_L8L1C:
-    case AWS_LOTL1:
-    case AWS_LOTL2:
-    case AWS_LMSSL1:
-    case AWS_LETML1:
-    case AWS_LETML2:
     case CDAS_L8_L9_LOTL1:
     case CDAS_LANDSAT_MOSAIC:
       return 'Landsat,NASA';

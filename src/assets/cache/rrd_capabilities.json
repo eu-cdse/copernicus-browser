@@ -142,6 +142,19 @@
         ],
         "datasets": []
     },
+    "16f4bd-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_WORLDVIEW_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "17b587-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_SAR_Wx_SGF_HH",
         "layers": [

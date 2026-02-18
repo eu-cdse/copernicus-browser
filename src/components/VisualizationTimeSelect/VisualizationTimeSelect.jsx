@@ -106,7 +106,9 @@ export function VisualizationTimeSelect({
 
   useEffect(() => {
     const updateSelectedDates = () => {
-      isSingle ? updateDate(selectedDay) : updateDate(selectedDay ? selectedDay : moment().utc());
+      if (isSingle || (!isTimeRange && !fromTime)) {
+        isSingle ? updateDate(selectedDay) : updateDate(selectedDay ? selectedDay : moment().utc());
+      }
     };
 
     updateSelectedDates();

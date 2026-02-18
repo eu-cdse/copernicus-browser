@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { t } from 'ttag';
 import moment from 'moment';
@@ -53,6 +53,7 @@ const ResultsCard = ({
   const [inCart, setInCart] = useState(false);
   const [requestInProgress, setHttpRequest] = useRRDHttpRequest();
   const [previewImageUrl, setPreviewImageUrl] = useState(null);
+  const isFetchingRef = useRef(false);
 
   const openProductDetailsModal = ({ downloadInProgress, onDownload }) => {
     store.dispatch(searchResultsSlice.actions.setSelectedResult(item));
@@ -86,6 +87,8 @@ const ResultsCard = ({
   }, [resultsSection.cartResults, item]);
 
   useEffect(() => {
+    let cancelled = false;
+
     const loadImage = async () => {
       // 1. Check if already cached in Redux
       const cached = quicklookImages[item._internalId] || quicklookImages[item._internalId + '_thumbnail'];
@@ -94,32 +97,55 @@ const ResultsCard = ({
         return;
       }
 
-      // 2. Try thumbnail first (if available)
-      const thumbnailHref = item.assets?.thumbnail?.href;
-      if (thumbnailHref) {
-        const thumbnailUrl = await fetchThumbnailImage(item, user.access_token);
-        if (thumbnailUrl) {
-          onImageLoad(item._internalId + '_thumbnail', thumbnailUrl);
-          setPreviewImageUrl(thumbnailUrl);
-          return;
-        }
+      // Prevent duplicate fetches
+      if (isFetchingRef.current) {
+        return;
       }
+      isFetchingRef.current = true;
 
-      // 3. Fallback to quicklook or provider logo
-      const previewUrl = await fetchPreviewImage(
-        item,
-        user.access_token,
-        providerSection.imageType,
-        isTaskingEnabled,
-      );
-      if (previewUrl) {
-        onImageLoad(item._internalId, previewUrl);
-        setPreviewImageUrl(previewUrl);
+      try {
+        // 2. Try thumbnail first (if available)
+        const thumbnailHref = item.assets?.thumbnail?.href;
+        if (thumbnailHref) {
+          const thumbnailUrl = await fetchThumbnailImage(
+            item,
+            user.access_token,
+            providerSection.imageType,
+            isTaskingEnabled,
+          );
+          if (thumbnailUrl && !cancelled) {
+            onImageLoad(item._internalId + '_thumbnail', thumbnailUrl);
+            setPreviewImageUrl(thumbnailUrl);
+            return;
+          }
+        }
+
+        // 3. Fallback to quicklook or provider logo
+        const previewUrl = await fetchPreviewImage(
+          item,
+          user.access_token,
+          providerSection.imageType,
+          isTaskingEnabled,
+        );
+        if (previewUrl && !cancelled) {
+          onImageLoad(item._internalId, previewUrl);
+          setPreviewImageUrl(previewUrl);
+        }
+      } finally {
+        if (!cancelled) {
+          isFetchingRef.current = false;
+        }
       }
     };
 
     loadImage();
-  }, [item, user.access_token, quicklookImages, onImageLoad, providerSection.imageType, isTaskingEnabled]);
+
+    return () => {
+      cancelled = true;
+      isFetchingRef.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item._internalId, user.access_token, providerSection.imageType, isTaskingEnabled]);
 
   const triggerAddToCartQuery = () => {
     try {

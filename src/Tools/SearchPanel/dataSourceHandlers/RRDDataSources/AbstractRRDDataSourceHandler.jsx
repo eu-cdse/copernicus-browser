@@ -7,6 +7,7 @@ import GenericSearchGroup from '../DatasourceRenderingComponents/searchGroups/Ge
 import { FetchingFunction } from '../../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { filterLayers } from '../filter';
 import { constructV3Evalscript } from '../../../../utils';
+import { generateFallbackEvalscript } from '../datasourceAssets/evalscriptTemplates';
 import { reprojectGeometry } from '../../../../utils/reproject';
 import { getSHServiceRootUrl } from '../dataSourceHandlers';
 
@@ -203,20 +204,10 @@ export default class AbstractRRDDataSourceHandler extends DataSourceHandler {
       return constructV3Evalscript(bands, config);
     }
 
-    return `//VERSION=3
-function setup() {
-  return {
-    input: ["${[...new Set(Object.values(bands))].join('","')}", "dataMask"],
-    output: { bands: 4 }
-  };
-}
-let factor = 1/2000;
-function evaluatePixel(sample) {
-  // This comment is required for evalscript parsing to work
-  return [${Object.values(bands)
-    .map((e) => 'factor * sample.' + e)
-    .join(',')}, sample.dataMask ];
-}`;
+    const bandNames = Object.values(bands);
+    const uniqueBands = [...new Set(bandNames)];
+    const factor = 1 / 2000;
+    return generateFallbackEvalscript(bandNames, uniqueBands, factor);
   };
 
   getLeafletZoomConfig() {

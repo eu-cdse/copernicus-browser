@@ -29,6 +29,7 @@ import {
   CCM_VHR_IMAGE_2024_BANDS,
 } from './datasourceAssets/CCMBands';
 import { constructV3Evalscript } from '../../../utils';
+import { generateFallbackEvalscript } from './datasourceAssets/evalscriptTemplates';
 
 export default class CCMDataSourceHandler extends DataSourceHandler {
   getDatasetSearchLabels = () => ({
@@ -256,23 +257,13 @@ export default class CCMDataSourceHandler extends DataSourceHandler {
       return constructV3Evalscript(bands, config);
     }
 
-    return this.defaultEvalscript(bands, 1 / 1000);
+    return this.defaultEvalscript(bands);
   };
 
-  defaultEvalscript = (bands, factor) => {
-    return `//VERSION=3
-function setup() {
-  return {
-    input: ["${[...new Set(Object.values(bands))].join('","')}", "dataMask"],
-    output: { bands: 4 }
-  };
-}
-let factor = ${factor};
-function evaluatePixel(sample) {
-  // This comment is required for evalscript parsing to work
-  return [${Object.values(bands)
-    .map((e) => 'factor * sample.' + e)
-    .join(',')}, sample.dataMask ];
-}`;
+  defaultEvalscript = (bands) => {
+    const bandNames = Object.values(bands);
+    const uniqueBands = [...new Set(bandNames)];
+    const factor = 1 / 1000;
+    return generateFallbackEvalscript(bandNames, uniqueBands, factor);
   };
 }

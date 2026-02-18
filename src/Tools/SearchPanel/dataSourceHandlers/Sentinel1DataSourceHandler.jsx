@@ -1,8 +1,5 @@
-import React from 'react';
 import {
-  DATASET_AWSEU_S1GRD,
   DATASET_CDAS_S1GRD,
-  S1GRDAWSEULayer,
   S1GRDCDASLayer,
   AcquisitionMode,
   Polarization,
@@ -11,17 +8,9 @@ import {
 } from '@sentinel-hub/sentinelhub-js';
 
 import DataSourceHandler from './DataSourceHandler';
-import Sentinel1SearchGroup from './DatasourceRenderingComponents/searchGroups/Sentinel1SearchGroup';
-import {
-  Sentinel1Tooltip,
-  getSentinel1Markdown,
-} from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel1Tooltip';
+import { getSentinel1Markdown } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel1Tooltip';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import {
-  S1_AWS_IW_VVVH,
-  S1_AWS_IW_VV,
-  S1_AWS_EW_HHHV,
-  S1_AWS_EW_HH,
   ASCENDING,
   DESCENDING,
   S1_CDAS_IW_VVVH,
@@ -84,7 +73,6 @@ export const S1_OBSERVATION_SCENARIOS = {
     { name: 'HV', description: '', color: undefined },
   ],
   DATA_LOCATIONS: {
-    AWS: 'AWS',
     CDAS: 'CDAS',
   },
   ACQUISITION_MODES: {
@@ -137,22 +125,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   searchGroupLabel = 'Sentinel-1';
 
   leafletZoomConfig = {
-    [S1_AWS_IW_VVVH]: {
-      min: 7,
-      max: 18,
-    },
-    [S1_AWS_IW_VV]: {
-      min: 7,
-      max: 18,
-    },
-    [S1_AWS_EW_HHHV]: {
-      min: 7,
-      max: 18,
-    },
-    [S1_AWS_EW_HH]: {
-      min: 7,
-      max: 18,
-    },
     [S1_CDAS_IW_VVVH]: {
       min: 7,
       max: 18,
@@ -224,13 +196,12 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   defaultPreselectedDataset = S1_CDAS_IW_VVVH;
 
   willHandle(service, url, name, layers, _preselected, _onlyForBaseLayer) {
-    const hasAWSLayer = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_AWSEU_S1GRD.id);
     const hasCDASLayer = !!layers.find((l) => l.dataset && l.dataset.id === DATASET_CDAS_S1GRD.id);
 
-    if (!hasAWSLayer && !hasCDASLayer) {
+    if (!hasCDASLayer) {
       return false;
     }
-    this.setFilteringOptions(layers, hasAWSLayer, hasCDASLayer);
+    this.setFilteringOptions(layers, hasCDASLayer);
     const availableDatasets = this.getAvailableDatasets(layers);
 
     if (!this.datasets.includes(...availableDatasets)) {
@@ -259,34 +230,9 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     store.dispatch(visualizationSlice.actions.setOrbitDirection(orbitDirections));
   };
 
-  getSearchFormComponents() {
-    if (!this.isHandlingAnyUrl()) {
-      return null;
-    }
-
-    return (
-      <Sentinel1SearchGroup
-        key={`sentinel-1`}
-        label={this.getSearchGroupLabel()}
-        preselected={false}
-        saveCheckedState={this.saveCheckedState}
-        dataSourceTooltip={<Sentinel1Tooltip />}
-        saveFiltersValues={this.saveSearchFilters}
-        dataLocations={this.dataLocations}
-        acquisitionModes={this.acquisitionModes}
-        polarizations={this.polarizations}
-        orbitDirections={this.ORBIT_DIRECTIONS}
-        renderOptionsHelpTooltips={this.renderOptionsHelpTooltips}
-      />
-    );
-  }
-
   getDescription = () => getSentinel1Markdown();
 
-  setFilteringOptions = (layers, hasAWSLayer, hasCDASLayer) => {
-    if (hasAWSLayer) {
-      this.dataLocations.AWS = this.DATA_LOCATIONS.AWS;
-    }
+  setFilteringOptions = (layers, hasCDASLayer) => {
     if (hasCDASLayer) {
       this.dataLocations.CDAS = this.DATA_LOCATIONS.CDAS;
     }
@@ -363,29 +309,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   getAvailableDatasets = (layers) => {
     const availableDatasets = [];
-    const AWSLayers = layers.filter((l) => l.dataset && l.dataset.id === DATASET_AWSEU_S1GRD.id);
     const CDASLayers = layers.filter((l) => l.dataset && l.dataset.id === DATASET_CDAS_S1GRD.id);
-
-    if (
-      AWSLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.DV)
-    ) {
-      availableDatasets.push(S1_AWS_IW_VVVH);
-    }
-    if (
-      AWSLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.SV)
-    ) {
-      availableDatasets.push(S1_AWS_IW_VV);
-    }
-    if (
-      AWSLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.DH)
-    ) {
-      availableDatasets.push(S1_AWS_EW_HHHV);
-    }
-    if (
-      AWSLayers.some((l) => l.acquisitionMode === AcquisitionMode.EW && l.polarization === Polarization.SH)
-    ) {
-      availableDatasets.push(S1_AWS_EW_HH);
-    }
 
     if (
       CDASLayers.some((l) => l.acquisitionMode === AcquisitionMode.IW && l.polarization === Polarization.DV)
@@ -466,7 +390,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       return [];
     }
 
-    const isAWS = this.searchFilters['dataLocations'].includes('AWS');
     const isCDAS = this.searchFilters['dataLocations'].includes('CDAS');
     const isIW = this.searchFilters['acquisitionModes'].includes('IW');
     const isEW = this.searchFilters['acquisitionModes'].includes('EW');
@@ -487,39 +410,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
       this.searchFilters['orbitDirections'].length === 1 ? this.searchFilters['orbitDirections'][0] : null;
 
     let fetchingFunctions = [];
-
-    if (isAWS) {
-      let selectedDatasets = [];
-      if (isIW_VV) {
-        selectedDatasets.push(S1_AWS_IW_VV);
-      }
-      if (isIW_VVVH) {
-        selectedDatasets.push(S1_AWS_IW_VVVH);
-      }
-      if (isEW_HH) {
-        selectedDatasets.push(S1_AWS_EW_HH);
-      }
-      if (isEW_HHHV) {
-        selectedDatasets.push(S1_AWS_EW_HHHV);
-      }
-      selectedDatasets.forEach((datasetId) => {
-        // Evalscript (or instanceId + layerId) is a required parameter, although we don't need it for findTiles
-        let searchLayer = new S1GRDAWSEULayer({
-          evalscript: true,
-          orbitDirection: orbitDirection,
-          ...Sentinel1DataSourceHandler.getDatasetParams(datasetId),
-        });
-        const ff = new FetchingFunction(
-          datasetId,
-          searchLayer,
-          fromMoment,
-          toMoment,
-          queryArea,
-          this.convertToStandardTiles,
-        );
-        fetchingFunctions.push(ff);
-      });
-    }
 
     if (isCDAS) {
       let selectedDatasets = [];
@@ -611,22 +501,18 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   getBands = (datasetId) => {
     switch (datasetId) {
-      case S1_AWS_IW_VV:
       case S1_CDAS_IW_VV:
       case S1_CDAS_EW_VV:
       case S1_CDAS_SM_VV:
         return this.KNOWN_BANDS.filter((b) => ['VV'].includes(b.name));
-      case S1_AWS_EW_HHHV:
       case S1_CDAS_EW_HHHV:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_SM_HHHV:
         return this.KNOWN_BANDS.filter((b) => ['HH', 'HV'].includes(b.name));
-      case S1_AWS_EW_HH:
       case S1_CDAS_EW_HH:
       case S1_CDAS_IW_HH:
       case S1_CDAS_SM_HH:
         return this.KNOWN_BANDS.filter((b) => ['HH'].includes(b.name));
-      case S1_AWS_IW_VVVH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_EW_VVVH:
       case S1_CDAS_SM_VVVH:
@@ -673,7 +559,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.SM,
           resolution: Resolution.HIGH, // we do not have data for FULL resolution (yet)
         };
-      case S1_AWS_IW_VVVH:
       case S1_CDAS_IW_VVVH:
         return {
           polarization: Polarization.DV,
@@ -686,7 +571,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.IW,
           resolution: Resolution.HIGH,
         };
-      case S1_AWS_IW_VV:
       case S1_CDAS_IW_VV:
         return {
           polarization: Polarization.SV,
@@ -699,7 +583,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.IW,
           resolution: Resolution.HIGH,
         };
-      case S1_AWS_EW_HHHV:
       case S1_CDAS_EW_HHHV:
         return {
           polarization: Polarization.DH,
@@ -712,7 +595,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
           acquisitionMode: AcquisitionMode.EW,
           resolution: Resolution.MEDIUM,
         };
-      case S1_AWS_EW_HH:
       case S1_CDAS_EW_HH:
         return {
           polarization: Polarization.SH,
@@ -740,11 +622,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   getSentinelHubDataset = (datasetId) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
-        return DATASET_AWSEU_S1GRD;
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -765,10 +642,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   generateEvalscript = (bands, datasetId, config) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_IW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_VV:
@@ -802,10 +675,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   getSupportedSpeckleFilters(datasetId) {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -830,15 +699,11 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     const ZoomThresholdSM = 12;
 
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
       case S1_CDAS_IW_HH:
         return currentZoom >= ZoomThresholdIW;
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_EW_HHHV:
       case S1_CDAS_EW_VVVH:
       case S1_CDAS_EW_HH:
@@ -856,10 +721,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   supportsOrthorectification = (datasetId) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -880,10 +741,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   supportsBackscatterCoeff = (datasetId) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -904,10 +761,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
 
   supportsV3Evalscript = (datasetId) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -938,13 +791,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
         }
       : null;
 
-    //  S1_AWS_EW_HHHV if the viewport bbox latitude is above 70° north or 55° south
     if ((coords && coords.south > 70) || (coords && coords.north < -55)) {
-      // check if S1_AWS_EW_HHHV is present among datasets in selected theme
-      if (!!this.datasets.find((d) => d === S1_AWS_EW_HHHV)) {
-        return S1_AWS_EW_HHHV;
-      }
-
       //try to find dataset with EW acquisition mode
       const datasetEW = this.datasets.find((d) => d.match(/EW/));
 
@@ -960,17 +807,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     const { polarization, acquisitionMode, resolution } =
       Sentinel1DataSourceHandler.getDatasetParams(datasetId);
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH:
-        return new S1GRDAWSEULayer({
-          instanceId: true,
-          layerId: true,
-          polarization: polarization,
-          acquisitionMode: acquisitionMode,
-          resolution: resolution,
-        });
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:

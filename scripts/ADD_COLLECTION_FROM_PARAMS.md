@@ -312,7 +312,3 @@ Each collection will be added independently with all necessary configurations.
 - **Testing:** Test each collection in the browser before adding the next one
 - **Manual steps:** Don't forget to complete the three manual steps (CLMS_OPTIONS, recursiveCollectionCLMS, and ODataHelpers.js) - they're required for the collection to work properly in the UI
 - **Duplicate check:** The script automatically checks if a collection already exists and will abort to prevent duplicates
-
-```
-
-```

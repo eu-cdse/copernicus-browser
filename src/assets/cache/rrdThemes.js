@@ -59,6 +59,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/1635ac-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_WORLDVIEW_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/16f4bd-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_SAR_Wx_SGF_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/17b587-YOUR-INSTANCEID-HERE',

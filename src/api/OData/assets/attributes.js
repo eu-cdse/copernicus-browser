@@ -166,6 +166,9 @@ export const FormatedAttributeNames = {
   wrsRow: () => t`WRS row`,
   wrsType: () => t`WRS type`,
   USGScollection: () => t`USGS collection`,
+  processingBaseline: () => t`Processing baseline`,
+  parentIdentifier: () => t`Parent identifier`,
+  acquisitionType: () => t`Acquisition type`,
 };
 
 export const AttributesDescriptions = {

@@ -1,33 +1,7 @@
 import {
   ApiType,
   parseLegacyWmsGetMapParams,
-  DATASET_AWSEU_S1GRD,
-  DATASET_S3OLCI,
-  DATASET_S3SLSTR,
-  DATASET_S5PL2,
-  DATASET_AWS_L8L1C,
-  DATASET_AWS_LOTL1,
-  DATASET_AWS_LOTL2,
-  DATASET_AWS_LTML1,
-  DATASET_AWS_LTML2,
-  DATASET_AWS_LETML1,
-  DATASET_AWS_LETML2,
-  DATASET_AWS_LMSSL1,
-  DATASET_AWS_DEM,
   DATASET_BYOC,
-  S1GRDAWSEULayer,
-  S3SLSTRLayer,
-  S3OLCILayer,
-  S5PL2Layer,
-  Landsat8AWSLayer,
-  Landsat8AWSLOTL1Layer,
-  Landsat8AWSLOTL2Layer,
-  Landsat45AWSLTML1Layer,
-  Landsat45AWSLTML2Layer,
-  Landsat7AWSLETML1Layer,
-  Landsat7AWSLETML2Layer,
-  Landsat15AWSLMSSL1Layer,
-  DEMLayer,
   BYOCLayer,
   ProcessingDataFusionLayer,
   DATASET_CDAS_S2L1C,
@@ -95,7 +69,6 @@ export async function constructDataFusionLayer(
 // given the dataset ID, construct an empty sentinelhub-js layer:
 export function constructLayerFromDatasetId(datasetId, mosaickingOrder, additionalParameters) {
   switch (datasetId) {
-    case DATASET_AWSEU_S1GRD.id:
     case DATASET_CDAS_S1GRD.id:
       // we are setting evalscript to avoid exception when the layer is initialized without any parameters
       // (this should be fixed in sentinelhub-js)
@@ -108,8 +81,7 @@ export function constructLayerFromDatasetId(datasetId, mosaickingOrder, addition
       } = additionalParameters;
       const orthorectify = orthorectification === '' ? false : true;
       const demInstanceType = orthorectification === '' ? null : orthorectification;
-      const shLayer = datasetId === DATASET_AWSEU_S1GRD ? S1GRDAWSEULayer : S1GRDCDASLayer;
-      return new shLayer({
+      return new S1GRDCDASLayer({
         evalscript: '//VERSION=3 ---',
         mosaickingOrder: mosaickingOrder,
         orthorectify: orthorectify,
@@ -123,40 +95,12 @@ export function constructLayerFromDatasetId(datasetId, mosaickingOrder, addition
       return new S2L1CCDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S2L2A.id:
       return new S2L2ACDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_S3OLCI.id:
-      return new S3OLCILayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S3OLCI.id:
       return new S3OLCICDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_S3SLSTR.id:
-      return new S3SLSTRLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S3SLSTR.id:
       return new S3SLSTRCDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_S5PL2.id:
-      return new S5PL2Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
     case DATASET_CDAS_S5PL2.id:
       return new S5PL2CDASLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LTML1.id:
-      return new Landsat45AWSLTML1Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LMSSL1.id:
-      return new Landsat15AWSLMSSL1Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LTML2.id:
-      return new Landsat45AWSLTML2Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LETML1.id:
-      return new Landsat7AWSLETML1Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LETML2.id:
-      return new Landsat7AWSLETML2Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_L8L1C.id:
-      return new Landsat8AWSLayer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LOTL1.id:
-      return new Landsat8AWSLOTL1Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_LOTL2.id:
-      return new Landsat8AWSLOTL2Layer({ evalscript: '//VERSION=3 ---', mosaickingOrder: mosaickingOrder });
-    case DATASET_AWS_DEM.id:
-      return new DEMLayer({
-        evalscript: '//VERSION=3 ---',
-        mosaickingOrder: mosaickingOrder,
-        ...additionalParameters,
-      });
     case DATASET_CDAS_DEM.id:
       return new DEMCDASLayer({
         evalscript: '//VERSION=3 ---',

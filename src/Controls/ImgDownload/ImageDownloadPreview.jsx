@@ -8,8 +8,8 @@ import {
   adjustClippingForAoi,
   fetchAndPatchImagesFromParams,
   fetchImageFromParams,
-  getImageDimensionFromBoundsWithCap,
   getMapDimensions,
+  capDimensionsToResolutionLimit,
 } from './ImageDownload.utils';
 import { getOrbitDirectionFromList } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 import { getGetMapAuthToken } from '../../App';
@@ -20,26 +20,22 @@ import { TABS } from './ImageDownloadForms';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import Loader from '../../Loader/Loader';
 import { PROCESSING_OPTIONS } from '../../const';
+import ImageDownloadErrorPanel from './ImageDownloadErrorPanel';
 
 async function fetchPreviewImage(props) {
   // setFetchingPreviewImage(true);
   const cancelToken = new CancelToken();
   const effectsParams = constructGetMapParamsEffects(props);
   const getMapAuthToken = getGetMapAuthToken(props.auth);
-  const previewHeight = 200; // height of preview in ImageDownloadPreview.scss in px
-  const ratioToAvoidMetersPerPixelLimit = 2;
 
   let height, width;
 
-  if (props.hasAoi && props.cropToAoi) {
-    ({ width, height } = getImageDimensionFromBoundsWithCap(props.aoiBounds, props.datasetId));
-  } else {
-    ({ width, height } = getMapDimensions(props.pixelBounds));
-  }
-  const maxDimension = Math.max(width, height);
-  // scale the dimension to the size of preview being displayed
-  height = (height / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
-  width = (width / maxDimension) * previewHeight * ratioToAvoidMetersPerPixelLimit;
+  const bounds = props.cropToAoi ? props.aoiBounds : props.mapBounds;
+  // Use pixel dimensions from the visible viewport instead of bounds-based dimensions
+  ({ width, height } = getMapDimensions(props.pixelBounds));
+
+  // Cap dimensions to ensure they meet the API's minimum meters-per-pixel requirement
+  ({ width, height } = capDimensionsToResolutionLimit(width, height, bounds, props.datasetId));
   const params = {
     ...props,
     cancelToken,
@@ -92,20 +88,24 @@ async function fetchPreviewImage(props) {
 
 const ImageDownloadPreview = (props) => {
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [canDisplayPreview, setCanDisplayPreview] = useState(true);
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState(false);
+  const [previewError, setPreviewError] = useState(null);
 
   const { analyticalFormLayers, selectedTab, disabledDownload, auth, layerId, is3D, selectedProcessing } =
     props;
 
   useEffect(() => {
     setFetchingPreviewImage(true);
+    setPreviewError(null);
+    setPreviewUrl(null);
+
     let selectedLayer = layerId;
     if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
       selectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
     } else if (props.customSelected && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API) {
       selectedLayer = CUSTOM_TAG;
     }
+
     const options = {
       ...props,
       layerId: selectedLayer === CUSTOM_TAG ? null : selectedLayer,
@@ -115,31 +115,42 @@ const ImageDownloadPreview = (props) => {
       customSelected: selectedLayer === CUSTOM_TAG,
     };
 
-    fetchPreviewImage(options)
-      .then((response) => {
-        setCanDisplayPreview(true);
-        setPreviewUrl(URL.createObjectURL(response));
-      })
-      .finally(() => {
+    const runPreviewFetch = async () => {
+      try {
+        const blob = await fetchPreviewImage(options);
+        if (blob instanceof Blob) {
+          setPreviewUrl(URL.createObjectURL(blob));
+        } else {
+          const error = new Error(t`Preview unavailable. Try zooming in or adjusting your selection.`);
+          setPreviewError(error);
+        }
+      } catch (e) {
+        setPreviewError(e);
+      } finally {
         setFetchingPreviewImage(false);
-      });
+      }
+    };
+
+    runPreviewFetch();
   }, [analyticalFormLayers, auth, layerId, props, selectedTab, selectedProcessing]);
 
+  if (disabledDownload || is3D) {
+    return null;
+  }
+
   return (
-    canDisplayPreview &&
-    !disabledDownload &&
-    !is3D && (
-      <div className="image-download-preview-wrapper">
-        <div className="image-download-preview-label">{t`Preview`}</div>
-        {fetchingPreviewImage ? (
+    <div className="image-download-preview-wrapper">
+      <div className="image-download-preview-label">{t`Preview`}</div>
+      {fetchingPreviewImage ? (
+        <div className="image-download-preview-placeholder">
           <Loader />
-        ) : previewUrl ? (
-          <img alt="download preview" className="image-download-preview" src={previewUrl} />
-        ) : (
-          <div className="image-download-preview-placeholder" />
-        )}
-      </div>
-    )
+        </div>
+      ) : previewError ? (
+        <ImageDownloadErrorPanel error={previewError} />
+      ) : previewUrl ? (
+        <img alt="download preview" className="image-download-preview" src={previewUrl} />
+      ) : null}
+    </div>
   );
 };
 

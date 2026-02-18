@@ -80,7 +80,7 @@ const getS3V10L2Markdown = () => t`
 const Sentinel3Tooltip = () =>
   DataSourceTooltip({
     source: getS3Markdown(),
-    credits: credits[DATASOURCES.S3],
+    credits: credits[DATASOURCES.S3_CDAS],
   });
 
 const S3SLSTRTooltip = () => (

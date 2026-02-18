@@ -7,7 +7,7 @@ import L from 'leaflet';
 
 import './DatasetLocationPreview.scss';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { findLatestDateWithData } from '../../Tools/VisualizationPanel/SmartPanel/LatestDataAction.utils';
+import { findLatestDateWithData } from '../../utils/latestDate.utils';
 import { getOrbitDirectionFromList } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 import { getFromTime } from '../../components/VisualizationTimeSelect/VisualizationTimeSelect.utils';
 import moment from 'moment';

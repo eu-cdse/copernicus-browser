@@ -1,4 +1,4 @@
-import { getQuarterlyInfo } from './LatestDataAction.utils'; // Adjust the import path accordingly
+import { getQuarterlyInfo } from './latestDate.utils';
 
 describe('getQuarterlyInfo with specific test dates', () => {
   it.each([

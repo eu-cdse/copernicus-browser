@@ -1,10 +1,6 @@
 import moment from 'moment';
 import { t } from 'ttag';
 import {
-  CNES_LAND_COVER,
-  ESA_WORLD_COVER,
-  IO_LULC_10M_ANNUAL,
-  S3SLSTR,
   S3SLSTR_CDAS,
   S5_SO2_CDAS,
   S5_HCHO_CDAS,
@@ -16,26 +12,8 @@ import {
   S5_CLOUD_CDAS,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
-  AWS_LETML2,
-  AWS_LETML1,
-  AWS_L8L1C,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  CDAS_L8_L9_LOTL1,
-  S3OLCI,
   S3OLCI_CDAS,
-  COPERNICUS_GLOBAL_LAND_COVER,
-  COPERNICUS_CORINE_LAND_COVER,
-  COPERNICUS_CLC_ACCOUNTING,
-  GLOBAL_HUMAN_SETTLEMENT,
-  COPERNICUS_WATER_BODIES,
-  AWS_LTML1,
-  AWS_LTML2,
-  AWS_LMSSL1,
-  COPERNICUS_GLOBAL_SURFACE_WATER,
-  DEM_MAPZEN,
-  DEM_COPERNICUS_30,
-  DEM_COPERNICUS_90,
+  CDAS_L8_L9_LOTL1,
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
   S1_CDAS_IW_VVVH,
@@ -191,6 +169,22 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -496,12 +490,7 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
-    match: [
-      { datasourceId: AWS_L8L1C, layerId: 'THERMAL' },
-      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '9_THERMAL' },
-      { datasourceId: AWS_LOTL1, layerId: 'THERMAL' },
-      { datasourceId: AWS_LOTL2, layerId: 'THERMAL' },
-    ],
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '9_THERMAL' }],
     legend: {
       type: 'continuous',
       minPosition: 223,
@@ -523,114 +512,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     },
     description: () =>
       t`# Thermal band 10\n\nThis thermal visualization is based on band 10 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10895 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, band 10 reports on the ground itself, which is often much hotter. Thermal band 10 is useful in providing surface temperatures and is collected with a 100-meter resolution.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products).`,
-  },
-
-  {
-    match: [
-      { datasourceId: AWS_LTML1, layerId: '1_TRUE_COLOR' },
-      { datasourceId: AWS_LTML2, layerId: '1_TRUE_COLOR' },
-    ],
-    description: () =>
-      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. Landsat 4-5 TM has 7 bands. The true color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites).`,
-  },
-  {
-    match: [
-      { datasourceId: AWS_LTML1, layerId: 'THERMAL' },
-      { datasourceId: AWS_LTML2, layerId: 'THERMAL' },
-    ],
-    legend: {
-      type: 'continuous',
-      minPosition: 223,
-      maxPosition: 348,
-      gradients: [
-        { position: 223, color: '#000000', label: '<= -50' },
-        { position: 253, color: '#AE0000', label: '-20' },
-        { position: 263, color: '#FF6E00', label: '-10' },
-        { position: 272, color: '#FF8600' },
-        { position: 273, color: '#FFFFFF', label: '0' },
-        { position: 274, color: '#fefce7' },
-        { position: 283, color: '#FDE191', label: '10' },
-        { position: 293, color: '#f69855', label: '20' },
-        { position: 303, color: '#f66927', label: '30' },
-        { position: 323, color: '#aa2d1d', label: '50' },
-        { position: 342, color: '#650401', label: '90' },
-        { position: 348, color: '#3d0200', label: '>= 100 [°C]' },
-      ],
-    },
-    description: () =>
-      t`# Thermal band 6\n\nThis thermal visualization is based on band 6 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 11040 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, band 6 reports on the ground itself, which is often much hotter. Thermal band 6 is useful in providing surface temperatures and is collected with a 120-meter resolution, resampled to 30-meter.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites).`,
-  },
-  {
-    match: [{ datasourceId: AWS_LETML2, layerId: 'THERMAL' }],
-    legend: {
-      type: 'continuous',
-      minPosition: 223,
-      maxPosition: 348,
-      gradients: [
-        { position: 223, color: '#003d99', label: '<= -50' },
-        { position: 253, color: '#2e82ff', label: '-20' },
-        { position: 263, color: '#80b3ff', label: '-10' },
-        { position: 272, color: '#e0edff' },
-        { position: 273, color: '#ffffff', label: '0' },
-        { position: 274, color: '#fefce7' },
-        { position: 283, color: '#FDE191', label: '10' },
-        { position: 293, color: '#f69855', label: '20' },
-        { position: 303, color: '#f66927', label: '30' },
-        { position: 323, color: '#aa2d1d', label: '50' },
-        { position: 342, color: '#650401', label: '90' },
-        { position: 348, color: '#3d0200', label: '>= 100 [°C]' },
-      ],
-    },
-    description: () =>
-      t`# Thermal Visualization\n\nThis thermal visualization is based on band B06 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10400-12500 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, band B06 reports on the ground itself, which is often much hotter. Thermal band B06 is useful in providing surface temperatures and is collected with a 60-meter resolution, resampled to 30-meter.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites) and [here](https://custom-scripts.sentinel-hub.com/landsat-7-etm/thermal/).`,
-  },
-  {
-    match: [{ datasourceId: AWS_LETML1, layerId: 'THERMAL-VCID_1' }],
-    legend: {
-      type: 'continuous',
-      minPosition: 223,
-      maxPosition: 348,
-      gradients: [
-        { position: 223, color: '#003d99', label: '<= -50' },
-        { position: 253, color: '#2e82ff', label: '-20' },
-        { position: 263, color: '#80b3ff', label: '-10' },
-        { position: 272, color: '#e0edff' },
-        { position: 273, color: '#ffffff', label: '0' },
-        { position: 274, color: '#fefce7' },
-        { position: 283, color: '#FDE191', label: '10' },
-        { position: 293, color: '#f69855', label: '20' },
-        { position: 303, color: '#f66927', label: '30' },
-        { position: 323, color: '#aa2d1d', label: '50' },
-        { position: 342, color: '#650401', label: '90' },
-        { position: 348, color: '#3d0200', label: '>= 100 [°C]' },
-      ],
-    },
-    description: () =>
-      t`# Thermal B06_VCID_1 Visualization\n\nThis thermal visualization is based on band B06_VCID_1 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10400-12500 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, B06_VCID_1 reports on the ground itself, which is often much hotter. It is useful in providing surface temperatures and is collected with a 60-meter resolution, resampled to 30-meters. As its dinamic range is wider than that of B06_VCID_2, it is less likely to oversaturate over hot areas. \n\n\n\nMore info [here](https://www.usgs.gov/faqs/why-do-landsat-7-level-1-products-contain-two-thermal-bands?qt-news_science_products=0#qt-news_science_products).`,
-  },
-  {
-    match: [{ datasourceId: AWS_LETML1, layerId: 'THERMAL-VCID_2' }],
-    legend: {
-      type: 'continuous',
-      minPosition: 223,
-      maxPosition: 348,
-      gradients: [
-        { position: 223, color: '#003d99', label: '<= -50' },
-        { position: 253, color: '#2e82ff', label: '-20' },
-        { position: 263, color: '#80b3ff', label: '-10' },
-        { position: 272, color: '#e0edff' },
-        { position: 273, color: '#ffffff', label: '0' },
-        { position: 274, color: '#fefce7' },
-        { position: 283, color: '#FDE191', label: '10' },
-        { position: 293, color: '#f69855', label: '20' },
-        { position: 303, color: '#f66927', label: '30' },
-        { position: 323, color: '#aa2d1d', label: '50' },
-        { position: 342, color: '#650401', label: '90' },
-        { position: 348, color: '#3d0200', label: '>= 100 [°C]' },
-      ],
-    },
-    description: () =>
-      t`# Thermal B06_VCID_2 Visualization\n\nThis thermal visualization is based on band B06_VCID_2 (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). At the central wavelength of 10400-12500 nm it measures in the thermal infrared, or TIR. Instead of measuring the temperature of the air, like weather stations do, B06_VCID_2 reports on the ground itself, which is often much hotter. It is useful in providing surface temperatures and is collected with a 60-meter resolution, resampled to 30-meters. Its dinamic range is narrower than that of B06_VCID_1, which means it is more likely to oversaturate over hot areas, but in turn has slightly higher radiometric sensitivity.\n\n\n\nMore info [here](https://www.usgs.gov/faqs/why-do-landsat-7-level-1-products-contain-two-thermal-bands?qt-news_science_products=0#qt-news_science_products).`,
   },
   {
     match: [
@@ -787,8 +668,6 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '2_MOISTURE-INDEX' },
       { datasourceId: S2_L1C_CDAS, layerId: '99_MOISTURE-INDEX' },
       { datasourceId: S2_L2A_CDAS, layerId: '99_MOISTURE-INDEX' },
-      { datasourceId: AWS_LETML2, layerId: 'MOISTURE-INDEX' },
-      { datasourceId: AWS_LETML1, layerId: 'MOISTURE-INDEX' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '8_NDMI' },
     ],
     legend: {
@@ -816,11 +695,6 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '7-NDWI' },
       { datasourceId: S2_L1C_CDAS, layerId: '3_NDWI' },
       { datasourceId: S2_L2A_CDAS, layerId: '3_NDWI' },
-      { datasourceId: AWS_LTML1, layerId: '5_NDWI' },
-      { datasourceId: AWS_LTML2, layerId: '5_NDWI' },
-      { datasourceId: AWS_LETML1, layerId: 'NDWI' },
-      { datasourceId: AWS_LETML2, layerId: 'NDWI' },
-      { datasourceId: AWS_LMSSL1, layerId: 'NDWI' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '7_NDWI' },
     ],
     legend: {
@@ -836,7 +710,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Normalized Difference Water Index (NDWI)\n\nThe normalized difference water index is most appropriate for water body mapping. Values of water bodies are larger than 0.5. Vegetation has smaller values. Built-up features have positive values between zero and 0.2.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ndwi/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '1_FALSE-COLOR' },
@@ -849,50 +722,15 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE-COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE-COLOR' },
-      { datasourceId: AWS_LETML2, layerId: 'FALSE-COLOR' },
-      { datasourceId: AWS_LETML1, layerId: 'FALSE-COLOR' },
-      { datasourceId: S3SLSTR, layerId: 'FALSE_COLOR' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'FALSE_COLOR' },
     ],
-
     description: () =>
       t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/) and [here.](https://earthobservatory.nasa.gov/features/FalseColor/page6.php)`,
   },
-
   {
-    match: [{ datasourceId: AWS_LMSSL1, layerId: 'FALSE-COLOR-ULTRA-RED' }],
-
-    description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black. In this case, the NIR band used in the red channel is Ultra Red band 3 (700 - 800 nm), which is particularly useful for distinguishing vegetation boundaries between land and water and various landforms. \n\n\n\nMore info [here](https://eos.com/find-satellite/landsat-5-mss/) and [here](https://custom-scripts.sentinel-hub.com/landsat-1-5-mss/false-color-ultrared/).`,
-  },
-
-  {
-    match: [{ datasourceId: AWS_LMSSL1, layerId: 'FALSE-COLOR-NEAR-INFRARED' }],
-
-    description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black. In this case, the NIR band used in the red channel is the NIR band 4 (800 - 1100 nm), which penetrates atmospheric haze, emphasizes vegetation, and distinguishes between land and water. \n\n\n\nMore info [here](https://eos.com/find-satellite/landsat-5-mss/) and [here](https://custom-scripts.sentinel-hub.com/landsat-1-5-mss/false-color-nir/).`,
-  },
-
-  {
-    match: [
-      { datasourceId: AWS_L8L1C, layerId: '3_FALSE_COLOR' },
-      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '4_FALSE_COLOR' },
-      { datasourceId: AWS_LOTL1, layerId: '3_FALSE_COLOR' },
-      { datasourceId: AWS_LOTL2, layerId: '3_FALSE_COLOR' },
-    ],
-
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '4_FALSE_COLOR' }],
     description: () =>
       t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/).`,
-  },
-
-  {
-    match: [
-      { datasourceId: AWS_LTML1, layerId: '3_FALSE_COLOR' },
-      { datasourceId: AWS_LTML2, layerId: '3_FALSE_COLOR' },
-    ],
-
-    description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page6.php)`,
   },
   {
     match: [
@@ -904,67 +742,28 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: 'TRUE-COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '1_TRUE-COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '1_TRUE-COLOR' },
-      { datasourceId: S3OLCI, layerId: '1_TRUE-COLOR' },
       { datasourceId: S3OLCI_CDAS, layerId: '1_TRUE-COLOR' },
     ],
-
     description: () =>
       t`# True color optimized\n\nThis optimized True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a product with natural colours that represents the Earth as humans would naturally see it. The visualisation uses highlight compression and improves the contrast and color vividness through minor contrast and saturation enhancement.\n\n\n\nMore info for [L1C](https://custom-scripts.sentinel-hub.com/sentinel-2/l1c_optimized/) and for [L2A](https://custom-scripts.sentinel-hub.com/sentinel-2/l2a_optimized/).`,
   },
-
   {
-    match: [
-      { datasourceId: AWS_L8L1C, layerId: '1_TRUE_COLOR' },
-      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '1_TRUE_COLOR' },
-      { datasourceId: AWS_L8L1C, layerId: '1_TRUE-COLOR' },
-      { datasourceId: AWS_L8L1C, layerId: 'TRUE-COLOR' },
-      { datasourceId: AWS_LOTL1, layerId: '1_TRUE_COLOR' },
-      { datasourceId: AWS_LOTL1, layerId: '1_TRUE-COLOR' },
-      { datasourceId: AWS_LOTL1, layerId: 'TRUE-COLOR' },
-      { datasourceId: AWS_LOTL2, layerId: '1_TRUE_COLOR' },
-      { datasourceId: AWS_LOTL2, layerId: '1_TRUE-COLOR' },
-      { datasourceId: AWS_LOTL2, layerId: 'TRUE-COLOR' },
-    ],
-
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '1_TRUE_COLOR' }],
     description: () =>
       t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. Landsat 8-9 has 11 bands. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/landsat-8/composites/).`,
   },
   {
-    match: [
-      { datasourceId: AWS_LETML2, layerId: '1_TRUE_COLOR' },
-      { datasourceId: AWS_LETML1, layerId: '1_TRUE_COLOR' },
-    ],
-
-    description: () =>
-      t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum. Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-7-etm/true-color/)`,
-  },
-  {
-    match: [
-      { datasourceId: S3OLCI, layerId: '1_TRUE_COLOR' },
-      { datasourceId: S3OLCI_CDAS, layerId: '1_TRUE_COLOR' },
-    ],
-
+    match: [{ datasourceId: S3OLCI_CDAS, layerId: '1_TRUE_COLOR' }],
     description: () =>
       t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum . Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-3-olci/overview/heritage)`,
   },
-
   {
-    match: [
-      { datasourceId: S3OLCI, layerId: '6_TRUE-COLOR-HIGLIGHT-OPTIMIZED' },
-      { datasourceId: S3OLCI_CDAS, layerId: '6_TRUE-COLOR-HIGLIGHT-OPTIMIZED' },
-    ],
-
+    match: [{ datasourceId: S3OLCI_CDAS, layerId: '6_TRUE-COLOR-HIGLIGHT-OPTIMIZED' }],
     description: () =>
       t`# Enhanced True Color Visualization\n\nThis script uses highlight optimization to avoid burnt out pixels and to even out the exposure. It makes clouds look natural and keep as much visual information as possible. Sentinel-3 OLCI tiles cover large areas, making it possible to observe large cloud formations, such as hurricanes.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/true_color_highlight_optimized/)`,
   },
-
   {
-    match: [
-      { datasourceId: AWS_L8L1C, layerId: '2_TRUE_COLOR_PANSHARPENED' },
-      { datasourceId: CDAS_L8_L9_LOTL1, layerId: '2_TRUE_COLOR_PANSHARPENED' },
-      { datasourceId: AWS_LOTL1, layerId: '2_TRUE_COLOR_PANSHARPENED' },
-    ],
-
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '2_TRUE_COLOR_PANSHARPENED' }],
     description: () =>
       t`# Pansharpened True Color\n\nThe pansharpened true color composite is done by using the usual true color data (red, green and blue (RGB)) and enhancing them by using the panchromatic band 8, or pan band (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). An image from the pan band is similar to black-and-white film: it combines light from the red, green, and blue parts of the spectrum into a single measure of overall visible reflectance. Pansharpened images have 4x the resolution of the usual true color composite, greatly enhancing the usefulness of Landsat imagery.\n\n\n\nMore info [here](https://blog.mapbox.com/pansharpening-for-higher-resolution-in-landsat-live-e4717cd7c356).`,
   },
@@ -978,22 +777,10 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: 'FALSE-COLOR-URBAN' },
       { datasourceId: S2_L1C_CDAS, layerId: '2_FALSE-COLOR-URBAN' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_FALSE-COLOR-URBAN' },
-      { datasourceId: AWS_LOTL2, layerId: 'FALSE-COLOR-URBAN' },
     ],
 
     description: () =>
       t`# False Color Urban composite\n\nThis composite is used to visualise urbanized areas more clearly. Vegetation is visible in shades of green, while urbanized areas are represented by white, grey, or purple. Soils, sand, and minerals are shown in a variety of colors. Snow and ice appear as dark blue, and water as black or blue. Flooded areas are very dark blue and almost black. The composite is useful for detecting wildfires and calderas of volcanoes, as they are displayed in shades of red and yellow.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false-color-urban-rgb/) and [here.](https://eos.com/false-color/)`,
-  },
-
-  {
-    match: [
-      { datasourceId: AWS_L8L1C, layerId: 'FALSE-COLOR-LAVA-FLOW' },
-      { datasourceId: AWS_LOTL1, layerId: 'FALSE-COLOR-LAVA-FLOW' },
-      { datasourceId: AWS_LOTL2, layerId: 'FALSE-COLOR-LAVA-FLOW' },
-    ],
-
-    description: () =>
-      t`# False Color Urban composite\n\nThis composite uses a combination of bands in visible and in short wave infrared (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). It displays vegetation in shades of green. While darker shades of green indicate denser vegetation, sparse vegetation have lighter shades. Urban areas are blue and soils have various shades of brown.\n\n\n\nMore info [here.](https://gisgeography.com/landsat-8-bands-combinations/)`,
   },
   {
     match: [
@@ -1008,7 +795,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Agriculture composite\n\nThis composite uses short-wave infrared, near-infrared and blue bands to monitor crop health (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Both short-wave and near infrared bands are particularly good at highlighting dense vegetation, which appears dark green in the composite. Crops appear in a vibrant green and bare earth appears magenta.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page5.php) and [here.](https://gisgeography.com/sentinel-2-bands-combinations/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '5_SNOW-CLASSIFIER' },
@@ -1018,7 +804,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Snow Classifier\n\nThe Snow Classifier algorithm aims to detect snow by classifying pixels based on different brightness and Normalized Difference Snow Index (NDSI) thresholds. Values classified as snow are returned in bright vivid blue. The script can overestimate snow areas over clouds.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/snow_classifier/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '4_ULYSSYS-WATER-QUALITY-VIEWER' },
@@ -1028,7 +813,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Ulyssys Water Quality Viewer (UWQV)\n\nThe script aims to dynamically visualise the chlorophyll and sediment conditions of water bodies, which are primary indicators of water quality. The chlorophyll content ranges in colors from dark blue (low chlorophyll content) through green to red (high chlorophyll content). Sediment concentrations are colored brown; opaque brown indicates high sediment content.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/ulyssys_water_quality_viewer/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '6-SWIR' },
@@ -1043,16 +827,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Short wave infrared composite (SWIR)\n\nShort wave infrared (SWIR) measurements can help scientists estimate how much water is present in plants and soil, as water absorbs SWIR wavelengths. Short wave infrared bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) are also useful for distinguishing between cloud types (water clouds versus ice clouds), snow and ice, all of which appear white in visible light. In this composite vegetation appears in shades of green, soils and built-up areas are in various shades of brown, and water appears black. Newly burned land reflects strongly in SWIR bands, making them valuable for mapping fire damages. Each rock type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/swir-rgb/)`,
   },
-
-  {
-    match: [
-      { datasourceId: AWS_LETML2, layerId: 'SWIR' },
-      { datasourceId: AWS_LETML1, layerId: 'SWIR' },
-    ],
-    description: () =>
-      t`# Short wave infrared composite (SWIR)\n\nShort wave infrared (SWIR) measurements can help scientists estimate how much water is present in plants and soil, as water absorbs SWIR wavelengths. Short wave infrared bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) are also useful for distinguishing between cloud types (water clouds versus ice clouds), snow and ice, all of which appear white in visible light. In this composite vegetation appears in shades of green, soils and built-up areas are in various shades of brown, and water appears black. Newly burned land reflects strongly in SWIR bands, making them valuable for mapping fire damages. Each rock type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/landsat-4-5-tm/swir/)`,
-  },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '8-NDSI' },
@@ -1080,10 +854,6 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: S2_L1C_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
-      { datasourceId: AWS_LETML1, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
-      { datasourceId: AWS_LETML2, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
-      { datasourceId: AWS_LOTL1, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
-      { datasourceId: AWS_LOTL2, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '3_TONEMAPPED_NATURAL_COLOR' },
     ],
 
@@ -1099,7 +869,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Geology 12, 8, 2 composite\n\nThis composite uses short-wave infrared (SWIR) band 12 to differentiate among different rock types (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Each rock and mineral type reflects short-wave infrared light differently, making it possible to map out geology by comparing reflected SWIR light. Near infrared (NIR) band 8 highlights vegetation and band 2 detects moisture, both contributing to differentiation of ground materials. The composite is useful for finding geological formations and features (e.g. faults, fractures), lithology (e.g. granite, basalt, etc.) and mining applications.\n\n\n\nMore info [here.](https://www.euspaceimaging.com/wp-content/uploads/2018/06/EUSI-SWIR.pdf)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: '4_GEOLOGY-8-11-12' },
@@ -1109,7 +878,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Geology 8, 11, 12 composite\n\nThis composite uses both short-wave infrared (SWIR) bands 11 and 12 to differentiate among different rock types (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Each rock and mineral type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light. Near Infrared (NIR) band 8 highlights vegetation, contributing to differentiation of ground materials. Vegetation in the composite appears red. The composite is useful for differentiating vegetation, and land especially geologic features that can be useful for mining and mineral exploration.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page5.php) and [here.](http://murphygeological.com/new---sentinel-2.html#)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: 'WILDFIRES-PIERRE-MARKUSE' },
@@ -1126,8 +894,6 @@ export const PREDEFINED_LAYERS_METADATA = [
 
   {
     match: [
-      { datasourceId: S3OLCI, layerId: '1_TRUE_COLOR_ENHANCED' },
-      { datasourceId: S3OLCI, layerId: '2_ENHANCED-TRUE-COLOR' },
       { datasourceId: S3OLCI_CDAS, layerId: '1_TRUE_COLOR_ENHANCED' },
       { datasourceId: S3OLCI_CDAS, layerId: '2_ENHANCED-TRUE-COLOR' },
     ],
@@ -1157,7 +923,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Burned Area Index\n\nBurned Area Index takes advantage of the wider spectrum of Visible, Red-Edge, NIR and SWIR bands.\n\nValues description:()=> The range of values for the index is \`-1\` to \`1\` for burn scars, and \`1\` - \`6\` for active fires. Different fire intensities may result in different thresholds; the current values were calibrated, as per original author, on mostly Mediterranen regions.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/bais2/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-BURN-RATIO-NBR' },
@@ -1189,7 +954,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Atmospheric penetration\n\nThis composite uses different bands (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands) in the non-visible part of the electromagnetic spectrum to reduce the influence of the atmosphere in the image. Short wave infrared bands 11 and 12 are highly reflected by the heated areas, making them useful for fire and burned area mapping. Near infrared band 8, is on contrary, highly reflected by vegetation, which signifies absence of fire. Vegetation appears blue, displaying details related to the vegetation vigor. Healthy vegetation is shown in light blue while the stressed, sparse or/and arid vegetation appears in dull blue. Urban features are white, grey, cyan or purple.\n\n\n\nMore info [here.](https://eos.com/atmospheric-penetration/)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: 'BARREN-SOIL' },
@@ -1201,7 +965,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Barren Soil Visualization\n\nThe Barren Soil Visualization can be useful for soil mapping, to investigate the location of landslides or the extent of erosion in non-vegetated areas. This visualization shows all vegetation in green and the barren ground in red. Water appears black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/barren_soil/) and [here.](https://medium.com/sentinel-hub/create-useful-and-beautiful-satellite-images-with-custom-scripts-8ef0e6a474c6)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: 'TRUE-COLOR-LAVA-FLOW' },
@@ -1211,7 +974,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# True Color with IR Highlights composite\n\nThis composite enhances the true color visualization by adding the shortwave infrared wavelengths to amplify details. It displays heated areas in red/orange.\n\n\n\nMore info [here.](https://medium.com/sentinel-hub/active-volcanoes-as-seen-from-space-9d1de0133733)`,
   },
-
   {
     match: [
       { datasourceId: S2_L1C_CDAS, layerId: 'BURNED-AREAS-DETECTION' },
@@ -1221,7 +983,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Detection of Burned Areas\n\nThis script is used to detect large scale recently burned areas. Pixels colored red highlight burned areas, and all other pixels are returned in true color. The script sometimes overestimates burned areas over water and clouds.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-2/burned_area_ms/)`,
   },
-
   {
     match: [
       {
@@ -1235,7 +996,6 @@ export const PREDEFINED_LAYERS_METADATA = [
         timeFrom: moment('2022-01-25').utc().startOf('day'),
       },
     ],
-
     legend: {
       type: 'discrete',
       items: [
@@ -1292,7 +1052,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Scene classification\n\n\n\nScene classification was developed to distinguish between cloudy pixels, clear pixels and water pixels of Sentinel-2 data and is a result of ESA's Scene classification algorithm. Twelve different classifications are provided including classes of clouds, vegetation, soils/desert, water and snow. It does not constitute a land cover classification map in a strict sense.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/scene-classification/).`,
   },
-
   {
     match: [
       {
@@ -1306,7 +1065,6 @@ export const PREDEFINED_LAYERS_METADATA = [
         timeTo: moment('2022-01-24').utc().endOf('day'),
       },
     ],
-
     legend: {
       type: 'discrete',
       items: [
@@ -1363,11 +1121,8 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Scene classification\n\n\n\nScene classification was developed to distinguish between cloudy pixels, clear pixels and water pixels of Sentinel-2 data and is a result of ESA's Scene classification algorithm. Twelve different classifications are provided including classes of clouds, vegetation, soils/desert, water and snow. It does not constitute a land cover classification map in a strict sense.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/scene-classification/).`,
   },
-
   {
     match: [
-      { datasourceId: S3OLCI, layerId: '2_OTCI' },
-      { datasourceId: S3OLCI, layerId: '3_OTCI' },
       { datasourceId: S3OLCI_CDAS, layerId: '2_OTCI' },
       { datasourceId: S3OLCI_CDAS, layerId: '3_OTCI' },
     ],
@@ -1416,1418 +1171,8 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
   },
-
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_LAND_COVER, layerId: 'DISCRETE-CLASSIFICATION-MAP' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#282828',
-          label: 'No input data',
-        },
-        {
-          color: '#ffbb22',
-          label: 'Shrubs',
-        },
-        {
-          color: '#ffff4c',
-          label: 'Herbaceous\nvegetation',
-        },
-        {
-          color: '#f096ff',
-          label: 'Cropland',
-        },
-        {
-          color: '#fa0000',
-          label: 'Urban built up',
-        },
-        {
-          color: '#b4b4b4',
-          label: 'Bare sparse\nvegetation',
-        },
-        {
-          color: '#f0f0f0',
-          label: 'Snow and Ice',
-        },
-        {
-          color: '#0032c8',
-          label: 'Permanent\nwater bodies',
-        },
-        {
-          color: '#0096a0',
-          label: 'Herbaceous\nwetland',
-        },
-        {
-          color: '#fae6a0',
-          label: 'Moss and lichen',
-        },
-        {
-          color: '#58481f',
-          label: 'Closed forest,\nevergreen needle leaf',
-        },
-        {
-          color: '#009900',
-          label: 'Closed forest,\nevergreen, broad leaf',
-        },
-        {
-          color: '#70663e',
-          label: 'Closed forest,\ndeciduous needle leaf',
-        },
-        {
-          color: '#00cc00',
-          label: 'Closed forest,\ndeciduous broad leaf',
-        },
-        {
-          color: '#4e751f',
-          label: 'Closed forest,\nmixed',
-        },
-        {
-          color: '#007800',
-          label: 'Closed forest,\nunknown',
-        },
-        {
-          color: '#666000',
-          label: 'Open forest,\nevergreen needle leafs',
-        },
-        {
-          color: '#8db400',
-          label: 'Open forest,\nevergreen broad leaf',
-        },
-        {
-          color: '#8d7400',
-          label: 'Open forest,\ndeciduous needle leaf',
-        },
-        {
-          color: '#a0dc00',
-          label: 'Open forest,\ndeciduous broad leaf',
-        },
-        {
-          color: '#929900',
-          label: 'Open forest,\nmixed',
-        },
-        {
-          color: '#648c00',
-          label: 'Open forest,\nunknown',
-        },
-        {
-          color: '#000080',
-          label: 'Open sea',
-        },
-      ],
-    },
-    description: () =>
-      t`# Discrete Classification Map\n\n\n\nThis layer visualises Global Land Cover discrete classification map with 23 classes defined using the UN-FAO Land Cover Classification System (LCCS) and with color scheme defined in the Product User Manual. Map [here.](https://land.copernicus.eu/global/sites/cgls.vito.be/files/products/CGLOPS1_PUM_LC100m-V3_I3.3.pdf)`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_LAND_COVER, layerId: 'FOREST-TYPE' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ffffff',
-          label: 'Not a forest',
-        },
-        {
-          color: '#58481f',
-          label: 'Evergreen niddle leaf',
-        },
-        {
-          color: '#009900',
-          label: 'Evergreen broad leaf',
-        },
-        {
-          color: '#70663e',
-          label: 'Deciduous needle leaf',
-        },
-        {
-          color: '#00cc00',
-          label: 'Deciduous broad leaf',
-        },
-        {
-          color: '#4e751f',
-          label: 'Mix of forest type ',
-        },
-      ],
-    },
-    description: () =>
-      t`# Forest Types\n\n\n\nVisualized forest types based on 6 classes, as defined in the UN-FAO Land Cover Classification System (LCCS). More [here.](https://land.copernicus.eu/global/sites/cgls.vito.be/files/products/CGLOPS1_PUM_LC100m-V3_I3.3.pdf).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '1_CORINE-LAND-COVER' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#e6004d',
-          label: 'Continuous\nurban fabric',
-        },
-        {
-          color: '#ff0000',
-          label: 'Discontinuous\nurban fabric',
-        },
-        {
-          color: '#cc4df2',
-          label: 'Industrial or\ncommercial units',
-        },
-        {
-          color: '#cc0000',
-          label: 'Road and rail\nnetworks',
-        },
-        {
-          color: '#e6cccc',
-          label: 'Port areas',
-        },
-        {
-          color: '#e6cce6',
-          label: 'Airports',
-        },
-        {
-          color: '#a600cc',
-          label: 'Mineral\nextraction sites',
-        },
-        {
-          color: '#a64d00',
-          label: 'Dump sites',
-        },
-        {
-          color: '#ff4dff',
-          label: 'Construction\nsites',
-        },
-        {
-          color: '#ffa6ff',
-          label: 'Green urban\nareas',
-        },
-        {
-          color: '#ffe6ff',
-          label: 'Sport and leisure\nfacilities',
-        },
-        {
-          color: '#ffffa8',
-          label: 'Non-irrigated\narable land',
-        },
-        {
-          color: '#ffff00',
-          label: 'Permanently\nirrigated land',
-        },
-        {
-          color: '#e6e600',
-          label: 'Rice fields',
-        },
-        {
-          color: '#e68000',
-          label: 'Vineyards',
-        },
-        {
-          color: '#f2a64d',
-          label: 'Fruit trees and\nberry plantations',
-        },
-        {
-          color: '#e6a600',
-          label: 'Olive groves',
-        },
-        {
-          color: '#e6e64d',
-          label: 'Pastures',
-        },
-        {
-          color: '#ffe6a6',
-          label: 'Annual crops\nassociated with\npermanent crops',
-        },
-        {
-          color: '#ffe64d',
-          label: 'Complex cultivation\npatterns',
-        },
-        {
-          color: '#e6cc4d',
-          label: 'Land principally\noccupied by\nagriculture with\n significant areas\nof natural vegetation',
-        },
-        {
-          color: '#f2cca6',
-          label: 'Agro-forestry\nareas',
-        },
-        {
-          color: '#80ff00',
-          label: 'Broad-leaved\nforest',
-        },
-        {
-          color: '#00a600',
-          label: 'Coniferous\nforest',
-        },
-        {
-          color: '#4dff00',
-          label: 'Mixed forest',
-        },
-        {
-          color: '#ccf24d',
-          label: 'Natural\ngrasslands',
-        },
-        {
-          color: '#a6ff80',
-          label: 'Moors and\nheathland',
-        },
-        {
-          color: '#a6e64d',
-          label: 'Sclerophyllous\nvegetation',
-        },
-        {
-          color: '#a6f200',
-          label: 'Transitional\nwoodland-shrub',
-        },
-        {
-          color: '#e6e6e6',
-          label: 'Beaches, dunes\nand sands',
-        },
-        {
-          color: '#cccccc',
-          label: 'Bare rocks',
-        },
-        {
-          color: '#ccffcc',
-          label: 'Sparsely\nvegetated areas',
-        },
-        {
-          color: '#000000',
-          label: 'Burnt areas',
-        },
-        {
-          color: '#a6e6cc',
-          label: 'Glaciers and\nperpetual snow',
-        },
-        {
-          color: '#a6a6ff',
-          label: 'Inland marshes',
-        },
-        {
-          color: '#4d4dff',
-          label: 'Peat bogs',
-        },
-        {
-          color: '#ccccff',
-          label: 'Salt marshes',
-        },
-        {
-          color: '#e6e6ff',
-          label: 'Salines',
-        },
-        {
-          color: '#a6a6e6',
-          label: 'Intertidal\nflats',
-        },
-        {
-          color: '#00ccf2',
-          label: 'Water courses',
-        },
-        {
-          color: '#80f2e6',
-          label: 'Water bodies',
-        },
-        {
-          color: '#00ffa6',
-          label: 'Coastal lagoons',
-        },
-        {
-          color: '#a6ffe6',
-          label: 'Estuaries',
-        },
-        {
-          color: '#e6f2ff',
-          label: 'Sea and ocean',
-        },
-        {
-          color: '#ffffff',
-          label: 'No data',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC)\n\n\n\nIn this Corine Land Cover layer, all 44 classes are shown. Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '2_ARTIFICIAL-SURFACES' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#e6004d',
-          label: 'Continuous\nurban fabric',
-        },
-        {
-          color: '#ff0000',
-          label: 'Discontinuous\nurban fabric',
-        },
-        {
-          color: '#cc4df2',
-          label: 'Industrial or\ncommercial units',
-        },
-        {
-          color: '#cc0000',
-          label: 'Road and rail\nnetworks',
-        },
-        {
-          color: '#e6cccc',
-          label: 'Port areas',
-        },
-        {
-          color: '#e6cce6',
-          label: 'Airports',
-        },
-        {
-          color: '#a600cc',
-          label: 'Mineral\nextraction sites',
-        },
-        {
-          color: '#a64d00',
-          label: 'Dump sites',
-        },
-        {
-          color: '#ff4dff',
-          label: 'Construction\nsites',
-        },
-        {
-          color: '#ffa6ff',
-          label: 'Green urban\nareas',
-        },
-        {
-          color: '#ffe6ff',
-          label: 'Sport and leisure\nfacilities',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC) - Artificial Surfaces\n\n\n\nIn this Corine Land Cover layer, only the 11 artificial surface classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '3_AGRICULTURAL-AREAS' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ffffa8',
-          label: 'Non-irrigated\narable land',
-        },
-        {
-          color: '#ffff00',
-          label: 'Permanently\nirrigated land',
-        },
-        {
-          color: '#e6e600',
-          label: 'Rice fields',
-        },
-        {
-          color: '#e68000',
-          label: 'Vineyards',
-        },
-        {
-          color: '#f2a64d',
-          label: 'Fruit trees and\nberry plantations',
-        },
-        {
-          color: '#e6a600',
-          label: 'Olive groves',
-        },
-        {
-          color: '#e6e64d',
-          label: 'Pastures',
-        },
-        {
-          color: '#ffe6a6',
-          label: 'Annual crops\nassociated with\npermanent crops',
-        },
-        {
-          color: '#ffe64d',
-          label: 'Complex cultivation\npatterns',
-        },
-        {
-          color: '#e6cc4d',
-          label: 'Land principally\noccupied by\nagriculture with\n significant areas\nof natural vegetation',
-        },
-        {
-          color: '#f2cca6',
-          label: 'Agro-forestry\nareas',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC) - Agricultural Areas\n\n\n\nIn this Corine Land Cover layer, only the 11 agricultural classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '4_FOREST-AND-SEMINATURAL-AREAS' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#80ff00',
-          label: 'Broad-leaved\nforest',
-        },
-        {
-          color: '#00a600',
-          label: 'Coniferous\nforest',
-        },
-        {
-          color: '#4dff00',
-          label: 'Mixed forest',
-        },
-        {
-          color: '#ccf24d',
-          label: 'Natural\ngrasslands',
-        },
-        {
-          color: '#a6ff80',
-          label: 'Moors and\nheathland',
-        },
-        {
-          color: '#a6e64d',
-          label: 'Sclerophyllous\nvegetation',
-        },
-        {
-          color: '#a6f200',
-          label: 'Transitional\nwoodland-shrub',
-        },
-        {
-          color: '#e6e6e6',
-          label: 'Beaches, dunes\nand sands',
-        },
-        {
-          color: '#cccccc',
-          label: 'Bare rocks',
-        },
-        {
-          color: '#ccffcc',
-          label: 'Sparsely\nvegetated areas',
-        },
-        {
-          color: '#000000',
-          label: 'Burnt areas',
-        },
-        {
-          color: '#a6e6cc',
-          label: 'Glaciers and\nperpetual snow',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC) - Forest and Seminatural Areas\n\n\n\nIn this Corine Land Cover layer, only the 12 Forest and Seminatural Area classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '5_WETLANDS' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#a6a6ff',
-          label: 'Inland marshes',
-        },
-        {
-          color: '#4d4dff',
-          label: 'Peat bogs',
-        },
-        {
-          color: '#ccccff',
-          label: 'Salt marshes',
-        },
-        {
-          color: '#e6e6ff',
-          label: 'Salines',
-        },
-        {
-          color: '#a6a6e6',
-          label: 'Intertidal\nflats',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC) - Wetlands\n\n\n\nIn this Corine Land Cover layer, only the 5 Wetland classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). 
-      Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CORINE_LAND_COVER, layerId: '6_WATER-BODIES' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#00ccf2',
-          label: 'Water courses',
-        },
-        {
-          color: '#80f2e6',
-          label: 'Water bodies',
-        },
-        {
-          color: '#00ffa6',
-          label: 'Coastal lagoons',
-        },
-        {
-          color: '#a6ffe6',
-          label: 'Estuaries',
-        },
-        {
-          color: '#e6f2ff',
-          label: 'Sea and ocean',
-        },
-        {
-          color: '#ffffff',
-          label: 'No data',
-        },
-      ],
-    },
-    description: () =>
-      t`# Corine Land Cover (CLC) - Water Bodies\n\n\n\nIn this Corine Land Cover layer, only the 6 Water body classes are shown, based on the classification [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html). Learn about each class [here](https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/docs/pdf/CLC2018_Nomenclature_illustrated_guide_20190510.pdf) and see the evalscript with all the classes [here](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover/).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_CLC_ACCOUNTING, layerId: 'ACCOUNTING-LAYERS-VISUALIZATION' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#e6004d',
-          label: 'Continuous\nurban fabric',
-        },
-        {
-          color: '#ff0000',
-          label: 'Discontinuous\nurban fabric',
-        },
-        {
-          color: '#cc4df2',
-          label: 'Industrial or\ncommercial units',
-        },
-        {
-          color: '#cc0000',
-          label: 'Road and rail\nnetworks',
-        },
-        {
-          color: '#e6cccc',
-          label: 'Port areas',
-        },
-        {
-          color: '#e6cce6',
-          label: 'Airports',
-        },
-        {
-          color: '#a600cc',
-          label: 'Mineral\nextraction sites',
-        },
-        {
-          color: '#a64d00',
-          label: 'Dump sites',
-        },
-        {
-          color: '#ff4dff',
-          label: 'Construction\nsites',
-        },
-        {
-          color: '#ffa6ff',
-          label: 'Green urban\nareas',
-        },
-        {
-          color: '#ffe6ff',
-          label: 'Sport and leisure\nfacilities',
-        },
-        {
-          color: '#ffffa8',
-          label: 'Non-irrigated\narable land',
-        },
-        {
-          color: '#ffff00',
-          label: 'Permanently\nirrigated land',
-        },
-        {
-          color: '#e6e600',
-          label: 'Rice fields',
-        },
-        {
-          color: '#e68000',
-          label: 'Vineyards',
-        },
-        {
-          color: '#f2a64d',
-          label: 'Fruit trees and\nberry plantations',
-        },
-        {
-          color: '#e6a600',
-          label: 'Olive groves',
-        },
-        {
-          color: '#e6e64d',
-          label: 'Pastures',
-        },
-        {
-          color: '#ffe6a6',
-          label: 'Annual crops\nassociated with\npermanent crops',
-        },
-        {
-          color: '#ffe64d',
-          label: 'Complex cultivation\npatterns',
-        },
-        {
-          color: '#e6cc4d',
-          label: 'Land principally\noccupied by\nagriculture with\n significant areas\nof natural vegetation',
-        },
-        {
-          color: '#f2cca6',
-          label: 'Agro-forestry\nareas',
-        },
-        {
-          color: '#80ff00',
-          label: 'Broad-leaved\nforest',
-        },
-        {
-          color: '#00a600',
-          label: 'Coniferous\nforest',
-        },
-        {
-          color: '#4dff00',
-          label: 'Mixed forest',
-        },
-        {
-          color: '#ccf24d',
-          label: 'Natural\ngrasslands',
-        },
-        {
-          color: '#a6ff80',
-          label: 'Moors and\nheathland',
-        },
-        {
-          color: '#a6e64d',
-          label: 'Sclerophyllous\nvegetation',
-        },
-        {
-          color: '#a6f200',
-          label: 'Transitional\nwoodland-shrub',
-        },
-        {
-          color: '#e6e6e6',
-          label: 'Beaches, dunes\nand sands',
-        },
-        {
-          color: '#cccccc',
-          label: 'Bare rocks',
-        },
-        {
-          color: '#ccffcc',
-          label: 'Sparsely\nvegetated areas',
-        },
-        {
-          color: '#000000',
-          label: 'Burnt areas',
-        },
-        {
-          color: '#a6e6cc',
-          label: 'Glaciers and\nperpetual snow',
-        },
-        {
-          color: '#a6a6ff',
-          label: 'Inland marshes',
-        },
-        {
-          color: '#4d4dff',
-          label: 'Peat bogs',
-        },
-        {
-          color: '#ccccff',
-          label: 'Salt marshes',
-        },
-        {
-          color: '#e6e6ff',
-          label: 'Salines',
-        },
-        {
-          color: '#a6a6e6',
-          label: 'Intertidal\nflats',
-        },
-        {
-          color: '#00ccf2',
-          label: 'Water courses',
-        },
-        {
-          color: '#80f2e6',
-          label: 'Water bodies',
-        },
-        {
-          color: '#00ffa6',
-          label: 'Coastal lagoons',
-        },
-        {
-          color: '#a6ffe6',
-          label: 'Estuaries',
-        },
-        {
-          color: '#e6f2ff',
-          label: 'Sea and ocean',
-        },
-        {
-          color: '#ffffff',
-          label: 'No data',
-        },
-      ],
-    },
-    description: () =>
-      t`#  Corine Land Cover - Accounting\n\n\n\nThis script visualises CORINE Land Cover (CLC) Accounting Layers according to the official CORINE Land Cover color scheme. CLC Accounting Layers are CLC status layers modified for the purpose of consistent statistical analysis in the land cover change accounting system at EEA. For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/copernicus_services/corine/corine_land_cover_accounting_layer/).`,
-  },
-
-  {
-    match: [{ datasourceId: GLOBAL_HUMAN_SETTLEMENT, layerId: 'GHS-BUILT-S2' }],
-
-    description: () =>
-      t`#  The Global Human Settlement Layer GHS-BUILT-S2 \n\n\n\n
-      
-      The Global Human Settlement Layer GHS-BUILT-S2 is a global map of built-up areas (expressed as probabilities from 0 to 100 %) at 10 m spatial resolution. It was derived from a Sentinel-2 global image composite for the reference year 2018 using Convolutional Neural Networks.
-
-      This script visualises the built-up probabilities stretched to 0-255.
-
-      For more information about the layer, visit [this website](https://custom-scripts.sentinel-hub.com/other_collections/global-human-settlement-layer/global-human-settlement-layer-ghs-built-s2/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_WATER_BODIES, layerId: 'WATER-BODIES-OCCURENCE' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ff0000',
-          label: 'Very low',
-        },
-        {
-          color: '#8e35ef',
-          label: 'Low',
-        },
-        {
-          color: '#a6a6e6',
-          label: 'Medium',
-        },
-        {
-          color: '#00ffff',
-          label: 'High',
-        },
-        {
-          color: '#3bb9ff',
-          label: 'Very High',
-        },
-        {
-          color: '#0032c8',
-          label: 'Permanent',
-        },
-      ],
-    },
-    description: () =>
-      t`# Water Bodies - Occurrence\n\n\n\nThis layer displays the 6 occurrence levels of the Quality layer (QUAL), providing information on the seasonal dynamics of the detected water bodies. QUAL is generated from water body occurrence statistics computed from previous monthly Water Bodies products. The occurrence statistics is ranked from low occurrence to permanent occurrence. More information [here](https://collections.sentinel-hub.com/water-bodies/readme.html), and [here](https://custom-scripts.sentinel-hub.com/copernicus_services/water-bodies-occurence/#).`,
-  },
-
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '1_OCCURRENCE' }],
-    legend: [
-      {
-        type: 'continuous',
-        minPosition: 1,
-        maxPosition: 100,
-        gradients: [
-          { position: '1', color: 'rgb(255,204,204)', label: '1 % Occurence' },
-          { position: '100', color: 'rgb(0,0,255)', label: '100 % Occurence' },
-        ],
-      },
-      {
-        type: 'discrete',
-        items: [
-          {
-            color: '#ffffff',
-            label: 'Not Water',
-          },
-          {
-            color: '#cccccc',
-            label: 'No Data',
-          },
-        ],
-      },
-    ],
-    description: () =>
-      t`# Global Surface Water - Occurrence\n\n\n\nThe layer shows the (intra- and inter-annual) variations of surface water presence in the time range between March 1984 and December 2021. Permanent water areas with 100% occurrence over the 38 years are shown in blue, while lighter shades of pink and purple indicate lower degrees of water presence. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_occurrence/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '2_CHANGE-INTENSITY' }],
-    legend: [
-      {
-        type: 'continuous',
-        minPosition: 0,
-        maxPosition: 200,
-        gradients: [
-          { position: '0', color: 'rgb(255,0,0)', label: '100 % Loss' },
-          { position: '100', color: 'rgb(0,0,0)', label: '0 % Change' },
-          { position: '200', color: 'rgb(0,255,0)', label: '100 % Increase' },
-        ],
-      },
-      {
-        type: 'discrete',
-        items: [
-          {
-            color: '#ffffff',
-            label: 'Not Water',
-          },
-          {
-            color: '#888888',
-            label: 'Unable to calculate',
-          },
-          {
-            color: '#cccccc',
-            label: 'No Data',
-          },
-        ],
-      },
-    ],
-    description: () =>
-      t`# Global Surface Water - Occurrence Change Intensity\n\n\n\nThe layer visualises changes in water occurrence between two different epochs, the first ranging from March 1984 to December 1999, and the other covering the period from January 2000 to December 2021. Areas with increase in water occurrence are visualised in different shades of green, areas with no change are colored black and areas with decrease are shown in shades of red. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global_surface_water_change/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '3_SEASONALITY' }],
-    legend: [
-      {
-        type: 'continuous',
-        minPosition: 1,
-        maxPosition: 12,
-        gradients: [
-          { position: '1', color: 'rgb(153, 217, 234)', label: '1 month of water' },
-          { position: '12', color: 'rgb(0,0,170)', label: '12 months of water' },
-        ],
-      },
-      {
-        type: 'discrete',
-        items: [
-          {
-            color: '#ffffff',
-            label: 'Not Water',
-          },
-          {
-            color: '#cccccc',
-            label: 'No Data',
-          },
-        ],
-      },
-    ],
-    description: () =>
-      t`# Global Surface Water - Seasonality\n\n\n\nThe Seasonality layer provides information on the distribution of surface water in 2021. Permanent water bodies (water was present for 12 months) are colored in dark blue and seasonal water (water was present for less than 12 months) in gradually lighter shades of blue, with the lightest blue showing areas where water was present for only 1 month. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_seasonality/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '4_RECURRENCE' }],
-    legend: [
-      {
-        type: 'continuous',
-        minPosition: 1,
-        maxPosition: 100,
-        gradients: [
-          { position: '1', color: 'rgb(255, 127, 39)', label: '1 % recurrence' },
-          { position: '100', color: 'rgb(153, 217, 234 )', label: '100 % recurrence' },
-        ],
-      },
-      {
-        type: 'discrete',
-        items: [
-          {
-            color: '#ffffff',
-            label: 'Not Water',
-          },
-          {
-            color: '#cccccc',
-            label: 'No Data',
-          },
-        ],
-      },
-    ],
-    description: () =>
-      t`# Global Surface Water - Recurrence\n\n\n\nThe Recurrence layer shows how frequently water returned to a particular location in a defined water period between 1984 and 2021. Orange color indicates low recurrence (water returned to the area infrequently), and light blue color indicates high recurrence (water returned to the area frequently). Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_recurrence/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '5_TRANSITIONS' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ffffff',
-          label: 'Not water',
-        },
-        {
-          color: '#0000ff',
-          label: 'Permanent',
-        },
-        {
-          color: '#22b14c',
-          label: 'New permanent',
-        },
-        {
-          color: '#d1102d',
-          label: 'Lost permanent',
-        },
-        {
-          color: '#99d9ea',
-          label: 'Seasonal',
-        },
-        {
-          color: '#b5e61d',
-          label: 'New seasonal',
-        },
-        {
-          color: '#e6a1aa',
-          label: 'Lost seasonal',
-        },
-        {
-          color: '#ff7f27',
-          label: 'Seasonal to permanent',
-        },
-        {
-          color: '#ffc90e',
-          label: 'Permanent to seasonal',
-        },
-        {
-          color: '#7f7f7f',
-          label: 'Ephemeral permanent',
-        },
-        {
-          color: '#c3c3c3',
-          label: 'Ephemeral seasonal',
-        },
-        {
-          color: '#cccccc',
-          label: 'No data',
-        },
-      ],
-    },
-    description: () =>
-      t`# Global Surface Water - Transitions\n\n\n\nThe Transitions layer is derived from a comparison between the first and last year in the 38-year time period. It visualises conversions between seasonal and permanent water. For example, "lost seasonal" means, that previously seasonal water was converted to land, "new seasonal" means that land has been converted to seasonal waters and so on. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_transitions/) and learn what each class means [here](https://global-surface-water.appspot.com/faq).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_GLOBAL_SURFACE_WATER, layerId: '6_EXTENT' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#6666ff',
-          label: 'Water Detected',
-        },
-        {
-          color: '#ffffff',
-          label: 'Not Water',
-        },
-        {
-          color: '#cccccc',
-          label: 'No Data',
-        },
-      ],
-    },
-    description: () =>
-      t`# Global Surface Water - Extent\n\n\n\nThis layer visualizes water in blue. It combines all the other layers and visualizes all the locations for which water presence has ever been detected over the 38-year period. Learn more [here](https://custom-scripts.sentinel-hub.com/other_collections/global-surface-water/global-surface-water/global_surface_water_extent/).`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_WATER_BODIES, layerId: 'WATER-BODIES' }],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#344ACD',
-          label: 'Water',
-        },
-      ],
-    },
-    description: () =>
-      t`# Water Bodies\n\n\n\nThis layer visualizes the Water Bodies detection layer (WB), which shows water bodies detected using the Modified Normalized Difference Water Index (MNDWI) derived from Sentinel-2 Level 1C data. More information [here](https://custom-scripts.sentinel-hub.com/copernicus_services/water-bodies/).`,
-  },
-  {
-    match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-CLASSIFICATION' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ff00ff',
-          label: 'Dense built-up area',
-        },
-        {
-          color: '#ff55ff',
-          label: 'Diffuse built-up area',
-        },
-        {
-          color: '#ffaaff',
-          label: 'Industrial and commercial areas',
-        },
-        {
-          color: '#00ffff',
-          label: 'Roads',
-        },
-        {
-          color: '#ffff00',
-          label: 'Oilseeds (Rapeseed)',
-        },
-        {
-          color: '#d0ff00',
-          label: 'Straw cereals (Wheat, Triticale, Barley)',
-        },
-        {
-          color: '#a1d600',
-          label: 'Protein crops (Beans / Peas)',
-        },
-        {
-          color: '#ffab44',
-          label: 'Soy',
-        },
-        {
-          color: '#d6d600',
-          label: 'Sunflower',
-        },
-        {
-          color: '#ff5500',
-          label: 'Corn',
-        },
-        {
-          color: '#c5ffff',
-          label: 'Rice',
-        },
-        {
-          color: '#aaaa61',
-          label: 'Tubers/roots',
-        },
-        {
-          color: '#aaaa00',
-          label: 'Grasslands',
-        },
-        {
-          color: '#aaaaff',
-          label: 'Orchards and fruit growing',
-        },
-        {
-          color: '#550000',
-          label: 'Vineyards',
-        },
-        {
-          color: '#009c00',
-          label: 'Hardwood forest',
-        },
-        {
-          color: '#003200',
-          label: 'Softwood forest',
-        },
-        {
-          color: '#aaff00',
-          label: 'Natural grasslands and pastures',
-        },
-        {
-          color: '#55aa7f',
-          label: 'Woody moorlands',
-        },
-        {
-          color: '#ff0000',
-          label: 'Natural mineral surfaces',
-        },
-        {
-          color: '#ffb802',
-          label: 'Beaches and dunes',
-        },
-        {
-          color: '#bebebe',
-          label: 'Glaciers and eternal snows',
-        },
-        {
-          color: '#0000ff',
-          label: 'Water',
-        },
-      ],
-    },
-    description: () =>
-      t`# CNES Land cover map\n\n\n\nThe CNES Land Cover Map (Occupation des Sols, OSO) produces land classification for Metropolitan France at 10 m spatial resolution based on Sentinel-2 L2A data within the Theia Land Cover CES framework. Maps for 2020, 2019, and 2018 use a 23-categories nomenclature. For earlier maps in 2017 and 2016, a fully compatible 17-classes nomenclature is employed.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_classification/).`,
-  },
-  {
-    match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-CLASSIFIER-CONFIDENCE' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#000000',
-          label: '1% confidence',
-        },
-        {
-          color: '#00c800',
-          label: '100% confidence',
-        },
-      ],
-    },
-    description: () =>
-      t`# CNES land cover classifier confidence visualisation\n\n\n\nThe script visualises the information on the classifier confidence with values ranging from 1 to 100.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_confidence/).`,
-  },
-  {
-    match: [{ datasourceId: CNES_LAND_COVER, layerId: 'CNES-LAND-COVER-VALIDITY' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#000000',
-          label: '1 cloudless image',
-        },
-        {
-          color: '#e60000',
-          label: '45 cloudless images',
-        },
-      ],
-    },
-    description: () =>
-      t`# CNES land cover validity visualisation\n\n\n\nThe script visualises the information on the number of cloudless images for validity.\n\n\n\nFind more information [here](https://custom-scripts.sentinel-hub.com/other_collections/cnes/cnes_land_cover_validity/).`,
-  },
-  {
-    match: [{ datasourceId: ESA_WORLD_COVER, layerId: 'WORLDCOVER-MAP' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#006400',
-          label: 'Tree cover',
-        },
-        {
-          color: '#ffbb22',
-          label: 'Shrubland',
-        },
-        {
-          color: '#ffff4c',
-          label: 'Grassland',
-        },
-        {
-          color: '#f096ff',
-          label: 'Cropland',
-        },
-        {
-          color: '#fa0000',
-          label: 'Built-up areas',
-        },
-        {
-          color: '#b4b4b4',
-          label: 'Bare / sparse vegetation',
-        },
-        {
-          color: '#f0f0f0',
-          label: 'Snow and ice',
-        },
-        {
-          color: '#0064c8',
-          label: 'Permanent water bodies',
-        },
-        {
-          color: '#0096a0',
-          label: 'Herbaceous wetland',
-        },
-        {
-          color: '#00cf75',
-          label: 'Mangroves',
-        },
-        {
-          color: '#fae6a0',
-          label: 'Moss and lichen',
-        },
-      ],
-    },
-    description: () =>
-      t`# ESA WorldCover Map\n\n\n\nThe WorldCover product displays a global land cover map with 11 different land cover classes produced at 10m resolution based on combination of both Sentinel-1 and Sentinel-2 data. In areas where Sentinel-2 images are covered by clouds for an extended period of time, Sentinel-1 data provides complimentary information on the structural characteristics of the observed land cover. Therefore, the combination of Sentinel-1 and Sentinel-2 data makes it possible to update the land cover map almost in real time. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/esa-worldcover/).`,
-  },
-  {
-    match: [{ datasourceId: IO_LULC_10M_ANNUAL, layerId: 'IO-LAND-USE-LAND-COVER-MAP' }],
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#419bdf',
-          label: 'Water',
-        },
-        {
-          color: '#397d49',
-          label: 'Trees',
-        },
-        {
-          color: '#7a87c6',
-          label: 'Flooded Vegetation',
-        },
-        {
-          color: '#e49635',
-          label: 'Crops',
-        },
-        {
-          color: '#c4281b',
-          label: 'Built Area',
-        },
-        {
-          color: '#a59b8f',
-          label: 'Bare Ground',
-        },
-        {
-          color: '#a8ebff',
-          label: 'Snow and ice',
-        },
-        {
-          color: '#616161',
-          label: 'Clouds',
-        },
-        {
-          color: '#e3e2c3',
-          label: 'Rangeland',
-        },
-      ],
-    },
-    description: () =>
-      t`# 10m Annual Land Use Land Cover (9-class)\n\n\n\nThe 10m Annual Land Use Land Cover (LULC) Map is produced by Impact Observatory, Microsoft, and Esri collaboratively. The data collection is derived from ESA Sentinel-2 imagery at 10m resolution globally using Impact Ovservatory's state of the art deep learning AI land classification model which is trained by billions of human-labeled image pixels. There are 9 LULC classes generated by the algorithm, including Built, Crops, Trees, Water, Rangeland, Flooded Vegetation, Snow/Ice, Bare Ground, and Clouds. Find more information [here](https://custom-scripts.sentinel-hub.com/other_collections/impact-observatory/impact-observatory-lulc/).`,
-  },
   {
     match: [
-      {
-        datasourceId: AWS_LOTL2,
-        layerId: 'X_BAND_QUALITY_ASSESSMENT',
-      },
-    ],
-
-    legend: {
-      type: 'discrete',
-      items: [
-        {
-          color: '#ffffff',
-          label: 'Cloud',
-        },
-        {
-          color: '#afafaf',
-          label: 'Dilated Clouds',
-        },
-        {
-          color: '#996633',
-          label: 'Cloud Shadow',
-        },
-        {
-          color: '#66ffff',
-          label: 'Cirrus',
-        },
-        {
-          color: '#ff00ff',
-          label: 'Snow',
-        },
-        {
-          color: '#0000CC',
-          label: 'Water',
-        },
-      ],
-    },
-    description: () =>
-      t`# Band Quality Assessment visualization\n\n\n\nThe Landsat BQA band provides useful information such as cloudy pixels to users wanting to mask their data from pixels that are either poor quality or contain no useful data. This visualization uses the [decodeL8C2Qa](https://docs.sentinel-hub.com/api/latest/evalscript/functions/#decodel8c2qa) function to decode the BQA band from the Landsat 8/9 Collection 2. Clear pixel, pixel not classified as clouds, snow or water, are displayed as true color image. \n\n\n\nMore info [here](https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands).`,
-  },
-
-  {
-    match: [{ datasourceId: 'S1_AWS_IW_VVVH', layerId: '1_ENHANCED-VISUALIZATION' }],
-    description: () =>
-      t`# False color visualization\n\nThis script offers different false color visualizations and the possibility to easily add more visualizations. Using variables, you can influence the resulting image in terms of what you want to higlight.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/sar_false_color_visualization-2/) and [here.](https://pierre-markuse.net/2019/10/22/sentinel-1-sar-data-visualization-in-eo-browser-using-a-custom-script/)`,
-  },
-  {
-    match: [{ datasourceId: 'S1_AWS_IW_VVVH', layerId: '2_ENHANCED-VISUALIZATION-2' }],
-    description: () =>
-      t`# False color visualization-2\n\nThe script visualizes the Earth's surface in False Color from Sentinel-1 data. It helps with maritime monitoring (ice monitoring, ship monitoring,...), land monitoring (agriculture, deforestation,...) and emergency management (flood monitoring, volcano monitoring,...).\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-1/sar_false_color_visualization/)`,
-  },
-  {
-    match: [{ datasourceId: 'S1_AWS_IW_VVVH', layerId: '3_URBAN-AREAS' }],
-    description: () =>
-      t`# Urban Areas visualization\n\nThe script is useful for locating urban areas and individual buildings. It uses VH and VV polarizations to highlight different buildings and topology orientations with purple and green colors. It can be used to track urban expansion, estimate building type or locate buildings in high-risk areas (such as floods).\n\nThe script does not work well in high elevation areas, where snow and high slopes are also highlighted, making it difficult to separate urban areas from the rest of the surface.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-1/urban_areas/)`,
-  },
-  {
-    match: [{ datasourceId: 'S1_AWS_IW_VVVH', layerId: '4_DEFORESTATION' }],
-    description: () =>
-      t`# Deforestation Visualization\n\nThe script uses the VV and VH bands of the Sentinel-1 and transforms the cartesian space of VV and VH into polar coordinates computing the length and angle of the resulting vector as well as the area of the square defined by VV and VH. Then the length of the vector is used as a classifier to distinguish between water, forest and soil.\n\nThe script paints the water and bare soil areas black, and uses both the length and the angle to draw a scale for the forest (green) and soil (red), drawing a stronger green if more forest was classified and a stronger red or black if more soil was found.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-1/sar_deforestation_detection/)`,
-  },
-  {
-    match: [{ datasourceId: 'S1_AWS_IW_VVVH', layerId: '5_WATER-SURFACE-ROUGHNESS-VISUALIZATION' }],
-    description: () =>
-      t`# Water Surface Roughness Visualization \n\nThe script visualizes the Water Surface Roughness from Sentinel-1 data. It helps in maritime monitoring (ship monitoring, oil pollution monitoring, sea currents,...).\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-1/water_surface_roughness_visualization/)`,
-  },
-
-  {
-    match: [{ datasourceId: DEM_MAPZEN, layerId: '1_TOPOGRAPHIC' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -5000,
-      maxPosition: 9000,
-      gradients: [
-        { position: '-4549', color: 'rgb(3%,3%,45%)', label: '-5.000' },
-        { position: '-4549', color: 'rgb(16%,19%,53%)' },
-        { position: '-4098', color: 'rgb(16%,19%,53%)' },
-        { position: '-4098', color: 'rgb(28%,35%,63%)' },
-        { position: '-3647', color: 'rgb(28%,35%,63%)', label: '-500' },
-        { position: '-3647', color: 'rgb(41%,50%,73%)' },
-        { position: '-3196', color: 'rgb(41%,50%,73%)' },
-        { position: '-3196', color: 'rgb(66%,82%,92%)' },
-        { position: '-2745', color: 'rgb(66%,82%,92%)' },
-        { position: '-2745', color: 'rgb(9%,33%,3%)', label: '0' },
-        { position: '-2294', color: 'rgb(9%,33%,3%)' },
-        { position: '-2294', color: 'rgb(12%,37%,8%)' },
-        { position: '-1843', color: 'rgb(12%,37%,8%)' },
-        { position: '-1843', color: 'rgb(15%,41%,13%)', label: '25' },
-        { position: '-1392', color: 'rgb(15%,41%,13%)' },
-        { position: '-1392', color: 'rgb(18%,45%,18%)' },
-        { position: '-941', color: 'rgb(18%,45%,18%)' },
-        { position: '-941', color: 'rgb(21%,49%,23%)' },
-        { position: '-490', color: 'rgb(21%,49%,23%)' },
-        { position: '-490', color: 'rgb(30%,58%,25%)', label: '100' },
-        { position: '-39', color: 'rgb(30%,58%,25%)' },
-        { position: '-39', color: 'rgb(37%,64%,33%)' },
-        { position: '412', color: 'rgb(37%,64%,33%)' },
-        { position: '412', color: 'rgb(45%,70%,40%)', label: '300' },
-        { position: '863', color: 'rgb(45%,70%,40%)' },
-        { position: '863', color: 'rgb(48%,73%,44%)' },
-        { position: '1314', color: 'rgb(48%,73%,44%)', label: '500' },
-        { position: '1314', color: 'rgb(52%,76%,48%)' },
-        { position: '1765', color: 'rgb(52%,76%,48%)' },
-        { position: '1765', color: 'rgb(59%,81%,56%)' },
-        { position: '2216', color: 'rgb(59%,81%,56%)' },
-        { position: '2216', color: 'rgb(65%,84%,61%)' },
-        { position: '2667', color: 'rgb(65%,84%,61%)' },
-        { position: '2667', color: 'rgb(67%,87%,63%)' },
-        { position: '3118', color: 'rgb(67%,87%,63%)' },
-        { position: '3118', color: 'rgb(99%,93%,75%)', label: '1.000' },
-        { position: '3569', color: 'rgb(99%,93%,75%)' },
-        { position: '3569', color: 'rgb(92%,85%,69%)' },
-        { position: '4020', color: 'rgb(92%,85%,69%)' },
-        { position: '4020', color: 'rgb(84%,77%,62%)' },
-        { position: '4471', color: 'rgb(84%,77%,62%)' },
-        { position: '4471', color: 'rgb(76%,69%,54%)' },
-        { position: '4922', color: 'rgb(76%,69%,54%)' },
-        { position: '4922', color: 'rgb(68%,61%,46%)' },
-        { position: '5373', color: 'rgb(68%,61%,46%)' },
-        { position: '5373', color: 'rgb(60%,53%,38%)', label: '3.500' },
-        { position: '5824', color: 'rgb(60%,53%,38%)' },
-        { position: '5824', color: 'rgb(53%,45%,30%)' },
-        { position: '6275', color: 'rgb(53%,45%,30%)' },
-        { position: '6275', color: 'rgb(45%,38%,22%)' },
-        { position: '6726', color: 'rgb(45%,38%,22%)' },
-        { position: '6726', color: 'rgb(37%,30%,15%)' },
-        { position: '7177', color: 'rgb(37%,30%,15%)' },
-        { position: '7177', color: 'rgb(29%,22%,7%)' },
-        { position: '7628', color: 'rgb(29%,22%,7%)' },
-        { position: '7628', color: 'rgb(90%,90%,90%)', label: '6.000' },
-        { position: '8079', color: 'rgb(90%,90%,90%)' },
-        { position: '8079', color: 'rgb(95%,95%,95%)' },
-        { position: '8530', color: 'rgb(95%,95%,95%)' },
-        { position: '8530', color: 'rgb(100%,100%,100%)' },
-        { position: '8981', color: 'rgb(100%,100%,100%)', label: '9.000 [m]' },
-      ],
-    },
-    description: () =>
-      t`# Topographic Visualization\n\n\n\nThis script returns a visualisation with green colours representing lowland elevations and earth colours as mountainous elevations. The script uses discrete classes rather than the continuous visualisations in the other DEM layers.\n\n\It is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-topographic/)`,
-  },
-  {
-    match: [
-      { datasourceId: DEM_COPERNICUS_30, layerId: '1_TOPOGRAPHIC' },
-      { datasourceId: DEM_COPERNICUS_90, layerId: '1_TOPOGRAPHIC' },
       { datasourceId: DEM_COPERNICUS_30_CDAS, layerId: '1_TOPOGRAPHIC' },
       { datasourceId: DEM_COPERNICUS_90_CDAS, layerId: '1_TOPOGRAPHIC' },
     ],
@@ -2898,43 +1243,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`# Topographic Visualization\n\n\n\nThis script returns a visualisation with green colours representing lowland elevations and earth colours as mountainous elevations. The script uses discrete classes rather than the continuous visualisations in the other DEM layers.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-topographic/)`,
   },
   {
-    match: [{ datasourceId: DEM_MAPZEN, layerId: 'COLOR' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -12000,
-      maxPosition: 9000,
-      gradients: [
-        { position: '-12000', color: 'rgb(0%,0%,1%)', label: '-12.000' },
-        { position: '-11000', color: 'rgb(11%,0%,35%)' },
-        { position: '-10000', color: 'rgb(11%,11%,47%)' },
-        { position: '-9000', color: 'rgb(15%,19%,70%)', label: '-1.000' },
-        { position: '-8000', color: 'rgb(23%,23%,90%)' },
-        { position: '-7000', color: 'rgb(23%,31%,96%)', label: '-200' },
-        { position: '-6000', color: 'rgb(35%,33%,98%)' },
-        { position: '-5000', color: 'rgb(47%,47%,92%)', label: '-20' },
-        { position: '-4000', color: 'rgb(62%,62%,100%)' },
-        { position: '-3000', color: 'rgb(78%,78%,78%)', label: '0' },
-        { position: '-2000', color: 'rgb(39%,22%,23%)' },
-        { position: '-1000', color: 'rgb(47%,18%,15%)', label: '10' },
-        { position: '0', color: 'rgb(54%,29%,15%)' },
-        { position: '1000', color: 'rgb(66%,37%,0%)', label: '200' },
-        { position: '2000', color: 'rgb(47%,22%,35%)' },
-        { position: '3000', color: 'rgb(82%,57%,70%)', label: '400' },
-        { position: '4000', color: 'rgb(54%,43%,0%)' },
-        { position: '5000', color: 'rgb(47%,54%,70%)', label: '1.000' },
-        { position: '6000', color: 'rgb(62%,66%,94%)' },
-        { position: '7000', color: 'rgb(74%,78%,98%)', label: '5.000' },
-        { position: '8000', color: 'rgb(86%,94%,100%)' },
-        { position: '9000', color: 'rgb(100%,100%,100%)', label: '9.000 [m]' },
-      ],
-    },
-    description: () =>
-      t`# Color Visualization\n\n\n\nThis script returns a color visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-color/)`,
-  },
-  {
     match: [
-      { datasourceId: DEM_COPERNICUS_30, layerId: 'COLOR' },
-      { datasourceId: DEM_COPERNICUS_90, layerId: 'COLOR' },
       { datasourceId: DEM_COPERNICUS_30_CDAS, layerId: 'COLOR' },
       { datasourceId: DEM_COPERNICUS_90_CDAS, layerId: 'COLOR' },
     ],
@@ -2963,43 +1272,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`# Color Visualization\n\n\n\nThis script returns a color visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-color/)`,
   },
   {
-    match: [{ datasourceId: DEM_MAPZEN, layerId: 'GRAYSCALE' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -5000,
-      maxPosition: 9000,
-      gradients: [
-        { position: '-12000', color: 'rgb(0%,0%,0%)', label: '-12.000' },
-        { position: '-11000', color: 'rgb(9%,9%,9%)' },
-        { position: '-10000', color: 'rgb(21%,21%,21%)' },
-        { position: '-9000', color: 'rgb(24%,24%,24%)', label: '-1.000' },
-        { position: '-8000', color: 'rgb(27%,27%,27%)' },
-        { position: '-7000', color: 'rgb(29%,29%,29%)', label: '-200' },
-        { position: '-6000', color: 'rgb(31%,31%,31%)' },
-        { position: '-5000', color: 'rgb(33%,33%,33%)', label: '-20' },
-        { position: '-4000', color: 'rgb(35%,35%,35%)' },
-        { position: '-3000', color: 'rgb(39%,39%,39%)', label: '0' },
-        { position: '-2000', color: 'rgb(43%,43%,43%)' },
-        { position: '-1000', color: 'rgb(51%,51%,51%)', label: '10' },
-        { position: '0', color: 'rgb(54%,54%,54%)' },
-        { position: '1000', color: 'rgb(62%,62%,62%)', label: '200' },
-        { position: '2000', color: 'rgb(70%,70%,70%)' },
-        { position: '3000', color: 'rgb(78%,78%,78%)', label: '400' },
-        { position: '4000', color: 'rgb(84%,84%,84%)' },
-        { position: '5000', color: 'rgb(88%,88%,88%)', label: '1.000' },
-        { position: '6000', color: 'rgb(92%,92%,92%)' },
-        { position: '7000', color: 'rgb(96%,96%,96%)', label: '5.000' },
-        { position: '8000', color: 'rgb(98%,98%,98%)' },
-        { position: '9000', color: 'rgb(100%,100%,100%)', label: '9.000 [m]' },
-      ],
-    },
-    description: () =>
-      t`# Grayscale Visualization\n\n\n\nThis script returns a grayscale visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-grayscale/)`,
-  },
-  {
     match: [
-      { datasourceId: DEM_COPERNICUS_30, layerId: 'GRAYSCALE' },
-      { datasourceId: DEM_COPERNICUS_90, layerId: 'GRAYSCALE' },
       { datasourceId: DEM_COPERNICUS_30_CDAS, layerId: 'GRAYSCALE' },
       { datasourceId: DEM_COPERNICUS_90_CDAS, layerId: 'GRAYSCALE' },
     ],
@@ -3028,43 +1301,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`# Grayscale Visualization\n\n\n\nThis script returns a grayscale visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-grayscale/)`,
   },
   {
-    match: [{ datasourceId: DEM_MAPZEN, layerId: 'SEPIA' }],
-    legend: {
-      type: 'continuous',
-      minPosition: -12000,
-      maxPosition: 9000,
-      gradients: [
-        { position: '-12000', color: 'rgb(0%,0%,0%)', label: '-12.000' },
-        { position: '-11000', color: 'rgb(2%,0%,2%)' },
-        { position: '-10000', color: 'rgb(5%,3%,0%)' },
-        { position: '-9000', color: 'rgb(9%,5%,1%)', label: '-1.000' },
-        { position: '-8000', color: 'rgb(13%,7%,2%)' },
-        { position: '-7000', color: 'rgb(17%,10%,3%)', label: '-200' },
-        { position: '-6000', color: 'rgb(23%,13%,3%)' },
-        { position: '-5000', color: 'rgb(31%,18%,5%)', label: '-20' },
-        { position: '-4000', color: 'rgb(35%,20%,6%)' },
-        { position: '-3000', color: 'rgb(39%,22%,6%)', label: '0' },
-        { position: '-2000', color: 'rgb(43%,25%,7%)' },
-        { position: '-1000', color: 'rgb(51%,29%,9%)', label: '10' },
-        { position: '0', color: 'rgb(54%,32%,9%)' },
-        { position: '1000', color: 'rgb(62%,36%,11%)', label: '200' },
-        { position: '2000', color: 'rgb(70%,41%,12%)' },
-        { position: '3000', color: 'rgb(78%,45%,13%)', label: '400' },
-        { position: '4000', color: 'rgb(84%,49%,14%)' },
-        { position: '5000', color: 'rgb(88%,51%,15%)', label: '1.000' },
-        { position: '6000', color: 'rgb(92%,54%,16%)' },
-        { position: '7000', color: 'rgb(96%,56%,16%)', label: '5.000' },
-        { position: '8000', color: 'rgb(98%,57%,17%)' },
-        { position: '9000', color: 'rgb(100%,58%,17%)', label: '9.000 [m]' },
-      ],
-    },
-    description: () =>
-      t`# Sepia Visualization\n\n\n\nThis script returns a sepia visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-sepia/)`,
-  },
-  {
     match: [
-      { datasourceId: DEM_COPERNICUS_30, layerId: 'SEPIA' },
-      { datasourceId: DEM_COPERNICUS_90, layerId: 'SEPIA' },
       { datasourceId: DEM_COPERNICUS_30_CDAS, layerId: 'SEPIA' },
       { datasourceId: DEM_COPERNICUS_90_CDAS, layerId: 'SEPIA' },
     ],
@@ -5678,5 +3915,85 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: '5_LAFTER' }],
     description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'DMP' }],
+    description: () =>
+      t`Dry Matter Productivity is defined as the overall growth rate, or dry biomass increase, of the vegetation. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'DMP' }],
+    description: () =>
+      t`Dry Matter Productivity is defined as the overall growth rate, or dry biomass increase, of the vegetation. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'DMP' }],
+    description: () =>
+      t`Dry Matter Productivity is defined as the overall growth rate, or dry biomass increase, of the vegetation. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'DMP' }],
+    description: () =>
+      t`Dry Matter Productivity is defined as the overall growth rate, or dry biomass increase, of the vegetation. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'GPP' }],
+    description: () =>
+      t`GPP is defined as the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'GPP' }],
+    description: () =>
+      t`GPP is defined as the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'GPP' }],
+    description: () =>
+      t`GPP is defined as the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'GPP' }],
+    description: () =>
+      t`GPP is defined as the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'NPP' }],
+    description: () =>
+      t`NPP is defined as the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'NPP' }],
+    description: () =>
+      t`NPP is defined as the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'NPP' }],
+    description: () =>
+      t`NPP is defined as the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'NPP' }],
+    description: () =>
+      t`NPP is defined as the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'GDMP' }],
+    description: () =>
+      t`GDMP represents the total amount of dry matter produced by land plants per unit time through photosynthesis. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1, layerId: 'GDMP' }],
+    description: () =>
+      t`GDMP represents the total amount of dry matter produced by land plants per unit time through photosynthesis. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2, layerId: 'GDMP' }],
+    description: () =>
+      t`GDMP represents the total amount of dry matter produced by land plants per unit time through photosynthesis. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'GDMP' }],
+    description: () =>
+      t`GDMP represents the total amount of dry matter produced by land plants per unit time through photosynthesis. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
   },
 ];

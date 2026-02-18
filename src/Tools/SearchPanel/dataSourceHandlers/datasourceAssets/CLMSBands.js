@@ -2131,3 +2131,163 @@ export const COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS = [
+  {
+    name: 'DMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS = [
+  {
+    name: 'DMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS = [
+  {
+    name: 'DMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
+  {
+    name: 'DMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS = [
+  {
+    name: 'GPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0_BANDS = [
+  {
+    name: 'NPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS = [
+  {
+    name: 'GPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1_BANDS = [
+  {
+    name: 'NPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS = [
+  {
+    name: 'GPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2_BANDS = [
+  {
+    name: 'NPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
+  {
+    name: 'GPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
+  {
+    name: 'NPP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0_BANDS = [
+  {
+    name: 'GDMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1_BANDS = [
+  {
+    name: 'GDMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2_BANDS = [
+  {
+    name: 'GDMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
+  {
+    name: 'GDMP',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QFLAG',
+    getDescription: () => ``,
+  },
+];

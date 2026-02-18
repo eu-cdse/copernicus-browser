@@ -44,7 +44,7 @@ const getS5CloudMarkdown = () =>
 const Sentinel5Tooltip = () =>
   DataSourceTooltip({
     source: getS5Markdown(),
-    credits: credits[DATASOURCES.S5],
+    credits: credits[DATASOURCES.S5_CDAS],
   });
 
 export {

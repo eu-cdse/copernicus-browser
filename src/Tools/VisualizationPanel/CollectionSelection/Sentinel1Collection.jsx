@@ -6,13 +6,9 @@ import store, { visualizationSlice } from '../../../store';
 
 import { S1_OBSERVATION_SCENARIOS } from '../../SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import {
-  S1_AWS_IW_VVVH,
-  S1_AWS_EW_HHHV,
   S1,
   ASCENDING,
   DESCENDING,
-  S1_EW,
-  S1_EW_SH,
   S1_CDAS_SM_VVVH,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
@@ -25,15 +21,6 @@ import { AttributeTooltips } from '../../../api/OData/assets/tooltips';
 import { AttributeNames } from '../../../api/OData/assets/attributes';
 
 const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDirection }) => {
-  // Get filter S1 filter options from dataset for example(S1_AWS_IW_VVVH)
-  /* 
-    Filter options = {
-      dataset: "S1"
-      host: "AWS"
-      acquisitionMode: "IW"
-      polarizationMode: "VVVH"
-    }
-  */
   const S1DatasetIdOrder = {
     0: 'dataset',
     1: 'host',
@@ -44,24 +31,9 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
   const getSelectedFiltersFromDataset = (dataset) => {
     let obj = {};
 
-    switch (dataset) {
-      case S1:
-      case S1_EW:
-      case S1_EW_SH:
-        obj = {
-          dataset: 'S1',
-          host: 'EOC',
-          acquisitionMode: dataset === S1 ? 'IW' : 'EW',
-          polarizationMode: dataset === S1 ? 'VVVH' : dataset === S1_EW ? 'HHHV' : 'HH',
-        };
-        break;
-      default:
-        dataset.split('_').forEach((key, index) => {
-          obj[S1DatasetIdOrder[index]] = key;
-        });
-        break;
-    }
-
+    dataset.split('_').forEach((key, index) => {
+      obj[S1DatasetIdOrder[index]] = key;
+    });
     return obj;
   };
 
@@ -73,10 +45,6 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
 
   const handlePreSelectedPolarization = (acq) => {
     switch (acq) {
-      case getSelectedFiltersFromDataset(S1_AWS_IW_VVVH).acquisitionMode:
-        return getSelectedFiltersFromDataset(S1_AWS_IW_VVVH).polarizationMode;
-      case getSelectedFiltersFromDataset(S1_AWS_EW_HHHV).acquisitionMode:
-        return getSelectedFiltersFromDataset(S1_AWS_EW_HHHV).polarizationMode;
       case getSelectedFiltersFromDataset(S1_CDAS_SM_VVVH).acquisitionMode:
         return getSelectedFiltersFromDataset(S1_CDAS_SM_VVVH).polarizationMode;
       default:
@@ -85,62 +53,20 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
   };
 
   const setAcquisitionMode = (acq) => {
-    let newDataset;
-
-    switch (selectedCollection.dataset) {
-      case S1:
-      case S1_EW:
-      case S1_EW_SH:
-        switch (acq) {
-          case 'IW':
-            newDataset = S1;
-            break;
-          default:
-            newDataset = S1_EW;
-            break;
-        }
-        break;
-      default:
-        newDataset = `${dataset}_${host}_${acq}_${handlePreSelectedPolarization(acq)}`;
-        break;
-    }
-
     onSelect(
       {
         datasource: datasource,
-        dataset: newDataset,
+        dataset: `${dataset}_${host}_${acq}_${handlePreSelectedPolarization(acq)}`,
       },
       orbitDirection,
     );
   };
 
   const setPolarizationMode = (pol) => {
-    let newDataset;
-
-    switch (selectedCollection.dataset) {
-      case S1:
-        newDataset = S1;
-        break;
-      case S1_EW:
-      case S1_EW_SH:
-        switch (pol) {
-          case 'HH':
-            newDataset = S1_EW_SH;
-            break;
-          default:
-            newDataset = S1_EW;
-            break;
-        }
-        break;
-      default:
-        newDataset = `${dataset}_${host}_${acquisitionMode}_${pol}`;
-        break;
-    }
-
     onSelect(
       {
         datasource: datasource,
-        dataset: newDataset,
+        dataset: `${dataset}_${host}_${acquisitionMode}_${pol}`,
       },
       orbitDirection,
     );

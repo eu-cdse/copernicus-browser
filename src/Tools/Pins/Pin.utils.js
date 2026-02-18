@@ -6,18 +6,10 @@ import { t } from 'ttag';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
 import store, { pinsSlice, tabsSlice } from '../../store';
-import { DEFAULT_THEMES } from '../../assets/default_themes.js';
 import { VERSION_INFO } from '../../VERSION';
-import { b64DecodeUnicode } from '../../utils/base64MDN';
 import { isUserAuthenticated } from '../../Auth/authHelpers';
 import { getDataSourceHandler, getDatasetLabel } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
-import {
-  datasourceToDatasetId,
-  dataSourceToThemeId,
-  datasourceToUrl,
-  getNewDatasetPropertiesIfDeprecatedDatasetId,
-} from '../../utils/handleOldUrls';
 import { ensureCorrectDataFusionFormat, getThemeName } from '../../utils';
 import {
   defaultGain,
@@ -27,269 +19,10 @@ import {
   isEffectRangeSetAndNotDefault,
 } from '../../utils/effectsUtils';
 import { getLayerFromParams } from '../../Controls/ImgDownload/ImageDownload.utils';
-import { DEFAULT_THEME_ID, PROCESSING_OPTIONS, TABS } from '../../const';
+import { PROCESSING_OPTIONS, TABS } from '../../const';
 import { SAVED_PINS, UNSAVED_PINS } from './PinPanel';
-import {
-  S3OLCI,
-  S3SLSTR,
-  S5_AER_AI,
-  S5_CH4,
-  S5_CLOUD,
-  S5_CO,
-  S5_HCHO,
-  S5_NO2,
-  S5_O3,
-  S5_OTHER,
-  S5_SO2,
-} from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const PINS_LC_NAME = 'eob-pins';
-
-const SH_SERVICE_HOSTNAMES_V3 = {
-  SERVICES: 'https://services.sentinel-hub.com/',
-  CREODIAS: 'https://creodias.sentinel-hub.com/',
-};
-
-// check if the pin was already converted by this version of EOB3
-const needsConversion = (pin) => {
-  if (!pin.tag || pin.tag === '') {
-    return true;
-  }
-  return pin.tag !== VERSION_INFO.tag;
-};
-
-const convertDataSource = (pin, newPin) => {
-  const { datasource } = pin;
-  if (datasource) {
-    const datasetId = datasourceToDatasetId[datasource];
-    const themeId = dataSourceToThemeId[datasource] ? dataSourceToThemeId[datasource] : DEFAULT_THEME_ID;
-    const visualizationUrl = datasourceToUrl[datasource];
-    newPin.datasetId = datasetId;
-    newPin.themeId = themeId;
-    newPin.visualizationUrl = visualizationUrl;
-  }
-  return newPin;
-};
-
-const convertPreset = (pin, newPin) => {
-  const { preset } = pin;
-  if (preset) {
-    newPin.layerId = preset;
-  }
-  return newPin;
-};
-
-const convertActiveLayer = (pin, newPin) => {
-  const { activeLayer } = pin;
-  if (activeLayer) {
-    const visualizationUrl = pin.activeLayer.baseUrls.WMS;
-    const theme = DEFAULT_THEMES.find((t) => t.content.map((d) => d.url).includes(visualizationUrl));
-    newPin.datasetId = activeLayer.shortName ? activeLayer.shortName : activeLayer.id;
-    newPin.themeId = theme ? theme.id : DEFAULT_THEMES[0].id;
-    newPin.visualizationUrl = visualizationUrl;
-  }
-  return newPin;
-};
-
-const addTag = (newPin) => {
-  newPin.tag = VERSION_INFO.tag;
-  return newPin;
-};
-
-const convertTitle = (pin, newPin) => {
-  const { pinTitle, datasource, preset } = pin;
-  if (pinTitle) {
-    newPin.title = pinTitle;
-  } else if (!newPin.title) {
-    newPin.title = `${datasource} ${preset}`;
-  }
-  return newPin;
-};
-
-const convertEvalscript = (pin, newPin) => {
-  const { evalscript, time, preset } = pin;
-  // We should only decode pins which have encoded evalscripts. Those are EOB2 pins and have to be identified with their distinct attributes.
-  const isEOB2Pin = time && preset;
-  if (!newPin.layerId && !newPin.evalscripturl && isEOB2Pin && evalscript && evalscript !== '') {
-    newPin.evalscript = b64DecodeUnicode(evalscript);
-  }
-  return newPin;
-};
-
-const convertTime = (pin, newPin) => {
-  const { time } = pin;
-
-  if (time) {
-    const times = time.split('/');
-    if (times.length === 2) {
-      newPin.fromTime = times[0];
-      newPin.toTime = times[1];
-    } else {
-      newPin.fromTime = moment.utc(times[0]).startOf('day').toISOString();
-      newPin.toTime = moment.utc(times[0]).endOf('day').toISOString();
-    }
-  }
-  return newPin;
-};
-
-const convertEffects = (pin, newPin) => {
-  const { gainOverride, gammaOverride, redRangeOverride, greenRangeOverride, blueRangeOverride } = pin;
-  const { gain, gamma, redRange, greenRange, blueRange } = pin;
-  const {
-    downsampling,
-    mosaickingOrder,
-    upsampling,
-    speckleFilter,
-    orthorectification,
-    backscatterCoeff,
-    demSource3D,
-  } = pin;
-  if (
-    isEffectValueSetAndNotDefault(gainOverride, defaultGain) &&
-    !isEffectValueSetAndNotDefault(gain, defaultGain)
-  ) {
-    newPin.gain = gainOverride;
-  }
-  if (
-    isEffectValueSetAndNotDefault(gammaOverride, defaultGamma) &&
-    !isEffectValueSetAndNotDefault(gamma, defaultGamma)
-  ) {
-    newPin.gamma = gammaOverride;
-  }
-  if (
-    isEffectRangeSetAndNotDefault(redRangeOverride, defaultRange) &&
-    isEffectRangeSetAndNotDefault(redRange, defaultRange)
-  ) {
-    newPin.redRange = redRangeOverride;
-  }
-  if (
-    isEffectRangeSetAndNotDefault(greenRangeOverride, defaultRange) &&
-    isEffectRangeSetAndNotDefault(greenRange, defaultRange)
-  ) {
-    newPin.greenRange = greenRangeOverride;
-  }
-  if (
-    isEffectRangeSetAndNotDefault(blueRangeOverride, defaultRange) &&
-    isEffectRangeSetAndNotDefault(blueRange, defaultRange)
-  ) {
-    newPin.blueRange = blueRangeOverride;
-  }
-
-  if (mosaickingOrder) {
-    newPin.mosaickingOrder = mosaickingOrder;
-  }
-
-  if (!!upsampling) {
-    newPin.upsampling = upsampling;
-  }
-
-  if (!!downsampling) {
-    newPin.downsampling = downsampling;
-  }
-
-  if (speckleFilter) {
-    newPin.speckleFilter = speckleFilter;
-  }
-
-  if (orthorectification) {
-    newPin.orthorectification = orthorectification;
-  }
-
-  if (backscatterCoeff) {
-    newPin.backscatterCoeff = backscatterCoeff;
-  }
-
-  if (demSource3D) {
-    newPin.demSource3D = demSource3D;
-  }
-
-  return newPin;
-};
-
-export function convertToNewFormat(pin) {
-  if (needsConversion(pin)) {
-    const {
-      _id,
-      lng,
-      lat,
-      zoom,
-      fromTime,
-      toTime,
-      dateMode,
-      title,
-      visualizationUrl,
-      themeId,
-      datasetId,
-      layerId,
-      evalscript,
-      evalscripturl,
-      dataFusion,
-      description,
-      gain,
-      gamma,
-      redRange,
-      greenRange,
-      blueRange,
-      minQa,
-      mosaickingOrder,
-      upsampling,
-      downsampling,
-      speckleFilter,
-      orthorectification,
-      backscatterCoeff,
-      orbitDirection,
-      demSource3D,
-      terrainViewerSettings,
-      cloudCoverage,
-    } = pin;
-    let newPin = {
-      _id: _id,
-      lng: lng,
-      lat: lat,
-      zoom: zoom,
-      fromTime: fromTime,
-      toTime: toTime,
-      dateMode: dateMode,
-      title: title,
-      visualizationUrl: visualizationUrl,
-      themeId: themeId,
-      datasetId: datasetId,
-      layerId: layerId,
-      evalscript: evalscript,
-      evalscripturl: evalscripturl,
-      dataFusion: dataFusion,
-      description: description,
-      gain: gain,
-      gamma: gamma,
-      redRange: redRange,
-      greenRange: greenRange,
-      blueRange: blueRange,
-      minQa: minQa,
-      mosaickingOrder: mosaickingOrder,
-      upsampling: upsampling,
-      downsampling: downsampling,
-      speckleFilter: speckleFilter,
-      orthorectification: orthorectification,
-      backscatterCoeff: backscatterCoeff,
-      orbitDirection: orbitDirection,
-      demSource3D: demSource3D,
-      terrainViewerSettings: terrainViewerSettings,
-      cloudCoverage: cloudCoverage,
-    };
-    // convert pin data
-    newPin = convertTitle(pin, newPin);
-    newPin = convertTime(pin, newPin);
-    newPin = convertActiveLayer(pin, newPin);
-    newPin = convertDataSource(pin, newPin);
-    newPin = convertPreset(pin, newPin);
-    newPin = convertEvalscript(pin, newPin);
-    newPin = convertEffects(pin, newPin);
-    // tag pin so we know that data was converted by this version of EOB3
-    newPin = addTag(newPin);
-    return newPin;
-  }
-  return pin;
-}
 
 async function getPinsFromBackend(access_token) {
   const url = `${import.meta.env.VITE_CDSE_BACKEND}userpins`;
@@ -410,7 +143,6 @@ export function getPinsFromSessionStorage() {
   const formattedPins = pins.map((pin) => {
     return {
       ...pin,
-      ...getNewDatasetPropertiesIfDeprecatedDatasetId(pin.datasetId, pin.visualizationUrl),
     };
   });
 
@@ -567,28 +299,8 @@ export async function layerFromPin(pin, reqConfig) {
   return layer;
 }
 
-export const getVisualizationUrl = ({ visualizationUrl, datasetId }) => {
-  // historically some S3 and S5P datasets were configured with 'services' hostnames. we're trying to fix this here now
-  if (isS3orS5(datasetId)) {
-    return visualizationUrl.replace(SH_SERVICE_HOSTNAMES_V3.SERVICES, SH_SERVICE_HOSTNAMES_V3.CREODIAS);
-  }
+export const getVisualizationUrl = ({ visualizationUrl }) => {
   return visualizationUrl;
-};
-
-export const isS3orS5 = (datasetId) => {
-  return [
-    S5_O3,
-    S5_NO2,
-    S5_SO2,
-    S5_CO,
-    S5_HCHO,
-    S5_CH4,
-    S5_AER_AI,
-    S5_CLOUD,
-    S5_OTHER,
-    S3OLCI,
-    S3SLSTR,
-  ].includes(datasetId);
 };
 
 export const isOnEqualDate = (date1, date2) => {
@@ -720,7 +432,6 @@ export function formatDeprecatedPins(pins) {
   return pins.map((pin) => {
     return {
       ...pin,
-      ...getNewDatasetPropertiesIfDeprecatedDatasetId(pin.datasetId, pin.visualizationUrl),
     };
   });
 }

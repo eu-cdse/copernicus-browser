@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -13,6 +13,7 @@ import store, { clmsSlice } from '../../../store';
 import {
   CLMS_OPTIONS,
   DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
+  filterCLMSOptionsByDatasets,
   flattenCLMSOptionsWithParent,
 } from './CLMSCollectionSelection.utils';
 import { DATASOURCES } from '../../../const';
@@ -206,20 +207,27 @@ function Breadcrumbs({
 function CLMSCollectionSelection({
   datasource,
   onSelect,
+  availableDatasets,
   selectedPath,
   selectedCollection,
   selectedConsolidationPeriodIndex,
 }) {
+  const menus = useMemo(() => {
+    const filteredOptions = availableDatasets?.length
+      ? filterCLMSOptionsByDatasets(CLMS_OPTIONS, availableDatasets)
+      : CLMS_OPTIONS;
+    return [{ label: datasource, id: datasource, options: filteredOptions }];
+  }, [datasource, availableDatasets]);
+
   useEffect(() => {
     if (datasource) {
-      const menus = [{ label: datasource, id: datasource, options: CLMS_OPTIONS }];
       updatePathAndCollection(selectedCollection, menus, datasource);
     }
-  }, [selectedCollection, datasource]);
+  }, [selectedCollection, datasource, menus]);
 
   return (
     <Breadcrumbs
-      menus={[{ label: datasource, id: datasource, options: CLMS_OPTIONS }]}
+      menus={menus}
       datasource={datasource}
       onSelect={onSelect}
       selectedPath={selectedPath || datasource}

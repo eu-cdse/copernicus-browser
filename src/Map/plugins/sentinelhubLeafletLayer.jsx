@@ -7,19 +7,7 @@ import {
   BBox,
   CRS_EPSG3857,
   MimeTypes,
-  S1GRDAWSEULayer,
-  S3SLSTRLayer,
-  S3OLCILayer,
   S3OLCIL2CDASLayer,
-  S5PL2Layer,
-  Landsat8AWSLayer,
-  Landsat8AWSLOTL1Layer,
-  Landsat8AWSLOTL2Layer,
-  Landsat45AWSLTML1Layer,
-  Landsat45AWSLTML2Layer,
-  Landsat15AWSLMSSL1Layer,
-  Landsat7AWSLETML1Layer,
-  Landsat7AWSLETML2Layer,
   ProcessingDataFusionLayer,
   CancelToken,
   isCancelled,
@@ -37,21 +25,6 @@ import {
 
 import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import {
-  S1_AWS_IW_VVVH,
-  S1_AWS_IW_VV,
-  S1_AWS_EW_HHHV,
-  S1_AWS_EW_HH,
-  S3SLSTR,
-  S3OLCI,
-  S5_O3,
-  S5_NO2,
-  S5_SO2,
-  S5_CO,
-  S5_HCHO,
-  S5_CH4,
-  S5_AER_AI,
-  S5_CLOUD,
-  S5_OTHER,
   S5_O3_CDAS,
   S5_NO2_CDAS,
   S5_SO2_CDAS,
@@ -61,18 +34,6 @@ import {
   S5_AER_AI_CDAS,
   S5_CLOUD_CDAS,
   S5_OTHER_CDAS,
-  AWS_L8L1C,
-  COPERNICUS_CORINE_LAND_COVER,
-  COPERNICUS_GLOBAL_LAND_COVER,
-  COPERNICUS_WATER_BODIES,
-  COPERNICUS_CLC_ACCOUNTING,
-  AWS_LOTL1,
-  AWS_LOTL2,
-  AWS_LTML1,
-  AWS_LTML2,
-  AWS_LMSSL1,
-  AWS_LETML1,
-  AWS_LETML2,
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HHHV,
   S1_CDAS_IW_VV,
@@ -240,6 +201,22 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -648,32 +625,6 @@ class SentinelHubLayer extends L.TileLayer {
     },
   ) => {
     switch (datasetId) {
-      case S1_AWS_IW_VVVH:
-      case S1_AWS_IW_VV:
-      case S1_AWS_EW_HHHV:
-      case S1_AWS_EW_HH: {
-        const { polarization, acquisitionMode, resolution } =
-          Sentinel1DataSourceHandler.getDatasetParams(datasetId);
-        return await new S1GRDAWSEULayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          polarization: polarization,
-          acquisitionMode: acquisitionMode,
-          resolution: resolution,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-          speckleFilter: speckleFilter,
-          demInstanceType: orthorectification,
-          orthorectify: orthorectification
-            ? orthorectification === DISABLED_ORTHORECTIFICATION
-              ? false
-              : true
-            : null,
-          backscatterCoeff: backscatterCoeff,
-          orbitDirection: orbitDirection,
-        });
-      }
       case S1_CDAS_IW_VVVH:
       case S1_CDAS_IW_HHHV:
       case S1_CDAS_IW_VV:
@@ -730,14 +681,6 @@ class SentinelHubLayer extends L.TileLayer {
             ? { maxCloudCoverPercent: cloudCoverage }
             : {}),
         });
-      case S3SLSTR:
-        return await new S3SLSTRLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
       case S3SLSTR_CDAS:
         return await new S3SLSTRCDASLayer({
           evalscript: evalscript,
@@ -748,14 +691,6 @@ class SentinelHubLayer extends L.TileLayer {
           ...(cloudCoverage !== undefined && cloudCoverage !== null
             ? { maxCloudCoverPercent: cloudCoverage }
             : {}),
-        });
-      case S3OLCI:
-        return await new S3OLCILayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
         });
       case S3OLCI_CDAS:
         return await new S3OLCICDASLayer({
@@ -806,23 +741,6 @@ class SentinelHubLayer extends L.TileLayer {
             ? { maxCloudCoverPercent: cloudCoverage }
             : {}),
         });
-      case S5_O3:
-      case S5_NO2:
-      case S5_SO2:
-      case S5_CO:
-      case S5_HCHO:
-      case S5_CH4:
-      case S5_AER_AI:
-      case S5_CLOUD:
-      case S5_OTHER:
-        return await new S5PL2Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          minQa: minQa,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
       case S5_O3_CDAS:
       case S5_NO2_CDAS:
       case S5_SO2_CDAS:
@@ -861,70 +779,6 @@ class SentinelHubLayer extends L.TileLayer {
           mosaickingOrder,
         );
         return layer;
-      case AWS_L8L1C:
-        return await new Landsat8AWSLayer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LOTL1:
-        return await new Landsat8AWSLOTL1Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LOTL2:
-        return await new Landsat8AWSLOTL2Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LTML1:
-        return await new Landsat45AWSLTML1Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LTML2:
-        return await new Landsat45AWSLTML2Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LMSSL1:
-        return await new Landsat15AWSLMSSL1Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LETML1:
-        return await new Landsat7AWSLETML1Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
-      case AWS_LETML2:
-        return await new Landsat7AWSLETML2Layer({
-          evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
-          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
-          upsampling: upsampling,
-          downsampling: downsampling,
-        });
       case DEM_COPERNICUS_30_CDAS:
       case DEM_COPERNICUS_90_CDAS:
         const demDsh = getDataSourceHandler(datasetId);
@@ -937,10 +791,6 @@ class SentinelHubLayer extends L.TileLayer {
           downsampling: downsampling,
           demInstance: demInst,
         });
-      case COPERNICUS_CORINE_LAND_COVER:
-      case COPERNICUS_GLOBAL_LAND_COVER:
-      case COPERNICUS_WATER_BODIES:
-      case COPERNICUS_CLC_ACCOUNTING:
       case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
       case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
       case CDSE_CCM_VHR_IMAGE_2024_COLLECTION:
@@ -1076,6 +926,22 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1:
       case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2:
       case COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6:
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0:
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1:
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6:
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0:
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1:
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6:
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0:
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1:
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6:
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0:
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1:
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
+      case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
       case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6: {
         const dsh = getDataSourceHandler(datasetId);
         const layer = await this.createBYOCLayer(

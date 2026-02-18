@@ -8,7 +8,6 @@ import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
 import './PinTools.scss';
 
 import {
-  convertToNewFormat,
   savePinsToSessionStorage,
   savePinsToServer,
   isPinValid,
@@ -74,7 +73,6 @@ class PinTools extends Component {
       if (!pins || !pins.length) {
         throw new Error(t`No pins were found.`);
       }
-      pins = pins.map((pin) => convertToNewFormat(pin));
       let allErrors = '';
       for (let pin of pins) {
         const { isValid, error } = isPinValid(pin);

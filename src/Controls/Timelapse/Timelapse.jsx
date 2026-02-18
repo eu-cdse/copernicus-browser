@@ -114,7 +114,7 @@ class Timelapse extends Component {
       }
 
       if (!toTime) {
-        store.dispatch(timelapseSlice.actions.setToTime(visualizationToTime));
+        store.dispatch(timelapseSlice.actions.setToTime(moment.utc(visualizationToTime).endOf('day')));
       }
 
       if (!maxCCPercentAllowed) {
@@ -386,40 +386,42 @@ class Timelapse extends Component {
 
   onImageLoad = ({ img, flyover, setDeferredImages = false }) => {
     const { maxCCPercentAllowed, minCoverageAllowed, isSelectAllChecked } = this.props;
-    const { canWeFilterByClouds, canWeFilterByCoverage, images: currentImages } = this.state;
-    let images = currentImages || [];
-
+    const { canWeFilterByClouds, canWeFilterByCoverage } = this.state;
     const flyoverHash = md5(JSON.stringify(flyover));
 
-    if (setDeferredImages) {
-      for (let i = 0; i < images.length; i++) {
-        if (images[i].flyoverHash === flyoverHash) {
-          images[i].url = img;
-        }
-      }
-    } else {
-      const augmentedImage = {
-        url: img,
-        layer: flyover.visualization.layer,
-        datasetId: flyover.visualization.datasetId,
-        fromTime: flyover.fromTime,
-        toTime: flyover.toTime,
-        effects: flyover.visualization.effects,
-        customSelected: flyover.visualization.customSelected,
-        pin: flyover.visualization.pin,
-        isSelected: isSelectAllChecked,
-        averageCloudCoverPercent: flyover.meta && flyover.meta.averageCloudCoverPercent,
-        coveragePercent: flyover.coveragePercent,
-        visualizationIndex: flyover.visualizationIndex,
-        origFlyover: flyover,
-        flyoverHash: flyoverHash,
-      };
-      images = [...images, augmentedImage].sort(
-        (a, b) => a.toTime - b.toTime || a.visualizationIndex - b.visualizationIndex,
-      );
-    }
-
+    // Use functional setState to ensure we always have the latest state
     this.setState((prevState) => {
+      let images = prevState.images || [];
+      if (setDeferredImages) {
+        // Create a new array to avoid mutation
+        images = images.map((image) => {
+          if (image.flyoverHash === flyoverHash) {
+            return { ...image, url: img };
+          }
+          return image;
+        });
+      } else {
+        const augmentedImage = {
+          url: img,
+          layer: flyover.visualization.layer,
+          datasetId: flyover.visualization.datasetId,
+          fromTime: flyover.fromTime,
+          toTime: flyover.toTime,
+          effects: flyover.visualization.effects,
+          customSelected: flyover.visualization.customSelected,
+          pin: flyover.visualization.pin,
+          isSelected: isSelectAllChecked,
+          averageCloudCoverPercent: flyover.meta && flyover.meta.averageCloudCoverPercent,
+          coveragePercent: flyover.coveragePercent,
+          visualizationIndex: flyover.visualizationIndex,
+          origFlyover: flyover,
+          flyoverHash: flyoverHash,
+        };
+        images = [...images, augmentedImage].sort(
+          (a, b) => a.toTime - b.toTime || a.visualizationIndex - b.visualizationIndex,
+        );
+      }
+
       const activeImageIndex =
         prevState.activeImageIndex !== null &&
         isImageApplicable(

@@ -170,27 +170,17 @@ export const EQUATOR_LENGTH = 40075016.685578488;
 export const DATASOURCES = {
   S1: 'Sentinel-1',
   S2_CDAS: 'Sentinel-2 CDAS',
-  S3: 'Sentinel-3',
   S3_CDAS: 'Sentinel-3 CDAS',
   S3_CDAS_L2: 'Sentinel-3 CDAS L2',
-  S5: 'Sentinel-5P',
   S5_CDAS: 'Sentinel-5P CDAS',
   LANDSAT_8_9_CDAS: 'Landsat 8-9 CDAS',
   LANDSAT_MOSAIC: 'Landsat Mosaics',
   COMPLEMENTARY_DATA: 'Complementary Data',
-  EOCLOUD_LANDSAT: 'LandsatEOCloud',
-  AWS_LANDSAT8: 'Landsat8AWS',
-  AWS_LANDSAT15: 'Landsat15AWS',
-  AWS_LANDSAT45: 'Landsat45AWS',
-  AWS_LANDSAT7_ETM: 'Landsat7ETMAWS',
   DEM_CDAS: 'DEM CDAS',
-  COPERNICUS_HRSI: 'Copernicus Snow & Ice',
-  COPERNICUS_HRVPP: 'Copernicus Vegetation',
   CUSTOM: 'CUSTOM',
   OTHER: 'OTHER',
   MOSAIC: 'MOSAIC',
   S1_MOSAIC: 'Sentinel-1 Mosaic',
-  GLOBAL_LAND_COVER: 'Global Land Cover',
   RRD_EUSI: 'EUSI',
   RRD_AIRBUS_DE: 'Airbus DE',
   RRD_AIRBUS_FE_SPOT: 'Airbus FE Spot',
@@ -270,9 +260,16 @@ export const MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL = 1080;
 export const CDSE_GITHUB_PAGE_LINK = 'https://github.com/eu-cdse/copernicus-browser#multilanguage-support';
 
 export const HTTPS = 'https://';
+
+export const MAX_URL_LENGTH_FOR_SHORTENING = 2048;
 export const MAX_CHARACTER_LIMIT_ERROR = {
   TYPE: 'InvalidMaxLength',
   MESSAGE: t`The evalscript you are using is too long and a short-URL cannot be generated.\n Please shorten your evalscript or save it to a website and use the “Load script from URL” functionality.`,
+};
+
+export const MAX_CHARACTER_LIMIT_PROCESS_GRAPH_ERROR = {
+  TYPE: 'InvalidMaxLength',
+  MESSAGE: t`The process graph you are using is too long and a short-URL cannot be generated.\n Please simplify your process graph to reduce the URL length.`,
 };
 
 export const DATE_MODES = {
@@ -313,7 +310,6 @@ export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
 
 export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
 export const ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY = 'cdsebrowser_search_config';
-export const SHOW_ZOOM_IN_ACTION_ANIMATION = 'eobrowser_show_zoom_in_action_animation';
 export const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
 export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
 export const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';

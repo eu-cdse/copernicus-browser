@@ -19,10 +19,7 @@ import {
   datasetLabels,
   checkIfCustom,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import {
-  CUSTOM,
-  COPERNICUS_CORINE_LAND_COVER,
-} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { CUSTOM } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { isDataFusionEnabled } from '../../utils';
 import { overlayTileLayers } from '../../Map/Layers';
 import { createGradients } from '../../Tools/VisualizationPanel/legendUtils';
@@ -74,6 +71,9 @@ import { warningColor } from '../../variables.module.scss';
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
 
+// Default minimum meters per pixel allowed by the API
+const DEFAULT_MIN_METERS_PER_PIXEL = 10;
+
 const FONT_FAMILY = 'Helvetica, Arial, sans-serif';
 const FONT_BASE = 960;
 const FONT_SIZES = {
@@ -87,6 +87,33 @@ export function getMapDimensions(pixelBounds, resolutionDivisor = 1) {
   const width = pixelBounds.max.x - pixelBounds.min.x;
   const height = pixelBounds.max.y - pixelBounds.min.y;
   return { width: Math.floor(width / resolutionDivisor), height: Math.floor(height / resolutionDivisor) };
+}
+
+export function capDimensionsToResolutionLimit(pixelWidth, pixelHeight, bounds, datasetId) {
+  const { width: widthInMeters, height: heightInMeters } = getDimensionsInMeters(bounds);
+
+  const metersPerPixelX = widthInMeters / pixelWidth;
+  const metersPerPixelY = heightInMeters / pixelHeight;
+  const minMetersPerPixel = Math.min(metersPerPixelX, metersPerPixelY);
+
+  // Get datasource-specific resolution limits
+  let minMetersPerPixelLimit = DEFAULT_MIN_METERS_PER_PIXEL;
+  const dsh = getDataSourceHandler(datasetId);
+  if (dsh) {
+    const resolutionLimits = dsh.getResolutionLimits(datasetId);
+    minMetersPerPixelLimit = resolutionLimits?.resolution || DEFAULT_MIN_METERS_PER_PIXEL;
+  }
+
+  if (minMetersPerPixel < minMetersPerPixelLimit) {
+    // Scale down dimensions to meet the minimum meters-per-pixel requirement
+    const scaleFactor = minMetersPerPixel / minMetersPerPixelLimit;
+    return {
+      width: Math.floor(pixelWidth * scaleFactor),
+      height: Math.floor(pixelHeight * scaleFactor),
+    };
+  }
+
+  return { width: pixelWidth, height: pixelHeight };
 }
 
 export function getDimensionsInMeters(bounds, targetCrs = CRS_EPSG3857.authId) {
@@ -225,6 +252,9 @@ export async function fetchImage(layer, options) {
         customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
       )
     ) {
+      const openEoWidth = Math.max(1, Math.abs(getMapParams.width));
+      const openEoHeight = Math.max(1, Math.abs(getMapParams.height));
+
       const isRawBand = options.bandName != null;
       const processGraph = getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
       const spatialExtent =
@@ -234,11 +264,11 @@ export async function fetchImage(layer, options) {
               east: getMapParams.bbox.maxX,
               south: getMapParams.bbox.minY,
               north: getMapParams.bbox.maxY,
-              height: getMapParams.height,
-              width: getMapParams.width,
+              height: openEoHeight,
+              width: openEoWidth,
               crs: bbox.crs.authId,
             }
-          : { ...geometry, height: getMapParams.height, width: getMapParams.width, crs: bbox.crs.authId };
+          : { ...geometry, height: openEoHeight, width: openEoWidth, crs: bbox.crs.authId };
 
       let collectionId;
       if (dsh.supportsLowResolutionAlternativeCollection(datasetId)) {
@@ -1128,19 +1158,6 @@ export function constructV3Evalscript(layer, datasetId, imageFormat, bands, addD
     bandsInfo: bands,
   });
   factor = factor ? `${factor} *` : '';
-
-  if (datasetId === COPERNICUS_CORINE_LAND_COVER) {
-    return `//VERSION=3
-function setup() {
-  return {
-    input: ["CLC"${addDataMask ? ', "dataMask"' : ''}],
-    output: { bands: ${addDataMask ? 2 : 1}, sampleType: "${sampleType}" }
-  };
-}
-
-function evaluatePixel(sample) {
-  return [${`${factor} (sample.CLC === ${layer})`}${addDataMask ? ', sample.dataMask' : ''} ];}`;
-  }
 
   return `//VERSION=3
 function setup() {

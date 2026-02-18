@@ -27,6 +27,19 @@ export const handleRRDError = async (error) => {
         try {
           const jsonError = JSON.parse(jsonMatch[0]);
 
+          const stringArrayEntry = Object.entries(jsonError).find(
+            ([, value]) => Array.isArray(value) && value.every((item) => typeof item === 'string'),
+          );
+
+          if (stringArrayEntry) {
+            const combinedMessage = `Error: ${stringArrayEntry[1].join('\n')}`;
+
+            await handleError({
+              message: combinedMessage,
+            });
+            return;
+          }
+
           const combinedMessage = [
             errorData.title || 'Error',
             jsonError.message || jsonError.error || 'An unknown error occurred',

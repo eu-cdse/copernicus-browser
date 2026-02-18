@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { t } from 'ttag';
 
+import {
+  MAX_CHARACTER_LIMIT_ERROR,
+  MAX_CHARACTER_LIMIT_PROCESS_GRAPH_ERROR,
+  MAX_URL_LENGTH_FOR_SHORTENING,
+  PROCESSING_OPTIONS,
+} from '../../const';
 import store, { notificationSlice } from '../../store';
 import { getShortUrl, getAppropriateHashtags, getSharedLinks } from './SocialShare.utils';
 import CopyToClipboardButton from '../CopyToClipboardButton/CopyToClipboardButton';
@@ -12,7 +18,13 @@ import Loader from '../../Loader/Loader';
 
 import './social.scss';
 
-const SocialShare = ({ displaySocialShareOptions, onHandleOutsideClick, datasetId, user }) => {
+const SocialShare = ({
+  displaySocialShareOptions,
+  onHandleOutsideClick,
+  datasetId,
+  user,
+  selectedProcessing,
+}) => {
   const [generating, setGenerating] = useState(false);
   const ref = useRef();
   const sharedLinks = getSharedLinks();
@@ -33,6 +45,17 @@ const SocialShare = ({ displaySocialShareOptions, onHandleOutsideClick, datasetI
       );
       return;
     }
+
+    if (currentUrl.length > MAX_URL_LENGTH_FOR_SHORTENING) {
+      const message =
+        selectedProcessing === PROCESSING_OPTIONS.OPENEO
+          ? MAX_CHARACTER_LIMIT_PROCESS_GRAPH_ERROR.MESSAGE
+          : MAX_CHARACTER_LIMIT_ERROR.MESSAGE;
+
+      store.dispatch(notificationSlice.actions.displayError(message));
+      return;
+    }
+
     setGenerating(true);
     setShortUrl(await getShortUrl(currentUrl));
     setGenerating(false);
@@ -85,6 +108,7 @@ const SocialShare = ({ displaySocialShareOptions, onHandleOutsideClick, datasetI
 
 const mapStoreToProps = (store) => ({
   user: store.auth.user,
+  selectedProcessing: store.visualization.selectedProcessing,
 });
 
 export default connect(mapStoreToProps, null)(SocialShare);

@@ -217,21 +217,19 @@ function VisualizationPanel({
     setShouldShowTPDI(!shouldShowTPDI);
   };
 
-  const shouldShowLayerList =
+  const shouldShowLayerList = !!(
     toTime &&
     datasetId &&
     visualizationUrl &&
     !showHighlightPanel &&
     !showComparePanel &&
     !showPinPanel &&
-    authToken;
+    authToken
+  );
 
   useEffect(() => {
-    if (shouldShowLayerList) {
-      if (showLayerPanel) {
-        return;
-      }
-      setShowLayerPanel(!showLayerPanel);
+    if (shouldShowLayerList && !showLayerPanel) {
+      setShowLayerPanel(true);
     }
   }, [shouldShowLayerList, showLayerPanel, setShowLayerPanel]);
 

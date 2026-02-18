@@ -3,9 +3,9 @@ import moment from 'moment';
 import { t } from 'ttag';
 
 import Highlight from './Highlight';
-import store, { visualizationSlice, mainMapSlice, pinsSlice } from '../../../store';
+import store, { visualizationSlice, mainMapSlice, pinsSlice, clmsSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { parsePosition } from '../../../utils';
+import { fetchEvalscriptFromEvalscripturl, parsePosition } from '../../../utils';
 import {
   constructEffectsFromPinOrHighlight,
   isVisualizationEffectsApplied,
@@ -61,6 +61,11 @@ class Highlights extends Component {
       evalscripturl,
       dataFusion,
       terrainViewerSettings,
+      dateMode,
+      mosaickingOrder,
+      upsampling,
+      downsampling,
+      cloudCoverage,
     } = pin;
 
     if (comparingPins || sharePins) {
@@ -82,6 +87,20 @@ class Highlights extends Component {
         zoom: parsedZoom,
       }),
     );
+
+    // Handle CLMS parameters if present
+    const { clmsSelectedPath, clmsSelectedCollection, clmsSelectedConsolidationPeriodIndex } = pin;
+    if (clmsSelectedPath) {
+      store.dispatch(clmsSlice.actions.setSelectedPath(clmsSelectedPath));
+    }
+    if (clmsSelectedCollection) {
+      store.dispatch(clmsSlice.actions.setSelectedCollection(clmsSelectedCollection));
+    }
+    if (clmsSelectedConsolidationPeriodIndex) {
+      store.dispatch(
+        clmsSlice.actions.setSelectedConsolidationPeriodIndex(parseInt(clmsSelectedConsolidationPeriodIndex)),
+      );
+    }
 
     let pinTimeFrom, pinTimeTo;
 
@@ -109,14 +128,37 @@ class Highlights extends Component {
       visibleOnMap: true,
       dataFusion: dataFusion,
       selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
+      ...(dateMode ? { dateMode: dateMode } : {}),
+      ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+      ...(upsampling ? { upsampling: upsampling } : {}),
+      ...(downsampling ? { downsampling: downsampling } : {}),
+      ...(cloudCoverage ? { cloudCoverage: cloudCoverage } : {}),
     };
 
-    if (evalscript || evalscripturl) {
-      visualizationParams.evalscript = evalscript;
-      visualizationParams.evalscripturl = evalscripturl;
-      visualizationParams.customSelected = true;
-    } else {
+    const hasEvalscript = Boolean(evalscript);
+    const hasEvalscriptUrl = Boolean(evalscripturl);
+
+    if (!hasEvalscript && !hasEvalscriptUrl) {
       visualizationParams.layerId = layerId;
+      store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));
+      return;
+    }
+
+    visualizationParams.customSelected = true;
+    visualizationParams.evalscript = hasEvalscript ? evalscript : undefined;
+    visualizationParams.evalscripturl = evalscripturl;
+
+    store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));
+
+    if (hasEvalscriptUrl && !hasEvalscript) {
+      try {
+        const { data } = await fetchEvalscriptFromEvalscripturl(evalscripturl);
+        if (data) {
+          store.dispatch(visualizationSlice.actions.setEvalscript(data));
+        }
+      } catch {
+        // ignore fetch error — keep using evalscripturl
+      }
     }
 
     visualizationParams = { ...visualizationParams, ...effects };
@@ -149,10 +191,20 @@ class Highlights extends Component {
 
   setHighlightsSection = () => {
     const { highlights, is3D } = this.props;
+
+    // Sort highlights by date (newest first)
+    const sortedHighlights = [...highlights].sort((a, b) => {
+      const getDate = (pin) => {
+        const dateStr = pin.fromTime || pin.toTime;
+        return dateStr ? moment.utc(dateStr).toDate() : moment.utc(0).toDate();
+      };
+      return getDate(b) - getDate(a);
+    });
+
     return (
       <div className="highlights-panel">
         <div className="highlights-container">
-          {highlights.map((pin, index) => (
+          {sortedHighlights.map((pin, index) => (
             <Highlight
               pin={pin}
               key={`${index}-${pin.title}-${pin._id}`}

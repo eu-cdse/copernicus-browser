@@ -38,6 +38,32 @@
         ],
         "datasets": []
     },
+    "042c01-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | DMP 300m 10-Daily V2 RT1",
+        "layers": [
+            {
+                "id": "DMP",
+                "name": "DMP",
+                "description": "Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/042c01-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "04c715-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | NPP 300m 10-Daily V2 RT0",
+        "layers": [
+            {
+                "id": "NPP",
+                "name": "NPP",
+                "description": "Net Primary Production",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/04c715-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "058c10-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] swi_europe_1km_daily_v1",
         "layers": [
@@ -268,6 +294,19 @@
                 ]
             }
         ]
+    },
+    "0e9c96-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gpp_global_300m_10daily_v2_RT6",
+        "layers": [
+            {
+                "id": "GPP",
+                "name": "GPP",
+                "description": "Gross Primary Production value",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0e9c96-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
     },
     "0ec96e-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] ndvi-lts_global_1km_10daily_v2",
@@ -1579,6 +1618,19 @@
         ],
         "datasets": []
     },
+    "37afc8-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gpp_global_300m_10daily_v2_RT1",
+        "layers": [
+            {
+                "id": "GPP",
+                "name": "GPP",
+                "description": "Gross Primary Production value",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/37afc8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "3825e2-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | NDVI 300m 10-Daily V3",
         "layers": [
@@ -2830,6 +2882,19 @@
         ],
         "datasets": []
     },
+    "52aa9b-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gpp_global_300m_10daily_v2_RT2",
+        "layers": [
+            {
+                "id": "GPP",
+                "name": "GPP",
+                "description": "Gross Primary Production value",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/52aa9b-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "57f9bd-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT6",
         "layers": [
@@ -3201,6 +3266,19 @@
         ],
         "datasets": []
     },
+    "6d81d2-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gdmp_global_300m_10daily_v2_RT6",
+        "layers": [
+            {
+                "id": "GDMP",
+                "name": "GDMP",
+                "description": "Gross Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/6d81d2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "6d91d5-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Sentinel-3 SLSTR Wildfires API",
         "layers": [
@@ -3474,6 +3552,19 @@
                 "description": "Snow Water Equivalent",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/703ede-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SWE&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "730752-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | NPP 300m 10-Daily V2 RT6",
+        "layers": [
+            {
+                "id": "NPP",
+                "name": "NPP",
+                "description": "Net Primary Production",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/730752-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
             }
         ],
         "datasets": []
@@ -4053,6 +4144,19 @@
         ],
         "datasets": []
     },
+    "804e62-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | NPP 300m 10-Daily V2 RT1",
+        "layers": [
+            {
+                "id": "NPP",
+                "name": "NPP",
+                "description": "Net Primary Production",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/804e62-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "8078ad-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] ba_global_300m_daily_v3",
         "layers": [
@@ -4372,6 +4476,19 @@
         ],
         "datasets": []
     },
+    "84552a-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | NPP 300m 10-Daily V2 RT2",
+        "layers": [
+            {
+                "id": "NPP",
+                "name": "NPP",
+                "description": "Net Primary Production",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/84552a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "85f0f9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fapar_global_300m_10daily_v1",
         "layers": [
@@ -4415,6 +4532,19 @@
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "895940-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | DMP 300m 10-Daily V2 RT6",
+        "layers": [
+            {
+                "id": "DMP",
+                "name": "DMP",
+                "description": "Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/895940-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
             }
         ],
         "datasets": []
@@ -4956,6 +5086,19 @@
         ],
         "datasets": []
     },
+    "9c0c63-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gdmp_global_300m_10daily_v2_RT0",
+        "layers": [
+            {
+                "id": "GDMP",
+                "name": "GDMP",
+                "description": "Gross Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9c0c63-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "9ccb92-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fapar_global_1km_10daily_v2_RT2",
         "layers": [
@@ -5035,6 +5178,19 @@
                 ]
             }
         ]
+    },
+    "a1a212-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | DMP 300m 10-Daily V2 RT2",
+        "layers": [
+            {
+                "id": "DMP",
+                "name": "DMP",
+                "description": "Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a1a212-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+            }
+        ],
+        "datasets": []
     },
     "a1f5a9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] wb_global_300m_monthly_v2",
@@ -5687,6 +5843,19 @@
             }
         ]
     },
+    "b5314a-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gdmp_global_300m_10daily_v2_RT2",
+        "layers": [
+            {
+                "id": "GDMP",
+                "name": "GDMP",
+                "description": "Gross Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b5314a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "b54215-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lai_global_1km_10daily_v2_RT1",
         "layers": [
@@ -6229,6 +6398,19 @@
         ],
         "datasets": []
     },
+    "d24515-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gdmp_global_300m_10daily_v2_RT1",
+        "layers": [
+            {
+                "id": "GDMP",
+                "name": "GDMP",
+                "description": "Gross Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/d24515-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "d40367-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-1-SM_HH",
         "layers": [
@@ -6543,6 +6725,32 @@
                 ]
             }
         ]
+    },
+    "e1499e-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW]  CLMS | DMP 300m 10-Daily V2 RT0",
+        "layers": [
+            {
+                "id": "DMP",
+                "name": "DMP",
+                "description": "Dry Matter Productivity",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e1499e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=DMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "e1f382-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | gpp_global_300m_10daily_v2_RT0",
+        "layers": [
+            {
+                "id": "GPP",
+                "name": "GPP",
+                "description": "Gross Primary Production value",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e1f382-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
     },
     "e3bcb9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lst-daily-cycle_global_5km_10daily_v1",

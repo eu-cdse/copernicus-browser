@@ -2,22 +2,12 @@ import { t } from 'ttag';
 import round from 'lodash.round';
 import moment from 'moment';
 import request from 'axios';
-import {
-  DATASET_AWS_L8L1C,
-  DATASET_S3OLCI,
-  DATASET_S3SLSTR,
-  DATASET_S5PL2,
-  DATASET_AWSEU_S1GRD,
-  DATASET_AWS_DEM,
-  DATASET_AWS_LOTL1,
-} from '@sentinel-hub/sentinelhub-js';
 
 import { b64EncodeUnicode } from './base64MDN';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BAND_UNIT } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { TABS } from '../const';
 import { ModalId } from '../const';
-import { replaceDeprecatedDatasetWithNew } from './handleOldUrls';
 import { rgbToHex } from '../junk/BandsToRGB/utils';
 import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
 import { encrypt } from './encrypt';
@@ -390,18 +380,34 @@ return colorBlend(
 export function parseEvalscriptBands(evalscript) {
   try {
     if (evalscript.startsWith('//VERSION=3')) {
-      return evalscript
-        .split('\n')[10]
-        .split('[')[1]
-        .split(']')[0]
-        .split(',')
-        .map((b) =>
-          b.replace('2.5 * sample.', '').replace('visualizer.process(sample.', '').replace(')', '').trim(),
-        )
-        .map((b) => b.replace('factor * sample.', ''))
-        .map((b) => b.replace('sample.CLC === ', ''))
-        .slice(0, -1);
+      const lines = evalscript.split('\n');
+      const listLine =
+        lines.find((line) => line.includes('return [')) || lines.find((line) => line.includes('let val = ['));
+      const listContent = listLine?.split('[')[1]?.split(']')[0];
+
+      if (listContent) {
+        return listContent
+          .split(',')
+          .map((b) => {
+            // Remove factor coefficients
+            let result = b.replace(/[\d.]+\s*\*\s*/g, '');
+            // Remove function calls
+            result = result
+              .replace('visualizer.process(sample.', '')
+              .replace('visualizer.process(', '')
+              .replace('factor * sample.', '')
+              .replace('sample.CLC === ', '')
+              .replace('samples.', '')
+              .replace('sample.', '')
+              .replace(')', '')
+              .trim();
+            return result;
+          })
+          .filter((b) => b && b !== 'dataMask');
+      }
+      return [];
     }
+
     return evalscript
       .split('[')[1]
       .split(']')[0]
@@ -560,10 +566,7 @@ export function readBlob(blob) {
 
 export function parseDataFusion(dataFusionString, datasetId) {
   const dataFusion = ensureCorrectDataFusionFormat(JSON.parse(dataFusionString), datasetId);
-  return replaceDeprecatedDatasetWithNew(dataFusion, {
-    oldDataset: DATASET_AWS_L8L1C,
-    newDataset: DATASET_AWS_LOTL1,
-  });
+  return dataFusion;
 }
 
 export function ensureCorrectDataFusionFormat(dataFusion, datasetId) {
@@ -619,18 +622,6 @@ export function ensureCorrectDataFusionFormat(dataFusion, datasetId) {
 
 const shJSdatasetIdToDataset = (datasetId) => {
   switch (datasetId) {
-    case DATASET_S3OLCI.id:
-      return DATASET_S3OLCI;
-    case DATASET_S3SLSTR.id:
-      return DATASET_S3SLSTR;
-    case DATASET_AWSEU_S1GRD.id:
-      return DATASET_AWSEU_S1GRD;
-    case DATASET_AWS_L8L1C.id:
-      return DATASET_AWS_L8L1C;
-    case DATASET_S5PL2.id:
-      return DATASET_S5PL2;
-    case DATASET_AWS_DEM.id:
-      return DATASET_AWS_DEM;
     default:
       return null;
   }

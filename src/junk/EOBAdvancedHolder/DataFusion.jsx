@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  DATASET_AWSEU_S1GRD,
-  DATASET_AWS_DEM,
   DATASET_BYOC,
   DEMInstanceType,
   LocationIdSHv3,
@@ -12,16 +10,6 @@ import {
   DATASET_CDAS_S3OLCI,
   DATASET_CDAS_S5PL2,
   DATASET_CDAS_DEM,
-  DATASET_S3SLSTR,
-  DATASET_S3OLCI,
-  DATASET_S5PL2,
-  DATASET_AWS_LMSSL1,
-  DATASET_AWS_LTML1,
-  DATASET_AWS_LTML2,
-  DATASET_AWS_LETML1,
-  DATASET_AWS_LETML2,
-  DATASET_AWS_LOTL1,
-  DATASET_AWS_LOTL2,
   BYOCSubTypes,
   SHV3_LOCATIONS_ROOT_URL,
 } from '@sentinel-hub/sentinelhub-js';
@@ -42,82 +30,6 @@ import './DataFusion.scss';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 
 const DATAFUSION_DATASETS = {
-  [DATASET_AWSEU_S1GRD.id]: {
-    label: 'S-1 GRD',
-    dataset: DATASET_AWSEU_S1GRD,
-    additionalMosaickingOrders: [],
-    additionalParameters: {},
-    additionalParametersComponent: DataFusionAdditionalParametersS1,
-  },
-  [DATASET_S3SLSTR.id]: {
-    label: 'S-3 SLSTR',
-    dataset: DATASET_S3SLSTR,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_S3OLCI.id]: {
-    label: 'S-3 OLCI',
-    dataset: DATASET_S3OLCI,
-    additionalMosaickingOrders: [],
-  },
-  [DATASET_S5PL2.id]: {
-    label: 'S-5P L2',
-    dataset: DATASET_S5PL2,
-    additionalMosaickingOrders: [],
-  },
-  [DATASET_AWS_LMSSL1.id]: {
-    label: 'Landsat 1-5 MSS L1',
-    dataset: DATASET_AWS_LMSSL1,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LTML1.id]: {
-    label: 'Landsat 4-5 TM L1',
-    dataset: DATASET_AWS_LTML1,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LTML2.id]: {
-    label: 'Landsat 4-5 TM L2',
-    dataset: DATASET_AWS_LTML2,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LETML1.id]: {
-    label: 'Landsat 7 ETM+ L1',
-    dataset: DATASET_AWS_LETML1,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LETML2.id]: {
-    label: 'Landsat 7 ETM+ L2',
-    dataset: DATASET_AWS_LETML2,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LOTL1.id]: {
-    label: 'Landsat 8-9 L1',
-    dataset: DATASET_AWS_LOTL1,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_LOTL2.id]: {
-    label: 'Landsat 8-9 L2',
-    dataset: DATASET_AWS_LOTL2,
-    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
-  },
-  [DATASET_AWS_DEM.id]: {
-    label: 'DEM',
-    dataset: DATASET_AWS_DEM,
-    mosaickingOrderDisabled: true,
-    additionalMosaickingOrders: [],
-    additionalParametersComponent: DataFusionAdditionalParameters,
-    additionalParameters: { demInstance: DEMInstanceType.MAPZEN },
-    additionalParametersSettings: {
-      demInstance: {
-        parameterType: 'select',
-        getName: () => t`DEM instance`,
-        options: [
-          { name: 'Mapzen', value: DEMInstanceType.MAPZEN },
-          { name: 'Copernicus 30', value: DEMInstanceType.COPERNICUS_30 },
-          { name: 'Copernicus 90', value: DEMInstanceType.COPERNICUS_90 },
-        ],
-      },
-    },
-  },
   [DATASET_BYOC.id]: {
     label: 'BYOC',
     dataset: DATASET_BYOC,

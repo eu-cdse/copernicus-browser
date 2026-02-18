@@ -29,6 +29,7 @@ import Loader from '../../Loader/Loader';
 import { TABS } from '../../const';
 import { getPolarizationFilterOptions } from './sections/ImageQualityAndProviderSection/Radar/Radar.utils';
 import ProjectDetailsSection from './sections/ProjectDetails/ProjectDetailsSection';
+import { validateAndPrepareRRDResults } from '../../api/RRD/result.utils';
 
 const ErrorCode = {
   OVERLAPPED_RANGES: 'OVERLAPPED_RANGES',
@@ -183,15 +184,6 @@ const RapidResponseDesk = ({
     return true;
   };
 
-  const ensureInternalFeatureIds = (features) => {
-    return features.map((item) => ({
-      ...item,
-      ...{
-        _internalId: Date.now().toString(36) + Math.random().toString(36).slice(2, 10),
-      },
-    }));
-  };
-
   const triggerSearchQuery = () => {
     store.dispatch(mainMapSlice.actions.clearQuicklookOverlays());
     resetMessagePanel();
@@ -289,19 +281,20 @@ const RapidResponseDesk = ({
       queryBody: searchRequestBody,
       responseHandler: (response) => {
         if (response) {
-          let result;
-          if (Array.isArray(response)) {
-            result = response.flatMap((tempResponse) => tempResponse.features);
-          } else {
-            result = response.features;
+          const { validResults, invalidResults } = validateAndPrepareRRDResults(response);
+          if (invalidResults.length > 0) {
+            handleError({
+              message:
+                t`Result(s) were removed because their geometry is invalid` + `: ${invalidResults.length}`,
+            });
           }
-          result = ensureInternalFeatureIds(result);
-          if (result.length > 0) {
+
+          if (validResults.length > 0) {
             store.dispatch(collapsiblePanelSlice.actions.setOrderPanels(false));
           } else {
             store.dispatch(collapsiblePanelSlice.actions.setOrderPanels(true));
           }
-          store.dispatch(resultsSectionSlice.actions.setResults(result));
+          store.dispatch(resultsSectionSlice.actions.setResults(validResults));
           store.dispatch(resultsSectionSlice.actions.setFilterState(getResultsSectionFilterDefaultValue()));
 
           const defaultSort = isTaskingEnabled

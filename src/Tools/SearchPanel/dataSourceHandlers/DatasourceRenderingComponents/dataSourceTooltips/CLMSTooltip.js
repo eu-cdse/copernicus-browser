@@ -826,6 +826,133 @@ const CopernicusClmsFcoverGlobal300m10dailyV2RT6Tooltip = () =>
     source: getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown(),
   });
 
+const getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown = () => t`
+  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsDmpGlobal300m10dailyV2RT0Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown(),
+  });
+
+const getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown = () => t`
+  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsDmpGlobal300m10dailyV2RT1Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown(),
+  });
+
+const getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown = () => t`
+  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsDmpGlobal300m10dailyV2RT2Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown(),
+  });
+
+const getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown = () => t`
+  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsDmpGlobal300m10dailyV2RT6Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown(),
+  });
+
+const getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown = () => t`
+  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+
+const CopernicusClmsGppGlobal300m10dailyV2RT0Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown(),
+  });
+
+const getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown = () => t`
+  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+
+const CopernicusClmsGppGlobal300m10dailyV2RT1Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown(),
+  });
+
+const getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown = () => t`
+  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+
+const CopernicusClmsGppGlobal300m10dailyV2RT2Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown(),
+  });
+
+const getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown = () => t`
+  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+
+const CopernicusClmsGppGlobal300m10dailyV2RT6Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown(),
+  });
+const getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown = () => t`
+  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+
+const CopernicusClmsNppGlobal300m10dailyV2RT0Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown(),
+  });
+
+const getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown = () => t`
+  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+
+const CopernicusClmsNppGlobal300m10dailyV2RT1Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown(),
+  });
+
+const getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown = () => t`
+  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+
+const CopernicusClmsNppGlobal300m10dailyV2RT2Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown(),
+  });
+
+const getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown = () => t`
+  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+
+const CopernicusClmsNppGlobal300m10dailyV2RT6Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown(),
+  });
+
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown = () => t`
+  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsGdmpGlobal300m10dailyV2RT0Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown(),
+  });
+
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown = () => t`
+  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsGdmpGlobal300m10dailyV2RT1Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown(),
+  });
+
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown = () => t`
+  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsGdmpGlobal300m10dailyV2RT2Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown(),
+  });
+
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown = () => t`
+  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const CopernicusClmsGdmpGlobal300m10dailyV2RT6Tooltip = () =>
+  DataSourceTooltip({
+    source: getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown(),
+  });
+
 export {
   getCLMSCollectionMarkdown,
   CLMSCollectionTooltip,
@@ -1049,4 +1176,36 @@ export {
   CopernicusClmsFcoverGlobal300m10dailyV2RT2Tooltip,
   getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown,
   CopernicusClmsFcoverGlobal300m10dailyV2RT6Tooltip,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown,
+  CopernicusClmsDmpGlobal300m10dailyV2RT0Tooltip,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown,
+  CopernicusClmsDmpGlobal300m10dailyV2RT1Tooltip,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown,
+  CopernicusClmsDmpGlobal300m10dailyV2RT2Tooltip,
+  getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown,
+  CopernicusClmsDmpGlobal300m10dailyV2RT6Tooltip,
+  getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown,
+  CopernicusClmsGppGlobal300m10dailyV2RT0Tooltip,
+  getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown,
+  CopernicusClmsGppGlobal300m10dailyV2RT1Tooltip,
+  getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown,
+  CopernicusClmsGppGlobal300m10dailyV2RT2Tooltip,
+  getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown,
+  CopernicusClmsGppGlobal300m10dailyV2RT6Tooltip,
+  getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown,
+  CopernicusClmsNppGlobal300m10dailyV2RT0Tooltip,
+  getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown,
+  CopernicusClmsNppGlobal300m10dailyV2RT1Tooltip,
+  getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown,
+  CopernicusClmsNppGlobal300m10dailyV2RT2Tooltip,
+  getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown,
+  CopernicusClmsNppGlobal300m10dailyV2RT6Tooltip,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown,
+  CopernicusClmsGdmpGlobal300m10dailyV2RT0Tooltip,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown,
+  CopernicusClmsGdmpGlobal300m10dailyV2RT1Tooltip,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown,
+  CopernicusClmsGdmpGlobal300m10dailyV2RT2Tooltip,
+  getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown,
+  CopernicusClmsGdmpGlobal300m10dailyV2RT6Tooltip,
 };

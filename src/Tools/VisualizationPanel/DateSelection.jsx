@@ -1,15 +1,19 @@
+import React, { useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
 import { VisualizationTimeSelect } from '../../components/VisualizationTimeSelect/VisualizationTimeSelect';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { findLatestDateWithData, generateAppropriateSearchBBox } from './SmartPanel/LatestDataAction.utils';
-import store, { visualizationSlice } from '../../store';
-import { reqConfigMemoryCache } from '../../const';
+
 import { handleError } from '../../utils';
+import { findLatestDateWithData } from '../../utils/latestDate.utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel.utils';
-import React, { useState } from 'react';
+import { generateAppropriateSearchBBox } from '../../utils/coords';
+
+import store, { visualizationSlice } from '../../store';
+
+import { reqConfigMemoryCache } from '../../const';
 
 function DateSelection({
   zoom,
@@ -74,7 +78,7 @@ function DateSelection({
   }
 
   async function getLayerAndBBoxSetup() {
-    const bbox = generateAppropriateSearchBBox(mapBounds, pixelBounds);
+    const bbox = generateAppropriateSearchBBox(mapBounds);
     const shJsDataset = dsh.getSentinelHubDataset(datasetId);
     const layers = await LayersFactory.makeLayers(
       visualizationUrl,
@@ -109,7 +113,7 @@ function DateSelection({
   }
 
   async function onFetchAvailableDates(fromMoment, toMoment) {
-    const bbox = generateAppropriateSearchBBox(mapBounds, pixelBounds);
+    const bbox = generateAppropriateSearchBBox(mapBounds);
     const dates = await dsh.findDates({
       datasetId: datasetId,
       bbox: bbox,

@@ -8,6 +8,7 @@ import store, {
   collapsiblePanelSlice,
   notificationSlice,
   imageQualityAndProviderSectionSlice,
+  resultsSectionSlice,
 } from '../../../../store';
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
@@ -312,11 +313,14 @@ const AreaAndTimeSection = ({
     store.dispatch(imageQualityAndProviderSectionSlice.actions.setRadarPolarizationFilterArray([]));
     store.dispatch(imageQualityAndProviderSectionSlice.actions.setRadarInstrumentFilterArray([]));
 
+    store.dispatch(resultsSectionSlice.actions.setResults(undefined));
+    store.dispatch(resultsSectionSlice.actions.setCurrentPage(1));
+
     setTimespanArray((prevState) =>
       prevState.map((item) => ({
         ...item,
         from: newTaskingEnabled ? now.clone() : now.clone().subtract(1, 'month').startOf('day'),
-        to: newTaskingEnabled ? now.clone().add(1, 'month') : now.clone(),
+        to: newTaskingEnabled ? now.clone().add(1, 'week') : now.clone(),
       })),
     );
   };

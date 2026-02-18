@@ -181,4 +181,21 @@ describe('handleRRDError', () => {
       message: 'An unknown error occurred',
     });
   });
+
+  it('should extract ANY_KEY from JSON string in error body', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error: `Research Feasibility: Error calling feasibility request. Status code: 400, Reason: Bad Request.\nBody:\n{"ANY_KEY":["Start time must be at least 6 hours in the future, if given."]}\n`,
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message: 'Error: Start time must be at least 6 hours in the future, if given.',
+    });
+  });
 });

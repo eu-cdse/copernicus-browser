@@ -14,9 +14,14 @@ import { DATASOURCES } from '../../../const';
 import { reprojectGeometry } from '../../../utils/reproject';
 import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import DataSourceHandler from './DataSourceHandler';
-import { CDAS_L8_L9_LOTL1, CDAS_LANDSAT_MOSAIC } from './dataSourceConstants';
+import { CDAS_L8_L9_LOTL1, CDAS_LANDSAT_MOSAIC, BAND_UNIT } from './dataSourceConstants';
 import { filterLayers } from './filter';
 import { getGroupedBands, getLandsatBandForDataset } from './datasourceAssets/landsatBands';
+import {
+  generateLandsatReflectanceEvalscript,
+  generateLandsatKelvinEvalscript,
+  generateFallbackEvalscript,
+} from './datasourceAssets/evalscriptTemplates';
 import { constructV3Evalscript } from '../../../utils';
 import {
   getLandsat89Markdown,
@@ -323,28 +328,48 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
 
   isSpectralExplorerSupported = () => true;
 
+  getFactor = (datasetId) => {
+    switch (datasetId) {
+      case CDAS_L8_L9_LOTL1:
+        return 2.5;
+      case CDAS_LANDSAT_MOSAIC:
+        return 0.01;
+      default:
+        return 0.01;
+    }
+  };
+
   generateEvalscript = (bands, datasetId, config) => {
     if (config) {
       return constructV3Evalscript(bands, config);
     }
 
-    return this.defaultEvalscript(bands, 1 / 1000);
+    return this.defaultEvalscript(bands, datasetId);
   };
 
-  defaultEvalscript = (bands, factor) => {
-    return `//VERSION=3
-function setup() {
-  return {
-    input: ["${[...new Set(Object.values(bands))].join('","')}", "dataMask"],
-    output: { bands: 4 }
+  getSelectedBandUnit = (bands, datasetId) => {
+    const allBands = this.getBands(datasetId);
+    const firstSelectedBandName = Object.values(bands)[0];
+    const firstBandObj = allBands.find((b) => b.name === firstSelectedBandName);
+    return firstBandObj?.unit;
   };
-}
-let factor = ${factor};
-function evaluatePixel(sample) {
-  // This comment is required for evalscript parsing to work
-  return [${Object.values(bands)
-    .map((e) => 'factor * sample.' + e)
-    .join(',')}, sample.dataMask ];
-}`;
+
+  defaultEvalscript = (bands, datasetId) => {
+    const bandUnit = this.getSelectedBandUnit(bands, datasetId);
+    const bandNames = Object.values(bands);
+    const uniqueBands = [...new Set(bandNames)];
+    const factor = this.getFactor(datasetId);
+
+    if (datasetId === CDAS_L8_L9_LOTL1) {
+      if (bandUnit === BAND_UNIT.REFLECTANCE) {
+        return generateLandsatReflectanceEvalscript(bandNames, uniqueBands);
+      }
+
+      if (bandUnit === BAND_UNIT.KELVIN) {
+        return generateLandsatKelvinEvalscript(bandNames, uniqueBands);
+      }
+    }
+
+    return generateFallbackEvalscript(bandNames, uniqueBands, factor);
   };
 }

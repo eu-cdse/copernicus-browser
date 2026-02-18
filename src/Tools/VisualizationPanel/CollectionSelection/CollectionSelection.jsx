@@ -44,7 +44,13 @@ const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollec
         />
       );
     case DATASOURCES.CLMS:
-      return <CLMSCollectionSelection datasource={selectedCollectionGroup.datasource} onSelect={onSelect} />;
+      return (
+        <CLMSCollectionSelection
+          datasource={selectedCollectionGroup.datasource}
+          onSelect={onSelect}
+          availableDatasets={selectedCollectionGroup.collections?.map((collection) => collection.dataset)}
+        />
+      );
     default:
       return renderCollectionsList({
         collections: selectedCollectionGroup.collections,
@@ -130,17 +136,30 @@ const renderCollections = (collectionGroups, selectedCollection, onSelect, isExp
       if (string.length < 3 && option.data.type === 'dataset') {
         return false;
       }
-      string = string.toLowerCase();
-      if (option.label.toLowerCase().includes(string) || option.value.toLowerCase().includes(string)) {
+
+      const terms = string.toLowerCase().split(/\s+/).filter(Boolean);
+
+      if (!terms.length) {
         return true;
       }
-      if (option.data.type === 'datasource') {
-        for (let dataset of collectionsPerGroup[option.label]) {
-          if (dataset.label.toLowerCase().includes(string) || dataset.value.toLowerCase().includes(string)) {
-            return true;
-          }
-        }
+
+      const matchesAll = (termsToMatch, text) => termsToMatch.every((term) => text.includes(term));
+
+      const label = option.label.toLowerCase();
+      const value = option.value.toLowerCase();
+
+      if (matchesAll(terms, label) || matchesAll(terms, value)) {
+        return true;
       }
+
+      if (option.data.type === 'datasource') {
+        return (collectionsPerGroup[option.label] || []).some((dataset) => {
+          const dLabel = dataset.label.toLowerCase();
+          const dValue = dataset.value.toLowerCase();
+          return matchesAll(terms, dLabel) || matchesAll(terms, dValue);
+        });
+      }
+
       return false;
     };
 

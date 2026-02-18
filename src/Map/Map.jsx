@@ -55,10 +55,7 @@ import { getIntersectingFeatures } from './Map.utils';
 import { COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { progressWithDelayedAction } from './progressWithDelayedAction';
 import { t } from 'ttag';
-import {
-  findLatestDateWithData,
-  getQuarterlyInfo,
-} from '../Tools/VisualizationPanel/SmartPanel/LatestDataAction.utils';
+import { findLatestDateWithData, getQuarterlyInfo } from '../utils/latestDate.utils';
 import { manipulateODataSearchResultsWithAntimeridianDuplicates } from '../utils/handelAntimeridianCoord.utils';
 import { getProcessGraph, isOpenEoSupported } from '../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';

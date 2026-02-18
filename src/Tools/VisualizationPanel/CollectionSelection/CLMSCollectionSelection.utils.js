@@ -46,6 +46,10 @@ import {
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT1,
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT2,
   COPERNICUS_CLMS_NPP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_SWI_12_5KM_10DAILY,
   COPERNICUS_CLMS_SWI_12_5KM_DAILY,
   COPERNICUS_CLMS_SWI_1KM_DAILY,
@@ -54,6 +58,10 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT2,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT5,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
@@ -121,6 +129,14 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+  COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -309,6 +325,28 @@ export const CLMS_OPTIONS = [
                 ],
               },
               {
+                label: 'dmp_global_300m_10daily_v2',
+                id: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+                consolidationPeriods: [
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
+                  },
+                ],
+              },
+              {
                 label: 'clms_global_dmp_1km_v2_10daily_geotiff',
                 id: COPERNICUS_CLMS_DMP_1KM_10DAILY,
                 consolidationPeriods: [
@@ -357,6 +395,28 @@ export const CLMS_OPTIONS = [
                   {
                     label: AttributeConsolidationPeriodValues.RT6.label,
                     id: COPERNICUS_CLMS_GDMP_300M_10DAILY_V1_RT6,
+                  },
+                ],
+              },
+              {
+                label: 'clms_global_gdmp_300m_v2_10daily',
+                id: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+                consolidationPeriods: [
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
                   },
                 ],
               },
@@ -415,6 +475,28 @@ export const CLMS_OPTIONS = [
                 ],
               },
               {
+                label: 'npp_global_300m_10daily_v2',
+                id: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+                consolidationPeriods: [
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_NPP_GLOBAL_300M_10DAILY_V2_RT6,
+                  },
+                ],
+              },
+              {
                 label: 'clms_global_gpp_300m_v1_10daily_geotiff_RT0',
                 id: COPERNICUS_CLMS_GPP_300M_10DAILY_RT0,
                 consolidationPeriods: [
@@ -433,6 +515,28 @@ export const CLMS_OPTIONS = [
                   {
                     label: AttributeConsolidationPeriodValues.RT6.label,
                     id: COPERNICUS_CLMS_GPP_300M_10DAILY_RT6,
+                  },
+                ],
+              },
+              {
+                label: 'clms_global_gpp_300m_10daily_v2',
+                id: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+                consolidationPeriods: [
+                  {
+                    label: AttributeConsolidationPeriodValues.RT0.label,
+                    id: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT1.label,
+                    id: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT2.label,
+                    id: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
+                  },
+                  {
+                    label: AttributeConsolidationPeriodValues.RT6.label,
+                    id: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT6,
                   },
                 ],
               },
@@ -793,6 +897,26 @@ export const CLMS_OPTIONS = [
     ],
   },
 ];
+
+export const filterCLMSOptionsByDatasets = (options, allowedDatasetIds = []) => {
+  if (!allowedDatasetIds || allowedDatasetIds.length === 0) {
+    return options;
+  }
+
+  const filterNode = (node) => {
+    if (node.options && node.options.length > 0) {
+      const filteredChildren = node.options.map(filterNode).filter(Boolean);
+      if (filteredChildren.length > 0) {
+        return { ...node, options: filteredChildren };
+      }
+      return null;
+    }
+
+    return allowedDatasetIds.includes(node.id) ? node : null;
+  };
+
+  return options.map(filterNode).filter(Boolean);
+};
 
 export const flattenCLMSOptionsWithParent = (options, parentPath) => {
   const arr = options.map((opt) => {

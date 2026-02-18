@@ -2,7 +2,8 @@ import { coordEach } from '@turf/meta';
 import { featureCollection, point as turfPoint } from '@turf/helpers';
 import geo_area from '@mapbox/geojson-area';
 import { reprojectGeometry } from './reproject';
-import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
+import { BBox, CRS_EPSG3857, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
+import { BBOX_PADDING } from '../const';
 
 export const EQUATOR_RADIUS = 6378137.0;
 
@@ -120,4 +121,15 @@ export function metersPerPixel(bbox, width) {
   const latitude = (newBBox.minY + newBBox.maxY) / 2;
 
   return (widthInMeters / width) * Math.cos(lat(latitude));
+}
+
+export function generateAppropriateSearchBBox(bounds) {
+  const minLng = bounds.getWest() + BBOX_PADDING * (bounds.getEast() - bounds.getWest());
+  const maxLng = bounds.getEast() - BBOX_PADDING * (bounds.getEast() - bounds.getWest());
+
+  // The following two are not correct  because resolution is not constant along a meridian, but I think it's good enough.
+  // On a 1000 pixel screen at zoom 3 the top padding is then effectively ~130px
+  const minLat = bounds.getSouth() + BBOX_PADDING * (bounds.getNorth() - bounds.getSouth());
+  const maxLat = bounds.getNorth() - BBOX_PADDING * (bounds.getNorth() - bounds.getSouth());
+  return new BBox(CRS_EPSG4326, minLng, minLat, maxLng, maxLat);
 }

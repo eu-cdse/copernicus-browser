@@ -48,6 +48,7 @@ function parseCollectionParams(params) {
 
   // Extract technical name from collectionInfo
   const technicalName = collectionInfo.technicalName || registration.collection_name;
+  const normalizedTechnicalName = technicalName.replace(/_RT\d+$/i, '');
 
   // Parse temporal resolution from technicalName
   let temporalResolution = 1;
@@ -84,6 +85,7 @@ function parseCollectionParams(params) {
     hierarchy,
     description: collectionInfo.description || '',
     technicalName,
+    normalizedTechnicalName,
     officialDocs: collectionInfo.official_docs || '',
   };
 }
@@ -334,12 +336,15 @@ function updateLayersMetadata(config) {
         if (bracketDepth === 0) {
           const insertPos = i;
           const layerEntries = config.layers
+            .filter((layer) => layer.evalscript && layer.colorRamp)
             .map((layer) => {
               return `  {\n    match: [{ datasourceId: ${config.constant}, layerId: '${layer.name}' }],\n    description: () => t\`${layer.longDescription}\`,\n  }`;
             })
             .join(',\n');
 
-          content = content.substring(0, insertPos) + layerEntries + ',\n' + content.substring(insertPos);
+          if (layerEntries) {
+            content = content.substring(0, insertPos) + layerEntries + ',\n' + content.substring(insertPos);
+          }
           break;
         }
         bracketDepth--;
@@ -408,7 +413,7 @@ function updateSentinelhubLeafletLayer(config) {
 
   // Add constant to imports
   const importMatch = content.match(
-    /import\s+\{[^}]+\}\s+from\s+['"]\.\..\/.\..\/Tools\/SearchPanel\/dataSourceHandlers\/dataSourceConstants['"]\s*;?/s,
+    /import\s+\{[^}]+\}\s+from\s+['"]\.\.\/\.\.\/Tools\/SearchPanel\/dataSourceHandlers\/dataSourceConstants['"]\s*;?/s,
   );
   if (importMatch) {
     const importContent = importMatch[0];
@@ -792,7 +797,7 @@ async function main() {
     console.log(`     - Add: { label: '${config.technicalName}', id: ${config.constant} }`);
     console.log('  2. Add entry to recursiveCollectionCLMS in collectionFormConfig.js');
     console.log(`     - Follow hierarchy: ${config.hierarchy.join(' > ')}`);
-    console.log(`     - productType: '${config.technicalName}'`);
+    console.log(`     - productType: '${config.normalizedTechnicalName}'`);
     console.log('  3. Add connection in ODataHelpers.js (Visualize → Search tab integration)');
     console.log('  4. Review all changes: git diff');
     console.log('  5. Test the new collection in the browser');

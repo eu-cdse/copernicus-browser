@@ -1571,7 +1571,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'swi_global_12.5km_10daily_v4',
-                label: 'Global, 10-daily, 12.5km, (2025–present), V4',
+                label: 'Global, 10-daily, 12.5km, (2007–present), V4',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1843,6 +1843,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'dmp_global_300m_10daily_v2',
+                label: 'Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'dmp_global_300m_10daily_v2',
+                )})`,
+              },
+              {
                 id: 'dmp_global_1km_10daily_v2',
                 label: 'Dry Matter Productivity, Global, 10-daily, 1km, (1999–2020), V2',
                 type: 'productType',
@@ -1860,6 +1870,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'gdmp_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'gdmp_global_300m_10daily_v2',
+                label: 'Gross Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'gdmp_global_300m_10daily_v2',
                 )})`,
               },
               {
@@ -1896,6 +1916,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'npp_global_300m_10daily_v2',
+                label: 'Net Primary Production, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'npp_global_300m_10daily_v2',
+                )})`,
+              },
+              {
                 id: 'gpp_global_300m_10daily_v1',
                 label: 'Gross Primary Production, Global, 10-daily, 300m, (2023–present), V1',
                 type: 'productType',
@@ -1903,6 +1933,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'gpp_global_300m_10daily_v1',
+                )})`,
+              },
+              {
+                id: 'gpp_global_300m_10daily_v2',
+                label: 'Gross Primary Production, Global, 10-daily, 300m, (2014–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'gpp_global_300m_10daily_v2',
                 )})`,
               },
             ],

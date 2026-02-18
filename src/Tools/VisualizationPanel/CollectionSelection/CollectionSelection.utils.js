@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { dataSourceHandlers } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { credits } from '../../SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/dataSourceTooltips/credits';
-import { findLatestDateWithData } from '../SmartPanel/LatestDataAction.utils';
+import { findLatestDateWithData } from '../../../utils/latestDate.utils';
 import store, { visualizationSlice } from '../../../store';
 
 const checkFilter = (item, filter) => {
