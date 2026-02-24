@@ -212,7 +212,7 @@ const opticalProvidersCollection = [
         stacConstellation: ['PNEO'],
         stacPlatform: ['PNEO', 'PNEO3', 'PNEO4'],
         label: 'Pléiades Neo',
-        taskingSupported: true,
+        taskingSupported: false,
         archiveSupported: true,
         description: {
           body: 'The Pléiades Neo is designed for a range of very-high-resolution (VHR) remote sensing applications for defence, security and crisis management, urban planning (mapping, civil engineering, infrastructure, mobility), maritime, agriculture, forestry and environment.',
