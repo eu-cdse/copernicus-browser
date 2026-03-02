@@ -91,28 +91,45 @@ const ImageDownloadPreview = (props) => {
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState(false);
   const [previewError, setPreviewError] = useState(null);
 
-  const { analyticalFormLayers, selectedTab, disabledDownload, auth, layerId, is3D, selectedProcessing } =
-    props;
+  const {
+    analyticalFormLayers,
+    selectedTab,
+    disabledDownload,
+    auth,
+    layerId,
+    is3D,
+    selectedProcessing,
+    processGraph,
+    evalscript,
+  } = props;
 
   useEffect(() => {
     setFetchingPreviewImage(true);
     setPreviewError(null);
     setPreviewUrl(null);
 
+    const isAnalyticalTab = selectedTab === TABS.ANALYTICAL;
+    const isOpenEOMode = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
+
     let selectedLayer = layerId;
-    if (analyticalFormLayers.length > 0 && selectedTab === TABS.ANALYTICAL) {
+    let isCustomLayer = false;
+
+    if (isAnalyticalTab && analyticalFormLayers.length > 0) {
       selectedLayer = analyticalFormLayers[analyticalFormLayers.length - 1];
-    } else if (props.customSelected && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API) {
+      isCustomLayer = selectedLayer === CUSTOM_TAG;
+    } else if (!isAnalyticalTab && props.customSelected) {
       selectedLayer = CUSTOM_TAG;
+      isCustomLayer = true;
     }
 
     const options = {
       ...props,
-      layerId: selectedLayer === CUSTOM_TAG ? null : selectedLayer,
-      // We need to change the evalscript of the selected layer depending if it is a custom layer or not.
-      // evalscript can be defined even if the custom layer is not selected in analytical
-      evalscript: selectedLayer === CUSTOM_TAG ? props.evalscript : null,
-      customSelected: selectedLayer === CUSTOM_TAG,
+      layerId: isCustomLayer ? layerId : selectedLayer,
+      // Only pass custom evalscript/processGraph if it's a custom layer
+      // For regular layers, nullify so the layer's own script is used
+      evalscript: isCustomLayer && !isOpenEOMode ? evalscript : null,
+      customSelected: isCustomLayer,
+      processGraph: isCustomLayer && isOpenEOMode ? processGraph : null,
     };
 
     const runPreviewFetch = async () => {
@@ -132,7 +149,7 @@ const ImageDownloadPreview = (props) => {
     };
 
     runPreviewFetch();
-  }, [analyticalFormLayers, auth, layerId, props, selectedTab, selectedProcessing]);
+  }, [analyticalFormLayers, auth, layerId, props, selectedTab, selectedProcessing, processGraph, evalscript]);
 
   if (disabledDownload || is3D) {
     return null;
@@ -166,7 +183,6 @@ const mapStoreToProps = (store) => ({
   loiGeometry: store.loi.geometry,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
   visualizationUrl: store.visualization.visualizationUrl,
   fromTime: store.visualization.fromTime,
@@ -175,6 +191,7 @@ const mapStoreToProps = (store) => ({
   customSelected: store.visualization.customSelected,
   cloudCoverage: store.visualization.cloudCoverage,
   selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   selectedThemeId: store.themes.selectedThemeId,

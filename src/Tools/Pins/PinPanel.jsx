@@ -348,6 +348,9 @@ class PinPanel extends Component {
       layerId,
       evalscript,
       evalscripturl,
+      processGraph,
+      processgraphurl,
+      selectedProcessing: pinSelectedProcessing,
       themeId,
       dataFusion,
       minQa,
@@ -432,6 +435,23 @@ class PinPanel extends Component {
       pinTimeTo = moment.utc(toTime);
     }
 
+    const hasEvalscript = !!(evalscript || evalscripturl);
+    const hasProcessGraph = !!(processGraph || processgraphurl);
+    const supportsOpenEo = isOpenEoSupported(
+      getVisualizationUrl(pin),
+      layerId,
+      IMAGE_FORMATS.PNG,
+      isVisualizationEffectsApplied(pin),
+      hasEvalscript,
+    );
+    const selectedProcessing =
+      pinSelectedProcessing ||
+      (hasProcessGraph
+        ? PROCESSING_OPTIONS.OPENEO
+        : supportsOpenEo
+        ? PROCESSING_OPTIONS.OPENEO
+        : PROCESSING_OPTIONS.PROCESS_API);
+
     let visualizationParams = {
       datasetId: datasetId,
       visualizationUrl: getVisualizationUrl(pin),
@@ -440,20 +460,16 @@ class PinPanel extends Component {
       ...(dateMode ? { dateMode: dateMode } : {}),
       visibleOnMap: true,
       dataFusion: dataFusion,
-      selectedProcessing: isOpenEoSupported(
-        getVisualizationUrl(pin),
-        layerId,
-        IMAGE_FORMATS.PNG,
-        isVisualizationEffectsApplied(pin),
-        evalscript || evalscripturl,
-      )
-        ? PROCESSING_OPTIONS.OPENEO
-        : PROCESSING_OPTIONS.PROCESS_API,
+      selectedProcessing: selectedProcessing,
     };
 
-    if (evalscript || evalscripturl) {
+    if (hasEvalscript) {
       visualizationParams.evalscript = evalscript;
       visualizationParams.evalscripturl = evalscripturl;
+      visualizationParams.customSelected = true;
+    } else if (hasProcessGraph) {
+      visualizationParams.processGraph = processGraph;
+      visualizationParams.processgraphurl = processgraphurl;
       visualizationParams.customSelected = true;
     } else {
       visualizationParams.layerId = layerId;

@@ -6,7 +6,7 @@ import request from 'axios';
 import { b64EncodeUnicode } from './base64MDN';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BAND_UNIT } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
-import { TABS } from '../const';
+import { PROCESSING_OPTIONS, TABS } from '../const';
 import { ModalId } from '../const';
 import { rgbToHex } from '../junk/BandsToRGB/utils';
 import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
@@ -38,7 +38,7 @@ export function userCanAccessLockedFunctionality(user, selectedTheme) {
   - visualizationUrl: WMS URL from the selected theme (the information about the
     layerId is available through GetCapabilities request there)
   - layerId: id of the selected layer. If not set, "custom layer" is selected and
-    either evalscript or evalscripturl parameters must be set.
+    either evalscript, evalscripturl, or processGraph parameters must be set.
   - zoom: zoom level
   - lat: latitude
   - lng: longitude
@@ -48,6 +48,8 @@ export function userCanAccessLockedFunctionality(user, selectedTheme) {
     or null if layer doesn't support time dimension.
   - evalscript: evalscript of the layer (if layerId and evalscripturl are not specified)
   - evalscripturl: evalscripturl of the layer (if layerId is not specified)
+  - processGraph: OpenEO process graph of the layer (if layerId and processgraphurl are not specified)
+  - processgraphurl: URL to fetch OpenEO process graph from (if layerId is not specified)
   - gain: gain effect
   - gamma: gamma effect
   - redRangeEffect: red range effect (slider)
@@ -77,6 +79,9 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     layerId,
     evalscript,
     evalscripturl,
+    processGraph,
+    processgraphurl,
+    selectedProcessing,
     customSelected,
     selectedThemeId,
     themeIdFromUrlParams,
@@ -133,12 +138,23 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
   if (visualizationUrl) {
     params.visualizationUrl = encrypt(visualizationUrl);
   }
-  if (customSelected && evalscript && !evalscripturl) {
-    params.evalscript = b64EncodeUnicode(evalscript);
+
+  if (customSelected) {
+    if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
+      if (processgraphurl) {
+        params.processgraphurl = b64EncodeUnicode(processgraphurl);
+      } else if (processGraph) {
+        params.processGraph = b64EncodeUnicode(processGraph);
+      }
+    } else {
+      if (evalscripturl) {
+        params.evalscripturl = b64EncodeUnicode(evalscripturl);
+      } else if (evalscript) {
+        params.evalscript = b64EncodeUnicode(evalscript);
+      }
+    }
   }
-  if (customSelected && evalscripturl) {
-    params.evalscripturl = evalscripturl;
-  }
+
   if (datasetId) {
     params.datasetId = datasetId;
   }
@@ -640,6 +656,10 @@ export function getThemeName(theme) {
 
 export async function fetchEvalscriptFromEvalscripturl(evalscripturl) {
   return request.get(evalscripturl);
+}
+
+export async function fetchProcessGraphFromProcessGraphUrl(processgraphurl) {
+  return request.get(processgraphurl);
 }
 
 /*

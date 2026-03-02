@@ -1,0 +1,102 @@
+@use '../../variables.module.scss' as vars;
+
+.evalscript-input {
+  display: flex;
+  flex-direction: column;
+
+  .code-editor-wrap {
+    height: 300px;
+    display: flex;
+  }
+
+  .evalscript-action-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+
+    .evalscript-action-load-url {
+      .checkbox-holder.use-url {
+        display: block;
+
+        &.disabled {
+          cursor: not-allowed;
+
+          label {
+            cursor: not-allowed;
+            color: vars.$iconGrayColor;
+          }
+        }
+      }
+    }
+
+    .insert-url-block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      margin-top: 8px;
+
+      input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid vars.$iconGrayColor;
+        border-radius: 4px;
+
+        &.warning {
+          border-color: vars.$warningColor;
+
+          &:focus {
+            border-color: vars.$warningColor;
+            outline: none;
+          }
+        }
+
+        &:focus {
+          border-color: #0a4393;
+          outline: none;
+        }
+      }
+
+      .fa {
+        margin-left: 8px;
+        cursor: pointer;
+        color: vars.$warningColor;
+
+        &.valid {
+          color: vars.$successColor;
+        }
+      }
+    }
+
+    .notification {
+      width: 100%;
+      margin-top: 8px;
+    }
+  }
+
+  .info-uncheck-url {
+    margin-top: 8px;
+
+    .fa-info {
+      margin-right: 8px;
+    }
+  }
+
+  .insert-url-block-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .script-button-panel {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 5px;
+
+    .eob-btn {
+      font-size: 12px;
+    }
+  }
+}

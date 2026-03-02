@@ -66,6 +66,7 @@ class Highlights extends Component {
       upsampling,
       downsampling,
       cloudCoverage,
+      // TODO: apply process graph parameters if needed
     } = pin;
 
     if (comparingPins || sharePins) {

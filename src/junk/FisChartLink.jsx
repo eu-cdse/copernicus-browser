@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
 import { checkAllMandatoryOutputsExist } from '../utils/parseEvalscript';
-import { reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../const';
+import { PROCESSING_OPTIONS, reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../const';
 import {
   getLayerNotSelectedMsg,
   getNotAvailableForErrorMsg,
@@ -53,6 +53,9 @@ const FisChartLink = (props) => {
   const isSelectedResult = !!props.selectedResult;
   const isStatAvailableOnDatasource = isSelectedResult && statisticalApiSupported;
   const isLoggedIn = !!props.user.userdata;
+  const isEditedOpenEOProcessingSelected =
+    props.selectedProcessing === PROCESSING_OPTIONS.OPENEO && props.isProcessGraphModified;
+  const editedOpenEOErrorMsg = t`Statistical info not available for edited OpenEO process graph`;
 
   const getTitleBasedOnStatus = (errorMessage) => {
     if (!isLoggedIn) {
@@ -102,6 +105,10 @@ const FisChartLink = (props) => {
     return statsError(getLoggedInErrorMsg());
   }
 
+  if (isEditedOpenEOProcessingSelected) {
+    return statsError(editedOpenEOErrorMsg);
+  }
+
   if (!isStatAvailableOnDatasource) {
     const statisticalInfoMsg = getStatisticalInfoMsg();
     const additionalErrorMsg = !isSelectedResult
@@ -120,6 +127,8 @@ const mapStoreToProps = (store) => ({
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
   customSelected: store.visualization.customSelected,
+  selectedProcessing: store.visualization.selectedProcessing,
+  isProcessGraphModified: store.visualization.isProcessGraphModified,
   user: store.auth.user,
 });
 

@@ -3,17 +3,12 @@ import { t } from 'ttag';
 
 import { BandsToRGB } from '../BandsToRGB/BandsToRGB';
 import { GroupedBandsToRGB } from '../BandsToRGB/GroupedBandsToRGB';
-import { EvalScriptInput } from './EvalScriptInput';
+import CustomScriptInput from './CustomScriptInput';
 import DataFusion from './DataFusion';
 import { IndexBands } from '../BandsToRGB/IndexBands';
 import withRouter from '../../hoc/withRouter';
 
-import { getProcessGraph, isOpenEoSupported } from '../../api/openEO/openEOHelpers';
-import {
-  CodeEditor,
-  themeCdasBrowserDark,
-  themeCdasBrowserLight,
-} from '@sentinel-hub/evalscript-code-editor';
+import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import RadioButtonGroup from '../../components/RadioButtonGroup/RadioButtonGroup';
 import { haveEffectsChangedFromDefault } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 
@@ -29,7 +24,14 @@ const CUSTOM_VISUALISATION_TABS = {
   CUSTOM_SCRIPT_TAB: 2,
 };
 
-export const CUSTOM_VISUALIZATION_URL_ROUTES = ['#custom-composite', '#custom-index', '#custom-script'];
+export const CUSTOM_COMPOSITE_ROUTE = '#custom-composite';
+export const CUSTOM_INDEX_ROUTE = '#custom-index';
+export const CUSTOM_SCRIPT_ROUTE = '#custom-script';
+export const CUSTOM_VISUALIZATION_URL_ROUTES = [
+  CUSTOM_COMPOSITE_ROUTE,
+  CUSTOM_INDEX_ROUTE,
+  CUSTOM_SCRIPT_ROUTE,
+];
 
 const tutorial =
   'https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript.html#tutorials-and-other-related-materials';
@@ -43,10 +45,13 @@ for different collections from the [custom script repository](${repo}).
 `;
 
 const processGraphUrl = 'https://documentation.dataspace.copernicus.eu/APIs/openEO/Glossary.html#processes';
-const getProcessGraphTooltipContent = () => t`
+const getProcessGraphTooltipContent = () =>
+  t`
 An OpenEO process graph is a chain of processes that defines how satellite data should be processed by the synchronous OpenEO API (one of the underlying services that powers the Browser) and what values the service should return. \n\n
-Read more about processes and process graphs [here](${processGraphUrl}).
-`;
+Read more about processes and process graphs [here](${processGraphUrl}).` +
+  `\n\n` +
+  t`Note: The collection **id**, **spatial_extent**, and **temporal_extent** properties are read-only. These values update automatically based on your selection in the data collection panel, the current map extent, and the date picker. \n\n`;
+
 const getUnsupportedProcessGraphTooltipContent = () => t`
 OpenEO process graph is currently not supported for this collection.
 
@@ -92,10 +97,11 @@ class EOBAdvancedHolder extends React.Component {
       layers,
       evalscript,
       evalscripturl,
+      processgraphurl,
       dataFusion = [],
       activeLayer: activeDatasource,
       initialTimespan,
-      isEvalUrl,
+      isUrlMode,
       indexLayers,
       onUpdateScript,
       onDataFusionChange,
@@ -108,7 +114,9 @@ class EOBAdvancedHolder extends React.Component {
       selectedVisualizationId,
       visualizationUrl,
       selectedProcessing,
+      processGraph,
       effects,
+      onRefreshOpenEO,
     } = this.props;
 
     const groupedChannels =
@@ -219,36 +227,19 @@ class EOBAdvancedHolder extends React.Component {
                   initialTimespan={initialTimespan}
                 />
               )}
-              {selectedProcessing === PROCESSING_OPTIONS.OPENEO ? (
-                <div className="evalscript-input">
-                  <div className="code-editor-wrap">
-                    <CodeEditor
-                      themeDark={themeCdasBrowserDark}
-                      themeLight={themeCdasBrowserLight}
-                      defaultEditorTheme="light"
-                      value={JSON.stringify(
-                        getProcessGraph(visualizationUrl, selectedVisualizationId),
-                        null,
-                        '\t',
-                      )}
-                      onChange={() => {}}
-                      portalId="code_editor_portal"
-                      zIndex={9999}
-                      isReadOnly={true}
-                      isEditable={false}
-                      language="json"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <EvalScriptInput
-                  onRefreshEvalscript={onEvalscriptRefresh}
-                  evalscript={evalscript}
-                  evalscripturl={window.decodeURIComponent(evalscripturl || '')}
-                  isEvalUrl={isEvalUrl}
-                  onChange={onUpdateScript}
-                />
-              )}
+              <CustomScriptInput
+                selectedProcessing={selectedProcessing}
+                onRefreshEvalscript={onEvalscriptRefresh}
+                onRefreshOpenEO={onRefreshOpenEO}
+                scriptContent={selectedProcessing === PROCESSING_OPTIONS.OPENEO ? processGraph : evalscript}
+                scriptUrl={window.decodeURIComponent(
+                  selectedProcessing === PROCESSING_OPTIONS.OPENEO
+                    ? processgraphurl || ''
+                    : evalscripturl || '',
+                )}
+                isUrlMode={isUrlMode}
+                onChange={onUpdateScript}
+              />
             </div>
           )}
         </div>

@@ -27,11 +27,17 @@ const CustomVisualizationLayer = (props) => {
     setDataFusion,
     onBackToLayerList,
     onVisualizeEditorEvalscript,
+    onVisualizeEditorOpenEO,
     onCompositeChange,
     onIndexScriptChange,
     selectedProcessing,
+    processGraph,
+    processGraphUrl,
+    useProcessGraphUrl,
     effects,
   } = props;
+
+  const isUrlMode = selectedProcessing === PROCESSING_OPTIONS.OPENEO ? useProcessGraphUrl : useEvalscriptUrl;
 
   const datasourceHandler = getDataSourceHandler(datasetId);
   const supportsIndex = datasourceHandler && datasourceHandler.supportsIndex(datasetId);
@@ -69,15 +75,18 @@ const CustomVisualizationLayer = (props) => {
   };
 
   // Prepare props for createLayerActions
-  // When in OpenEO mode we set evalscripts to null.
-  // TODO: When processGraphs can be changed we will need to add the new processGraph to the visualisation or layer in compare mode
-  // for now we do not set anything as the editor is read-only
+
   const layerActionsProps = cloneDeep({ ...props, ...effects });
   if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
     layerActionsProps.evalscript = null; // Don't pass evalscript in OpenEO mode
     layerActionsProps.evalscripturl = null;
     layerActionsProps.selectedProcessing = selectedProcessing;
-    layerActionsProps.processGraph = getProcessGraph(visualizationUrl, selectedVisualizationId);
+    const processGraphObj = processGraph || getProcessGraph(visualizationUrl, selectedVisualizationId);
+    layerActionsProps.processGraph =
+      processGraphObj && typeof processGraphObj === 'object'
+        ? JSON.stringify(processGraphObj)
+        : processGraphObj;
+    layerActionsProps.processgraphurl = useProcessGraphUrl ? processGraphUrl : null;
   }
   const layerActions = createLayerActions(layerActionsProps);
   return (
@@ -96,12 +105,13 @@ const CustomVisualizationLayer = (props) => {
         }}
         indexLayers={selectedIndexBands}
         activeLayer={legacyActiveLayer}
-        isEvalUrl={useEvalscriptUrl}
+        isUrlMode={isUrlMode}
         style={null}
         onUpdateScript={onUpdateScript}
         onDataFusionChange={setDataFusion}
         onBack={onBackToLayerList}
         onEvalscriptRefresh={onVisualizeEditorEvalscript}
+        onRefreshOpenEO={onVisualizeEditorOpenEO}
         onCompositeChange={onCompositeChange}
         onIndexScriptChange={onIndexScriptChange}
         supportsIndex={supportsIndex}
@@ -109,6 +119,8 @@ const CustomVisualizationLayer = (props) => {
         selectedVisualizationId={selectedVisualizationId}
         visualizationUrl={visualizationUrl}
         selectedProcessing={selectedProcessing}
+        processGraph={processGraph}
+        processgraphurl={processGraphUrl}
         effects={effects}
       />
     </div>
@@ -123,6 +135,8 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   datasetId: store.visualization.datasetId,
   selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
+  processGraphUrl: store.visualization.processgraphurl,
   selectedThemeId: store.themes.selectedThemeId,
   selectedModeId: store.themes.selectedModeId,
   is3D: store.mainMap.is3D,

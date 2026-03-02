@@ -42,6 +42,7 @@ const addVisualizationToComponent = (
     orbitDirection,
     selectedProcessing,
     processGraph,
+    processgraphurl,
   },
 ) => {
   const title = `${getDatasetLabel(datasetId)}: ${customSelected ? 'Custom' : selectedVisualizationId}`;
@@ -56,8 +57,8 @@ const addVisualizationToComponent = (
     datasetId,
     visualizationUrl,
     layerId: selectedVisualizationId,
-    evalscript: customSelected ? evalscript : '',
-    evalscripturl: customSelected ? evalscripturl : '',
+    evalscript: evalscript || '',
+    evalscripturl: evalscripturl || '',
     dataFusion,
     gainEffect,
     gammaEffect,
@@ -72,8 +73,9 @@ const addVisualizationToComponent = (
     orthorectification,
     themeId: selectedThemeId,
     orbitDirection,
-    processGraph: processGraph,
-    selectedProcessing: selectedProcessing,
+    processGraph: processGraph || '',
+    processgraphurl: processgraphurl || '',
+    selectedProcessing,
   };
 
   store.dispatch(dispatchAction(visualizationProps));

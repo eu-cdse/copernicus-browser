@@ -88,7 +88,19 @@ async function fetchWithCache(url, init) {
     }
 
     const response = await fetch(url, init);
-    // //Store the data in cache
+
+    if (!response.ok) {
+      let message;
+      try {
+        const data = await response.clone().json();
+        message = data && (data.message || data.error || data.code);
+      } catch (error) {
+        message = undefined;
+      }
+      throw new Error(message || 'Request failed');
+    }
+
+    // Store the data in cache
     const cache = await caches.open(CACHE_NAME);
     const data = await getData(response);
     const newHeaders = new Headers(response.headers);
@@ -107,7 +119,7 @@ async function fetchWithCache(url, init) {
     if (error.name === 'AbortError') {
       throw error; // Re-throw AbortError to preserve its type
     }
-    throw new Error(`Failed to fetch from ${url}: ${error.message}`);
+    throw new Error(`${url}: ${error.message}`);
   }
 }
 

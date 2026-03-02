@@ -336,16 +336,23 @@ class Map extends React.Component {
       RRDFilterStateResultsSection,
       filteredQuicklookOverlays,
       selectedProcessing,
+      processGraph,
     } = this.props;
     const { evalscripturl } = getUrlParams();
     const isEffectsSelected = isVisualizationEffectsApplied(this.props);
+    const isCustomEvalscript = customSelected && !!evalscript;
+    const isOpenEOSelected = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
     const supportsOpenEo = isOpenEoSupported(
       visualizationUrl,
       visualizationLayerId,
       IMAGE_FORMATS.PNG,
       isEffectsSelected,
-      customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
+      isCustomEvalscript,
     );
+
+    const hasCustomProcessGraph = customSelected && !!processGraph && isOpenEOSelected;
+    const shouldRenderOpenEO = isOpenEOSelected && (supportsOpenEo || hasCustomProcessGraph);
+
     const zoomConfig = getZoomConfiguration(datasetId);
     let speckleFilterProp = speckleFilter;
     const dsh = getDataSourceHandler(datasetId);
@@ -505,14 +512,18 @@ class Map extends React.Component {
 
           <Pane name={SENTINELHUB_LAYER_PANE_ID} style={{ zIndex: SENTINELHUB_LAYER_PANE_ZINDEX }} />
 
-          {showSingleShLayer && supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.OPENEO && (
+          {showSingleShLayer && shouldRenderOpenEO && (
             <Overlay
               key={`overlay-${datasetId}-${selectedProcessing}`}
               name={`${getDatasetLabel(datasetId)}`}
               checked={visibleOnMap}
             >
               <OpenEoLayerComponent
-                processGraph={getProcessGraph(visualizationUrl, visualizationLayerId)}
+                processGraph={
+                  processGraph
+                    ? JSON.parse(processGraph)
+                    : getProcessGraph(visualizationUrl, visualizationLayerId)
+                }
                 datasetId={datasetId}
                 getMapAuthToken={getGetMapAuthToken(auth)}
                 fromTime={fromTime ? fromTime.toISOString() : null}
@@ -527,9 +538,9 @@ class Map extends React.Component {
             </Overlay>
           )}
 
-          {showSingleShLayer && !supportsOpenEo && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && (
+          {showSingleShLayer && !shouldRenderOpenEO && !isOpenEOSelected && (
             <Overlay
-              key={`overlay-${datasetId}-${selectedProcessing}`}
+              key={`overlay-sentinel-${datasetId}-${visualizationLayerId}-${selectedProcessing}`}
               name={`${getDatasetLabel(datasetId)}`}
               checked={visibleOnMap}
             >
@@ -605,7 +616,7 @@ class Map extends React.Component {
                   backscatterCoeff,
                   themeId,
                   orbitDirection,
-                  selectedProcessing,
+                  processGraph,
                 } = p;
                 const dsh = getDataSourceHandler(datasetId);
                 const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true; //We can only check if a datasetId is BYOC when the datasource handler for it is instantiated (thus, we are on the user instance which includes that BYOC collection), so we set default to `true` to cover other cases.
@@ -638,11 +649,15 @@ class Map extends React.Component {
                   isCustomVisualisation,
                 );
 
-                if (supportsOpenEoComparedLayer && selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
+                if (supportsOpenEoComparedLayer && isOpenEOSelected) {
+                  let processGraphToUse = processGraph
+                    ? JSON.parse(processGraph)
+                    : getProcessGraph(visualizationUrl, layerId);
+
                   return (
                     <OpenEoLayerComponent
                       key={i}
-                      processGraph={getProcessGraph(visualizationUrl, layerId)}
+                      processGraph={processGraphToUse}
                       datasetId={datasetId}
                       getMapAuthToken={getGetMapAuthToken(auth)}
                       fromTime={pinTimeFrom}
@@ -869,6 +884,7 @@ const mapStoreToProps = (store) => {
     dataFusion: store.visualization.dataFusion,
     cloudCoverage: store.visualization.cloudCoverage,
     selectedProcessing: store.visualization.selectedProcessing,
+    processGraph: store.visualization.processGraph,
     dataSourcesInitialized: store.themes.dataSourcesInitialized,
     selectedThemeId: store.themes.selectedThemeId,
     selectedTabIndex: store.tabs.selectedTabIndex,

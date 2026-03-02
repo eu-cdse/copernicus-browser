@@ -475,6 +475,8 @@ class Timelapse extends Component {
       lat,
       lng,
       zoom,
+      selectedProcessing,
+      processGraph,
     } = this.props;
     const { canWeFilterByClouds, canWeFilterByCoverage } = this.state;
 
@@ -568,6 +570,8 @@ class Timelapse extends Component {
             lat: lat,
             lng: lng,
             zoom: zoom,
+            selectedProcessing: selectedProcessing,
+            processGraph: processGraph,
           })
             .then((image) => {
               return this.onImageLoad({ img: image.url, flyover: flyover });
@@ -899,8 +903,18 @@ class Timelapse extends Component {
   };
 
   refetchImages = async (images, size) => {
-    const { mapBounds, aoi, auth, showBorders, visualizationUrl, lat, lng, zoom, selectedProcessing } =
-      this.props;
+    const {
+      mapBounds,
+      aoi,
+      auth,
+      showBorders,
+      visualizationUrl,
+      lat,
+      lng,
+      zoom,
+      selectedProcessing,
+      processGraph,
+    } = this.props;
     let resolvedCounter = 0;
 
     const imageUrls = await Promise.all(
@@ -929,6 +943,7 @@ class Timelapse extends Component {
           lng: lng,
           zoom: zoom,
           selectedProcessing: selectedProcessing,
+          processGraph: processGraph,
         }).catch((err) => {
           console.warn('Unable to refetch timelapse image', err);
           throw err;
@@ -1257,6 +1272,7 @@ const mapStoreToProps = (store) => ({
   evalscript: store.visualization.evalscript,
   evalscripturl: store.visualization.evalscripturl,
   selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

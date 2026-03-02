@@ -32,13 +32,14 @@ const DEFAULT_VALUES = spreadHandlersEvenly(2, DEFAULT_DOMAIN.min, DEFAULT_DOMAI
 const link1 =
   'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndvi/#normalized-difference-vegetation-index';
 const link2 = 'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/ndwi/';
-const getTooltipContent = () => t`
-Create a simple band ratio (A/B) to highlight the spectral differences between two bands,
+const getTooltipContent = () =>
+  t`Create a simple band ratio (A/B) to highlight the spectral differences between two bands,
 or create a normalized difference index ((A-B)/(A+B)) to compare your data across time.\n\n
 Popular difference indices are the Normalized Difference Vegetation Index (NDVI),
 which uses the near-infrared and red bands or the Normalized Difference Water Index (NDWI),
-which uses the near-infrared and shortwave infrared bands.\n\nMore info [here](${link1}) or [here](${link2}).
-`;
+which uses the near-infrared and shortwave infrared bands.\n\nMore info [here](${link1}) or [here](${link2}).` +
+  '\n\n' +
+  t`Modifying the index configuration switches the mode to custom script and updates the layer automatically.`;
 
 export const IndexBands = ({ bands, layers, onChange, evalscript }) => {
   const [equation, setEquation] = React.useState(EQUATIONS[0]);

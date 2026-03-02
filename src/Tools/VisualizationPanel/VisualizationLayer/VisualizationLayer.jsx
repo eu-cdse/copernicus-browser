@@ -55,13 +55,17 @@ class VisualizationLayer extends Component {
     const hasDetails = viz.legendUrl || legend || longDescription;
 
     // Prepare props for createLayerActions
-    // When in OpenEO mode we set evalscripts to null and add processGraph
     const layerActionsProps = { ...this.props };
     if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
-      layerActionsProps.evalscript = null; // Don't pass evalscript in OpenEO mode
+      layerActionsProps.evalscript = null;
       layerActionsProps.evalscripturl = null;
       layerActionsProps.selectedProcessing = selectedProcessing;
-      layerActionsProps.processGraph = getProcessGraph(visualizationUrl, selectedVisualizationId);
+      const processGraphObj = viz?.processGraph || getProcessGraph(visualizationUrl, selectedVisualizationId);
+      layerActionsProps.processGraph =
+        processGraphObj && typeof processGraphObj === 'object'
+          ? JSON.stringify(processGraphObj)
+          : processGraphObj;
+      layerActionsProps.processgraphurl = viz?.processgraphurl || null;
     }
 
     const layerActions = createLayerActions(layerActionsProps);
@@ -124,6 +128,8 @@ const mapStoreToProps = (store) => ({
   evalscript: store.visualization.evalscript,
   evalscripturl: store.visualization.evalscripturl,
   dataFusion: store.visualization.dataFusion,
+  processGraph: store.visualization.processGraph,
+  processgraphurl: store.visualization.processgraphurl,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
 });

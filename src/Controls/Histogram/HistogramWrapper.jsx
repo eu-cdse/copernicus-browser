@@ -24,7 +24,7 @@ import { CUSTOM } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceCon
 import HistogramModal from './HistogramModal';
 
 import './HistogramWrapper.scss';
-import { TABS } from '../../const';
+import { PROCESSING_OPTIONS, TABS } from '../../const';
 
 class HistogramWrapper extends Component {
   state = {
@@ -60,13 +60,21 @@ class HistogramWrapper extends Component {
   };
 
   checkIfEnabled = async () => {
-    const { layerId, datasetId, customSelected, selectedTabIndex } = this.props;
+    const {
+      layerId,
+      datasetId,
+      customSelected,
+      selectedTabIndex,
+      selectedProcessing,
+      isProcessGraphModified,
+    } = this.props;
 
     const dsHandler = getDataSourceHandler(datasetId);
     const supportsV3Evalscript = dsHandler && dsHandler.supportsV3Evalscript(datasetId);
     const isOnVisualizationPanel = selectedTabIndex === TABS.VISUALIZE_TAB;
     const hasVisualization = !!(layerId || customSelected);
-    const isIndexOutputPresent = await checkIfIndexOutputPresent(this.props, this.cancelToken);
+    const isEditedOpenEOProcessingSelected =
+      selectedProcessing === PROCESSING_OPTIONS.OPENEO && isProcessGraphModified;
 
     if (!hasVisualization) {
       this.setState({ histogramEnabled: false, errorMessage: t`Please select a layer` });
@@ -87,6 +95,16 @@ class HistogramWrapper extends Component {
       });
       return;
     }
+    if (isEditedOpenEOProcessingSelected) {
+      this.setState({
+        histogramEnabled: false,
+        errorMessage: t`Histogram not available for edited OpenEO process graph`,
+      });
+      return;
+    }
+
+    const isIndexOutputPresent = await checkIfIndexOutputPresent(this.props, this.cancelToken);
+
     if (!isIndexOutputPresent) {
       this.setState({
         histogramEnabled: false,
@@ -134,6 +152,8 @@ const mapStoreToProps = (store) => ({
   layerId: store.visualization.layerId,
   customSelected: store.visualization.customSelected,
   selectedTabIndex: store.tabs.selectedTabIndex,
+  selectedProcessing: store.visualization.selectedProcessing,
+  isProcessGraphModified: store.visualization.isProcessGraphModified,
   evalscript: store.visualization.evalscript,
   visualizationUrl: store.visualization.visualizationUrl,
 });

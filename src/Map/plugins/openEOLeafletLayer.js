@@ -3,14 +3,17 @@ import isEqual from 'lodash.isequal';
 import { GridLayer, withLeaflet } from 'react-leaflet';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
-import { MIMETYPE_TO_OPENEO_FORMAT } from '../../api/openEO/openEOHelpers';
+import {
+  OPENEO_DOWNLOADABLE_FORMATS,
+  findNodeByProcessId,
+  OPENEO_VALID_FORMATS,
+  MIMETYPE_TO_OPENEO_FORMAT,
+} from '../../api/openEO/openEOHelpers';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
 import { metersPerPixel } from '../../utils/coords';
-
-function findNodeByProcessId(processGraph, processId) {
-  return Object.keys(processGraph).find((key) => processGraph[key].process_id === processId);
-}
+import store, { notificationSlice } from '../../store';
+import { t } from 'ttag';
 
 class OpenEoLayer extends L.TileLayer {
   constructor(options) {
@@ -52,10 +55,24 @@ class OpenEoLayer extends L.TileLayer {
     const se = L.CRS.EPSG3857.project(this._map.unproject(sePoint, coords.z));
     const processGraph = this.options.processGraph;
     const loadCollectionNode = findNodeByProcessId(processGraph, 'load_collection');
+
+    const onTileImageError = this.options.onTileImageError;
+    const onTileImageLoad = this.options.onTileImageLoad;
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+    tile.controller = controller;
+
     if (loadCollectionNode === undefined) {
-      throw new Error('No load_collection process found');
+      store.dispatch(
+        notificationSlice.actions.displayError(t`No load_collection process found in the process graph.`),
+      );
+      done(new Error('No load_collection process found'), null);
+      return tile;
     }
-    let collectionId = null;
+
+    let collectionId;
+
     if (this.dsh?.supportsLowResolutionAlternativeCollection(this.options.datasetId)) {
       const lowResolutionCollectionId = this.dsh.getLowResolutionCollectionId(this.options.datasetId);
       const lowResolutionMetersPerPixelThreshold = this.dsh.getLowResolutionMetersPerPixelThreshold(
@@ -67,29 +84,21 @@ class OpenEoLayer extends L.TileLayer {
       }
     }
 
-    const newProcessGraph = processGraphBuilder.saveResult(
-      processGraphBuilder.loadCollection(processGraph, {
-        id: collectionId,
-        spatial_extent: {
-          west: nw.x,
-          east: se.x,
-          south: se.y,
-          north: nw.y,
-          height: this.options.tileSize,
-          width: this.options.tileSize,
-          crs: CRS_EPSG3857.authId,
-        },
-        temporal_extent: [this.options.fromTime, this.options.toTime],
-      }),
-      { format: this.options.format },
-    );
+    const newProcessGraph = processGraphBuilder.loadCollection(processGraph, {
+      id: collectionId,
+      datasetId: this.options.datasetId,
+      spatial_extent: {
+        west: nw.x,
+        east: se.x,
+        south: se.y,
+        north: nw.y,
+        height: this.options.tileSize,
+        width: this.options.tileSize,
+        crs: CRS_EPSG3857.authId,
+      },
+      temporal_extent: [this.options.fromTime, this.options.toTime],
+    });
 
-    const onTileImageError = this.options.onTileImageError;
-    const onTileImageLoad = this.options.onTileImageLoad;
-
-    const controller = new AbortController();
-    const signal = controller.signal;
-    tile.controller = controller;
     openEOApi
       .getResult(newProcessGraph, this.options.getMapAuthToken, signal)
       .then(async (blob) => {
@@ -116,7 +125,36 @@ class OpenEoLayer extends L.TileLayer {
     return tile;
   };
 
+  validateProcessGraphFormat = (processGraph) => {
+    const saveResultNode = findNodeByProcessId(processGraph, 'save_result');
+    if (saveResultNode) {
+      const format = processGraph[saveResultNode]?.arguments?.format;
+      if (format && !OPENEO_VALID_FORMATS.includes(format.toLowerCase())) {
+        const formatLower = format.toLowerCase();
+        if (OPENEO_DOWNLOADABLE_FORMATS.includes(formatLower)) {
+          store.dispatch(
+            notificationSlice.actions.displayError(
+              t`Format "${format}" is not supported for map visualization but can be downloaded.`,
+            ),
+          );
+        } else {
+          store.dispatch(
+            notificationSlice.actions.displayError(
+              t`Format "${format}" is not supported. Only PNG and JPG formats are supported for map visualization.`,
+            ),
+          );
+        }
+        return false;
+      }
+    }
+    return true;
+  };
+
   setParams = (params) => {
+    if (!this.validateProcessGraphFormat(params.processGraph)) {
+      return;
+    }
+
     this.options = Object.assign(this.options, params);
     this.redraw();
   };
@@ -181,9 +219,17 @@ class OpenEoLayerComponent extends GridLayer {
       layer.on('load', function () {
         progress.done();
       });
+
+      layer.on('tileerror', function () {
+        if (layer._noTilesToLoad()) {
+          progress.done();
+        }
+      });
     }
     layer.on('tileunload', function (e) {
-      e.tile.controller.abort();
+      if (e !== undefined && e.tile !== undefined && e.tile.controller !== undefined) {
+        e.tile.controller.abort();
+      }
     });
     layer.setClipping(params.clipping);
     layer.setOpacity(params.opacity);
@@ -210,7 +256,7 @@ class OpenEoLayerComponent extends GridLayer {
 
   getOptions(params) {
     let options = {};
-    if (params.processGraph && Object.keys(params.processGraph).length > 0) {
+    if (params.processGraph) {
       options.processGraph = params.processGraph;
     }
     if (params.datasetId) {

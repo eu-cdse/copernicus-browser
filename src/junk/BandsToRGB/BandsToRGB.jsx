@@ -12,11 +12,12 @@ import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 const link1 = 'https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/composites/';
 const link2 = 'https://www.usgs.gov/media/images/common-landsat-band-rgb-composites';
-const getTooltipContent = () => t`
-By using different spectral bands in the different colour channels (RGB) of an image, certain
+const getTooltipContent = () =>
+  t`By using different spectral bands in the different colour channels (RGB) of an image, certain
 features can be emphasised in the data.\n\nPopular RGB composites are True Colour (red, blue and green
-bands) or False Colour (near-infrared, red and green bands).\n\nMore info [here](${link1}) or [here](${link2}).
-`;
+bands) or False Colour (near-infrared, red and green bands).\n\nMore info [here](${link1}) or [here](${link2}).` +
+  '\n\n' +
+  t`Modifying the band assignment switches the mode to custom script and updates the layer automatically.`;
 
 // value = { r:'B01', g:'B02', b: 'B03' }
 export const BandsToRGB = ({ bands, value, onChange, areBandsClasses }) => {

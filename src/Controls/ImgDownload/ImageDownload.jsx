@@ -46,7 +46,7 @@ import {
   getLoggedInErrorMsg,
   getOnlyBasicImgDownloadAvailableMsg,
 } from '../../junk/ConstMessages';
-import { isDataFusionEnabled, fetchEvalscriptFromEvalscripturl } from '../../utils';
+import { isDataFusionEnabled } from '../../utils';
 import {
   constructGetMapParamsEffects,
   getVisualizationEffectsFromStore,
@@ -56,7 +56,7 @@ import { getGetMapAuthToken } from '../../App';
 import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 
 import './ImageDownload.scss';
-import { MAX_SH_IMAGE_SIZE } from '../../const';
+import { MAX_SH_IMAGE_SIZE, PROCESSING_OPTIONS } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 
@@ -188,7 +188,7 @@ function ImageDownload(props) {
       const selectedTheme = props.themesLists[props.selectedThemesListId].find(
         (t) => t.id === props.selectedThemeId,
       );
-      getAllLayers(props.visualizationUrl, props.datasetId, selectedTheme, props.fromTime).then((allLayers) =>
+      getAllLayers(props.visualizationUrl, props.datasetId, selectedTheme).then((allLayers) =>
         setAllLayers(allLayers),
       );
       setSupportedImageFormats(getSupportedImageFormats(props.datasetId));
@@ -232,6 +232,8 @@ function ImageDownload(props) {
       width: width,
       height: height,
       getMapAuthToken: getMapAuthToken,
+      selectedProcessing: props.selectedProcessing,
+      processGraph: props.processGraph,
     };
 
     if (cropToAoi) {
@@ -328,6 +330,8 @@ function ImageDownload(props) {
     const {
       evalscript,
       evalscripturl,
+      processGraph,
+      processgraphurl,
       visualizationUrl,
       datasetId,
       dataFusion,
@@ -418,25 +422,19 @@ function ImageDownload(props) {
       blueRangeEffect: blueRangeEffect,
       redRangeEffect: redRangeEffect,
       greenRangeEffect: greenRangeEffect,
+      selectedProcessing: props.selectedProcessing,
     };
 
     if (customSelected) {
-      let response;
-      if (evalscripturl) {
-        try {
-          response = await fetchEvalscriptFromEvalscripturl(evalscripturl);
-        } catch (error) {
-          setError('Could not get custom evalscript.');
-          setLoadingImages(false);
-          return;
-        }
-      }
-
+      const isOpenEO = props.selectedProcessing === PROCESSING_OPTIONS.OPENEO;
       requestsParams.push({
         ...baseParams,
+        layerId: props.layerId,
         customSelected: true,
-        evalscript: evalscripturl ? response.data : evalscript,
-        evalscripturl: evalscripturl,
+        processGraph: isOpenEO ? processGraph : null,
+        processgraphurl: isOpenEO ? processgraphurl : null,
+        evalscript: isOpenEO ? null : evalscript,
+        evalscripturl: isOpenEO ? null : evalscripturl,
         dataFusion: dataFusion,
         effects: effects,
       });
@@ -921,6 +919,8 @@ const mapStoreToProps = (store) => ({
   customSelected: store.visualization.customSelected,
   cloudCoverage: store.visualization.cloudCoverage,
   selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
+  processgraphurl: store.visualization.processgraphurl,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   selectedThemesListId: store.themes.selectedThemesListId,

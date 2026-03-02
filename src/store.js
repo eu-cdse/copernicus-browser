@@ -497,6 +497,8 @@ export const visualizationSlice = createSlice({
     dateMode: DATE_MODES.SINGLE.value,
     selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
     processGraph: '',
+    processgraphurl: undefined,
+    isProcessGraphModified: false,
   },
   reducers: {
     setVisualizationTime: (state, action) => {
@@ -517,6 +519,9 @@ export const visualizationSlice = createSlice({
       state.evalscript = undefined;
       state.dataFusion = [];
       state.evalscripturl = undefined;
+      state.processGraph = undefined;
+      state.processgraphurl = undefined;
+      state.isProcessGraphModified = false;
       if (orbitDirection) {
         state.orbitDirection = orbitDirection;
       } else {
@@ -540,6 +545,9 @@ export const visualizationSlice = createSlice({
     },
     setEvalscripturl: (state, action) => {
       state.evalscripturl = action.payload;
+    },
+    setProcessgraphurl: (state, action) => {
+      state.processgraphurl = action.payload;
     },
     setDataFusion: (state, action) => {
       state.dataFusion = action.payload;
@@ -758,6 +766,12 @@ export const visualizationSlice = createSlice({
       if (action.payload.processGraph !== undefined) {
         state.processGraph = action.payload.processGraph;
       }
+      if (action.payload.processgraphurl !== undefined) {
+        state.processgraphurl = action.payload.processgraphurl;
+      }
+      if (action.payload.isProcessGraphModified !== undefined) {
+        state.isProcessGraphModified = action.payload.isProcessGraphModified;
+      }
     },
     reset: (state) => {
       state.fromTime = undefined;
@@ -768,6 +782,7 @@ export const visualizationSlice = createSlice({
       state.customSelected = false;
       state.evalscript = undefined;
       state.evalscripturl = undefined;
+      state.processgraphurl = undefined;
       state.dataFusion = [];
       state.visibleOnMap = false;
       state.gainEffect = 1;
@@ -786,6 +801,7 @@ export const visualizationSlice = createSlice({
       state.orbitDirection = undefined;
       state.cloudCoverage = DEFAULT_CLOUD_COVER_PERCENT;
       state.dateMode = DATE_MODES.SINGLE.value;
+      state.isProcessGraphModified = false;
     },
   },
 });

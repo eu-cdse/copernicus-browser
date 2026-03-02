@@ -183,6 +183,7 @@ const pinPropertiesSubset = (pin) => ({
   dateMode: pin.dateMode,
   evalscript: pin.evalscript,
   evalscripturl: pin.evalscripturl,
+  processgraphurl: pin.processgraphurl,
   dataFusion: pin.dataFusion,
   dataFusionLegacy: pin.dataFusionLegacy,
   gain: pin.gain,
@@ -200,6 +201,8 @@ const pinPropertiesSubset = (pin) => ({
   backscatterCoeff: pin.backscatterCoeff,
   demSource3D: pin.demSource3D,
   terrainViewerSettings: pin.terrainViewerSettings,
+  processGraph: pin.processGraph,
+  selectedProcessing: pin.selectedProcessing,
 });
 
 export function getPinsFromStorage(user) {
@@ -382,6 +385,7 @@ export async function constructPinFromProps(props) {
     cloudCoverage,
     selectedProcessing,
     processGraph,
+    processgraphurl,
   } = props;
   const themeName = getThemeName(themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId));
   const layer = await getLayerFromParams(props);
@@ -424,7 +428,14 @@ export async function constructPinFromProps(props) {
     orbitDirection: orbitDirection,
     cloudCoverage: cloudCoverage,
     selectedProcessing: selectedProcessing,
-    processGraph: processGraph,
+    processGraph:
+      selectedProcessing === PROCESSING_OPTIONS.OPENEO && customSelected && !processgraphurl
+        ? processGraph
+        : '',
+    processgraphurl:
+      selectedProcessing === PROCESSING_OPTIONS.OPENEO && processgraphurl && customSelected
+        ? processgraphurl
+        : '',
   };
 }
 

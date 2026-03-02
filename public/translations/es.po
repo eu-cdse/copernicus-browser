@@ -10319,3 +10319,50 @@ msgid ""
 "left and right sides of each season. The data are available at 300 m "
 "spatial resolution with the temporal extent from 2014 to present."
 msgstr ""
+
+msgid "Load process graph from URL"
+msgstr ""
+
+msgid ""
+"Note: The collection **id**, **spatial_extent**, and **temporal_extent** "
+"properties are read-only. These values update automatically based on your "
+"selection in the data collection panel, the current map extent, and the "
+"date picker."
+msgstr ""
+
+msgid ""
+"Modifying the band assignment switches the mode to custom script and "
+"updates the layer automatically."
+msgstr ""
+
+msgid ""
+"Modifying the index configuration switches the mode to custom script and "
+"updates the layer automatically."
+msgstr ""
+
+msgid "Invalid evalscript provided"
+msgstr ""
+
+msgid "Invalid OpenEO process graph provided"
+msgstr ""
+
+msgid "No load_collection process found in the process graph."
+msgstr ""
+
+#, javascript-format
+msgid ""
+"Format \"${ format }\" is not supported for map visualization but can be "
+"downloaded."
+msgstr ""
+
+#, javascript-format
+msgid ""
+"Format \"${ format }\" is not supported. Only PNG and JPG formats are "
+"supported for map visualization."
+msgstr ""
+
+msgid "Statistical info not available for edited OpenEO process graph"
+msgstr ""
+
+msgid "Histogram not available for edited OpenEO process graph"
+msgstr ""

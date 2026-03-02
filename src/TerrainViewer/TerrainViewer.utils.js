@@ -22,8 +22,11 @@ import { findMatchingLayerMetadata } from '../Tools/VisualizationPanel/legendUti
 import store, { mainMapSlice, terrainViewerSlice } from '../store';
 import { wgs84ToMercator } from '../junk/EOBCommon/utils/coords';
 import { getBoundsZoomLevel } from '../utils/coords';
-import { DEFAULT_DEM_SOURCE, DEM_3D_MAX_ZOOM, EQUATOR_LENGTH } from '../const';
+import { DEFAULT_DEM_SOURCE, DEM_3D_MAX_ZOOM, EQUATOR_LENGTH, PROCESSING_OPTIONS } from '../const';
 import { addLabelsAndLogos, dateTimeDisplayFormat } from '../Controls/Timelapse/Timelapse.utils';
+import { getProcessGraph, isOpenEoSupported, MIMETYPE_TO_OPENEO_FORMAT } from '../api/openEO/openEOHelpers';
+import processGraphBuilder from '../api/openEO/processGraphBuilder';
+import openEOApi from '../api/openEO/openEO.api';
 
 let mapTileRequestDelay = 1;
 const mapTileRequestList = [];
@@ -127,41 +130,92 @@ function getMapTileUrlInternal({
     : layer.supportsApiType(ApiType.WMTS)
     ? ApiType.WMTS
     : ApiType.WMS;
-  layer
-    .getMap(params, apiType, reqConfig)
-    .then(async (blob) => {
-      mapTileRequestDelay = Math.max(1, 0.5 * mapTileRequestDelay); // reduce the delay
-      let url = URL.createObjectURL(blob);
-      callback(url);
-    })
-    .catch((error) => {
-      const httpStatus = error.response && error.response.status ? error.response.status : 0;
-      if (httpStatus === 429) {
-        // too many requests, must wait a little and retry
-        mapTileRequestDelay = Math.min(5000, mapTileRequestDelay / 0.8);
-        if (mapTileRequestDelay > maxDelayBeforeSwitch) {
-          reqConfig.authToken = null;
+
+  const shouldUseOpenEO =
+    params.selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
+    (params.processGraph ||
+      isOpenEoSupported(layer.instanceId, layer.layerId, params.format, !!params.effects, false));
+
+  const tryLayerGetMap = () =>
+    layer
+      .getMap(params, apiType, reqConfig)
+      .then(async (blob) => {
+        mapTileRequestDelay = Math.max(1, 0.5 * mapTileRequestDelay); // reduce the delay
+        let url = URL.createObjectURL(blob);
+        callback(url);
+      })
+      .catch((error) => {
+        const httpStatus = error.response && error.response.status ? error.response.status : 0;
+        if (httpStatus === 429) {
+          // too many requests, must wait a little and retry
+          mapTileRequestDelay = Math.min(5000, mapTileRequestDelay / 0.8);
+          if (mapTileRequestDelay > maxDelayBeforeSwitch) {
+            reqConfig.authToken = null;
+          }
+          getMapTileUrl({
+            layer,
+            params,
+            minX,
+            minY,
+            maxX,
+            maxY,
+            width,
+            height,
+            callback,
+            reqConfig,
+            onTileError,
+          });
+        } else {
+          if (!isCancelled(error)) {
+            onTileError(error);
+          }
+          callback(null);
         }
-        getMapTileUrl({
-          layer,
-          params,
-          minX,
-          minY,
-          maxX,
-          maxY,
-          width,
-          height,
-          callback,
-          reqConfig,
-          onTileError,
-        });
-      } else {
-        if (!isCancelled(error)) {
-          onTileError(error);
-        }
-        callback(null);
-      }
-    });
+      });
+
+  if (!shouldUseOpenEO) {
+    tryLayerGetMap();
+    return;
+  }
+
+  try {
+    const bbox = params.bbox || new BBox(CRS_EPSG3857, minX, minY, maxX, maxY);
+    const spatialExtent = {
+      west: bbox.minX,
+      east: bbox.maxX,
+      south: bbox.minY,
+      north: bbox.maxY,
+      height: params.height || height,
+      width: params.width || width,
+      crs: bbox.crs.authId,
+    };
+
+    const processGraphJson = layer.processGraph
+      ? JSON.parse(layer.processGraph)
+      : getProcessGraph(layer.instanceId, layer.layerId);
+
+    const newProcessGraph = processGraphBuilder.saveResult(
+      processGraphBuilder.loadCollection(processGraphJson, {
+        datasetId: params.datasetId,
+        spatial_extent: spatialExtent,
+        temporal_extent: [params.fromTime || null, params.toTime || null],
+      }),
+      { format: MIMETYPE_TO_OPENEO_FORMAT[params.format] },
+    );
+
+    openEOApi
+      .getResult(newProcessGraph, reqConfig && reqConfig.authToken)
+      .then((blob) => {
+        mapTileRequestDelay = Math.max(1, 0.5 * mapTileRequestDelay);
+        const url = URL.createObjectURL(blob);
+        callback(url);
+      })
+      .catch(() => {
+        tryLayerGetMap();
+      });
+  } catch (e) {
+    tryLayerGetMap();
+  }
 }
 
 export function getHeightFromZoom(zoom) {

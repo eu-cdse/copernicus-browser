@@ -314,6 +314,8 @@ function TerrainViewer(props) {
         toTime: toTime.toDate(),
         preview: 2,
         effects: constructGetMapParamsEffects(props),
+        selectedProcessing: props.selectedProcessing,
+        processGraph: props.processGraph,
         tileCoord: {
           x: tileX,
           y: tileY,
@@ -389,6 +391,8 @@ function TerrainViewer(props) {
         toTime: toTime.toDate(),
         preview: 2,
         effects: constructGetMapParamsEffects(props),
+        selectedProcessing: props.selectedProcessing,
+        processGraph: props.processGraph,
         tileCoord: {
           x: tileX,
           y: tileY,
@@ -490,7 +494,7 @@ function TerrainViewer(props) {
         is3D &&
         props.dataSourcesInitialized &&
         props.datasetId &&
-        (props.layerId || props.evalscript || props.evalscripturl)
+        (props.layerId || props.evalscript || props.evalscripturl || props.processGraph)
       ) {
         if (props.visibleOnMap) {
           const newLayer = await getLayerFromParams(props).catch((e) => {
@@ -580,6 +584,8 @@ function TerrainViewer(props) {
     props.cloudCoverage,
     props.dateMode,
     props.visibleOnMap,
+    props.processGraph,
+    props.selectedProcessing,
   ]);
 
   useEffect(() => {
@@ -830,6 +836,8 @@ const mapStoreToProps = (store) => ({
   cloudCoverage: store.visualization.cloudCoverage,
   datasetId: store.visualization.datasetId,
   customSelected: store.visualization.customSelected,
+  selectedProcessing: store.visualization.selectedProcessing,
+  processGraph: store.visualization.processGraph,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
   demSource3D: store.visualization.demSource3D,

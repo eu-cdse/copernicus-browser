@@ -62,8 +62,16 @@
 
         &.disabled {
           cursor: not-allowed;
-          background-color: vars.$sliderRailGray;
-          opacity: 0.9;
+          pointer-events: none;
+          opacity: 0.5;
+
+          &:active {
+            border: none;
+          }
+
+          &:not(:checked) {
+            background-color: vars.$customCheckboxBackgroundColor;
+          }
         }
       }
 

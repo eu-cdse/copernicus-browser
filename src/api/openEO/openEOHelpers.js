@@ -6,6 +6,10 @@ export const MIMETYPE_TO_OPENEO_FORMAT = {
   'image/tiff': 'gtiff',
 };
 
+export const OPENEO_VALID_FORMATS = ['png', 'jpg'];
+
+export const OPENEO_DOWNLOADABLE_FORMATS = ['geotiff', 'gtiff'];
+
 window.useOpenEO = true;
 
 const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_FLOAT32];
@@ -34,19 +38,25 @@ export function isOpenEoSupported(
     return false;
   }
 
-  if (
-    !instanceUrl ||
-    !layerId ||
-    !SUPPORTED_IMAGE_FORMATS.includes(imageFormat) ||
-    isVisualizationEffectsApplied ||
-    isCustomVisualization
-  ) {
+  const hasRequiredParams = !!instanceUrl && !!layerId;
+  const isSupportedImageFormat = SUPPORTED_IMAGE_FORMATS.includes(imageFormat);
+  const isBlockedByState = isVisualizationEffectsApplied || isCustomVisualization;
+
+  if (!hasRequiredParams || !isSupportedImageFormat || isBlockedByState) {
     return false;
   }
-  const graph = getProcessGraph(instanceUrl, layerId);
-  return graph !== undefined;
+
+  return getProcessGraph(instanceUrl, layerId) !== undefined;
 }
 
 export function findNodeByProcessId(processGraph, processId) {
   return Object.keys(processGraph).find((key) => processGraph[key].process_id === processId);
+}
+
+export function getProcessGraphString(url, layerId, supportsOpenEO) {
+  if (!supportsOpenEO) {
+    return '';
+  }
+  const processGraph = getProcessGraph(url, layerId);
+  return processGraph ? JSON.stringify(processGraph, null, '\t') : '';
 }

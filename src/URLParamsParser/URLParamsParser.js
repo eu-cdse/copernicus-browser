@@ -2,7 +2,13 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getUrlParams, parsePosition, parseDataFusion, fetchEvalscriptFromEvalscripturl } from '../utils';
+import {
+  getUrlParams,
+  parsePosition,
+  parseDataFusion,
+  fetchEvalscriptFromEvalscripturl,
+  fetchProcessGraphFromProcessGraphUrl,
+} from '../utils';
 import store, {
   mainMapSlice,
   visualizationSlice,
@@ -39,11 +45,32 @@ class URLParamsParser extends React.Component {
     params: null,
   };
 
+  normalizeUrlParam = (value) => {
+    if (!value) {
+      return value;
+    }
+
+    if (/^https?:\/\//i.test(value)) {
+      return value;
+    }
+
+    try {
+      const decoded = b64DecodeUnicode(value);
+      return /^https?:\/\//i.test(decoded) ? decoded : value;
+    } catch (e) {
+      return value;
+    }
+  };
+
   async componentDidMount() {
     let params = getUrlParams();
 
-    params = await this.parseEvalscriptFromEvalscriptUrl(params);
-
+    if (params.evalscripturl) {
+      params = await this.parseEvalscriptFromEvalscriptUrl(params);
+    }
+    if (params.processgraphurl) {
+      params = await this.parseProcessGraphFromProcessGraphUrl(params);
+    }
     const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(this.props.user.access_token);
     if (
       [
@@ -71,11 +98,29 @@ class URLParamsParser extends React.Component {
       return params;
     }
 
-    const { data } = await fetchEvalscriptFromEvalscripturl(evalscripturl);
+    const decodedEvalscriptUrl = this.normalizeUrlParam(evalscripturl);
+    const { data } = await fetchEvalscriptFromEvalscripturl(decodedEvalscriptUrl);
 
     return {
       ...params,
       evalscript: b64EncodeUnicode(data),
+    };
+  };
+
+  parseProcessGraphFromProcessGraphUrl = async (params) => {
+    const { processgraphurl } = params;
+
+    if (!processgraphurl) {
+      return params;
+    }
+
+    const decodedProcessGraphUrl = b64DecodeUnicode(processgraphurl);
+    const { data } = await fetchProcessGraphFromProcessGraphUrl(decodedProcessGraphUrl);
+    const processGraphData = typeof data === 'string' ? JSON.parse(data) : data;
+
+    return {
+      ...params,
+      processGraph: b64EncodeUnicode(JSON.stringify(processGraphData, null, 2)),
     };
   };
 
@@ -99,6 +144,8 @@ class URLParamsParser extends React.Component {
       layerId,
       evalscript,
       evalscripturl,
+      processgraphurl,
+      processGraph,
       themesUrl,
       gain,
       gamma,
@@ -145,7 +192,7 @@ class URLParamsParser extends React.Component {
         ? decrypt(visualizationUrl)
         : visualizationUrl;
 
-    const customSelected = evalscript || evalscripturl ? true : undefined;
+    const customSelected = evalscript || evalscripturl || processGraph || processgraphurl ? true : undefined;
     const newVisualizationParams = {
       datasetId: datasetId,
       fromTime: fromTime ? moment.utc(fromTime) : null,
@@ -154,7 +201,9 @@ class URLParamsParser extends React.Component {
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
       customSelected: customSelected,
-      evalscripturl,
+      evalscripturl: this.normalizeUrlParam(evalscripturl),
+      processgraphurl: processgraphurl ? b64DecodeUnicode(processgraphurl) : undefined,
+      processGraph: processGraph ? b64DecodeUnicode(processGraph) : undefined,
       gainEffect: gain ? parseFloat(gain) : undefined,
       gammaEffect: gamma ? parseFloat(gamma) : undefined,
       redRangeEffect: redRange ? JSON.parse(redRange) : undefined,
@@ -175,15 +224,18 @@ class URLParamsParser extends React.Component {
       dateMode: dateMode,
       useEvoland: useEvoland,
       visibleOnMap: (layerId || customSelected) && datasetId && decryptedVisualisationUrl,
-      selectedProcessing: isOpenEoSupported(
-        decryptedVisualisationUrl,
-        layerId,
-        IMAGE_FORMATS.PNG,
-        isVisualizationEffectsApplied({ effects: { gain, gamma, redRange, greenRange, blueRange } }),
-        evalscript || evalscripturl,
-      )
-        ? PROCESSING_OPTIONS.OPENEO
-        : PROCESSING_OPTIONS.PROCESS_API,
+      selectedProcessing:
+        processGraph || processgraphurl
+          ? PROCESSING_OPTIONS.OPENEO
+          : isOpenEoSupported(
+              decryptedVisualisationUrl,
+              layerId,
+              IMAGE_FORMATS.PNG,
+              isVisualizationEffectsApplied({ effects: { gain, gamma, redRange, greenRange, blueRange } }),
+              evalscript || evalscripturl,
+            )
+          ? PROCESSING_OPTIONS.OPENEO
+          : PROCESSING_OPTIONS.PROCESS_API,
     };
     store.dispatch(visualizationSlice.actions.setVisualizationParams(newVisualizationParams));
     if (datasetId && !compareShare) {

@@ -211,6 +211,7 @@ export async function fetchImage(layer, options) {
     isEffectsAndOptionsSelected,
     customSelected,
     selectedProcessing,
+    processGraph,
   } = options;
 
   const dsh = getDataSourceHandler(datasetId);
@@ -243,20 +244,22 @@ export async function fetchImage(layer, options) {
       reqConfig,
     );
   } else {
-    if (
-      isOpenEoSupported(
-        layer.instanceId,
-        layer.layerId,
-        imageFormat,
-        isEffectsAndOptionsSelected,
-        customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
-      )
-    ) {
+    const shouldUseOpenEO = isOpenEoSupported(
+      layer.instanceId,
+      layer.layerId,
+      imageFormat,
+      isEffectsAndOptionsSelected,
+      customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
+    );
+
+    if (shouldUseOpenEO) {
       const openEoWidth = Math.max(1, Math.abs(getMapParams.width));
       const openEoHeight = Math.max(1, Math.abs(getMapParams.height));
 
       const isRawBand = options.bandName != null;
-      const processGraph = getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
+      let processGraphToUse = processGraph
+        ? JSON.parse(processGraph)
+        : getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
       const spatialExtent =
         geometry == null
           ? {
@@ -282,8 +285,9 @@ export async function fetchImage(layer, options) {
       }
 
       const newProcessGraph = processGraphBuilder.saveResult(
-        processGraphBuilder.loadCollection(processGraph, {
+        processGraphBuilder.loadCollection(processGraphToUse, {
           id: collectionId,
+          datasetId,
           spatial_extent: spatialExtent,
           temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
           bands: isRawBand ? [options.bandName] : null,
@@ -499,6 +503,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
     selectedCrs,
     baseLayerUrl,
     cropToAoi,
+    selectedProcessing,
+    processGraph,
   } = params;
   const isEffectsAndOptionsSelected = isVisualizationEffectsApplied(params);
   const layer = layerFromParams ?? (await getLayerFromParams(params, cancelToken));
@@ -568,6 +574,8 @@ export async function fetchImageFromParams(params, raiseWarning) {
         getMapAuthToken: getMapAuthToken,
         isEffectsAndOptionsSelected,
         customSelected,
+        selectedProcessing,
+        processGraph,
       };
 
       const blob = await fetchImage(layer, options).catch((err) => {
@@ -602,6 +610,9 @@ export async function fetchImageFromParams(params, raiseWarning) {
       mimeType: mimeType,
       getMapAuthToken: getMapAuthToken,
       isEffectsAndOptionsSelected,
+      customSelected,
+      selectedProcessing,
+      processGraph,
     };
 
     blob = await fetchImage(layer, options).catch((err) => {
@@ -881,6 +892,8 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
     backscatterCoeff,
     orbitDirection,
     cloudCoverage,
+    selectedProcessing,
+    processGraph,
   } = params;
   const isTimeRange = isTimespanModeSelected(fromTime, toTime);
   let layer;
@@ -922,6 +935,18 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
       layer.evalscript = evalscript;
       layer.evalscriptUrl = evalscripturl;
       layer.layerId = layerId;
+    }
+  }
+
+  if (layer) {
+    layer.selectedProcessing = selectedProcessing;
+    layer.processGraph = processGraph;
+
+    if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
+      layer.evalscript = null;
+      layer.evalscriptUrl = null;
+    } else {
+      layer.processGraph = null;
     }
   }
   if (layer) {
@@ -1095,7 +1120,7 @@ export function getAllBands(datasetId) {
   return dsh ? dsh.getBands(datasetId) : [];
 }
 
-export async function getAllLayers(url, datasetId, selectedTheme, selectedDate) {
+export async function getAllLayers(url, datasetId, selectedTheme) {
   const dsh = getDataSourceHandler(datasetId);
   const shJsDataset = dsh ? dsh.getSentinelHubDataset(datasetId) : null;
   const { layersExclude, layersInclude } = selectedTheme.content.find((t) => t.url === url);
@@ -1110,7 +1135,7 @@ export async function getAllLayers(url, datasetId, selectedTheme, selectedDate) 
       await l.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
     }),
   );
-  return dsh.getLayers(allLayers, datasetId, url, layersExclude, layersInclude, selectedDate);
+  return dsh.getLayers(allLayers, datasetId, url, layersExclude, layersInclude);
 }
 
 export function getSupportedImageFormats(datasetId) {

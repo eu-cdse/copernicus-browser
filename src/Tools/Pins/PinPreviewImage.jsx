@@ -101,6 +101,7 @@ class PinPreviewImage extends React.Component {
       upsampling,
       downsampling,
       orbitDirection,
+      processGraph,
     } = this.props.pin;
 
     try {
@@ -169,8 +170,10 @@ class PinPreviewImage extends React.Component {
         if (getMapAuthToken) {
           reqConfig.authToken = getMapAuthToken;
         }
+        let processGraphToUse = processGraph
+          ? JSON.parse(processGraph)
+          : getProcessGraph(layer.instanceId, layer.layerId);
 
-        const processGraph = getProcessGraph(layer.instanceId, layer.layerId);
         const spatialExtent = {
           west: getMapParams.bbox.minX,
           east: getMapParams.bbox.maxX,
@@ -192,8 +195,9 @@ class PinPreviewImage extends React.Component {
         }
 
         const newProcessGraph = processGraphBuilder.saveResult(
-          processGraphBuilder.loadCollection(processGraph, {
+          processGraphBuilder.loadCollection(processGraphToUse, {
             id: collectionId,
+            datasetId,
             spatial_extent: spatialExtent,
             temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
           }),
