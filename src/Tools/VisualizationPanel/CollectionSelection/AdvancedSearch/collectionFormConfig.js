@@ -336,30 +336,36 @@ export const collections = [
         ],
       },
       {
-        id: 'Complementary',
-        label: 'Complementary',
+        id: 'Demo Products',
+        label: 'Demo Products',
         supportsInstrumentName: false,
         supportsCloudCover: false,
-        productTypes: [
+        groups: [
           {
-            id: 'SR_2_TDP_LI',
-            name: 'SR_2_TDP_LI',
-            label: 'SR_2_TDP_LI',
-            customFilterExpression: FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'SR_2_TDP_LI',
-            ),
-          },
-          {
-            id: 'SR_2_TDP_HY',
-            name: 'SR_2_TDP_HY',
-            label: 'SR_2_TDP_HY',
-            customFilterExpression: FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'SR_2_TDP_HY',
-            ),
+            id: 'Demo Products SRAL',
+            label: 'SRAL',
+            productTypes: [
+              {
+                id: 'SR_2_TDP_LI',
+                name: 'SR_2_TDP_LI',
+                label: 'SR_2_TDP_LI',
+                customFilterExpression: FilterElement.Attribute(
+                  ODataAttributes.productType,
+                  ODataFilterOperator.eq,
+                  'SR_2_TDP_LI',
+                ),
+              },
+              {
+                id: 'SR_2_TDP_HY',
+                name: 'SR_2_TDP_HY',
+                label: 'SR_2_TDP_HY',
+                customFilterExpression: FilterElement.Attribute(
+                  ODataAttributes.productType,
+                  ODataFilterOperator.eq,
+                  'SR_2_TDP_HY',
+                ),
+              },
+            ],
           },
         ],
       },
@@ -2445,8 +2451,26 @@ function transformToRecursive(collections) {
         transformedInstrument.type = 'instrument';
         transformedInstrument.items = [];
 
-        // Transform product types to items
-        if (Array.isArray(instrument.productTypes)) {
+        // Transform groups to items
+        if (Array.isArray(instrument.groups)) {
+          instrument.groups.forEach((group) => {
+            const transformedGroup = { ...group };
+            transformedGroup.type = 'group';
+            transformedGroup.items = [];
+
+            // Transform product types to items
+            if (Array.isArray(group.productTypes)) {
+              group.productTypes.forEach((productType) => {
+                const transformedProductType = { ...productType };
+                transformedProductType.type = 'productType';
+                transformedProductType.items = [];
+                transformedGroup.items.push(transformedProductType);
+              });
+            }
+            transformedInstrument.items.push(transformedGroup);
+          });
+          // Transform product types to items
+        } else if (Array.isArray(instrument.productTypes)) {
           instrument.productTypes.forEach((productType) => {
             const transformedProductType = { ...productType };
             transformedProductType.type = 'productType';

@@ -941,13 +941,6 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
   if (layer) {
     layer.selectedProcessing = selectedProcessing;
     layer.processGraph = processGraph;
-
-    if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
-      layer.evalscript = null;
-      layer.evalscriptUrl = null;
-    } else {
-      layer.processGraph = null;
-    }
   }
   if (layer) {
     if (dsh && dsh.getAdditionalParamsForGetMap) {

@@ -59,6 +59,7 @@ import './ImageDownload.scss';
 import { MAX_SH_IMAGE_SIZE, PROCESSING_OPTIONS } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import { getDefaultBaseLayer } from '../../Map/Layers';
+import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 
 function checkZoomLevel(datasetId, zoom) {
   const dsh = getDataSourceHandler(datasetId);
@@ -354,6 +355,7 @@ function ImageDownload(props) {
       blueRangeEffect,
       redRangeEffect,
       greenRangeEffect,
+      selectedProcessing,
     } = props;
     const {
       selectedResolution,
@@ -422,11 +424,11 @@ function ImageDownload(props) {
       blueRangeEffect: blueRangeEffect,
       redRangeEffect: redRangeEffect,
       greenRangeEffect: greenRangeEffect,
-      selectedProcessing: props.selectedProcessing,
+      selectedProcessing: selectedProcessing,
     };
 
     if (customSelected) {
-      const isOpenEO = props.selectedProcessing === PROCESSING_OPTIONS.OPENEO;
+      const isOpenEO = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
       requestsParams.push({
         ...baseParams,
         layerId: props.layerId,
@@ -446,12 +448,18 @@ function ImageDownload(props) {
     for (let band of selectedBands) {
       requestsParams.push({
         ...baseParams,
+        layerId: props.layerId,
         customSelected: true,
         evalscript: supportsV3Evalscript
           ? constructV3Evalscript(band, datasetId, imageFormat, allBands, addDataMask)
           : constructBasicEvalscript(band),
         isRawBand: true,
         bandName: band,
+        selectedProcessing:
+          selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
+          isOpenEoSupported(visualizationUrl, props.layerId, imageFormat) // check if the image format from the form is supported for openEO, if not fallback to process api
+            ? PROCESSING_OPTIONS.OPENEO
+            : PROCESSING_OPTIONS.PROCESS_API,
       });
     }
 
@@ -461,6 +469,11 @@ function ImageDownload(props) {
           ...baseParams,
           layerId: layer,
           effects: effects,
+          selectedProcessing:
+            selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
+            isOpenEoSupported(visualizationUrl, layer, imageFormat) // check if the image format from the form is supported for openEO, if not fallback to process api
+              ? PROCESSING_OPTIONS.OPENEO
+              : PROCESSING_OPTIONS.PROCESS_API,
         });
       }
     }
