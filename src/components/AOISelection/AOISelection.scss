@@ -5,14 +5,32 @@
   align-items: center;
   margin-bottom: 6px;
 
-  .aoi-selection {
+  .aoi-label-wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+  }
+
+  .aoi-selection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-height: 24px;
     padding-left: 10px;
 
+    .aoi-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .aoi-text {
+      display: flex;
+      align-items: center;
+    }
+
     .area-text {
-      line-height: 0;
+      line-height: 1;
     }
 
     i {

@@ -20,7 +20,7 @@ import {
 } from '../../utils/effectsUtils';
 import { getLayerFromParams } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { PROCESSING_OPTIONS, TABS } from '../../const';
-import { SAVED_PINS, UNSAVED_PINS } from './PinPanel';
+import { SAVED_PINS, UNSAVED_PINS } from './const';
 
 const PINS_LC_NAME = 'eob-pins';
 

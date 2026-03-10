@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CacheTarget,
   LayersFactory,
@@ -12,7 +11,6 @@ import { t } from 'ttag';
 import store, { notificationSlice, themesSlice } from '../../../store';
 import Sentinel1DataSourceHandler from './Sentinel1DataSourceHandler';
 import ComplementaryDataDataSourceHandler from './ComplementaryDataDataSourceHandler';
-import BYOCDataSourceHandler from './BYOCDataSourceHandler';
 import DEMCDASDataSourceHandler from './DEMCDASDataSourceHandler';
 
 import { getCollectionInformation } from '../../../utils/collections';
@@ -241,6 +239,7 @@ import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 import GHGSatDatasourceHandler from './RRDDataSources/GHGSatDatasourceHandler';
 import EvolandDataSourceHandler from './EvolandDataSourceHandler';
+import UnknownBYOCDataSourceHandler from './UnknownBYOCDataSourceHandler';
 
 export let dataSourceHandlers;
 initializeDataSourceHandlers();
@@ -254,7 +253,6 @@ export function initializeDataSourceHandlers() {
     new Sentinel3CDASDataSourceHandler(),
     new Sentinel5PCDASDataSourceHandler(),
     new DEMCDASDataSourceHandler(),
-    new BYOCDataSourceHandler(),
     new AirbusDeDataSourceHandler(),
     new EUSIDataSourceHandler(),
     new GeosatDatasourceHandler(),
@@ -272,6 +270,7 @@ export function initializeDataSourceHandlers() {
     new CLMSDataSourceHandler(),
     new CCMDataSourceHandler(),
     new EvolandDataSourceHandler(),
+    new UnknownBYOCDataSourceHandler(), // Moved to end as fallback for unknown BYOC collections
     new ComplementaryDataDataSourceHandler(),
   ];
 }
@@ -281,12 +280,6 @@ export function registerHandlers(service, url, name, configs = [], preselected, 
     dsHandler.willHandle(service, url, name, configs, preselected, onlyForBaseLayer),
   );
   return handledBy.length !== 0;
-}
-
-export function renderDataSourcesInputs() {
-  return dataSourceHandlers
-    .filter((dsh) => dsh.isHandlingAnyUrl())
-    .map((dsh, dshIndex) => <div key={dshIndex}>{dsh.getSearchFormComponents()}</div>);
 }
 
 export function getAllAvailableCollections() {

@@ -7,6 +7,7 @@
 /build
 /deploy
 .env*
+!.env*.example
 .npm
 .gitlab
 .DS_Store

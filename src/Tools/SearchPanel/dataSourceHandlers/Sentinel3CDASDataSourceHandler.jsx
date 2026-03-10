@@ -22,7 +22,6 @@ import {
   //getS3AODL2Markdown,
   //getS3VGPL2Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel3Tooltip';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import {
   S3SLSTR_CDAS,
   S3OLCI_CDAS,
@@ -471,62 +470,6 @@ export default class Sentinel3CDASDataSourceHandler extends DataSourceHandler {
   }
 
   getUrlsForDataset = (datasetId) => this.urls[datasetId] || [];
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-
-    const datasets = this.searchFilters.selectedOptions;
-    datasets.forEach((dataset) => {
-      const { maxCC, views, orbitDirections } = this.searchFiltersSLSTR;
-
-      let searchLayer;
-      if (dataset === S3OLCI_CDAS) {
-        // instanceId and layerId are required parameters, although we don't need them for findTiles
-        searchLayer = new S3OLCICDASLayer({ instanceId: true, layerId: true });
-      }
-      if (dataset === S3SLSTR_CDAS) {
-        // instanceId and layerId are required parameters, although we don't need them for findTiles
-        searchLayer = new S3SLSTRCDASLayer({
-          instanceId: true,
-          layerId: true,
-          view: views[0],
-          orbitDirection: orbitDirections[0],
-          maxCloudCoverPercent: maxCC,
-        });
-      }
-      if (dataset === S3OLCIL2_WATER || dataset === S3OLCIL2_LAND) {
-        searchLayer = new S3OLCIL2CDASLayer({ instanceId: true, layerId: true, maxCloudCoverPercent: maxCC });
-      }
-      if (
-        dataset === S3SYNERGY_L2_SYN ||
-        dataset === S3SYNERGY_L2_VG1 ||
-        dataset === S3SYNERGY_L2_V10
-        // TODO: || dataset === S3SYNERGY_L2_AOD || dataset === S3SYNERGY_L2_VGP
-      ) {
-        searchLayer = new S3SYNL2CDASLayer({
-          instanceId: true,
-          layerId: true,
-          maxCloudCoverPercent: maxCC,
-          s3Type: this.getS3Type(dataset),
-        });
-      }
-
-      const ff = new FetchingFunction(
-        dataset,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
 
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => ({

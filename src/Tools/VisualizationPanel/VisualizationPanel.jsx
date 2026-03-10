@@ -35,13 +35,11 @@ import { getAppropriateAuthToken } from '../../App';
 import { resetMessagePanel } from '../../utils';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
+import { NOTIFICATION_BADGE_RESET_TIMEOUT } from './const';
 
 const showEffectsText = () => t`Show effects and advanced options`;
 const appliedEffectsText = () => t`Effects and advanced options applied`;
 const showVisualizationsText = () => t`Show visualisations`;
-
-//number of ms to delay notification reset (to avoid notification reset on double click)
-export const NOTIFICATION_BADGE_RESET_TIMEOUT = 300;
 
 const getActions = ({
   displayEffects,

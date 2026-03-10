@@ -1,10 +1,4 @@
-import {
-  BYOCLayer,
-  BYOCSubTypes,
-  CRS_EPSG4326,
-  DATASET_BYOC,
-  LocationIdSHv3,
-} from '@sentinel-hub/sentinelhub-js';
+import { LocationIdSHv3 } from '@sentinel-hub/sentinelhub-js';
 import {
   EVOLAND_C01_CONTINUOUS_FOREST_MONITORING,
   EVOLAND_C02_FOREST_DISTURBANCE,
@@ -33,13 +27,8 @@ import {
   EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING_BANDS,
   EVOLAND_C12_TREE_TYPES_BANDS,
 } from './datasourceAssets/EvolandBands';
-import DataSourceHandler from './DataSourceHandler';
-import { reprojectGeometry } from '../../../utils/reproject';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { DATASOURCES } from '../../../const';
 import moment from 'moment';
-
-import { filterLayers } from './filter';
 import {
   getC01ContinuousForestMonitoringDescription,
   getC02ForestDisturbanceDescription,
@@ -54,8 +43,9 @@ import {
   getC11OnDemandLandCoverMappingDescription,
   getC12TreeTypesDescription,
 } from './DatasourceRenderingComponents/dataSourceTooltips/EvolandTooltip';
+import AbstractBYOCDataSourceHandler from './AbstractBYOCDataSourceHandler';
 
-export default class EvolandDataSourceHandler extends DataSourceHandler {
+export default class EvolandDataSourceHandler extends AbstractBYOCDataSourceHandler {
   datasource = DATASOURCES.EVOLAND;
   searchGroupLabel = 'Evoland Prototypes';
 
@@ -221,128 +211,6 @@ export default class EvolandDataSourceHandler extends DataSourceHandler {
       minDate: moment.utc('2021-01-01'),
       maxDate: moment.utc('2021-01-02'),
     },
-  };
-
-  allLayers = [];
-
-  getKnownCollectionsList() {
-    return Object.values(this.KNOWN_COLLECTIONS).flat();
-  }
-
-  isHandlingAnyUrl() {
-    return Object.values(this.urls).flat().length > 0;
-  }
-
-  getSentinelHubDataset = () => DATASET_BYOC;
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-
-    const { selectedOptions } = this.searchFilters;
-    selectedOptions.forEach((datasetId) => {
-      const searchLayer = this.allLayers.find((l) =>
-        this.KNOWN_COLLECTIONS[datasetId].includes(l.collectionId),
-      );
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
-
-  willHandle(service, url, name, layers, _preselected) {
-    let handlesAny = false;
-    for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
-      const layersWithDataset = layers.filter((l) =>
-        this.KNOWN_COLLECTIONS[datasetId].includes(l.collectionId),
-      );
-      if (layersWithDataset.length > 0) {
-        if (!this.urls[datasetId]?.includes(url)) {
-          this.urls[datasetId].push(url);
-        }
-        if (!this.datasets.includes(datasetId)) {
-          this.datasets.push(datasetId);
-        }
-        handlesAny = true;
-        this.allLayers.push(...layersWithDataset);
-      }
-    }
-    this.saveFISLayers(url, layers);
-    return handlesAny;
-  }
-
-  getUrlsForDataset = (datasetId) => {
-    const urls = this.urls[datasetId];
-    if (!urls) {
-      return [];
-    }
-    return urls;
-  };
-
-  getLayers = (data, datasetId, url, layersExclude, layersInclude) => {
-    return data
-      .filter(
-        (layer) =>
-          filterLayers(layer.layerId, layersExclude, layersInclude) &&
-          this.KNOWN_COLLECTIONS[datasetId].includes(layer.collectionId),
-      )
-      .map((l) => ({ ...l, url: url }));
-  };
-
-  convertToStandardTiles = (data, datasetId) => {
-    const tiles = data.map((t) => {
-      if (t.geometry && t.geometry.crs && t.geometry.crs.properties.name !== CRS_EPSG4326.urn) {
-        reprojectGeometry(t.geometry, { toCrs: CRS_EPSG4326.authId });
-      }
-      return {
-        sensingTime: t.sensingTime,
-        geometry: t.geometry,
-        datasource: 'CUSTOM',
-        datasetId: datasetId,
-        metadata: {},
-      };
-    });
-    return tiles;
-  };
-
-  getMinMaxDates(datasetId) {
-    if (this.MIN_MAX_DATES[datasetId] == null) {
-      return { minDate: null, maxDate: null };
-    }
-    return this.MIN_MAX_DATES[datasetId];
-  }
-
-  getBaseLayerForDatasetId = (datasetId) => {
-    const collectionIds = this.KNOWN_COLLECTIONS[datasetId];
-    if (collectionIds) {
-      return new BYOCLayer({
-        evalscript: true,
-        collectionId: collectionIds[0],
-        locationId: this.KNOWN_COLLECTIONS_LOCATIONS[datasetId],
-      });
-    }
-  };
-
-  getDatasetParams = (datasetId) => {
-    const collectionIds = this.KNOWN_COLLECTIONS[datasetId];
-    if (collectionIds) {
-      return {
-        collectionId: collectionIds[0],
-        locationId: this.KNOWN_COLLECTIONS_LOCATIONS[datasetId],
-        subType: BYOCSubTypes.BYOC,
-      };
-    }
-    return {};
   };
 
   getBands = (datasetId) => {

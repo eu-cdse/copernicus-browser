@@ -2,7 +2,7 @@ import React from 'react';
 import { t } from 'ttag';
 
 import ArrowSvg from '../../../../../icons/arrow.svg?react';
-import { ADDITIONAL_FILTERS_ENABLED } from './AdditionalFilters.utils';
+import { ADDITIONAL_FILTERS_ENABLED } from '../const';
 import { useLayoutEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 

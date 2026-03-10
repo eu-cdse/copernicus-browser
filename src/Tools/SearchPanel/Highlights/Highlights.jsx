@@ -13,7 +13,7 @@ import {
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
-import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from '../../Pins/PinPanel';
+import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from '../../Pins/const';
 import { getPinsFromSessionStorage, savePinsToServer, savePinsToSessionStorage } from '../../Pins/Pin.utils';
 import { connect } from 'react-redux';
 import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';

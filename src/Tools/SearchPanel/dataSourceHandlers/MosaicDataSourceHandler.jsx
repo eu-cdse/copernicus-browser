@@ -1,15 +1,11 @@
-import React from 'react';
 import { t } from 'ttag';
-import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
+import { BYOCLayer } from '@sentinel-hub/sentinelhub-js';
 
-import DataSourceHandler from './DataSourceHandler';
-import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
+import AbstractBYOCDataSourceHandler from './AbstractBYOCDataSourceHandler';
 import { filterLayers } from './filter';
-import { constructV3Evalscript, isFunction } from '../../../utils';
-import { generateFallbackEvalscript } from './datasourceAssets/evalscriptTemplates';
+import { isFunction } from '../../../utils';
 import { DATASOURCES } from '../../../const';
-import { reprojectGeometry } from '../../../utils/reproject';
+
 import { getSHServiceRootUrl } from './dataSourceHandlers';
 import {
   getWorldCoverAnnualCloudlessMosaic,
@@ -22,8 +18,6 @@ import {
 import moment from 'moment';
 import { S2_ANNUAL_MOSAIC_BANDS, S2_QUARTERLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
 
-const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
-
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: {
     lowResolutionCollectionId: '6af2d932-8f18-4bed-a31b-d32bc49d43a0',
@@ -31,7 +25,12 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   },
 };
 
-export default class MosaicDataSourceHandler extends DataSourceHandler {
+export default class MosaicDataSourceHandler extends AbstractBYOCDataSourceHandler {
+  constructor() {
+    super();
+    this.LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS;
+  }
+
   datasetSearchLabels = {};
   datasetSearchIds = {};
   collections = {};
@@ -40,8 +39,6 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   datasets = [];
   preselectedDatasets = new Set();
   allLayers = [];
-  searchFilters = {};
-  isChecked = false;
   datasource = DATASOURCES.MOSAIC;
   limitMonthsSearch = 12;
   searchGroupLabel = 'Sentinel-2 Mosaics';
@@ -125,88 +122,6 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     return Object.values(this.urls).flat().length > 0;
   }
 
-  getSearchFormComponents() {
-    if (!this.isHandlingAnyUrl()) {
-      return null;
-    }
-    return (
-      <GenericSearchGroup
-        key={'CUSTOM'}
-        label={this.getSearchGroupLabel()}
-        preselected={false}
-        saveCheckedState={this.saveCheckedState}
-        saveFiltersValues={this.saveSearchFilters}
-        options={this.datasets.length > 1 ? this.datasets : []}
-        optionsLabels={this.datasetSearchLabels}
-        preselectedOptions={Array.from(this.preselectedDatasets)}
-        hasMaxCCFilter={false}
-      />
-    );
-  }
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-    let datasets;
-
-    if (this.datasets.length === 1) {
-      datasets = this.datasets;
-    } else {
-      datasets = this.searchFilters.selectedOptions;
-    }
-
-    datasets.forEach((datasetId) => {
-      // InstanceId, layerId and evalscript are required parameters, although we don't need them for findTiles.
-      // As we don't have any layer related information at this stage, some dummy values are set for those 3 params to prevent
-      // querying configuration service for dataset defaults
-      const subType = this.collections[datasetId].subType
-        ? this.collections[datasetId].subType
-        : BYOCSubTypes.BYOC;
-      const searchLayer = new BYOCLayer({
-        instanceId: true,
-        layerId: true,
-        evalscript: '//',
-        collectionId: datasetId,
-        subType: subType,
-        shServiceRootUrl: getSHServiceRootUrl(),
-      });
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
-
-  convertToStandardTiles = (data, datasetId) => {
-    const tiles = data.map((t) => {
-      if (t.geometry && t.geometry.crs && t.geometry.crs.properties.name !== CRS_EPSG4326_urn) {
-        reprojectGeometry(t.geometry, { toCrs: CRS_EPSG4326.authId });
-      }
-      return {
-        sensingTime: t.sensingTime,
-        geometry: t.geometry,
-        datasource: this.datasource,
-        datasetId: datasetId,
-        metadata: {},
-      };
-    });
-    return tiles;
-  };
-
-  getUrlsForDataset = (datasetId) => {
-    return this.urls[datasetId] ? [...new Set(this.urls[datasetId])] : [];
-  };
-
-  getSentinelHubDataset = () => DATASET_BYOC;
-
   getResolutionLimits() {
     return { resolution: 0.5 };
   }
@@ -272,18 +187,6 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     }
   };
 
-  generateEvalscript = (bands, dataSetId, config) => {
-    // NOTE: changing the format will likely break parseEvalscriptBands method.
-    if (config) {
-      return constructV3Evalscript(bands, config);
-    }
-
-    const bandNames = Object.values(bands);
-    const uniqueBands = [...new Set(bandNames)];
-    const factor = 1 / 2000;
-    return generateFallbackEvalscript(bandNames, uniqueBands, factor);
-  };
-
   getLeafletZoomConfig(datasetId) {
     const collectionId = this.getCollectionByDatasetId(datasetId);
     if (!collectionId) {
@@ -295,12 +198,6 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
   supportsInterpolation() {
     return true;
   }
-
-  getCopyrightText = () => '';
-
-  isCopernicus = () => false;
-
-  isSentinelHub = () => true;
 
   getBaseLayerForDatasetId = (datasetId) => {
     const layer = this.allLayers.find((l) => l.collectionId === datasetId);
@@ -337,23 +234,7 @@ export default class MosaicDataSourceHandler extends DataSourceHandler {
     return {};
   };
 
-  getKnownCollectionsList() {
-    return Object.values(this.KNOWN_COLLECTIONS).flat();
-  }
-
-  supportsDisplayLatestDateOnSelect = () => true;
-
-  supportsLowResolutionAlternativeCollection = (collectionId) => {
-    return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];
-  };
-
-  getLowResolutionCollectionId = (collectionId) => {
-    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionCollectionId;
-  };
-
-  getLowResolutionMetersPerPixelThreshold = (collectionId) => {
-    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
-  };
+  supportsDisplayLatestDateOnSelect = (_datasetId) => true;
 
   supportsFindProductsForCurrentView = (datasetId) =>
     datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC;

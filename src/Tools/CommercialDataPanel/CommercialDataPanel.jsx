@@ -124,11 +124,11 @@ The "Commercial data" tab allows you to search, purchase, and visualise Commerci
 
 **Available constellations**  
 We currently offer data from 3 different commercial data providers offering data from 5 different constellations:
-- Planet [Planet scope](https://docs.sentinel-hub.com/api/latest/data/planet-scope/) (4/8 bands, 3m resolution)
-- Planet [SkySat](https://docs.sentinel-hub.com/api/latest/data/planet/skysat/) (4 bands, 0.5m resolution)
-- Airbus [Pleiades](https://docs.sentinel-hub.com/api/latest/data/airbus/pleiades/) (5 bands, 0.5m - 2m resolution)
-- Airbus [SPOT](https://docs.sentinel-hub.com/api/latest/data/airbus/spot/) (5 bands, 1.5m - 6m resolution)
-- Maxar [WorldView](https://docs.sentinel-hub.com/api/latest/data/maxar/world-view/) (5 bands, 0.5m - 2m resolution)
+- Planet [Planet scope](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#planetscope) (4/8 bands, 3m resolution)
+- Planet [SkySat](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-missions) (4 bands, 0.5m resolution)
+- Airbus [Pleiades](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#pleiades) (5 bands, 0.5m - 2m resolution)
+- Airbus [SPOT](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#spot-6-7) (5 bands, 1.5m - 6m resolution)
+- Maxar [WorldView](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#worldview-2-3) (5 bands, 0.5m - 2m resolution)
 
 As the term "commercial" implies, the data comes at a cost, which means **in addition to your existing Sentinel Hub subscription, you will need to purchase quota** for the data you are interested in.
 
@@ -144,7 +144,7 @@ To purchase commercial data, you must:
 - review the order and confirm it (*Created orders (not confirmed)* in *My orders*). Your order will now be listed under *Running orders* and move to *Finished orders* once the data has been purchased and ingested.
 
 **More information**  
-For more information on ordering commercial data ( Third Party Data Import ), please see the [Sentinel Hub Documentation Page](https://docs.sentinel-hub.com/api/latest/api/data-import/).
+For more information on ordering commercial data ( Third Party Data Import ), please see the [Sentinel Hub Documentation Page](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/ProcessingUnit.html#data-ordering-and-delivery---applicable-to-orders-api-subscriptions-api-and-third-party-data-import-api).
 `;
 
 const CommercialDataPanel = ({

@@ -6,8 +6,6 @@ import './BrowseProduct.scss';
 import { getRootNodeUri, useListNodes } from './BrowseProduct.utils';
 import Loader from '../../../Loader/Loader';
 
-export const BROWSE_PRODUCT_ENABLED = true;
-
 const BrowseProduct = ({ product, downloadInProgress, onDownload, onClose, userToken }) => {
   const [expandedNodes, setExpandedNodes] = useState();
   const [rootNode, setRootNode] = useState();

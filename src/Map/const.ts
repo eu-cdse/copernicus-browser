@@ -1,6 +1,17 @@
-import { warningColor } from '../variables.module.scss';
+import styles from '../variables.module.scss';
 
-export const highlightedTileStyle = {
+const { warningColor } = styles;
+
+type PathStyle = {
+  weight?: number;
+  color?: string;
+  opacity?: number;
+  fillColor?: string;
+  fillOpacity?: number;
+  dashArray?: string;
+};
+
+export const highlightedTileStyle: PathStyle = {
   weight: 2,
   color: '#57de71',
   opacity: 1,
@@ -9,7 +20,7 @@ export const highlightedTileStyle = {
 };
 
 // Style for dataset location polygons
-export const datsetLocationPolygonStyle = {
+export const datasetLocationPolygonStyle: PathStyle = {
   weight: 2,
   color: '#4285f4',
   opacity: 0.8,
@@ -19,7 +30,7 @@ export const datsetLocationPolygonStyle = {
 };
 
 // Style for AOI (Area of Interest) polygons
-export const aoiStyle = {
+export const aoiStyle: PathStyle = {
   color: warningColor,
   weight: 3,
   opacity: 1,
@@ -28,7 +39,7 @@ export const aoiStyle = {
 };
 
 // Style for LOI (Line of Interest)
-export const loiStyle = {
+export const loiStyle: PathStyle = {
   color: warningColor,
   weight: 3,
   opacity: 1,

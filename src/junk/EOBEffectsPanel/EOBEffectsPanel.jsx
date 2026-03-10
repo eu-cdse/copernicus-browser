@@ -94,7 +94,7 @@ function renderOrthorectificationSelection({ effects, onUpdateOrthorectification
           {t`Orthorectification creates a planimetrically correct image. Specify the DEM used for Orthorectification process here.`}
           <br />
           <br />
-          <ExternalLink href="https://docs.sentinel-hub.com/api/latest/data/sentinel-1-grd/#processing-options">
+          <ExternalLink href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S1GRD.html#processing-options">
             {t`More information`}
           </ExternalLink>
         </HelpTooltip>
@@ -118,7 +118,7 @@ function renderBackscatterCoeffSelection({ effects, onUpdateBackscatterCoeff }) 
           {t`Measurement values returned will be in the chosen backscatter coefficient. Radiometric terrain correction can be enabled by setting the Backscatter coefficient to gamma0_terrain; in this case orthorectification will be enabled using the DEM selected under Orthorectification.`}
           <br />
           <br />
-          <ExternalLink href="https://docs.sentinel-hub.com/api/latest/data/sentinel-1-grd/#processing-options">
+          <ExternalLink href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S1GRD.html#processing-options">
             {t`More information`}
           </ExternalLink>
         </HelpTooltip>

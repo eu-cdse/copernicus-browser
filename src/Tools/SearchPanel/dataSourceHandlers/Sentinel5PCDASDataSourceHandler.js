@@ -28,7 +28,6 @@ import {
 } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel5Tooltip';
 import { getS5ProductType } from './datasourceAssets/getS5ProductType';
 import { filterLayers } from './filter';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 
 export default class Sentinel5PCDASDataSourceHandler extends DataSourceHandler {
   S5PDATASETS = [
@@ -174,41 +173,6 @@ export default class Sentinel5PCDASDataSourceHandler extends DataSourceHandler {
     }
   };
 
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-    let datasets;
-
-    const isOtherSelected = this.searchFilters.selectedOptions.includes(this.OTHER_DATASETID);
-    if (isOtherSelected) {
-      datasets = this.S5PDATASETS;
-    } else {
-      datasets = this.searchFilters.selectedOptions;
-    }
-
-    datasets.forEach((datasetId) => {
-      // instanceId and layerId are required parameters, although we don't need them for findTiles
-      const searchLayer = new this.shLayer({
-        instanceId: true,
-        layerId: true,
-        productType: this.datasetSearchIds[datasetId],
-      });
-      const ff = new FetchingFunction(
-        isOtherSelected ? this.OTHER_DATASETID : datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
-
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => ({
       sensingTime: t.sensingTime,
@@ -286,7 +250,7 @@ export default class Sentinel5PCDASDataSourceHandler extends DataSourceHandler {
 
   getDefaultMinQa = (datasetId) => {
     // values set as per documentation
-    // https://docs.sentinel-hub.com/api/latest/#/data/Sentinel-5P-L2?id=processing-options
+    // https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S5PL2.html#processing-options
     switch (datasetId) {
       case this.NO2_DATASETID:
         return 75;

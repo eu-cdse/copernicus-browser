@@ -6,7 +6,6 @@ import {
   getCopernicus30Markdown,
   getDEMMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/DEMTooltip';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { DEM_COPERNICUS_30_CDAS, DEM_COPERNICUS_90_CDAS } from './dataSourceConstants';
 import { filterLayers } from './filter';
 import { DATASOURCES } from '../../../const';
@@ -115,36 +114,6 @@ export default class DEMCDASDataSourceHandler extends DataSourceHandler {
         return null;
     }
   };
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-    let datasets;
-
-    datasets = this.searchFilters.selectedOptions;
-
-    datasets.forEach((datasetId) => {
-      // instanceId and layerId are required parameters, although we don't need them for findTiles
-      const searchLayer = new this.shLayer({
-        instanceId: true,
-        layerId: true,
-        demInstance: this.datasetSearchIds[datasetId],
-      });
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
 
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => ({

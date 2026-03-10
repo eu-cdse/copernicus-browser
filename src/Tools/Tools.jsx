@@ -21,7 +21,7 @@ import {
 import './Tools.scss';
 import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
-import { USE_PINS_BACKEND } from './Pins/PinPanel';
+import { USE_PINS_BACKEND } from './Pins/const';
 import { checkUserAccount } from './CommercialDataPanel/commercialData.utils';
 import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 import { isInGroup } from '../Auth/authHelpers';

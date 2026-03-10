@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import geo_area from '@mapbox/geojson-area';
 import L from 'leaflet';
 import { t } from 'ttag';
+import ReactMarkdown from 'react-markdown';
 import './AOISelection.scss';
 import store, { aoiSlice, mainMapSlice } from '../../store';
 import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
 import { AOI_SHAPE } from '../../const';
 import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
 import { getBoundsAndLatLng } from '../../Tools/CommercialDataPanel/commercialData.utils';
+import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
+import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
 
 export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
   const [uploadDialog, setUploadDialog] = useState(false);
+
+  const aoiTooltipText = t`AOI polygon constraints apply (polygon unicity, shape and size). See the [user manual](https://info.rapidresponse.copernicus.eu) for details.`;
 
   const onFileUpload = (geometry) => {
     const layer = L.geoJSON(geometry);
@@ -52,7 +57,12 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
 
   return (
     <div className="row">
-      <label title={`${t`Area of interest`}`}>{`${t`Area of interest`}:`}</label>
+      <div className="aoi-label-wrapper">
+        <label title={`${t`Area of interest`}`}>{`${t`Area of interest`}:`}</label>
+        <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{aoiTooltipText}</ReactMarkdown>
+        </HelpTooltip>
+      </div>
       <div className="aoi-selection">
         {!!aoiGeometry && (
           <div className="aoi-text">

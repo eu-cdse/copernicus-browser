@@ -54,11 +54,9 @@ import ArrowSvg from '../../icons/arrow.svg?react';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
+import { UNSAVED_PINS, SAVED_PINS, OPERATION_SHARE, USE_PINS_BACKEND } from './const';
+
 const PINS_LC_NAME = 'eob-pins';
-export const UNSAVED_PINS = 'unsaved-pins';
-export const SAVED_PINS = 'saved-pins';
-export const OPERATION_SHARE = 'share';
-export const USE_PINS_BACKEND = true;
 
 const ORDERING_MODE = {
   TITLE: 'title',

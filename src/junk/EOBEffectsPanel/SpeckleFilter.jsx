@@ -36,7 +36,7 @@ const SpeckleFilter = ({
           {t`Speckle filtering is only applied at zoom levels 12 and above for IW and zoom levels 8 and above for EW acquisition. Zoom levels outside this range will render without speckle filtering, even if it is set.`}
           <br />
           <br />
-          <ExternalLink href="https://docs.sentinel-hub.com/api/latest/data/sentinel-1-grd/#speckle-filtering">
+          <ExternalLink href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S1GRD.html#speckle-filtering">
             {t`More information`}
           </ExternalLink>
         </HelpTooltip>

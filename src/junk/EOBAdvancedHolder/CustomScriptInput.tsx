@@ -118,7 +118,8 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
   };
 
   const loadCode = async (): Promise<void> => {
-    const { loading, scriptUrl, isProcessGraphUrl } = stateRef.current;
+    const { loading, scriptUrl } = stateRef.current;
+    const isOpenEO = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
 
     if (loading) {
       return;
@@ -129,7 +130,11 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
     }
 
     if (scriptUrl.includes('http://')) {
-      applyState({ error: t`Error loading script. Check your URL.` });
+      applyState({
+        error: isOpenEO
+          ? t`Error loading process graph. Check your URL.`
+          : t`Error loading script. Check your URL.`,
+      });
       setTimeout(() => applyState({ error: null }), 5000);
       return;
     }
@@ -137,7 +142,7 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
     applyState({ loading: true, error: null });
 
     try {
-      const fetchFunction = isProcessGraphUrl
+      const fetchFunction = isOpenEO
         ? fetchProcessGraphFromProcessGraphUrl
         : fetchEvalscriptFromEvalscripturl;
 
@@ -150,7 +155,12 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
       setTimeout(() => applyState({ success: false }), 2000);
     } catch (_error) {
       console.error(_error);
-      applyState({ loading: false, error: t`Error loading script. Check your URL.` });
+      applyState({
+        loading: false,
+        error: isOpenEO
+          ? t`Error loading process graph. Check your URL.`
+          : t`Error loading script. Check your URL.`,
+      });
       setTimeout(() => applyState({ error: null }), 5000);
     }
   };
@@ -219,7 +229,11 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
           onRunEvalscriptClick={handleRefreshClick}
           runEvalscriptButtonText={t`Apply`}
           runningEvalscriptButtonText={t`Applying`}
-          readOnlyMessage={t`Editor is in read only mode. Uncheck "Load script from URL" to edit the code`}
+          readOnlyMessage={
+            isOpenEO
+              ? t`Editor is in read only mode. Uncheck "Load process graph from URL" to edit the code`
+              : t`Editor is in read only mode. Uncheck "Load script from URL" to edit the code`
+          }
           language={language}
         />
       </div>
@@ -260,7 +274,7 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
           <div className="insert-url-block-wrapper">
             <div className="insert-url-block">
               <input
-                placeholder={t`Enter URL to your script`}
+                placeholder={isOpenEO ? t`Enter URL to your process graph` : t`Enter URL to your script`}
                 onKeyDown={onKeyDown}
                 disabled={!currentIsUrlMode}
                 value={scriptUrl}
@@ -269,7 +283,13 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
               />
               {success || hasWarning ? (
                 <i
-                  title={success ? t`Script loaded.` : t`Only HTTPS domains are allowed.`}
+                  title={
+                    success
+                      ? isOpenEO
+                        ? t`Process graph loaded.`
+                        : t`Script loaded.`
+                      : t`Only HTTPS domains are allowed.`
+                  }
                   className={`fa fa-${success ? 'check' : 'warning'}`}
                 />
               ) : scriptUrl ? (
@@ -277,7 +297,9 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
                 <a onClick={loadCode}>
                   <i
                     className={`fa fa-refresh ${loading ? 'fa-spin' : ''} valid`}
-                    title={t`Load script into code editor`}
+                    title={
+                      isOpenEO ? t`Load process graph into code editor` : t`Load script into code editor`
+                    }
                   />
                 </a>
               ) : null}
@@ -288,7 +310,9 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
         {currentIsUrlMode && (
           <div className="info-uncheck-url">
             <i className="fa fa-info" />
-            {t`Uncheck Load script from URL to edit the code.`}
+            {isOpenEO
+              ? t`Uncheck Load process graph from URL to edit the code.`
+              : t`Uncheck Load script from URL to edit the code.`}
           </div>
         )}
 

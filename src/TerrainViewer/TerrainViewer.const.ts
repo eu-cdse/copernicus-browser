@@ -2,11 +2,11 @@ export const TERRAIN_VIEWER_IDS = {
   MAIN: 'main-terrain-viewer',
   TIMELAPSE_PREVIEWS: 'timelapse-terrain-viewer-previews',
   TIMELAPSE: 'timelapse-terrain-viewer',
-};
+} as const;
 
-export let CURRENT_TERRAIN_VIEWER_ID = TERRAIN_VIEWER_IDS.MAIN;
+export let CURRENT_TERRAIN_VIEWER_ID: string = TERRAIN_VIEWER_IDS.MAIN;
 
-export function setTerrainViewerId(terrainViewerId) {
+export function setTerrainViewerId(terrainViewerId: string): void {
   CURRENT_TERRAIN_VIEWER_ID = terrainViewerId;
 }
 

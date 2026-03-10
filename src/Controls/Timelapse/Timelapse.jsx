@@ -36,7 +36,7 @@ import {
 } from './Timelapse.utils';
 
 import './Timelapse.scss';
-import { applyFilterMonthsToDateRange } from '../../junk/EOBCommon/utils/filterDates';
+import { applyFilterMonthsToDateRange } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { EXPORT_FORMAT, TRANSITION } from '../../const';
 import { NotificationPanel } from '../../Notification/NotificationPanel';

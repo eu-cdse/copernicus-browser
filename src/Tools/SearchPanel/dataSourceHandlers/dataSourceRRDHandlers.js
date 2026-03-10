@@ -1,4 +1,4 @@
-import { DATASOURCES } from '../../../const.js';
+import { DATASOURCES } from '../../../const';
 import {
   GENERAL_PNEO_PANCHROMATIC_COLLECTION,
   GENERAL_GEOSAT_MS4_COLLECTION,

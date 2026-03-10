@@ -1,7 +1,8 @@
 import { getRrdCollectionId } from './api.utils';
 
 const fixtures = [
-  // ['planetscope', 'planetscope', false, 11],
+  ['planetscope', 'planetscope', false, 11],
+  ['planetscope', 'planetscope', true, 11],
   ['TerraSAR-X/TanDEM-X', 'TDX-1', false, 1],
   ['Worldview', 'GE01', true, 14],
   ['Legion', 'LG01', true, 14],
@@ -12,16 +13,16 @@ const fixtures = [
   ['Legion', 'LG06', true, 14],
   ['Worldview', 'WV04', false, 9],
   ['Worldview', 'GE01', false, 5],
-  // ['SPOT', 'SPOT6', false, 16],
   ['PAZ', 'PAZ-1', false, 15],
   ['Legion', 'LG01', false, 20],
   ['GHGSat', 'GHGSat-C4', false, 19],
   ['GHGSat', 'GHGSat-C1', false, 19],
   ['ICEYE', 'ICEYE-X2', false, 10],
   ['ICEYE', 'ICEYE-X200', false, 10],
-  ['skysat', 'skysat', false, 12],
+  ['SPOT', 'SPOT6', false, 16],
+  ['PHR', 'PHR1A', false, 17],
+  ['PHR', 'PHR1B', false, 17],
   ['PNEO', 'PNEO4', false, 18],
-  ['PNEO', 'PNEO4', true, 18],
 ];
 
 describe("'add' utility", () => {

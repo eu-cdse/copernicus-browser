@@ -1,13 +1,13 @@
-import AirbusLogo from '../../../../../public/rrd/airbus-logo_blue.png';
-import CosmoSkymedLogo from '../../../../../public/rrd/cosmo-skymed-logo.png';
-import CosmoSkymedSecondGenLogo from '../../../../../public/rrd/cosmo-skymed-2nd-logo.png';
-import EUSILogo from '../../../../../public/rrd/EUSI-logo_Blue.png';
-import HISDESATLogo from '../../../../../public/rrd/hisdesat-logo.png';
-import IceyeLogo from '../../../../../public/rrd/iceye-logo.png';
-import PlanetLogo from '../../../../../public/rrd/planet-logo.png';
-import RadarSatLogo from '../../../../../public/rrd/radarsat-logo.png';
-import GeosatLogo from '../../../../../public/rrd/geosat-logo.png';
-import GHGSatLogo from '../../../../../public/rrd/GHGSAT-logo.png';
+const AirbusLogo = '/rrd/airbus-logo_blue.png';
+const CosmoSkymedLogo = '/rrd/cosmo-skymed-logo.png';
+const CosmoSkymedSecondGenLogo = '/rrd/cosmo-skymed-2nd-logo.png';
+const EUSILogo = '/rrd/EUSI-logo_Blue.png';
+const HISDESATLogo = '/rrd/hisdesat-logo.png';
+const IceyeLogo = '/rrd/iceye-logo.png';
+const PlanetLogo = '/rrd/planet-logo.png';
+const RadarSatLogo = '/rrd/radarsat-logo.png';
+const GeosatLogo = '/rrd/geosat-logo.png';
+const GHGSatLogo = '/rrd/GHGSAT-logo.png';
 
 export {
   AirbusLogo,

@@ -1,10 +1,7 @@
-import React from 'react';
-import { BYOCLayer, DATASET_BYOC, BYOCSubTypes, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
+import { BYOCLayer, DATASET_BYOC, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 
 import DataSourceHandler from './DataSourceHandler';
-import GenericSearchGroup from './DatasourceRenderingComponents/searchGroups/GenericSearchGroup';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { filterLayers } from './filter';
 import { constructV3Evalscript, isFunction } from '../../../utils';
 import { generateFallbackEvalscript } from './datasourceAssets/evalscriptTemplates';
@@ -19,9 +16,17 @@ import CCMDataSourceHandler from './CCMDataSourceHandler';
 import EvolandDataSourceHandler from './EvolandDataSourceHandler';
 import ComplementaryDataDataSourceHandler from './ComplementaryDataDataSourceHandler';
 
-const CRS_EPSG4326_urn = 'urn:ogc:def:crs:EPSG::4326';
-
-export default class BYOCDataSourceHandler extends DataSourceHandler {
+/**
+ * Fallback handler for BYOC (Bring Your Own Collection) layers that are not handled by specialized handlers.
+ * This handler only processes collections that are not claimed by:
+ * - OthersDataSourceHandler (ESA WorldCover, etc.)
+ * - MosaicDataSourceHandler (Sentinel-2 Mosaics)
+ * - S1MosaicDataSourceHandler (Sentinel-1 Mosaics)
+ * - CLMSDataSourceHandler (CLMS Collections)
+ * - CCMDataSourceHandler (CCM Collections)
+ * - RRD handlers (RRD Collections)
+ */
+export default class UnknownBYOCDataSourceHandler extends DataSourceHandler {
   datasetSearchLabels = {};
   datasetSearchIds = {};
   collections = {};
@@ -30,35 +35,29 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
   datasets = [];
   preselectedDatasets = new Set();
   allLayers = [];
-  searchFilters = {};
-  isChecked = false;
   datasource = DATASOURCES.CUSTOM;
 
   leafletZoomConfig = {
     CUSTOM: { min: 0, max: 25 },
   };
 
-  MOSAIC_KNOWN_COLLECTIONS = new MosaicDataSourceHandler().getKnownCollectionsList();
-  MOSAIC_S1_KNOWN_COLLECTIONS = new S1MosaicDataSourceHandler().getKnownCollectionsList();
-  RRD_KNOWN_COLLECTIONS = RRD_COLLECTIONS;
-  CLMS_KNOWN_COLLECTIONS = new CLMSDataSourceHandler().getKnownCollectionsList();
-  CDSE_CCM_KNOWN_COLLECTIONS = new CCMDataSourceHandler().getKnownCollectionsList();
-  EVOLAND_KNOWN_COLLECTIONS = new EvolandDataSourceHandler().getKnownCollectionsList();
-  COMPLEMENTARY_KNOWN_COLLECTIONS = new ComplementaryDataDataSourceHandler().getKnownCollectionsList();
+  // Blacklist of collection IDs that are handled by specific BYOC handlers
+  // This prevents UnknownBYOCDataSourceHandler from claiming collections that belong to specialized handlers
+  BLACKLISTED_COLLECTIONS = [
+    ...new MosaicDataSourceHandler().getKnownCollectionsList(), // Sentinel-2 Mosaics
+    ...new S1MosaicDataSourceHandler().getKnownCollectionsList(), // Sentinel-1 Mosaics
+    ...RRD_COLLECTIONS, // RRD Collections
+    ...new CLMSDataSourceHandler().getKnownCollectionsList(), // CLMS Collections
+    ...new CCMDataSourceHandler().getKnownCollectionsList(), // CCM Collections
+    ...new EvolandDataSourceHandler().getKnownCollectionsList(), // Evoland Collections
+    ...new ComplementaryDataDataSourceHandler().getKnownCollectionsList(), // Complementary Data Collections
+  ];
 
   willHandle(service, url, name, layers, _preselected, _onlyForBaseLayer) {
     name = isFunction(name) ? name() : name;
     const customLayers = layers.filter(
       (l) =>
-        l instanceof BYOCLayer &&
-        l.collectionId &&
-        !this.MOSAIC_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.MOSAIC_S1_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.RRD_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.CLMS_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.CDSE_CCM_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.EVOLAND_KNOWN_COLLECTIONS.includes(l.collectionId) &&
-        !this.COMPLEMENTARY_KNOWN_COLLECTIONS.includes(l.collectionId),
+        l instanceof BYOCLayer && l.collectionId && !this.BLACKLISTED_COLLECTIONS.includes(l.collectionId),
     );
     if (customLayers.length === 0) {
       return false;
@@ -94,69 +93,9 @@ export default class BYOCDataSourceHandler extends DataSourceHandler {
     return Object.values(this.urls).flat().length > 0;
   }
 
-  getSearchFormComponents() {
-    if (!this.isHandlingAnyUrl()) {
-      return null;
-    }
-    return (
-      <GenericSearchGroup
-        key={'CUSTOM'}
-        label={this.getSearchGroupLabel()}
-        preselected={false}
-        saveCheckedState={this.saveCheckedState}
-        saveFiltersValues={this.saveSearchFilters}
-        options={this.datasets.length > 1 ? this.datasets : []}
-        optionsLabels={this.datasetSearchLabels}
-        preselectedOptions={Array.from(this.preselectedDatasets)}
-        hasMaxCCFilter={false}
-      />
-    );
-  }
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-    let datasets;
-
-    if (this.datasets.length === 1) {
-      datasets = this.datasets;
-    } else {
-      datasets = this.searchFilters.selectedOptions;
-    }
-
-    datasets.forEach((datasetId) => {
-      // InstanceId, layerId and evalscript are required parameters, although we don't need them for findTiles.
-      // As we don't have any layer related information at this stage, some dummy values are set for those 3 params to prevent
-      // querying configuration service for dataset defaults
-      const subType = this.collections[datasetId].subType
-        ? this.collections[datasetId].subType
-        : BYOCSubTypes.BYOC;
-      const searchLayer = new BYOCLayer({
-        instanceId: true,
-        layerId: true,
-        evalscript: '//',
-        collectionId: datasetId,
-        subType: subType,
-        shServiceRootUrl: getSHServiceRootUrl(),
-      });
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
-
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => {
-      if (t.geometry && t.geometry.crs && t.geometry.crs.properties.name !== CRS_EPSG4326_urn) {
+      if (t.geometry && t.geometry.crs && t.geometry.crs.properties.name !== CRS_EPSG4326.urn) {
         reprojectGeometry(t.geometry, { toCrs: CRS_EPSG4326.authId });
       }
       return {

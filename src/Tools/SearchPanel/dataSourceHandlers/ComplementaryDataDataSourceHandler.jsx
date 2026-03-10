@@ -12,7 +12,6 @@ import {
 
 import { DATASOURCES } from '../../../const';
 import { reprojectGeometry } from '../../../utils/reproject';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import DataSourceHandler from './DataSourceHandler';
 import { CDAS_L8_L9_LOTL1, CDAS_LANDSAT_MOSAIC, BAND_UNIT } from './dataSourceConstants';
 import { filterLayers } from './filter';
@@ -170,39 +169,6 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
         return '';
     }
   };
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-
-    const { selectedOptions, maxCC } = this.searchFilters;
-    selectedOptions.forEach((datasetId) => {
-      const searchLayer = this.allLayers.find(
-        (l) =>
-          this.KNOWN_COLLECTIONS[datasetId].includes(l.collectionId) ||
-          l.dataset === this.getSentinelHubDataset(datasetId),
-      );
-
-      if (!searchLayer) {
-        return;
-      }
-      searchLayer.maxCloudCoverPercent = maxCC;
-
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
 
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => {

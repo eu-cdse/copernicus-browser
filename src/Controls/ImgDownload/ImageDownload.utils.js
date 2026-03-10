@@ -1154,7 +1154,8 @@ export function getRawBandsScalingFactor({ datasetId, imageSampleType, bandsInfo
   if (isBYOC) {
     // This is a hack to make raw bands for BYOC layers display anything
     // Service stretches values from 0-1 to 0-255, but if our BYOC bands can be UINT8 or UINT16
-    // https://docs.sentinel-hub.com/api/latest/#/Evalscript/V3/README?id=sampletype
+    //     // https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript.html#transparent-nodata-pixels-and-sampletype-uint16
+
     const sampleType = bandsInfo[0].sampleType;
     const orig = factor ? factor : 1.0;
     if (sampleType === 'UINT8') {

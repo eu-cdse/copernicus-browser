@@ -26,6 +26,11 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
 };
 
 export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
+  constructor() {
+    super();
+    this.LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS;
+  }
+
   datasource = DATASOURCES.S1_MOSAIC;
   searchGroupLabel = 'Sentinel-1 Mosaics';
   preselectedDatasets = new Set([S1_MONTHLY_MOSAIC_IW]);
@@ -61,18 +66,6 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
     [S1_MONTHLY_MOSAIC_DH]: t`Sentinel-1 DH Monthly Mosaics`,
     [S1_MONTHLY_MOSAIC_IW]: t`Sentinel-1 IW Monthly Mosaics`,
   });
-
-  supportsLowResolutionAlternativeCollection = (collectionId) => {
-    return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];
-  };
-
-  getLowResolutionCollectionId = (collectionId) => {
-    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionCollectionId;
-  };
-
-  getLowResolutionMetersPerPixelThreshold = (collectionId) => {
-    return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
-  };
 
   supportsFindProductsForCurrentView = () => true;
 

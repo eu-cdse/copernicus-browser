@@ -176,7 +176,7 @@ export default class AnalyticalForm extends React.Component {
           <div className="form-field">
             <label title={this.DATAMASK_TITLE}>
               {t`Add dataMask band to raw layers`}
-              <ExternalLink href="https://docs.sentinel-hub.com/api/latest/user-guides/datamask/">
+              <ExternalLink href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/UserGuides/Datamask.html">
                 <i className="fa fa-info-circle" />
               </ExternalLink>
             </label>

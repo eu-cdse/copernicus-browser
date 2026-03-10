@@ -1,5 +1,5 @@
 import React from 'react';
-import { ADDITIONAL_FILTERS_ENABLED } from './AdditionalFilters.utils';
+import { ADDITIONAL_FILTERS_ENABLED } from '../const';
 
 const Tag = ({ value, onRemove }) => {
   if (!value) {

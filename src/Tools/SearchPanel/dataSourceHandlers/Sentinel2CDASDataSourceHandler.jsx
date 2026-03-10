@@ -10,9 +10,7 @@ import { t } from 'ttag';
 import moment from 'moment';
 
 import DataSourceHandler from './DataSourceHandler';
-import Sentinel2SearchGroup from './DatasourceRenderingComponents/searchGroups/Sentinel2SearchGroup';
 import {
-  Sentinel2Tooltip,
   S2L1CTooltip,
   S2L2ATooltip,
   getSentinel2Markdown,
@@ -20,7 +18,6 @@ import {
   getS2L2AMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel2Tooltip';
 import HelpTooltip from './DatasourceRenderingComponents/HelpTooltip';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import { BAND_UNIT, S2_L1C_CDAS, S2_L2A_CDAS } from './dataSourceConstants';
 import { DATASOURCES } from '../../../const';
 
@@ -135,8 +132,6 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
   handlerId = 'S2AWS';
   resultId;
   preselectedDatasets = new Set();
-  searchFilters = {};
-  isChecked = false;
   datasource = DATASOURCES.S2_CDAS;
   defaultPreselectedDataset = S2_L2A_CDAS;
 
@@ -217,28 +212,6 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
     }
   };
 
-  getSearchFormComponents() {
-    if (!this.isHandlingAnyUrl()) {
-      return null;
-    }
-    const preselected = this.preselectedDatasets.size > 0;
-    return (
-      <Sentinel2SearchGroup
-        key={`sentinel-2-aws`}
-        label={this.getSearchGroupLabel()}
-        preselected={preselected}
-        saveCheckedState={this.saveCheckedState}
-        dataSourceTooltip={<Sentinel2Tooltip />}
-        saveFiltersValues={this.saveSearchFilters}
-        options={this.datasets}
-        optionsLabels={this.getDatasetSearchLabels()}
-        preselectedOptions={Array.from(this.preselectedDatasets)}
-        hasMaxCCFilter={true}
-        renderOptionsHelpTooltips={this.renderOptionsHelpTooltips}
-      />
-    );
-  }
-
   getMinMaxDates(datasetId) {
     if (this.MIN_MAX_DATES[datasetId] == null) {
       return { minDate: null, maxDate: null };
@@ -247,32 +220,6 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
   }
 
   getDescription = () => getSentinel2Markdown();
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    let fetchingFunctions = [];
-
-    const { selectedOptions, maxCC } = this.searchFilters;
-    selectedOptions.forEach((datasetId) => {
-      const searchLayer = this.allLayers.find((l) => l.dataset === this.getSentinelHubDataset(datasetId));
-      if (searchLayer.maxCloudCoverPercent !== undefined) {
-        searchLayer.maxCloudCoverPercent = maxCC;
-      }
-      const ff = new FetchingFunction(
-        datasetId,
-        searchLayer,
-        fromMoment,
-        toMoment,
-        queryArea,
-        this.convertToStandardTiles,
-      );
-      fetchingFunctions.push(ff);
-    });
-    return fetchingFunctions;
-  }
 
   convertToStandardTiles = (data, datasetId) => {
     const tiles = data.map((t) => ({

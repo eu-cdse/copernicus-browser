@@ -9,7 +9,6 @@ import {
 
 import DataSourceHandler from './DataSourceHandler';
 import { getSentinel1Markdown } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel1Tooltip';
-import { FetchingFunction } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/search';
 import {
   ASCENDING,
   DESCENDING,
@@ -30,7 +29,6 @@ import { constructV3Evalscript } from '../../../utils';
 import { filterLayers } from './filter';
 import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';
 import { DATASOURCES } from '../../../const';
-import store, { visualizationSlice } from '../../../store';
 
 export const S1_SUPPORTED_SPECKLE_FILTERS = [
   {
@@ -119,8 +117,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     AWS: [],
   };
   configs = {};
-  searchFilters = {};
-  isChecked = false;
   datasource = DATASOURCES.S1;
   searchGroupLabel = 'Sentinel-1';
 
@@ -223,12 +219,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   isHandlingAnyUrl() {
     return Object.values(this.urls).flat().length > 0;
   }
-
-  saveSearchFilters = (searchFilters) => {
-    this.searchFilters = searchFilters;
-    const { orbitDirections } = searchFilters;
-    store.dispatch(visualizationSlice.actions.setOrbitDirection(orbitDirections));
-  };
 
   getDescription = () => getSentinel1Markdown();
 
@@ -383,92 +373,6 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
         this.urls[datasetId] = [url];
       }
     }
-  }
-
-  getNewFetchingFunctions(fromMoment, toMoment, queryArea = null) {
-    if (!this.isChecked) {
-      return [];
-    }
-
-    const isCDAS = this.searchFilters['dataLocations'].includes('CDAS');
-    const isIW = this.searchFilters['acquisitionModes'].includes('IW');
-    const isEW = this.searchFilters['acquisitionModes'].includes('EW');
-    const isSM = this.searchFilters['acquisitionModes'].includes('SM');
-    const isIW_VV = isIW && this.searchFilters['polarizations'].includes('VV');
-    const isIW_HH = isIW && this.searchFilters['polarizations'].includes('HH');
-    const isIW_VVVH = isIW && this.searchFilters['polarizations'].includes('VVVH');
-    const isIW_HHHV = isIW && this.searchFilters['polarizations'].includes('HHHV');
-    const isEW_HH = isEW && this.searchFilters['polarizations'].includes('HH');
-    const isEW_VV = isEW && this.searchFilters['polarizations'].includes('VV');
-    const isEW_HHHV = isEW && this.searchFilters['polarizations'].includes('HHHV');
-    const isEW_VVVH = isEW && this.searchFilters['polarizations'].includes('VVVH');
-    const isSM_VV = isSM && this.searchFilters['polarizations'].includes('VV');
-    const isSM_VVVH = isSM && this.searchFilters['polarizations'].includes('VVVH');
-    const isSM_HH = isSM && this.searchFilters['polarizations'].includes('HH');
-    const isSM_HHHV = isSM && this.searchFilters['polarizations'].includes('HHHV');
-    const orbitDirection =
-      this.searchFilters['orbitDirections'].length === 1 ? this.searchFilters['orbitDirections'][0] : null;
-
-    let fetchingFunctions = [];
-
-    if (isCDAS) {
-      let selectedDatasets = [];
-      if (isIW_VV) {
-        selectedDatasets.push(S1_CDAS_IW_VV);
-      }
-      if (isIW_HH) {
-        selectedDatasets.push(S1_CDAS_IW_HH);
-      }
-      if (isIW_VVVH) {
-        selectedDatasets.push(S1_CDAS_IW_VVVH);
-      }
-      if (isIW_HHHV) {
-        selectedDatasets.push(S1_CDAS_IW_HHHV);
-      }
-      if (isEW_HH) {
-        selectedDatasets.push(S1_CDAS_EW_HH);
-      }
-      if (isEW_VV) {
-        selectedDatasets.push(S1_CDAS_EW_VV);
-      }
-      if (isEW_HHHV) {
-        selectedDatasets.push(S1_CDAS_EW_HHHV);
-      }
-      if (isEW_VVVH) {
-        selectedDatasets.push(S1_CDAS_EW_VVVH);
-      }
-      if (isSM_VV) {
-        selectedDatasets.push(S1_CDAS_SM_VV);
-      }
-      if (isSM_VVVH) {
-        selectedDatasets.push(S1_CDAS_SM_VVVH);
-      }
-      if (isSM_HH) {
-        selectedDatasets.push(S1_CDAS_SM_HH);
-      }
-      if (isSM_HHHV) {
-        selectedDatasets.push(S1_CDAS_SM_HHHV);
-      }
-      selectedDatasets.forEach((datasetId) => {
-        // Evalscript (or instanceId + layerId) is a required parameter, although we don't need it for findTiles
-        let searchLayer = new S1GRDCDASLayer({
-          evalscript: true,
-          orbitDirection: orbitDirection,
-          ...Sentinel1DataSourceHandler.getDatasetParams(datasetId),
-        });
-        const ff = new FetchingFunction(
-          datasetId,
-          searchLayer,
-          fromMoment,
-          toMoment,
-          queryArea,
-          this.convertToStandardTiles,
-        );
-        fetchingFunctions.push(ff);
-      });
-    }
-
-    return fetchingFunctions;
   }
 
   convertToStandardTiles = (data, datasetId) => {

@@ -9,11 +9,11 @@ import CommercialDataPanel from './CommercialDataPanel';
 import './CommercialData.scss';
 
 const links = {
-  planetScope: 'https://docs.sentinel-hub.com/api/latest/data/planet-scope/',
-  planetSkySat: 'https://docs.sentinel-hub.com/api/latest/data/planet/skysat/',
-  airbusPleiades: 'https://docs.sentinel-hub.com/api/latest/data/airbus/pleiades/',
-  airbusSpot: 'https://docs.sentinel-hub.com/api/latest/data/airbus/spot/',
-  maxarWorldView: 'https://docs.sentinel-hub.com/api/latest/data/maxar/world-view/',
+  planetScope: 'https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#planetscope',
+  planetSkySat: 'https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-missions',
+  airbusPleiades: 'https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#pleiades',
+  airbusSpot: 'https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#spot-6-7',
+  maxarWorldView: 'https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#worldview-2-3',
   signUp: 'https://dataspace.copernicus.eu/',
   dashboard: 'https://shapps.dataspace.copernicus.eu/dashboard/#/account/billing',
 };

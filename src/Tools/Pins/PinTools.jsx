@@ -14,7 +14,7 @@ import {
   formatDeprecatedPins,
   establishCorrectDataFusionFormatInPins,
 } from './Pin.utils';
-import { OPERATION_SHARE, USE_PINS_BACKEND } from './PinPanel';
+import { OPERATION_SHARE, USE_PINS_BACKEND } from './const';
 
 class PinTools extends Component {
   state = {

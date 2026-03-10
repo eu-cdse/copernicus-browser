@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { applyFilterMonthsToDateRange } from './filterDates';
+import { applyFilterMonthsToDateRange } from './search';
 
 // moment.js dates are not being compared properly, so we use this function to avoid
 // having to change them just for tests:

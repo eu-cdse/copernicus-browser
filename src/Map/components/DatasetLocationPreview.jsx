@@ -14,7 +14,7 @@ import moment from 'moment';
 import store, { mainMapSlice, visualizationSlice } from '../../store';
 import { t } from 'ttag';
 import { getBoundsAndLatLng } from '../../Tools/CommercialDataPanel/commercialData.utils';
-import { datsetLocationPolygonStyle, highlightedTileStyle } from '../const';
+import { datasetLocationPolygonStyle, highlightedTileStyle } from '../const';
 
 /**
  * Helper function to extract Leaflet bounds from a polygon geometry
@@ -129,7 +129,7 @@ const DatasetLocationPreview = ({
   const handlePolygonMouseOut = useCallback((e) => {
     const layer = e.layer;
     setHoveredPolygonId(null);
-    layer.setStyle(datsetLocationPolygonStyle);
+    layer.setStyle(datasetLocationPolygonStyle);
   }, []);
 
   const handlePolygonClick = useCallback((e) => {
@@ -222,7 +222,7 @@ const DatasetLocationPreview = ({
   // Style function that considers hover state
   const getFeatureStyle = useCallback(
     (feature) => {
-      return hoveredPolygonId === feature.id ? highlightedTileStyle : datsetLocationPolygonStyle;
+      return hoveredPolygonId === feature.id ? highlightedTileStyle : datasetLocationPolygonStyle;
     },
     [hoveredPolygonId],
   );

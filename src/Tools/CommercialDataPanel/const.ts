@@ -1,7 +1,7 @@
 import { TPDICollections } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 
-export const TPDI_PROVIDER_ORDER_WARNINGS = {
+export const TPDI_PROVIDER_ORDER_WARNINGS: Record<string, string | null> = {
   [TPDICollections.AIRBUS_PLEIADES]: null,
   [TPDICollections.AIRBUS_SPOT]: null,
   [TPDICollections.PLANET_SCOPE]: null,

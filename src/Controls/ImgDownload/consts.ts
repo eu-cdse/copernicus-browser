@@ -10,9 +10,18 @@ export const IMAGE_FORMATS = {
   TIFF_UINT8: 'tiff-8-bit-int',
   TIFF_UINT16: 'tiff-16-bit-int',
   TIFF_FLOAT32: 'tiff-32-bit-float',
+} as const;
+
+type ImageFormatInfo = {
+  text: string;
+  mimeType: string;
+  mimeTypeProcessing: string | null;
+  ext: string;
+  sampleType: string;
+  scaleFactor?: number;
 };
 
-export const IMAGE_FORMATS_INFO = {
+export const IMAGE_FORMATS_INFO: Record<string, ImageFormatInfo> = {
   [IMAGE_FORMATS.JPG]: {
     text: 'JPG (no georeference)',
     mimeType: MimeTypes.JPEG,
@@ -71,7 +80,7 @@ export const RESOLUTION_OPTIONS = {
   MEDIUM: 'MEDIUM',
   HIGH: 'HIGH',
   CUSTOM: 'CUSTOM',
-};
+} as const;
 
 export const RESOLUTION_DIVISORS = {
   [RESOLUTION_OPTIONS.LOW]: { text: 'LOW', value: 4 },

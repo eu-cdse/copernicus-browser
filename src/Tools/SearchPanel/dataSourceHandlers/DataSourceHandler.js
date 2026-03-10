@@ -18,7 +18,6 @@ export const SENTINEL_COPYRIGHT_TEXT = `Credit: European Union, contains modifie
   .format('YYYY')}, processed with Copernicus Browser`;
 
 export default class DataSourceHandler {
-  fetchingFunctions = [];
   FISLayers = {};
   datasets = [];
   defaultPreselectedDataset = null;
@@ -35,9 +34,6 @@ export default class DataSourceHandler {
   isHandlingAnyUrl() {
     // Returns whether this handler accepted handling of anything.
     return false;
-  }
-  getSearchFormComponents() {
-    return [];
   }
 
   getLeafletZoomConfig(datasetId) {
@@ -66,11 +62,6 @@ export default class DataSourceHandler {
     }
 
     return DEFAULT_TILES_SIZE_CONFIG;
-  }
-
-  prepareNewSearch(fromMoment, toMoment, queryArea = null) {
-    this.fetchingFunctions = this.getNewFetchingFunctions(fromMoment, toMoment, queryArea);
-    return this.fetchingFunctions;
   }
 
   getUrlsForDataset(_datasetId) {
@@ -213,14 +204,6 @@ export default class DataSourceHandler {
   getSupportedImageFormats() {
     return Object.values(IMAGE_FORMATS);
   }
-
-  saveSearchFilters = (searchFilters) => {
-    this.searchFilters = searchFilters;
-  };
-
-  saveCheckedState = (checkedState) => {
-    this.isChecked = checkedState;
-  };
 
   areBandsClasses = () => {
     return false;

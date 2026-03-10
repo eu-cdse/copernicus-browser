@@ -45,7 +45,7 @@ export function ImageDownloadWarningPanel(props) {
       <div>
         {t`This means "sampleType" parameter is likely set to default (AUTO). You can fix this by editing your evalscript. Learn more about "sampleType" in the documentation`}
         :{' '}
-        <ExternalLink href="https://docs.sentinel-hub.com/api/latest/evalscript/v3/#sampletype">
+        <ExternalLink href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript/Functions.html#sampletype">
           <i className="fas fa-external-link-alt" />
         </ExternalLink>
       </div>

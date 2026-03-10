@@ -12,8 +12,6 @@ import oDataHelpers from '../../../../../api/OData/ODataHelpers';
 import { ODataFilterOperator } from '../../../../../api/OData/ODataTypes';
 import { isFunction } from '../../../../../utils';
 
-export const ADDITIONAL_FILTERS_ENABLED = true;
-
 export const getAdditionalFilterData = (collectionId, attributeId, props) => {
   const title = oDataHelpers.formatAttributesNames(attributeId);
   let tooltip;

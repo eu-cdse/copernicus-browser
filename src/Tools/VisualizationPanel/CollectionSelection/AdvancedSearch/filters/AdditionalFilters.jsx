@@ -2,7 +2,7 @@ import React from 'react';
 import { t } from 'ttag';
 
 import ChevronCollapse from '../../../../../Tools/Header/chevron-collapse.svg?react';
-import { ADDITIONAL_FILTERS_ENABLED } from './AdditionalFilters.utils';
+import { ADDITIONAL_FILTERS_ENABLED } from '../const';
 
 import './AdditionalFilters.scss';
 import { useEffect, useState } from 'react';

@@ -16,7 +16,9 @@ import { EDUCATION_THEMES } from './assets/education_themes.js';
 import {
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
-} from './Tools/SearchPanel/dataSourceHandlers/dataSourceConstants.js';
+} from './Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+
+// --- Modals ---
 
 export const ModalId = {
   ELEVATION_PROFILE: 'ElevationProfile',
@@ -32,7 +34,9 @@ export const ModalId = {
   SPECTRAL_EXPLORER: 'SpectralExplorer',
   BROWSE_PRODUCT: 'BrowseProduct',
   RRD_PRODUCT_DETAILS: 'RRDProductDetails',
-};
+} as const;
+
+// --- Themes & modes ---
 
 export const MODE_THEMES_LIST = 'mode';
 export const URL_THEMES_LIST = 'url';
@@ -55,6 +59,8 @@ export const DEFAULT_MODE = {
 
 export const DEFAULT_THEME_ID = 'DEFAULT-THEME';
 
+// --- Map defaults ---
+
 export const DEFAULT_LAT_LNG = {
   lat: 50.16282,
   lng: 20.78613,
@@ -76,10 +82,14 @@ export const NOT_LOGGED_IN = {
   errorLink: 'https://shapps.dataspace.copernicus.eu/dashboard/#/',
 };
 
+// --- AOI ---
+
 export const AOI_SHAPE = {
   polygon: 'Polygon',
   rectangle: 'Rectangle',
 };
+
+// --- Timelapse / export ---
 
 export const TRANSITION = {
   none: 'none',
@@ -91,6 +101,8 @@ export const EXPORT_FORMAT = {
   mpeg4: 'MPEG4',
 };
 
+// --- Sentinel-1 defaults ---
+
 export const S1_DEFAULT_PARAMS = {
   polarization: Polarization.DV,
   acquisitionMode: AcquisitionMode.IW,
@@ -99,6 +111,8 @@ export const S1_DEFAULT_PARAMS = {
   speckleFilter: { type: SpeckleFilterType.NONE },
   backscatterCoeff: BackscatterCoeff.GAMMA0_ELLIPSOID,
 };
+
+// --- Sentinel Hub request config ---
 
 export const reqConfigMemoryCache = {
   cache: {
@@ -115,14 +129,18 @@ export const reqConfigGetMap = {
 
 export const MAX_SH_IMAGE_SIZE = 2500; // SH services have a limit for a max image size of 2500px*2500px
 
+// --- Tabs ---
+
 export const TABS = {
   VISUALIZE_TAB: 1,
   SEARCH_TAB: 2,
   RAPID_RESPONSE_DESK: 3,
   COMMERCIAL_TAB: 4,
-};
+} as const;
 
 export const DISABLED_ORTHORECTIFICATION = 'DISABLED';
+
+// --- DEM / 3D ---
 
 export const ORTHORECTIFICATION_OPTIONS = {
   [DISABLED_ORTHORECTIFICATION]: t`Disabled`,
@@ -167,6 +185,8 @@ export const DEFAULT_DEM_SOURCE = DEMInstanceType.MAPZEN;
 
 export const EQUATOR_LENGTH = 40075016.685578488;
 
+// --- Datasources ---
+
 export const DATASOURCES = {
   S1: 'Sentinel-1',
   S2_CDAS: 'Sentinel-2 CDAS',
@@ -198,7 +218,9 @@ export const DATASOURCES = {
   CLMS: 'CLMS',
   CCM: 'CCM',
   EVOLAND: 'EVOLAND',
-};
+} as const;
+
+// --- Visualization effects ---
 
 export const defaultEffects = {
   gainEffect: 1,
@@ -215,12 +237,18 @@ export const defaultEffects = {
   mosaickingOrder: '',
 };
 
+// --- Evalscript outputs ---
+
 export const DATAMASK_OUTPUT = 'dataMask';
 export const EOBROWSERSTATS_OUTPUT = 'eobrowserStats';
 export const ALL_BANDS_OUTPUT = 'bands';
 export const STATISTICS_MANDATORY_OUTPUTS = [EOBROWSERSTATS_OUTPUT, DATAMASK_OUTPUT];
 
+// --- Local storage & session keys ---
+
 export const LOCAL_STORAGE_PRIVACY_CONSENT_KEY = 'eobrowser-privacy-consent';
+
+// --- Commercial data ---
 
 export const TRANSACTION_TYPE = {
   ORDER: 'ORDER',
@@ -244,6 +272,8 @@ export const DEFAULT_CLOUD_COVER_PERCENT = 30;
 
 export const BBOX_PADDING = 0.1;
 
+// --- Compare ---
+
 export const COMPARE_OPTIONS = {
   COMPARE_SPLIT: {
     value: 'split',
@@ -261,6 +291,8 @@ export const CDSE_GITHUB_PAGE_LINK = 'https://github.com/eu-cdse/copernicus-brow
 
 export const HTTPS = 'https://';
 
+// --- URL & sharing ---
+
 export const MAX_URL_LENGTH_FOR_SHORTENING = 2048;
 export const MAX_CHARACTER_LIMIT_ERROR = {
   TYPE: 'InvalidMaxLength',
@@ -271,6 +303,8 @@ export const MAX_CHARACTER_LIMIT_PROCESS_GRAPH_ERROR = {
   TYPE: 'InvalidMaxLength',
   MESSAGE: t`The process graph you are using is too long and a short-URL cannot be generated.\n Please simplify your process graph to reduce the URL length.`,
 };
+
+// --- Search & date ---
 
 export const DATE_MODES = {
   SINGLE: {
@@ -286,6 +320,8 @@ export const DATE_MODES = {
     label: () => t`Time range`,
   },
 };
+
+// --- Auth & account ---
 
 export const SH_ACCOUNT_TYPE = {
   TRIAL: 11000,
@@ -307,6 +343,8 @@ export const SH_PAYING_ACCOUNT_TYPES = [
 export const UPDATE_BEFORE_EXPIRY_USER_TOKEN = 3 * 60 * 1000; //minutes*seconds*miliseconds
 export const UPDATE_BEFORE_EXPIRY_ANON_TOKEN = 10 * 1000; //seconds*miliseconds
 export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
+
+// --- Misc ---
 
 export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
 export const ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY = 'cdsebrowser_search_config';
