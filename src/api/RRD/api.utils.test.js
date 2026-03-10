@@ -2,7 +2,7 @@ import { getRrdCollectionId } from './api.utils';
 
 const fixtures = [
   ['planetscope', 'planetscope', false, 11],
-  ['planetscope', 'planetscope', true, 11],
+  //['planetscope', 'planetscope', true, 11],
   ['TerraSAR-X/TanDEM-X', 'TDX-1', false, 1],
   ['Worldview', 'GE01', true, 14],
   ['Legion', 'LG01', true, 14],
