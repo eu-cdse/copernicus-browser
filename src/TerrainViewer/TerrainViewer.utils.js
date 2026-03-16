@@ -7,6 +7,7 @@ import {
   BBox,
   CRS_EPSG3857,
   DEMInstanceType,
+  S1GRDCDASLayer,
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 import L from 'leaflet';
@@ -24,9 +25,15 @@ import { wgs84ToMercator } from '../junk/EOBCommon/utils/coords';
 import { getBoundsZoomLevel } from '../utils/coords';
 import { DEFAULT_DEM_SOURCE, DEM_3D_MAX_ZOOM, EQUATOR_LENGTH, PROCESSING_OPTIONS } from '../const';
 import { addLabelsAndLogos, dateTimeDisplayFormat } from '../Controls/Timelapse/Timelapse.utils';
-import { getProcessGraph, isOpenEoSupported, MIMETYPE_TO_OPENEO_FORMAT } from '../api/openEO/openEOHelpers';
+import {
+  getProcessGraph,
+  isOpenEoSupported,
+  MIMETYPE_TO_OPENEO_FORMAT,
+  getOpenEOS1Options,
+} from '../api/openEO/openEOHelpers';
 import processGraphBuilder from '../api/openEO/processGraphBuilder';
 import openEOApi from '../api/openEO/openEO.api';
+import { runEffectFunctions } from '../utils/effects/runEffectFuntions';
 
 let mapTileRequestDelay = 1;
 const mapTileRequestList = [];
@@ -133,8 +140,7 @@ function getMapTileUrlInternal({
 
   const shouldUseOpenEO =
     params.selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
-    (params.processGraph ||
-      isOpenEoSupported(layer.instanceId, layer.layerId, params.format, !!params.effects, false));
+    (params.processGraph || isOpenEoSupported(layer.instanceId, layer.layerId, params.format));
 
   const tryLayerGetMap = () =>
     layer
@@ -193,27 +199,51 @@ function getMapTileUrlInternal({
     const processGraphJson = layer.processGraph
       ? JSON.parse(layer.processGraph)
       : getProcessGraph(layer.instanceId, layer.layerId);
+    const cachedProcessGraph = getProcessGraph(layer.instanceId, layer.layerId);
+
+    const s1Options = getOpenEOS1Options({
+      isS1: layer instanceof S1GRDCDASLayer,
+      orbitDirection: layer?.orbitDirection,
+      acquisitionMode: layer?.acquisitionMode,
+      polarization: layer?.polarization,
+      resolution: layer?.resolution,
+      speckleFilter: layer?.speckleFilter,
+      orthorectification: layer?.orthorectify ? layer?.demInstanceType : null,
+      backscatterCoeff: layer?.backscatterCoeff,
+    });
 
     const newProcessGraph = processGraphBuilder.saveResult(
-      processGraphBuilder.loadCollection(processGraphJson, {
-        datasetId: params.datasetId,
-        spatial_extent: spatialExtent,
-        temporal_extent: [params.fromTime || null, params.toTime || null],
-      }),
+      processGraphBuilder.loadCollection(
+        processGraphJson,
+        {
+          datasetId: params.datasetId,
+          spatial_extent: spatialExtent,
+          temporal_extent: [params.fromTime || null, params.toTime || null],
+          minQa: layer?.minQa,
+          mosaickingOrder: layer?.mosaickingOrder,
+          upsampling: layer?.upsampling,
+          downsampling: layer?.downsampling,
+          previewMode: layer?.previewMode,
+          ...s1Options,
+        },
+        cachedProcessGraph,
+      ),
       { format: MIMETYPE_TO_OPENEO_FORMAT[params.format] },
     );
 
     openEOApi
       .getResult(newProcessGraph, reqConfig && reqConfig.authToken)
-      .then((blob) => {
+      .then(async (blob) => {
         mapTileRequestDelay = Math.max(1, 0.5 * mapTileRequestDelay);
-        const url = URL.createObjectURL(blob);
+        const tmpBlob = await runEffectFunctions(blob, params.effects ?? {});
+        const url = URL.createObjectURL(tmpBlob);
         callback(url);
       })
       .catch(() => {
         tryLayerGetMap();
       });
   } catch (e) {
+    console.log(e);
     tryLayerGetMap();
   }
 }

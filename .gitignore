@@ -13,6 +13,7 @@
 .DS_Store
 .idea
 .vscode
+.claude/worktrees/
 
 scripts/*.csv
 scripts/*.txt
@@ -23,3 +24,9 @@ yarn-error.log*
 .github
 
 /scripts/clms*.json
+
+# playwright
+/playwright-report/
+/test-results/
+/e2e/.auth/
+/.playwright-cli/

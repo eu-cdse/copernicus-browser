@@ -6,10 +6,7 @@ import Highlight from './Highlight';
 import store, { visualizationSlice, mainMapSlice, pinsSlice, clmsSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { fetchEvalscriptFromEvalscripturl, parsePosition } from '../../../utils';
-import {
-  constructEffectsFromPinOrHighlight,
-  isVisualizationEffectsApplied,
-} from '../../../utils/effectsUtils';
+import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
@@ -113,12 +110,10 @@ class Highlights extends Component {
     }
 
     const effects = constructEffectsFromPinOrHighlight(pin);
-    const isEffectsApplied = isVisualizationEffectsApplied(effects);
     const supportsOpenEO = isOpenEoSupported(
       visualizationUrl,
       datasetId,
       IMAGE_FORMATS.PNG,
-      isEffectsApplied,
       evalscript || evalscripturl,
     );
     let visualizationParams = {

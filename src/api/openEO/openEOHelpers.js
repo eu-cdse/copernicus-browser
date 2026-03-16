@@ -30,7 +30,6 @@ export function isOpenEoSupported(
   instanceUrl,
   layerId,
   imageFormat = IMAGE_FORMATS.PNG,
-  isVisualizationEffectsApplied = false,
   isCustomVisualization = false,
 ) {
   // enables switching between openEO and process api from developer tools
@@ -40,7 +39,7 @@ export function isOpenEoSupported(
 
   const hasRequiredParams = !!instanceUrl && !!layerId;
   const isSupportedImageFormat = SUPPORTED_IMAGE_FORMATS.includes(imageFormat);
-  const isBlockedByState = isVisualizationEffectsApplied || isCustomVisualization;
+  const isBlockedByState = isCustomVisualization;
 
   if (!hasRequiredParams || !isSupportedImageFormat || isBlockedByState) {
     return false;
@@ -51,6 +50,39 @@ export function isOpenEoSupported(
 
 export function findNodeByProcessId(processGraph, processId) {
   return Object.keys(processGraph).find((key) => processGraph[key].process_id === processId);
+}
+
+export function getOpenEOS1Options({
+  isS1,
+  datasetParams,
+  orbitDirection,
+  speckleFilter,
+  orthorectification,
+  backscatterCoeff,
+  acquisitionMode,
+  polarization,
+  resolution,
+} = {}) {
+  if (!isS1) {
+    return {};
+  }
+  const s1Options = {
+    ...(datasetParams ?? {}),
+    orbitDirection,
+    speckleFilter,
+    orthorectification,
+    backscatterCoeff,
+  };
+  if (acquisitionMode !== undefined) {
+    s1Options.acquisitionMode = acquisitionMode;
+  }
+  if (polarization !== undefined) {
+    s1Options.polarization = polarization;
+  }
+  if (resolution !== undefined) {
+    s1Options.resolution = resolution;
+  }
+  return s1Options;
 }
 
 export function getProcessGraphString(url, layerId, supportsOpenEO) {

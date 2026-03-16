@@ -801,6 +801,7 @@ export const visualizationSlice = createSlice({
       state.orbitDirection = undefined;
       state.cloudCoverage = DEFAULT_CLOUD_COVER_PERCENT;
       state.dateMode = DATE_MODES.SINGLE.value;
+      state.processGraph = '';
       state.isProcessGraphModified = false;
     },
   },

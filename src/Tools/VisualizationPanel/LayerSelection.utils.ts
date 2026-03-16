@@ -3,7 +3,6 @@
  */
 
 import { isOpenEoSupported, getProcessGraphString } from '../../api/openEO/openEOHelpers';
-import { isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 interface Band {
@@ -77,18 +76,12 @@ export const generateFallbackEvalscript = (
  * @param effects - The visualization effects to check if applied
  * @returns Object with supportsOpenEO boolean and processGraphValue string
  */
-export const getLayerProcessingInfo = (
-  layer: { url: string; layerId: string; [key: string]: unknown },
-  effects: unknown,
-): { supportsOpenEO: boolean; processGraphValue: string } => {
-  const isEffectsApplied = isVisualizationEffectsApplied(effects);
-  const supportsOpenEO = isOpenEoSupported(
-    layer.url,
-    layer.layerId,
-    IMAGE_FORMATS.PNG,
-    isEffectsApplied,
-    false,
-  );
+export const getLayerProcessingInfo = (layer: {
+  url: string;
+  layerId: string;
+  [key: string]: unknown;
+}): { supportsOpenEO: boolean; processGraphValue: string } => {
+  const supportsOpenEO = isOpenEoSupported(layer.url, layer.layerId, IMAGE_FORMATS.PNG, false);
   const processGraphValue = getProcessGraphString(layer.url, layer.layerId, supportsOpenEO);
   return { supportsOpenEO, processGraphValue };
 };

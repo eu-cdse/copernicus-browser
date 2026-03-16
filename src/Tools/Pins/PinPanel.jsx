@@ -11,7 +11,7 @@ import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPane
 import Pin from './Pin';
 import PinTools from './PinTools';
 import UpdatingStatus from './UpdatingStatus';
-import { constructEffectsFromPinOrHighlight, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
+import { constructEffectsFromPinOrHighlight } from '../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../TerrainViewer/TerrainViewer.utils';
 
 import store, {
@@ -439,7 +439,6 @@ class PinPanel extends Component {
       getVisualizationUrl(pin),
       layerId,
       IMAGE_FORMATS.PNG,
-      isVisualizationEffectsApplied(pin),
       hasEvalscript,
     );
     const selectedProcessing =

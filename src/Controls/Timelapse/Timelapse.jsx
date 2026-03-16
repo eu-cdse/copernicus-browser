@@ -475,8 +475,6 @@ class Timelapse extends Component {
       lat,
       lng,
       zoom,
-      selectedProcessing,
-      processGraph,
     } = this.props;
     const { canWeFilterByClouds, canWeFilterByCoverage } = this.state;
 
@@ -570,8 +568,9 @@ class Timelapse extends Component {
             lat: lat,
             lng: lng,
             zoom: zoom,
-            selectedProcessing: selectedProcessing,
-            processGraph: processGraph,
+            selectedProcessing: flyover.visualization.layer.selectedProcessing,
+            processGraph: flyover.visualization.layer.processGraph,
+            orbitDirection: flyover.visualization.layer.orbitDirection,
           })
             .then((image) => {
               return this.onImageLoad({ img: image.url, flyover: flyover });
@@ -914,6 +913,7 @@ class Timelapse extends Component {
       zoom,
       selectedProcessing,
       processGraph,
+      orbitDirection,
     } = this.props;
     let resolvedCounter = 0;
 
@@ -944,6 +944,7 @@ class Timelapse extends Component {
           zoom: zoom,
           selectedProcessing: selectedProcessing,
           processGraph: processGraph,
+          orbitDirection: orbitDirection,
         }).catch((err) => {
           console.warn('Unable to refetch timelapse image', err);
           throw err;

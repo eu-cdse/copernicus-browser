@@ -7,7 +7,7 @@ describe('ExpressionTree', () => {
   });
 
   test('empty tree - or', () => {
-    const tree = new ExpressionTree(ExpressionTree.OR);
+    const tree = new ExpressionTree(ExpressionTreeOperator.OR);
     expect(tree.evaluate()).toBe('');
   });
 
@@ -37,6 +37,18 @@ describe('ExpressionTree', () => {
     const subtree = new ExpressionTree();
     tree.addChild(subtree);
     expect(tree.evaluate()).toBe('A');
+  });
+
+  test('ignores empty-string child in nested logical subtree', () => {
+    const tree = new ExpressionTree();
+    tree.addChild("Collection/Name eq 'SENTINEL-3'");
+
+    const subtree = new ExpressionTree(ExpressionTreeOperator.AND);
+    subtree.addChild('');
+    tree.addChild(subtree);
+
+    tree.addChild('Online eq true');
+    expect(tree.evaluate()).toBe("Collection/Name eq 'SENTINEL-3' and Online eq true");
   });
 
   test('1 value child and subtree with 1 value child', () => {

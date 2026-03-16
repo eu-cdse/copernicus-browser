@@ -44,6 +44,7 @@ import {
   MAX_SH_IMAGE_SIZE,
   DISABLED_ORTHORECTIFICATION,
   PROCESSING_OPTIONS,
+  DATASOURCES,
 } from '../../const';
 
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
@@ -61,12 +62,14 @@ import {
   getProcessGraph,
   isOpenEoSupported,
   MIMETYPE_TO_OPENEO_FORMAT,
+  getOpenEOS1Options,
 } from '../../api/openEO/openEOHelpers';
+import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
 import { ensureMercatorBBox, metersPerPixel } from '../../utils/coords';
-import { isVisualizationEffectsApplied } from '../../utils/effectsUtils';
 import { warningColor } from '../../variables.module.scss';
+import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
 
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
@@ -208,7 +211,6 @@ export async function fetchImage(layer, options) {
     effects,
     getMapAuthToken,
     mimeType,
-    isEffectsAndOptionsSelected,
     customSelected,
     selectedProcessing,
     processGraph,
@@ -248,7 +250,6 @@ export async function fetchImage(layer, options) {
       layer.instanceId,
       layer.layerId,
       imageFormat,
-      isEffectsAndOptionsSelected,
       customSelected && selectedProcessing !== PROCESSING_OPTIONS.OPENEO,
     );
 
@@ -260,6 +261,7 @@ export async function fetchImage(layer, options) {
       let processGraphToUse = processGraph
         ? JSON.parse(processGraph)
         : getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
+      const cachedProcessGraph = getProcessGraph(layer.instanceId, isRawBand ? 'RAW_BAND' : layer.layerId);
       const spatialExtent =
         geometry == null
           ? {
@@ -284,19 +286,44 @@ export async function fetchImage(layer, options) {
         }
       }
 
+      const s1Options = getOpenEOS1Options({
+        isS1: dsh?.datasource === DATASOURCES.S1,
+        datasetParams:
+          dsh?.datasource === DATASOURCES.S1
+            ? Sentinel1DataSourceHandler.getDatasetParams(datasetId)
+            : undefined,
+        orbitDirection: layer?.orbitDirection,
+        speckleFilter: layer?.speckleFilter,
+        orthorectification: layer?.orthorectify ? layer?.demInstanceType : null,
+        backscatterCoeff: layer?.backscatterCoeff,
+      });
+
       const newProcessGraph = processGraphBuilder.saveResult(
-        processGraphBuilder.loadCollection(processGraphToUse, {
-          id: collectionId,
-          datasetId,
-          spatial_extent: spatialExtent,
-          temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
-          bands: isRawBand ? [options.bandName] : null,
-        }),
+        processGraphBuilder.loadCollection(
+          processGraphToUse,
+          {
+            id: collectionId,
+            datasetId: datasetId,
+            spatial_extent: spatialExtent,
+            temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
+            bands: isRawBand ? [options.bandName] : null,
+            minQa: layer?.minQa,
+            mosaickingOrder: layer?.mosaickingOrder,
+            upsampling: layer?.upsampling,
+            downsampling: layer?.downsampling,
+            previewMode: layer?.previewMode,
+            ...s1Options,
+          },
+          cachedProcessGraph,
+        ),
         { format: MIMETYPE_TO_OPENEO_FORMAT[mimeType] },
       );
 
-      return openEOApi.getResult(newProcessGraph, getMapAuthToken);
+      const tmpBlob = await openEOApi.getResult(newProcessGraph, getMapAuthToken);
+      const blob = await runEffectFunctions(tmpBlob, effects ?? {});
+      return blob;
     }
+
     return refetchWithDefaultToken((reqConfig) => layer.getMap(getMapParams, apiType, reqConfig), reqConfig);
   }
 }
@@ -506,7 +533,6 @@ export async function fetchImageFromParams(params, raiseWarning) {
     selectedProcessing,
     processGraph,
   } = params;
-  const isEffectsAndOptionsSelected = isVisualizationEffectsApplied(params);
   const layer = layerFromParams ?? (await getLayerFromParams(params, cancelToken));
 
   if (!layer) {
@@ -572,7 +598,6 @@ export async function fetchImageFromParams(params, raiseWarning) {
         apiType: apiType,
         mimeType: mimeType,
         getMapAuthToken: getMapAuthToken,
-        isEffectsAndOptionsSelected,
         customSelected,
         selectedProcessing,
         processGraph,
@@ -609,7 +634,6 @@ export async function fetchImageFromParams(params, raiseWarning) {
       apiType: apiType,
       mimeType: mimeType,
       getMapAuthToken: getMapAuthToken,
-      isEffectsAndOptionsSelected,
       customSelected,
       selectedProcessing,
       processGraph,

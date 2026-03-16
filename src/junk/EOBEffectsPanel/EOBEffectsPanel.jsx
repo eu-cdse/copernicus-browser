@@ -28,7 +28,6 @@ import { getValueOrDefault, getDatasetDefaults } from '../../utils/effectsUtils'
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import ExternalLink from '../../ExternalLink/ExternalLink';
 import { getMosaickingOrderOptions } from '../../utils/mosaickingOrder.utils';
-import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 const supportedInterpolations = [Interpolator.BILINEAR, Interpolator.BICUBIC, Interpolator.NEAREST];
 
@@ -180,8 +179,6 @@ function render3DDemSourceSelection(props) {
 }
 
 function renderCommonEffects(props) {
-  const dsh = getDataSourceHandler(props.datasetId);
-  const hasCloudCoverage = dsh && dsh.tilesHaveCloudCoverage(props.datasetId);
   return (
     <React.Fragment key="commonEffects">
       <EffectSlider
@@ -208,7 +205,7 @@ function renderCommonEffects(props) {
         name={t`Mosaicking order`}
         value={getValueOrDefault(props.effects, 'mosaickingOrder', defaultEffects)}
         onChange={props.onUpdateMosaickingOrder}
-        options={getMosaickingOrderOptions(props.datasetId, hasCloudCoverage)}
+        options={getMosaickingOrderOptions()}
         displayLayerDefault={true}
       />
     </React.Fragment>

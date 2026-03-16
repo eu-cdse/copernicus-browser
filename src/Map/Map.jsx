@@ -46,7 +46,7 @@ import {
 } from '../Tools/SearchPanel/dataSourceHandlers/helper';
 // import { checkUserAccount } from '../Tools/CommercialDataPanel/commercialData.utils';
 import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
-import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../utils/effectsUtils';
+import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import {
   getOrbitDirectionFromList,
   isTimespanModeSelected,
@@ -339,14 +339,12 @@ class Map extends React.Component {
       processGraph,
     } = this.props;
     const { evalscripturl } = getUrlParams();
-    const isEffectsSelected = isVisualizationEffectsApplied(this.props);
     const isCustomEvalscript = customSelected && !!evalscript;
     const isOpenEOSelected = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
     const supportsOpenEo = isOpenEoSupported(
       visualizationUrl,
       visualizationLayerId,
       IMAGE_FORMATS.PNG,
-      isEffectsSelected,
       isCustomEvalscript,
     );
 
@@ -524,6 +522,7 @@ class Map extends React.Component {
                     ? JSON.parse(processGraph)
                     : getProcessGraph(visualizationUrl, visualizationLayerId)
                 }
+                cachedProcessGraph={getProcessGraph(visualizationUrl, visualizationLayerId)}
                 datasetId={datasetId}
                 getMapAuthToken={getGetMapAuthToken(auth)}
                 fromTime={fromTime ? fromTime.toISOString() : null}
@@ -534,6 +533,19 @@ class Map extends React.Component {
                 pane={SENTINELHUB_LAYER_PANE_ID}
                 minZoom={zoomConfig.min}
                 maxZoom={zoomConfig.max}
+                gainEffect={gainEffect}
+                gammaEffect={gammaEffect}
+                redRangeEffect={redRangeEffect}
+                greenRangeEffect={greenRangeEffect}
+                blueRangeEffect={blueRangeEffect}
+                minQa={minQa}
+                mosaickingOrder={mosaickingOrder}
+                upsampling={upsampling}
+                downsampling={downsampling}
+                speckleFilter={speckleFilterProp}
+                orthorectification={orthorectification}
+                backscatterCoeff={backscatterCoeff}
+                orbitDirection={orbitDirection}
               />
             </Overlay>
           )}
@@ -639,13 +651,11 @@ class Map extends React.Component {
                   pinTimeTo = moment.utc(toTime).endOf('day').toDate();
                 }
                 const index = comparedLayers.length - 1 - i;
-                const areEffectsAppliedForComparedLayer = isVisualizationEffectsApplied(p);
                 const isCustomVisualisation = evalscript != null && evalscript.length > 0;
                 const supportsOpenEoComparedLayer = isOpenEoSupported(
                   visualizationUrl,
                   layerId,
                   IMAGE_FORMATS.PNG,
-                  areEffectsAppliedForComparedLayer,
                   isCustomVisualisation,
                 );
 
@@ -658,6 +668,7 @@ class Map extends React.Component {
                     <OpenEoLayerComponent
                       key={i}
                       processGraph={processGraphToUse}
+                      cachedProcessGraph={getProcessGraph(visualizationUrl, layerId)}
                       datasetId={datasetId}
                       getMapAuthToken={getGetMapAuthToken(auth)}
                       fromTime={pinTimeFrom}
@@ -670,6 +681,19 @@ class Map extends React.Component {
                       clipping={comparedClipping[index]}
                       minZoom={zoomConfig.min}
                       maxZoom={zoomConfig.max}
+                      gainEffect={gainEffect}
+                      gammaEffect={gammaEffect}
+                      redRangeEffect={redRangeEffect}
+                      greenRangeEffect={greenRangeEffect}
+                      blueRangeEffect={blueRangeEffect}
+                      minQa={minQa}
+                      mosaickingOrder={mosaickingOrder}
+                      upsampling={upsampling}
+                      downsampling={downsampling}
+                      speckleFilter={speckleFilterProp}
+                      orthorectification={orthorectification}
+                      backscatterCoeff={backscatterCoeff}
+                      orbitDirection={orbitDirection}
                     />
                   );
                 }

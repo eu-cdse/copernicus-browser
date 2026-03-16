@@ -178,7 +178,6 @@ export const DEM_3D_MAX_ZOOM = {
 export const MOSAICKING_ORDER_OPTIONS = {
   [MosaickingOrder.MOST_RECENT]: () => t`Most recent`,
   [MosaickingOrder.LEAST_RECENT]: () => t`Least recent`,
-  [MosaickingOrder.LEAST_CC]: () => t`Least cloud coverage`,
 };
 
 export const DEFAULT_DEM_SOURCE = DEMInstanceType.MAPZEN;

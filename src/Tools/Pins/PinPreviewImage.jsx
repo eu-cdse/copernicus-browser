@@ -16,17 +16,20 @@ import { getAppropriateAuthToken, getGetMapAuthToken } from '../../App';
 import { layerFromPin } from './Pin.utils';
 import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 import { isDataFusionEnabled } from '../../utils';
-import { constructGetMapParamsEffects, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
-import { reqConfigMemoryCache, reqConfigGetMap } from '../../const';
+import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
+import { reqConfigMemoryCache, reqConfigGetMap, DATASOURCES } from '../../const';
 import {
   getProcessGraph,
   isOpenEoSupported,
   MIMETYPE_TO_OPENEO_FORMAT,
+  getOpenEOS1Options,
 } from '../../api/openEO/openEOHelpers';
+import Sentinel1DataSourceHandler from '../SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import { metersPerPixel } from '../../utils/coords';
 import openEOApi from '../../api/openEO/openEO.api';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
+import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
 
 const PIN_PREVIEW_DIMENSIONS = {
   WIDTH: 90,
@@ -126,7 +129,6 @@ class PinPreviewImage extends React.Component {
       const bbox = this.computeBBox(lat, lng, zoom);
 
       const effects = constructGetMapParamsEffects(this.props.pin);
-      const isEffectsApplied = isVisualizationEffectsApplied(this.props.pin);
       const isEvalscript = evalscript || evalscripturl;
 
       const apiType = layer.supportsApiType(ApiType.PROCESSING)
@@ -146,7 +148,6 @@ class PinPreviewImage extends React.Component {
         layer.instanceId,
         layer.layerId,
         IMAGE_FORMATS.PNG,
-        isEffectsApplied,
         isEvalscript,
       );
 
@@ -173,6 +174,7 @@ class PinPreviewImage extends React.Component {
         let processGraphToUse = processGraph
           ? JSON.parse(processGraph)
           : getProcessGraph(layer.instanceId, layer.layerId);
+        const cachedProcessGraph = getProcessGraph(layer.instanceId, layer.layerId);
 
         const spatialExtent = {
           west: getMapParams.bbox.minX,
@@ -194,17 +196,39 @@ class PinPreviewImage extends React.Component {
           }
         }
 
+        const s1Options = getOpenEOS1Options({
+          isS1: dsh?.datasource === DATASOURCES.S1,
+          datasetParams:
+            dsh?.datasource === DATASOURCES.S1
+              ? Sentinel1DataSourceHandler.getDatasetParams(this.props.pin.datasetId)
+              : undefined,
+          orbitDirection: this.props.pin.orbitDirection,
+          speckleFilter: this.props.pin.speckleFilter,
+          orthorectification: this.props.pin.orthorectification,
+          backscatterCoeff: this.props.pin.backscatterCoeff,
+        });
+
         const newProcessGraph = processGraphBuilder.saveResult(
-          processGraphBuilder.loadCollection(processGraphToUse, {
-            id: collectionId,
-            datasetId,
-            spatial_extent: spatialExtent,
-            temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
-          }),
+          processGraphBuilder.loadCollection(
+            processGraphToUse,
+            {
+              id: collectionId,
+              datasetId: datasetId,
+              spatial_extent: spatialExtent,
+              temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
+              minQa: this.props.pin.minQa,
+              mosaickingOrder: this.props.pin.mosaickingOrder,
+              upsampling: this.props.pin.upsampling,
+              downsampling: this.props.pin.downsampling,
+              ...s1Options,
+            },
+            cachedProcessGraph,
+          ),
           { format: MIMETYPE_TO_OPENEO_FORMAT[MimeTypes.PNG] },
         );
 
-        blob = await openEOApi.getResult(newProcessGraph, getMapAuthToken);
+        const tmpBlob = await openEOApi.getResult(newProcessGraph, getMapAuthToken);
+        blob = await runEffectFunctions(tmpBlob, effects ?? {});
       } else {
         const getMapParams = {
           bbox: bbox,

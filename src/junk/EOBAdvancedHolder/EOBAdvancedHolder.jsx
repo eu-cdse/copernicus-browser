@@ -10,7 +10,6 @@ import withRouter from '../../hoc/withRouter';
 
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import RadioButtonGroup from '../../components/RadioButtonGroup/RadioButtonGroup';
-import { haveEffectsChangedFromDefault } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 
 import { PROCESSING_OPTIONS } from '../../const';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
@@ -39,7 +38,7 @@ const repo = 'https://custom-scripts.sentinel-hub.com/';
 const getEvalscriptTooltipContent = () => t`
 An evalscript (or "custom script") is a piece of Javascript code that defines how the satellite data
 should be processed by Sentinel Hub (one of the underlying services that powers the Browser) and what values the
-service should return. \n\n
+service should return.
 Read more about custom scripts in our [tutorials](${tutorial}) or use already prepared scripts
 for different collections from the [custom script repository](${repo}).
 `;
@@ -50,7 +49,7 @@ const getProcessGraphTooltipContent = () =>
 An OpenEO process graph is a chain of processes that defines how satellite data should be processed by the synchronous OpenEO API (one of the underlying services that powers the Browser) and what values the service should return. \n\n
 Read more about processes and process graphs [here](${processGraphUrl}).` +
   `\n\n` +
-  t`Note: The collection **id**, **spatial_extent**, and **temporal_extent** properties are read-only. These values update automatically based on your selection in the data collection panel, the current map extent, and the date picker. \n\n`;
+  t`Note: The **collection_id**, **spatial_extent**, **temporal_extent**, and **advanced options** settings (e.g., mosaickingOrder, upsampling, downsampling) are read-only. These values are updated automatically based on your map navigation, date selection, collection choice, and advanced settings. \n\n`;
 
 const getUnsupportedProcessGraphTooltipContent = () => t`
 OpenEO process graph is currently not supported for this collection.
@@ -115,7 +114,6 @@ class EOBAdvancedHolder extends React.Component {
       visualizationUrl,
       selectedProcessing,
       processGraph,
-      effects,
       onRefreshOpenEO,
     } = this.props;
 
@@ -124,13 +122,7 @@ class EOBAdvancedHolder extends React.Component {
         ? activeDatasource.groupChannels(activeDatasource.datasetId)
         : null;
 
-    const haveEffectsChanged = haveEffectsChangedFromDefault(effects, activeDatasource?.datasetId);
-    const supportsOpenEO = isOpenEoSupported(
-      visualizationUrl,
-      selectedVisualizationId,
-      IMAGE_FORMATS.PNG,
-      haveEffectsChanged,
-    );
+    const supportsOpenEO = isOpenEoSupported(visualizationUrl, selectedVisualizationId, IMAGE_FORMATS.PNG);
     const customProcessingOptions = [
       {
         label: t`OpenEO process graph`,

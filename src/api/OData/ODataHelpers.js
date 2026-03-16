@@ -1919,8 +1919,9 @@ export const countGeometryRepetitions = (collections) => {
 
     instruments.forEach((instrument) => {
       const instrumentConfig = findInstrumentConfigById(instrument.id);
-      const hasProductTypeFilter =
-        instrument.productTypes?.length > 0 || getInstrumentProductTypes(instrumentConfig).length > 0;
+      const hasProductTypeFilter = Array.isArray(instrument.productTypes)
+        ? instrument.productTypes.length > 0
+        : false;
       const allProductsInInstrumentSupportGeometry = checkAllProductsInInstrumentSupport(
         instrument.id,
         SUPPORTED_PROPERTIES.Geometry,
@@ -2042,9 +2043,13 @@ const createProductTypeFilter = ({ productTypeId, productTypeConfig, geometry })
 //creates productType filter
 // (productTypeFilter1 or productTypeFilter2 ... )
 const createProductTypesFilter = ({ instrument, geometry }) => {
-  const hasProductTypeFilter = instrument.productTypes
+  // Use only the explicitly set productTypes array to determine if a product type filter is active.
+  // When productTypes is undefined (e.g. config-sourced instruments for parent-level selection),
+  // treat it as no filter — this allows the geometry optimisation to fire at instrument level
+  // via the instrument's customFilterExpression, rather than repeating geometry per product type.
+  const hasProductTypeFilter = Array.isArray(instrument.productTypes)
     ? instrument.productTypes.length > 0
-    : getInstrumentProductTypes(instrument).length > 0;
+    : false;
   const allProductsSupportGeometry = checkAllProductsInInstrumentSupport(
     instrument.id,
     SUPPORTED_PROPERTIES.Geometry,
@@ -2134,9 +2139,17 @@ const createInstrumentsFilter = ({ collection, geometry }) => {
     collection.id,
     SUPPORTED_PROPERTIES.InstrumentName,
   );
+  const collectionConfig = findCollectionConfigById(collection.id);
+  const collectionSupportsGeometry = collectionConfig ? collectionConfig.supportsGeometry !== false : true;
 
   // optimisation: geometry constraint can be applied on top level when all product types share the same constraint
-  if (!hasInstrumentFilter && allInstrumentsSupportInstrumentName && allProductsSupportGeometry && geometry) {
+  if (
+    !hasInstrumentFilter &&
+    allInstrumentsSupportInstrumentName &&
+    allProductsSupportGeometry &&
+    geometry &&
+    collectionSupportsGeometry
+  ) {
     const geometryFilter = new ODataFilterBuilder();
     const wkt = wellknown.stringify(geometry);
     geometryFilter.intersects(wkt);

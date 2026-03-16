@@ -1851,6 +1851,19 @@ describe('countGeometryRepetitions', () => {
     expect(result).toBeGreaterThanOrEqual(1);
   });
 
+  test('counts 1 repetition for instrument without explicit productTypes (geometry applied at instrument level)', () => {
+    // When productTypes is undefined, hasProductTypeFilter = false → geometry optimisation fires at
+    // instrument level (SAR supports InstrumentName and all its products support Geometry)
+    const collections = [
+      {
+        id: 'S1',
+        instruments: [{ id: 'SAR' }],
+      },
+    ];
+    const result = countGeometryRepetitions(collections);
+    expect(result).toBe(1);
+  });
+
   test('counts repetitions for collection with instruments', () => {
     const collections = [
       {
@@ -1859,7 +1872,6 @@ describe('countGeometryRepetitions', () => {
       },
     ];
     const result = countGeometryRepetitions(collections);
-    // Should count based on SAR instrument's product types
     expect(result).toBeGreaterThanOrEqual(1);
   });
 

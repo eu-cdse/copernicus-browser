@@ -39,6 +39,7 @@ import ReactMarkdown from 'react-markdown';
 import { cloneDeep } from 'lodash';
 import { themesSlice } from '../../../../store';
 import { ODATA_SEARCH_ERROR_MESSAGE } from '../../../../hooks/useODataSearch';
+import { ErrorCode, ErrorMessage } from './const';
 import {
   CollectionFormInitialState,
   getCollectionFormConfig,
@@ -50,23 +51,64 @@ import { AttributeNames } from '../../../../api/OData/assets/attributes';
 import { ODataCollections } from '../../../../api/OData/ODataTypes';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 
-const ErrorCode = {
-  noProductsFound: 'noProductsFound',
-  selectSearchCriteria: 'selectSearchCriteria',
-  invalidTimeRange: 'invalidTimeRange',
-  invalidDateRange: 'invalidDateRange',
-};
-
-const ErrorMessage = {
-  [ErrorCode.noProductsFound]: () => t`No products were found for the selected search parameters.\n
-  To get more results, try selecting more data sources, extending the time range and/or selecting a larger area on the map.`,
-  [ErrorCode.selectSearchCriteria]: () => t`Please select at least one search criteria!`,
-  [ErrorCode.invalidTimeRange]: () => t`Invalid time range!`,
-  [ErrorCode.invalidDateRange]: () => t`Invalid date range!`,
-};
-
 const WarningMessage = {
   geometrySimplified: () => t`Your search geometry was simplified to fit the search query limits.`,
+};
+
+const findConfigByPath = (rootConfig, path = []) => {
+  if (!rootConfig) {
+    return null;
+  }
+  return path.reduce(
+    (currentNode, pathId) => currentNode?.items?.find((item) => item.id === pathId),
+    rootConfig,
+  );
+};
+
+const getProductTypeIdsFromConfig = (configNode) => {
+  if (!configNode?.items || !configNode.items.length) {
+    return [];
+  }
+  return configNode.items.flatMap((item) => {
+    if (item.type === 'productType') {
+      return [item.id];
+    }
+    if (item.type === 'group') {
+      return getProductTypeIdsFromConfig(item);
+    }
+    return [];
+  });
+};
+
+const getInstrumentIdsFromConfigNode = (configNode) => {
+  if (!configNode?.items || !configNode.items.length) {
+    return [];
+  }
+  return configNode.items.flatMap((item) => {
+    if (item.type === 'instrument') {
+      return [item.id];
+    }
+    if (item.type === 'group') {
+      return getInstrumentIdsFromConfigNode(item);
+    }
+    return [];
+  });
+};
+
+const addProductTypesToInstrument = (instrumentObj, productTypeIds) => {
+  if (!instrumentObj || !Array.isArray(productTypeIds) || !productTypeIds.length) {
+    return;
+  }
+  if (!instrumentObj.productTypes) {
+    instrumentObj.productTypes = [];
+  }
+  const selectedProductTypeIds = new Set(instrumentObj.productTypes.map((pt) => pt.id));
+  productTypeIds.forEach((productTypeId) => {
+    if (!selectedProductTypeIds.has(productTypeId)) {
+      instrumentObj.productTypes.push({ id: productTypeId });
+      selectedProductTypeIds.add(productTypeId);
+    }
+  });
 };
 
 class AdvancedSearch extends Component {
@@ -85,6 +127,7 @@ class AdvancedSearch extends Component {
   };
 
   calendarHolder = React.createRef();
+  errorPanelRef = React.createRef();
 
   componentDidMount() {
     const searchConfigFromSession = JSON.parse(
@@ -198,6 +241,10 @@ class AdvancedSearch extends Component {
       }));
       //reset last search params
       store.dispatch(searchResultsSlice.actions.setSearchFormData(null));
+    }
+
+    if (!prevProps.searchError && this.props.searchError) {
+      this.errorPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
 
@@ -528,6 +575,7 @@ class AdvancedSearch extends Component {
         const selectedCollectionData =
           collectionForm.selectedCollections[ODataCollections.COMPLEMENTARY_DATA.id]?.[collection.id] ??
           collectionForm.selectedCollections[collection.id];
+        const collectionConfig = findCollectionConfigById(collection.id);
 
         const getInstrumentCloudCover = (instrumentId) => {
           if (!collectionForm.maxCc || !collectionForm.maxCc[collection.id]) {
@@ -572,65 +620,27 @@ class AdvancedSearch extends Component {
             return;
           }
 
-          // Check if this is a group with type property but no other selections
-          const isEmptySelectedGroup = obj.type === 'group' && Object.keys(obj).length === 1;
+          const isEmptySelectedNode = Object.keys(obj).length === 1;
 
-          // If this is a selected group with no internal selections, we need to get
-          // all instruments from the collection config
-          if (isEmptySelectedGroup) {
-            // Get all instruments in this group from the configuration
-            const groupPath = [...parentPath];
-            const collectionConfig = findCollectionConfigById(collection.id);
+          if (isEmptySelectedNode && (obj.type === 'group' || obj.type === 'instrument')) {
+            const selectedConfigNode = findConfigByPath(collectionConfig, parentPath);
 
-            if (collectionConfig) {
-              // Find the group in the config
-              let currentConfig = collectionConfig;
-              let groupConfig = null;
-
-              // Navigate through the path to find this group
-              for (let i = 0; i < groupPath.length; i++) {
-                const pathItem = groupPath[i];
-                if (currentConfig.items) {
-                  currentConfig = currentConfig.items.find((item) => item.id === pathItem);
-                  if (!currentConfig) {
-                    break;
-                  }
-
-                  if (i === groupPath.length - 1) {
-                    groupConfig = currentConfig;
-                  }
+            // When an empty group contains instruments (e.g. Snow group → Snow Cover Extent, Snow Water Equivalent),
+            // add those instruments without specific product types so all their children are searched.
+            const instrumentIds = getInstrumentIdsFromConfigNode(selectedConfigNode);
+            if (instrumentIds.length > 0 && !instrumentParent) {
+              instrumentIds.forEach((instrumentId) => {
+                const instrumentObj = { id: instrumentId };
+                const cloudCoverValue = getInstrumentCloudCover(instrumentId);
+                if (cloudCoverValue !== undefined) {
+                  instrumentObj.cloudCover = cloudCoverValue;
                 }
-              }
-
-              if (groupConfig && groupConfig.items) {
-                // Collect all instruments from a group config
-                const collectInstruments = (container) => {
-                  if (!container.items) {
-                    return;
-                  }
-
-                  container.items.forEach((item) => {
-                    if (item.type === 'instrument') {
-                      const instrumentId = item.id;
-                      const instrumentObj = { id: instrumentId };
-
-                      const cloudCoverValue = getInstrumentCloudCover(instrumentId);
-                      if (cloudCoverValue !== undefined) {
-                        instrumentObj.cloudCover = cloudCoverValue;
-                      }
-
-                      instruments.push(instrumentObj);
-                    } else if (item.type === 'group') {
-                      // Process nested groups
-                      collectInstruments(item);
-                    }
-                  });
-                };
-
-                collectInstruments(groupConfig);
-              }
+                instruments.push(instrumentObj);
+              });
+            } else {
+              const productTypeIds = getProductTypeIdsFromConfig(selectedConfigNode);
+              addProductTypesToInstrument(instrumentParent, productTypeIds);
             }
-
             return;
           }
 
@@ -778,10 +788,13 @@ class AdvancedSearch extends Component {
       );
     }
 
-    const oDataSearchError =
-      searchError?.message === ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND
-        ? { message: ErrorMessage.noProductsFound() }
-        : null;
+    const oDataSearchError = searchError?.message?.startsWith(ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND)
+      ? {
+          message: searchError?.availabilityMessage
+            ? `${ErrorMessage[ErrorCode.noMatchingProducts]()}\n${searchError.availabilityMessage}`
+            : ErrorMessage[ErrorCode.noMatchingProducts](),
+        }
+      : null;
 
     const geometrySimplifiedWarning = this.state.geometrySimplified
       ? {
@@ -890,12 +903,14 @@ class AdvancedSearch extends Component {
             <EOBButton loading={searchInProgress} onClick={this.doSearch} fluid text={t`Search`} />
           </div>
           {error ? (
-            <NotificationPanel
-              msg={
-                <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{error.message}</ReactMarkdown>
-              }
-              type="error"
-            />
+            <div ref={this.errorPanelRef}>
+              <NotificationPanel
+                msg={
+                  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{error.message}</ReactMarkdown>
+                }
+                type="error"
+              />
+            </div>
           ) : null}
         </div>
       </>

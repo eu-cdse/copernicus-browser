@@ -27,7 +27,7 @@ import { usePrevious } from '../../hooks/usePrevious';
 
 import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';
 import { getProcessGraphString, isOpenEoSupported } from '../../api/openEO/openEOHelpers';
-import { getVisualizationEffectsFromStore, isVisualizationEffectsApplied } from '../../utils/effectsUtils';
+import { getVisualizationEffectsFromStore } from '../../utils/effectsUtils';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 const LayerSelection = ({
@@ -53,7 +53,6 @@ const LayerSelection = ({
   onBackToLayerList,
   toggleLayerActions,
   layerActionsOpen,
-  effects,
   selectedProcessing,
 }) => {
   const [layers, setLayers] = useState([]);
@@ -104,7 +103,7 @@ const LayerSelection = ({
       }
       saveCustomState();
       setLocationHash('');
-      const { supportsOpenEO, processGraphValue } = getLayerProcessingInfo(layer, effects);
+      const { supportsOpenEO, processGraphValue } = getLayerProcessingInfo(layer);
 
       setProcessGraph(processGraphValue);
 
@@ -123,7 +122,7 @@ const LayerSelection = ({
       setUseEvalscriptUrl(false);
       setUseProcessGraphUrl(false);
     },
-    [customSelected, selectedLayerId, visualizationUrl, saveCustomState, setLocationHash, effects],
+    [customSelected, selectedLayerId, visualizationUrl, saveCustomState, setLocationHash],
   );
 
   useEffect(() => {
@@ -333,14 +332,7 @@ const LayerSelection = ({
       return;
     }
 
-    const isEffectsApplied = isVisualizationEffectsApplied(effects);
-    const supportsOpenEO = isOpenEoSupported(
-      activeLayer.url,
-      activeLayer.layerId,
-      IMAGE_FORMATS.PNG,
-      isEffectsApplied,
-      false,
-    );
+    const supportsOpenEO = isOpenEoSupported(activeLayer.url, activeLayer.layerId, IMAGE_FORMATS.PNG, false);
     const fallbackProcessGraph = getProcessGraphString(activeLayer.url, activeLayer.layerId, supportsOpenEO);
 
     if (!fallbackProcessGraph) {
@@ -366,7 +358,54 @@ const LayerSelection = ({
     selectedProcessing,
     processGraph,
     processGraphUrl,
-    effects,
+    datasetId,
+    datasourceHandler,
+  ]);
+
+  // OpenEO fallback: Load default process graph when switching to custom mode
+  useEffect(() => {
+    if (!customSelected || layers.length === 0 || selectedProcessing !== PROCESSING_OPTIONS.OPENEO) {
+      return;
+    }
+
+    if (processGraph || processGraphUrl) {
+      return;
+    }
+
+    const activeLayer =
+      layers.find((layer) => layer.layerId === selectedLayerId) ||
+      layers.find((layer) => layer.url === visualizationUrl) ||
+      layers[0];
+
+    if (!activeLayer) {
+      return;
+    }
+
+    const supportsOpenEO = isOpenEoSupported(activeLayer.url, activeLayer.layerId, IMAGE_FORMATS.PNG, false);
+    const fallbackProcessGraph = getProcessGraphString(activeLayer.url, activeLayer.layerId, supportsOpenEO);
+
+    if (!fallbackProcessGraph) {
+      return;
+    }
+
+    setProcessGraph(fallbackProcessGraph);
+    setProcessGraphUrl(null);
+    setUseProcessGraphUrl(false);
+    store.dispatch(
+      visualizationSlice.actions.setVisualizationParams({
+        processGraph: fallbackProcessGraph,
+        processgraphurl: null,
+        selectedProcessing: PROCESSING_OPTIONS.OPENEO,
+      }),
+    );
+  }, [
+    customSelected,
+    layers,
+    selectedLayerId,
+    visualizationUrl,
+    selectedProcessing,
+    processGraph,
+    processGraphUrl,
   ]);
 
   const handleBackToLayerList = useCallback(() => {
@@ -442,7 +481,7 @@ const LayerSelection = ({
     (layerId) => {
       const layer = layers.find((l) => l.layerId === layerId);
       if (layer) {
-        const { supportsOpenEO, processGraphValue } = getLayerProcessingInfo(layer, effects);
+        const { supportsOpenEO, processGraphValue } = getLayerProcessingInfo(layer);
 
         setEvalscript(layer.evalscript);
         setCustomEvalscript(layer.evalscript);
@@ -468,7 +507,7 @@ const LayerSelection = ({
         setLocationHash(CUSTOM_SCRIPT_ROUTE);
       }
     },
-    [layers, effects, setLocationHash],
+    [layers, setLocationHash],
   );
 
   const onCompositeChange = useCallback(

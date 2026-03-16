@@ -8,12 +8,17 @@ import {
   findNodeByProcessId,
   OPENEO_VALID_FORMATS,
   MIMETYPE_TO_OPENEO_FORMAT,
+  getOpenEOS1Options,
 } from '../../api/openEO/openEOHelpers';
+import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
 import { metersPerPixel } from '../../utils/coords';
 import store, { notificationSlice } from '../../store';
 import { t } from 'ttag';
+import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
+import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
+import { DATASOURCES } from '../../const';
 
 class OpenEoLayer extends L.TileLayer {
   constructor(options) {
@@ -84,20 +89,42 @@ class OpenEoLayer extends L.TileLayer {
       }
     }
 
-    const newProcessGraph = processGraphBuilder.loadCollection(processGraph, {
-      id: collectionId,
-      datasetId: this.options.datasetId,
-      spatial_extent: {
-        west: nw.x,
-        east: se.x,
-        south: se.y,
-        north: nw.y,
-        height: this.options.tileSize,
-        width: this.options.tileSize,
-        crs: CRS_EPSG3857.authId,
-      },
-      temporal_extent: [this.options.fromTime, this.options.toTime],
+    const s1Options = getOpenEOS1Options({
+      isS1: this.dsh?.datasource === DATASOURCES.S1,
+      datasetParams:
+        this.dsh?.datasource === DATASOURCES.S1
+          ? Sentinel1DataSourceHandler.getDatasetParams(this.options.datasetId)
+          : undefined,
+      orbitDirection: this.options.orbitDirection,
+      speckleFilter: this.options.speckleFilter,
+      orthorectification: this.options.orthorectification,
+      backscatterCoeff: this.options.backscatterCoeff,
     });
+
+    const newProcessGraph = processGraphBuilder.loadCollection(
+      processGraph,
+      {
+        id: collectionId,
+        datasetId: this.options.datasetId,
+        spatial_extent: {
+          west: nw.x,
+          east: se.x,
+          south: se.y,
+          north: nw.y,
+          height: this.options.tileSize,
+          width: this.options.tileSize,
+          crs: CRS_EPSG3857.authId,
+        },
+        temporal_extent: [this.options.fromTime, this.options.toTime],
+        minQa: this.options.minQa,
+        mosaickingOrder: this.options.mosaickingOrder,
+        upsampling: this.options.upsampling,
+        downsampling: this.options.downsampling,
+        previewMode: this.options.previewMode,
+        ...s1Options,
+      },
+      this.options.cachedProcessGraph,
+    );
 
     openEOApi
       .getResult(newProcessGraph, this.options.getMapAuthToken, signal)
@@ -109,7 +136,8 @@ class OpenEoLayer extends L.TileLayer {
           }
           done(null, tile);
         };
-        const objectURL = URL.createObjectURL(blob);
+        const updatedBlob = await runEffectFunctions(blob, this.options.effects ?? {});
+        const objectURL = URL.createObjectURL(updatedBlob);
         tile.src = objectURL;
       })
       .catch(function (error) {
@@ -259,6 +287,11 @@ class OpenEoLayerComponent extends GridLayer {
     if (params.processGraph) {
       options.processGraph = params.processGraph;
     }
+    if (params.cachedProcessGraph) {
+      options.cachedProcessGraph = params.cachedProcessGraph;
+    } else {
+      options.cachedProcessGraph = null;
+    }
     if (params.datasetId) {
       options.datasetId = params.datasetId;
     }
@@ -295,6 +328,67 @@ class OpenEoLayerComponent extends GridLayer {
     } else if (params.maxZoom) {
       options.maxNativeZoom = params.maxZoom;
       options.maxZoom = params.maxZoom;
+    }
+
+    const effects = constructGetMapParamsEffects(params);
+    if (effects) {
+      options.effects = effects;
+    } else {
+      options.effects = {};
+    }
+
+    if (params.minQa !== undefined) {
+      options.minQa = params.minQa;
+    } else {
+      options.minQa = null;
+    }
+
+    if (params.mosaickingOrder) {
+      options.mosaickingOrder = params.mosaickingOrder;
+    } else {
+      options.mosaickingOrder = null;
+    }
+
+    if (params.upsampling) {
+      options.upsampling = params.upsampling;
+    } else {
+      options.upsampling = null;
+    }
+
+    if (params.downsampling) {
+      options.downsampling = params.downsampling;
+    } else {
+      options.downsampling = null;
+    }
+
+    if (params.speckleFilter) {
+      options.speckleFilter = params.speckleFilter;
+    } else {
+      options.speckleFilter = null;
+    }
+
+    if (params.orthorectification) {
+      options.orthorectification = params.orthorectification;
+    } else {
+      options.orthorectification = null;
+    }
+
+    if (params.backscatterCoeff) {
+      options.backscatterCoeff = params.backscatterCoeff;
+    } else {
+      options.backscatterCoeff = null;
+    }
+
+    if (params.orbitDirection) {
+      options.orbitDirection = params.orbitDirection;
+    } else {
+      options.orbitDirection = null;
+    }
+
+    if (params.previewMode) {
+      options.previewMode = params.previewMode;
+    } else {
+      options.previewMode = null;
     }
 
     return options;

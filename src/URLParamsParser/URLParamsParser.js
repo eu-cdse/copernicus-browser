@@ -38,7 +38,6 @@ import {
 import { saveToLocalStorage } from '../utils/localStorage.utils';
 import { isOpenEoSupported } from '../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
-import { isVisualizationEffectsApplied } from '../utils/effectsUtils';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -231,7 +230,6 @@ class URLParamsParser extends React.Component {
               decryptedVisualisationUrl,
               layerId,
               IMAGE_FORMATS.PNG,
-              isVisualizationEffectsApplied({ effects: { gain, gamma, redRange, greenRange, blueRange } }),
               evalscript || evalscripturl,
             )
           ? PROCESSING_OPTIONS.OPENEO

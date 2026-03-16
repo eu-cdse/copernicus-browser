@@ -5,6 +5,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { oDataApi } from '../api/OData/ODataApi';
 import oDataHelpers, { PAGE_SIZE } from '../api/OData/ODataHelpers';
 import { ODataEntity } from '../api/OData/ODataTypes';
+import { getAvailabilityInfo } from './stacAvailability';
 
 export const ODATA_SEARCH_ERROR_MESSAGE = {
   NO_PRODUCTS_FOUND: 'No products found',
@@ -66,10 +67,39 @@ export const useODataSearch = () => {
         nextPageQuery.skip(PAGE_SIZE * page);
         const data = await oDataApi.search(ODataEntity.Products, nextPageQuery, authToken);
         if (!(data && data.value && data.value.length)) {
-          throw new Error(ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND);
+          // If we have results from previous pages, just finish
+          if (results && results.length) {
+            const result = {
+              allResults: results,
+              hasMore: false,
+              totalCount: results.length,
+              next: () => {},
+            };
+            setODataSearchResult(result);
+            setSearchInProgress(false);
+            return;
+          }
+
+          // No results at all - get availability info
+          const errorMessage = ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND;
+          let availabilityMessage = '';
+
+          const filterOption = query?.options?.find((option) => option.key === 'filter');
+          if (filterOption?.value) {
+            const availabilityInfo = await getAvailabilityInfo(filterOption.value, authToken);
+            if (availabilityInfo) {
+              availabilityMessage = availabilityInfo;
+            }
+          }
+
+          const error = new Error(errorMessage);
+          if (availabilityMessage) {
+            error.availabilityMessage = availabilityMessage;
+          }
+          throw error;
         }
-        const formatedResults = oDataHelpers.formatSearchResults(data.value);
-        const allResults = [...results, ...formatedResults];
+        const formattedResults = oDataHelpers.formatSearchResults(data.value);
+        const allResults = [...results, ...formattedResults];
 
         /*ODataSearch result has
         - allResults: array of products

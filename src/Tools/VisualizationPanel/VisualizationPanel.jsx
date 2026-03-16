@@ -142,12 +142,10 @@ function VisualizationPanel({
   const visualizationActionsRef = useRef();
   const selectedTimeRef = useRef(toTime);
 
-  const haveEffectsChanged = haveEffectsChangedFromDefault(effects, datasetId);
   const supportsOpenEo = isOpenEoSupported(
     visualizationUrl,
     layerId,
     IMAGE_FORMATS.PNG,
-    haveEffectsChanged,
     customSelected && selectedProcessing === PROCESSING_OPTIONS.PROCESS_API,
   );
 

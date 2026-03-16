@@ -21,11 +21,30 @@ export class ExpressionTree {
   }
 
   isEmpty(tree) {
-    return (
-      tree.value === undefined ||
-      ((tree.value === ExpressionTreeOperator.AND || tree.value === ExpressionTreeOperator.OR) &&
-        !tree.children.length)
-    );
+    if (!tree) {
+      return true;
+    }
+
+    if (tree.value === '' || tree.value === null) {
+      return true;
+    }
+
+    if (typeof tree.value === 'string' && tree.value.trim() === '') {
+      return true;
+    }
+
+    const isLogicalOperator =
+      tree.value === ExpressionTreeOperator.AND || tree.value === ExpressionTreeOperator.OR;
+
+    if (isLogicalOperator) {
+      if (!tree.children || tree.children.length === 0) {
+        return true;
+      }
+
+      return tree.children.every((child) => this.isEmpty(child));
+    }
+
+    return tree.value === undefined;
   }
 
   evaluateChildren(children, parentOperator, depth) {

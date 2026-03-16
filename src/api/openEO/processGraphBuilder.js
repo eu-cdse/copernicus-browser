@@ -1,4 +1,6 @@
+import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
 import { findNodeByProcessId } from './openEOHelpers';
+import { DISABLED_ORTHORECTIFICATION } from '../../const';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { DATASET_BYOC } from '@sentinel-hub/sentinelhub-js';
 
@@ -29,15 +31,19 @@ function resolveCollectionId(options) {
   return collectionId;
 }
 
-function loadCollection(processGraph, options) {
+function loadCollection(processGraph, options, cachedProcessGraph = null) {
   let copyProcessGraph = JSON.parse(JSON.stringify(processGraph));
   const loadCollectionNode = findNodeByProcessId(copyProcessGraph, 'load_collection');
   const resolvedCollectionId = resolveCollectionId(options);
 
-  if (loadCollection === undefined) {
-    copyProcessGraph[loadCollectionNode] = { process_id: 'load_collection', arguments: options };
+  if (loadCollectionNode === undefined) {
     copyProcessGraph['load_collection'] = { process_id: 'load_collection', arguments: {} };
   }
+
+  // Resolve cached defaults: prefer explicitly passed cachedProcessGraph,
+  // fall back to processGraph itself (works when it hasn't been user-modified)
+  const defaultsGraph = cachedProcessGraph ?? processGraph;
+  const defaultsNode = findNodeByProcessId(defaultsGraph, 'load_collection');
 
   if (resolvedCollectionId !== undefined && resolvedCollectionId !== null) {
     copyProcessGraph[loadCollectionNode]['arguments']['id'] = resolvedCollectionId;
@@ -50,6 +56,74 @@ function loadCollection(processGraph, options) {
   }
   if (options.bands != null) {
     copyProcessGraph[loadCollectionNode]['arguments']['bands'] = options.bands;
+  }
+
+  const cachedProcessGraphArgs = defaultsNode ? defaultsGraph[defaultsNode]['arguments'] : {};
+
+  // For each option: 1) effects override, 2) cached layer value, 3) undefined
+  const resolveOption = (key, value) => (value != null ? value : cachedProcessGraphArgs[key]);
+
+  copyProcessGraph[loadCollectionNode]['arguments']['minQa'] = resolveOption('minQa', options.minQa);
+  copyProcessGraph[loadCollectionNode]['arguments']['mosaickingOrder'] = resolveOption(
+    'mosaickingOrder',
+    options.mosaickingOrder,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['upsampling'] = resolveOption(
+    'upsampling',
+    options.upsampling,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['downsampling'] = resolveOption(
+    'downsampling',
+    options.downsampling,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['acquisitionMode'] = resolveOption(
+    'acquisitionMode',
+    options.acquisitionMode,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['resolution'] = resolveOption(
+    'resolution',
+    options.resolution,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['polarization'] = resolveOption(
+    'polarization',
+    options.polarization,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['orbitDirection'] = resolveOption(
+    'orbitDirection',
+    options.orbitDirection,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['previewMode'] = resolveOption(
+    'previewMode',
+    options.previewMode,
+  );
+  copyProcessGraph[loadCollectionNode]['arguments']['backscatterCoefficient'] = resolveOption(
+    'backscatterCoefficient',
+    options.backscatterCoeff,
+  );
+
+  if (options.speckleFilter != null) {
+    copyProcessGraph[loadCollectionNode]['arguments']['speckleFilter'] = options.speckleFilter.type;
+    if (options.speckleFilter.type !== SpeckleFilterType.NONE) {
+      copyProcessGraph[loadCollectionNode]['arguments']['speckleFilterSizeX'] =
+        options.speckleFilter.windowSizeX;
+      copyProcessGraph[loadCollectionNode]['arguments']['speckleFilterSizeY'] =
+        options.speckleFilter.windowSizeY;
+    }
+  } else {
+    copyProcessGraph[loadCollectionNode]['arguments']['speckleFilter'] =
+      cachedProcessGraphArgs['speckleFilter'];
+    copyProcessGraph[loadCollectionNode]['arguments']['speckleFilterSizeX'] =
+      cachedProcessGraphArgs['speckleFilterSizeX'];
+    copyProcessGraph[loadCollectionNode]['arguments']['speckleFilterSizeY'] =
+      cachedProcessGraphArgs['speckleFilterSizeY'];
+  }
+
+  if (options.orthorectification != null && options.orthorectification !== DISABLED_ORTHORECTIFICATION) {
+    copyProcessGraph[loadCollectionNode]['arguments']['orthorectificationDemInstance'] =
+      options.orthorectification;
+  } else {
+    copyProcessGraph[loadCollectionNode]['arguments']['orthorectificationDemInstance'] =
+      cachedProcessGraphArgs['orthorectificationDemInstance'];
   }
 
   return copyProcessGraph;

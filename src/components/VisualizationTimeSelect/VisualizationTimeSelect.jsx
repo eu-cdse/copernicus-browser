@@ -18,7 +18,6 @@ import { getValueOrDefault } from '../../utils/effectsUtils';
 import { useSelector } from 'react-redux';
 import { getMosaickingOrderOptions } from '../../utils/mosaickingOrder.utils';
 import { defaultEffects, DATE_MODES } from '../../const';
-import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 import Single from './icons/single.svg?react';
 import Mosaic from './icons/mosaic.svg?react';
@@ -27,9 +26,6 @@ import { getFromTime } from './VisualizationTimeSelect.utils';
 
 const AdditionalTimeSelectOptions = () => {
   const mosaickingOrder = useSelector((state) => state.visualization.mosaickingOrder);
-  const datasetId = useSelector((state) => state.visualization.datasetId);
-  const dsh = getDataSourceHandler(datasetId);
-  const hasCloudCoverage = dsh && dsh.tilesHaveCloudCoverage(datasetId);
   const onUpdateMosaickingOrder = (mosaickingOrder) =>
     store.dispatch(
       visualizationSlice.actions.setMosaickingOrder(mosaickingOrder ? mosaickingOrder : undefined),
@@ -40,7 +36,7 @@ const AdditionalTimeSelectOptions = () => {
       name={t`Mosaicking order`}
       value={getValueOrDefault({ mosaickingOrder }, 'mosaickingOrder', defaultEffects)}
       onChange={onUpdateMosaickingOrder}
-      options={getMosaickingOrderOptions(datasetId, hasCloudCoverage)}
+      options={getMosaickingOrderOptions()}
       displayLayerDefault={true}
       separator=":"
     />
