@@ -9,7 +9,6 @@
 .env*
 !.env*.example
 .npm
-.gitlab
 .DS_Store
 .idea
 .vscode
