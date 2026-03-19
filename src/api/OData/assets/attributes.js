@@ -43,6 +43,9 @@ export const AttributeNames = {
   datasetShortName: 'datasetShortName',
   consolidationPeriod: 'consolidationPeriod',
   nominalDate: 'nominalDate',
+  dayNightFlag: 'dayNightFlag',
+  horizontalTileNumber: 'horizontalTileNumber',
+  verticalTileNumber: 'verticalTileNumber',
 };
 
 export const FormatedAttributeNames = {
@@ -169,6 +172,9 @@ export const FormatedAttributeNames = {
   processingBaseline: () => t`Processing baseline`,
   parentIdentifier: () => t`Parent identifier`,
   acquisitionType: () => t`Acquisition type`,
+  dayNightFlag: () => t`Day night flag`,
+  horizontalTileNumber: () => t`Horizontal tile number`,
+  verticalTileNumber: () => t`Vertical tile number`,
 };
 
 export const AttributesDescriptions = {

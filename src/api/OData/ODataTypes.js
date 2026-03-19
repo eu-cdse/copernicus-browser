@@ -90,6 +90,9 @@ const ODataCollections = {
   LANDSAT8: { id: 'LANDSAT-8', label: 'LANDSAT-8', collection: 'LANDSAT-8' },
   LANDSAT9: { id: 'LANDSAT-9', label: 'LANDSAT-9', collection: 'LANDSAT-9' },
   COMPLEMENTARY_DATA: { id: 'COMPLEMENTARY_DATA', label: 'Complementary Data' },
+  MODIS_TERRA: { id: 'TERRA', label: 'TERRA', collection: 'TERRA' },
+  MODIS_AQUA: { id: 'AQUA', label: 'AQUA', collection: 'AQUA' },
+  MODIS_TERRAAQUA: { id: 'TERRAAQUA', label: 'TERRAAQUA', collection: 'TERRAAQUA' },
 };
 
 export {

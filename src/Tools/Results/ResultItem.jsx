@@ -52,6 +52,7 @@ export const ErrorMessage = {
   atleastOneProductSelected: () => t`At least one product needs to be selected.`,
   productAlreadySavedToWorkspace: () => t`This product has already been saved to the workspace.`,
   landsatAccessRoleNotEligible: () => t`You are not eligible to use this feature.`,
+  modisAccessRoleNotEligible: () => t`You are not eligible to use this feature.`,
 };
 
 const visualizationButtonDisabled = (tile, user) => {

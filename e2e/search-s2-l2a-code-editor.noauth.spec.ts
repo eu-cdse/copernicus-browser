@@ -1,24 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { dismissAnonymousSession } from './fixtures/helpers';
 
 test('search latest S2 L2A image and verify process graph is selected in code editor', async ({ page }) => {
   await page.goto('/');
-
-  // Dismiss consent modal — wait for it to appear first (Keycloak silent SSO redirect may delay it)
-  await page.getByText('Anonymously', { exact: true }).waitFor({ state: 'visible' });
-  await page.getByText('Anonymously', { exact: true }).click();
-  await page.getByText('Anonymously', { exact: true }).waitFor({ state: 'hidden' });
-
-  // Dismiss onboarding tour if present — use waitFor so we don't race against mount
-  try {
-    const tourButton = page.getByRole('button', { name: "Don't show again" });
-    await tourButton.waitFor({ state: 'visible', timeout: 3000 });
-    await tourButton.click();
-  } catch {
-    // tour already dismissed or not shown in this session
-  }
+  await dismissAnonymousSession(page);
 
   // Switch to Search tab
-  await page.locator('.tab-list').getByText('Search', { exact: true }).click();
+  await page.getByRole('listitem').getByText('Search', { exact: true }).click();
 
   // Select SENTINEL-2 and L2A sub-filter
   await page.getByRole('checkbox', { name: 'SENTINEL-2' }).check();

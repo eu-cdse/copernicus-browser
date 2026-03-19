@@ -10,6 +10,7 @@ import { ErrorMessage } from '../ResultItem';
 import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { LANDSAT_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/landsatAccessRightsConfig';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../rehypeConfig';
+import { MODIS_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/modisAccessRightsConfig';
 
 export const commonProductAttributes = [
   'name',
@@ -134,10 +135,12 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
     errorMessage = ErrorMessage.atleastOneProductSelected();
   } else if (!product.online) {
     errorMessage = ErrorMessage.downloadOfflineProduct();
-  } else if (shouldShowCCMAccessError(userToken, product)) {
+  } else if (shouldShowAccessError(userToken, product, CCM_PRODUCT_TYPE_ACCESS_RIGHTS, 'productType')) {
     errorMessage = ErrorMessage.CCMAccessRoleNotEligible();
-  } else if (shouldShowLandsatAccessError(userToken, product)) {
+  } else if (shouldShowAccessError(userToken, product, LANDSAT_ACCESS_RIGHTS, 'platformShortName')) {
     errorMessage = ErrorMessage.landsatAccessRoleNotEligible();
+  } else if (shouldShowAccessError(userToken, product, MODIS_ACCESS_RIGHTS, 'instrumentShortName')) {
+    errorMessage = ErrorMessage.modisAccessRoleNotEligible();
   }
 
   if (errorMessage) {
@@ -147,25 +150,17 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
   return null;
 };
 
-export const shouldShowCCMAccessError = (userToken, product) =>
-  isProductCCM(product) && !hasCCMDownloadAccess(userToken, product);
+export const isProductInConfig = (product, config, productKey) =>
+  config[product[productKey]]?.DOWNLOAD_PRODUCT_ROLES !== undefined;
 
-export const isProductCCM = ({ productType }) => {
-  // we assume that all necessary access rights for products in CCM are in CCM_PRODUCT_TYPE_ACCESS_RIGHTS
-  // so, we can assume that the product with productType is part of CCM
-  // if there is an entry for productType in CCM_PRODUCT_TYPE_ACCESS_RIGHTS
-  const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
-  return downloadProductRoles !== undefined;
-};
-
-export const hasCCMDownloadAccess = (userToken, { productType }) => {
+export const hasDownloadAccessForConfig = (userToken, product, config, productKey) => {
   if (!userToken) {
     return false;
   }
 
   try {
     const roles = jwt_dec(userToken).realm_access?.roles;
-    const downloadProductRoles = CCM_PRODUCT_TYPE_ACCESS_RIGHTS[productType]?.DOWNLOAD_PRODUCT_ROLES;
+    const downloadProductRoles = config[product[productKey]]?.DOWNLOAD_PRODUCT_ROLES;
 
     return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));
   } catch (error) {
@@ -174,26 +169,6 @@ export const hasCCMDownloadAccess = (userToken, { productType }) => {
   }
 };
 
-export const shouldShowLandsatAccessError = (userToken, product) =>
-  isProductLandsat(product) && !hasLandsatDownloadAccess(userToken, product);
-
-export const isProductLandsat = ({ platformShortName }) => {
-  const downloadProductRoles = LANDSAT_ACCESS_RIGHTS[platformShortName]?.DOWNLOAD_PRODUCT_ROLES;
-  return downloadProductRoles !== undefined;
-};
-
-export const hasLandsatDownloadAccess = (userToken, { platformShortName }) => {
-  if (!userToken) {
-    return false;
-  }
-
-  try {
-    const roles = jwt_dec(userToken).realm_access?.roles;
-    const downloadProductRoles = LANDSAT_ACCESS_RIGHTS[platformShortName]?.DOWNLOAD_PRODUCT_ROLES;
-
-    return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));
-  } catch (error) {
-    console.error('Error decoding JWT token:', error);
-    return false;
-  }
-};
+export const shouldShowAccessError = (userToken, product, config, productKey) =>
+  isProductInConfig(product, config, productKey) &&
+  !hasDownloadAccessForConfig(userToken, product, config, productKey);

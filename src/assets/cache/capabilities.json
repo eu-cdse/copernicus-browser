@@ -4336,126 +4336,126 @@
             {
                 "id": "CHLAMEAN",
                 "name": "CHLAMEAN",
-                "description": "Mean concentration of chlorophyll-a",
+                "description": "Mean of chlorophyll-a concentration",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CHLAMEAN&style=default"
             },
             {
                 "id": "FCBPROB",
                 "name": "FCBPROB",
-                "description": "Probability of Floating Cyanobacteria",
+                "description": "Probability of floating cyanobacteria",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FCBPROB&style=default"
             },
             {
                 "id": "RW1375",
                 "name": "RW1375",
-                "description": "Fully normalized water leaving reflectance at 1375 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW1375&style=default"
             },
             {
                 "id": "RW1610",
                 "name": "RW1610",
-                "description": "Fully normalized water leaving reflectance at 1610 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW1610&style=default"
             },
             {
                 "id": "RW2190",
                 "name": "RW2190",
-                "description": "Fully normalized water leaving reflectance at 2190 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW2190&style=default"
             },
             {
                 "id": "RW443",
                 "name": "RW443",
-                "description": "Fully normalized water leaving reflectance at 443 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW443&style=default"
             },
             {
                 "id": "RW490",
                 "name": "RW490",
-                "description": "Fully normalized water leaving reflectance at 490 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW490&style=default"
             },
             {
                 "id": "RW560",
                 "name": "RW560",
-                "description": "Fully normalized water leaving reflectance at 560 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW560&style=default"
             },
             {
                 "id": "RW665",
                 "name": "RW665",
-                "description": "Fully normalized water leaving reflectance at 665 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW665&style=default"
             },
             {
                 "id": "RW705",
                 "name": "RW705",
-                "description": "Fully normalized water leaving reflectance at 705 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW705&style=default"
             },
             {
                 "id": "RW740",
                 "name": "RW740",
-                "description": "Fully normalized water leaving reflectance at 740 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW740&style=default"
             },
             {
                 "id": "RW783",
                 "name": "RW783",
-                "description": "Fully normalized water leaving reflectance at 783 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW783&style=default"
             },
             {
                 "id": "RW842",
                 "name": "RW842",
-                "description": "Fully normalized water leaving reflectance at 842 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW842&style=default"
             },
             {
                 "id": "RW865",
                 "name": "RW865",
-                "description": "Fully normalized water leaving reflectance at 865 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW865&style=default"
             },
             {
                 "id": "RW945",
                 "name": "RW945",
-                "description": "Fully normalized water leaving reflectance at 945 nm",
+                "description": "Fully normalised water-leaving reflectance",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=RW945&style=default"
             },
             {
                 "id": "TMEAN",
                 "name": "TMEAN",
-                "description": "Mean of turbidity in water body",
+                "description": "Mean turbidity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TMEAN&style=default"
             },
             {
                 "id": "TSI",
                 "name": "TSI",
-                "description": "Trophic state index",
+                "description": "Trophic State Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TSI&style=default"
             },
             {
                 "id": "TSMMEAN",
                 "name": "TSMMEAN",
-                "description": "Mean concentration of total suspended matter",
+                "description": "Mean of total suspended matter",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/82a8cb-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TSMMEAN&style=default"
             }
