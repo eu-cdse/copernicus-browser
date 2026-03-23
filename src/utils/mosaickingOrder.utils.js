@@ -9,7 +9,7 @@ export const getMosaickingOrderOptions = () => {
   }));
 };
 
-export const isValidMosaickingOrder = (datasetId, mosaickingOrder) => {
+export const isValidMosaickingOrder = (mosaickingOrder) => {
   const mosaickingOrderOptions = getMosaickingOrderOptions();
   return mosaickingOrderOptions && mosaickingOrderOptions.find((option) => option.value === mosaickingOrder);
 };

@@ -476,7 +476,7 @@ export const visualizationSlice = createSlice({
     layerId: undefined,
     customSelected: false,
     evalscript: undefined,
-    evalscripturl: undefined,
+    evalscriptUrl: undefined,
     dataFusion: [],
     gainEffect: 1,
     gammaEffect: 1,
@@ -497,7 +497,7 @@ export const visualizationSlice = createSlice({
     dateMode: DATE_MODES.SINGLE.value,
     selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
     processGraph: '',
-    processgraphurl: undefined,
+    processGraphUrl: undefined,
     isProcessGraphModified: false,
   },
   reducers: {
@@ -518,16 +518,16 @@ export const visualizationSlice = createSlice({
       state.customSelected = false;
       state.evalscript = undefined;
       state.dataFusion = [];
-      state.evalscripturl = undefined;
+      state.evalscriptUrl = undefined;
       state.processGraph = undefined;
-      state.processgraphurl = undefined;
+      state.processGraphUrl = undefined;
       state.isProcessGraphModified = false;
       if (orbitDirection) {
         state.orbitDirection = orbitDirection;
       } else {
         state.orbitDirection = undefined;
       }
-      if (state.mosaickingOrder && !isValidMosaickingOrder(datasetId, state.mosaickingOrder)) {
+      if (state.mosaickingOrder && !isValidMosaickingOrder(state.mosaickingOrder)) {
         state.mosaickingOrder = undefined;
       }
     },
@@ -543,11 +543,11 @@ export const visualizationSlice = createSlice({
     setEvalscript: (state, action) => {
       state.evalscript = action.payload;
     },
-    setEvalscripturl: (state, action) => {
-      state.evalscripturl = action.payload;
+    setEvalscriptUrl: (state, action) => {
+      state.evalscriptUrl = action.payload;
     },
-    setProcessgraphurl: (state, action) => {
-      state.processgraphurl = action.payload;
+    setProcessGraphUrl: (state, action) => {
+      state.processGraphUrl = action.payload;
     },
     setDataFusion: (state, action) => {
       state.dataFusion = action.payload;
@@ -700,8 +700,8 @@ export const visualizationSlice = createSlice({
       if (action.payload.evalscript !== undefined) {
         state.evalscript = action.payload.evalscript;
       }
-      if (action.payload.evalscripturl !== undefined) {
-        state.evalscripturl = action.payload.evalscripturl;
+      if (action.payload.evalscriptUrl !== undefined) {
+        state.evalscriptUrl = action.payload.evalscriptUrl;
       }
       if (action.payload.dataFusion !== undefined) {
         state.dataFusion = action.payload.dataFusion;
@@ -754,7 +754,7 @@ export const visualizationSlice = createSlice({
       if (action.payload.cloudCoverage !== undefined) {
         state.cloudCoverage = action.payload.cloudCoverage;
       }
-      if (state.mosaickingOrder && !isValidMosaickingOrder(state.datasetId, state.mosaickingOrder)) {
+      if (state.mosaickingOrder && !isValidMosaickingOrder(state.mosaickingOrder)) {
         state.mosaickingOrder = undefined;
       }
       if (action.payload.dateMode !== undefined) {
@@ -766,8 +766,8 @@ export const visualizationSlice = createSlice({
       if (action.payload.processGraph !== undefined) {
         state.processGraph = action.payload.processGraph;
       }
-      if (action.payload.processgraphurl !== undefined) {
-        state.processgraphurl = action.payload.processgraphurl;
+      if (action.payload.processGraphUrl !== undefined) {
+        state.processGraphUrl = action.payload.processGraphUrl;
       }
       if (action.payload.isProcessGraphModified !== undefined) {
         state.isProcessGraphModified = action.payload.isProcessGraphModified;
@@ -781,8 +781,8 @@ export const visualizationSlice = createSlice({
       state.layerId = undefined;
       state.customSelected = false;
       state.evalscript = undefined;
-      state.evalscripturl = undefined;
-      state.processgraphurl = undefined;
+      state.evalscriptUrl = undefined;
+      state.processGraphUrl = undefined;
       state.dataFusion = [];
       state.visibleOnMap = false;
       state.gainEffect = 1;

@@ -97,7 +97,7 @@ class PinPreviewImage extends React.Component {
       toTime,
       datasetId,
       evalscript,
-      evalscripturl,
+      evalscriptUrl,
       dataFusion,
       minQa,
       mosaickingOrder,
@@ -129,7 +129,7 @@ class PinPreviewImage extends React.Component {
       const bbox = this.computeBBox(lat, lng, zoom);
 
       const effects = constructGetMapParamsEffects(this.props.pin);
-      const isEvalscript = evalscript || evalscripturl;
+      const isEvalscript = evalscript || evalscriptUrl;
 
       const apiType = layer.supportsApiType(ApiType.PROCESSING)
         ? ApiType.PROCESSING
@@ -265,7 +265,7 @@ class PinPreviewImage extends React.Component {
           const dataFusionLayer = await constructDataFusionLayer(
             dataFusion,
             evalscript,
-            evalscripturl,
+            evalscriptUrl,
             pinTimeFrom,
             pinTimeTo,
           );

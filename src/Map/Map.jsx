@@ -38,6 +38,18 @@ import {
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAppropriateAuthToken, getGetMapAuthToken } from '../App';
 import { getUrlParams, handleError } from '../utils';
+import {
+  BASE_PANE_ID,
+  BASE_S2_MOSAIC_PANE_ID,
+  SENTINELHUB_LAYER_PANE_ID,
+  SENTINELHUB_LAYER_PANE_ZINDEX,
+  DEFAULT_COMPARED_LAYERS_MAX_ZOOM,
+  DEFAULT_COMPARED_LAYERS_OVERZOOM,
+  S2_QUARTERLY_MOSAIC_DATASET_ID,
+  S2_QUARTERLY_MOSAIC_LAYER_ID,
+  MAX_MAP_LOADING_TIME,
+  highlightedTileStyle,
+} from './const';
 import SearchBox from '../SearchBox/SearchBox';
 
 import {
@@ -52,7 +64,6 @@ import {
   isTimespanModeSelected,
 } from '../Tools/VisualizationPanel/VisualizationPanel.utils';
 import { getIntersectingFeatures } from './Map.utils';
-import { COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { progressWithDelayedAction } from './progressWithDelayedAction';
 import { t } from 'ttag';
 import { findLatestDateWithData, getQuarterlyInfo } from '../utils/latestDate.utils';
@@ -62,26 +73,10 @@ import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
 import { processRRDResults } from '../hooks/useRRDProcessResults';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
 import DatasetLocationPreview from './components/DatasetLocationPreview';
-import { highlightedTileStyle } from './const';
 import MapPanes from './components/MapPanes';
 import MapOverlays from './components/MapOverlays';
 
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
-
-const BASE_PANE_ID = 'baseMapPane';
-const BASE_PANE_ZINDEX = 5;
-const BASE_S2_MOSAIC_PANE_ID = 'baseS2MosaicMapPane';
-const BASE_S2_MOSAIC_PANE_ZINDEX = BASE_PANE_ZINDEX;
-const SENTINELHUB_LAYER_PANE_ID = 'sentinelhubPane';
-const SENTINELHUB_LAYER_PANE_ZINDEX = 6;
-
-const DEFAULT_COMPARED_LAYERS_MAX_ZOOM = 25;
-const DEFAULT_COMPARED_LAYERS_OVERZOOM = 0;
-
-const S2QuarterlyMosaicDatasetId = COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC;
-const S2QuarterlyMosaicLayerId = 'TRUE-COLOR-CLOUDLESS';
-
-const MAX_MAP_LOADING_TIME = 5 * 1000;
 
 const { BaseLayer, Overlay } = LayersControl;
 class Map extends React.Component {
@@ -174,10 +169,10 @@ class Map extends React.Component {
       this.props.mapBounds
     ) {
       try {
-        const S2QMosaicDsh = getDataSourceHandler(S2QuarterlyMosaicDatasetId);
+        const S2QMosaicDsh = getDataSourceHandler(S2_QUARTERLY_MOSAIC_DATASET_ID);
 
         const latestDateWithAvailableData = await findLatestDateWithData({
-          datasetId: S2QuarterlyMosaicDatasetId,
+          datasetId: S2_QUARTERLY_MOSAIC_DATASET_ID,
           bounds: this.props.mapBounds,
           pixelBounds: this.props.pixelBounds,
         });
@@ -185,11 +180,11 @@ class Map extends React.Component {
         if (latestDateWithAvailableData) {
           this.setState({
             latestS2QMosaicDate: latestDateWithAvailableData,
-            S2QMosaicZoom: S2QMosaicDsh.getLeafletZoomConfig(S2QuarterlyMosaicDatasetId),
+            S2QMosaicZoom: S2QMosaicDsh.getLeafletZoomConfig(S2_QUARTERLY_MOSAIC_DATASET_ID),
           });
         }
       } catch (e) {
-        console.error(`Unable to get latest date for mosaic base layer:`, S2QuarterlyMosaicDatasetId);
+        console.error(`Unable to get latest date for mosaic base layer:`, S2_QUARTERLY_MOSAIC_DATASET_ID);
       }
     }
 
@@ -338,7 +333,8 @@ class Map extends React.Component {
       selectedProcessing,
       processGraph,
     } = this.props;
-    const { evalscripturl } = getUrlParams();
+    const { evalscriptUrl, evalscripturl: evalscriptUrlLegacy } = getUrlParams();
+    const resolvedEvalscriptUrl = evalscriptUrl || evalscriptUrlLegacy;
     const isCustomEvalscript = customSelected && !!evalscript;
     const isOpenEOSelected = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
     const supportsOpenEo = isOpenEoSupported(
@@ -434,12 +430,7 @@ class Map extends React.Component {
           }
         }}
       >
-        <MapPanes
-          BASE_PANE_ID={BASE_PANE_ID}
-          BASE_PANE_ZINDEX={BASE_PANE_ZINDEX}
-          BASE_S2_MOSAIC_PANE_ID={BASE_S2_MOSAIC_PANE_ID}
-          BASE_S2_MOSAIC_PANE_ZINDEX={BASE_S2_MOSAIC_PANE_ZINDEX}
-        />
+        <MapPanes />
 
         <LayersControl
           // force rerender of layers-control to reset the selected layer if google maps was selected and user logs out.
@@ -462,10 +453,10 @@ class Map extends React.Component {
               {baseLayer.urlType === 'BYOC' ? (
                 <LayerGroup>
                   <TileLayer url={osmLayer.url} attribution={osmLayer.attribution} pane={BASE_PANE_ID} />
-                  {S2QMosaicReady && isOpenEoSupported(baseLayer.url, S2QuarterlyMosaicLayerId) ? (
+                  {S2QMosaicReady && isOpenEoSupported(baseLayer.url, S2_QUARTERLY_MOSAIC_LAYER_ID) ? (
                     <OpenEoLayerComponent
-                      processGraph={getProcessGraph(baseLayer.url, S2QuarterlyMosaicLayerId)}
-                      datasetId={S2QuarterlyMosaicDatasetId}
+                      processGraph={getProcessGraph(baseLayer.url, S2_QUARTERLY_MOSAIC_LAYER_ID)}
+                      datasetId={S2_QUARTERLY_MOSAIC_DATASET_ID}
                       getMapAuthToken={getGetMapAuthToken(auth)}
                       fromTime={moment(latestS2QMosaicDate).utc().startOf('day').toDate()}
                       toTime={moment(latestS2QMosaicDate).utc().endOf('day').toDate()}
@@ -480,9 +471,9 @@ class Map extends React.Component {
                   ) : (
                     <SentinelHubLayerComponent
                       pane={BASE_S2_MOSAIC_PANE_ID}
-                      datasetId={S2QuarterlyMosaicDatasetId}
+                      datasetId={S2_QUARTERLY_MOSAIC_DATASET_ID}
                       url={baseLayer.url}
-                      layers={S2QuarterlyMosaicLayerId}
+                      layers={S2_QUARTERLY_MOSAIC_LAYER_ID}
                       format="PNG"
                       fromTime={moment(latestS2QMosaicDate).utc().startOf('day').toDate()}
                       toTime={moment(latestS2QMosaicDate).utc().endOf('day').toDate()}
@@ -565,7 +556,7 @@ class Map extends React.Component {
                 toTime={toTime ? toTime.toDate() : null}
                 customSelected={customSelected}
                 evalscript={evalscript}
-                evalscripturl={evalscripturl}
+                evalscriptUrl={resolvedEvalscriptUrl}
                 dataFusion={dataFusion}
                 pane={SENTINELHUB_LAYER_PANE_ID}
                 progress={this.progress}
@@ -610,7 +601,7 @@ class Map extends React.Component {
                   toTime,
                   datasetId,
                   evalscript,
-                  evalscripturl,
+                  evalscriptUrl,
                   dataFusion,
                   visualizationUrl,
                   layerId,
@@ -706,9 +697,9 @@ class Map extends React.Component {
                     format="PNG"
                     fromTime={pinTimeFrom}
                     toTime={pinTimeTo}
-                    customSelected={!!(evalscript || evalscripturl)}
+                    customSelected={!!(evalscript || evalscriptUrl)}
                     evalscript={evalscript}
-                    evalscripturl={evalscripturl}
+                    evalscriptUrl={evalscriptUrl}
                     dataFusion={dataFusion}
                     minZoom={minZoom}
                     maxZoom={maxZoom}

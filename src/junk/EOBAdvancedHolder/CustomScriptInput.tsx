@@ -9,7 +9,7 @@ import {
 
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { HTTPS, PROCESSING_OPTIONS } from '../../const';
-import { fetchEvalscriptFromEvalscripturl, fetchProcessGraphFromProcessGraphUrl } from '../../utils';
+import { fetchEvalscriptFromEvalscriptUrl, fetchProcessGraphFromProcessGraphUrl } from '../../utils';
 
 import './CustomScriptInput.scss';
 
@@ -144,7 +144,7 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
     try {
       const fetchFunction = isOpenEO
         ? fetchProcessGraphFromProcessGraphUrl
-        : fetchEvalscriptFromEvalscripturl;
+        : fetchEvalscriptFromEvalscriptUrl;
 
       const res = await fetchFunction(scriptUrl);
       const { data: text } = res;

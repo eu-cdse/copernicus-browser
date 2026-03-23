@@ -5,7 +5,7 @@ import { t } from 'ttag';
 import Highlight from './Highlight';
 import store, { visualizationSlice, mainMapSlice, pinsSlice, clmsSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { fetchEvalscriptFromEvalscripturl, parsePosition } from '../../../utils';
+import { fetchEvalscriptFromEvalscriptUrl, parsePosition } from '../../../utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
@@ -55,7 +55,7 @@ class Highlights extends Component {
       visualizationUrl,
       layerId,
       evalscript,
-      evalscripturl,
+      evalscriptUrl,
       dataFusion,
       terrainViewerSettings,
       dateMode,
@@ -114,7 +114,7 @@ class Highlights extends Component {
       visualizationUrl,
       datasetId,
       IMAGE_FORMATS.PNG,
-      evalscript || evalscripturl,
+      evalscript || evalscriptUrl,
     );
     let visualizationParams = {
       datasetId: datasetId,
@@ -132,7 +132,7 @@ class Highlights extends Component {
     };
 
     const hasEvalscript = Boolean(evalscript);
-    const hasEvalscriptUrl = Boolean(evalscripturl);
+    const hasEvalscriptUrl = Boolean(evalscriptUrl);
 
     if (!hasEvalscript && !hasEvalscriptUrl) {
       visualizationParams.layerId = layerId;
@@ -142,18 +142,18 @@ class Highlights extends Component {
 
     visualizationParams.customSelected = true;
     visualizationParams.evalscript = hasEvalscript ? evalscript : undefined;
-    visualizationParams.evalscripturl = evalscripturl;
+    visualizationParams.evalscriptUrl = evalscriptUrl;
 
     store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));
 
     if (hasEvalscriptUrl && !hasEvalscript) {
       try {
-        const { data } = await fetchEvalscriptFromEvalscripturl(evalscripturl);
+        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
         if (data) {
           store.dispatch(visualizationSlice.actions.setEvalscript(data));
         }
       } catch {
-        // ignore fetch error — keep using evalscripturl
+        // ignore fetch error — keep using evalscriptUrl
       }
     }
 

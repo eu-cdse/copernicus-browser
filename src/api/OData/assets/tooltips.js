@@ -128,9 +128,9 @@ const DEM = {
 
 const ProductTypeTooltips = {
   SR_2_TDP_LI: () =>
-    t`Sentinel-3 altimetry non-operational demonstration products for Land Ice (Greenland & Antarctica). \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-sral-level-2-ampli-sr_2_tdp_li).`,
+    t`Sentinel-3 altimetry non-operational demonstration products for Land Ice (Greenland & Antarctica). \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_AMPLI_User_Handbook_v1.1.pdf).`,
   SR_2_TDP_HY: () =>
-    t`Sentinel-3 altimetry non-operational demonstration products for Lakes and Reservoirs. \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-sral-level-2-l2-lake-processing-prototype-sr_2_tdp_hy).`,
+    t`Sentinel-3 altimetry non-operational demonstration products for Lakes and Reservoirs. \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_LPP_HY_v1.2.pdf).`,
 };
 
 const InstrumentTooltips = {

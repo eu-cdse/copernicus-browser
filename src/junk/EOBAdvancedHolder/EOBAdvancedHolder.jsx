@@ -95,8 +95,8 @@ class EOBAdvancedHolder extends React.Component {
       channels,
       layers,
       evalscript,
-      evalscripturl,
-      processgraphurl,
+      evalscriptUrl,
+      processGraphUrl,
       dataFusion = [],
       activeLayer: activeDatasource,
       initialTimespan,
@@ -226,8 +226,8 @@ class EOBAdvancedHolder extends React.Component {
                 scriptContent={selectedProcessing === PROCESSING_OPTIONS.OPENEO ? processGraph : evalscript}
                 scriptUrl={window.decodeURIComponent(
                   selectedProcessing === PROCESSING_OPTIONS.OPENEO
-                    ? processgraphurl || ''
-                    : evalscripturl || '',
+                    ? processGraphUrl || ''
+                    : evalscriptUrl || '',
                 )}
                 isUrlMode={isUrlMode}
                 onChange={onUpdateScript}

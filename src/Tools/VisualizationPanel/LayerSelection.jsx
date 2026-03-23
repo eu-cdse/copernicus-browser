@@ -297,7 +297,7 @@ const LayerSelection = ({
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
         evalscript: fallbackEvalscript,
-        evalscripturl: null,
+        evalscriptUrl: null,
         selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
       }),
     );
@@ -345,7 +345,7 @@ const LayerSelection = ({
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
         processGraph: fallbackProcessGraph,
-        processgraphurl: null,
+        processGraphUrl: null,
         selectedProcessing: PROCESSING_OPTIONS.OPENEO,
         isProcessGraphModified: false,
       }),
@@ -394,7 +394,7 @@ const LayerSelection = ({
     store.dispatch(
       visualizationSlice.actions.setVisualizationParams({
         processGraph: fallbackProcessGraph,
-        processgraphurl: null,
+        processGraphUrl: null,
         selectedProcessing: PROCESSING_OPTIONS.OPENEO,
       }),
     );
@@ -424,9 +424,9 @@ const LayerSelection = ({
           visibleOnMap: true,
           visualizationUrl: savedCustomState.visualizationUrl || visualizationUrl || layers[0]?.url,
           evalscript: savedCustomState.evalscript,
-          evalscripturl: savedCustomState.useEvalscriptUrl ? savedCustomState.evalscriptUrl : null,
+          evalscriptUrl: savedCustomState.useEvalscriptUrl ? savedCustomState.evalscriptUrl : null,
           processGraph: savedCustomState.processGraph,
-          processgraphurl: savedCustomState.useProcessGraphUrl ? savedCustomState.processGraphUrl : null,
+          processGraphUrl: savedCustomState.useProcessGraphUrl ? savedCustomState.processGraphUrl : null,
           selectedProcessing: savedCustomState.selectedProcessing,
           dataFusion: savedCustomState.dataFusion,
         }),
@@ -494,8 +494,8 @@ const LayerSelection = ({
             visualizationUrl: layer.url,
             customSelected: true,
             visibleOnMap: true,
-            evalscripturl: null,
-            processgraphurl: null,
+            evalscriptUrl: null,
+            processGraphUrl: null,
             dataFusion: [],
             selectedProcessing: supportsOpenEO ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API,
             processGraph: processGraphValue,
@@ -588,7 +588,7 @@ const LayerSelection = ({
             visibleOnMap: true,
             dataFusion: dataFusion,
             evalscript: nextEvalscript,
-            evalscripturl: useEvalscriptUrl ? nextEvalscriptUrl : null,
+            evalscriptUrl: useEvalscriptUrl ? nextEvalscriptUrl : null,
             selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
           }),
         );
@@ -619,7 +619,7 @@ const LayerSelection = ({
             customSelected: true,
             visibleOnMap: true,
             processGraph: validation.processGraphString,
-            processgraphurl: useProcessGraphUrl ? latestProcessGraphUrl : null,
+            processGraphUrl: useProcessGraphUrl ? latestProcessGraphUrl : null,
             selectedProcessing: PROCESSING_OPTIONS.OPENEO,
             isProcessGraphModified: true,
           }),
@@ -688,9 +688,9 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   visualizationUrl: store.visualization.visualizationUrl,
-  visualizedEvalscriptUrl: store.visualization.evalscripturl,
+  visualizedEvalscriptUrl: store.visualization.evalscriptUrl,
   visualizedProcessGraph: store.visualization.processGraph,
-  visualizedProcessGraphUrl: store.visualization.processgraphurl,
+  visualizedProcessGraphUrl: store.visualization.processGraphUrl,
   selectedThemeId: store.themes.selectedThemeId,
   selectedThemesListId: store.themes.selectedThemesListId,
   themesLists: store.themes.themesLists,

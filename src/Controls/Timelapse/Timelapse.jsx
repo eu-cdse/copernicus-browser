@@ -1271,7 +1271,7 @@ const mapStoreToProps = (store) => ({
   customSelected: store.visualization.customSelected,
   visualizationUrl: store.visualization.visualizationUrl,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
+  evalscriptUrl: store.visualization.evalscriptUrl,
   selectedProcessing: store.visualization.selectedProcessing,
   processGraph: store.visualization.processGraph,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),

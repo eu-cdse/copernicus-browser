@@ -345,9 +345,9 @@ class PinPanel extends Component {
       datasetId,
       layerId,
       evalscript,
-      evalscripturl,
+      evalscriptUrl,
       processGraph,
-      processgraphurl,
+      processGraphUrl,
       selectedProcessing: pinSelectedProcessing,
       themeId,
       dataFusion,
@@ -433,8 +433,8 @@ class PinPanel extends Component {
       pinTimeTo = moment.utc(toTime);
     }
 
-    const hasEvalscript = !!(evalscript || evalscripturl);
-    const hasProcessGraph = !!(processGraph || processgraphurl);
+    const hasEvalscript = !!(evalscript || evalscriptUrl);
+    const hasProcessGraph = !!(processGraph || processGraphUrl);
     const supportsOpenEo = isOpenEoSupported(
       getVisualizationUrl(pin),
       layerId,
@@ -462,11 +462,11 @@ class PinPanel extends Component {
 
     if (hasEvalscript) {
       visualizationParams.evalscript = evalscript;
-      visualizationParams.evalscripturl = evalscripturl;
+      visualizationParams.evalscriptUrl = evalscriptUrl;
       visualizationParams.customSelected = true;
     } else if (hasProcessGraph) {
       visualizationParams.processGraph = processGraph;
-      visualizationParams.processgraphurl = processgraphurl;
+      visualizationParams.processGraphUrl = processGraphUrl;
       visualizationParams.customSelected = true;
     } else {
       visualizationParams.layerId = layerId;

@@ -6,7 +6,7 @@ import {
   getUrlParams,
   parsePosition,
   parseDataFusion,
-  fetchEvalscriptFromEvalscripturl,
+  fetchEvalscriptFromEvalscriptUrl,
   fetchProcessGraphFromProcessGraphUrl,
 } from '../utils';
 import store, {
@@ -26,7 +26,7 @@ import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, PROCESSING_OPTIONS, SHOW_TUTORIAL_LC, TABS } from '../const';
 import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
-import { getSharedPins } from '../Tools/Pins/Pin.utils';
+import { getSharedPins, normalizePin } from '../Tools/Pins/Pin.utils';
 import { decrypt } from '../utils/encrypt';
 import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
@@ -64,10 +64,10 @@ class URLParamsParser extends React.Component {
   async componentDidMount() {
     let params = getUrlParams();
 
-    if (params.evalscripturl) {
+    if (params.evalscriptUrl || params.evalscripturl) {
       params = await this.parseEvalscriptFromEvalscriptUrl(params);
     }
-    if (params.processgraphurl) {
+    if (params.processGraphUrl || params.processgraphurl) {
       params = await this.parseProcessGraphFromProcessGraphUrl(params);
     }
     const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(this.props.user.access_token);
@@ -91,14 +91,14 @@ class URLParamsParser extends React.Component {
   }
 
   parseEvalscriptFromEvalscriptUrl = async (params) => {
-    const { evalscripturl } = params;
+    const evalscriptUrl = params.evalscriptUrl ?? params.evalscripturl;
 
-    if (!evalscripturl) {
+    if (!evalscriptUrl) {
       return params;
     }
 
-    const decodedEvalscriptUrl = this.normalizeUrlParam(evalscripturl);
-    const { data } = await fetchEvalscriptFromEvalscripturl(decodedEvalscriptUrl);
+    const decodedEvalscriptUrl = this.normalizeUrlParam(evalscriptUrl);
+    const { data } = await fetchEvalscriptFromEvalscriptUrl(decodedEvalscriptUrl);
 
     return {
       ...params,
@@ -107,13 +107,13 @@ class URLParamsParser extends React.Component {
   };
 
   parseProcessGraphFromProcessGraphUrl = async (params) => {
-    const { processgraphurl } = params;
+    const processGraphUrl = params.processGraphUrl ?? params.processgraphurl;
 
-    if (!processgraphurl) {
+    if (!processGraphUrl) {
       return params;
     }
 
-    const decodedProcessGraphUrl = b64DecodeUnicode(processgraphurl);
+    const decodedProcessGraphUrl = b64DecodeUnicode(processGraphUrl);
     const { data } = await fetchProcessGraphFromProcessGraphUrl(decodedProcessGraphUrl);
     const processGraphData = typeof data === 'string' ? JSON.parse(data) : data;
 
@@ -142,8 +142,10 @@ class URLParamsParser extends React.Component {
       visualizationUrl,
       layerId,
       evalscript,
-      evalscripturl,
-      processgraphurl,
+      evalscriptUrl: evalscriptUrlParam,
+      evalscripturl: evalscriptUrlLegacy,
+      processGraphUrl: processGraphUrlParam,
+      processgraphurl: processGraphUrlLegacy,
       processGraph,
       themesUrl,
       gain,
@@ -191,7 +193,9 @@ class URLParamsParser extends React.Component {
         ? decrypt(visualizationUrl)
         : visualizationUrl;
 
-    const customSelected = evalscript || evalscripturl || processGraph || processgraphurl ? true : undefined;
+    const evalscriptUrl = evalscriptUrlParam ?? evalscriptUrlLegacy;
+    const processGraphUrl = processGraphUrlParam ?? processGraphUrlLegacy;
+    const customSelected = evalscript || evalscriptUrl || processGraph || processGraphUrl ? true : undefined;
     const newVisualizationParams = {
       datasetId: datasetId,
       fromTime: fromTime ? moment.utc(fromTime) : null,
@@ -200,8 +204,8 @@ class URLParamsParser extends React.Component {
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
       customSelected: customSelected,
-      evalscripturl: this.normalizeUrlParam(evalscripturl),
-      processgraphurl: processgraphurl ? b64DecodeUnicode(processgraphurl) : undefined,
+      evalscriptUrl: this.normalizeUrlParam(evalscriptUrl),
+      processGraphUrl: processGraphUrl ? b64DecodeUnicode(processGraphUrl) : undefined,
       processGraph: processGraph ? b64DecodeUnicode(processGraph) : undefined,
       gainEffect: gain ? parseFloat(gain) : undefined,
       gammaEffect: gamma ? parseFloat(gamma) : undefined,
@@ -224,13 +228,13 @@ class URLParamsParser extends React.Component {
       useEvoland: useEvoland,
       visibleOnMap: (layerId || customSelected) && datasetId && decryptedVisualisationUrl,
       selectedProcessing:
-        processGraph || processgraphurl
+        processGraph || processGraphUrl
           ? PROCESSING_OPTIONS.OPENEO
           : isOpenEoSupported(
               decryptedVisualisationUrl,
               layerId,
               IMAGE_FORMATS.PNG,
-              evalscript || evalscripturl,
+              evalscript || evalscriptUrl,
             )
           ? PROCESSING_OPTIONS.OPENEO
           : PROCESSING_OPTIONS.PROCESS_API,
@@ -301,7 +305,7 @@ class URLParamsParser extends React.Component {
     if (compareShare) {
       (async () => {
         const pins = await getSharedPins(compareSharedPinsId);
-
+        const normalizedLayers = pins.items.map(normalizePin);
         let compareModeOption = Object.keys(COMPARE_OPTIONS).find(
           (key) => COMPARE_OPTIONS[key].value === compareMode,
         );
@@ -310,7 +314,7 @@ class URLParamsParser extends React.Component {
           compareLayersSlice.actions.restoreComparedLayers({
             compareShare: params.compareShare,
             compareSharedPinsId: params.compareSharedPinsId,
-            layers: pins.items,
+            layers: normalizedLayers,
             compareMode: compareModeOption
               ? COMPARE_OPTIONS[compareModeOption]
               : COMPARE_OPTIONS.COMPARE_SPLIT,

@@ -1,6 +1,6 @@
 import { boundsToPolygon } from '../../utils/geojson.utils';
 import { RRD_DATEFORMAT, RRD_RESOLUTION_CLASSES } from './assets/rrd.utils';
-import moment from 'moment/moment';
+import moment from 'moment';
 import {
   ADVANCED_PROPERTY_FILTERS,
   InstructionNamesRRD,

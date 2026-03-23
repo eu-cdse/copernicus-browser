@@ -494,7 +494,7 @@ function TerrainViewer(props) {
         is3D &&
         props.dataSourcesInitialized &&
         props.datasetId &&
-        (props.layerId || props.evalscript || props.evalscripturl || props.processGraph)
+        (props.layerId || props.evalscript || props.evalscriptUrl || props.processGraph)
       ) {
         if (props.visibleOnMap) {
           const newLayer = await getLayerFromParams(props).catch((e) => {
@@ -560,7 +560,7 @@ function TerrainViewer(props) {
     terrainViewerId,
     props.layerId,
     props.evalscript,
-    props.evalscripturl,
+    props.evalscriptUrl,
     // eslint-disable-next-line
     isDataFusionEnabled(props.dataFusion) && props.dataFusion,
     props.visualizationUrl,
@@ -827,7 +827,7 @@ const mapStoreToProps = (store) => ({
   is3D: store.mainMap.is3D,
   layerId: store.visualization.layerId,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
+  evalscriptUrl: store.visualization.evalscriptUrl,
   dataFusion: store.visualization.dataFusion,
   visualizationUrl: store.visualization.visualizationUrl,
   fromTime: store.visualization.fromTime,

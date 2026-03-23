@@ -208,7 +208,7 @@ class PinsStoryBuilder extends React.Component {
           continue;
         }
 
-        const { fromTime, toTime, themeId, datasetId, evalscript, evalscripturl, dataFusion } = pin;
+        const { fromTime, toTime, themeId, datasetId, evalscript, evalscriptUrl, dataFusion } = pin;
 
         const authToken = getAppropriateAuthToken(auth, themeId);
         const dsh = getDataSourceHandler(datasetId);
@@ -246,7 +246,7 @@ class PinsStoryBuilder extends React.Component {
           const dataFusionLayer = await constructDataFusionLayer(
             dataFusion,
             evalscript,
-            evalscripturl,
+            evalscriptUrl,
             pinFromTime,
             pinToTime,
           );

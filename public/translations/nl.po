@@ -9118,13 +9118,22 @@ msgid ""
 "**Spatial Resolution:** ~20 meters."
 msgstr ""
 
+msgid "Day night flag"
+msgstr ""
+
+msgid "Horizontal tile number"
+msgstr ""
+
+msgid "Vertical tile number"
+msgstr ""
+
 msgid ""
 "Sentinel-3 altimetry non-operational demonstration products for Land Ice "
 "(Greenland & Antarctica). \n"
 "\n"
 "More info "
 "[here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/"
-"Sentinel3.html#sentinel-3-sral-level-2-ampli-sr_2_tdp_li)."
+"docs/S3_AMPLI_User_Handbook_v1.1.pdf)."
 msgstr ""
 
 msgid ""
@@ -9133,15 +9142,5 @@ msgid ""
 "\n"
 "More info "
 "[here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/"
-"Sentinel3.html#sentinel-3-sral-level-2-l2-lake-processing-prototype-sr_2_"
-"tdp_hy)."
-msgstr ""
-
-msgid "Day night flag"
-msgstr ""
-
-msgid "Horizontal tile number"
-msgstr ""
-
-msgid "Vertical tile number"
+"docs/S3_LPP_HY_v1.2.pdf)."
 msgstr ""

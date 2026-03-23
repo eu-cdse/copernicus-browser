@@ -25,7 +25,7 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualisation ([li
 
 ### Requirements
 
-- `node` version >= 18
+- `node` version >= 22
 - `npm` version >= 10
 
 ### Local development

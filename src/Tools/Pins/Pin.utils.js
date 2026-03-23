@@ -33,7 +33,7 @@ async function getPinsFromBackend(access_token) {
     },
   };
   const res = await axios.get(url, requestParams);
-  return establishCorrectDataFusionFormatInPins(res.data);
+  return establishCorrectDataFusionFormatInPins(res.data.map(normalizePin));
 }
 
 export async function getPinsFromServer() {
@@ -140,11 +140,7 @@ export function getPinsFromSessionStorage() {
     pins = JSON.parse(pins);
   }
 
-  const formattedPins = pins.map((pin) => {
-    return {
-      ...pin,
-    };
-  });
+  const formattedPins = pins.map((pin) => normalizePin({ ...pin }));
 
   return establishCorrectDataFusionFormatInPins(formattedPins);
 }
@@ -182,8 +178,8 @@ const pinPropertiesSubset = (pin) => ({
   toTime: pin.toTime,
   dateMode: pin.dateMode,
   evalscript: pin.evalscript,
-  evalscripturl: pin.evalscripturl,
-  processgraphurl: pin.processgraphurl,
+  evalscriptUrl: pin.evalscriptUrl,
+  processGraphUrl: pin.processGraphUrl,
   dataFusion: pin.dataFusion,
   dataFusionLegacy: pin.dataFusionLegacy,
   gain: pin.gain,
@@ -232,7 +228,7 @@ export async function importSharedPins(sharedPinsListId) {
 
   //merge sharedPins with pins
   const newPins = [];
-  sharedPins.itmes = establishCorrectDataFusionFormatInPins(sharedPins.items);
+  sharedPins.items = establishCorrectDataFusionFormatInPins(sharedPins.items.map(normalizePin));
   sharedPins.items.forEach((sharedPin) => {
     //for each shared pin check if it already exists in existing pins list
     const existingPin = existingPins.find((pin) =>
@@ -259,7 +255,7 @@ export async function importSharedPins(sharedPinsListId) {
 
 // Creates a sentinelhub-js Layer instance from the pin. Known limitation:
 export async function layerFromPin(pin, reqConfig) {
-  const { datasetId, layerId, evalscript, evalscripturl, dataFusion } = pin;
+  const { datasetId, layerId, evalscript, evalscriptUrl, dataFusion } = pin;
 
   const visualizationUrl = getVisualizationUrl(pin);
 
@@ -296,7 +292,7 @@ export async function layerFromPin(pin, reqConfig) {
     layer = layers[0];
     if (Object.keys(dataFusion).length === 0) {
       layer.evalscript = evalscript;
-      layer.evalscriptUrl = evalscripturl;
+      layer.evalscriptUrl = evalscriptUrl;
     }
   }
   return layer;
@@ -324,6 +320,14 @@ export const constructTimespanString = ({ fromTime, toTime } = {}) => {
 
   return `${moment.utc(fromTime).format('YYYY-MM-DD')} - ${moment.utc(toTime).format('YYYY-MM-DD')}`;
 };
+
+export function normalizePin(pin) {
+  return {
+    ...pin,
+    evalscriptUrl: pin.evalscriptUrl ?? pin.evalscripturl,
+    processGraphUrl: pin.processGraphUrl ?? pin.processgraphurl,
+  };
+}
 
 export function establishCorrectDataFusionFormatInPins(pins) {
   return pins.map((pin) => {
@@ -361,7 +365,7 @@ export async function constructPinFromProps(props) {
     toTime,
     dateMode,
     evalscript,
-    evalscripturl,
+    evalscriptUrl,
     customSelected,
     dataFusion,
     gainEffect,
@@ -385,7 +389,7 @@ export async function constructPinFromProps(props) {
     cloudCoverage,
     selectedProcessing,
     processGraph,
-    processgraphurl,
+    processGraphUrl,
   } = props;
   const themeName = getThemeName(themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId));
   const layer = await getLayerFromParams(props);
@@ -401,12 +405,12 @@ export async function constructPinFromProps(props) {
     toTime: toTime.toISOString(),
     dateMode: dateMode,
     evalscript:
-      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscript && !evalscripturl && customSelected
+      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscript && !evalscriptUrl && customSelected
         ? evalscript
         : '',
-    evalscripturl:
-      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscripturl && customSelected
-        ? evalscripturl
+    evalscriptUrl:
+      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscriptUrl && customSelected
+        ? evalscriptUrl
         : '',
     themeId: selectedThemeId,
     dataFusion: dataFusion,
@@ -429,12 +433,12 @@ export async function constructPinFromProps(props) {
     cloudCoverage: cloudCoverage,
     selectedProcessing: selectedProcessing,
     processGraph:
-      selectedProcessing === PROCESSING_OPTIONS.OPENEO && customSelected && !processgraphurl
+      selectedProcessing === PROCESSING_OPTIONS.OPENEO && customSelected && !processGraphUrl
         ? processGraph
         : '',
-    processgraphurl:
-      selectedProcessing === PROCESSING_OPTIONS.OPENEO && processgraphurl && customSelected
-        ? processgraphurl
+    processGraphUrl:
+      selectedProcessing === PROCESSING_OPTIONS.OPENEO && processGraphUrl && customSelected
+        ? processGraphUrl
         : '',
   };
 }

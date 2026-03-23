@@ -38,7 +38,7 @@ export function userCanAccessLockedFunctionality(user, selectedTheme) {
   - visualizationUrl: WMS URL from the selected theme (the information about the
     layerId is available through GetCapabilities request there)
   - layerId: id of the selected layer. If not set, "custom layer" is selected and
-    either evalscript, evalscripturl, or processGraph parameters must be set.
+    either evalscript, evalscriptUrl, or processGraph parameters must be set.
   - zoom: zoom level
   - lat: latitude
   - lng: longitude
@@ -46,10 +46,10 @@ export function userCanAccessLockedFunctionality(user, selectedTheme) {
     or if layer doesn't support time dimension.
   - toTime: date and time of the end of timespan, or date if a single date is selected,
     or null if layer doesn't support time dimension.
-  - evalscript: evalscript of the layer (if layerId and evalscripturl are not specified)
-  - evalscripturl: evalscripturl of the layer (if layerId is not specified)
-  - processGraph: OpenEO process graph of the layer (if layerId and processgraphurl are not specified)
-  - processgraphurl: URL to fetch OpenEO process graph from (if layerId is not specified)
+  - evalscript: evalscript of the layer (if layerId and evalscriptUrl are not specified)
+  - evalscriptUrl: evalscriptUrl of the layer (if layerId is not specified)
+  - processGraph: OpenEO process graph of the layer (if layerId and processGraphUrl are not specified)
+  - processGraphUrl: URL to fetch OpenEO process graph from (if layerId is not specified)
   - gain: gain effect
   - gamma: gamma effect
   - redRangeEffect: red range effect (slider)
@@ -78,9 +78,9 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     visualizationUrl,
     layerId,
     evalscript,
-    evalscripturl,
+    evalscriptUrl,
     processGraph,
-    processgraphurl,
+    processGraphUrl,
     selectedProcessing,
     customSelected,
     selectedThemeId,
@@ -141,14 +141,14 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
 
   if (customSelected) {
     if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
-      if (processgraphurl) {
-        params.processgraphurl = b64EncodeUnicode(processgraphurl);
+      if (processGraphUrl) {
+        params.processGraphUrl = b64EncodeUnicode(processGraphUrl);
       } else if (processGraph) {
         params.processGraph = b64EncodeUnicode(processGraph);
       }
     } else {
-      if (evalscripturl) {
-        params.evalscripturl = b64EncodeUnicode(evalscripturl);
+      if (evalscriptUrl) {
+        params.evalscriptUrl = b64EncodeUnicode(evalscriptUrl);
       } else if (evalscript) {
         params.evalscript = b64EncodeUnicode(evalscript);
       }
@@ -654,12 +654,12 @@ export function getThemeName(theme) {
   return isFunction(theme.name) ? theme.name() : theme.name;
 }
 
-export async function fetchEvalscriptFromEvalscripturl(evalscripturl) {
-  return request.get(evalscripturl);
+export async function fetchEvalscriptFromEvalscriptUrl(evalscriptUrl) {
+  return request.get(evalscriptUrl);
 }
 
-export async function fetchProcessGraphFromProcessGraphUrl(processgraphurl) {
-  return request.get(processgraphurl);
+export async function fetchProcessGraphFromProcessGraphUrl(processGraphUrl) {
+  return request.get(processGraphUrl);
 }
 
 /*

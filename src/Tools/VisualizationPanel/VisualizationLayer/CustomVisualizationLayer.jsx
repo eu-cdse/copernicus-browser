@@ -79,14 +79,14 @@ const CustomVisualizationLayer = (props) => {
   const layerActionsProps = cloneDeep({ ...props, ...effects });
   if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
     layerActionsProps.evalscript = null; // Don't pass evalscript in OpenEO mode
-    layerActionsProps.evalscripturl = null;
+    layerActionsProps.evalscriptUrl = null;
     layerActionsProps.selectedProcessing = selectedProcessing;
     const processGraphObj = processGraph || getProcessGraph(visualizationUrl, selectedVisualizationId);
     layerActionsProps.processGraph =
       processGraphObj && typeof processGraphObj === 'object'
         ? JSON.stringify(processGraphObj)
         : processGraphObj;
-    layerActionsProps.processgraphurl = useProcessGraphUrl ? processGraphUrl : null;
+    layerActionsProps.processGraphUrl = useProcessGraphUrl ? processGraphUrl : null;
   }
   const layerActions = createLayerActions(layerActionsProps);
   return (
@@ -94,7 +94,7 @@ const CustomVisualizationLayer = (props) => {
       <ActionBar actionsOpen={true} actions={layerActions} />
       <EOBAdvancedHolder
         channels={bands}
-        evalscripturl={evalscriptUrl}
+        evalscriptUrl={evalscriptUrl}
         evalscript={evalscript}
         dataFusion={dataFusion}
         initialTimespan={{ fromTime: fromTime, toTime: toTime }}
@@ -120,7 +120,7 @@ const CustomVisualizationLayer = (props) => {
         visualizationUrl={visualizationUrl}
         selectedProcessing={selectedProcessing}
         processGraph={processGraph}
-        processgraphurl={processGraphUrl}
+        processGraphUrl={processGraphUrl}
         effects={effects}
       />
     </div>
@@ -136,7 +136,7 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   selectedProcessing: store.visualization.selectedProcessing,
   processGraph: store.visualization.processGraph,
-  processGraphUrl: store.visualization.processgraphurl,
+  processGraphUrl: store.visualization.processGraphUrl,
   selectedThemeId: store.themes.selectedThemeId,
   selectedModeId: store.themes.selectedModeId,
   is3D: store.mainMap.is3D,

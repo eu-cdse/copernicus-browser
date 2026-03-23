@@ -904,7 +904,7 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
     datasetId,
     dataFusion,
     evalscript,
-    evalscripturl,
+    evalscriptUrl,
     fromTime,
     toTime,
     minQa,
@@ -934,12 +934,12 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
     if (evalscript) {
       layer.evalscript = evalscript;
     }
-    if (evalscripturl) {
-      layer.evalscriptUrl = evalscripturl;
+    if (evalscriptUrl) {
+      layer.evalscriptUrl = evalscriptUrl;
     }
     await layer.updateLayerFromServiceIfNeeded(reqConfig);
   } else if (isDataFusionEnabled(dataFusion)) {
-    layer = await constructDataFusionLayer(dataFusion, evalscript, evalscripturl, fromTime, toTime);
+    layer = await constructDataFusionLayer(dataFusion, evalscript, evalscriptUrl, fromTime, toTime);
   } else {
     const shJsDataset = dsh ? dsh.getSentinelHubDataset(datasetId) : null;
     let layers = await LayersFactory.makeLayers(
@@ -957,7 +957,7 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
       layer = layers[0];
       await layer.updateLayerFromServiceIfNeeded(reqConfig);
       layer.evalscript = evalscript;
-      layer.evalscriptUrl = evalscripturl;
+      layer.evalscriptUrl = evalscriptUrl;
       layer.layerId = layerId;
     }
   }

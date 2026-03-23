@@ -12,7 +12,7 @@ import store, {
 } from '../../../../store';
 import { AOISelection } from '../../../../components/AOISelection/AOISelection';
 import { TimespanPicker } from '../../../../components/TimespanPicker/TimespanPicker';
-import moment from 'moment/moment';
+import moment from 'moment';
 import { MIN_SEARCH_DATE } from '../../../../api/OData/ODataHelpers';
 import Button, { ButtonType } from '../../../../components/Button/Button';
 import { TABS } from '../../../../const';

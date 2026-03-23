@@ -5,9 +5,9 @@ import ExternalLink from '../../ExternalLink/ExternalLink';
 import { VERSION_INFO } from '../../VERSION';
 import { t } from 'ttag';
 
-import EuropeBanner from './icons/europe-banner.svg?react';
-import EsaBanner from './icons/esa-banner.svg?react';
-import CopernicusBanner from './icons/copernicus-banner.svg?react';
+import europeBannerUrl from './icons/europe-banner.svg';
+import esaBannerUrl from './icons/esa-banner.svg';
+import copernicusBannerUrl from './icons/copernicus-banner.svg';
 
 import './ToolsFooter.scss';
 
@@ -34,16 +34,16 @@ class ToolsFooter extends Component {
           <div className="credentials">
             <div className="banners">
               <ExternalLink className="europe-banner" href="https://commission.europa.eu/index_en">
-                <EuropeBanner />
+                <img src={europeBannerUrl} alt="European Commission" />
               </ExternalLink>
               <ExternalLink
                 className="copernicus-banner"
                 href="https://www.copernicus.eu/en/about-copernicus"
               >
-                <CopernicusBanner />
+                <img src={copernicusBannerUrl} alt="Copernicus" />
               </ExternalLink>
               <ExternalLink className="esa-banner" href="https://www.esa.int/">
-                <EsaBanner />
+                <img src={esaBannerUrl} alt="ESA" />
               </ExternalLink>
             </div>
 

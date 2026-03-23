@@ -584,7 +584,7 @@ class SentinelHubLayer extends L.TileLayer {
     return layer;
   };
 
-  createDataFusionLayer = async (url, { dataFusion, evalscript, evalscripturl, fromTime, toTime }) => {
+  createDataFusionLayer = async (url, { dataFusion, evalscript, evalscriptUrl, fromTime, toTime }) => {
     const layers = [];
 
     for (let dataFusionEntry of dataFusion) {
@@ -600,7 +600,7 @@ class SentinelHubLayer extends L.TileLayer {
 
     const dataFusionLayer = new ProcessingDataFusionLayer({
       evalscript: evalscript,
-      evalscriptUrl: evalscripturl,
+      evalscriptUrl: evalscriptUrl,
       layers: layers,
     });
     return dataFusionLayer;
@@ -611,7 +611,7 @@ class SentinelHubLayer extends L.TileLayer {
     {
       datasetId,
       evalscript,
-      evalscripturl,
+      evalscriptUrl,
       minQa,
       mosaickingOrder,
       upsampling,
@@ -641,7 +641,7 @@ class SentinelHubLayer extends L.TileLayer {
           Sentinel1DataSourceHandler.getDatasetParams(datasetId);
         return await new S1GRDCDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           polarization: polarization,
           acquisitionMode: acquisitionMode,
           resolution: resolution,
@@ -662,7 +662,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S2_L1C_CDAS:
         return await new S2L1CCDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -673,7 +673,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S2_L2A_CDAS:
         return await new S2L2ACDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -684,7 +684,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3SLSTR_CDAS:
         return await new S3SLSTRCDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -695,7 +695,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3OLCI_CDAS:
         return await new S3OLCICDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -705,7 +705,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3SYNERGY_L2_SYN:
         return await new S3SYNL2CDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -714,7 +714,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3SYNERGY_L2_V10:
         return await new S3SYNL2CDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -723,7 +723,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3SYNERGY_L2_VG1:
         return await new S3SYNL2CDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -733,7 +733,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S3OLCIL2_LAND:
         return await new S3OLCIL2CDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -752,7 +752,7 @@ class SentinelHubLayer extends L.TileLayer {
       case S5_OTHER_CDAS:
         return await new S5PL2CDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           minQa: minQa,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
@@ -761,7 +761,7 @@ class SentinelHubLayer extends L.TileLayer {
       case CDAS_L8_L9_LOTL1:
         return await new Landsat89CDASLOTL1Layer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -772,7 +772,7 @@ class SentinelHubLayer extends L.TileLayer {
           url,
           dsh.KNOWN_COLLECTIONS[datasetId],
           evalscript,
-          evalscripturl,
+          evalscriptUrl,
           accessToken,
           upsampling,
           downsampling,
@@ -785,7 +785,7 @@ class SentinelHubLayer extends L.TileLayer {
         const { demInst } = demDsh.getDatasetParams(datasetId);
         return await new DEMCDASLayer({
           evalscript: evalscript,
-          evalscriptUrl: evalscripturl,
+          evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
@@ -948,7 +948,7 @@ class SentinelHubLayer extends L.TileLayer {
           url,
           dsh.KNOWN_COLLECTIONS[datasetId],
           evalscript,
-          evalscripturl,
+          evalscriptUrl,
           accessToken,
           upsampling,
           downsampling,
@@ -971,7 +971,7 @@ class SentinelHubLayer extends L.TileLayer {
           url,
           dsh.KNOWN_COLLECTIONS[datasetId],
           evalscript,
-          evalscripturl,
+          evalscriptUrl,
           accessToken,
           upsampling,
           downsampling,
@@ -992,7 +992,7 @@ class SentinelHubLayer extends L.TileLayer {
             url,
             datasetId,
             evalscript,
-            evalscripturl,
+            evalscriptUrl,
             accessToken,
             upsampling,
             downsampling,
@@ -1007,7 +1007,7 @@ class SentinelHubLayer extends L.TileLayer {
     url,
     collectionId,
     evalscript,
-    evalscripturl,
+    evalscriptUrl,
     accessToken,
     upsampling,
     downsampling,
@@ -1023,7 +1023,7 @@ class SentinelHubLayer extends L.TileLayer {
             : layer.collectionId === collectionId
         ) {
           layer.evalscript = evalscript;
-          layer.evalscripturl = evalscripturl;
+          layer.evalscriptUrl = evalscriptUrl;
           if (mosaickingOrder) {
             layer.mosaickingOrder = mosaickingOrder;
           }
@@ -1045,12 +1045,12 @@ class SentinelHubLayer extends L.TileLayer {
     });
   };
 
-  createSH12Layer = (url, evalscript, evalscripturl, upsampling, downsampling) => {
+  createSH12Layer = (url, evalscript, evalscriptUrl, upsampling, downsampling) => {
     // BUG: we assume that there is only one dataset used within the instance
     return LayersFactory.makeLayers(url, null, null, reqConfigMemoryCache).then((layers) => {
       let layer = layers[0];
       layer.evalscript = evalscript;
-      layer.evalscripturl = evalscripturl;
+      layer.evalscriptUrl = evalscriptUrl;
       layer.upsampling = upsampling;
       layer.downsampling = downsampling;
       layer.maxCloudCoverPercent = 100;
@@ -1129,11 +1129,11 @@ class SentinelHubLayerComponent extends GridLayer {
     if (params.format) {
       options.format = MimeTypes[params.format];
     }
-    if (params.customSelected && (params.evalscript || params.evalscripturl)) {
+    if (params.customSelected && (params.evalscript || params.evalscriptUrl)) {
       options.customSelected = true;
       if (params.evalscript) {
         options.evalscript = params.evalscript;
-        options.evalscripturl = null;
+        options.evalscriptUrl = null;
       }
       if (params.dataFusion) {
         options.dataFusion = params.dataFusion;

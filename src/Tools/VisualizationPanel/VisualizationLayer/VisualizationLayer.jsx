@@ -58,14 +58,14 @@ class VisualizationLayer extends Component {
     const layerActionsProps = { ...this.props };
     if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
       layerActionsProps.evalscript = null;
-      layerActionsProps.evalscripturl = null;
+      layerActionsProps.evalscriptUrl = null;
       layerActionsProps.selectedProcessing = selectedProcessing;
       const processGraphObj = viz?.processGraph || getProcessGraph(visualizationUrl, selectedVisualizationId);
       layerActionsProps.processGraph =
         processGraphObj && typeof processGraphObj === 'object'
           ? JSON.stringify(processGraphObj)
           : processGraphObj;
-      layerActionsProps.processgraphurl = viz?.processgraphurl || null;
+      layerActionsProps.processGraphUrl = viz?.processGraphUrl || null;
     }
 
     const layerActions = createLayerActions(layerActionsProps);
@@ -126,10 +126,10 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   evalscript: store.visualization.evalscript,
-  evalscripturl: store.visualization.evalscripturl,
+  evalscriptUrl: store.visualization.evalscriptUrl,
   dataFusion: store.visualization.dataFusion,
   processGraph: store.visualization.processGraph,
-  processgraphurl: store.visualization.processgraphurl,
+  processGraphUrl: store.visualization.processGraphUrl,
   ...getVisualizationEffectsFromStore(store),
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
 });

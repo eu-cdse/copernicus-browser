@@ -8,8 +8,8 @@ import {
   faRightLeft,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import Sentinel2Banner from './icons/data-space-sentinel-2-banner.svg?react';
-import MultiSentinelBanner from './icons/multi-sentinel-banner.svg?react';
+import sentinel2BannerUrl from './icons/data-space-sentinel-2-banner.svg';
+import multiSentinelBannerUrl from './icons/multi-sentinel-banner.svg';
 import './Tabs.scss';
 import { t } from 'ttag';
 import { TABS } from '../../const';
@@ -152,13 +152,13 @@ const Tabs = (props) => {
   const showBannerBasedOnTab = () => {
     switch (props.activeIndex) {
       case 1:
-        return <Sentinel2Banner className="sentinels-banner-position" />;
+        return <img src={sentinel2BannerUrl} className="sentinels-banner-position" alt="" />;
 
       case 2:
-        return <MultiSentinelBanner className="sentinels-banner-position" />;
+        return <img src={multiSentinelBannerUrl} className="sentinels-banner-position" alt="" />;
 
       case 3:
-        return <Sentinel2Banner className="sentinels-banner-position" />;
+        return <img src={sentinel2BannerUrl} className="sentinels-banner-position" alt="" />;
 
       default:
         break;

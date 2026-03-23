@@ -13,6 +13,7 @@
 .idea
 .vscode
 .claude/worktrees/
+.claude/settings.local.json
 
 scripts/*.csv
 scripts/*.txt

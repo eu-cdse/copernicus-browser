@@ -1,4 +1,4 @@
-import { isOnEqualDate, constructTimespanString } from './Pin.utils';
+import { isOnEqualDate, constructTimespanString, normalizePin } from './Pin.utils';
 
 describe('isOnEqualDate', () => {
   it('should return true when both dates are on the same date', () => {
@@ -60,5 +60,45 @@ describe('constructTimespanString', () => {
   it('should return null when a pin is not passed', () => {
     const date = constructTimespanString();
     expect(date).toBe(null);
+  });
+});
+
+describe('normalizePin', () => {
+  it('preserves camelCase keys when already present', () => {
+    const pin = { evalscriptUrl: 'https://example.com/eval', processGraphUrl: 'https://example.com/pg' };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('https://example.com/eval');
+    expect(result.processGraphUrl).toBe('https://example.com/pg');
+  });
+
+  it('promotes legacy lowercase evalscripturl to evalscriptUrl', () => {
+    const pin = { evalscripturl: 'https://example.com/eval' };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('https://example.com/eval');
+  });
+
+  it('promotes legacy lowercase processgraphurl to processGraphUrl', () => {
+    const pin = { processgraphurl: 'https://example.com/pg' };
+    const result = normalizePin(pin);
+    expect(result.processGraphUrl).toBe('https://example.com/pg');
+  });
+
+  it('prefers camelCase over legacy lowercase when both are present', () => {
+    const pin = {
+      evalscriptUrl: 'new',
+      evalscripturl: 'old',
+      processGraphUrl: 'new-pg',
+      processgraphurl: 'old-pg',
+    };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('new');
+    expect(result.processGraphUrl).toBe('new-pg');
+  });
+
+  it('leaves evalscriptUrl undefined when neither key is present', () => {
+    const pin = { someOtherProp: 'value' };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBeUndefined();
+    expect(result.processGraphUrl).toBeUndefined();
   });
 });

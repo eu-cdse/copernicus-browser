@@ -1589,7 +1589,7 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/c9e05c-YOUR-INSTANCEID-HERE`,
         toTime: '2025-10-01',
-        evalscripturl:
+        evalscriptUrl:
           'https://raw.githubusercontent.com/eu-cdse/sentinel-hub-custom-scripts/refs/heads/main/sentinel-1-monthly-mosaics/mangrove_radar/script.js',
         themeId: 'AGRICULTURE',
         description:

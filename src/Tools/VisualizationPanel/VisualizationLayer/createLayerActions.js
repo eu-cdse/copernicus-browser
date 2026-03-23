@@ -24,7 +24,7 @@ const addVisualizationToComponent = (
     visualizationUrl,
     selectedVisualizationId,
     evalscript,
-    evalscripturl,
+    evalscriptUrl,
     dataFusion,
     gainEffect,
     gammaEffect,
@@ -42,7 +42,7 @@ const addVisualizationToComponent = (
     orbitDirection,
     selectedProcessing,
     processGraph,
-    processgraphurl,
+    processGraphUrl,
   },
 ) => {
   const title = `${getDatasetLabel(datasetId)}: ${customSelected ? 'Custom' : selectedVisualizationId}`;
@@ -58,7 +58,7 @@ const addVisualizationToComponent = (
     visualizationUrl,
     layerId: selectedVisualizationId,
     evalscript: evalscript || '',
-    evalscripturl: evalscripturl || '',
+    evalscriptUrl: evalscriptUrl || '',
     dataFusion,
     gainEffect,
     gammaEffect,
@@ -74,7 +74,7 @@ const addVisualizationToComponent = (
     themeId: selectedThemeId,
     orbitDirection,
     processGraph: processGraph || '',
-    processgraphurl: processgraphurl || '',
+    processGraphUrl: processGraphUrl || '',
     selectedProcessing,
   };
 
