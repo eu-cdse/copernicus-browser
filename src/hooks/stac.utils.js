@@ -307,6 +307,20 @@ export const getDatasetIdentifierAttributeValues = (filterString) => {
   return matches.map((match) => match[1]);
 };
 
+export const getNominalDateAttributeValues = (filterString) => {
+  if (!filterString) {
+    return [];
+  }
+
+  const matches = [
+    ...filterString.matchAll(
+      /att\/Name\s+eq\s+'nominalDate'\s+and\s+att\/OData\.CSC\.DateTimeOffsetAttribute\/Value\s+eq\s+([^\s)]+)/g,
+    ),
+  ];
+
+  return matches.map((match) => match[1]);
+};
+
 const CCM_COLLECTION_IDS = new Set([ODataCollections.OPTICAL.id, ODataCollections.CCM_SAR.id]);
 export const CCM_COLLECTION_NAME = ODataCollections.OPTICAL.collection;
 const ccmDatasetIndex = new Map();
@@ -435,7 +449,7 @@ const clmsProductTypeLabelsIndex = new Map();
 const clmsDatasetIdentifierIndex = new Map();
 
 const CLMS_ATTR_VALUE_REGEX =
-  /att\/Name\s+eq\s+'([^']+)'\s+and\s+att\/OData\.CSC\.StringAttribute\/Value\s+eq\s+'([^']+)'/;
+  /att\/Name\s+eq\s+'([^']+)'\s+and\s+att\/OData\.CSC\.(?:StringAttribute|DateTimeOffsetAttribute)\/Value\s+eq\s+'?([^'\s)]+)'?/;
 
 const extractClmsFilterValue = (expr, attributeName) => {
   if (!expr) {
@@ -448,7 +462,7 @@ const extractClmsFilterValue = (expr, attributeName) => {
 const walkClmsItems = (items, collectionLabel, instrumentLabel, instrumentProductType) => {
   for (const item of items || []) {
     if (item.type === 'group') {
-      walkClmsItems(item.items, collectionLabel, null, null);
+      walkClmsItems(item.items, collectionLabel, instrumentLabel, instrumentProductType);
     } else if (item.type === 'instrument') {
       const productTypeValue = extractClmsFilterValue(item.customFilterExpression, 'productType');
       if (productTypeValue) {
@@ -457,18 +471,47 @@ const walkClmsItems = (items, collectionLabel, instrumentLabel, instrumentProduc
       }
       walkClmsItems(item.items, collectionLabel, item.label, productTypeValue);
     } else if (item.type === 'productType') {
-      const datasetIdentifierValue = extractClmsFilterValue(item.customFilterExpression, 'datasetIdentifier');
-      if (datasetIdentifierValue) {
-        clmsDatasetIdentifierIndex.set(datasetIdentifierValue, {
-          productTypeLabel: item.label,
-          instrumentLabel,
-          collectionLabel,
-          // The productType OData value of the parent instrument, or null for instruments
-          // like Evapotranspiration that have no productType-based customFilterExpression.
-          instrumentProductType,
-        });
-        if (instrumentProductType && clmsProductTypeLabelsIndex.has(instrumentProductType)) {
-          clmsProductTypeLabelsIndex.get(instrumentProductType).push(item.label);
+      if (item.multiCustomFilterExpression) {
+        // Items like UA LCU 2018/2021 share a datasetIdentifier but differ by nominalDate.
+        // Index them under a composite key (datasetIdentifier_year) so each gets its own label.
+        let datasetIdentifierValue = null;
+        let nominalDateValue = null;
+        for (const expr of item.multiCustomFilterExpression) {
+          datasetIdentifierValue =
+            datasetIdentifierValue ?? extractClmsFilterValue(expr, 'datasetIdentifier');
+          nominalDateValue = nominalDateValue ?? extractClmsFilterValue(expr, 'nominalDate');
+        }
+        if (datasetIdentifierValue && nominalDateValue) {
+          // Key uses only the year (first 4 chars) because the OData API returns nominalDate in
+          // ISO-8601 format (e.g. "2018-01-01T00:00:00.000000Z") and products like UA LCU 2018
+          // and 2021 share the same datasetIdentifier, distinguished solely by their reference year.
+          clmsDatasetIdentifierIndex.set(`${datasetIdentifierValue}_${nominalDateValue.slice(0, 4)}`, {
+            productTypeLabel: item.label,
+            instrumentLabel,
+            collectionLabel,
+            instrumentProductType,
+          });
+          if (instrumentProductType && clmsProductTypeLabelsIndex.has(instrumentProductType)) {
+            clmsProductTypeLabelsIndex.get(instrumentProductType).push(item.label);
+          }
+        }
+      } else {
+        const datasetIdentifierValue = extractClmsFilterValue(
+          item.customFilterExpression,
+          'datasetIdentifier',
+        );
+        if (datasetIdentifierValue) {
+          clmsDatasetIdentifierIndex.set(datasetIdentifierValue, {
+            productTypeLabel: item.label,
+            instrumentLabel,
+            collectionLabel,
+            // The productType OData value of the parent instrument, or null for instruments
+            // like Evapotranspiration that have no productType-based customFilterExpression.
+            instrumentProductType,
+          });
+          if (instrumentProductType && clmsProductTypeLabelsIndex.has(instrumentProductType)) {
+            clmsProductTypeLabelsIndex.get(instrumentProductType).push(item.label);
+          }
         }
       }
     }
@@ -482,6 +525,7 @@ for (const collection of recursiveCollectionCLMS) {
 export const getClmsAvailabilityLabels = (filterString) => {
   const productTypeValues = getProductTypeAttributeValues(filterString);
   const datasetIdentifierValues = getDatasetIdentifierAttributeValues(filterString);
+  const nominalDateValues = getNominalDateAttributeValues(filterString);
 
   if (productTypeValues.length === 0 && datasetIdentifierValues.length === 0) {
     return recursiveCollectionCLMS.map((c) => c.label);
@@ -494,18 +538,32 @@ export const getClmsAvailabilityLabels = (filterString) => {
   // that productType (Case B). This ensures multiple concurrent selections (e.g. SNOW parent +
   // DynamicLandCover with one child) all appear — not just the one that has a specific leaf.
   for (const productTypeValue of productTypeValues) {
-    const specificIds = datasetIdentifierValues.filter((id) => {
-      const info = clmsDatasetIdentifierIndex.get(id);
-      return info?.instrumentProductType === productTypeValue;
-    });
+    const specificLabels = [];
 
-    if (specificIds.length > 0) {
-      for (const id of specificIds) {
-        const info = clmsDatasetIdentifierIndex.get(id);
-        if (info) {
-          labels.push(info.productTypeLabel || info.instrumentLabel || info.collectionLabel);
+    // Composite key lookup for multiCustomFilterExpression items (e.g. UA LCU 2018/2021) that
+    // share a datasetIdentifier but are disambiguated by nominalDate. The OData API returns
+    // nominalDate in ISO-8601 format (e.g. "2018-01-01T00:00:00.000000Z"), so slicing the first
+    // 4 chars extracts the year, matching the key format used when building the index above.
+    for (const datasetIdentifier of datasetIdentifierValues) {
+      for (const nominalDate of nominalDateValues) {
+        const info = clmsDatasetIdentifierIndex.get(`${datasetIdentifier}_${nominalDate.slice(0, 4)}`);
+        if (info?.instrumentProductType === productTypeValue) {
+          specificLabels.push(info.productTypeLabel || info.instrumentLabel || info.collectionLabel);
         }
       }
+    }
+
+    // Plain datasetIdentifier lookup for customFilterExpression items. Both paths can match
+    // simultaneously when the filter mixes multi- and single-expression product types.
+    for (const id of datasetIdentifierValues) {
+      const info = clmsDatasetIdentifierIndex.get(id);
+      if (info?.instrumentProductType === productTypeValue) {
+        specificLabels.push(info.productTypeLabel || info.instrumentLabel || info.collectionLabel);
+      }
+    }
+
+    if (specificLabels.length > 0) {
+      labels.push(...specificLabels);
     } else {
       const productTypeLabels = clmsProductTypeLabelsIndex.get(productTypeValue) || [];
       labels.push(...productTypeLabels);

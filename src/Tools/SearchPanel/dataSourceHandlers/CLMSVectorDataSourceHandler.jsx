@@ -96,12 +96,25 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: {
       minDate: moment.utc('2021-01-01'),
-      maxDate: moment.utc('2021-01-01'),
+      maxDate: moment.utc('2021-01-01'), // single-date dataset: the change period spans 2018–2021 but the reference date is 2021-01-01
     },
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: {
       minDate: moment.utc('2021-01-01'),
       maxDate: moment.utc('2021-01-01'),
     },
+  };
+
+  TEMPORAL_RESOLUTION = {
+    [COPERNICUS_CLMS_UA_LCU_2018_VECTOR]: {
+      amount: 3,
+      unit: 'year',
+    },
+    [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: {
+      amount: 3,
+      unit: 'year',
+    },
+    [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: { amount: 3, unit: 'year' },
+    [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: { amount: 3, unit: 'year' },
   };
 
   getKnownUrl = () =>
@@ -166,6 +179,13 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     return urls;
   };
 
+  getTemporalResolution(datasetId) {
+    if (this.TEMPORAL_RESOLUTION[datasetId] == null) {
+      return null;
+    }
+    return this.TEMPORAL_RESOLUTION[datasetId];
+  }
+
   getMinMaxDates(datasetId) {
     if (this.MIN_MAX_DATES[datasetId] == null) {
       return { minDate: null, maxDate: null };
@@ -216,6 +236,8 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
   supportsAnalyticalImgExport = () => false;
 
   supportsTimelapse = () => false;
+
+  supportsFindProductsForCurrentView = () => true;
 }
 
 export default CLMSVectorDataSourceHandler;

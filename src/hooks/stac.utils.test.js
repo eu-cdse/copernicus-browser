@@ -9,6 +9,7 @@ import {
   getCollectionNames,
   getDatasetFullValues,
   getDemCollectionsFromDatasetValues,
+  getNominalDateAttributeValues,
   getStacBaseId,
 } from './stac.utils';
 
@@ -17,6 +18,8 @@ const productTypeFragment = (value) =>
   `Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq '${value}')`;
 const datasetIdentifierFragment = (value) =>
   `Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetIdentifier' and att/OData.CSC.StringAttribute/Value eq '${value}')`;
+const nominalDateFragment = (value) =>
+  `Attributes/OData.CSC.DateTimeOffsetAttribute/any(att:att/Name eq 'nominalDate' and att/OData.CSC.DateTimeOffsetAttribute/Value eq ${value})`;
 const collectionFragment = (name) => `Collection/Name eq '${name}'`;
 
 describe('stac.utils', () => {
@@ -186,6 +189,30 @@ describe('stac.utils', () => {
     });
   });
 
+  describe('getNominalDateAttributeValues', () => {
+    it('extracts unquoted datetime values from DateTimeOffsetAttribute filter fragments', () => {
+      const filter = nominalDateFragment('2018-01-01T00:00:00.000000Z');
+      expect(getNominalDateAttributeValues(filter)).toEqual(['2018-01-01T00:00:00.000000Z']);
+    });
+
+    it('extracts multiple nominalDate values', () => {
+      const filter = [
+        nominalDateFragment('2018-01-01T00:00:00.000000Z'),
+        nominalDateFragment('2021-01-01T00:00:00.000000Z'),
+      ].join(' and ');
+      expect(getNominalDateAttributeValues(filter)).toEqual([
+        '2018-01-01T00:00:00.000000Z',
+        '2021-01-01T00:00:00.000000Z',
+      ]);
+    });
+
+    it('returns empty array when no nominalDate present', () => {
+      expect(getNominalDateAttributeValues('')).toEqual([]);
+      expect(getNominalDateAttributeValues(null)).toEqual([]);
+      expect(getNominalDateAttributeValues(productTypeFragment('urban_atlas'))).toEqual([]);
+    });
+  });
+
   describe('getClmsAvailabilityLabels', () => {
     const SNOW_COVER_EXTENT_LEAVES = [
       'Europe, Daily, 500m, (2017–present), V1',
@@ -277,6 +304,53 @@ describe('stac.utils', () => {
       expect(labels).toContain('Global, Yearly, 100m, (2015–2019), V3');
       // Other DynamicLandCover leaves NOT selected
       expect(labels).not.toContain('LCM Global, Yearly, 10m, 2020, V1');
+    });
+
+    describe('Urban Atlas LCU — multiCustomFilterExpression products', () => {
+      const UA_LCU_DATASET_ID = 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1';
+
+      it('shows only the 2018 leaf when productType=urban_atlas + datasetIdentifier + nominalDate 2018', () => {
+        const filter = [
+          collectionFragment('CLMS'),
+          productTypeFragment('urban_atlas'),
+          datasetIdentifierFragment(UA_LCU_DATASET_ID),
+          nominalDateFragment('2018-01-01T00:00:00.000000Z'),
+        ].join(' and ');
+        const labels = getClmsAvailabilityLabels(filter);
+        expect(labels).toEqual(['Land Cover and Land Use, 3-yearly, 2018']);
+      });
+
+      it('shows only the 2021 leaf when productType=urban_atlas + datasetIdentifier + nominalDate 2021', () => {
+        const filter = [
+          collectionFragment('CLMS'),
+          productTypeFragment('urban_atlas'),
+          datasetIdentifierFragment(UA_LCU_DATASET_ID),
+          nominalDateFragment('2021-01-01T00:00:00.000000Z'),
+        ].join(' and ');
+        const labels = getClmsAvailabilityLabels(filter);
+        expect(labels).toEqual(['Land Cover and Land Use, 3-yearly, 2021']);
+      });
+
+      it('falls back to all urban_atlas leaves when productType=urban_atlas but no nominalDate', () => {
+        const filter = [collectionFragment('CLMS'), productTypeFragment('urban_atlas')].join(' and ');
+        const labels = getClmsAvailabilityLabels(filter);
+        expect(labels).toContain('Land Cover and Land Use, 3-yearly, 2018');
+        expect(labels).toContain('Land Cover and Land Use, 3-yearly, 2021');
+      });
+
+      it('shows both the multiCustomFilterExpression leaf (LCU 2018) and the customFilterExpression leaf (LCUC) when both are selected', () => {
+        const filter = [
+          collectionFragment('CLMS'),
+          productTypeFragment('urban_atlas'),
+          datasetIdentifierFragment('clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1'),
+          nominalDateFragment('2018-01-01T00:00:00.000000Z'),
+          datasetIdentifierFragment('clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1'),
+        ].join(' and ');
+        const labels = getClmsAvailabilityLabels(filter);
+        expect(labels).toContain('Land Cover and Land Use, 3-yearly, 2018');
+        expect(labels).toContain('Land Cover and Land Use Change, 3-yearly, 2018-2021');
+        expect(labels).not.toContain('Land Cover and Land Use, 3-yearly, 2021');
+      });
     });
 
     describe('CLMS Land Cover parent – regression', () => {

@@ -9330,9 +9330,6 @@ msgstr ""
 msgid "Projection transform"
 msgstr ""
 
-msgid "Scene ID"
-msgstr ""
-
 msgid "View sun azimuth"
 msgstr ""
 
@@ -10537,4 +10534,37 @@ msgid ""
 "2021 reference year in EEA38 countries (EU, EFTA, Western Balkans "
 "countries, as well as Türkiye) and the United Kingdom. More information "
 "[here](https://land.copernicus.eu/en/products/urban-atlas)."
+msgstr ""
+
+msgid "Scene id"
+msgstr ""
+
+msgid "Cell id"
+msgstr ""
+
+msgid "Country code"
+msgstr ""
+
+msgid "FUA code"
+msgstr ""
+
+msgid "FUA name"
+msgstr ""
+
+msgid "Minimal mapping unit"
+msgstr ""
+
+msgid "Minimal mapping unit label"
+msgstr ""
+
+msgid "Minimal mapping width"
+msgstr ""
+
+msgid "Minimal mapping width label"
+msgstr ""
+
+msgid "Product delivery date"
+msgstr ""
+
+msgid "SDI resource identifier"
 msgstr ""

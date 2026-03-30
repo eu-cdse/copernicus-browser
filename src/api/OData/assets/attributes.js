@@ -1,5 +1,10 @@
 import { t } from 'ttag';
-import { ODataDoubleAttribute, ODataIntegerAttribute, ODataStringAttribute } from '../ODataAttribute';
+import {
+  ODataDateTimeAttribute,
+  ODataDoubleAttribute,
+  ODataIntegerAttribute,
+  ODataStringAttribute,
+} from '../ODataAttribute';
 
 export const AttributeNames = {
   collectionName: 'Collection/Name',
@@ -48,6 +53,9 @@ export const AttributeNames = {
   verticalTileNumber: 'verticalTileNumber',
 };
 
+/**
+ * Mapping of attribute names from OData API to human-friendly labels for display in the UI.
+ */
 export const FormatedAttributeNames = {
   name: () => t`Name`,
   size: () => t`Size`,
@@ -162,7 +170,7 @@ export const FormatedAttributeNames = {
   'proj:epsg': () => t`Projection EPSG code`,
   projShape: () => t`Projection shape`,
   projTransform: () => t`Projection transform`,
-  sceneId: () => t`Scene ID`,
+  sceneId: () => t`Scene id`,
   'view:sun_azimuth': () => t`View sun azimuth`,
   'view:sun_elevation': () => t`View sun elevation`,
   wrsPath: () => t`WRS path`,
@@ -172,6 +180,16 @@ export const FormatedAttributeNames = {
   processingBaseline: () => t`Processing baseline`,
   parentIdentifier: () => t`Parent identifier`,
   acquisitionType: () => t`Acquisition type`,
+  cellID: () => t`Cell id`,
+  countryCode: () => t`Country code`,
+  fuaCode: () => t`FUA code`,
+  fuaName: () => t`FUA name`,
+  minimalMappingUnit: () => t`Minimal mapping unit`,
+  minimalMappingUnitLabel: () => t`Minimal mapping unit label`,
+  minimalMappingWidth: () => t`Minimal mapping width`,
+  minimalMappingWidthLabel: () => t`Minimal mapping width label`,
+  productDeliveryDate: () => t`Product delivery date`,
+  SDIResourceIdentifier: () => t`SDI resource identifier`,
   dayNightFlag: () => t`Day night flag`,
   horizontalTileNumber: () => t`Horizontal tile number`,
   verticalTileNumber: () => t`Vertical tile number`,
@@ -254,6 +272,7 @@ export const ODataAttributes = {
   component: new ODataStringAttribute(AttributeNames.component),
   gridLabel: new ODataStringAttribute(AttributeNames.gridLabel),
   consolidationPeriod: new ODataIntegerAttribute(AttributeNames.consolidationPeriod),
+  nominalDate: new ODataDateTimeAttribute(AttributeNames.nominalDate),
 };
 
 export const AttributeOriginValues = {

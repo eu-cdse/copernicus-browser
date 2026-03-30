@@ -1488,6 +1488,104 @@ export const collectionsComplementaryData = [
 
 export const recursiveCollectionCLMS = [
   {
+    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
+    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.label,
+    type: 'collection',
+    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.collection,
+    supportsGeometry: false,
+    supportsCloudCover: false,
+    items: [
+      {
+        id: 'URBAN_ATLAS',
+        label: 'Urban Atlas',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'urban_atlas',
+        )})`,
+        items: [
+          {
+            id: 'LAND_COVER_LAND_USE',
+            label: 'Land Cover and Land Use',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018',
+                label: 'Land Cover and Land Use, 3-yearly, 2018',
+                type: 'productType',
+                multiCustomFilterExpression: [
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.datasetIdentifier,
+                    ODataFilterOperator.eq,
+                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
+                  )})`,
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.nominalDate,
+                    ODataFilterOperator.eq,
+                    '2018-01-01T00:00:00.000000Z',
+                  )})`,
+                ],
+              },
+              {
+                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021',
+                label: 'Land Cover and Land Use, 3-yearly, 2021',
+                type: 'productType',
+                multiCustomFilterExpression: [
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.datasetIdentifier,
+                    ODataFilterOperator.eq,
+                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
+                  )})`,
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.nominalDate,
+                    ODataFilterOperator.eq,
+                    '2021-01-01T00:00:00.000000Z',
+                  )})`,
+                ],
+              },
+            ],
+          },
+          {
+            id: 'LAND_COVER_LAND_USE_CHANGE',
+            label: 'Land Cover and Land Use Change',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
+                label: 'Land Cover and Land Use Change, 3-yearly, 2018-2021',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'STREET_TREE_LAYER',
+            label: 'Street Tree Layer',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
+                label: 'Street Tree Layer, 3-yearly, 2021',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
     label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.label,
     type: 'collection',
