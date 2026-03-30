@@ -492,6 +492,7 @@ export const visualizationSlice = createSlice({
     backscatterCoeff: undefined,
     demSource3D: DEMInstanceType.MAPZEN,
     error: undefined,
+    resolutionTooLow: false,
     orbitDirection: undefined,
     cloudCoverage: DEFAULT_CLOUD_COVER_PERCENT,
     dateMode: DATE_MODES.SINGLE.value,
@@ -522,6 +523,7 @@ export const visualizationSlice = createSlice({
       state.processGraph = undefined;
       state.processGraphUrl = undefined;
       state.isProcessGraphModified = false;
+      state.resolutionTooLow = false;
       if (orbitDirection) {
         state.orbitDirection = orbitDirection;
       } else {
@@ -652,6 +654,9 @@ export const visualizationSlice = createSlice({
     },
     setError: (state, action) => {
       state.error = action.payload;
+    },
+    setResolutionTooLow: (state, action) => {
+      state.resolutionTooLow = action.payload;
     },
     resetEffects: (state) => {
       state.gainEffect = 1;
@@ -803,6 +808,7 @@ export const visualizationSlice = createSlice({
       state.dateMode = DATE_MODES.SINGLE.value;
       state.processGraph = '';
       state.isProcessGraphModified = false;
+      state.resolutionTooLow = false;
     },
   },
 });

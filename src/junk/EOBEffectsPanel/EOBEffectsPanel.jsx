@@ -18,6 +18,7 @@ import './EOBEffectsPanel.scss';
 
 import {
   BACK_COEF_OPTIONS,
+  DATASOURCES,
   defaultEffects,
   DEM_3D_SOURCES,
   DISABLED_ORTHORECTIFICATION,
@@ -28,6 +29,7 @@ import { getValueOrDefault, getDatasetDefaults } from '../../utils/effectsUtils'
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import ExternalLink from '../../ExternalLink/ExternalLink';
 import { getMosaickingOrderOptions } from '../../utils/mosaickingOrder.utils';
+import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 const supportedInterpolations = [Interpolator.BILINEAR, Interpolator.BICUBIC, Interpolator.NEAREST];
 
@@ -179,6 +181,8 @@ function render3DDemSourceSelection(props) {
 }
 
 function renderCommonEffects(props) {
+  const dsh = getDataSourceHandler(props.datasetId);
+  const isVectorData = dsh?.datasource === DATASOURCES.CLMS_VECTOR;
   return (
     <React.Fragment key="commonEffects">
       <EffectSlider
@@ -199,15 +203,19 @@ function renderCommonEffects(props) {
         value={getValueOrDefault(props.effects, 'gammaEffect', defaultEffects)}
         onChange={props.onUpdateGammaEffect}
       />
-      <RGBEffects key="rgbEffects" {...props} />
-      <EffectDropdown
-        key="mosaickingOrder"
-        name={t`Mosaicking order`}
-        value={getValueOrDefault(props.effects, 'mosaickingOrder', defaultEffects)}
-        onChange={props.onUpdateMosaickingOrder}
-        options={getMosaickingOrderOptions()}
-        displayLayerDefault={true}
-      />
+      {!isVectorData && (
+        <>
+          <RGBEffects key="rgbEffects" {...props} />
+          <EffectDropdown
+            key="mosaickingOrder"
+            name={t`Mosaicking order`}
+            value={getValueOrDefault(props.effects, 'mosaickingOrder', defaultEffects)}
+            onChange={props.onUpdateMosaickingOrder}
+            options={getMosaickingOrderOptions()}
+            displayLayerDefault={true}
+          />
+        </>
+      )}
     </React.Fragment>
   );
 }

@@ -826,6 +826,34 @@ const CopernicusClmsFcoverGlobal300m10dailyV2RT6Tooltip = () =>
     source: getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown(),
   });
 
+const getClmsUaLcu2018VectorMarkdown = () =>
+  t`Urban Atlas Land Cover and Land Use 2018 provides reliable, inter-comparable, high-resolution land use and land cover data for 764 Functional Urban Areas (FUA) with more than 50,000 inhabitants for the 2018 reference year in EEA38 countries (EU, EFTA, Western Balkans countries, as well as Türkiye) and the United Kingdom. More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+const ClmsUaLcu2018VectorTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsUaLcu2018VectorMarkdown(),
+  });
+
+const getClmsUaLcu2021VectorMarkdown = () =>
+  t`Urban Atlas Land Cover and Land Use 2021 provides reliable, inter-comparable, high-resolution land use and land cover data for 790 Functional Urban Areas (FUA) with more than 50,000 inhabitants for the 2021 reference year in EEA38 countries (EU, EFTA, Western Balkans countries, as well as Türkiye) and the United Kingdom. More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+const ClmsUaLcu2021VectorTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsUaLcu2021VectorMarkdown(),
+  });
+
+const getClmsUaLcuc20182021VectorMarkdown = () =>
+  t`Urban Atlas Land Cover and Land Use Change 2018-2021 provides reliable, inter-comparable, high-resolution land use and land cover change data for 764 Functional Urban Areas (FUA) with more than 50,000 inhabitants for the 2021 reference year in EEA38 countries (EU, EFTA, Western Balkans countries, as well as Türkiye) and the United Kingdom. More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+const ClmsUaLcuc20182021VectorTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsUaLcuc20182021VectorMarkdown(),
+  });
+
+const getClmsUaStl2021VectorMarkdown = () =>
+  t`Urban Atlas Street Tree Layer 2021 provides information about presence of trees within Functional Urban Areas (FUA). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+const ClmsUaStl2021VectorTooltip = () =>
+  DataSourceTooltip({
+    source: getClmsUaStl2021VectorMarkdown(),
+  });
+
 const getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown = () => t`
   Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
 
@@ -1176,6 +1204,14 @@ export {
   CopernicusClmsFcoverGlobal300m10dailyV2RT2Tooltip,
   getCopernicusClmsFcoverGlobal300m10dailyV2RT6Markdown,
   CopernicusClmsFcoverGlobal300m10dailyV2RT6Tooltip,
+  getClmsUaLcu2018VectorMarkdown,
+  ClmsUaLcu2018VectorTooltip,
+  getClmsUaLcu2021VectorMarkdown,
+  ClmsUaLcu2021VectorTooltip,
+  getClmsUaLcuc20182021VectorMarkdown,
+  ClmsUaLcuc20182021VectorTooltip,
+  getClmsUaStl2021VectorMarkdown,
+  ClmsUaStl2021VectorTooltip,
   getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown,
   CopernicusClmsDmpGlobal300m10dailyV2RT0Tooltip,
   getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown,

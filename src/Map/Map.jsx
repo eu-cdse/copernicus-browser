@@ -1,31 +1,16 @@
 import React from 'react';
-import {
-  Map as LeafletMap,
-  Pane,
-  LayersControl,
-  GeoJSON,
-  FeatureGroup,
-  TileLayer,
-  LayerGroup,
-} from 'react-leaflet';
+import { Map as LeafletMap, Pane, LayersControl, TileLayer, LayerGroup } from 'react-leaflet';
 
 import { connect } from 'react-redux';
 import 'nprogress/nprogress.css';
 
-import store, {
-  commercialDataSlice,
-  mainMapSlice,
-  themesSlice,
-  visualizationSlice,
-  searchResultsSlice,
-} from '../store';
+import store, { mainMapSlice, themesSlice, visualizationSlice, searchResultsSlice } from '../store';
 import 'leaflet/dist/leaflet.css';
 import './Map.scss';
 import L from 'leaflet';
 import moment from 'moment';
 import { PROCESSING_OPTIONS, SELECTED_BASE_LAYER_KEY, TABS } from '../const';
 import Controls from '../Controls/Controls';
-import PreviewLayer from '../Tools/Results/PreviewLayer';
 import LeafletControls from './LeafletControls/LeafletControls';
 import SentinelHubLayerComponent from './plugins/sentinelhubLeafletLayer';
 import OpenEoLayerComponent from './plugins/openEOLeafletLayer';
@@ -48,7 +33,6 @@ import {
   S2_QUARTERLY_MOSAIC_DATASET_ID,
   S2_QUARTERLY_MOSAIC_LAYER_ID,
   MAX_MAP_LOADING_TIME,
-  highlightedTileStyle,
 } from './const';
 import SearchBox from '../SearchBox/SearchBox';
 
@@ -58,12 +42,16 @@ import {
 } from '../Tools/SearchPanel/dataSourceHandlers/helper';
 // import { checkUserAccount } from '../Tools/CommercialDataPanel/commercialData.utils';
 import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
-import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
+import { isTimespanModeSelected } from '../Tools/VisualizationPanel/VisualizationPanel.utils';
 import {
-  getOrbitDirectionFromList,
-  isTimespanModeSelected,
-} from '../Tools/VisualizationPanel/VisualizationPanel.utils';
-import { getIntersectingFeatures } from './Map.utils';
+  getIntersectingFeatures,
+  createClickedPoint,
+  shouldShowSingleShLayer,
+  shouldShowCompareShLayers,
+  shouldShowS2MosaicTransparency,
+  getPinTimes,
+} from './Map.utils';
+import { mapStoreToProps } from './Map.selectors';
 import { progressWithDelayedAction } from './progressWithDelayedAction';
 import { t } from 'ttag';
 import { findLatestDateWithData, getQuarterlyInfo } from '../utils/latestDate.utils';
@@ -74,6 +62,7 @@ import { processRRDResults } from '../hooks/useRRDProcessResults';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
 import DatasetLocationPreview from './components/DatasetLocationPreview';
 import MapPanes from './components/MapPanes';
+import CommercialDataOverlay from './components/CommercialDataOverlay';
 import MapOverlays from './components/MapOverlays';
 
 // import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
@@ -223,14 +212,7 @@ class Map extends React.Component {
   };
 
   onPreviewClick = (e) => {
-    const clickedPoint = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [e.latlng.lng, e.latlng.lat],
-      },
-    };
-
+    const clickedPoint = createClickedPoint(e.latlng);
     const selectedTiles = getIntersectingFeatures(clickedPoint, this.props.searchResults, {
       zoom: this.props.zoom,
     });
@@ -239,14 +221,7 @@ class Map extends React.Component {
   };
 
   onPreviewRRDClick = (e) => {
-    const clickedPoint = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [e.latlng.lng, e.latlng.lat],
-      },
-    };
-
+    const clickedPoint = createClickedPoint(e.latlng);
     const selectedTiles = getIntersectingFeatures(clickedPoint, this.state.RRDProcessedResults, {
       zoom: this.props.zoom,
     });
@@ -360,22 +335,30 @@ class Map extends React.Component {
       constellationProp = datasetParams?.constellation;
     }
 
-    const showSingleShLayer = !!(
-      authenticated &&
-      dataSourcesInitialized &&
-      selectedTabIndex === TABS.VISUALIZE_TAB &&
-      !displayingSearchResults &&
-      !showComparePanel &&
-      (visualizationLayerId || customSelected) &&
-      datasetId &&
-      visualizationUrl
-    );
+    const showSingleShLayer = shouldShowSingleShLayer({
+      authenticated,
+      dataSourcesInitialized,
+      selectedTabIndex,
+      displayingSearchResults,
+      showComparePanel,
+      visualizationLayerId,
+      customSelected,
+      datasetId,
+      visualizationUrl,
+    });
 
-    const showCompareShLayers =
-      comparedLayers.length && selectedTabIndex === TABS.VISUALIZE_TAB && showComparePanel;
+    const showCompareShLayers = shouldShowCompareShLayers({
+      comparedLayers,
+      selectedTabIndex,
+      showComparePanel,
+    });
 
     const { latestS2QMosaicDate, S2QMosaicZoom } = this.state;
-    const S2QMosaicTransparent = (showSingleShLayer && visibleOnMap) || showCompareShLayers;
+    const S2QMosaicTransparent = shouldShowS2MosaicTransparency(
+      showSingleShLayer,
+      visibleOnMap,
+      showCompareShLayers,
+    );
     const S2QMosaicReady = authenticated && dataSourcesInitialized && latestS2QMosaicDate && S2QMosaicZoom;
 
     const shownBaseLayers = baseLayers.map((baseLayer) => {
@@ -601,7 +584,7 @@ class Map extends React.Component {
                   toTime,
                   datasetId,
                   evalscript,
-                  evalscriptUrl,
+                  evalscriptUrl, // from the saved pin object (already normalized from legacy evalscripturl by Pin.utils), not from URL params
                   dataFusion,
                   visualizationUrl,
                   layerId,
@@ -629,18 +612,7 @@ class Map extends React.Component {
                   allowOverZoomBy = DEFAULT_COMPARED_LAYERS_OVERZOOM,
                 } = getZoomConfiguration(datasetId);
 
-                let pinTimeFrom, pinTimeTo;
-                if (supportsTimeRange) {
-                  if (fromTime) {
-                    pinTimeFrom = moment.utc(fromTime).toDate();
-                    pinTimeTo = moment.utc(toTime).toDate();
-                  } else {
-                    pinTimeFrom = moment.utc(toTime).startOf('day').toDate();
-                    pinTimeTo = moment.utc(toTime).endOf('day').toDate();
-                  }
-                } else {
-                  pinTimeTo = moment.utc(toTime).endOf('day').toDate();
-                }
+                const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, supportsTimeRange);
                 const index = comparedLayers.length - 1 - i;
                 const isCustomVisualisation = evalscript != null && evalscript.length > 0;
                 const supportsOpenEoComparedLayer = isOpenEoSupported(
@@ -792,48 +764,12 @@ class Map extends React.Component {
           filteredQuicklookOverlays={filteredQuicklookOverlays}
         />
 
-        {this.props.commercialDataDisplaySearchResults && !!this.props.commercialDataHighlightedResult && (
-          <GeoJSON
-            id="commercialDataResult"
-            data={this.props.commercialDataHighlightedResult.geometry}
-            key={this.props.commercialDataHighlightedResult.id}
-            style={() => highlightedTileStyle}
-          />
-        )}
-
-        {this.props.commercialDataDisplaySearchResults &&
-        this.props.commercialDataSearchResults &&
-        this.props.commercialDataSearchResults.length > 0 ? (
-          <FeatureGroup
-            onClick={(e) => {
-              store.dispatch(
-                commercialDataSlice.actions.setLocation({ lat: e.latlng.lat, lng: e.latlng.lng }),
-              );
-            }}
-          >
-            {this.props.commercialDataSearchResults.map((result, i) => (
-              <PreviewLayer tile={result} key={`preview-layer-${i}`} />
-            ))}
-          </FeatureGroup>
-        ) : null}
-
-        {!!this.props.commercialDataSelectedOrder &&
-          !!this.props.commercialDataSelectedOrder.input &&
-          !!this.props.commercialDataSelectedOrder.input.bounds &&
-          !!this.props.commercialDataSelectedOrder.input.bounds.geometry && (
-            <GeoJSON
-              id="commercialDataSelectedOrder"
-              data={this.props.commercialDataSelectedOrder.input.bounds.geometry}
-              key={this.props.commercialDataSelectedOrder.id}
-              style={() => ({
-                weight: 2,
-                color: 'green',
-                opacity: 1,
-                fillColor: 'green',
-                fillOpacity: 0.3,
-              })}
-            />
-          )}
+        <CommercialDataOverlay
+          displaySearchResults={this.props.commercialDataDisplaySearchResults}
+          highlightedResult={this.props.commercialDataHighlightedResult}
+          searchResults={this.props.commercialDataSearchResults}
+          selectedOrder={this.props.commercialDataSelectedOrder}
+        />
         {selectedTabIndex === TABS.VISUALIZE_TAB && <DatasetLocationPreview />}
         {/* {selectedModeId && !is3D && (
           <EOBModeSelection
@@ -863,65 +799,5 @@ class Map extends React.Component {
     );
   }
 }
-
-const mapStoreToProps = (store) => {
-  return {
-    lat: store.mainMap.lat,
-    lng: store.mainMap.lng,
-    zoom: store.mainMap.zoom,
-    mapBounds: store.mainMap.bounds,
-    baseLayerId: store.mainMap.baseLayerId,
-    enabledOverlaysId: store.mainMap.enabledOverlaysId,
-    displayingSearchResults: store.searchResults.displayingSearchResults,
-    searchResults: store.searchResults.searchResult?.allResults,
-    RRDResults: store.resultsSection.results,
-    currentPage: store.resultsSection.currentPage,
-    RRDSortStateResultsSection: store.resultsSection.sortState,
-    RRDFilterStateResultsSection: store.resultsSection.filterState,
-    highlightedRRDResult: store.resultsSection.highlightedResult,
-    highlightedTile: store.searchResults.highlightedTile,
-    aoiGeometry: store.aoi.geometry,
-    aoiBounds: store.aoi.bounds,
-    aoiLastEdited: store.aoi.lastEdited,
-    loiGeometry: store.loi.geometry,
-    loiLastEdited: store.loi.lastEdited,
-    displayTimelapseAreaPreview: store.timelapse.displayTimelapseAreaPreview,
-    poiPosition: store.poi.position,
-    poiLastEdited: store.poi.lastEdited,
-    datasetId: store.visualization.datasetId,
-    visibleOnMap: store.visualization.visibleOnMap,
-    visualizationLayerId: store.visualization.layerId,
-    visualizationUrl: store.visualization.visualizationUrl,
-    fromTime: store.visualization.fromTime,
-    toTime: store.visualization.toTime,
-    customSelected: store.visualization.customSelected,
-    evalscript: store.visualization.evalscript,
-    dataFusion: store.visualization.dataFusion,
-    cloudCoverage: store.visualization.cloudCoverage,
-    selectedProcessing: store.visualization.selectedProcessing,
-    processGraph: store.visualization.processGraph,
-    dataSourcesInitialized: store.themes.dataSourcesInitialized,
-    selectedThemeId: store.themes.selectedThemeId,
-    selectedTabIndex: store.tabs.selectedTabIndex,
-    selectedLanguage: store.language.selectedLanguage,
-    ...getVisualizationEffectsFromStore(store),
-    orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
-    error: store.visualization.error,
-    comparedLayers: store.compare.comparedLayers,
-    comparedOpacity: store.compare.comparedOpacity,
-    comparedClipping: store.compare.comparedClipping,
-    auth: store.auth,
-    commercialDataSearchResults: store.commercialData.searchResults,
-    commercialDataHighlightedResult: store.commercialData.highlightedResult,
-    commercialDataDisplaySearchResults: store.commercialData.displaySearchResults,
-    commercialDataSelectedOrder: store.commercialData.selectedOrder,
-    selectedTabSearchPanelIndex: store.tabs.selectedTabSearchPanelIndex,
-    is3D: store.mainMap.is3D,
-    selectedModeId: store.themes.selectedModeId,
-    elevationProfileHighlightedPoint: store.elevationProfile.highlightedPoint,
-    quicklookOverlays: store.mainMap.quicklookOverlays,
-    filteredQuicklookOverlays: store.mainMap.filteredQuicklookOverlays,
-  };
-};
 
 export default connect(mapStoreToProps, null)(Map);

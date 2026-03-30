@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { getZoomConfiguration } from '../Tools/SearchPanel/dataSourceHandlers/helper';
 import { t } from 'ttag';
@@ -6,10 +6,18 @@ import { EOBButton } from '../junk/EOBCommon//EOBButton/EOBButton';
 import { TABS } from '../const';
 
 import './FloatingNotificationPanel.scss';
-import store, { mainMapSlice } from '../store';
+import store, { mainMapSlice, visualizationSlice } from '../store';
 import useLoginLogout from '../Auth/loginLogout/useLoginLogout';
+import { RootState } from '../hooks';
 
-const FloatingNotificationWrapper = ({ toolsOpen, children }) => {
+type WithToolsOpen = {
+  toolsOpen: boolean;
+};
+
+const FloatingNotificationWrapper = ({
+  toolsOpen,
+  children,
+}: WithToolsOpen & { children: React.ReactNode }) => {
   return (
     <div className={`floating-notification-panel ${toolsOpen ? 'tools-opened' : 'tools-closed'}`}>
       {children}
@@ -17,7 +25,7 @@ const FloatingNotificationWrapper = ({ toolsOpen, children }) => {
   );
 };
 
-function RenderUserAuthError({ userAuthError, toolsOpen }) {
+function RenderUserAuthError({ userAuthError, toolsOpen }: { userAuthError: string; toolsOpen: boolean }) {
   const { doLogin } = useLoginLogout();
 
   return (
@@ -33,7 +41,7 @@ function RenderUserAuthError({ userAuthError, toolsOpen }) {
   );
 }
 
-function RenderZoomInAlert({ toolsOpen }) {
+function RenderZoomInAlert({ toolsOpen }: WithToolsOpen) {
   return (
     <FloatingNotificationWrapper toolsOpen={toolsOpen}>
       <div className="message">{t`Please zoom in or search for a location of interest`}</div>
@@ -41,7 +49,18 @@ function RenderZoomInAlert({ toolsOpen }) {
   );
 }
 
-function RenderMapLoadingMessage({ toolsOpen, mapLoadingMessage }) {
+function RenderResolutionAlert({ toolsOpen }: WithToolsOpen) {
+  return (
+    <FloatingNotificationWrapper toolsOpen={toolsOpen}>
+      <div className="message">{t`Please zoom in to visualize the data`}</div>
+    </FloatingNotificationWrapper>
+  );
+}
+
+function RenderMapLoadingMessage({
+  toolsOpen,
+  mapLoadingMessage,
+}: WithToolsOpen & { mapLoadingMessage: string }) {
   return (
     <FloatingNotificationWrapper toolsOpen={toolsOpen}>
       <div className="message">{mapLoadingMessage}</div>
@@ -53,6 +72,21 @@ function RenderMapLoadingMessage({ toolsOpen, mapLoadingMessage }) {
   );
 }
 
+type Props = {
+  zoom: number;
+  datasetId: string | undefined;
+  // fromTime, toTime, and selectedLanguage are not used directly but are mapped from the store
+  // to trigger a re-render when dates or language change, keeping the notification panel in sync.
+  fromTime: string | null | undefined;
+  toTime: string | null | undefined;
+  selectedLanguage: string | undefined;
+  selectedTabIndex: number;
+  userAuthError: string | undefined;
+  toolsOpen: boolean;
+  mapLoadingMessage: string | null;
+  resolutionTooLow: boolean;
+};
+
 function FloatingNotificationPanel({
   zoom,
   datasetId,
@@ -60,27 +94,41 @@ function FloatingNotificationPanel({
   userAuthError,
   toolsOpen,
   mapLoadingMessage,
-}) {
+  resolutionTooLow,
+}: Props) {
+  const resolutionTooLowRef = useRef(resolutionTooLow);
+  resolutionTooLowRef.current = resolutionTooLow;
+
+  useEffect(() => {
+    if (resolutionTooLowRef.current) {
+      store.dispatch(visualizationSlice.actions.setResolutionTooLow(false));
+    }
+  }, [zoom]);
+
   function showZoomInAlert() {
     const { min: minZoom } = getZoomConfiguration(datasetId);
     return selectedTabIndex === TABS.VISUALIZE_TAB && zoom < minZoom;
   }
 
   if (userAuthError) {
-    return RenderUserAuthError({ userAuthError, toolsOpen });
+    return <RenderUserAuthError userAuthError={userAuthError} toolsOpen={toolsOpen} />;
   }
 
   if (showZoomInAlert()) {
-    return RenderZoomInAlert({ toolsOpen });
+    return <RenderZoomInAlert toolsOpen={toolsOpen} />;
+  }
+
+  if (resolutionTooLow) {
+    return <RenderResolutionAlert toolsOpen={toolsOpen} />;
   }
 
   if (mapLoadingMessage) {
-    return RenderMapLoadingMessage({ toolsOpen, mapLoadingMessage });
+    return <RenderMapLoadingMessage toolsOpen={toolsOpen} mapLoadingMessage={mapLoadingMessage} />;
   }
   return null;
 }
 
-const mapStoreToProps = (store) => ({
+const mapStoreToProps = (store: RootState) => ({
   zoom: store.mainMap.zoom,
   datasetId: store.visualization.datasetId,
   fromTime: store.visualization.fromTime,
@@ -90,6 +138,7 @@ const mapStoreToProps = (store) => ({
   userAuthError: store.auth.user.error,
   toolsOpen: store.tools.open,
   mapLoadingMessage: store.mainMap.loadingMessage,
+  resolutionTooLow: store.visualization.resolutionTooLow,
 });
 
 export default connect(mapStoreToProps, null)(FloatingNotificationPanel);

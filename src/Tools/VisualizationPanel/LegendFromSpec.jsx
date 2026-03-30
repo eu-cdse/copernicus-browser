@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from 'ttag';
 
 import { createGradients } from './legendUtils';
 
@@ -20,7 +21,7 @@ export default class LegendFromSpec extends React.Component {
             backgroundColor: legendItem.color,
           }}
         />
-        <label>{legendItem.label}</label>
+        <label title={legendItem.label}>{legendItem.label}</label>
       </div>
     ));
   }
@@ -85,6 +86,19 @@ export default class LegendFromSpec extends React.Component {
     const { legend } = this.props;
     try {
       if (Array.isArray(legend)) {
+        const allDiscrete = legend.every((l) => l.type === 'discrete');
+        if (allDiscrete) {
+          return (
+            <>
+              <div className="discrete-legend-title">{t`Legend`}</div>
+              <div className="discrete-legend-grid">
+                {legend.map((l, index) => (
+                  <React.Fragment key={index}>{this.renderDiscreteLegend(l, true)}</React.Fragment>
+                ))}
+              </div>
+            </>
+          );
+        }
         return (
           <>
             {legend.map((l) =>
@@ -98,7 +112,12 @@ export default class LegendFromSpec extends React.Component {
         return this.renderContinuousLegend(legend);
       }
       if (type === 'discrete') {
-        return this.renderDiscreteLegend(legend);
+        return (
+          <>
+            <div className="discrete-legend-title">{t`Legend`}</div>
+            <div className="discrete-legend-grid">{this.renderDiscreteLegend(legend)}</div>
+          </>
+        );
       }
       return null;
     } catch (err) {

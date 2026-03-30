@@ -754,12 +754,15 @@ function ImageDownload(props) {
 
   const isDataFusionAndKMZSelected =
     selectedTab === TABS.ANALYTICAL &&
-    isDataFusionEnabled &&
+    isDataFusionEnabled(props.dataFusion) &&
     analyticalFormState.customSelected &&
     isKMZ(analyticalFormState.imageFormat);
 
-  const areEffectsSetAndFormatNotJpgPng =
-    selectedTab === TABS.ANALYTICAL && !!effects && !isJPGorPNG(analyticalFormState.imageFormat);
+  const areEffectsSetAndFormatNotJpgPngKmz =
+    selectedTab === TABS.ANALYTICAL &&
+    !!effects &&
+    !isJPGorPNG(analyticalFormState.imageFormat) &&
+    !isKMZ(analyticalFormState.imageFormat);
 
   const areImageDimensionsValid =
     selectedTab !== TABS.ANALYTICAL ||
@@ -846,7 +849,7 @@ function ImageDownload(props) {
                 isAnalyticalModeAndNothingSelected ||
                 isDataFusionAndKMZSelected ||
                 isAnalyticalModeAndLayersNotLoaded ||
-                areEffectsSetAndFormatNotJpgPng ||
+                areEffectsSetAndFormatNotJpgPngKmz ||
                 !isZoomLevelOK
               }
               onClick={() => onDownloadImage(selectedTab)}
@@ -896,6 +899,7 @@ function ImageDownload(props) {
             isAnalyticalModeAndLayersNotLoaded={isAnalyticalModeAndLayersNotLoaded}
             isAnalyticalModeAndOnlyRawBands={isAnalyticalModeAndOnlyRawBands}
             isDataFusionAndKMZSelected={isDataFusionAndKMZSelected}
+            areEffectsSetAndFormatNotJpgPngKmz={areEffectsSetAndFormatNotJpgPngKmz}
             isZoomLevelOK={isZoomLevelOK}
             areImageDimensionsValid={areImageDimensionsValid}
           />

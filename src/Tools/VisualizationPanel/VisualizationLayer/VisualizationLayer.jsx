@@ -32,7 +32,6 @@ class VisualizationLayer extends Component {
       customSelected,
       datasetId,
       selectedThemeId,
-      selectedModeId,
       setEvalScriptAndCustomVisualization,
       visualizationUrl,
       toggleLayerActions,
@@ -43,13 +42,12 @@ class VisualizationLayer extends Component {
     const { detailsOpen } = this.state;
     const vizId = viz.layerId;
     const isActive = selectedVisualizationId === vizId && viz.url === visualizationUrl && !customSelected;
-    const hasEvalScript = viz.evalscript !== null;
+    const hasEvalScript = viz.evalscript !== null && viz.evalscript !== undefined;
 
     const layerMetadata = findMatchingLayerMetadata(datasetId, viz.layerId, selectedThemeId);
     const longDescription = getDescriptionFromMetadata(layerMetadata);
-    const shortDescription =
-      getShortDescriptionFromMetadata(layerMetadata, selectedModeId) || viz.description;
-    const title = getTitleFromMetadata(layerMetadata, selectedModeId) || viz.title;
+    const shortDescription = getShortDescriptionFromMetadata(layerMetadata) || viz.description;
+    const title = getTitleFromMetadata(layerMetadata) || viz.title;
     const legend = getLegendDefinitionFromMetadata(layerMetadata) || viz.legend;
 
     const hasDetails = viz.legendUrl || legend || longDescription;
@@ -118,7 +116,6 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   selectedProcessing: store.visualization.selectedProcessing,
   selectedThemeId: store.themes.selectedThemeId,
-  selectedModeId: store.themes.selectedModeId,
   is3D: store.mainMap.is3D,
   zoom: store.mainMap.zoom,
   lat: store.mainMap.lat,

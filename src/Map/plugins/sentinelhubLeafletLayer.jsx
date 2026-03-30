@@ -228,6 +228,7 @@ import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import { reqConfigMemoryCache, reqConfigGetMap, DISABLED_ORTHORECTIFICATION } from '../../const';
 import { RRD_COLLECTIONS } from '../../Tools/SearchPanel/dataSourceHandlers/RRDDataSources/dataSourceRRDConstants';
+import { TILE_REQUEST_DEBOUNCE_MS } from '../const';
 
 class SentinelHubLayer extends L.TileLayer {
   constructor(options) {
@@ -284,6 +285,21 @@ class SentinelHubLayer extends L.TileLayer {
 
     const mergedOptions = Object.assign(defaultOptions, options);
     L.setOptions(this, mergedOptions);
+
+    // Tile loading is delayed until the map has been idle for TILE_REQUEST_DEBOUNCE_MS.
+    // This prevents firing requests for every intermediate zoom level
+    // when the user scrolls through multiple zoom steps rapidly.
+    this._debounceTimer = null;
+    const originalUpdate = L.GridLayer.prototype._update.bind(this);
+    this._update = function () {
+      clearTimeout(this._debounceTimer);
+      this._debounceTimer = setTimeout(originalUpdate, TILE_REQUEST_DEBOUNCE_MS);
+    }.bind(this);
+    const originalOnRemove = this.onRemove.bind(this);
+    this.onRemove = function (map) {
+      clearTimeout(this._debounceTimer);
+      originalOnRemove(map);
+    }.bind(this);
   }
 
   onAdd = (map) => {
@@ -485,6 +501,7 @@ class SentinelHubLayer extends L.TileLayer {
       cloudCoverage: cloudCoverage,
     });
 
+    clearTimeout(this._debounceTimer);
     this.redraw();
   };
 

@@ -129,6 +129,10 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
+  COPERNICUS_CLMS_UA_STL_2021_VECTOR,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
@@ -142,6 +146,36 @@ import {
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
 
 export const CLMS_OPTIONS = [
+  {
+    label: 'CLMS Land Cover and Land Use in Priority Areas',
+    id: 'CLMS Land Cover and Land Use in Priority Areas',
+    options: [
+      {
+        label: 'Urban Atlas',
+        id: 'Urban Atlas',
+        options: [
+          {
+            id: 'UA_LCU',
+            label: 'Land Cover and Land Use',
+            options: [
+              { label: 'UA_LCU_2018_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2018_VECTOR },
+              { label: 'UA_LCU_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2021_VECTOR },
+            ],
+          },
+          {
+            id: 'UA_LCUC',
+            label: 'Land Cover and Land Use Change',
+            options: [{ label: 'UA_LCUC_2018_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR }],
+          },
+          {
+            id: 'UA_STL',
+            label: 'Street Tree Layer',
+            options: [{ label: 'UA_STL_2021_VECTOR', id: COPERNICUS_CLMS_UA_STL_2021_VECTOR }],
+          },
+        ],
+      },
+    ],
+  },
   {
     label: 'CLMS Land Cover and Land Use Mapping',
     id: 'CLMS Land Cover and Land Use Mapping',

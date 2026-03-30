@@ -7,13 +7,7 @@ import AnalyticalForm from './AnalyticalForm';
 import PrintForm from './PrintForm';
 import TerrainViewerForm from './TerrainViewerForm';
 import { RESOLUTION_OPTIONS, RESOLUTION_DIVISORS, AVAILABLE_CRS } from './consts';
-import {
-  constructBBoxFromBounds,
-  getDimensionsInMeters,
-  getImageDimensions,
-  isJPGorPNG,
-  isKMZ,
-} from './ImageDownload.utils';
+import { constructBBoxFromBounds, getDimensionsInMeters, getImageDimensions } from './ImageDownload.utils';
 import store, { notificationSlice } from '../../store';
 import { getUtmCrsFromBbox } from '../../utils/utm';
 import ImageDownloadPreview from './ImageDownloadPreview';
@@ -57,7 +51,7 @@ export function ImageDownloadForms(props) {
     isAnalyticalModeAndLayersNotLoaded,
     isAnalyticalModeAndNothingSelected,
     isDataFusionAndKMZSelected,
-    areEffectsSetAndFormatNotJpgPng,
+    areEffectsSetAndFormatNotJpgPngKmz,
     isZoomLevelOK,
     isAnalyticalModeAndOnlyRawBands,
     areImageDimensionsValid,
@@ -123,37 +117,16 @@ export function ImageDownloadForms(props) {
     return t`Projected resolution: ${formattedResolution} m/px`;
   }
 
-  function displayDataFusionWarning() {
-    const { customSelected, imageFormat } = analyticalFormState;
-    if (
-      selectedTab === TABS.ANALYTICAL &&
-      props.isDataFusionEnabled &&
-      customSelected &&
-      !isJPGorPNG(imageFormat)
-    ) {
-      if (isKMZ(imageFormat)) {
-        return (
-          <div className="image-download-warning">
-            <i className="fa fa-exclamation-circle" />
-            {t`Error: Data fusion does not support KMZ/JPG and KMZ/PNG formats.`}
-          </div>
-        );
-      }
+  function displayDownloadWarning(condition, message) {
+    if (!condition) {
+      return null;
     }
-    return null;
-  }
-
-  function displayEffectsWarning() {
-    const { imageFormat } = analyticalFormState;
-    if (selectedTab === TABS.ANALYTICAL && props.areEffectsSet && !isJPGorPNG(imageFormat)) {
-      return (
-        <div className="image-download-warning">
-          <i className="fa fa-exclamation-circle" />
-          {t`Error: You can only download visualisation with effects in JPEG or PNG formats.`}
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div className="image-download-warning">
+        <i className="fa fa-exclamation-circle" />
+        {message}
+      </div>
+    );
   }
 
   function getCrsOptions() {
@@ -170,14 +143,20 @@ export function ImageDownloadForms(props) {
     isAnalyticalModeAndNothingSelected ||
     isDataFusionAndKMZSelected ||
     isAnalyticalModeAndLayersNotLoaded ||
-    areEffectsSetAndFormatNotJpgPng ||
+    areEffectsSetAndFormatNotJpgPngKmz ||
     !isZoomLevelOK ||
     isAnalyticalModeAndOnlyRawBands;
 
   return (
     <div className="image-download-forms">
-      {displayDataFusionWarning()}
-      {displayEffectsWarning()}
+      {displayDownloadWarning(
+        isDataFusionAndKMZSelected,
+        t`Error: Data fusion does not support KMZ/JPG and KMZ/PNG formats.`,
+      )}
+      {displayDownloadWarning(
+        areEffectsSetAndFormatNotJpgPngKmz,
+        t`Error: You can only download visualisation with effects in JPEG, PNG or KMZ formats.`,
+      )}
 
       <h3>{t`Image download`}</h3>
       {selectedTab === TABS.BASIC && (

@@ -169,6 +169,10 @@ import {
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
@@ -3894,6 +3898,404 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT6, layerId: '5_LAFTER' }],
     description: () => t`Length of the semi-period after the dekadal date of the compositing window [days].`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_UA_LCU_2018_VECTOR, layerId: 'CLMS_UA_LCU_S2018_V025ha' }],
+    title: () => t`Land Cover and Land Use, 3-yearly, 2018`,
+    description: () =>
+      t`Provides land cover and land use data in 764 Functional Urban Areas (FUA) with more than 50,000 inhabitants in EEA38 countries and the United Kingdom for the 2018 reference year. The dataset maps land cover and land use for 17 urban classes with the Minimum Mapping Unit (MMU) of 0.25 ha and for 9 rural classes with the MMU of 1 ha and is available as vector data. The revised 2018 dataset is now aligned with the 2021 FUA boundaries, except for the 26 new FUAs that have no correspondence in 2018.`,
+    shortDescription: () => t`UA 2018 LCLU (MMU 0.25/1 ha)`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#800000',
+          label: 'Continuous urban fabric (S.L. > 80%)',
+        },
+        {
+          color: '#bf0000',
+          label: 'Discontinuous dense urban fabric (S.L.: 50% - 80%)',
+        },
+        {
+          color: '#ff4040',
+          label: 'Discontinuous medium density urban fabric (S.L.: 30% - 50%)',
+        },
+        {
+          color: '#ff8080',
+          label: 'Discontinuous low density urban fabric (S.L.: 10% - 30%)',
+        },
+        {
+          color: '#ffbfbf',
+          label: 'Discontinuous very low density urban fabric (S.L. < 10%)',
+        },
+        {
+          color: '#cc6666',
+          label: 'Isolated structures',
+        },
+        {
+          color: '#cc4df2',
+          label: 'Industrial, commercial, public, military and private units',
+        },
+        {
+          color: '#959595',
+          label: 'Fast transit roads and associated land',
+        },
+        {
+          color: '#b3b3b3',
+          label: 'Other roads and associated land',
+        },
+        {
+          color: '#595959',
+          label: 'Railways and associated land',
+        },
+        {
+          color: '#e6cccc',
+          label: 'Port areas',
+        },
+        {
+          color: '#e6cce6',
+          label: 'Airports',
+        },
+        {
+          color: '#734d37',
+          label: 'Mineral extraction and dump sites',
+        },
+        {
+          color: '#b9a56e',
+          label: 'Construction sites',
+        },
+        {
+          color: '#874545',
+          label: 'Land without current use',
+        },
+        {
+          color: '#8cdc00',
+          label: 'Green urban areas',
+        },
+        {
+          color: '#afd2a5',
+          label: 'Sports and leisure facilities',
+        },
+        {
+          color: '#ffffa8',
+          label: 'Arable land (annual crops)',
+        },
+        {
+          color: '#f2a64d',
+          label: 'Permanent crops',
+        },
+        {
+          color: '#e6e64d',
+          label: 'Pastures',
+        },
+        {
+          color: '#ffe64d',
+          label: 'Complex and mixed cultivation patterns',
+        },
+        {
+          color: '#008c00',
+          label: 'Forests',
+        },
+        {
+          color: '#ccf24d',
+          label: 'Herbaceous vegetation associations',
+        },
+        {
+          color: '#ccffcc',
+          label: 'Open spaces with little or no vegetations',
+        },
+        {
+          color: '#a6a6ff',
+          label: 'Wetlands',
+        },
+        {
+          color: '#80f2e6',
+          label: 'Water',
+        },
+      ],
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_UA_LCU_2021_VECTOR, layerId: 'CLMS_UA_LCU_S2021_V025ha' }],
+    title: () => t`Land Cover and Land Use, 3-yearly, 2021`,
+    description: () =>
+      t`Provides land cover and land use data in 790 Functional Urban Areas (FUA) with more than 50,000 inhabitants in EEA38 countries and the United Kingdom for the 2021 reference year. The dataset maps land cover and land use for 19 urban classes with the Minimum Mapping Unit (MMU) of 0.25 ha and for 9 rural classes with the MMU of 1 ha and is available as vector data.`,
+    shortDescription: () => t`UA 2021 LCLU (MMU 0.25/1 ha)`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#800000',
+          label: 'Continuous urban fabric (S.L. : > 80%)',
+        },
+        {
+          color: '#bf0000',
+          label: 'Discontinuous dense urban fabric (S.L. : 50% - 80%)',
+        },
+        {
+          color: '#ff4040',
+          label: 'Discontinuous medium density urban fabric (S.L. : 30% - 50%)',
+        },
+        {
+          color: '#ff8080',
+          label: 'Discontinuous low density urban fabric (S.L. : 10% - 30%)',
+        },
+        {
+          color: '#ffbfbf',
+          label: 'Discontinuous very low density urban fabric (S.L. : < 10%)',
+        },
+        {
+          color: '#cc6666',
+          label: 'Isolated structures',
+        },
+        {
+          color: '#cc4df2',
+          label: 'Industrial, commercial, public, military and private units',
+        },
+        {
+          color: '#959595',
+          label: 'Fast transit roads and associated land',
+        },
+        {
+          color: '#b3b3b3',
+          label: 'Other roads and associated land',
+        },
+        {
+          color: '#595959',
+          label: 'Railways and associated land',
+        },
+        {
+          color: '#e6cccc',
+          label: 'Port areas',
+        },
+        {
+          color: '#e6cce6',
+          label: 'Airports',
+        },
+        {
+          color: '#734d37',
+          label: 'Mineral extraction and dump sites',
+        },
+        {
+          color: '#b9a56e',
+          label: 'Construction sites',
+        },
+        {
+          color: '#874545',
+          label: 'Land without current use',
+        },
+        {
+          color: '#8cdc00',
+          label: 'Green urban areas (Public access)',
+        },
+        {
+          color: '#74b800',
+          label: 'Green urban areas (Private access)',
+        },
+        {
+          color: '#5a8f00',
+          label: 'Green urban areas (Unknown access conditions)',
+        },
+        {
+          color: '#afd2a5',
+          label: 'Sports and leisure facilities',
+        },
+        {
+          color: '#ffffa8',
+          label: 'Arable land (annual crops)',
+        },
+        {
+          color: '#f2a64d',
+          label: 'Permanent crops (vineyards, fruit trees, olive groves)',
+        },
+        {
+          color: '#e6e64d',
+          label: 'Pastures',
+        },
+        {
+          color: '#ffe64d',
+          label: 'Complex and mixed cultivation patterns',
+        },
+        {
+          color: '#008c00',
+          label: 'Forests',
+        },
+        {
+          color: '#ccf24d',
+          label: 'Herbaceous vegetation associations (natural grassland, moors...)',
+        },
+        {
+          color: '#ccffcc',
+          label: 'Open spaces with little or no vegetation (beaches, dunes, bare rocks, glaciers)',
+        },
+        {
+          color: '#a6a6ff',
+          label: 'Wetlands',
+        },
+        {
+          color: '#80f2e6',
+          label: 'Water',
+        },
+        {
+          color: '#ffffff',
+          label: 'No data (Clouds and shadows)',
+        },
+        {
+          color: '#000000',
+          label: 'No data (Missing imagery)',
+        },
+      ],
+    },
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR, layerId: 'CLMS_UA_LCUC_C2018-2021_V010ha' },
+    ],
+    title: () => t`Land Cover and Land Use Change, 3-yearly, 2018-2021`,
+    description: () =>
+      t`Provides land cover and land use change data between the 2018 and 2021 Urban Atlas layers. The Minimum Mapping Unit (MMU) varies from 0.1 ha to 0.25 ha depending on the class. The Minimum Mapping Width (MMW) is 10 m, and the dataset is available as vector data.`,
+    shortDescription: () => t`UA 2018–2021 LCLU Change (MMU 0.1–0.25 ha)`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#800000',
+          label: 'Continuous urban fabric (S.L.: > 80%)',
+        },
+        {
+          color: '#bf0000',
+          label: 'Discontinuous dense urban fabric (S.L.: 50% - 80%)',
+        },
+        {
+          color: '#ff4040',
+          label: 'Discontinuous medium density urban fabric (S.L.: 30% - 50%)',
+        },
+        {
+          color: '#ff8080',
+          label: 'Discontinuous low density urban fabric (S.L.: 10% - 30%)',
+        },
+        {
+          color: '#ffbfbf',
+          label: 'Discontinuous very low density urban fabric (S.L.: < 10%)',
+        },
+        {
+          color: '#cc6666',
+          label: 'Isolated structures',
+        },
+        {
+          color: '#cc4df2',
+          label: 'Industrial, commercial, public, military and private units',
+        },
+        {
+          color: '#959595',
+          label: 'Fast transit roads and associated land',
+        },
+        {
+          color: '#b3b3b3',
+          label: 'Other roads and associated land',
+        },
+        {
+          color: '#595959',
+          label: 'Railways and associated land',
+        },
+        {
+          color: '#e6cccc',
+          label: 'Port areas',
+        },
+        {
+          color: '#e6cce6',
+          label: 'Airports',
+        },
+        {
+          color: '#734d37',
+          label: 'Mineral extraction and dump sites',
+        },
+        {
+          color: '#b9a56e',
+          label: 'Construction sites',
+        },
+        {
+          color: '#874545',
+          label: 'Land without current use',
+        },
+        {
+          color: '#8cdc00',
+          label: 'Green urban areas (Public access)',
+        },
+        {
+          color: '#74b800',
+          label: 'Green urban areas (Private access)',
+        },
+        {
+          color: '#5a8f00',
+          label: 'Green urban areas (Unknown access conditions)',
+        },
+        {
+          color: '#afd2a5',
+          label: 'Sports and leisure facilities',
+        },
+        {
+          color: '#ffffa8',
+          label: 'Arable land (annual crops)',
+        },
+        {
+          color: '#f2a64d',
+          label: 'Permanent crops',
+        },
+        {
+          color: '#e6e64d',
+          label: 'Pastures',
+        },
+        {
+          color: '#ffe64d',
+          label: 'Complex and mixed cultivation patterns',
+        },
+        {
+          color: '#008c00',
+          label: 'Forests',
+        },
+        {
+          color: '#ccf24d',
+          label: 'Herbaceous vegetation associations',
+        },
+        {
+          color: '#ccffcc',
+          label: 'Open spaces with little or no vegetation',
+        },
+        {
+          color: '#a6a6ff',
+          label: 'Wetlands',
+        },
+        {
+          color: '#80f2e6',
+          label: 'Water',
+        },
+        {
+          color: '#ffffff',
+          label: 'No data (Clouds and shadows)',
+        },
+        {
+          color: '#000000',
+          label: 'No data (Missing imagery)',
+        },
+      ],
+    },
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_UA_STL_2021_VECTOR, layerId: 'CLMS_UA_STL_S2021_V005ha' }],
+    title: () => t`Street Tree Layer, 3-yearly, 2021`,
+    description: () =>
+      t`Provides a separate layer of Urban Atlas 2021 showing contiguous rows or patches of trees covering 500 m² or more and with a Minimum Mapping Width (MMW) of 10 m over \"Artificial surfaces\" (nomenclature class 1) inside each Functional Urban Area (FUA). The dataset is available as vector data.`,
+    shortDescription: () => t`Urban Atlas 2021 tree cover ≥500 m²`,
+    legend: {
+      type: 'discrete',
+      items: [
+        {
+          color: '#75dd00',
+          label: 'Street tree layer',
+        },
+      ],
+    },
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0, layerId: 'DMP' }],

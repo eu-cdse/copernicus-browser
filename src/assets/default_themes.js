@@ -991,6 +991,13 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/eb4d54-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'CLMS Urban Atlas',
+        service: 'WMS',
+        url:
+          global.window?.API_ENDPOINT_CONFIG?.VECTOR_DATA_BASEURL ??
+          'https://mapserver.dataspace.copernicus.eu/ogc',
+      },
+      {
         name: 'dmp_global_300m_10daily_v2_rt0',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

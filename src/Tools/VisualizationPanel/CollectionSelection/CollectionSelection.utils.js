@@ -3,6 +3,7 @@ import { dataSourceHandlers } from '../../SearchPanel/dataSourceHandlers/dataSou
 import { credits } from '../../SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/dataSourceTooltips/credits';
 import { findLatestDateWithData } from '../../../utils/latestDate.utils';
 import store, { visualizationSlice } from '../../../store';
+import { DATASOURCES } from '../../../const';
 
 const checkFilter = (item, filter) => {
   if (!filter) {
@@ -23,6 +24,36 @@ const checkFilter = (item, filter) => {
     return item.collections.some((collection) => checkFilter(collection, filter));
   }
   return false;
+};
+
+// CLMS (raster) and CLMS Vector datasets are handled by separate DataSourceHandlers,
+// which results in them being registered as two separate collection groups. From the
+// user's perspective, however, they belong to the same product family (Copernicus Land
+// Monitoring Service) and should appear as a single group in the UI. This function merges
+// the two groups into one, placing the combined group at the original position of the CLMS
+// group so the overall ordering of the collection list is not affected.
+const mergeCLMSGroups = (groups) => {
+  const clmsGroup = groups.find((g) => g.datasource === DATASOURCES.CLMS);
+  const clmsVectorGroup = groups.find((g) => g.datasource === DATASOURCES.CLMS_VECTOR);
+
+  if (!clmsGroup || !clmsVectorGroup) {
+    return groups;
+  }
+
+  const mergedGroup = {
+    ...clmsGroup,
+    collections: [...(clmsGroup.collections || []), ...(clmsVectorGroup.collections || [])],
+    searchTags: [...new Set([...clmsGroup.searchTags, ...clmsVectorGroup.searchTags])],
+  };
+
+  return groups.reduce((acc, g) => {
+    if (g.datasource === DATASOURCES.CLMS) {
+      acc.push(mergedGroup);
+    } else if (g.datasource !== DATASOURCES.CLMS_VECTOR) {
+      acc.push(g);
+    }
+    return acc;
+  }, []);
 };
 
 const createCollectionGroupsFromDataSourceHandlers = (filter, bounds) => {
@@ -63,7 +94,10 @@ const createCollectionGroupsFromDataSourceHandlers = (filter, bounds) => {
       return { ...collectionGroup, collections: [...filteredCollections] };
     });
 
-  return collectionGroups;
+  // Merge CLMS groups (CLMS and CLMS Vector)
+  const mergedCollectionGroups = mergeCLMSGroups(collectionGroups);
+
+  return mergedCollectionGroups;
 };
 
 const getSelectedCollectionTitle = (selected) => {

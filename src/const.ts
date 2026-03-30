@@ -215,6 +215,7 @@ export const DATASOURCES = {
   RRD_ICEYE: 'ICEYE',
   RRD_GHGSAT: 'GHGSat',
   CLMS: 'CLMS',
+  CLMS_VECTOR: 'CLMS Vector',
   CCM: 'CCM',
   EVOLAND: 'EVOLAND',
 } as const;

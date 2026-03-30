@@ -702,35 +702,66 @@ describe('createAdvancedSearchQuery - contains name', () => {
     },
   };
 
-  test('contains name and not contains name are set correctly for S1 GRD', () => {
+  test('productType attribute filter is set correctly for S1 GRD', () => {
     const collectionS1 = { id: 'S1', instruments: [{ id: 'SAR', productTypes: [{ id: 'GRD' }] }] };
 
     const oqb = oDataHelpers.createAdvancedSearchQuery({ ...params, collections: [collectionS1] });
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
-    expect(filter.value).toContain(`contains(Name,'GRD')`);
-    expect(filter.value).toContain(`not contains(Name,'_COG')`);
+    expect(filter.value).toContain(
+      `att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'GRD'`,
+    );
+    expect(filter.value).not.toContain(`contains(Name,'GRD')`);
+    expect(filter.value).not.toContain(`contains(Name,'_COG')`);
   });
 
-  test('contains name and not contains name are set correctly for S1 GRD-COG', () => {
+  test('productType attribute filter is set correctly for S1 GRD-COG', () => {
     const collectionS1 = { id: 'S1', instruments: [{ id: 'SAR', productTypes: [{ id: 'GRD-COG' }] }] };
 
     const oqb = oDataHelpers.createAdvancedSearchQuery({ ...params, collections: [collectionS1] });
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
-    expect(filter.value).toContain(`contains(Name,'GRD')`);
-    expect(filter.value).toContain(`contains(Name,'_COG')`);
-    expect(filter.value).not.toContain(`and not contains(Name,'undefined')`);
+    expect(filter.value).toContain(
+      `att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'GRD-COG'`,
+    );
+    expect(filter.value).not.toContain(`contains(Name,'GRD')`);
+    expect(filter.value).not.toContain(`contains(Name,'_COG')`);
   });
 
-  test('only contains name is set for S1 SLC', () => {
+  test('productType attribute filter is set correctly for S1 SLC', () => {
     const collectionS1 = { id: 'S1', instruments: [{ id: 'SAR', productTypes: [{ id: 'SLC' }] }] };
 
     const oqb = oDataHelpers.createAdvancedSearchQuery({ ...params, collections: [collectionS1] });
     const filter = oqb._findOption('filter');
     expect(filter).not.toBeNull();
-    expect(filter.value).toContain(`contains(Name,'SLC')`);
-    expect(filter.value).not.toContain(`and not contains(Name,'undefined')`);
+    expect(filter.value).toContain(
+      `att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'SLC'`,
+    );
+    expect(filter.value).not.toContain(`contains(Name,'SLC')`);
+  });
+
+  test('productType attribute filter is set correctly for S1 RAW', () => {
+    const collectionS1 = { id: 'S1', instruments: [{ id: 'SAR', productTypes: [{ id: 'RAW' }] }] };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery({ ...params, collections: [collectionS1] });
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toContain(
+      `att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'RAW'`,
+    );
+    expect(filter.value).not.toContain(`contains(Name,'RAW')`);
+  });
+
+  test('productType attribute filter is set correctly for S1 OCN', () => {
+    const collectionS1 = { id: 'S1', instruments: [{ id: 'SAR', productTypes: [{ id: 'OCN' }] }] };
+
+    const oqb = oDataHelpers.createAdvancedSearchQuery({ ...params, collections: [collectionS1] });
+    const filter = oqb._findOption('filter');
+    expect(filter).not.toBeNull();
+    expect(filter.value).toContain(
+      `att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'OCN'`,
+    );
+    expect(filter.value).not.toContain(`contains(Name,'OCN')`);
   });
 
   test('only contains name is set for S2', () => {

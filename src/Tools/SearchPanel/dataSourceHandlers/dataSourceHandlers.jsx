@@ -154,6 +154,10 @@ import {
   COPERNICUS_CLMS_SWI_1KM_DAILY,
   COPERNICUS_CLMS_SWI_1KM_DAILY_V2,
   COPERNICUS_CLMS_TCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
+  COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  COPERNICUS_CLMS_UA_STL_2021_VECTOR,
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   COPERNICUS_CLMS_WB_1KM_10DAILY_V2,
@@ -239,6 +243,7 @@ import CLMSDataSourceHandler from './CLMSDataSourceHandler';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 import GHGSatDatasourceHandler from './RRDDataSources/GHGSatDatasourceHandler';
 import EvolandDataSourceHandler from './EvolandDataSourceHandler';
+import CLMSVectorDataSourceHandler from './CLMSVectorDataSourceHandler';
 import UnknownBYOCDataSourceHandler from './UnknownBYOCDataSourceHandler';
 
 export let dataSourceHandlers;
@@ -268,6 +273,7 @@ export function initializeDataSourceHandlers() {
     new IceyeDatasourceHandler(),
     new GHGSatDatasourceHandler(),
     new CLMSDataSourceHandler(),
+    new CLMSVectorDataSourceHandler(),
     new CCMDataSourceHandler(),
     new EvolandDataSourceHandler(),
     new UnknownBYOCDataSourceHandler(), // Moved to end as fallback for unknown BYOC collections
@@ -718,6 +724,11 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
     case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
       return DATASOURCES.CLMS;
+    case COPERNICUS_CLMS_UA_LCU_2018_VECTOR:
+    case COPERNICUS_CLMS_UA_LCU_2021_VECTOR:
+    case COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR:
+    case COPERNICUS_CLMS_UA_STL_2021_VECTOR:
+      return DATASOURCES.CLMS_VECTOR;
     case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
     case CDSE_CCM_VHR_IMAGE_2024_COLLECTION:
@@ -956,6 +967,10 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT1]: t`FAPAR 300m 10-daily V2 RT1`,
   [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT2]: t`FAPAR 300m 10-daily V2 RT2`,
   [COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6]: t`FAPAR 300m 10-daily V2 RT6`,
+  [COPERNICUS_CLMS_UA_LCU_2018_VECTOR]: t`UA LCU 3-yearly 2018`,
+  [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: t`UA LCU 3-yearly 2021`,
+  [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: t`UA LCUC 3-yearly 2018-2021`,
+  [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: t`UA STL 3-yearly 2021`,
 };
 
 export function getDatasetLabel(datasetId) {

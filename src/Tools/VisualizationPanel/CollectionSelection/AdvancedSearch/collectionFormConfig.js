@@ -42,11 +42,21 @@ export const collections = [
         label: 'C-SAR',
         selected: true,
         productTypes: [
-          { id: 'RAW', name: 'RAW', label: 'Level-0 RAW' },
-          { id: 'SLC', name: 'SLC', label: 'Level-1 SLC' },
-          { id: 'GRD', name: 'GRD', notName: '_COG', label: 'Level-1 GRD' },
-          { id: 'GRD-COG', name: ['GRD', '_COG'], label: 'Level-1 GRD COG' },
-          { id: 'OCN', name: 'OCN', label: 'Level-2 OCN' },
+          { id: 'RAW', name: 'RAW', label: 'Level-0 RAW', customFilterQueryByProductType: true },
+          { id: 'SLC', name: 'SLC', label: 'Level-1 SLC', customFilterQueryByProductType: true },
+          {
+            id: 'GRD',
+            name: 'GRD',
+            label: 'Level-1 GRD',
+            customFilterQueryByProductType: true,
+          },
+          {
+            id: 'GRD-COG',
+            name: 'GRD-COG',
+            label: 'Level-1 GRD COG',
+            customFilterQueryByProductType: true,
+          },
+          { id: 'OCN', name: 'OCN', label: 'Level-2 OCN', customFilterQueryByProductType: true },
         ],
       },
       {

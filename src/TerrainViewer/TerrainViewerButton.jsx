@@ -8,7 +8,8 @@ import Icon2D from './icons/icon-2D.svg?react';
 import Icon3D from './icons/icon-3D.svg?react';
 
 import './TerrainViewer.scss';
-import { TABS } from '../const';
+import { DATASOURCES, TABS } from '../const';
+import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 class TerrainViewerButton extends Component {
   checkIfDisabled = () => {
@@ -22,6 +23,7 @@ class TerrainViewerButton extends Component {
       terrainViewerId,
       showComparePanel,
     } = this.props;
+    const dsh = getDataSourceHandler(datasetId);
 
     if (!is3D && (selectedTabIndex !== TABS.VISUALIZE_TAB || showComparePanel)) {
       return {
@@ -31,6 +33,13 @@ class TerrainViewerButton extends Component {
     }
     if (!is3D && !(visualizationUrl && datasetId && layerId) && !customSelected) {
       return { isDisabled: true, errorMessage: t`please select a layer` };
+    }
+    if (!is3D && dsh?.datasource === DATASOURCES.CLMS_VECTOR) {
+      const label = dsh?.getDatasetSearchLabels()[datasetId];
+      return {
+        isDisabled: true,
+        errorMessage: t`3D not available for ${label}`,
+      };
     }
     if ((!is3D && terrainViewerId) || (is3D && !terrainViewerId)) {
       // Terrain Viewer is closing or opening
@@ -43,7 +52,7 @@ class TerrainViewerButton extends Component {
     const { is3D } = this.props;
     const { isDisabled, errorMessage } = this.checkIfDisabled();
 
-    if (isDisabled) {
+    if (isDisabled && errorMessage !== null) {
       store.dispatch(notificationSlice.actions.displayError(errorMessage));
       return;
     }

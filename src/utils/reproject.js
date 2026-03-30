@@ -6,8 +6,8 @@ import { AVAILABLE_CRS } from '../Controls/ImgDownload/consts';
 /**
  * A FromToCrs object
  * @typedef {Object} FromToCrs
- * @property {fromCrs=} CRS[authId] authId
- * @property {toCrs} CRS[authId] authId
+ * @property {string} [fromCrs] - Source CRS authId (defaults to 'EPSG:4326')
+ * @property {string} toCrs - Target CRS authId
  */
 
 /**

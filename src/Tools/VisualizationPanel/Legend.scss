@@ -7,7 +7,9 @@ div.layer-details {
   flex-direction: row;
 
   div.layer-legend {
-    padding: 5px 0 5px 0;
+    padding: 12px 0 12px 0;
+    min-width: 0;
+    overflow: hidden;
 
     img {
       max-width: 300px;
@@ -21,17 +23,17 @@ div.layer-details {
     div.legend-item.discrete {
       display: flex;
       align-items: center;
-      padding: 2px 10px 2px 15px;
+      padding: 1px 10px 1px 15px;
 
       &.multiple-legends {
         padding-left: 5px;
       }
 
       div.color {
-        min-width: 25px;
-        min-height: 25px;
-        border: 2px solid #777;
-        border-radius: 50%;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        border: 1px solid #777;
       }
 
       label {
@@ -39,7 +41,9 @@ div.layer-details {
         font-size: 12px;
         margin-left: 10px;
         color: vars.$textColor;
-        white-space: pre-wrap;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
@@ -55,7 +59,7 @@ div.layer-details {
         border: 1px solid #999;
         border-radius: 5px;
         overflow: hidden;
-        margin: 10px 0;
+        margin: 10px 0 10px 8px;
         position: relative;
 
         div.gradient {
@@ -160,6 +164,33 @@ div.layer-details {
       padding: 0 4px;
       border-radius: 2px;
       font-size: 11px;
+    }
+  }
+
+  &.discrete-layout {
+    flex-direction: column;
+
+    div.layer-legend {
+      order: 2;
+      padding-top: 0;
+    }
+
+    div.layer-description {
+      order: 1;
+    }
+
+    div.discrete-legend-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: vars.$textColor;
+      padding: 0 10px 10px 15px;
+      margin-top: 4px;
+    }
+
+    div.discrete-legend-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 50%));
+      padding: 0 10px 8px 5px;
     }
   }
 }

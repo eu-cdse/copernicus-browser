@@ -22,20 +22,20 @@ export function getDescriptionFromMetadata(metadata) {
   return metadata && metadata.description ? metadata.description() : null;
 }
 
-export function getTitleFromMetadata(metadata, selectedModeId) {
-  if (!metadata || !metadata.titles) {
+export function getTitleFromMetadata(metadata) {
+  if (!metadata || !metadata.title) {
     return null;
   }
-  const titles = metadata.titles();
-  return titles[selectedModeId] ? titles[selectedModeId] : null;
+  const title = metadata.title();
+  return title ? title : null;
 }
 
-export function getShortDescriptionFromMetadata(metadata, selectedModeId) {
-  if (!metadata || !metadata.shortDescriptions) {
+export function getShortDescriptionFromMetadata(metadata) {
+  if (!metadata || !metadata.shortDescription) {
     return null;
   }
-  const shortDescriptions = metadata.shortDescriptions();
-  return shortDescriptions[selectedModeId] ? shortDescriptions[selectedModeId] : null;
+  const shortDescription = metadata.shortDescription();
+  return shortDescription ? shortDescription : null;
 }
 
 export function getLegendDefinitionFromMetadata(metadata) {

@@ -530,6 +530,26 @@ export function isQuotaError({ status, code }) {
   return status === 403 && quotaErrorCodes.includes(code);
 }
 
+/**
+ * Checks whether an error is caused by the zoom level exceeding a dataset's resolution limit.
+ * Async because the API response data may be a Blob, which requires awaiting readBlob() to extract
+ * the error message. Always await this function — a missing await will return a truthy Promise
+ * instead of a boolean, silently treating every error as a resolution limit error.
+ */
+export async function isResolutionLimitError(error) {
+  if (error?.response?.status !== 400) {
+    return false;
+  }
+  let message;
+  if (error.response?.data instanceof Blob) {
+    const errorJson = await readBlob(error.response.data);
+    message = errorJson?.error?.message ?? '';
+  } else {
+    message = error.response?.data?.error?.message ?? '';
+  }
+  return message.includes('meters per pixel exceeds the limit');
+}
+
 export async function constructPanelError(error) {
   const DEFAULT_ERROR = JSON.stringify(error);
   if (error.response && error.response?.data) {
@@ -680,6 +700,8 @@ export async function handleError(
     store.dispatch(authSlice.actions.setUserAuthError(t`Your authentication has expired`));
   } else if (isQuotaError(error)) {
     store.dispatch(notificationSlice.actions.displayPanelError(QUOTA_ERROR_MESSAGE));
+  } else if (await isResolutionLimitError(error)) {
+    store.dispatch(visualizationSlice.actions.setResolutionTooLow(true));
   } else {
     const panelError = defaultErrorMessage
       ? { message: defaultErrorMessage }
@@ -713,4 +735,5 @@ export const resetMessagePanel = () => {
   store.dispatch(visualizationSlice.actions.setError(null));
   store.dispatch(notificationSlice.actions.displayPanelError(null));
   store.dispatch(themesSlice.actions.setFailedThemeParts([]));
+  store.dispatch(visualizationSlice.actions.setResolutionTooLow(false));
 };

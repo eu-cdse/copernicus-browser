@@ -1,6 +1,16 @@
-import { getBufferRadius, getIntersectingFeatures } from './Map.utils';
+import moment from 'moment';
+import {
+  getBufferRadius,
+  getIntersectingFeatures,
+  createClickedPoint,
+  shouldShowSingleShLayer,
+  shouldShowCompareShLayers,
+  shouldShowS2MosaicTransparency,
+  getPinTimes,
+} from './Map.utils';
+import { TABS } from '../const';
 
-const squareFeature = {
+const squareFeature: GeoJSON.Feature = {
   type: 'Feature',
   properties: {},
   geometry: {
@@ -17,7 +27,7 @@ const squareFeature = {
   },
 };
 
-const longAndNarrowFeature = {
+const longAndNarrowFeature: GeoJSON.Feature = {
   type: 'Feature',
   properties: {},
   geometry: {
@@ -35,7 +45,7 @@ const longAndNarrowFeature = {
 };
 
 //S3B_SR_2_LAN_LI_20230318T210822_20230318T213100_20230416T155045_1358_077_200______LN3_O_NT_005.
-const s3Feature = {
+const s3Feature: GeoJSON.Feature = {
   type: 'Feature',
   properties: {},
   geometry: {
@@ -138,8 +148,9 @@ const s3Feature = {
   },
 };
 
-const clickedPoint = ({ lng, lat }) => ({
+const clickedPoint = ({ lng, lat }: { lng: number; lat: number }): GeoJSON.Feature => ({
   type: 'Feature',
+  properties: null,
   geometry: {
     type: 'Point',
     coordinates: [lng, lat],
@@ -194,7 +205,7 @@ describe('getIntersectingFeatures - long and narrow polygon', () => {
     expect(result.length).toBe(1);
   });
 
-  test('long and narrow feature, click on the border, zoom 13, buffer 20km', () => {
+  test('long and narrow feature, click on the border, zoom 3, buffer 20km', () => {
     const result = getIntersectingFeatures(clickedPoint({ lng: 50, lat: 0.005 }), [longAndNarrowFeature], {
       zoom: 3,
     });
@@ -303,6 +314,179 @@ describe('getIntersectingFeatures - s3-sral-lan_li product', () => {
   });
 });
 
+describe('createClickedPoint', () => {
+  test('creates a GeoJSON point feature from latlng', () => {
+    expect(createClickedPoint({ lat: 45.5, lng: 13.2 })).toEqual({
+      type: 'Feature',
+      properties: null,
+      geometry: { type: 'Point', coordinates: [13.2, 45.5] },
+    });
+  });
+
+  test('handles negative coordinates', () => {
+    expect(createClickedPoint({ lat: -33.87, lng: 151.21 }).geometry.coordinates).toEqual([151.21, -33.87]);
+  });
+
+  test('handles zero coordinates', () => {
+    expect(createClickedPoint({ lat: 0, lng: 0 })).toEqual({
+      type: 'Feature',
+      properties: null,
+      geometry: { type: 'Point', coordinates: [0, 0] },
+    });
+  });
+});
+
+describe('shouldShowSingleShLayer', () => {
+  const base = {
+    authenticated: true,
+    dataSourcesInitialized: true,
+    selectedTabIndex: TABS.VISUALIZE_TAB,
+    displayingSearchResults: false,
+    showComparePanel: false,
+    visualizationLayerId: 'TRUE-COLOR',
+    customSelected: false,
+    datasetId: 'S2L2A',
+    visualizationUrl: 'https://example.com',
+  };
+
+  test('returns true when all conditions are met', () => {
+    expect(shouldShowSingleShLayer(base)).toBe(true);
+  });
+
+  test('returns false when not authenticated', () => {
+    expect(shouldShowSingleShLayer({ ...base, authenticated: false })).toBe(false);
+  });
+
+  test('returns false when displaying search results', () => {
+    expect(shouldShowSingleShLayer({ ...base, displayingSearchResults: true })).toBe(false);
+  });
+
+  test('returns false when compare panel is shown', () => {
+    expect(shouldShowSingleShLayer({ ...base, showComparePanel: true })).toBe(false);
+  });
+
+  test('returns false when not on visualize tab', () => {
+    expect(shouldShowSingleShLayer({ ...base, selectedTabIndex: TABS.SEARCH_TAB })).toBe(false);
+  });
+
+  test('returns true with customSelected and no layerId', () => {
+    expect(shouldShowSingleShLayer({ ...base, visualizationLayerId: null, customSelected: true })).toBe(true);
+  });
+
+  test('returns false when missing datasetId', () => {
+    expect(shouldShowSingleShLayer({ ...base, datasetId: null })).toBe(false);
+  });
+
+  test('returns false when both visualizationLayerId and customSelected are falsy', () => {
+    expect(shouldShowSingleShLayer({ ...base, visualizationLayerId: null, customSelected: false })).toBe(
+      false,
+    );
+  });
+
+  test('returns false when dataSourcesInitialized is false', () => {
+    expect(shouldShowSingleShLayer({ ...base, dataSourcesInitialized: false })).toBe(false);
+  });
+
+  test('returns false when visualizationUrl is missing', () => {
+    expect(shouldShowSingleShLayer({ ...base, visualizationUrl: null })).toBe(false);
+  });
+});
+
+describe('shouldShowCompareShLayers', () => {
+  test('returns true when compare mode is active', () => {
+    expect(
+      shouldShowCompareShLayers({
+        comparedLayers: [{}],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+        showComparePanel: true,
+      }),
+    ).toBe(true);
+  });
+
+  test('returns false when no compared layers', () => {
+    expect(
+      shouldShowCompareShLayers({
+        comparedLayers: [],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+        showComparePanel: true,
+      }),
+    ).toBe(false);
+  });
+
+  test('returns false when compare panel is hidden', () => {
+    expect(
+      shouldShowCompareShLayers({
+        comparedLayers: [{}],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+        showComparePanel: false,
+      }),
+    ).toBe(false);
+  });
+
+  test('returns false when not on visualize tab', () => {
+    expect(
+      shouldShowCompareShLayers({
+        comparedLayers: [{}],
+        selectedTabIndex: TABS.SEARCH_TAB,
+        showComparePanel: true,
+      }),
+    ).toBe(false);
+  });
+});
+
+describe('shouldShowS2MosaicTransparency', () => {
+  test('returns true when single layer is visible', () => {
+    expect(shouldShowS2MosaicTransparency(true, true, false)).toBe(true);
+  });
+
+  test('returns true when compare layers are shown', () => {
+    expect(shouldShowS2MosaicTransparency(false, false, true)).toBe(true);
+  });
+
+  test('returns false when layer is not visible on map', () => {
+    expect(shouldShowS2MosaicTransparency(true, false, false)).toBe(false);
+  });
+
+  test('returns false when single layer condition is false and compare layers are not shown', () => {
+    expect(shouldShowS2MosaicTransparency(false, true, false)).toBe(false);
+  });
+});
+
+describe('getPinTimes', () => {
+  const toTime = '2024-01-15T12:00:00Z';
+  const fromTime = '2024-01-10T10:00:00Z';
+
+  test('returns full range when supportsTimeRange and fromTime is set', () => {
+    const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, true);
+    expect(pinTimeFrom).toEqual(moment.utc(fromTime).toDate());
+    expect(pinTimeTo).toEqual(moment.utc(toTime).toDate());
+  });
+
+  test('returns day range when supportsTimeRange but fromTime is absent', () => {
+    const { pinTimeFrom, pinTimeTo } = getPinTimes(null, toTime, true);
+    expect(pinTimeFrom).toEqual(moment.utc(toTime).startOf('day').toDate());
+    expect(pinTimeTo).toEqual(moment.utc(toTime).endOf('day').toDate());
+  });
+
+  test('returns undefined pinTimeFrom when not supporting time range', () => {
+    const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, false);
+    expect(pinTimeFrom).toBeUndefined();
+    expect(pinTimeTo).toEqual(moment.utc(toTime).endOf('day').toDate());
+  });
+
+  test('returns undefined pinTimeFrom and endOfDay pinTimeTo when not supporting time range and fromTime is null', () => {
+    const { pinTimeFrom, pinTimeTo } = getPinTimes(null, toTime, false);
+    expect(pinTimeFrom).toBeUndefined();
+    expect(pinTimeTo).toEqual(moment.utc(toTime).endOf('day').toDate());
+  });
+
+  test('returns day range when supportsTimeRange and fromTime is undefined', () => {
+    const { pinTimeFrom, pinTimeTo } = getPinTimes(undefined, toTime, true);
+    expect(pinTimeFrom).toEqual(moment.utc(toTime).startOf('day').toDate());
+    expect(pinTimeTo).toEqual(moment.utc(toTime).endOf('day').toDate());
+  });
+});
+
 describe('getBufferRadius', () => {
   test.each([
     [0, 20000],
@@ -316,9 +500,8 @@ describe('getBufferRadius', () => {
     [10, 156.25],
     [11, 78.125],
     [12, 39.0625],
-    [13, 10],
-    [19, 10],
-    [19, 10],
+    [13, 10], // zoom > maxZoom (12) — clamped to defaultBufferRadius
+    [19, 10], // zoom >> maxZoom — still clamped
   ])('zoom %', (zoom, expectedRadius) => {
     const radius = getBufferRadius(zoom);
     expect(radius).toEqual(expectedRadius);

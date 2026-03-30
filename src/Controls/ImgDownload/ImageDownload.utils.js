@@ -230,6 +230,10 @@ export async function fetchImage(layer, options) {
     preview: 2,
     showlogo: false,
     effects: effects,
+    // transparent: true is a global setting applied to all image downloads (S2, S1, CLMS raster, etc.).
+    // SH honours transparency only for PNG; JPEG ignores it. This is intentional — transparency is
+    // harmless for raster datasets and is needed to preserve transparent areas in CLMS Vector PNG downloads.
+    transparent: true,
   };
   const reqConfig = {
     cancelToken: cancelToken,

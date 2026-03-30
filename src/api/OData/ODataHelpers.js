@@ -179,6 +179,10 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
+  // COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  // COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  // COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
+  // COPERNICUS_CLMS_UA_STL_2021_VECTOR,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -302,6 +306,11 @@ const PRODUCT_TYPE_TO_DATASETID = {
   fapar_global_300m_10daily_v2: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0,
   fcover_global_300m_10daily_v2: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
   gpp_global_300m_10daily_v2: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  // TODO: uncomment when both search and visualization panels support vector datasets
+  // 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018': COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  // 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021': COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  // 'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1': COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
+  // 'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1': COPERNICUS_CLMS_UA_STL_2021_VECTOR,
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -374,6 +383,20 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       return PRODUCT_TYPE_TO_DATASETID['COP-DEM_GLO-90-DGED'];
     }
   }
+
+  // TODO: uncomment when both search and visualization panels support vector datasets
+  // if (productType === 'urban_atlas') {
+  //   const { datasetIdentifier, nominalDate } = attributesObject;
+  //   if (datasetIdentifier === 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1') {
+  //     if (nominalDate.startsWith('2018')) {
+  //       return PRODUCT_TYPE_TO_DATASETID['clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018'];
+  //     }
+  //     if (nominalDate.startsWith('2021')) {
+  //       return PRODUCT_TYPE_TO_DATASETID['clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021'];
+  //     }
+  //   }
+  //   return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  // }
 
   if (productType === 'dynamic_land_cover' && checkProductTypeFileFormat(attributes)) {
     const { datasetIdentifier } = attributesObject;
@@ -990,6 +1013,25 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       },
     ];
   }
+
+  // TODO: uncomment when both search and visualization panels support vector datasets
+  // if (
+  //   [
+  //     COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
+  //     COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
+  //     COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
+  //     COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  //   ].includes(datasetId)
+  // ) {
+  //   return [
+  //     {
+  //       id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
+  //       instrument: 'URBAN_ATLAS',
+  //       productType: getProductTypeFromDatasetId(datasetId),
+  //       selectedFilters: {},
+  //     },
+  //   ];
+  // }
 
   if (
     [
@@ -2010,6 +2052,10 @@ const createProductTypeFilter = ({ productTypeId, productTypeConfig, geometry })
 
   if (productTypeConfig.customFilterExpression) {
     productTypeFilter.addExpression(productTypeConfig.customFilterExpression);
+  } else if (productTypeConfig.multiCustomFilterExpression) {
+    productTypeConfig.multiCustomFilterExpression.forEach((expression) => {
+      productTypeFilter.addExpression(expression);
+    });
   } else if (productTypeConfig.customFilterQueryByDatasetFull) {
     productTypeFilter.attribute(ODataAttributes.datasetFull, ODataFilterOperator.eq, productTypeId);
   } else if (productTypeConfig.customFilterQueryByProductType) {

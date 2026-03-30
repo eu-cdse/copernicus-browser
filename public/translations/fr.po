@@ -2667,13 +2667,6 @@ msgstr ""
 "evalscript. En savoir plus sur \"sampleType\" dans la documentation"
 
 msgid ""
-"Error: You can only download visualisation with effects in JPEG or PNG "
-"formats."
-msgstr ""
-"Erreur : vous ne pouvez télécharger un visuel avec des effets qu'aux "
-"formats JPEG ou PNG."
-
-msgid ""
 "# Enhanced True Color Visualization\n"
 "\n"
 "This script uses highlight optimization to avoid burnt out pixels and to "
@@ -10268,4 +10261,120 @@ msgid ""
 "More info "
 "[here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/"
 "docs/S3_LPP_HY_v1.2.pdf)."
+msgstr ""
+
+msgid "Legend"
+msgstr ""
+
+msgid "Please zoom in to visualize the data"
+msgstr ""
+
+msgid ""
+"Error: You can only download visualisation with effects in JPEG, PNG or KMZ "
+"formats."
+msgstr ""
+
+msgid "Land Cover and Land Use, 3-yearly, 2018"
+msgstr ""
+
+msgid ""
+"Provides land cover and land use data in 764 Functional Urban Areas (FUA) "
+"with more than 50,000 inhabitants in EEA38 countries and the United Kingdom "
+"for the 2018 reference year. The dataset maps land cover and land use for "
+"17 urban classes with the Minimum Mapping Unit (MMU) of 0.25 ha and for 9 "
+"rural classes with the MMU of 1 ha and is available as vector data. The "
+"revised 2018 dataset is now aligned with the 2021 FUA boundaries, except "
+"for the 26 new FUAs that have no correspondence in 2018."
+msgstr ""
+
+msgid "UA 2018 LCLU (MMU 0.25/1 ha)"
+msgstr ""
+
+msgid "Land Cover and Land Use, 3-yearly, 2021"
+msgstr ""
+
+msgid ""
+"Provides land cover and land use data in 790 Functional Urban Areas (FUA) "
+"with more than 50,000 inhabitants in EEA38 countries and the United Kingdom "
+"for the 2021 reference year. The dataset maps land cover and land use for "
+"19 urban classes with the Minimum Mapping Unit (MMU) of 0.25 ha and for 9 "
+"rural classes with the MMU of 1 ha and is available as vector data."
+msgstr ""
+
+msgid "UA 2021 LCLU (MMU 0.25/1 ha)"
+msgstr ""
+
+msgid "Land Cover and Land Use Change, 3-yearly, 2018-2021"
+msgstr ""
+
+msgid ""
+"Provides land cover and land use change data between the 2018 and 2021 "
+"Urban Atlas layers. The Minimum Mapping Unit (MMU) varies from 0.1 ha to "
+"0.25 ha depending on the class. The Minimum Mapping Width (MMW) is 10 m, "
+"and the dataset is available as vector data."
+msgstr ""
+
+msgid "UA 2018–2021 LCLU Change (MMU 0.1–0.25 ha)"
+msgstr ""
+
+msgid "Street Tree Layer, 3-yearly, 2021"
+msgstr ""
+
+msgid ""
+"Provides a separate layer of Urban Atlas 2021 showing contiguous rows or "
+"patches of trees covering 500 m² or more and with a Minimum Mapping Width "
+"(MMW) of 10 m over \"Artificial surfaces\" (nomenclature class 1) inside "
+"each Functional Urban Area (FUA). The dataset is available as vector data."
+msgstr ""
+
+msgid "Urban Atlas 2021 tree cover ≥500 m²"
+msgstr ""
+
+msgid "UA LCU 3-yearly 2018"
+msgstr ""
+
+msgid "UA LCU 3-yearly 2021"
+msgstr ""
+
+msgid "UA LCUC 3-yearly 2018-2021"
+msgstr ""
+
+msgid "UA STL 3-yearly 2021"
+msgstr ""
+
+msgid ""
+"Urban Atlas Street Tree Layer 2021 provides information about presence of "
+"trees within Functional Urban Areas (FUA). More information "
+"[here](https://land.copernicus.eu/en/products/urban-atlas)."
+msgstr ""
+
+#, javascript-format
+msgid "3D not available for ${ label }"
+msgstr ""
+
+msgid ""
+"Urban Atlas Land Cover and Land Use 2018 provides reliable, "
+"inter-comparable, high-resolution land use and land cover data for 764 "
+"Functional Urban Areas (FUA) with more than 50,000 inhabitants for the 2018 "
+"reference year in EEA38 countries (EU, EFTA, Western Balkans countries, as "
+"well as Türkiye) and the United Kingdom. More information "
+"[here](https://land.copernicus.eu/en/products/urban-atlas)."
+msgstr ""
+
+msgid ""
+"Urban Atlas Land Cover and Land Use 2021 provides reliable, "
+"inter-comparable, high-resolution land use and land cover data for 790 "
+"Functional Urban Areas (FUA) with more than 50,000 inhabitants for the 2021 "
+"reference year in EEA38 countries (EU, EFTA, Western Balkans countries, as "
+"well as Türkiye) and the United Kingdom. More information "
+"[here](https://land.copernicus.eu/en/products/urban-atlas)."
+msgstr ""
+
+msgid ""
+"Urban Atlas Land Cover and Land Use Change 2018-2021 provides reliable, "
+"inter-comparable, high-resolution land use and land cover change data for "
+"764 Functional Urban Areas (FUA) with more than 50,000 inhabitants for the "
+"2021 reference year in EEA38 countries (EU, EFTA, Western Balkans "
+"countries, as well as Türkiye) and the United Kingdom. More information "
+"[here](https://land.copernicus.eu/en/products/urban-atlas)."
 msgstr ""
