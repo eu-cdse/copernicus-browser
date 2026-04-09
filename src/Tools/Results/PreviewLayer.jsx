@@ -18,7 +18,8 @@ const hoverStyle = () => {
     color: '#57de71',
     opacity: 1,
     fillColor: '#57de71',
-    fillOpacity: 0.5,
+    fillOpacity: 0.3,
+    dashArray: '5, 5',
   };
 };
 

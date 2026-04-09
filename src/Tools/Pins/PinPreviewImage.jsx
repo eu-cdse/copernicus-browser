@@ -13,7 +13,7 @@ import {
 
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAppropriateAuthToken, getGetMapAuthToken } from '../../App';
-import { layerFromPin } from './Pin.utils';
+import { layerFromPin, normalizePin } from './Pin.utils';
 import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 import { isDataFusionEnabled } from '../../utils';
 import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
@@ -30,6 +30,7 @@ import openEOApi from '../../api/openEO/openEO.api';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
+import { fetchEvalscriptFromEvalscriptUrl } from '../../utils';
 
 const PIN_PREVIEW_DIMENSIONS = {
   WIDTH: 90,
@@ -52,11 +53,38 @@ class PinPreviewImage extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.auth !== this.props.auth) {
+    const pinChanged =
+      prevProps.pin?.id !== this.props.pin?.id ||
+      prevProps.pin?._id !== this.props.pin?._id ||
+      prevProps.pin?.datasetId !== this.props.pin?.datasetId ||
+      prevProps.pin?.layerId !== this.props.pin?.layerId ||
+      prevProps.pin?.visualizationUrl !== this.props.pin?.visualizationUrl ||
+      prevProps.pin?.fromTime !== this.props.pin?.fromTime ||
+      prevProps.pin?.toTime !== this.props.pin?.toTime ||
+      prevProps.pin?.evalscript !== this.props.pin?.evalscript ||
+      prevProps.pin?.evalscriptUrl !== this.props.pin?.evalscriptUrl ||
+      prevProps.pin?.processGraph !== this.props.pin?.processGraph ||
+      prevProps.pin?.lat !== this.props.pin?.lat ||
+      prevProps.pin?.lng !== this.props.pin?.lng ||
+      prevProps.pin?.zoom !== this.props.pin?.zoom;
+
+    if (prevProps.auth !== this.props.auth || pinChanged) {
+      const oldPreviewImgUrl = this.state.previewImgUrl;
+      if (oldPreviewImgUrl) {
+        URL.revokeObjectURL(oldPreviewImgUrl);
+      }
+      if (this.cancelToken) {
+        this.cancelToken.cancel();
+      }
+
+      await new Promise((resolve) => {
+        this.setState({ previewImgUrl: null, fetchingPreview: false }, resolve);
+      });
+
       const { auth, pin } = this.props;
       const authToken = getAppropriateAuthToken(auth, pin.themeId);
       if (authToken) {
-        await this.ensurePinPreview(authToken);
+        await this.ensurePinPreview(authToken, true);
       }
     }
   }
@@ -88,7 +116,8 @@ class PinPreviewImage extends React.Component {
     return new BBox(CRS_EPSG4326, west, south, east, north);
   };
 
-  ensurePinPreview = async (authToken) => {
+  ensurePinPreview = async (authToken, forceReload = false) => {
+    const pin = normalizePin(this.props.pin);
     const {
       zoom,
       lat,
@@ -105,11 +134,23 @@ class PinPreviewImage extends React.Component {
       downsampling,
       orbitDirection,
       processGraph,
-    } = this.props.pin;
+    } = pin;
+
+    let resolvedEvalscript = evalscript;
+    if (!resolvedEvalscript && evalscriptUrl) {
+      try {
+        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
+        resolvedEvalscript = data;
+      } catch (e) {
+        // Browser-side fetch failed (CORS, network, etc.).
+        // Fall through: keep evalscriptUrl so the SH API can fetch server-side.
+        console.error('Failed to fetch evalscript from URL for pin preview', e);
+      }
+    }
 
     try {
       const { previewImgUrl, fetchingPreview } = this.state;
-      if (previewImgUrl || fetchingPreview) {
+      if (!forceReload && (previewImgUrl || fetchingPreview)) {
         return;
       }
 
@@ -117,7 +158,12 @@ class PinPreviewImage extends React.Component {
         authToken: authToken,
         cancelToken: this.cancelToken,
       };
-      const layer = await layerFromPin(this.props.pin, { ...reqConfigMemoryCache, ...reqConfig });
+      // If we fetched the content, embed it directly (avoids server-side re-fetch).
+      // If not, keep evalscriptUrl so the SH API can fetch the script server-side.
+      const previewPin = resolvedEvalscript
+        ? { ...pin, evalscript: resolvedEvalscript, evalscriptUrl: null }
+        : pin;
+      const layer = await layerFromPin(previewPin, { ...reqConfigMemoryCache, ...reqConfig });
       if (!layer) {
         return;
       }
@@ -126,12 +172,30 @@ class PinPreviewImage extends React.Component {
       const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true;
 
       const { pinTimeFrom, pinTimeTo } = this.computeTimes(fromTime, toTime);
-      const bbox = this.computeBBox(lat, lng, zoom);
 
-      const effects = constructGetMapParamsEffects(this.props.pin);
-      const isEvalscript = evalscript || evalscriptUrl;
+      // For collections with a PROCESSING API resolution limit (e.g. S2 Quarterly Mosaics at
+      // 1600 m/px), compute the preview bbox at a higher zoom until the resolution is within
+      // the threshold where the collection can serve data without errors.
+      let bboxZoom = zoom;
+      if (dsh && dsh.supportsLowResolutionAlternativeCollection(datasetId)) {
+        const threshold = dsh.getLowResolutionMetersPerPixelThreshold(datasetId);
+        let testBbox = this.computeBBox(lat, lng, bboxZoom);
+        while (metersPerPixel(testBbox, PIN_PREVIEW_DIMENSIONS.WIDTH) > threshold && bboxZoom < 16) {
+          bboxZoom++;
+          testBbox = this.computeBBox(lat, lng, bboxZoom);
+        }
+      }
+      const bbox = this.computeBBox(lat, lng, bboxZoom);
 
-      const apiType = layer.supportsApiType(ApiType.PROCESSING)
+      const effects = constructGetMapParamsEffects(previewPin);
+      const isEvalscript = resolvedEvalscript || evalscriptUrl;
+
+      // Some layers (e.g. S5P) return false for supportsApiType(PROCESSING) even when a
+      // custom script is set. Mirror the same guard used in sentinelhubLeafletLayer.createTile.
+      const canUseProcessingApi =
+        layer.supportsApiType(ApiType.PROCESSING) ||
+        (!!layer.dataset && (!!layer.evalscriptUrl || !!(resolvedEvalscript || evalscript)));
+      const apiType = canUseProcessingApi
         ? ApiType.PROCESSING
         : layer.supportsApiType(ApiType.WMTS)
         ? ApiType.WMTS
@@ -139,17 +203,15 @@ class PinPreviewImage extends React.Component {
 
       const getMapAuthToken = getGetMapAuthToken(this.props.auth);
       const cancelToken = new CancelToken();
+      this.cancelToken = cancelToken;
 
       this.setState({ fetchingPreview: true });
 
       let blob;
 
-      const openEoAllowed = isOpenEoSupported(
-        layer.instanceId,
-        layer.layerId,
-        IMAGE_FORMATS.PNG,
-        isEvalscript,
-      );
+      const openEoAllowed =
+        !(evalscriptUrl && !resolvedEvalscript) &&
+        isOpenEoSupported(layer.instanceId, layer.layerId, IMAGE_FORMATS.PNG, isEvalscript);
 
       if (openEoAllowed) {
         const getMapParams = {
@@ -200,12 +262,12 @@ class PinPreviewImage extends React.Component {
           isS1: dsh?.datasource === DATASOURCES.S1,
           datasetParams:
             dsh?.datasource === DATASOURCES.S1
-              ? Sentinel1DataSourceHandler.getDatasetParams(this.props.pin.datasetId)
+              ? Sentinel1DataSourceHandler.getDatasetParams(previewPin.datasetId)
               : undefined,
-          orbitDirection: this.props.pin.orbitDirection,
-          speckleFilter: this.props.pin.speckleFilter,
-          orthorectification: this.props.pin.orthorectification,
-          backscatterCoeff: this.props.pin.backscatterCoeff,
+          orbitDirection: previewPin.orbitDirection,
+          speckleFilter: previewPin.speckleFilter,
+          orthorectification: previewPin.orthorectification,
+          backscatterCoeff: previewPin.backscatterCoeff,
         });
 
         const newProcessGraph = processGraphBuilder.saveResult(
@@ -216,10 +278,10 @@ class PinPreviewImage extends React.Component {
               datasetId: datasetId,
               spatial_extent: spatialExtent,
               temporal_extent: [getMapParams.fromTime, getMapParams.toTime],
-              minQa: this.props.pin.minQa,
-              mosaickingOrder: this.props.pin.mosaickingOrder,
-              upsampling: this.props.pin.upsampling,
-              downsampling: this.props.pin.downsampling,
+              minQa: previewPin.minQa,
+              mosaickingOrder: previewPin.mosaickingOrder,
+              upsampling: previewPin.upsampling,
+              downsampling: previewPin.downsampling,
               ...s1Options,
             },
             cachedProcessGraph,
@@ -264,7 +326,7 @@ class PinPreviewImage extends React.Component {
         if (isDataFusionEnabled(dataFusion)) {
           const dataFusionLayer = await constructDataFusionLayer(
             dataFusion,
-            evalscript,
+            resolvedEvalscript,
             evalscriptUrl,
             pinTimeFrom,
             pinTimeTo,

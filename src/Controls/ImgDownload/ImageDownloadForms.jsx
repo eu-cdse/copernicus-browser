@@ -51,7 +51,7 @@ export function ImageDownloadForms(props) {
     isAnalyticalModeAndLayersNotLoaded,
     isAnalyticalModeAndNothingSelected,
     isDataFusionAndKMZSelected,
-    areEffectsSetAndFormatNotJpgPngKmz,
+    hasActiveEffects,
     isZoomLevelOK,
     isAnalyticalModeAndOnlyRawBands,
     areImageDimensionsValid,
@@ -143,7 +143,6 @@ export function ImageDownloadForms(props) {
     isAnalyticalModeAndNothingSelected ||
     isDataFusionAndKMZSelected ||
     isAnalyticalModeAndLayersNotLoaded ||
-    areEffectsSetAndFormatNotJpgPngKmz ||
     !isZoomLevelOK ||
     isAnalyticalModeAndOnlyRawBands;
 
@@ -153,11 +152,6 @@ export function ImageDownloadForms(props) {
         isDataFusionAndKMZSelected,
         t`Error: Data fusion does not support KMZ/JPG and KMZ/PNG formats.`,
       )}
-      {displayDownloadWarning(
-        areEffectsSetAndFormatNotJpgPngKmz,
-        t`Error: You can only download visualisation with effects in JPEG, PNG or KMZ formats.`,
-      )}
-
       <h3>{t`Image download`}</h3>
       {selectedTab === TABS.BASIC && (
         <BasicForm
@@ -188,6 +182,7 @@ export function ImageDownloadForms(props) {
           supportedImageFormats={supportedImageFormats}
           allowShowLogoAnalytical={allowShowLogoAnalytical}
           hasAoi={hasAoi}
+          hasActiveEffects={hasActiveEffects}
           getCrsOptions={getCrsOptions}
         />
       )}

@@ -22,7 +22,7 @@ import {
   getDataSourceHandler,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getAppropriateAuthToken, getGetMapAuthToken } from '../App';
-import { getUrlParams, handleError } from '../utils';
+import { handleError } from '../utils';
 import {
   BASE_PANE_ID,
   BASE_S2_MOSAIC_PANE_ID,
@@ -262,6 +262,7 @@ class Map extends React.Component {
       toTime,
       customSelected,
       evalscript,
+      evalscriptUrl,
       dataFusion,
       dataSourcesInitialized,
       selectedThemeId,
@@ -308,16 +309,12 @@ class Map extends React.Component {
       selectedProcessing,
       processGraph,
     } = this.props;
-    const { evalscriptUrl, evalscripturl: evalscriptUrlLegacy } = getUrlParams();
-    const resolvedEvalscriptUrl = evalscriptUrl || evalscriptUrlLegacy;
-    const isCustomEvalscript = customSelected && !!evalscript;
+    const isCustomEvalscript = customSelected && !!(evalscript || evalscriptUrl);
+    const shouldBlockOpenEoForEvalscriptUrl = !!evalscriptUrl && !evalscript;
     const isOpenEOSelected = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
-    const supportsOpenEo = isOpenEoSupported(
-      visualizationUrl,
-      visualizationLayerId,
-      IMAGE_FORMATS.PNG,
-      isCustomEvalscript,
-    );
+    const supportsOpenEo =
+      !shouldBlockOpenEoForEvalscriptUrl &&
+      isOpenEoSupported(visualizationUrl, visualizationLayerId, IMAGE_FORMATS.PNG, isCustomEvalscript);
 
     const hasCustomProcessGraph = customSelected && !!processGraph && isOpenEOSelected;
     const shouldRenderOpenEO = isOpenEOSelected && (supportsOpenEo || hasCustomProcessGraph);
@@ -524,7 +521,7 @@ class Map extends React.Component {
             </Overlay>
           )}
 
-          {showSingleShLayer && !shouldRenderOpenEO && !isOpenEOSelected && (
+          {showSingleShLayer && !shouldRenderOpenEO && (!isOpenEOSelected || isCustomEvalscript) && (
             <Overlay
               key={`overlay-sentinel-${datasetId}-${visualizationLayerId}-${selectedProcessing}`}
               name={`${getDatasetLabel(datasetId)}`}
@@ -539,7 +536,7 @@ class Map extends React.Component {
                 toTime={toTime ? toTime.toDate() : null}
                 customSelected={customSelected}
                 evalscript={evalscript}
-                evalscriptUrl={resolvedEvalscriptUrl}
+                evalscriptUrl={evalscriptUrl}
                 dataFusion={dataFusion}
                 pane={SENTINELHUB_LAYER_PANE_ID}
                 progress={this.progress}
@@ -614,13 +611,11 @@ class Map extends React.Component {
 
                 const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, supportsTimeRange);
                 const index = comparedLayers.length - 1 - i;
-                const isCustomVisualisation = evalscript != null && evalscript.length > 0;
-                const supportsOpenEoComparedLayer = isOpenEoSupported(
-                  visualizationUrl,
-                  layerId,
-                  IMAGE_FORMATS.PNG,
-                  isCustomVisualisation,
-                );
+                const isCustomVisualisation =
+                  (evalscript != null && evalscript.length > 0) || !!evalscriptUrl;
+                const supportsOpenEoComparedLayer =
+                  !(!!evalscriptUrl && !evalscript) &&
+                  isOpenEoSupported(visualizationUrl, layerId, IMAGE_FORMATS.PNG, isCustomVisualisation);
 
                 if (supportsOpenEoComparedLayer && isOpenEOSelected) {
                   let processGraphToUse = processGraph

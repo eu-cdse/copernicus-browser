@@ -1,4 +1,9 @@
-import { isOnEqualDate, constructTimespanString, normalizePin } from './Pin.utils';
+import {
+  isOnEqualDate,
+  constructTimespanString,
+  constructCompareTimespanString,
+  normalizePin,
+} from './Pin.utils';
 
 describe('isOnEqualDate', () => {
   it('should return true when both dates are on the same date', () => {
@@ -63,11 +68,42 @@ describe('constructTimespanString', () => {
   });
 });
 
+describe('constructCompareTimespanString', () => {
+  it('returns min fromTime / max toTime across layers with / separator', () => {
+    const comparedLayers = [
+      { fromTime: '2019-08-17T00:00:00.000Z', toTime: '2019-08-17T23:59:59.999Z' },
+      { fromTime: '2022-04-01T00:00:00.000Z', toTime: '2022-04-01T23:59:59.999Z' },
+    ];
+    expect(constructCompareTimespanString(comparedLayers)).toEqual('2019-08-17 / 2022-04-01');
+  });
+
+  it('returns a single date when all layers fall on the same day', () => {
+    const comparedLayers = [
+      { fromTime: '2019-08-18T00:00:00.000Z', toTime: '2019-08-18T23:59:59.999Z' },
+      { fromTime: '2019-08-18T06:00:00.000Z', toTime: '2019-08-18T23:59:59.999Z' },
+    ];
+    expect(constructCompareTimespanString(comparedLayers)).toEqual('2019-08-18');
+  });
+
+  it('returns null when comparedLayers is empty', () => {
+    expect(constructCompareTimespanString([])).toBeNull();
+  });
+
+  it('returns null when called without arguments', () => {
+    expect(constructCompareTimespanString()).toBeNull();
+  });
+});
+
 describe('normalizePin', () => {
-  it('preserves camelCase keys when already present', () => {
-    const pin = { evalscriptUrl: 'https://example.com/eval', processGraphUrl: 'https://example.com/pg' };
+  it('preserves evalscriptUrl when already present', () => {
+    const pin = { evalscriptUrl: 'https://example.com/eval' };
     const result = normalizePin(pin);
     expect(result.evalscriptUrl).toBe('https://example.com/eval');
+  });
+
+  it('preserves processGraphUrl when already present', () => {
+    const pin = { processGraphUrl: 'https://example.com/pg' };
+    const result = normalizePin(pin);
     expect(result.processGraphUrl).toBe('https://example.com/pg');
   });
 
@@ -83,15 +119,15 @@ describe('normalizePin', () => {
     expect(result.processGraphUrl).toBe('https://example.com/pg');
   });
 
-  it('prefers camelCase over legacy lowercase when both are present', () => {
-    const pin = {
-      evalscriptUrl: 'new',
-      evalscripturl: 'old',
-      processGraphUrl: 'new-pg',
-      processgraphurl: 'old-pg',
-    };
+  it('prefers camelCase evalscriptUrl over legacy lowercase evalscripturl', () => {
+    const pin = { evalscriptUrl: 'new', evalscripturl: 'old' };
     const result = normalizePin(pin);
     expect(result.evalscriptUrl).toBe('new');
+  });
+
+  it('prefers camelCase processGraphUrl over legacy lowercase processgraphurl', () => {
+    const pin = { processGraphUrl: 'new-pg', processgraphurl: 'old-pg' };
+    const result = normalizePin(pin);
     expect(result.processGraphUrl).toBe('new-pg');
   });
 
@@ -100,5 +136,49 @@ describe('normalizePin', () => {
     const result = normalizePin(pin);
     expect(result.evalscriptUrl).toBeUndefined();
     expect(result.processGraphUrl).toBeUndefined();
+  });
+
+  it('clears processGraph and processGraphUrl when evalscriptUrl is present', () => {
+    const pin = {
+      evalscriptUrl: 'https://example.com/eval',
+      processGraph: '{"some":"graph"}',
+      processGraphUrl: 'https://example.com/pg',
+    };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('https://example.com/eval');
+    expect(result.processGraph).toBeUndefined();
+    expect(result.processGraphUrl).toBeUndefined();
+  });
+
+  it('clears evalscript when processGraphUrl is present and no evalscriptUrl', () => {
+    const pin = {
+      processGraphUrl: 'https://example.com/pg',
+      evalscript: 'return [1,1,1]',
+    };
+    const result = normalizePin(pin);
+    expect(result.processGraphUrl).toBe('https://example.com/pg');
+    expect(result.evalscript).toBeUndefined();
+    expect(result.evalscriptUrl).toBeUndefined();
+  });
+
+  it('evalscriptUrl takes precedence over processGraphUrl when both are present', () => {
+    const pin = {
+      evalscriptUrl: 'https://example.com/eval',
+      processGraphUrl: 'https://example.com/pg',
+    };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('https://example.com/eval');
+    expect(result.processGraphUrl).toBeUndefined();
+  });
+
+  it('removes legacy lowercase evalscripturl and processgraphurl keys from the result', () => {
+    const pin = {
+      evalscripturl: 'https://example.com/eval',
+      processgraphurl: 'https://example.com/pg',
+    };
+    const result = normalizePin(pin);
+    expect(result.evalscriptUrl).toBe('https://example.com/eval');
+    expect('evalscripturl' in result).toBe(false);
+    expect('processgraphurl' in result).toBe(false);
   });
 });

@@ -808,6 +808,7 @@ export const visualizationSlice = createSlice({
       state.dateMode = DATE_MODES.SINGLE.value;
       state.processGraph = '';
       state.isProcessGraphModified = false;
+      state.selectedProcessing = PROCESSING_OPTIONS.PROCESS_API;
       state.resolutionTooLow = false;
     },
   },

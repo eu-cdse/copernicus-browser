@@ -514,7 +514,14 @@ async function prepareThemeDataSourceHandlers(theme) {
   return failedThemeParts;
 }
 
+// Version counter to handle concurrent calls triggered by rapid theme switches.
+// Each call resets the handler registry via initializeDataSourceHandlers(), so a stale call
+// finishing after a newer one started would dispatch setDataSourcesInitialized(true) with
+// handlers for the wrong theme. Stale calls bail out early; only the latest call commits.
+let prepareDataSourceHandlersVersion = 0;
+
 export async function prepareDataSourceHandlers(theme) {
+  const myVersion = ++prepareDataSourceHandlersVersion;
   initializeDataSourceHandlers();
 
   // for S2 Quarterly Mosaics base layer
@@ -522,12 +529,23 @@ export async function prepareDataSourceHandlers(theme) {
     S2QuarterlyCloudlessMosaicsBaseLayerTheme,
   );
 
+  if (myVersion !== prepareDataSourceHandlersVersion) {
+    return [];
+  }
+
   if (failedS2QuarterlyMosaicParts.length > 0) {
     console.error(`Could not retrieve data for base layer: ${failedS2QuarterlyMosaicParts.toString()}`);
   }
 
   const failedThemeParts = await prepareThemeDataSourceHandlers(theme);
-  console.error(`Could not retrieve data for theme: ${failedThemeParts}`);
+
+  if (myVersion !== prepareDataSourceHandlersVersion) {
+    return [];
+  }
+
+  if (failedThemeParts.length > 0) {
+    console.error(`Could not retrieve data for theme: ${failedThemeParts.toString()}`);
+  }
   store.dispatch(themesSlice.actions.setDataSourcesInitialized(true));
   return failedThemeParts;
 }

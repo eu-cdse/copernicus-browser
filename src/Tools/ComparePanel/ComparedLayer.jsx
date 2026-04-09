@@ -6,7 +6,7 @@ import { t } from 'ttag';
 import store, { mainMapSlice, compareLayersSlice } from '../../store';
 import { parsePosition } from '../../utils';
 import PinPreviewImage from '../Pins/PinPreviewImage';
-import { constructTimespanString } from '../Pins/Pin.utils';
+import { constructTimespanString, normalizePin } from '../Pins/Pin.utils';
 
 import LocationCrosshairsSvg from './LocationCrosshair.svg?react';
 import { COMPARE_OPTIONS } from '../../const';
@@ -76,7 +76,7 @@ const ComparedLayer = ({ layer, compareMode, opacity, clipping, index, onDrop })
         <LocationCrosshairsSvg />
       </div>
       <div className="compare-layer-content">
-        <PinPreviewImage pin={layer} />
+        <PinPreviewImage pin={normalizePin(layer)} />
         <div className="compare-layer-info">
           <span>{title}</span>
           <div>

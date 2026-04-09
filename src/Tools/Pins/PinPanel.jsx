@@ -29,18 +29,21 @@ import {
   getPinsFromServer,
   getPinsFromSessionStorage,
   getVisualizationUrl,
+  normalizePin,
   removePinsFromServer,
   savePinsToServer,
   savePinsToSessionStorage,
 } from './Pin.utils';
-import { parsePosition } from '../../utils';
+import { parsePosition, fetchEvalscriptFromEvalscriptUrl } from '../../utils';
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
 import './Pins.scss';
 
 import {
+  DATE_MODES,
   DEFAULT_MODE,
+  DEFAULT_THEME_ID,
   MODES,
   MODE_THEMES_LIST,
   URL_THEMES_LIST,
@@ -334,7 +337,8 @@ class PinPanel extends Component {
     }
   };
 
-  onPinSelect = async (pin, arePinsSelectable) => {
+  onPinSelect = async (rawPin, arePinsSelectable) => {
+    const pin = normalizePin(rawPin);
     const {
       zoom,
       lat,
@@ -368,61 +372,35 @@ class PinPanel extends Component {
       return;
     }
 
-    // since we are setting a new theme and changing map state we should reset search results
-    this.props.resetSearch();
-    store.dispatch(visualizationSlice.actions.reset());
-    this.props.setShowPinPanel(false);
-
     if (!themeId) {
       store.dispatch(notificationSlice.actions.displayError('Pin is invalid: themeId is not defined.'));
       return;
     }
 
-    const modeFromPinThemeId = MODES.find((m) => m.themes.find((t) => t.id === themeId));
-    let selectedModeId = this.props.selectedModeId;
-    let selectedThemesListId = this.props.selectedThemesListId;
+    // since we are setting a new theme and changing map state we should reset search results
+    this.props.resetSearch();
+    store.dispatch(visualizationSlice.actions.reset());
+    this.props.setShowPinPanel(false);
 
-    if (
-      this.props.urlThemesList.find((t) => t.id === themeId) &&
-      this.props.selectedModeId !== DEFAULT_MODE
-    ) {
-      // themeId is one of the url themes, we set the default mode if not set
-      selectedModeId = DEFAULT_MODE.id;
-      selectedThemesListId = URL_THEMES_LIST;
-    } else if (modeFromPinThemeId && modeFromPinThemeId.id !== this.props.selectedModeId) {
-      // themeId is in one of the modes themes and we set the mode if it's other than currently selected
-      selectedModeId = modeFromPinThemeId.id;
-      selectedThemesListId = MODE_THEMES_LIST;
-    } else if (this.props.userInstancesThemesList.find((t) => t.id === themeId)) {
-      // themeId is in a user instance, we keep the current mode.
-      selectedThemesListId = USER_INSTANCES_THEMES_LIST;
-    } else if (
-      selectedThemesListId !== MODE_THEMES_LIST &&
-      this.props.modeThemesList.find((t) => t.id === themeId)
-    ) {
-      // Check mode themes when theme is not found in userInstancesThemesList or urlThemesList
-      // and change selectedThemesListId accordingly
-      selectedThemesListId = MODE_THEMES_LIST;
+    // Guard against races: if the user clicks a second pin before this fetch completes,
+    // the newer call increments _pinSelectId and this one bails out after the await.
+    const selectId = (this._pinSelectId = (this._pinSelectId || 0) + 1);
+
+    let resolvedEvalscript = evalscript;
+    if (!evalscript && evalscriptUrl) {
+      try {
+        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
+        resolvedEvalscript = data;
+      } catch (e) {
+        console.error('Failed to fetch evalscript from URL', e);
+      }
     }
 
-    store.dispatch(
-      themesSlice.actions.setSelectedThemeIdAndModeId({
-        selectedThemeId: themeId,
-        selectedThemesListId: selectedThemesListId,
-        selectedModeId: selectedModeId,
-      }),
-    );
+    if (selectId !== this._pinSelectId) {
+      return;
+    }
 
-    const { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
-
-    store.dispatch(
-      mainMapSlice.actions.setPosition({
-        lat: parsedLat,
-        lng: parsedLng,
-        zoom: parsedZoom,
-      }),
-    );
-
+    // Calculate visualization params and time-related values after reset.
     let pinTimeFrom, pinTimeTo;
     const dataSourceHandler = getDataSourceHandler(datasetId);
     const supportsTimeRange = dataSourceHandler ? dataSourceHandler.supportsTimeRange() : true;
@@ -433,37 +411,57 @@ class PinPanel extends Component {
       pinTimeTo = moment.utc(toTime);
     }
 
-    const hasEvalscript = !!(evalscript || evalscriptUrl);
+    // Infer TIME RANGE for legacy pins saved without dateMode: if fromTime and toTime are
+    // on different calendar days, the pin was saved as a time range visualization.
+    const effectiveDateMode =
+      dateMode ||
+      (fromTime && toTime && !moment.utc(fromTime).isSame(moment.utc(toTime), 'day')
+        ? DATE_MODES['TIME RANGE'].value
+        : undefined);
+
+    const hasEvalscript = !!(resolvedEvalscript || evalscriptUrl);
     const hasProcessGraph = !!(processGraph || processGraphUrl);
-    const supportsOpenEo = isOpenEoSupported(
-      getVisualizationUrl(pin),
-      layerId,
-      IMAGE_FORMATS.PNG,
-      hasEvalscript,
-    );
-    const selectedProcessing =
-      pinSelectedProcessing ||
-      (hasProcessGraph
-        ? PROCESSING_OPTIONS.OPENEO
-        : supportsOpenEo
-        ? PROCESSING_OPTIONS.OPENEO
-        : PROCESSING_OPTIONS.PROCESS_API);
+
+    // Determine selectedProcessing following the decision order:
+    // 1. Custom evalscript → PROCESS_API
+    // 2. ProcessGraph → OPENEO
+    // 3. Saved preference
+    // 4. OpenEO support (only if no custom code)
+    let selectedProcessing;
+    if (hasEvalscript) {
+      selectedProcessing = PROCESSING_OPTIONS.PROCESS_API;
+    } else if (hasProcessGraph) {
+      selectedProcessing = PROCESSING_OPTIONS.OPENEO;
+    } else {
+      // Only check OpenEO support if no custom code is present
+      const supportsOpenEo = isOpenEoSupported(
+        getVisualizationUrl(pin),
+        layerId,
+        IMAGE_FORMATS.PNG,
+        false, // no evalscript at this point
+      );
+      selectedProcessing =
+        pinSelectedProcessing ||
+        (supportsOpenEo ? PROCESSING_OPTIONS.OPENEO : PROCESSING_OPTIONS.PROCESS_API);
+    }
 
     let visualizationParams = {
       datasetId: datasetId,
       visualizationUrl: getVisualizationUrl(pin),
       fromTime: pinTimeFrom,
       toTime: pinTimeTo,
-      ...(dateMode ? { dateMode: dateMode } : {}),
+      ...(effectiveDateMode ? { dateMode: effectiveDateMode } : {}),
       visibleOnMap: true,
       dataFusion: dataFusion,
       selectedProcessing: selectedProcessing,
     };
 
     if (hasEvalscript) {
-      visualizationParams.evalscript = evalscript;
+      visualizationParams.evalscript = resolvedEvalscript;
       visualizationParams.evalscriptUrl = evalscriptUrl;
       visualizationParams.customSelected = true;
+      visualizationParams.processGraph = '';
+      visualizationParams.processGraphUrl = null;
     } else if (hasProcessGraph) {
       visualizationParams.processGraph = processGraph;
       visualizationParams.processGraphUrl = processGraphUrl;
@@ -505,7 +503,64 @@ class PinPanel extends Component {
     if (cloudCoverage !== undefined) {
       visualizationParams.cloudCoverage = cloudCoverage;
     }
+
+    const modeFromPinThemeId = MODES.find((m) => m.themes.find((t) => t.id === themeId));
+    let selectedModeId = this.props.selectedModeId;
+    let selectedThemesListId = this.props.selectedThemesListId;
+
+    if (
+      this.props.urlThemesList.find((t) => t.id === themeId) &&
+      this.props.selectedModeId !== DEFAULT_MODE.id
+    ) {
+      // themeId is one of the url themes, we set the default mode if not set
+      selectedModeId = DEFAULT_MODE.id;
+      selectedThemesListId = URL_THEMES_LIST;
+    } else if (modeFromPinThemeId && modeFromPinThemeId.id !== this.props.selectedModeId) {
+      // themeId is in one of the modes themes and we set the mode if it's other than currently selected
+      selectedModeId = modeFromPinThemeId.id;
+      selectedThemesListId = MODE_THEMES_LIST;
+    } else if (this.props.userInstancesThemesList.find((t) => t.id === themeId)) {
+      // themeId is in a user instance, we keep the current mode.
+      selectedThemesListId = USER_INSTANCES_THEMES_LIST;
+    } else if (
+      selectedThemesListId !== MODE_THEMES_LIST &&
+      this.props.modeThemesList.find((t) => t.id === themeId)
+    ) {
+      // Check mode themes when theme is not found in userInstancesThemesList or urlThemesList
+      // and change selectedThemesListId accordingly
+      selectedThemesListId = MODE_THEMES_LIST;
+    }
+
+    // If the themeId doesn't exist in any known theme list (e.g. pins saved from highlights
+    // may have themeId 'HIGHLIGHT' which is not a real theme), fall back to the default theme
+    // to avoid "Selected themeId does not exist!" errors in ThemesProvider.
+    const allKnownThemes = [
+      ...this.props.modeThemesList,
+      ...this.props.urlThemesList,
+      ...this.props.userInstancesThemesList,
+    ];
+    const resolvedThemeId = allKnownThemes.some((t) => t.id === themeId) ? themeId : DEFAULT_THEME_ID;
+
+    store.dispatch(
+      themesSlice.actions.setSelectedThemeIdAndModeId({
+        selectedThemeId: resolvedThemeId,
+        selectedThemesListId: selectedThemesListId,
+        selectedModeId: selectedModeId,
+      }),
+    );
+
+    const { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
+
+    store.dispatch(
+      mainMapSlice.actions.setPosition({
+        lat: parsedLat,
+        lng: parsedLng,
+        zoom: parsedZoom,
+      }),
+    );
+
     store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));
+
     this.props.setSelectedPin(this.props.item);
 
     setTerrainViewerFromPin({

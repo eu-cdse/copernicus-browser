@@ -1,4 +1,5 @@
 import { DATASOURCES } from '../../../../../const';
+import { S3OLCIL2_WATER } from '../../dataSourceConstants';
 import {
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
@@ -158,6 +159,7 @@ export const credits = {
   [DATASOURCES.S1]: [copernicus],
   [DATASOURCES.S2_CDAS]: [copernicus],
   [DATASOURCES.S3_CDAS]: [copernicus],
+  [S3OLCIL2_WATER]: [{ title: 'EUMETSAT', link: 'https://www.eumetsat.int/sentinel-3' }],
   [DATASOURCES.S5_CDAS]: [copernicus],
   [CDAS_L8_L9_LOTL1]: [
     {

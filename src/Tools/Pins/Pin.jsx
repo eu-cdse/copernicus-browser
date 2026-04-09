@@ -6,7 +6,7 @@ import EditableString from './EditableString';
 import Description from './Description';
 import { parsePosition } from '../../utils';
 import PinPreviewImage from './PinPreviewImage';
-import { constructTimespanString, isPinValid } from './Pin.utils';
+import { constructTimespanString, isPinValid, normalizePin } from './Pin.utils';
 import { constructEffectsFromPinOrHighlight } from '../../utils/effectsUtils';
 import InvalidPin from './InvalidPin';
 
@@ -82,7 +82,7 @@ const Pin = ({
           {arePinsSelectable && item && (
             <span id={index} className={`pin-selector ${selectedForSharing ? 'selected' : ''}`} />
           )}
-          <PinPreviewImage pin={pinItem} />
+          <PinPreviewImage pin={normalizePin(pinItem)} />
         </div>
         <div className="pin-left-controls-container">
           <div className="pin-drag-handler">

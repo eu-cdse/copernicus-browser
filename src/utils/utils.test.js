@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-import { parseDataFusion, parseEvalscriptBands, parseIndexEvalscript } from './index';
+import { parseDataFusion, parseEvalscriptBands, parseIndexEvalscript, updatePath } from './index';
+import { PROCESSING_OPTIONS, TABS } from '../const';
 import {
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HHHV,
@@ -143,3 +144,85 @@ test.each(allDatasetIds.map((d) => [d]))(
     }
   },
 );
+
+describe('updatePath URL serialization', () => {
+  const baseProps = {
+    currentZoom: 10,
+    currentLat: 48.0,
+    currentLng: 16.0,
+    selectedTabIndex: TABS.VISUALIZE_TAB,
+    terrainViewerSettings: null,
+  };
+
+  function getSerializedParams(props) {
+    const pushState = jest.spyOn(window.history, 'pushState').mockImplementation(() => {});
+    updatePath({ ...baseProps, ...props }, true);
+    const url = pushState.mock.calls[0][2];
+    pushState.mockRestore();
+    return Object.fromEntries(new URL(url).searchParams.entries());
+  }
+
+  test('PROCESS_API with evalscriptUrl: serializes evalscriptUrl, not processGraph', () => {
+    const params = getSerializedParams({
+      customSelected: true,
+      selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
+      evalscriptUrl: 'https://example.com/script.js',
+      processGraph: '{"process":"graph"}',
+    });
+
+    expect(params).toHaveProperty('evalscriptUrl');
+    expect(params).not.toHaveProperty('processGraph');
+    expect(params).not.toHaveProperty('processGraphUrl');
+  });
+
+  test('OPENEO with processGraph: serializes processGraph, not evalscriptUrl or evalscript', () => {
+    const params = getSerializedParams({
+      customSelected: true,
+      selectedProcessing: PROCESSING_OPTIONS.OPENEO,
+      evalscriptUrl: 'https://example.com/script.js',
+      evalscript: 'return [B04, B03, B02];',
+      processGraph: '{"process":"graph"}',
+    });
+
+    expect(params).toHaveProperty('processGraph');
+    expect(params).not.toHaveProperty('evalscriptUrl');
+    expect(params).not.toHaveProperty('evalscript');
+  });
+
+  test('OPENEO with processGraphUrl: serializes processGraphUrl, not evalscriptUrl', () => {
+    const params = getSerializedParams({
+      customSelected: true,
+      selectedProcessing: PROCESSING_OPTIONS.OPENEO,
+      evalscriptUrl: 'https://example.com/script.js',
+      evalscript: 'return [B04, B03, B02];',
+      processGraphUrl: 'https://example.com/graph.json',
+    });
+
+    expect(params).toHaveProperty('processGraphUrl');
+    expect(params).not.toHaveProperty('evalscriptUrl');
+    expect(params).not.toHaveProperty('evalscript');
+  });
+
+  test('PROCESS_API with evalscriptUrl and evalscript: serializes evalscriptUrl only', () => {
+    const params = getSerializedParams({
+      customSelected: true,
+      selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
+      evalscriptUrl: 'https://example.com/script.js',
+      evalscript: 'return [B04, B03, B02];',
+    });
+
+    expect(params).toHaveProperty('evalscriptUrl');
+    expect(params).not.toHaveProperty('evalscript');
+  });
+
+  test('PROCESS_API with evalscript only: serializes evalscript', () => {
+    const params = getSerializedParams({
+      customSelected: true,
+      selectedProcessing: PROCESSING_OPTIONS.PROCESS_API,
+      evalscript: 'return [B04, B03, B02];',
+    });
+
+    expect(params).toHaveProperty('evalscript');
+    expect(params).not.toHaveProperty('evalscriptUrl');
+  });
+});

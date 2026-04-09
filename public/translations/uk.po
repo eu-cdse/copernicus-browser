@@ -10426,11 +10426,6 @@ msgstr ""
 msgid "Please zoom in to visualize the data"
 msgstr ""
 
-msgid ""
-"Error: You can only download visualisation with effects in JPEG, PNG or KMZ "
-"formats."
-msgstr ""
-
 msgid "Land Cover and Land Use, 3-yearly, 2018"
 msgstr ""
 
@@ -10536,6 +10531,9 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/urban-atlas)."
 msgstr ""
 
+msgid "This data product was processed by EUMETSAT."
+msgstr ""
+
 msgid "Scene id"
 msgstr ""
 
@@ -10567,4 +10565,10 @@ msgid "Product delivery date"
 msgstr ""
 
 msgid "SDI resource identifier"
+msgstr ""
+
+msgid "not available with effects"
+msgstr ""
+
+msgid "The maximum selectable time range is limited to 180 days."
 msgstr ""

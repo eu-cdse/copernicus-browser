@@ -279,6 +279,7 @@ function VisualizationPanel({
               compareShare={compareShare}
               showLayerPanel={showLayerPanel}
               setShowLayerPanel={setShowLayerPanel}
+              showHighlightPanel={showHighlightPanel}
             />
           </div>
         )}
@@ -340,7 +341,10 @@ function VisualizationPanel({
               </>
             )}
 
-            {showHighlightPanel && highlightsAvailable && (
+            {/* dataSourcesInitialized guards against clicking a highlight while handlers are
+                still loading after a theme switch, which would cause getDataSourceHandler to
+                return null and fail dataset validation in Highlights.onPinSelect. */}
+            {showHighlightPanel && highlightsAvailable && dataSourcesInitialized && (
               <Highlights
                 highlights={selectedTheme.pins}
                 terrainViewerId={terrainViewerId}

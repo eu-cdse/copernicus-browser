@@ -9,6 +9,7 @@ import {
   fetchEvalscriptFromEvalscriptUrl,
   fetchProcessGraphFromProcessGraphUrl,
 } from '../utils';
+import { MAX_TIME_RANGE_DAYS } from '../components/TimespanPicker/TimespanPicker';
 import store, {
   mainMapSlice,
   visualizationSlice,
@@ -23,7 +24,14 @@ import store, {
 } from '../store';
 import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
-import { COMPARE_OPTIONS, DEFAULT_LAT_LNG, PROCESSING_OPTIONS, SHOW_TUTORIAL_LC, TABS } from '../const';
+import {
+  COMPARE_OPTIONS,
+  DATE_MODES,
+  DEFAULT_LAT_LNG,
+  PROCESSING_OPTIONS,
+  SHOW_TUTORIAL_LC,
+  TABS,
+} from '../const';
 import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins, normalizePin } from '../Tools/Pins/Pin.utils';
@@ -98,12 +106,17 @@ class URLParamsParser extends React.Component {
     }
 
     const decodedEvalscriptUrl = this.normalizeUrlParam(evalscriptUrl);
-    const { data } = await fetchEvalscriptFromEvalscriptUrl(decodedEvalscriptUrl);
-
-    return {
-      ...params,
-      evalscript: b64EncodeUnicode(data),
-    };
+    try {
+      const { data } = await fetchEvalscriptFromEvalscriptUrl(decodedEvalscriptUrl);
+      return {
+        ...params,
+        evalscript: b64EncodeUnicode(data),
+      };
+    } catch (e) {
+      console.error('Failed to fetch evalscript from URL on page load:', e);
+      // Keep evalscriptUrl in params so the SentinelHub API can fetch the script server-side.
+      return params;
+    }
   };
 
   parseProcessGraphFromProcessGraphUrl = async (params) => {
@@ -196,10 +209,20 @@ class URLParamsParser extends React.Component {
     const evalscriptUrl = evalscriptUrlParam ?? evalscriptUrlLegacy;
     const processGraphUrl = processGraphUrlParam ?? processGraphUrlLegacy;
     const customSelected = evalscript || evalscriptUrl || processGraph || processGraphUrl ? true : undefined;
+    const parsedFromTime = fromTime ? moment.utc(fromTime) : null;
+    const parsedToTime = toTime ? moment.utc(toTime) : null;
+    const clampedFromTime =
+      dateMode === DATE_MODES['TIME RANGE'].value &&
+      parsedFromTime &&
+      parsedToTime &&
+      parsedToTime.diff(parsedFromTime, 'days', true) > MAX_TIME_RANGE_DAYS
+        ? parsedToTime.clone().subtract(MAX_TIME_RANGE_DAYS, 'days').startOf('day')
+        : parsedFromTime;
+
     const newVisualizationParams = {
       datasetId: datasetId,
-      fromTime: fromTime ? moment.utc(fromTime) : null,
-      toTime: toTime ? moment.utc(toTime) : null,
+      fromTime: clampedFromTime,
+      toTime: parsedToTime,
       visualizationUrl: decryptedVisualisationUrl,
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,

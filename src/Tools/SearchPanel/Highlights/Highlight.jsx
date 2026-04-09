@@ -6,7 +6,7 @@ import PinPreviewImage from '../../Pins/PinPreviewImage';
 import store, { compareLayersSlice } from '../../../store';
 import Description from '../../Pins/Description';
 
-import { constructTimespanString } from '../../Pins/Pin.utils';
+import { constructTimespanString, constructCompareTimespanString, normalizePin } from '../../Pins/Pin.utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
 import { getDataSourceHandler } from '../dataSourceHandlers/dataSourceHandlers';
 
@@ -53,7 +53,7 @@ class Highlight extends Component {
       }
     }
 
-    store.dispatch(compareLayersSlice.actions.addToCompare(highlight));
+    store.dispatch(compareLayersSlice.actions.addToCompare(normalizePin(highlight)));
   };
 
   render() {
@@ -64,6 +64,11 @@ class Highlight extends Component {
     const effects = constructEffectsFromPinOrHighlight(pin);
     const highlight = { ...pin, ...effects };
 
+    const previewPin =
+      !pin.visualizationUrl && pin.comparedLayers?.length > 0
+        ? { ...pin, ...pin.comparedLayers[0] }
+        : highlight;
+
     const actionItem = createLayerActions(cloneDeep({ savePin: () => savePin(pin) })).find(
       (action) => action.id === 'savePin',
     );
@@ -73,14 +78,19 @@ class Highlight extends Component {
         id={`${index}`}
       >
         <div className="highlight-content" onClick={this.props.onSelect}>
-          <PinPreviewImage pin={highlight} />
+          <PinPreviewImage pin={previewPin} />
           <div className="highlight-info">
             <span className="highlight-info-row">{title}</span>
             <div onClick={(e) => e.stopPropagation()}>
               <ActionItem action={actionItem} className={isSelected ? 'selected' : ''} />
             </div>
             <div>
-              <label>{t`Date`}:</label> <span className="highlight-date">{constructTimespanString(pin)}</span>
+              <label>{t`Date`}:</label>{' '}
+              <span className="highlight-date">
+                {pin.comparedLayers?.length > 0
+                  ? constructCompareTimespanString(pin.comparedLayers)
+                  : constructTimespanString(pin)}
+              </span>
             </div>
             {this.canDisplayDescription() && (
               <div

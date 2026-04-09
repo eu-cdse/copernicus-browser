@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Rodal from 'rodal';
 import { t } from 'ttag';
@@ -29,7 +29,6 @@ import {
   prepareKmzFile,
   getDimensionsInMeters,
   adjustClippingForAoi,
-  isJPGorPNG,
   isKMZ,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
@@ -172,13 +171,19 @@ function ImageDownload(props) {
   }
 
   const effects = constructGetMapParamsEffects(props);
+  const hasActiveEffects = !!effects;
   const getMapAuthToken = getGetMapAuthToken(props.auth);
 
-  let cancelToken;
-  useEffect((cancelToken) => {
+  const cancelTokenRef = useRef(null);
+  useEffect(() => {
+    if (hasActiveEffects && isTiff(analyticalFormState.imageFormat)) {
+      setAnalyticalFormState((prev) => ({ ...prev, imageFormat: IMAGE_FORMATS.JPG }));
+    }
+  }, [hasActiveEffects, analyticalFormState.imageFormat]);
+  useEffect(() => {
     return () => {
-      if (cancelToken) {
-        cancelToken.cancel();
+      if (cancelTokenRef.current) {
+        cancelTokenRef.current.cancel();
       }
     };
   }, []);
@@ -215,7 +220,7 @@ function ImageDownload(props) {
     const { imageFormat, cropToAoi } = formData;
 
     setLoadingImages(true);
-    cancelToken = new CancelToken();
+    cancelTokenRef.current = new CancelToken();
 
     let { width, height } = getMapDimensions(pixelBounds);
 
@@ -228,7 +233,7 @@ function ImageDownload(props) {
     }
 
     const baseParams = {
-      cancelToken: cancelToken,
+      cancelToken: cancelTokenRef.current,
       imageFormat: imageFormat,
       width: width,
       height: height,
@@ -387,7 +392,7 @@ function ImageDownload(props) {
 
     const shouldClipExtraBands = clipExtraBandsTiff && isTiff(imageFormat);
 
-    cancelToken = new CancelToken();
+    cancelTokenRef.current = new CancelToken();
 
     const requestsParams = [];
     const baseParams = {
@@ -410,7 +415,7 @@ function ImageDownload(props) {
       orthorectification: orthorectification,
       backscatterCoeff: backscatterCoeff,
       ...(orbitDirection && { orbitDirection: orbitDirection }),
-      cancelToken: cancelToken,
+      cancelToken: cancelTokenRef.current,
       showLogo: showLogo,
       shouldClipExtraBands: shouldClipExtraBands,
       getMapAuthToken: getMapAuthToken,
@@ -592,7 +597,7 @@ function ImageDownload(props) {
     setError(null);
     setWarnings(null);
     setLoadingImages(true);
-    cancelToken = new CancelToken();
+    cancelTokenRef.current = new CancelToken();
 
     const width = Math.floor(imageWidthInches * resolutionDpi);
     const height = Math.floor(((imageWidthInches * defaultHeight) / defaultWidth) * resolutionDpi);
@@ -601,7 +606,7 @@ function ImageDownload(props) {
       showCaptions: showCaptions,
       showLegend: showLegend,
       userDescription: userDescription,
-      cancelToken: cancelToken,
+      cancelToken: cancelTokenRef.current,
       imageFormat: imageFormat,
       width: width,
       height: height,
@@ -758,12 +763,6 @@ function ImageDownload(props) {
     analyticalFormState.customSelected &&
     isKMZ(analyticalFormState.imageFormat);
 
-  const areEffectsSetAndFormatNotJpgPngKmz =
-    selectedTab === TABS.ANALYTICAL &&
-    !!effects &&
-    !isJPGorPNG(analyticalFormState.imageFormat) &&
-    !isKMZ(analyticalFormState.imageFormat);
-
   const areImageDimensionsValid =
     selectedTab !== TABS.ANALYTICAL ||
     (imageWidth <= MAX_SH_IMAGE_SIZE &&
@@ -849,7 +848,6 @@ function ImageDownload(props) {
                 isAnalyticalModeAndNothingSelected ||
                 isDataFusionAndKMZSelected ||
                 isAnalyticalModeAndLayersNotLoaded ||
-                areEffectsSetAndFormatNotJpgPngKmz ||
                 !isZoomLevelOK
               }
               onClick={() => onDownloadImage(selectedTab)}
@@ -899,7 +897,7 @@ function ImageDownload(props) {
             isAnalyticalModeAndLayersNotLoaded={isAnalyticalModeAndLayersNotLoaded}
             isAnalyticalModeAndOnlyRawBands={isAnalyticalModeAndOnlyRawBands}
             isDataFusionAndKMZSelected={isDataFusionAndKMZSelected}
-            areEffectsSetAndFormatNotJpgPngKmz={areEffectsSetAndFormatNotJpgPngKmz}
+            hasActiveEffects={hasActiveEffects}
             isZoomLevelOK={isZoomLevelOK}
             areImageDimensionsValid={areImageDimensionsValid}
           />

@@ -195,7 +195,7 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
       params.blueRange = JSON.stringify(blueRangeEffect);
     }
 
-    if (minQa !== undefined) {
+    if (minQa !== undefined && minQa !== null) {
       params.minQa = minQa;
     }
     if (mosaickingOrder !== undefined) {

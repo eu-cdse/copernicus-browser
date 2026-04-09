@@ -6,6 +6,8 @@ import { DateTimeInput } from './DateTimeInput';
 import { EOBCCSlider } from '../../junk/EOBCommon/EOBCCSlider/EOBCCSlider';
 import './TimespanPicker.scss';
 
+export const MAX_TIME_RANGE_DAYS = 180;
+
 export class TimespanPicker extends Component {
   state = {
     fromTime: null,
@@ -33,8 +35,8 @@ export class TimespanPicker extends Component {
       return;
     }
     this.setState({
-      fromTime: moment(fromTime).clone(),
-      toTime: moment(toTime).clone(),
+      fromTime: fromTime ? moment(fromTime).clone() : null,
+      toTime: toTime ? moment(toTime).clone() : null,
     });
   };
 
@@ -44,21 +46,28 @@ export class TimespanPicker extends Component {
   };
 
   setFromTime = (time) => {
-    this.setState(
-      {
-        fromTime: time.clone(),
-      },
-      this.apply,
-    );
+    const { isTimeRange } = this.props;
+    const newFromTime = time.clone();
+    const maxToTime = newFromTime.clone().add(MAX_TIME_RANGE_DAYS, 'days').endOf('day');
+    const clampedToTime =
+      isTimeRange && this.state.toTime && this.state.toTime.isValid() && this.state.toTime.isAfter(maxToTime)
+        ? maxToTime
+        : this.state.toTime;
+    this.setState({ fromTime: newFromTime, toTime: clampedToTime }, this.apply);
   };
 
   setToTime = (time) => {
-    this.setState(
-      {
-        toTime: time.clone(),
-      },
-      this.apply,
-    );
+    const { isTimeRange } = this.props;
+    const newToTime = time.clone();
+    const minFromTime = newToTime.clone().subtract(MAX_TIME_RANGE_DAYS, 'days').startOf('day');
+    const clampedFromTime =
+      isTimeRange &&
+      this.state.fromTime &&
+      this.state.fromTime.isValid() &&
+      this.state.fromTime.isBefore(minFromTime)
+        ? minFromTime
+        : this.state.fromTime;
+    this.setState({ fromTime: clampedFromTime, toTime: newToTime }, this.apply);
   };
 
   render() {
@@ -100,7 +109,7 @@ export class TimespanPicker extends Component {
           selectedTime={fromTime}
           setSelectedTime={this.setFromTime}
           minDate={this.props.minDate}
-          maxDate={toTime}
+          maxDate={toTime && toTime.isValid() ? toTime : this.props.maxDate}
           onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
           hasCloudCoverage={hasCloudCoverage}
           showNextPrevDateArrows={showNextPrevDateArrows}
@@ -127,7 +136,7 @@ export class TimespanPicker extends Component {
           calendarContainer={calendarHolder || this.calendarHolder}
           selectedTime={toTime}
           setSelectedTime={this.setToTime}
-          minDate={fromTime}
+          minDate={fromTime && fromTime.isValid() ? fromTime : this.props.minDate}
           maxDate={this.props.maxDate}
           onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
           hasCloudCoverage={hasCloudCoverage}

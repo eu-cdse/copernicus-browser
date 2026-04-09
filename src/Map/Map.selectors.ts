@@ -35,6 +35,7 @@ export const mapStoreToProps = (store: any) => {
     toTime: store.visualization.toTime,
     customSelected: store.visualization.customSelected,
     evalscript: store.visualization.evalscript,
+    evalscriptUrl: store.visualization.evalscriptUrl,
     dataFusion: store.visualization.dataFusion,
     cloudCoverage: store.visualization.cloudCoverage,
     selectedProcessing: store.visualization.selectedProcessing,

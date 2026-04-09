@@ -1130,7 +1130,7 @@ export const DEFAULT_THEMES = [
         title: 'Dam Removal on the Klamath River (True Color)',
         toTime: '2024-04-11',
         layerId: '1_TRUE_COLOR',
-        themeId: 'HIGHLIGHT',
+        themeId: 'MONITORING',
         datasetId: 'S2_L2A_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1320,6 +1320,24 @@ export const DEFAULT_THEMES = [
         description:
           'This highlight shows a successful restoration of highly biodiverse Alvar grasslands in Estonia, an EU priority habitat characterised by thin soil over limestone bedrock. Historically threatened by overgrowth from shrubs and trees, large areas have been mechanically cleared and prepared for grazing. The satellite imagery provides clear visual evidence of this success: differences in vegetation spectral signatures sharply distinguish the restored, healthy meadow areas from overgrown sites. This monitoring confirms the rapid recovery of vegetation and the dramatic increase in biodiversity, achieved within a few years.',
       },
+      {
+        title: 'Identifying Volcano Activity Status with Sentinel-2',
+        lat: -57.79881,
+        lng: -26.45868,
+        zoom: 13,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: '6-SWIR',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/25444d-YOUR-INSTANCEID-HERE`,
+        fromTime: '2019-12-24T00:00:00.000Z',
+        toTime: '2019-12-24T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'MONITORING',
+        description:
+          'Many islands in the southern Indian and Atlantic Ocean have been known for the volcanic processes forming them, but due to their remote location and adverse conditions, their status of activity was difficult to ascertain. Sentinel-2 imagery and specifically the availability of short wave infrared bands sensitive to high temperatures has allowed regular virtual checks on these locations, often revealing permanently ongoing eruptions. Saunders Island in the South Sandwich Islands on the Atlantic Ocean is a notable example, where the lava lake of Mount Michael was first discovered on satellite imagery and only confirmed in the field later. This Short-Wave Infrared Composite shows hot areas as bright pink, snow and ice as cyan, vegetation in green and bare soil in brown. This demonstrates how Copernicus Sentinel data, coordinated by the European Commission and ESA, supports remote volcanic activity monitoring in otherwise inaccessible regions.',
+      },
     ],
   },
 
@@ -1348,6 +1366,20 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/6e1aa1-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'CLMS DMP 300m 10-daily V1 RT2',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/8010c3-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'Agriculture (S2 Quarterly Mosaics)',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/867895-YOUR-INSTANCEID-HERE`,
       },
     ],
     pins: [
@@ -1586,6 +1618,24 @@ export const DEFAULT_THEMES = [
       //     'Agriculture north-east of Mumbwa town in Zambia’s Central Province, is blessed with good climatic conditions and fertile soils. The main crops grown in the region are maize, cotton, soybeans and sunflowers. Besides vegetable cultivation, the region also offers favourable conditions for livestock farming. The most important animal species are cattle, sheep and goats. Several round structures created by center-pivot irrigation with groundwater can be seen in the west. Learn more [here](https://www.fao.org/3/i9761en/I9761EN.pdf).',
       // },
       {
+        title: 'Mapping Oil Palm Plantations in Borneo with Sentinel-1',
+        lat: 0.84042,
+        lng: 115.71899,
+        zoom: 7,
+        datasetId: '3c6623-YOUR-INSTANCEID-HERE',
+        layerId: '0-RGB-RATIO',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/c9e05c-YOUR-INSTANCEID-HERE`,
+        fromTime: '2025-10-01T00:00:00.000Z',
+        toTime: '2025-10-01T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'AGRICULTURE',
+        description:
+          'Oil palm plantations provide essential products for the food and cosmetics industry, but their expansion results in rainforest loss. On Borneo, several hundred thousand hectares of rainforest were lost annually to new plantations before conservation measures were implemented. Sentinel-1 is a key data source for large-scale monitoring due to its ability to provide robust canopy-structure measurements through persistent cloud cover. Sentinel-1 mosaics provide accurate, seamless data on a regular basis. In this RGB ratio composite, oil palm stands out in orange, while rainforest appears in yellow and blue, and settlements in bright white. This demonstrates how Copernicus Sentinel data, implemented by the European Union with ESA, supports evidence-based land-use monitoring and conservation planning.',
+      },
+      {
         title: 'Banana Plantations in Ecuador',
         lat: -3.30505,
         lng: -79.82391,
@@ -1601,6 +1651,46 @@ export const DEFAULT_THEMES = [
         themeId: 'AGRICULTURE',
         description:
           "The mapping of Banana Plantations (or similar high-biomass crops) using the unique scattering properties of radar. The white areas on the image are caused by high VV backscatter, where the large, vertically oriented leaves of the banana plants act as complex reflectors that scatter the C-band radar signal back strongly toward the satellite. This high backscatter (rendered as bright white) makes mature plantations stand out sharply against the surrounding landscape, demonstrating Sentinel-1's value for crop type mapping and agricultural monitoring in regions often obscured by cloud cover.",
+      },
+      {
+        title: 'Drought and Bare Soils in Southern Hungary',
+        lat: 47.25686,
+        lng: 19.94568,
+        zoom: 8,
+        datasetId: 'COPERNICUS_CLMS_DMP_300M_10DAILY_RT2',
+        layerId: 'DMP',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/8010c3-YOUR-INSTANCEID-HERE`,
+        fromTime: '2022-08-10T00:00:00.000Z',
+        toTime: '2022-08-10T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        clmsSelectedPath: 'COPERNICUS_CLMS_DMP_300M_10DAILY_RT0',
+        clmsSelectedCollection: 'COPERNICUS_CLMS_DMP_300M_10DAILY_RT0',
+        clmsSelectedConsolidationPeriodIndex: 2,
+        themeId: 'AGRICULTURE',
+        description:
+          'Cereal, fodder and sunflower farming dominates the land cover in southeastern Hungary. During 2022 for economic reasons, many farmers planted spring crops such as maize and sunflower, but this season was affected by extreme drought. Therefore, many crops were harvested early, and by the end of summer, large areas of farmland had no vegetation cover, leading to soil loss and aggravating the effect of the drought and heatwave. This is reflected in the Dry Matter Productivity 300 m 10-daily v1 dataset - red pixels are bare soil with zero productivity, yellow areas are dry vegetation or crop stubble, while green pixels are healthy productive vegetation.',
+      },
+      {
+        title: 'The "Corn Belt" in the United States of America',
+        lat: 40.66397,
+        lng: -95.42725,
+        zoom: 6,
+        datasetId: '5460de-YOUR-INSTANCEID-HERE',
+        layerId: 'TRUE-COLOR-CLOUDLESS',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/867895-YOUR-INSTANCEID-HERE`,
+        evalscriptUrl:
+          'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-2/agriculture_growth_stage/quarterly_mosaics.js',
+        fromTime: '2025-04-01T00:00:00.000Z',
+        toTime: '2025-10-01T23:59:59.999Z',
+        dateMode: 'TIME RANGE',
+        cloudCoverage: 30,
+        themeId: 'AGRICULTURE',
+        description:
+          'Corn and soybeans are the dominant crop in large areas of the USA. These crops have a relatively short and synchronized crop cycle, planted in April and harvested in October. The Agricultural Growth Stage script, applied on Sentinel-2 Quarterly Cloudless Mosaics, highlights these areas in bright green. The mosaics provide cloud-free composites of Sentinel imagery, and the NDVI mean of the first, second and third quarter in the study period is assigned to the red, green and blue channels of each pixel. Since each crop has a distinct phenology, this composite can be used to map cropping trends from local to continental scale. [Explore the visualisation](https://link.dataspace.copernicus.eu/m37i).',
       },
     ],
   },
@@ -1696,7 +1786,7 @@ export const DEFAULT_THEMES = [
         title: 'Deteriorating Air Quality in New Delhi (Aerosol Index)',
         toTime: '2023-11-02',
         layerId: 'AER_AI_340_AND_380_VISUALIZED',
-        themeId: 'HIGHLIGHT',
+        themeId: 'ATMOSPHERE',
         datasetId: 'S5_AER_AI_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1711,7 +1801,7 @@ export const DEFAULT_THEMES = [
         title: 'Hurricane Dora’s Historic Journey (Cloud Base Pressure)',
         toTime: '2023-08-04',
         layerId: 'CLOUD_BASE_PRESSURE_VISUALIZED',
-        themeId: 'HIGHLIGHT',
+        themeId: 'ATMOSPHERE',
         datasetId: 'S5_CLOUD_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1956,6 +2046,93 @@ export const DEFAULT_THEMES = [
         description:
           "The reawakening of Mauna Loa, the world's largest active volcano on Hawaiʻi Island, which erupted for the first time in 38 years, beginning on November 27, 2022, and ending on December 13, 2022. The effusive eruption from the Northeast Rift Zone (NERZ) produced dramatic features clearly visible from space: intense thermal signatures and infrared anomalies marked the active lava flows, which traveled approximately 12 miles (19 km) downslope before stalling. Monitoring the concentration and direction of this plume was vital for assessing the impact of vog (volcanic smog) on downwind communities across Hawaiʻi Island. This event was remarkably benign, resulting in no recorded injuries or fatalities. While the main lava flow did temporarily cut off power and access to the Mauna Loa Observatory and threatened the cross-island Saddle Road, it ultimately stalled before causing major infrastructure or property damage.",
       },
+      {
+        title: 'Methane Emission in the Permian Basin, Texas, USA',
+        lat: 32.64631,
+        lng: -100.7666,
+        zoom: 8,
+        datasetId: 'S5_CH4_CDAS',
+        layerId: 'CH4_VISUALIZED',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE`,
+        fromTime: '2023-12-08T00:00:00.000Z',
+        toTime: '2023-12-08T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'ATMOSPHERE',
+        description:
+          'Methane is a potent greenhouse gas contributing to global warming and also creating adverse effects on human health. In the Permian Basin, one of the most intensively used oil and natural gas extraction sites in the United States, high methane emissions regularly occur. These are caused by seemingly minor problems with compressor stations, dump valves or flares. Sentinel-5P offers publicly available data for tracking these events and supporting mitigation. [Explore the visualisation](https://link.dataspace.copernicus.eu/gl6p).',
+      },
+      {
+        title: 'Drastically Reduced NO2 Pollution in Paris',
+        lat: 48.90806,
+        lng: 2.66418,
+        zoom: 9,
+        themeId: 'ATMOSPHERE',
+        compareMode: 'split',
+        comparedOpacity: [1, 1],
+        comparedClipping: [
+          [0, 0.42],
+          [0, 1],
+        ],
+        comparedLayers: [
+          {
+            title: 'Paris, NO2 October 2018',
+            lat: 48.90806,
+            lng: 2.66418,
+            zoom: 9,
+            datasetId: 'S5_NO2_CDAS',
+            layerId: 'NO2_VISUALIZED',
+            visualizationUrl: `${
+              global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+            }/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE`,
+            evalscriptUrl:
+              'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-5p/no2_monthly_mean/script.js',
+            fromTime: '2018-10-01T00:00:00.000Z',
+            toTime: '2018-10-31T23:59:59.999Z',
+            dateMode: 'TIME RANGE',
+            cloudCoverage: 30,
+          },
+          {
+            title: 'Paris, NO2 October 2025',
+            lat: 48.90806,
+            lng: 2.66418,
+            zoom: 9,
+            datasetId: 'S5_NO2_CDAS',
+            layerId: 'NO2_VISUALIZED',
+            visualizationUrl: `${
+              global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+            }/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE`,
+            evalscriptUrl:
+              'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-5p/no2_monthly_mean/script.js',
+            fromTime: '2025-10-01T00:00:00.000Z',
+            toTime: '2025-10-31T23:59:59.999Z',
+            dateMode: 'TIME RANGE',
+            cloudCoverage: 30,
+          },
+        ],
+        description:
+          'Nitrogen Dioxide is a public health hazard, causing respiratory problems and increasing the risk of lung cancer. It is mainly emitted by vehicles and also by industry. Starting in 2020, the city of Paris, France is implementing a series of measures to reduce car traffic and improve air quality, including new bicycle lanes, limited traffic zones and new urban green spaces. The effect is well visible on this comparison of Sentinel-5P NO2 monthly mosaics from October 2018 and October 2025: before the initiative, large areas of the city and its suburbs had hazardous NO2 concentrations, while currently the highly polluted area is concentrated in the city center. [Explore the visualisation](http://link.dataspace.copernicus.eu/gn47).',
+      },
+      {
+        title: 'Sulfur Dioxide Plume from Hayli Gubbi Volcano, Ethiopia',
+        lat: 21.82071,
+        lng: 74.17969,
+        zoom: 4,
+        datasetId: 'S5_SO2_CDAS',
+        layerId: 'SO2_VISUALIZED',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/0b0f5a-YOUR-INSTANCEID-HERE`,
+        fromTime: '2025-11-25T00:00:00.000Z',
+        toTime: '2025-11-25T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'ATMOSPHERE',
+        description:
+          'Hayli Gubbi volcano in Ethiopia erupted on 23 November 2025. It had no previous eruptions in known history. The eruption emitted a massive amount of sulfur dioxide into the upper troposphere that was then carried long distances with the wind. Sentinel-5P measures sulfur dioxide in the total atmospheric column, and has daily coverage of the globe. This map of the sulfur dioxide product shows the distribution of the plume reaching across the eastern Indian Ocean, crossing India and travelling as far as southern China. [Explore the visualisation](https://link.dataspace.copernicus.eu/i5ve).',
+      },
     ],
   },
 
@@ -1977,6 +2154,13 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/dd16e0-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'Historical (S2 Quarterly Mosaics)',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/867895-YOUR-INSTANCEID-HERE`,
       },
       // {
       //   name: 'Historical (L8 USGS)',
@@ -2058,6 +2242,24 @@ export const DEFAULT_THEMES = [
         themeId: 'HISTORICAL',
         description:
           'The controversial Belo Monte mega-dam in Pará state has done significant socio-environmental harm to the Xingu River and the indigenous and traditional people living beside it. Project designers appear to have seriously overestimated the Xingu River flow rates and failed to account for fluctuations between wet and dry seasons, while also not accounting for reductions in flow due to deforestation caused by rapidly expanding cattle ranches and soy plantations. Due to escalating climate change and drought that are reducing Xingu River flow, the dam seems almost certain to never fulfill promised economic or energy-producing goals. The dam diverts the Xingu River’s natural flow into a constructed channel, then into a reservoir and to the main electricity-producing Belo Monte dam, largely drying up the river in its original path. Tens of thousands of indigenous and traditional people were forced from their homes, and had to give up their fishing livelihoods. Today, the Belo Monte hydroelectric dam stands as a warning – proof of the damage caused by ill-conceived Amazon mega-projects. Learn more [here](https://news.mongabay.com/2018/02/belo-monte-legacy-harm-from-amazon-dam-didnt-end-with-construction/) and [here](https://news.mongabay.com/2020/01/belo-monte-boondoggle-brazils-biggest-costliest-dam-may-be-unviable/).',
+      },
+      {
+        title: 'Mine Recultivation in Cottbus, Germany',
+        lat: 51.79874,
+        lng: 14.49818,
+        zoom: 12,
+        datasetId: '5460de-YOUR-INSTANCEID-HERE',
+        layerId: 'TRUE-COLOR-CLOUDLESS',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/867895-YOUR-INSTANCEID-HERE`,
+        fromTime: '2015-10-01T00:00:00.000Z',
+        toTime: '2015-10-01T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'HISTORICAL',
+        description:
+          'The current Cottbus Ostsee Lake used to be a brown coal mine, fuelling the nearby power station. In December 2015, extraction from the Cottbus-Nord mine ended, and recultivation was launched. Cottbus-Nord was turned into a lake with artificial shores designed to support nature and human use. The nearby Jänschwalde mine to the northeast continues to operate, but recultivation into a forest, wind farm, solar park and farmland is also in progress. Sentinel-2 quarterly cloudless mosaics offer clear, seamless views of the landscape and cover the full operational history of Sentinel-2 from 2015 to the present day. In compare mode, you can swipe between the historic images and the latest state to see the change with your own eyes. [Explore the visualisation](https://link.dataspace.copernicus.eu/xsr2).',
       },
     ],
   },
@@ -2173,7 +2375,7 @@ export const DEFAULT_THEMES = [
         title: 'Amazon Drought (Highlight Optimized Natural Color)',
         toTime: '2023-10-02',
         layerId: 'HIGHLIGHT-OPTIMIZED-NATURAL-COLOR',
-        themeId: 'HIGHLIGHT',
+        themeId: 'FLOODING',
         datasetId: 'S2_L2A_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -2203,7 +2405,7 @@ export const DEFAULT_THEMES = [
         title: 'Devastating Flooding in DR Congo (Enhanced Visualization)',
         toTime: '2023-05-05',
         layerId: '2_ENHANCED-VISUALIZATION-2',
-        themeId: 'HIGHLIGHT',
+        themeId: 'FLOODING',
         datasetId: 'S1_CDAS_IW_VVVH',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -2749,6 +2951,24 @@ export const DEFAULT_THEMES = [
         description:
           'Coastal waves are a daily consequence of the so-called [sea breeze](https://eschooltoday.com/winds/land-breeze-and-sea-breeze.html). During the day, the land gets heated from the sun, getting warmer than the sea. As warmer air is less dense, it rises above the land, lowering the air pressure. The difference in air pressure creates cool winds, blowing from the sea towards the land. Italy attracts many tourists interested in [surfing](https://www.surf-forecast.com/breaks/Circoletto-Rome), especially in winter, when the waves are expected to be the highest. On December 22, 2019, however, the waves were extremely high due to the [storms Elsa and Fabien](https://www.accuweather.com/en/severe-weather/storms-elsa-and-fabien-unleash-damage-from-france-and-spain-to-italy/649871), which caused winds up to 200 kilometers per hour. The storms caused power outages, heavy flooding and a mini tornado, which destroyed 20 homes. The storm caused 9 fatalities and resulted in considerable damage across Portugal, Spain and France.',
       },
+      {
+        title: 'Oil Leak During Salvage of the MV Golden Ray',
+        lat: 31.13342,
+        lng: -81.39127,
+        zoom: 14,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: '1_TRUE_COLOR',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/7e2a0c-YOUR-INSTANCEID-HERE`,
+        fromTime: '2021-08-01T00:00:00.000Z',
+        toTime: '2021-08-01T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'OCEAN',
+        description:
+          'Golden Ray was a roll-on-roll-off car carrier ship, which capsized in Saint Simons Sound off the port of Brunswick, USA due to incorrect loading and ballast management. There was no loss of life, but the ship remained aground for several years. Since it was so large it could not be salvaged, it was cut up into 8 sections on the spot for removal. Unfortunately, during this operation, an oil leak ensued that breached the environmental barrier and was carried further away by currents, causing severe pollution. On this Sentinel-2 true color image, you can see the oil as bright, shiny streaks on the water surface. If you create a timelapse from September 2019 to October 2021, you can follow the full process of salvage. The yellow arches are VB-10,000, a special salvage ship that was used during the operation. [Explore the visualisation](https://link.dataspace.copernicus.eu/e6c9).',
+      },
     ],
   },
 
@@ -2802,7 +3022,7 @@ export const DEFAULT_THEMES = [
         title: 'Heavy Ice in the Bothnian Bay (RGB Ratio)',
         toTime: '2024-02-12',
         layerId: '8_RGB-RATIO',
-        themeId: 'HIGHLIGHT',
+        themeId: 'SNOW',
         datasetId: 'S1_CDAS_IW_VVVH',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -2817,13 +3037,33 @@ export const DEFAULT_THEMES = [
         title: 'Onset of Winter in Southern Germany (True Color)',
         toTime: '2023-12-07T23:59:59.999Z',
         layerId: '1_TRUE_COLOR',
-        themeId: 'HIGHLIGHT',
+        themeId: 'SNOW',
         datasetId: 'S2_L2A_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE`,
         description:
           'On the morning of December 2, 2023, some people in Southern Germany may have felt like they were watching the wrong movie when they woke up to almost half a meter of fresh snow. The weather services reported the highest snow depths for this time of year since recording (e.g. 45 cm for Munich). The trigger for the huge masses of snow was a moisture-rich warm front from south-western Europe, which collided with a cold front from Scandinavia over the northern Alpine foothills. What offered perfect conditions for all winter enthusiasts caused chaos, frustration and considerable obstructions on other fronts. Traffic in the region came to a standstill, airports were not operating, sport events had to be canceled and the subsequent snowmelt a few days later led to flooded fields and roads [[1](https://www.theguardian.com/world/2023/dec/02/snow-chaos-southern-germany-munich-airport-suspends-flights)].',
+      },
+      {
+        title: 'Finding a Penguin Colony on McDonald Ice Rumples',
+        lat: -75.44975,
+        lng: -26.26247,
+        zoom: 12,
+        datasetId: 'S2_L2A_CDAS',
+        layerId: '1_TRUE_COLOR',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/a55e9e-YOUR-INSTANCEID-HERE`,
+        fromTime: '2025-11-18T00:00:00.000Z',
+        toTime: '2025-11-18T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        evalscriptUrl:
+          'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-2/penguin_locator/script.js',
+        themeId: 'SNOW',
+        description:
+          'Satellite imagery is essential not only for monitoring snow and ice processes, but also the activity of endangered species that live in such environments. One of the most prominent examples is the discovery and observation of Emperor Penguin colonies in Antarctica: this species breeds on the ice surface (as opposed to bare rock or ground), and its guano produces stains that can be clearly identified. This Sentinel-2 image is visualized with the Penguin Locator custom script, enhancing small differences between the red, green and blue bands of the dataset to highlight different types and thicknesses of ice, and of course, penguin colonies. This kind of observation supports Copernicus-based environmental monitoring and complements ESA-led Earth observation efforts in polar regions.',
       },
       {
         title: 'Bear Glacier, Alaska (Highlight Optimized Natural Color)',
@@ -3027,6 +3267,20 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/af9f44-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'Urban (S2 SWIR)',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/25444d-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'Urban (Landsat Mosaics)',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'Urban (S3-SLSTR)',
         service: 'WMS',
         url: `${
@@ -3036,6 +3290,53 @@ export const DEFAULT_THEMES = [
       },
     ],
     pins: [
+      {
+        title: 'Monitoring Coastal Land Cover Change with Landsat Mosaics on Lara Kundu Beach, Turkey',
+        lat: 36.9079,
+        lng: 30.90986,
+        zoom: 13,
+        themeId: 'URBAN',
+        compareMode: 'split',
+        comparedOpacity: [1, 1],
+        comparedClipping: [
+          [0.4, 1],
+          [0, 1],
+        ],
+        comparedLayers: [
+          {
+            title: 'Kundu, Turkey (2024)',
+            lat: 36.9079,
+            lng: 30.90986,
+            zoom: 13,
+            datasetId: 'CDAS_LANDSAT_MOSAIC',
+            layerId: '1-TRUE-COLOUR',
+            visualizationUrl: `${
+              global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+            }/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE`,
+            fromTime: '2024-07-01T00:00:00.000Z',
+            toTime: '2024-07-01T23:59:59.999Z',
+            dateMode: 'SINGLE',
+            cloudCoverage: 30,
+          },
+          {
+            title: 'Kundu, Turkey (1998)',
+            lat: 36.9079,
+            lng: 30.90986,
+            zoom: 13,
+            datasetId: 'CDAS_LANDSAT_MOSAIC',
+            layerId: '1-TRUE-COLOUR',
+            visualizationUrl: `${
+              global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+            }/ogc/wms/3bdae8-YOUR-INSTANCEID-HERE`,
+            fromTime: '1998-07-01T00:00:00.000Z',
+            toTime: '1998-07-01T23:59:59.999Z',
+            dateMode: 'SINGLE',
+            cloudCoverage: 30,
+          },
+        ],
+        description:
+          'Long-term time series of satellite imagery can help us understand urban change through several decades. This compare scene shows the region of Kundu, east of Antalya, Turkey in 1998 and 2024. Before beachfront development and the spread of plastic greenhouse agriculture, this area was a vegetated coastal plain with agricultural areas inland. During the early 2000s the shore was built up by hotels and holiday resorts, while the main form of cultivation changed to tunnel greenhouse farming. Landsat bi-monthly mosaics provide a robust way to show such processes happening through space and time. This type of long-term observation supports Copernicus Data Space Ecosystem services and complements ESA-led Earth observation analysis for monitoring urban and coastal land-cover dynamics.',
+      },
       {
         title: 'Marshalling Yard Maschen in Hamburg, Germany',
         lat: 53.4044,
@@ -3471,6 +3772,24 @@ export const DEFAULT_THEMES = [
         description:
           "This highlight showcases Riga's extensive urban greenery, with approximately 47% of its municipal area classified as green space or forest. Satellite land cover data clearly delineate the city's green heart, from the historic central parks to the massive Mežaparks urban forest on Lake Ķīšezers. This visualisation confirms Riga's status as one of Europe's greenest capitals and assists in monitoring the preservation and health of these vital natural areas.",
       },
+      {
+        title: 'Corviale - a massive urban development project reimagined',
+        lat: 41.85163,
+        lng: 12.42682,
+        zoom: 15,
+        datasetId: '5460de-YOUR-INSTANCEID-HERE',
+        layerId: 'TRUE-COLOR-CLOUDLESS',
+        visualizationUrl: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/867895-YOUR-INSTANCEID-HERE`,
+        fromTime: '2025-10-01T00:00:00.000Z',
+        toTime: '2025-10-01T23:59:59.999Z',
+        dateMode: 'SINGLE',
+        cloudCoverage: 30,
+        themeId: 'URBAN',
+        description:
+          'During the early 1970\'s Rome experienced a housing crisis, and one of the proposed solutions was to create a massive communal housing unit. Corviale or "the snake - Il Serpentone" was created, housing more than 1000 apartments on 11 floors over the length of nearly a kilometer. However, the building was never completely finished, and soon turned into a disadvantaged neighbourhood. Recently, a process of architectural and social reconstruction has begun, improving quality of life for the residents. This Sentinel-2 mosaic from 1 October 2025 shows the location and scale of the building on a seamless composite.',
+      },
     ],
   },
 
@@ -3804,7 +4123,7 @@ export const DEFAULT_THEMES = [
         title: 'Wildfires in Canada (SWIR)',
         toTime: '2023-06-20',
         layerId: 'SWIR',
-        themeId: 'HIGHLIGHT',
+        themeId: 'WILDFIRES',
         datasetId: 'S2_L2A_CDAS',
         visualizationUrl: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

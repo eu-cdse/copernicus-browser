@@ -244,6 +244,7 @@ class SentinelHubLayer extends L.TileLayer {
       url,
       layers,
       evalscript,
+      evalscriptUrl,
       dataFusion,
       fromTime,
       toTime,
@@ -265,6 +266,7 @@ class SentinelHubLayer extends L.TileLayer {
     this.layer = this.createLayer(url, {
       datasetId: datasetId,
       evalscript: evalscript,
+      evalscriptUrl: evalscriptUrl,
       dataFusion: dataFusion,
       fromTime: fromTime,
       toTime: toTime,
@@ -402,9 +404,16 @@ class SentinelHubLayer extends L.TileLayer {
             console.error('There has been a problem with your fetch operation: ', error.message);
           }
         }
+        // If the fetch failed and evalscript is still not populated, bail — falling
+        // through to WMS without a layerId would throw a misleading SDK error.
+        if (!layer.evalscript) {
+          done(new Error('Failed to fetch evalscript from evalscriptUrl'), null);
+          return;
+        }
       }
 
-      const apiType = layer.supportsApiType(ApiType.PROCESSING)
+      const canUseProcessingApi = layer.supportsApiType(ApiType.PROCESSING);
+      const apiType = canUseProcessingApi
         ? ApiType.PROCESSING
         : layer.supportsApiType(ApiType.WMTS)
         ? ApiType.WMTS
@@ -467,6 +476,7 @@ class SentinelHubLayer extends L.TileLayer {
       url,
       layers,
       evalscript,
+      evalscriptUrl,
       dataFusion,
       datasetId,
       customSelected,
@@ -485,6 +495,7 @@ class SentinelHubLayer extends L.TileLayer {
     this.layer = this.createLayer(url, {
       datasetId: datasetId,
       evalscript: evalscript,
+      evalscriptUrl: evalscriptUrl,
       dataFusion: dataFusion,
       layer: layers,
       customSelected: customSelected,
@@ -799,14 +810,14 @@ class SentinelHubLayer extends L.TileLayer {
       case DEM_COPERNICUS_30_CDAS:
       case DEM_COPERNICUS_90_CDAS:
         const demDsh = getDataSourceHandler(datasetId);
-        const { demInst } = demDsh.getDatasetParams(datasetId);
+        const { demInstance } = demDsh.getDatasetParams(datasetId);
         return await new DEMCDASLayer({
           evalscript: evalscript,
           evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
           upsampling: upsampling,
           downsampling: downsampling,
-          demInstance: demInst,
+          demInstance: demInstance,
         });
       case CDSE_CCM_VHR_IMAGE_2018_COLLECTION:
       case CDSE_CCM_VHR_IMAGE_2021_COLLECTION:
@@ -1151,6 +1162,8 @@ class SentinelHubLayerComponent extends GridLayer {
       if (params.evalscript) {
         options.evalscript = params.evalscript;
         options.evalscriptUrl = null;
+      } else if (params.evalscriptUrl) {
+        options.evalscriptUrl = params.evalscriptUrl;
       }
       if (params.dataFusion) {
         options.dataFusion = params.dataFusion;

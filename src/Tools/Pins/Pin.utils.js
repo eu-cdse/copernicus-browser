@@ -41,6 +41,14 @@ export async function getPinsFromServer() {
   return await getPinsFromBackend(access_token);
 }
 
+// The server schema uses the legacy lowercase key "evalscripturl".
+// Map the camelCase field to lowercase and drop the camelCase key before any PUT
+// so the server stores and returns the value correctly.
+function toServerPin(p) {
+  const { evalscriptUrl, evalscripturl: evalscriptUrlLegacy, ...rest } = p;
+  return { ...rest, evalscripturl: evalscriptUrl ?? evalscriptUrlLegacy };
+}
+
 async function removePinsFromBackend(ids) {
   const access_token = store.getState().auth.user.access_token;
   const url = `${import.meta.env.VITE_CDSE_BACKEND}userpins`;
@@ -52,7 +60,7 @@ async function removePinsFromBackend(ids) {
   };
   let userPins = await getPinsFromServer();
   userPins = userPins.filter((p) => !ids.includes(p._id));
-  await axios.put(url, { items: userPins }, requestParams);
+  await axios.put(url, { items: userPins.map(toServerPin) }, requestParams);
   return userPins;
 }
 
@@ -88,7 +96,7 @@ async function savePinsToBackend(pins, replace = false) {
     newPins = [...pins, ...currentPins];
   }
   try {
-    await axios.put(url, { items: newPins }, requestParams);
+    await axios.put(url, { items: newPins.map(toServerPin) }, requestParams);
     return { uniqueId: lastUniqueId, pins: newPins };
   } catch (err) {
     console.error('Unable to save pins!', err);
@@ -98,10 +106,13 @@ async function savePinsToBackend(pins, replace = false) {
 
 export async function savePinsToServer(pins, replace = false) {
   const response = await savePinsToBackend(pins, replace);
+  const normalizedPins = establishCorrectDataFusionFormatInPins(
+    response.pins.map((pin) => normalizePin({ ...pin })),
+  );
 
-  store.dispatch(pinsSlice.actions.updatePinsByType({ pins: response.pins, pinType: SAVED_PINS }));
+  store.dispatch(pinsSlice.actions.updatePinsByType({ pins: normalizedPins, pinType: SAVED_PINS }));
 
-  return response;
+  return { ...response, pins: normalizedPins };
 }
 
 export function savePinsToSessionStorage(newPins, replace = false) {
@@ -112,7 +123,7 @@ export function savePinsToSessionStorage(newPins, replace = false) {
       p._id = uniqueId;
     }
     lastUniqueId = p._id;
-    return p;
+    return normalizePin({ ...p });
   });
   let pins = sessionStorage.getItem(PINS_LC_NAME);
   if (!pins) {
@@ -121,7 +132,7 @@ export function savePinsToSessionStorage(newPins, replace = false) {
     pins = JSON.parse(pins);
   }
   if (!replace) {
-    pins = [...newPins, ...pins];
+    pins = [...newPins, ...pins.map((pin) => normalizePin({ ...pin }))];
   } else {
     pins = newPins;
   }
@@ -148,7 +159,7 @@ export function getPinsFromSessionStorage() {
 export async function saveSharedPinsToServer(pins) {
   const url = `${import.meta.env.VITE_CDSE_BACKEND}sharedpins`;
   const { data } = await axios.post(url, {
-    items: pins,
+    items: pins.map(toServerPin),
   });
 
   return data.id;
@@ -283,14 +294,24 @@ export async function layerFromPin(pin, reqConfig) {
     layer = layers.find((l) => l.layerId === layerId);
     if (layer) {
       await layer.updateLayerFromServiceIfNeeded(reqConfig);
+      if ((evalscript || evalscriptUrl) && Object.keys(dataFusion || {}).length === 0) {
+        layer.evalscript = evalscript;
+        layer.evalscriptUrl = evalscriptUrl;
+      }
       if (dsh && dsh.supportsLowResolutionAlternativeCollection(datasetId)) {
         layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(datasetId);
         layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(datasetId);
       }
+    } else if ((evalscript || evalscriptUrl) && Object.keys(dataFusion || {}).length === 0) {
+      // layerId not found in WMS layers but a custom script is present — fall back to layers[0]
+      // so the preview can still render using the custom evalscript.
+      layer = layers[0];
+      layer.evalscript = evalscript;
+      layer.evalscriptUrl = evalscriptUrl;
     }
   } else {
     layer = layers[0];
-    if (Object.keys(dataFusion).length === 0) {
+    if (Object.keys(dataFusion || {}).length === 0) {
       layer.evalscript = evalscript;
       layer.evalscriptUrl = evalscriptUrl;
     }
@@ -321,12 +342,59 @@ export const constructTimespanString = ({ fromTime, toTime } = {}) => {
   return `${moment.utc(fromTime).format('YYYY-MM-DD')} - ${moment.utc(toTime).format('YYYY-MM-DD')}`;
 };
 
+export const constructCompareTimespanString = (comparedLayers = []) => {
+  const fromTimes = comparedLayers
+    .map((cl) => cl.fromTime)
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
+  const toTimes = comparedLayers
+    .map((cl) => cl.toTime)
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
+
+  if (!toTimes.length) {
+    return null;
+  }
+
+  const fromTime = fromTimes[0];
+  const toTime = toTimes.at(-1);
+
+  if (!fromTime || isOnEqualDate(fromTime, toTime)) {
+    return moment.utc(toTime).format('YYYY-MM-DD');
+  }
+
+  return `${moment.utc(fromTime).format('YYYY-MM-DD')} / ${moment.utc(toTime).format('YYYY-MM-DD')}`;
+};
+
 export function normalizePin(pin) {
-  return {
+  const resolvedEvalscriptUrl = pin.evalscriptUrl ?? pin.evalscripturl;
+  const resolvedProcessGraphUrl = pin.processGraphUrl ?? pin.processgraphurl;
+
+  const result = {
     ...pin,
-    evalscriptUrl: pin.evalscriptUrl ?? pin.evalscripturl,
-    processGraphUrl: pin.processGraphUrl ?? pin.processgraphurl,
+    evalscriptUrl: resolvedEvalscriptUrl,
+    processGraphUrl: resolvedProcessGraphUrl,
   };
+
+  // evalscript/evalscriptUrl and processGraph/processGraphUrl are mutually exclusive.
+  // Priority: evalscriptUrl > processGraphUrl > evalscript (inline).
+  // Delete the losing-mode fields so they are absent from the object entirely.
+  // Remove legacy lowercase keys that were spread in from the original pin object.
+  delete result.evalscripturl;
+  delete result.processgraphurl;
+
+  if (resolvedEvalscriptUrl) {
+    delete result.processGraph;
+    delete result.processGraphUrl;
+  } else if (resolvedProcessGraphUrl) {
+    delete result.evalscript;
+    delete result.evalscriptUrl;
+  } else if (pin.evalscript) {
+    delete result.processGraph;
+    delete result.processGraphUrl;
+  }
+
+  return result;
 }
 
 export function establishCorrectDataFusionFormatInPins(pins) {
@@ -408,10 +476,10 @@ export async function constructPinFromProps(props) {
       selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscript && !evalscriptUrl && customSelected
         ? evalscript
         : '',
-    evalscriptUrl:
-      selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && evalscriptUrl && customSelected
-        ? evalscriptUrl
-        : '',
+    // evalscriptUrl is saved regardless of selectedProcessing because normalizePin enforces
+    // mutual exclusion downstream (it clears processGraph/processGraphUrl when evalscriptUrl
+    // is present), so any stale process graph from a previous OpenEO session is safely discarded.
+    evalscriptUrl: evalscriptUrl && customSelected ? evalscriptUrl : '',
     themeId: selectedThemeId,
     dataFusion: dataFusion,
     tag: VERSION_INFO.tag,

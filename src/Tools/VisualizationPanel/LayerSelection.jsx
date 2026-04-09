@@ -238,9 +238,7 @@ const LayerSelection = ({
 
   useEffect(() => {
     setEvalscriptUrl(visualizedEvalscriptUrl);
-    if (visualizedEvalscriptUrl) {
-      setUseEvalscriptUrl(true);
-    }
+    setUseEvalscriptUrl(!!visualizedEvalscriptUrl);
   }, [visualizedEvalscriptUrl]);
 
   useEffect(() => {
@@ -271,7 +269,7 @@ const LayerSelection = ({
       return;
     }
 
-    if (evalscript || evalscriptUrl) {
+    if (evalscript || evalscriptUrl || visualizedEvalscript || visualizedEvalscriptUrl) {
       return;
     }
 
@@ -309,6 +307,8 @@ const LayerSelection = ({
     selectedProcessing,
     evalscript,
     evalscriptUrl,
+    visualizedEvalscript,
+    visualizedEvalscriptUrl,
     datasetId,
     datasourceHandler,
   ]);

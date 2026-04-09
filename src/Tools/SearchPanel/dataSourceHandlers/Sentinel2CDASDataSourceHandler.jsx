@@ -163,13 +163,21 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
     if (!usesS2L2ADataset && !usesS2L1CDataset) {
       return false;
     }
-    if (usesS2L1CDataset && !this.datasets.includes(S2_L1C_CDAS)) {
-      this.datasets.push(S2_L1C_CDAS);
-      this.urls[S2_L1C_CDAS].push(url);
+    if (usesS2L1CDataset) {
+      if (!this.datasets.includes(S2_L1C_CDAS)) {
+        this.datasets.push(S2_L1C_CDAS);
+      }
+      if (!this.urls[S2_L1C_CDAS].includes(url)) {
+        this.urls[S2_L1C_CDAS].push(url);
+      }
     }
-    if (usesS2L2ADataset && !this.datasets.includes(S2_L2A_CDAS)) {
-      this.datasets.push(S2_L2A_CDAS);
-      this.urls[S2_L2A_CDAS].push(url);
+    if (usesS2L2ADataset) {
+      if (!this.datasets.includes(S2_L2A_CDAS)) {
+        this.datasets.push(S2_L2A_CDAS);
+      }
+      if (!this.urls[S2_L2A_CDAS].includes(url)) {
+        this.urls[S2_L2A_CDAS].push(url);
+      }
     }
     if (preselected) {
       if (usesS2L1CDataset) {

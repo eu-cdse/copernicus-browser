@@ -23,6 +23,7 @@ import Single from './icons/single.svg?react';
 import Mosaic from './icons/mosaic.svg?react';
 import TimeRange from './icons/time-range.svg?react';
 import { getFromTime } from './VisualizationTimeSelect.utils';
+import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 
 const AdditionalTimeSelectOptions = () => {
   const mosaickingOrder = useSelector((state) => state.visualization.mosaickingOrder);
@@ -66,6 +67,7 @@ export function VisualizationTimeSelect({
   datePanelExpanded,
   showLayerPanel,
   setShowLayerPanel,
+  showHighlightPanel,
   dateMode,
   compareShare,
   clmsSelection,
@@ -126,7 +128,7 @@ export function VisualizationTimeSelect({
   }
 
   function openLayerPanel() {
-    if (!showLayerPanel && setShowLayerPanel && !compareShare) {
+    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showHighlightPanel) {
       setShowLayerPanel(true);
     }
   }
@@ -168,6 +170,11 @@ export function VisualizationTimeSelect({
         <div className="date-timespan-label">
           <b className="time-select-type">
             {t`Date:`}&nbsp;{DATE_MODES[dateMode]?.label()}
+            {isTimeRange && (
+              <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
+                {t`The maximum selectable time range is limited to 180 days.`}
+              </HelpTooltip>
+            )}
           </b>
 
           <div className="date-tabs">

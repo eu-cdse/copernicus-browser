@@ -60,6 +60,7 @@ export default class AnalyticalForm extends React.Component {
       clipExtraBandsTiff,
       customResolution,
       getCrsOptions,
+      hasActiveEffects,
     } = this.props;
 
     const isJPGorPNG = imageFormat === IMAGE_FORMATS.JPG || imageFormat === IMAGE_FORMATS.PNG;
@@ -97,11 +98,18 @@ export default class AnalyticalForm extends React.Component {
             value={imageFormat}
             onChange={(e) => updateFormData('imageFormat', e.target.value)}
           >
-            {supportedImageFormats.map((format) => (
-              <option key={IMAGE_FORMATS_INFO[format].text} value={format}>
-                {IMAGE_FORMATS_INFO[format].text}
-              </option>
-            ))}
+            {supportedImageFormats.map((format) => {
+              const isTiffFormat = isTiff(format);
+              const isDisabled = hasActiveEffects && isTiffFormat;
+              const optionText = isDisabled
+                ? IMAGE_FORMATS_INFO[format].text + ' (' + t`not available with effects` + ')'
+                : IMAGE_FORMATS_INFO[format].text;
+              return (
+                <option key={IMAGE_FORMATS_INFO[format].text} value={format} disabled={isDisabled}>
+                  {optionText}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="row">

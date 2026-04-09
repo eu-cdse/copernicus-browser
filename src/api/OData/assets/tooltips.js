@@ -126,11 +126,18 @@ const DEM = {
     t`This attribute allows selection of available data for a specific grid ID. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
 };
 
+const eumetsatProcessedTooltip = () => t`This data product was processed by EUMETSAT.`;
+
 const ProductTypeTooltips = {
   SR_2_TDP_LI: () =>
     t`Sentinel-3 altimetry non-operational demonstration products for Land Ice (Greenland & Antarctica). \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_AMPLI_User_Handbook_v1.1.pdf).`,
   SR_2_TDP_HY: () =>
     t`Sentinel-3 altimetry non-operational demonstration products for Lakes and Reservoirs. \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_LPP_HY_v1.2.pdf).`,
+  OL_2_WFR___: eumetsatProcessedTooltip,
+  SL_2_AOD___: eumetsatProcessedTooltip,
+  SL_2_FRP___: eumetsatProcessedTooltip,
+  SL_2_WST___: eumetsatProcessedTooltip,
+  SR_2_WAT___: eumetsatProcessedTooltip,
 };
 
 const InstrumentTooltips = {
