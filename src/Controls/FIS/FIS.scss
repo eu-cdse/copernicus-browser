@@ -85,13 +85,13 @@
     }
 
     path.tick-line {
-      shape-rendering: crispEdges;
+      shape-rendering: crispedges;
       stroke: #666;
       stroke-dasharray: 5, 5;
     }
 
     line.axis-baseline {
-      shape-rendering: crispEdges;
+      shape-rendering: crispedges;
       stroke: vars.$textColor;
     }
   }
@@ -131,13 +131,13 @@
     }
 
     path.tick-line {
-      shape-rendering: crispEdges;
+      shape-rendering: crispedges;
       stroke: #666;
       stroke-dasharray: 5, 5;
     }
 
     line.axis-baseline {
-      shape-rendering: crispEdges;
+      shape-rendering: crispedges;
       stroke: vars.$textColor;
     }
   }

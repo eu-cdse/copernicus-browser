@@ -5,7 +5,7 @@
   color: vars.$textColor;
   display: flex;
   flex-flow: column;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px rgb(0 0 0 / 20%);
 
   .compare-panel-header {
     padding: 10px;
@@ -93,10 +93,6 @@
             filter: brightness(0) saturate(100%) invert(8%) sepia(35%) saturate(1683%) hue-rotate(137deg)
               brightness(89%) contrast(106%);
             /* stylelint-enable */
-            -webkit-transform: rotate(180deg);
-            -moz-transform: rotate(180deg);
-            -ms-transform: rotate(180deg);
-            -o-transform: rotate(180deg);
             transform: rotate(180deg);
           }
         }
@@ -115,7 +111,7 @@
     }
 
     .compare-panel-button-wrapper {
-      margin: 10px 0 0 0;
+      margin: 10px 0 0;
 
       .compare-panel-button {
         cursor: pointer;
@@ -139,15 +135,13 @@
     background-color: vars.$mainMedium;
     padding: 10px;
     display: flex;
-    margin: -5px 10px 10px 10px;
+    margin: -5px 10px 10px;
     box-shadow: none;
     justify-content: space-between;
 
-    @media only screen and (max-width: 400px) {
-      & {
-        flex-direction: column;
-        flex: 1;
-      }
+    @media only screen and (width <= 400px) {
+      flex-direction: column;
+      flex: 1;
     }
 
     input {
@@ -176,10 +170,8 @@
       justify-content: flex-end;
       align-items: center;
 
-      @media only screen and (max-width: 400px) {
-        & {
-          justify-content: center;
-        }
+      @media only screen and (width <= 400px) {
+        justify-content: center;
       }
 
       .holders {

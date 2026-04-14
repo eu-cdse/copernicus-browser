@@ -26,7 +26,7 @@
 
   .rrd-logo {
     width: 140px;
-    padding: 0 12.5px 0 12.5px;
+    padding: 0 12.5px;
     cursor: pointer;
 
     .cls-1 {
@@ -92,15 +92,15 @@
   .user-panel {
     margin-left: 10px;
 
-    @media screen and (max-width: 430px) {
+    @media screen and (width <= 430px) {
       max-width: 120px;
     }
 
-    @media screen and (max-width: 400px) {
+    @media screen and (width <= 400px) {
       max-width: 80px;
     }
 
-    @media screen and (max-width: 360px) {
+    @media screen and (width <= 360px) {
       max-width: 50px;
     }
 
@@ -113,7 +113,7 @@
       font-size: 13px;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding: 5px 5px;
+      padding: 5px;
       gap: 10px;
 
       &::after {
@@ -124,7 +124,7 @@
         right: 0;
         background: vars.$whiteColor;
         height: 1px;
-        border-radius: 10px 10px 10px 10px;
+        border-radius: 10px;
       }
 
       .user-menu-username-button {
@@ -159,8 +159,8 @@
         left: 0;
         right: 0;
         margin-top: 1.5px;
-        padding: 2px 4px 2px 4px;
-        box-shadow: 0 3px 6px 6px rgba(0, 0, 0, 0.1);
+        padding: 2px 4px;
+        box-shadow: 0 3px 6px 6px rgb(0 0 0 / 10%);
 
         .user-menu-button-dropdown-item {
           background-color: vars.$whiteColor;
@@ -197,7 +197,7 @@
       font-size: 13px;
       font-weight: vars.$fontWeightBold;
       cursor: pointer;
-      padding: 5px 5px;
+      padding: 5px;
       position: relative;
 
       &::after {
@@ -208,7 +208,7 @@
         right: 0;
         background: vars.$whiteColor;
         height: 1px;
-        border-radius: 10px 10px 10px 10px;
+        border-radius: 10px;
       }
     }
 
@@ -270,7 +270,7 @@
     }
 
     &:hover {
-      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 2px rgb(0 0 0 / 40%);
       color: #fff;
       transition: all ease 0.4s;
     }

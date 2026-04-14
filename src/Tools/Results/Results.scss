@@ -119,7 +119,7 @@ $headerPadding: 10px;
     .container {
       display: grid;
       grid-template-columns: 64px auto;
-      grid-gap: 5px 10px;
+      gap: 5px 10px;
 
       .tile-checkbox {
         position: absolute;
@@ -217,12 +217,12 @@ $headerPadding: 10px;
       }
 
       .title {
-        word-wrap: anywhere;
+        overflow-wrap: anywhere;
       }
 
       .bold {
         font-weight: bold;
-        word-wrap: anywhere;
+        overflow-wrap: anywhere;
       }
 
       .detail {

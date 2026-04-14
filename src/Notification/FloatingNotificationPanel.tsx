@@ -79,9 +79,9 @@ type Props = {
   // to trigger a re-render when dates or language change, keeping the notification panel in sync.
   fromTime: string | null | undefined;
   toTime: string | null | undefined;
-  selectedLanguage: string | undefined;
+  selectedLanguage: string | null | undefined;
   selectedTabIndex: number;
-  userAuthError: string | undefined;
+  userAuthError: string | null | undefined;
   toolsOpen: boolean;
   mapLoadingMessage: string | null;
   resolutionTooLow: boolean;

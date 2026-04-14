@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   LinkType,
   S2L2ACDASLayer,
@@ -11,13 +10,10 @@ import moment from 'moment';
 
 import DataSourceHandler from './DataSourceHandler';
 import {
-  S2L1CTooltip,
-  S2L2ATooltip,
   getSentinel2Markdown,
   getS2L1CMarkdown,
   getS2L2AMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/Sentinel2Tooltip';
-import HelpTooltip from './DatasourceRenderingComponents/HelpTooltip';
 import { BAND_UNIT, S2_L1C_CDAS, S2_L2A_CDAS } from './dataSourceConstants';
 import { DATASOURCES } from '../../../const';
 
@@ -200,25 +196,6 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
   isHandlingAnyUrl() {
     return Object.values(this.urls).flat().length > 0;
   }
-
-  renderOptionsHelpTooltips = (option) => {
-    switch (option) {
-      case S2_L1C_CDAS:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <S2L1CTooltip />
-          </HelpTooltip>
-        );
-      case S2_L2A_CDAS:
-        return (
-          <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-            <S2L2ATooltip />
-          </HelpTooltip>
-        );
-      default:
-        return null;
-    }
-  };
 
   getMinMaxDates(datasetId) {
     if (this.MIN_MAX_DATES[datasetId] == null) {

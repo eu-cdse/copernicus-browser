@@ -138,7 +138,7 @@ const radarProvidersCollection = [
         stacConstellation: ['ICEYE'],
         stacPlatform: ['ICEYE-X'],
         taskingSupported: true,
-        archiveSupported: false,
+        archiveSupported: true,
         description: {
           body: "ICEYE's overall mission objective is to enable better decision making by providing timely and reliable Earth observation data.",
           footer: '',

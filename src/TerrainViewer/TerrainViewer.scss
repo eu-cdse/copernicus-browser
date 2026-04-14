@@ -12,7 +12,7 @@
   cursor: pointer;
   position: absolute;
   top: 360px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
   background: vars.$mainLight;
   padding: 0;
   color: #fff;
@@ -49,12 +49,6 @@
   }
 }
 
-@-webkit-keyframes slide-in {
-  100% {
-    -webkit-transform: translateX(0%);
-  }
-}
-
 @keyframes slide-out {
   0% {
     transform: translateX(0%);
@@ -62,16 +56,6 @@
 
   100% {
     transform: translateX(200%);
-  }
-}
-
-@-webkit-keyframes slide-out {
-  0% {
-    -webkit-transform: translateX(0%);
-  }
-
-  100% {
-    -webkit-transform: translateX(200%);
   }
 }
 
@@ -134,7 +118,6 @@
       line-height: 40px;
       background: vars.$mainLight;
       color: vars.$secondaryColor;
-      -webkit-box-shadow: vars.$boxShadow;
       box-shadow: vars.$boxShadow;
       text-align: center;
 
@@ -144,11 +127,6 @@
 
       &.animated {
         transform: translateX(100%);
-        -webkit-transform: translateX(100%);
-        -webkit-animation: slide-in 2s forwards; /* Safari, Chrome and Opera > 12.1 */
-        -moz-animation: slide-in 2s forwards; /* Firefox < 16 */
-        -ms-animation: slide-in 2s forwards; /* Internet Explorer */
-        -o-animation: slide-in 2s forwards; /* Opera < 12.1 */
         animation: slide-in 2s forwards;
       }
 
@@ -167,10 +145,6 @@
       }
 
       &.closing {
-        -webkit-animation: slide-out 2s forwards; /* Safari, Chrome and Opera > 12.1 */
-        -moz-animation: slide-out 2s forwards; /* Firefox < 16 */
-        -ms-animation: slide-out 2s forwards; /* Internet Explorer */
-        -o-animation: slide-out 2s forwards; /* Opera < 12.1 */
         animation: slide-out 2s forwards;
       }
 

@@ -5,7 +5,7 @@
   color: vars.$textColor;
   display: flex;
   flex-flow: column;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px rgb(0 0 0 / 20%);
 
   .highlights-panel {
     position: relative;
@@ -21,7 +21,7 @@
 
     .highlights-container {
       position: relative;
-      margin: 10px 10px 10px 10px;
+      margin: 10px;
     }
   }
 

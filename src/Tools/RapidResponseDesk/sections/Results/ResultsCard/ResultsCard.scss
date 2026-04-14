@@ -90,7 +90,7 @@
       .card-name {
         font-size: 14px;
         width: 250px;
-        word-wrap: anywhere;
+        overflow-wrap: anywhere;
         flex: 0;
       }
 
@@ -99,10 +99,8 @@
 
         .information-points-container {
           display: flex;
-          flex-wrap: wrap;
-          column-gap: 15px;
-          row-gap: 2px;
-          flex-direction: column;
+          flex-flow: column wrap;
+          gap: 2px 15px;
 
           .information-point {
             display: flex;

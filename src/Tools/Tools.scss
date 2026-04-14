@@ -12,7 +12,7 @@ $searchBorderColour: vars.$primaryColor;
   box-shadow: vars.$boxShadow;
   z-index: 500;
 
-  @media screen and (max-width: 450px) {
+  @media screen and (width <= 450px) {
     height: calc(100% - 75px);
     width: 100%;
     position: absolute;
@@ -25,7 +25,7 @@ $searchBorderColour: vars.$primaryColor;
     width: 450px;
     flex-flow: column;
 
-    @media screen and (max-width: 450px) {
+    @media screen and (width <= 450px) {
       width: 100%;
     }
   }
@@ -72,7 +72,7 @@ $searchBorderColour: vars.$primaryColor;
   }
 
   &.top {
-    padding: 15px 10px 20px 10px;
+    padding: 15px 10px 20px;
   }
 
   &.bottom {
@@ -93,8 +93,7 @@ $searchBorderColour: vars.$primaryColor;
 }
 
 .dropdown {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
   background: none;
   background-image: url("data:image/svg+xml;utf8,<svg fill='373741' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;

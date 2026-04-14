@@ -41,7 +41,7 @@
       }
     }
 
-    /***  month and year select  ***/ //
+    /***  month and year select  ***/
     i.fas {
       display: flex;
       justify-content: center;
@@ -49,7 +49,7 @@
 
     i.fas.fa-chevron-left {
       color: vars.$primaryColor;
-      box-shadow: 1px 0 1px rgba(0, 0, 0, 0.15);
+      box-shadow: 1px 0 1px rgb(0 0 0 / 15%);
       line-height: 35px;
       width: 35px;
       cursor: pointer;
@@ -57,7 +57,7 @@
 
     i.fas.fa-chevron-right {
       color: vars.$primaryColor;
-      box-shadow: -1px 0 1px rgba(0, 0, 0, 0.15);
+      box-shadow: -1px 0 1px rgb(0 0 0 / 15%);
       line-height: 35px;
       width: 35px;
       cursor: pointer;

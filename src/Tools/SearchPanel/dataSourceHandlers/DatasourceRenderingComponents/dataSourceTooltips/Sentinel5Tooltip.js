@@ -1,7 +1,4 @@
 import { t } from 'ttag';
-import { DATASOURCES } from '../../../../../const';
-import { credits } from './credits';
-import DataSourceTooltip from './DataSourceTooltip';
 
 const getS5Markdown = () => t`
 **Sentinel-5P** is a satellite that provides atmospheric measurements to be used for air quality, ozone monitoring, UV radiation,
@@ -41,14 +38,7 @@ const getS5AERAIMarkdown = () =>
 const getS5CloudMarkdown = () =>
   t`### Cloud\n\nThe TROPOMI instrument, single payload onboard Sentinel-5 Precursor, retrieves operationally the most important quantities for cloud correction of satellite trace gas retrievals: cloud fraction, cloud optical thickness (albedo), and cloud-top pressure (height). Cloud parameters from TROPOMI are not only used for enhancing the accuracy of trace gas retrievals, but also to extend the satellite data record of cloud information.\n\nMore info [here](https://sentinels.copernicus.eu/web/sentinel/data-products/-/asset_publisher/fp37fc19FN8F/content/sentinel-5-precursor-level-2-cloud).`;
 
-const Sentinel5Tooltip = () =>
-  DataSourceTooltip({
-    source: getS5Markdown(),
-    credits: credits[DATASOURCES.S5_CDAS],
-  });
-
 export {
-  Sentinel5Tooltip,
   getS5Markdown,
   getS5O3Markdown,
   getS5NO2Markdown,

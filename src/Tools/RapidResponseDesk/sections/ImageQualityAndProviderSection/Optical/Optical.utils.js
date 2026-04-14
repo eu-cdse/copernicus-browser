@@ -172,7 +172,7 @@ const opticalProvidersCollection = [
         stacConstellation: ['SPOT'],
         stacPlatform: ['SPOT', 'SPOT6', 'SPOT7'],
         label: 'Spot',
-        taskingSupported: false,
+        taskingSupported: true,
         archiveSupported: true,
         description: {
           body: "The goal of the SPOT series is to improve the knowledge and management of Earth by exploring the planet's resources, detecting and forecasting phenomena involving climatology and oceanography, and monitoring human activities and natural phenomena.",
@@ -186,7 +186,7 @@ const opticalProvidersCollection = [
         label: 'Pléiades-1A/B',
         stacConstellation: ['PHR'],
         stacPlatform: ['PHR', 'PHR1A', 'PHR1B'],
-        taskingSupported: false,
+        taskingSupported: true,
         archiveSupported: true,
         description: {
           body: 'The Pléiades system is designed for a range of very-high-resolution (VHR) remote sensing applications in the field of cartography, agriculture, forestry, hydrology, and geological prospecting.',

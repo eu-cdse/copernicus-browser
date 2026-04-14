@@ -1,10 +1,4 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
-import { DATASOURCES } from '../../../../../const';
-import { credits } from './credits';
-import DataSourceTooltip from './DataSourceTooltip';
-import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const getSentinel2Markdown = () => t`
 **Sentinel-2** provides high-resolution images in the visible and infrared wavelengths, to monitor vegetation, soil and water cover, inland waterways and coastal areas.
@@ -26,25 +20,4 @@ More info about atmospheric correction [here](https://www.sentinel-hub.com/devel
 const getS2L1CMarkdown = () => t`
 Level 1C data are data of sufficient quality for most investigations, where all image corrections were done except for the atmospheric correction. Data are available globally since June 2015 onwards.`;
 
-const Sentinel2Tooltip = () =>
-  DataSourceTooltip({
-    source: getSentinel2Markdown(),
-    credits: credits[DATASOURCES.S2_CDAS],
-  });
-
-const S2L2ATooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS2L2AMarkdown()}</ReactMarkdown>
-);
-
-const S2L1CTooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS2L1CMarkdown()}</ReactMarkdown>
-);
-
-export {
-  Sentinel2Tooltip,
-  S2L1CTooltip,
-  S2L2ATooltip,
-  getSentinel2Markdown,
-  getS2L2AMarkdown,
-  getS2L1CMarkdown,
-};
+export { getSentinel2Markdown, getS2L2AMarkdown, getS2L1CMarkdown };

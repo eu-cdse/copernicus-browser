@@ -2384,132 +2384,130 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'A_TPROD_S1' }],
     description: () =>
-      t`Season 1: the growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the season start and end. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the start and end of the first growing season. Expressed in [m².day/m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'B_TPROD_S2' }],
     description: () =>
-      t`Season 2: the growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the season start and end. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the start and end of the second growing season. Expressed in [m².day/m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'C_SPROD_S1' }],
     description: () =>
-      t`Season 1: the growing season integral that is computed as the time-integrated Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the start and end of the first growing season minus their base level value. Expressed in [m².day/m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'D_SPROD_S2' }],
     description: () =>
-      t`Season 2: the growing season integral that is computed as the time-integrated Plant Phenology Index values between the dates of the season start and end, minus their base level value. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Growing season integral computed as the time-integrated Plant Phenology Index values between the dates of the start and end of the second growing season minus their base level value. Expressed in [m².day/m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'E_LENGTH_S1' }],
-    description: () =>
-      t`Season 1: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+    description: () => t`Number of days between the start and the end of the first growing season.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'F_LENGTH_S2' }],
-    description: () =>
-      t`Season 2: provides the number of days between the start and end dates of the vegetation growing season in the time profile of the Plant Phenology Index. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+    description: () => t`Number of days between the start and the end of the second growing season.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'G_AMPL_S1' }],
     description: () =>
-      t`Season 1: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Difference between the Season Maximum value and the Season Minimum Value for the first growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'H_AMPL_S2' }],
     description: () =>
-      t`Season 2: provides the difference between the maximum and minimum Plant Phenology Index values reached during the season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Difference between the Season Maximum value and the Season Minimum Value for the second growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'I_LSLOPE_S1' }],
     description: () =>
-      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the increasing rate of Plant Phenology Index during the first season vegetation green-up. Expressed in [m² / m² /day]`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'J_LSLOPE_S2' }],
     description: () =>
-      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season starts. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the increasing rate of Plant Phenology Index during the second season vegetation green-up. Expressed in [m² / m² /day].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'K_RSLOPE_S1' }],
     description: () =>
-      t`Season 1: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Absolute value of the decreasing rate of Plant Phenology Index during the first season vegetation green-down. Expressed in [m² / m² /day].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'L_RSLOPE_S2' }],
     description: () =>
-      t`Season 2: provides the rate of change in the values of the Plant Phenology Index at the day when the vegetation growing season ends. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Absolute value of the decreasing rate of Plant Phenology Index during the second season vegetation green-down. Expressed in [m² / m² /day].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'M_SOSD_S1' }],
     description: () =>
-      t`Season 1: marks the day of the year when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year when the first vegetation growing season starts in the time profile of the Plant Phenology Index. A negative value of the SOSD indicates that the peak of growing season is in the current year and the start of the season is located in the previous year.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'N_SOSD_S2' }],
     description: () =>
-      t`Season 2: marks the day of the year when the vegetation growing season starts in the time profile of the Plant Phenology Index. The start-of-season occurs, by definition, when the Plant Phenology Index value reaches 25% of the season amplitude during the green-up period. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year when the second vegetation growing season starts in the time profile of the Plant Phenology Index. A negative value of the SOSD indicates that the peak of growing season is in the current year and the start of the season is located in the previous year.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'O_MAXD_S1' }],
     description: () =>
-      t`Season 1: provides the day of the year in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year in the first vegetation growing season when the Plant Phenology Index reaches its maximum value.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'P_MAXD_S2' }],
     description: () =>
-      t`Season 2: provides the day of the year in the vegetation growing season when the maximum Plant Phenology Index value is reached. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year in the second vegetation growing season when the Plant Phenology Index reaches its maximum value.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'Q_EOSD_S1' }],
     description: () =>
-      t`Season 1: provides the day of the year when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year when the first vegetation growing season ends in the time profile of the Plant Phenology Index. A value of the EOSD larger than 365 indicates that the peak of growing season is in the current year and the end of the season is located in the next year.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'R_EOSD_S2' }],
     description: () =>
-      t`Season 2: provides the day of the year when the vegetation growing season ends in the time profile of the Plant Phenology Index. The end-of-season occurs, by definition, when the Plant Phenology Index value reaches 15% of the season amplitude during the green-down period. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Day of the year when the second vegetation growing season ends in the time profile of the Plant Phenology Index. A value of the EOSD larger than 365 indicates that the peak of growing season is in the current year and the end of the season is located in the next year.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'S_SOSV_S1' }],
     description: () =>
-      t`Season 1: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the Plant Phenology Index at the start of the first vegetation growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'T_SOSV_S2' }],
     description: () =>
-      t`Season 2: provides the value of the Plant Phenology Index at the start of the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the Plant Phenology Index at the start of the second vegetation growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'U_MAXV_S1' }],
     description: () =>
-      t`Season 1: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Maximum value that the Plant Phenology Index reaches during the first vegetation growing season i.e. value of the Plant Phenology Index at the maximum season date of the first growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'V_MAXV_S2' }],
     description: () =>
-      t`Season 2: provides the maximum (peak) value that the Plant Phenology Index reaches during the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Maximum value that the Plant Phenology Index reaches during the second vegetation growing season i.e. value of the Plant Phenology Index at the maximum season date of the second growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'W_MINV_S1' }],
     description: () =>
-      t`Season 1: provides the average Plant Phenology Index value of the minima on left and right sides of each season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`The average of the Plant Phenology Index value of the minima on left and right sides of the first season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'X_MINV_S2' }],
     description: () =>
-      t`Season 2: provides the average Plant Phenology Index value of the minima on left and right sides of each season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`The average of the Plant Phenology Index value of the minima on left and right sides of the second season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'Y_EOSV_S1' }],
     description: () =>
-      t`Season 1: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the Plant Phenology Index at the end of the first vegetation growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSP_300M_YEARLY_V2, layerId: 'ZA_EOSV_S2' }],
     description: () =>
-      t`Season 2: provides the value of the Plant Phenology Index at the end of the vegetation growing season. The data are available at 300 m spatial resolution with the temporal extent from 2014 to present.`,
+      t`Value of the Plant Phenology Index at the end of the second vegetation growing season. Expressed in [m² / m²].`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_5KM_HOURLY_V1, layerId: 'LST' }],

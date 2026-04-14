@@ -2,7 +2,7 @@
   border: none;
   padding: 0;
   margin: 0;
-  background: rgba(0, 0, 0, 0);
+  background: rgb(0 0 0 / 0%);
   box-shadow: none;
 
   &::before {
@@ -13,7 +13,7 @@
     width: 100%;
     text-align: center;
     color: #38f;
-    background: rgba(0, 0, 0, 0);
+    background: rgb(0 0 0 / 0%);
     font-size: 20px;
     transform: translateY(-60px);
 

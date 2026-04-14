@@ -9,8 +9,7 @@
   .tags-inner-container {
     display: flex;
     flex-wrap: nowrap;
-    column-gap: 3px;
-    row-gap: 2px;
+    gap: 2px 3px;
   }
 
   .tag {

@@ -5,7 +5,6 @@
   ],
   "rules": {
     "selector-class-pattern": "^([a-zA-Z0-9_-]+)([_-][a-zA-Z0-9]+)*$",
-    "selector-id-pattern": "^([a-zA-Z0-9_-]+)([_-][a-zA-Z0-9]+)*$",
-    "linebreaks": "unix"
+    "selector-id-pattern": "^([a-zA-Z0-9_-]+)([_-][a-zA-Z0-9]+)*$"
   }
 }

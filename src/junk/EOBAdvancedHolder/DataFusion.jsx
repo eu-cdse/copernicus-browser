@@ -8,8 +8,11 @@ import {
   DATASET_CDAS_S2L1C,
   DATASET_CDAS_S3SLSTR,
   DATASET_CDAS_S3OLCI,
+  DATASET_CDAS_S3OLCIL2,
+  DATASET_CDAS_S3SYNERGYL2,
   DATASET_CDAS_S5PL2,
   DATASET_CDAS_DEM,
+  DATASET_CDAS_L8_L9_LOTL1,
   BYOCSubTypes,
   SHV3_LOCATIONS_ROOT_URL,
 } from '@sentinel-hub/sentinelhub-js';
@@ -110,6 +113,21 @@ const DATAFUSION_DATASETS = {
         ],
       },
     },
+  },
+  [DATASET_CDAS_S3OLCIL2.id]: {
+    label: 'S-3 OLCI L2',
+    dataset: DATASET_CDAS_S3OLCIL2,
+    additionalMosaickingOrders: [],
+  },
+  [DATASET_CDAS_S3SYNERGYL2.id]: {
+    label: 'S-3 Synergy L2',
+    dataset: DATASET_CDAS_S3SYNERGYL2,
+    additionalMosaickingOrders: [],
+  },
+  [DATASET_CDAS_L8_L9_LOTL1.id]: {
+    label: 'Landsat-8/9 L1',
+    dataset: DATASET_CDAS_L8_L9_LOTL1,
+    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
   },
 };
 

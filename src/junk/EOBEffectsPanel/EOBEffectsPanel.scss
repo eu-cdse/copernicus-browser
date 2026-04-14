@@ -151,8 +151,7 @@
         &::-webkit-inner-spin-button,
         &::-webkit-outer-spin-button {
           // remove style for number input so it can be only 40px wide
-          -webkit-appearance: none;
-          -moz-appearance: textfield;
+          appearance: textfield;
         }
 
         &.left-value {

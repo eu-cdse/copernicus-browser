@@ -110,13 +110,13 @@
           }
 
           path.tick-line {
-            shape-rendering: crispEdges;
+            shape-rendering: crispedges;
             stroke: #666;
             stroke-dasharray: 5, 5;
           }
 
           line.axis-baseline {
-            shape-rendering: crispEdges;
+            shape-rendering: crispedges;
             stroke: vars.$textColor;
           }
         }
@@ -132,13 +132,13 @@
           }
 
           path.tick-line {
-            shape-rendering: crispEdges;
+            shape-rendering: crispedges;
             stroke: #666;
             stroke-dasharray: 5, 5;
           }
 
           line.axis-baseline {
-            shape-rendering: crispEdges;
+            shape-rendering: crispedges;
             stroke: vars.$textColor;
           }
         }
@@ -170,8 +170,7 @@
       .legend {
         display: flex;
         justify-content: space-evenly;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
         padding: 5px;
 
         .item {

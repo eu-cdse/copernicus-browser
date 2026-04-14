@@ -1,8 +1,4 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
-import DataSourceTooltip from './DataSourceTooltip';
-import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const COPERNICUS_CREDITS_URL =
   'https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model';
@@ -17,28 +13,4 @@ const getCopernicus30Markdown = () =>
 const getCopernicus90Markdown = () =>
   t`The **Copernicus DEM** represents the surface of the Earth including buildings, infrastructure and vegetation. Similar to the Mapzen DEM, it is based on a combination of different DEMs (basis [WorldDEMTM](https://www.geospatialworld.net/article/worlddemtm-new-standard-of-global-elevation-models/)). It is a static collection (independent of date) with global coverage.\n\n**Spatial resolution:** 90 m\n\nCredits: [ESA](${COPERNICUS_CREDITS_URL})`;
 
-const DEMTooltip = () =>
-  DataSourceTooltip({
-    source: getDEMMarkdown(),
-  });
-
-const MapzenTooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getMapzenMarkdown()}</ReactMarkdown>
-);
-const Copernicus30Tooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getCopernicus30Markdown()}</ReactMarkdown>
-);
-const Copernicus90Tooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getCopernicus90Markdown()}</ReactMarkdown>
-);
-
-export {
-  DEMTooltip,
-  MapzenTooltip,
-  Copernicus30Tooltip,
-  Copernicus90Tooltip,
-  getDEMMarkdown,
-  getMapzenMarkdown,
-  getCopernicus30Markdown,
-  getCopernicus90Markdown,
-};
+export { getDEMMarkdown, getMapzenMarkdown, getCopernicus30Markdown, getCopernicus90Markdown };

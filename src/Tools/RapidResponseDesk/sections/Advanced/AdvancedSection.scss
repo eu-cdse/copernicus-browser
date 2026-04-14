@@ -22,8 +22,7 @@
       }
 
       .label-text {
-        flex-direction: row;
-        flex-wrap: nowrap;
+        flex-flow: row nowrap;
         display: flex;
         padding-right: 10px;
         flex: 1 0 auto;

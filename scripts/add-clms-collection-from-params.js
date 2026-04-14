@@ -271,19 +271,13 @@ function updateCLMSTooltip(config) {
   const exportMatch = content.match(/export\s+\{[^}]*\};?\s*$/s);
   if (exportMatch) {
     const insertPos = exportMatch.index;
-    const newFunction = `const ${funcName} = () => t\`\n  ${config.description} More information [here](${
-      config.officialDocs
-    }).\`;\n\nconst ${funcName
-      .replace('get', '')
-      .replace('Markdown', 'Tooltip')} = () =>\n  DataSourceTooltip({\n    source: ${funcName}(),\n  });\n\n`;
+    const newFunction = `const ${funcName} = () => t\`\n  ${config.description} More information [here](${config.officialDocs}).\`;\n\n`;
 
     // Also add to export list
     const exportContent = exportMatch[0];
     const closingBrace = exportContent.lastIndexOf('}');
     const modifiedExport =
-      exportContent.substring(0, closingBrace) +
-      `  ${funcName},\n  ${funcName.replace('get', '').replace('Markdown', 'Tooltip')},\n` +
-      exportContent.substring(closingBrace);
+      exportContent.substring(0, closingBrace) + `  ${funcName},\n` + exportContent.substring(closingBrace);
 
     content =
       content.substring(0, insertPos) +

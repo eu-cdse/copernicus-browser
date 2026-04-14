@@ -3,7 +3,7 @@
 .calendar-wrapper {
   color: vars.$textColor;
   margin-top: 5px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px rgb(0 0 0 / 20%);
 
   .year-month-form {
     padding: 0 2.5rem;
@@ -156,7 +156,7 @@
     background-color: #eee0;
     border: none;
     cursor: pointer;
-    padding: 24px 14px 14px 14px;
+    padding: 24px 14px 14px;
     position: relative;
 
     i {
@@ -174,7 +174,7 @@
 
   .date-nav-button.disabled {
     i {
-      color: rgba(vars.$color: vars.$textColor, vars.$alpha: 0.25);
+      color: rgba(vars.$color: vars.$textColor, vars.$alpha: 25%);
     }
   }
 
@@ -196,7 +196,7 @@
     background-color: vars.$mainLight;
     color: vars.$textColor;
     display: flex;
-    padding: 10px 12px 0 12px;
+    padding: 10px 12px 0;
     font-size: 14px;
     line-height: 16px;
 

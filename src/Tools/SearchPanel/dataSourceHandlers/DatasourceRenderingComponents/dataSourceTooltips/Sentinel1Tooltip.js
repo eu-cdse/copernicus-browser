@@ -1,8 +1,4 @@
 import { t } from 'ttag';
-import { DATASOURCES } from '../../../../../const';
-
-import { credits } from './credits';
-import DataSourceTooltip from './DataSourceTooltip';
 
 const getSentinel1Markdown = () => t`
 **Sentinel-1** provides all-weather, day and night radar imagery for land and ocean services. EO
@@ -20,10 +16,4 @@ processed to Level-1 Ground Range Detected (GRD).
 **Common usage:** Maritime and land monitoring, emergency response, climate change.
 `;
 
-const Sentinel1Tooltip = () =>
-  DataSourceTooltip({
-    source: getSentinel1Markdown(),
-    credits: credits[DATASOURCES.S1],
-  });
-
-export { Sentinel1Tooltip, getSentinel1Markdown };
+export { getSentinel1Markdown };

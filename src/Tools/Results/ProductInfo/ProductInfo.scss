@@ -139,11 +139,11 @@
           font-weight: vars.$fontWeightBold;
           min-width: 150px;
           width: 150px;
-          word-wrap: anywhere;
+          overflow-wrap: anywhere;
         }
 
         .right {
-          word-wrap: anywhere;
+          overflow-wrap: anywhere;
         }
 
         .attribute {
@@ -192,7 +192,7 @@
 
             h4,
             p {
-              margin: 0 0 5px 0;
+              margin: 0 0 5px;
 
               span {
                 font-weight: vars.$fontWeightBold;
@@ -241,7 +241,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0 0 0;
+    padding: 15px 0 0;
 
     .product-link {
       padding: 8px 0;

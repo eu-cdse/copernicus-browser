@@ -48,7 +48,7 @@
           display: inherit;
         }
 
-        @media screen and (max-width: 420px) {
+        @media screen and (width <= 420px) {
           .europe-banner {
             img {
               width: 38px;
@@ -87,7 +87,7 @@
             font-weight: vars.$fontWeightNormal;
           }
 
-          @media screen and (max-width: 420px) {
+          @media screen and (width <= 420px) {
             gap: 10px;
           }
         }

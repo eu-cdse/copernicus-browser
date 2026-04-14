@@ -47,7 +47,7 @@
     ul {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 20px;
+      gap: 20px;
       list-style-type: none;
       position: absolute;
       left: 50%;
@@ -82,21 +82,17 @@
         color: vars.$whiteColor;
       }
 
-      @media only screen and (max-height: 450px) {
-        & {
-          max-height: 200px;
-        }
+      @media only screen and (height <= 450px) {
+        max-height: 200px;
       }
 
-      @media only screen and (max-width: 450px) {
-        & {
-          grid-gap: 15px;
-          padding: 15px;
-          padding-bottom: 55px;
+      @media only screen and (width <= 450px) {
+        gap: 15px;
+        padding: 15px;
+        padding-bottom: 55px;
 
-          li:last-child {
-            bottom: 15px;
-          }
+        li:last-child {
+          bottom: 15px;
         }
       }
     }
@@ -111,7 +107,7 @@
       justify-content: center;
 
       &::after {
-        content: url(./icons/chevron-down.svg);
+        content: url("./icons/chevron-down.svg");
         display: flex;
         align-items: center;
         border: none;
@@ -153,7 +149,7 @@
       justify-content: center;
 
       &::after {
-        content: url(../icons/chevron-up.svg);
+        content: url("../icons/chevron-up.svg");
         display: flex;
         align-items: center;
         border: none;
@@ -181,7 +177,7 @@
         /* stylelint-disable-line */
         .ReactFlagsSelect-module_selectFlag__2q5gC {
           /* stylelint-disable-line */
-          content: url(../LanguageSelector/icons/catalan-flag.svg);
+          content: url("../LanguageSelector/icons/catalan-flag.svg");
         }
       }
 
@@ -191,7 +187,7 @@
 
         .ReactFlagsSelect-module_selectFlag__2q5gC {
           /* stylelint-disable-line */
-          content: url(../LanguageSelector/icons/people-group.svg);
+          content: url("../LanguageSelector/icons/people-group.svg");
         }
 
         .ReactFlagsSelect-module_label__27pw9 {
@@ -218,6 +214,6 @@
     width: 45px;
     background: vars.$whiteColor;
     height: 1px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { t } from 'ttag';
-import AlertProvider, { confirm } from 'react-alert-async';
+import Rodal from 'rodal';
 
 import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
@@ -22,7 +22,6 @@ import {
 } from '../const';
 import { isInGroup, logoutUser, openLogin } from '../Auth/authHelpers';
 
-import 'react-alert-async/dist/index.css';
 import './ThemesProvider.scss';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
 import { RRD_THEMES } from '../assets/cache/rrdThemes';
@@ -60,6 +59,24 @@ function filterRrdThemesByIdentifier(themes, identifier) {
 }
 
 class ThemesProvider extends React.Component {
+  state = {
+    confirmDialog: null,
+  };
+
+  _confirmResolve = null;
+
+  showConfirm = (text, { title, okLabel, cancelLabel }) => {
+    return new Promise((resolve) => {
+      this._confirmResolve = resolve;
+      this.setState({ confirmDialog: { text, title, okLabel, cancelLabel } });
+    });
+  };
+
+  handleConfirm = (result) => {
+    this._confirmResolve(result);
+    this.setState({ confirmDialog: null });
+  };
+
   async componentDidMount() {
     const { themesUrl } = this.props;
 
@@ -89,13 +106,11 @@ class ThemesProvider extends React.Component {
         ? t`The configuration you are trying to access is private. Do you want to switch to another account to access this content?`
         : t`The configuration you are trying to access is private. Please log in to continue.`;
 
-      const shouldExecuteLogin = await confirm(modalText, {
+      const shouldExecuteLogin = await this.showConfirm(modalText, {
         title: t`Authentication Required`,
         okLabel: isUserLoggedIn ? t`Login as a different user` : t`Log in`,
         cancelLabel: isUserLoggedIn ? t`Cancel` : t`Continue without logging in`,
       });
-
-      store.dispatch(modalSlice.actions.removeModal());
 
       if (shouldExecuteLogin) {
         if (isUserLoggedIn && loginAsDifferentUser) {
@@ -178,7 +193,11 @@ class ThemesProvider extends React.Component {
       const isThemeIdInModeThemesList = !!allThemes.find((t) => t.id === currentThemeId);
 
       if (selectedMode.themes.length > 0 && !isThemeIdInModeThemesList && currentThemeId) {
-        await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token);
+        try {
+          await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token);
+        } finally {
+          this.setSelectedThemeIdFromMode(selectedMode, null, userInstances, rrdInstances);
+        }
       }
     }
   };
@@ -405,10 +424,56 @@ class ThemesProvider extends React.Component {
   };
 
   render() {
+    const { confirmDialog } = this.state;
     return (
       <>
-        <AlertProvider />
         {this.props.modalId === ModalId.PRIVATE_THEMEID_LOGIN && <div className="login-overlay" />}
+        {confirmDialog && (
+          <Rodal
+            animation="slideUp"
+            visible={true}
+            customStyles={{
+              position: 'fixed',
+              width: '90%',
+              maxWidth: '600px',
+              height: 'auto',
+              bottom: 'auto',
+              top: '30%',
+              transform: 'translateY(-50%)',
+            }}
+            onClose={() => {}}
+            showCloseButton={false}
+            closeOnEsc={false}
+          >
+            <div
+              className="confirm-dialog"
+              role="alertdialog"
+              aria-labelledby="confirm-dialog-title"
+              aria-describedby="confirm-dialog-text"
+            >
+              <div id="confirm-dialog-title" className="confirm-dialog__title">
+                {confirmDialog.title}
+              </div>
+              <div id="confirm-dialog-text" className="confirm-dialog__text">
+                {confirmDialog.text}
+              </div>
+              <div className="confirm-dialog__buttons">
+                <button
+                  className="confirm-dialog__btn confirm-dialog__btn--ok"
+                  onClick={() => this.handleConfirm(true)}
+                >
+                  {confirmDialog.okLabel}
+                </button>
+                <button
+                  className="confirm-dialog__btn confirm-dialog__btn--cancel"
+                  onClick={() => this.handleConfirm(false)}
+                >
+                  {confirmDialog.cancelLabel}
+                </button>
+              </div>
+            </div>
+          </Rodal>
+        )}
         {this.props.children}
       </>
     );

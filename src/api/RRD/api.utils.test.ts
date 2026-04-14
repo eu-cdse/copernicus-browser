@@ -11,6 +11,7 @@ const fixtures: [string, string, boolean, number][] = [
   ['COSMO-SkyMed (II Generation)', 'CSG1', true, 4],
   ['Worldview', 'GE01', false, 5],
   ['Worldview', 'WV04', false, 9],
+  ['ICEYE', 'ICEYE-X2', false, 10],
   ['ICEYE', 'ICEYE-X2', true, 10],
   ['planetscope', 'planetscope', false, 11],
   ['planetscope', 'planetscope', true, 11],
@@ -28,8 +29,12 @@ const fixtures: [string, string, boolean, number][] = [
   ['PAZ', 'PAZ-1', false, 15],
   ['PAZ', 'PAZ-1', true, 15],
   ['SPOT', 'SPOT6', false, 16],
+  ['SPOT', 'SPOT6', true, 16],
+  ['SPOT', 'SPOT7', true, 16],
   ['PHR', 'PHR1A', false, 17],
+  ['PHR', 'PHR1A', true, 17],
   ['PHR', 'PHR1B', false, 17],
+  ['PHR', 'PHR1B', true, 17],
   ['PNEO', 'PNEO4', false, 18],
   ['GHGSat', 'GHGSat-C4', false, 19],
   ['GHGSat', 'GHGSat-C1', false, 19],
@@ -65,11 +70,5 @@ describe('getRrdCollectionId config-driven mode correctness', () => {
         });
       });
     });
-  });
-
-  it('returns -1 for PNEO in tasking mode', () => {
-    expect(getRrdCollectionId('PNEO', 'PNEO', true)).toBe(-1);
-    expect(getRrdCollectionId('PNEO', 'PNEO3', true)).toBe(-1);
-    expect(getRrdCollectionId('PNEO', 'PNEO4', true)).toBe(-1);
   });
 });

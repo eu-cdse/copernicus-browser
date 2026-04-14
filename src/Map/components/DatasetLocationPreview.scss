@@ -6,7 +6,7 @@
   // Just ensure proper z-index and backdrop styling
   // Make the backdrop more transparent so background is visible
   .rodal-mask {
-    background-color: rgba(0, 0, 0, 0.3); // More transparent backdrop
+    background-color: rgb(0 0 0 / 30%); // More transparent backdrop
   }
 
   .rodal-dialog {
@@ -14,7 +14,7 @@
     background-color: vars.$mainLight;
     color: vars.$textColor;
     font-family: vars.$fontFamily;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); // Add subtle shadow for better visibility
+    box-shadow: 0 4px 20px rgb(0 0 0 / 15%); // Add subtle shadow for better visibility
     border-radius: 4px; // Add slight border radius
   }
 }
@@ -82,7 +82,7 @@
   span {
     color: vars.$textColor;
     flex: 1;
-    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 

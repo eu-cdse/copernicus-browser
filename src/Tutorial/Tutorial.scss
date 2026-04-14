@@ -2,12 +2,12 @@
 
 .activate-close-animation {
   display: block !important;
-  animation-name: animateCloseInfo;
+  animation-name: animate-close-info;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
-@keyframes animateCloseInfo {
+@keyframes animate-close-info {
   0% {
     display: block;
     opacity: 1;
@@ -164,7 +164,7 @@
       cursor: pointer;
       line-height: 1;
       padding: 15px;
-      -webkit-appearance: none;
+      appearance: none;
       position: absolute;
       right: 0;
       top: 0;
@@ -209,7 +209,7 @@
         cursor: pointer;
         line-height: 1;
         padding: 8px;
-        -webkit-appearance: none;
+        appearance: none;
         font-size: 14px;
         margin: 2px;
 

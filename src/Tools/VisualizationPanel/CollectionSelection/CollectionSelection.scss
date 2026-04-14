@@ -121,8 +121,7 @@
     .collection-buttons-wrapper {
       width: 100%;
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
+      flex-flow: column wrap;
       justify-content: space-between;
 
       .single-collection-wrapper {

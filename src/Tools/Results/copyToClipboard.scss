@@ -5,7 +5,7 @@
   position: relative;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgb(0 0 0 / 87%);
   padding-top: 5px;
 
   input.copy-input {
@@ -15,10 +15,10 @@
     max-width: 100%;
     flex: 1 0 auto;
     text-align: left;
-    padding: 0.67861429em 1em;
+    padding: 0.6786em 1em;
     background: #807e7ea3;
-    border: 1px solid rgba(34, 36, 38, 0.15);
-    color: rgb(245, 245, 245);
+    border: 1px solid rgb(34 36 38 / 15%);
+    color: rgb(245 245 245);
   }
 
   .copy-btn {
@@ -48,11 +48,11 @@
     text-shadow: none;
     text-transform: none;
     letter-spacing: normal;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     white-space: pre;
     pointer-events: none;
     content: attr(aria-label);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgb(0 0 0 / 80%);
     border-radius: 3px;
     -webkit-font-smoothing: subpixel-antialiased;
   }
@@ -63,7 +63,7 @@
     display: none;
     width: 0;
     height: 0;
-    color: rgba(0, 0, 0, 0.8);
+    color: rgb(0 0 0 / 80%);
     pointer-events: none;
     content: '';
     border: 5px solid transparent;
@@ -90,6 +90,6 @@
     right: 50%;
     bottom: auto;
     margin-right: -5px;
-    border-top-color: rgba(0, 0, 0, 0.8);
+    border-top-color: rgb(0 0 0 / 80%);
   }
 }

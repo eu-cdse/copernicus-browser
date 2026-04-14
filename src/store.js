@@ -1,4 +1,4 @@
-import { configureStore, combineReducers, createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
@@ -1625,8 +1625,6 @@ const reducers = combineReducers({
 
 const store = configureStore({
   reducer: reducers,
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 }); // Due to "A non-serializable value was detected in an action" => https://github.com/rt2zz/redux-persist/issues/988
 export default store;

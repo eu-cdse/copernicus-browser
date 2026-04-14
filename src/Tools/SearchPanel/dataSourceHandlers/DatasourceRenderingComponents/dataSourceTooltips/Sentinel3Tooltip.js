@@ -1,10 +1,4 @@
-import React from 'react';
 import { t } from 'ttag';
-import ReactMarkdown from 'react-markdown';
-import { credits } from './credits';
-import { DATASOURCES } from '../../../../../const';
-import DataSourceTooltip from './DataSourceTooltip';
-import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../../rehypeConfig';
 
 const getS3Markdown = () => t`
 **Sentinel-3** mission's main objective is to measure the sea surface topography, the sea and land surface temperature, and the colour of the ocean and land surface. To achieve this goal, Sentinel-3 has a combination of different instruments on board. The most important instruments are the Ocean and Land Colour Instrument (OLCI), the SAR Radar Altimeter (SRAL) and the Sea and Land Surface Temperature Radiometer (SLSTR).
@@ -77,39 +71,7 @@ const getS3V10L2Markdown = () => t`
 // const getS3AODL2Markdown = () => t`Global Aerosol parameter over land and sea on super pixel resolution (4.5 km x 4.5 km)`;
 // const getS3VGPL2Markdown = () => t`1 km VEGETATION-Like product (~VGT-P) - TOA Reflectance`;
 
-const Sentinel3Tooltip = () =>
-  DataSourceTooltip({
-    source: getS3Markdown(),
-    credits: credits[DATASOURCES.S3_CDAS],
-  });
-
-const S3SLSTRTooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3SLSTRMarkdown()}</ReactMarkdown>
-);
-const S3OLCITooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3OLCIMarkdown()}</ReactMarkdown>
-);
-const S3SynL2Tooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3SynL2Markdown()}</ReactMarkdown>
-);
-const S3VG1L2Tooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3VG1L2Markdown()}</ReactMarkdown>
-);
-const S3V10L2Tooltip = () => (
-  <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3V10L2Markdown()}</ReactMarkdown>
-);
-// const S3AODL2Tooltip = () => <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3AODL2Markdown()}</ReactMarkdown>;
-// const S3VGPL2Tooltip = () => <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{getS3VGPL2Markdown()}</ReactMarkdown>;
-
 export {
-  Sentinel3Tooltip,
-  S3SLSTRTooltip,
-  S3OLCITooltip,
-  S3SynL2Tooltip,
-  S3VG1L2Tooltip,
-  S3V10L2Tooltip,
-  // S3AODL2Tooltip,
-  // S3VGPL2Tooltip,
   getS3Markdown,
   getS3SLSTRMarkdown,
   getS3OLCIMarkdown,

@@ -6,7 +6,7 @@
   display: flex;
   flex-flow: column;
   color: vars.$textColor;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   font-size: 14px;
 
   i {
@@ -62,7 +62,7 @@
   .file,
   .folder {
     display: flex;
-    word-break: break-word;
+    overflow-wrap: break-word;
 
     &:hover {
       background-color: vars.$mainMedium;

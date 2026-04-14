@@ -4,7 +4,7 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  margin: 0 10px 10px 10px;
+  margin: 0 10px 10px;
   clear: both;
   user-select: none;
   color: vars.$textColor;
@@ -45,7 +45,7 @@
     i {
       color: vars.$whiteColor;
       padding: 0;
-      text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+      text-shadow: 0 0 2px rgb(0 21 20 / 80%);
     }
   }
 
@@ -59,7 +59,7 @@
     .compare-layer-info {
       display: flex;
       flex-direction: column;
-      word-wrap: anywhere;
+      overflow-wrap: anywhere;
       font-size: 13px;
       height: 90px;
       justify-content: space-evenly;
@@ -133,7 +133,7 @@
     color: vars.$whiteColor;
 
     i.fa-trash {
-      text-shadow: 0 0 2px rgba(0, 21, 20, 0.8);
+      text-shadow: 0 0 2px rgb(0 21 20 / 80%);
       cursor: pointer;
     }
   }
@@ -154,6 +154,6 @@
     opacity: 0.8;
     background-color: vars.$mainDark !important;
     box-shadow: 0 3px 5px #000;
-    cursor: -webkit-grabbing !important;
+    cursor: grabbing !important;
   }
 }

@@ -27,7 +27,7 @@
     width: 42px;
     border-radius: 50px;
     color: vars.$whiteColor;
-    text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 0 7px rgb(0 0 0 / 70%);
     font-size: 14px;
     font-weight: bold;
     margin: 5px 8px;
@@ -51,10 +51,10 @@
     .band-text-runner {
       position: relative;
       left: 5px;
-      animation: moveText 4s ease-in-out infinite;
+      animation: move-text 4s ease-in-out infinite;
     }
 
-    @keyframes moveText {
+    @keyframes move-text {
       0% {
         transform: translateX(0);
       }
@@ -97,10 +97,7 @@
 
   &::before {
     position: absolute;
-    left: -5px;
-    right: -5px;
-    top: -5px;
-    bottom: -5px;
+    inset: -5px;
     border-radius: 100px;
     content: '';
     display: block;
@@ -152,10 +149,10 @@
     .band-text-runner {
       position: relative;
       left: 3px;
-      animation: moveText 4s ease-in-out infinite;
+      animation: move-text 4s ease-in-out infinite;
     }
 
-    @keyframes moveText {
+    @keyframes move-text {
       0% {
         transform: translateX(0);
       }
@@ -290,7 +287,7 @@ select:-moz-focusring {
         display: none;
         background-color: vars.$mainDark;
         border-radius: 4px;
-        border: 2px solid rgba(255, 255, 255, 0.8);
+        border: 2px solid rgb(255 255 255 / 80%);
         width: 28px;
         padding: 4px 2px;
         text-align: center;

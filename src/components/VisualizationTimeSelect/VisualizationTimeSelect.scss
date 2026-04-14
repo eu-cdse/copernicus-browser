@@ -248,7 +248,7 @@
 
     &.disabled {
       pointer-events: none;
-      background-color: rgba(vars.$color: vars.$secondaryColor, vars.$alpha: 0.5);
+      background-color: rgba(vars.$color: vars.$secondaryColor, vars.$alpha: 50%);
 
       svg {
         fill: vars.$whiteColor;
@@ -261,7 +261,7 @@
     font-size: 13px;
     font-weight: bold;
     text-decoration: underline;
-    padding: 3px 5px 3px;
+    padding: 3px 5px;
     cursor: pointer;
 
     &.disabled {

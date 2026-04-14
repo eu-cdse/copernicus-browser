@@ -5,7 +5,7 @@
   height: 100%;
   color: vars.$textColor;
   background-color: vars.$whiteBackground;
-  box-shadow: 0 3px 6px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px 6px rgb(0 0 0 / 10%);
 
   .title-bar {
     display: flex;

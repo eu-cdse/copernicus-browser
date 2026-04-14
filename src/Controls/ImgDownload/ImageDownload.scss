@@ -6,7 +6,7 @@
   font-size: 14px;
 
   &-header {
-    padding: 15px 23px 20px 23px;
+    padding: 15px 23px 20px;
     background-color: vars.$primaryColor;
     display: flex;
     justify-content: space-between;
@@ -27,10 +27,7 @@
       .rodal-close {
         position: relative;
         width: 18px;
-        top: auto;
-        right: auto;
-        left: auto;
-        bottom: auto;
+        inset: auto;
 
         &::before,
         &::after {
@@ -141,8 +138,7 @@
 
     .form-field {
       display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
+      flex-flow: row wrap;
       align-items: center;
       margin: 2px 0;
       line-height: 30px;
@@ -195,7 +191,7 @@
       text-align: left;
       padding: 0.5em;
       background: vars.$mainMedium;
-      border: 1px solid rgba(34, 36, 38, 0.15);
+      border: 1px solid rgb(34 36 38 / 15%);
       color: vars.$textColor;
     }
 

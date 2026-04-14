@@ -7,50 +7,61 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(0 0 0 / 30%);
   z-index: 501;
 }
 
-// !important to override styles from npm
-.alert {
-  .alert-inner {
-    top: 30% !important;
-    padding: 25px !important;
-    text-align: center !important;
-    border-radius: 1px !important;
-    background-color: vars.$mainLight !important;
+.confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px;
+  text-align: center;
+  color: vars.$textColor;
+  font-family: vars.$fontFamily;
 
-    .alert-title {
-      color: vars.$textColor !important;
-      font-size: 18px !important;
-      font-weight: bold !important;
-    }
+  &__title {
+    font-size: 18px;
+    font-weight: vars.$fontWeightBold;
+  }
 
-    .alert-text {
-      color: vars.$textColor !important;
-    }
+  &__text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 
-    .alert-buttons {
-      border-radius: 1px !important;
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
 
-      &_ok {
-        color: vars.$whiteColor !important;
-        cursor: pointer !important;
-        content: 'Terst' !important;
-        font-weight: 600 !important;
-        padding: 8px 12px !important;
-        border-radius: 1px !important;
-        background: vars.$primaryColor !important;
+  &__btn {
+    cursor: pointer;
+    font-family: vars.$fontFamily;
+    font-size: 16px;
+    font-weight: vars.$fontWeightBold;
+    padding: 8px 12px;
+    border-radius: 0;
+    border: none;
+    flex: 1 0 45%;
+
+    &--ok {
+      color: vars.$whiteColor;
+      background: vars.$primaryColor;
+
+      &:hover {
+        background: vars.$hoverPrimaryColor;
       }
+    }
 
-      &_cancel {
-        cursor: pointer !important;
-        font-weight: 600 !important;
-        color: vars.$primaryColor !important;
-        padding: 8px 12px !important;
-        border-radius: 1px !important;
-        background: transparent !important;
-        border: 1px solid vars.$primaryColor !important;
+    &--cancel {
+      color: vars.$primaryColor;
+      background: transparent;
+      border: 1px solid vars.$primaryColor;
+
+      &:hover {
+        background: rgba(vars.$primaryColor, 0.05);
       }
     }
   }

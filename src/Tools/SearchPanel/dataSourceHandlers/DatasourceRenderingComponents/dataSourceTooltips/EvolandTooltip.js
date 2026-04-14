@@ -1,14 +1,3 @@
-import DataSourceTooltip from './DataSourceTooltip';
-
-const getEvolandCollectionMarkdown = () => `
-Geographical information on land cover and its changes, land use, ground motion, vegetation state, water cycle and earth surface energy variables for both Europe and the entire globe. Visit the [CLMS website](https://land.copernicus.eu/en) for more information.
-`;
-
-const EvolandCollectionTooltip = () =>
-  DataSourceTooltip({
-    source: getEvolandCollectionMarkdown(),
-  });
-
 const getC01ContinuousForestMonitoringDescription = () => `
 Provides spatio-temporal information on tree cover disturbances (canopy changes and losses) for a monitoring period of three years. More information [here](https://www.evo-land.eu/prototype/c1-continuous-forest-monitoring/).`;
 
@@ -46,7 +35,6 @@ const getC12TreeTypesDescription = () =>
   `The Tree Types Mapping prototype provides information on the dominant tree species for a demonstration site in Central Europe, based on Sentinel-2 data. More information [here](https://www.evo-land.eu/prototype/c12-tree-type-mapping/).`;
 
 export {
-  EvolandCollectionTooltip,
   getC01ContinuousForestMonitoringDescription,
   getC02ForestDisturbanceDescription,
   getC03ForestBiomassDescription,
