@@ -1,4 +1,5 @@
 import { configureStore, combineReducers, createSlice } from '@reduxjs/toolkit';
+import { notificationSlice } from './store/slices/notificationSlice';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
@@ -195,41 +196,7 @@ export const mainMapSlice = createSlice({
   },
 });
 
-export const notificationSlice = createSlice({
-  name: 'notification',
-  initialState: {
-    type: null,
-    msg: null,
-    panelError: null,
-  },
-  reducers: {
-    displayPanelError: (state, action) => {
-      state.panelError = action.payload;
-    },
-    displayError: (state, action) => {
-      state.type = 'error';
-      state.msg = action.payload;
-    },
-    displayWarning: (state, action) => {
-      state.type = 'warning';
-      state.msg = action.payload;
-    },
-    displayInfo: (state, action) => {
-      state.type = 'info';
-      state.msg = action.payload;
-    },
-    removeNotification: (state) => {
-      state.type = null;
-      state.msg = null;
-    },
-
-    reset: (state) => {
-      state.type = null;
-      state.msg = null;
-      state.panelError = null;
-    },
-  },
-});
+export { notificationSlice };
 
 export const floatingPanelNotificationSlice = createSlice({
   name: 'floatingPanelNotification',

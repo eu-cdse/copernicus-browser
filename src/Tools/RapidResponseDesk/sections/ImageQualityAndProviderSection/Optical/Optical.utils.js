@@ -137,7 +137,7 @@ const opticalProvidersCollection = [
         stacConstellation: ['planetscope'],
         stacPlatform: ['planetscope'],
         label: 'PlanetScope',
-        taskingSupported: true,
+        taskingSupported: false,
         archiveSupported: true,
         description: {
           body: "The PlanetScope constellation of 430+ Dove and SuperDove satellites is able to image nearly all Earth's land every day.",

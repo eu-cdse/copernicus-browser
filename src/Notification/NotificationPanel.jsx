@@ -4,6 +4,9 @@ import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../rehypeConfig';
 
 import './NotificationPanel.scss';
 
+/**
+ * @param {{ type: import('../store/slices/notificationSlice').NotificationType | 'nothing' | 'loading' | null, msg: string | null, className?: string, children?: React.ReactNode }} props
+ */
 export const NotificationPanel = ({ type, msg, className, children }) => {
   let icon = null;
   switch (type) {

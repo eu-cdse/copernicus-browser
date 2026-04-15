@@ -14,7 +14,6 @@ const fixtures: [string, string, boolean, number][] = [
   ['ICEYE', 'ICEYE-X2', false, 10],
   ['ICEYE', 'ICEYE-X2', true, 10],
   ['planetscope', 'planetscope', false, 11],
-  ['planetscope', 'planetscope', true, 11],
   ['skysat', 'skysat', false, 12],
   ['skysat', 'skysat', true, 12],
   ['RADARSAT', 'RS02', false, 13],
