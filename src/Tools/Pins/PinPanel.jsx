@@ -34,7 +34,7 @@ import {
   savePinsToServer,
   savePinsToSessionStorage,
 } from './Pin.utils';
-import { parsePosition, fetchEvalscriptFromEvalscriptUrl } from '../../utils';
+import { parsePosition, resolveEvalscript } from '../../utils';
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 
@@ -386,15 +386,7 @@ class PinPanel extends Component {
     // the newer call increments _pinSelectId and this one bails out after the await.
     const selectId = (this._pinSelectId = (this._pinSelectId || 0) + 1);
 
-    let resolvedEvalscript = evalscript;
-    if (!evalscript && evalscriptUrl) {
-      try {
-        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
-        resolvedEvalscript = data;
-      } catch (e) {
-        console.error('Failed to fetch evalscript from URL', e);
-      }
-    }
+    const resolvedEvalscript = await resolveEvalscript(evalscript, evalscriptUrl);
 
     if (selectId !== this._pinSelectId) {
       return;

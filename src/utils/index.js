@@ -678,6 +678,19 @@ export async function fetchEvalscriptFromEvalscriptUrl(evalscriptUrl) {
   return request.get(evalscriptUrl);
 }
 
+export async function resolveEvalscript(evalscript, evalscriptUrl) {
+  if (evalscript || !evalscriptUrl) {
+    return evalscript ?? null;
+  }
+  try {
+    const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
+    return data;
+  } catch (e) {
+    console.error('Failed to fetch evalscript from URL', e);
+    return null;
+  }
+}
+
 export async function fetchProcessGraphFromProcessGraphUrl(processGraphUrl) {
   return request.get(processGraphUrl);
 }

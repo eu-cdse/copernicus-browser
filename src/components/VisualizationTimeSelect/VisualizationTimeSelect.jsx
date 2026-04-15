@@ -68,6 +68,7 @@ export function VisualizationTimeSelect({
   showLayerPanel,
   setShowLayerPanel,
   showHighlightPanel,
+  showComparePanel,
   dateMode,
   compareShare,
   clmsSelection,
@@ -128,7 +129,7 @@ export function VisualizationTimeSelect({
   }
 
   function openLayerPanel() {
-    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showHighlightPanel) {
+    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showHighlightPanel && !showComparePanel) {
       setShowLayerPanel(true);
     }
   }

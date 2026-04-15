@@ -33,6 +33,7 @@ import {
   S2_QUARTERLY_MOSAIC_DATASET_ID,
   S2_QUARTERLY_MOSAIC_LAYER_ID,
   MAX_MAP_LOADING_TIME,
+  SERVER_ERROR_THRESHOLD,
 } from './const';
 import SearchBox from '../SearchBox/SearchBox';
 
@@ -70,6 +71,7 @@ import MapOverlays from './components/MapOverlays';
 const { BaseLayer, Overlay } = LayersControl;
 class Map extends React.Component {
   mapRef = undefined;
+  serverErrorCount = 0;
   progress = progressWithDelayedAction({
     parent: '#map',
     delay: MAX_MAP_LOADING_TIME,
@@ -125,6 +127,13 @@ class Map extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
+    if (
+      this.props.datasetId !== prevProps.datasetId ||
+      this.props.visualizationLayerId !== prevProps.visualizationLayerId
+    ) {
+      this.serverErrorCount = 0;
+    }
+
     // This part refers to the case if the search result is in the antimeridian section
     // (Each polygon moves at approximately +180 and creates duplicates at -180, so that it is not cut off in any direction that the user moves it).
     if (this.props.searchResults !== prevProps.searchResults) {
@@ -230,10 +239,23 @@ class Map extends React.Component {
   };
 
   onTileError = async (error) => {
-    handleError(error);
+    const status = error?.response?.status;
+    if (status >= 400 && status < 500) {
+      // 4xx = user error (bad evalscript / process graph) — always show immediately
+      this.serverErrorCount = 0;
+      handleError(error);
+    } else {
+      // 5xx or no status (transient backend failure) — only show after threshold
+      this.serverErrorCount++;
+      if (this.serverErrorCount >= SERVER_ERROR_THRESHOLD) {
+        this.serverErrorCount = 0;
+        handleError(error);
+      }
+    }
   };
 
   onTileLoad = () => {
+    this.serverErrorCount = 0;
     const { error } = this.props;
     if (error) {
       store.dispatch(visualizationSlice.actions.setError(null));

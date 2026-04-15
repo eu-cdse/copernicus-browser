@@ -30,7 +30,7 @@ import openEOApi from '../../api/openEO/openEO.api';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
-import { fetchEvalscriptFromEvalscriptUrl } from '../../utils';
+import { resolveEvalscript } from '../../utils';
 
 const PIN_PREVIEW_DIMENSIONS = {
   WIDTH: 90,
@@ -136,17 +136,7 @@ class PinPreviewImage extends React.Component {
       processGraph,
     } = pin;
 
-    let resolvedEvalscript = evalscript;
-    if (!resolvedEvalscript && evalscriptUrl) {
-      try {
-        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
-        resolvedEvalscript = data;
-      } catch (e) {
-        // Browser-side fetch failed (CORS, network, etc.).
-        // Fall through: keep evalscriptUrl so the SH API can fetch server-side.
-        console.error('Failed to fetch evalscript from URL for pin preview', e);
-      }
-    }
+    const resolvedEvalscript = await resolveEvalscript(evalscript, evalscriptUrl);
 
     try {
       const { previewImgUrl, fetchingPreview } = this.state;

@@ -97,7 +97,9 @@ async function fetchWithCache(url, init) {
       } catch (error) {
         message = undefined;
       }
-      throw new Error(message || 'Request failed');
+      const err = new Error(message || 'Request failed');
+      err.response = { status: response.status };
+      throw err;
     }
 
     // Store the data in cache
@@ -119,7 +121,9 @@ async function fetchWithCache(url, init) {
     if (error.name === 'AbortError') {
       throw error; // Re-throw AbortError to preserve its type
     }
-    throw new Error(`${url}: ${error.message}`);
+    const wrappedError = new Error(`${url}: ${error.message}`);
+    wrappedError.response = error.response;
+    throw wrappedError;
   }
 }
 
@@ -143,7 +147,9 @@ async function getResult(processGraph, token, signal) {
     if (error.name === 'AbortError') {
       throw error; // Re-throw AbortError to be handled by the caller
     }
-    throw new Error(`Failed to get OpenEO result: ${error.message}`);
+    const wrappedError = new Error(`Failed to get OpenEO result: ${error.message}`);
+    wrappedError.response = error.response;
+    throw wrappedError;
   }
 }
 

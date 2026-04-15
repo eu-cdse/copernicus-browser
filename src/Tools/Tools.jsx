@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import center from '@turf/center';
 import moment from 'moment';
 import { t } from 'ttag';
@@ -302,41 +302,47 @@ class Tools extends Component {
   }
 }
 
-const mapStoreToProps = (store) => ({
-  user: store.auth.user,
-  access_token: store.auth.user.access_token,
-  zoom: store.mainMap.zoom,
-  lat: store.mainMap.lat,
-  lng: store.mainMap.lng,
-  fromTime: store.visualization.fromTime,
-  toTime: store.visualization.toTime,
-  dateMode: store.visualization.dateMode,
-  datasetId: store.visualization.datasetId,
-  visualizationUrl: store.visualization.visualizationUrl,
-  layerId: store.visualization.layerId,
-  customSelected: store.visualization.customSelected,
-  evalscript: store.visualization.evalscript,
-  evalscriptUrl: store.visualization.evalscriptUrl,
-  dataFusion: store.visualization.dataFusion,
-  cloudCoverage: store.visualization.cloudCoverage,
-  selectedTabIndex: store.tabs.selectedTabIndex,
-  selectedLanguage: store.language.selectedLanguage,
-  mode: store.modes.selectedMode,
-  ...getVisualizationEffectsFromStore(store),
-  orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),
-  demSource3D: store.visualization.demSource3D,
-  selectedThemesListId: store.themes.selectedThemesListId,
-  themesLists: store.themes.themesLists,
-  selectedThemeId: store.themes.selectedThemeId,
-  selectedModeId: store.themes.selectedModeId,
-  newCompareLayersCount: store.compare.newCompareLayersCount,
-  terrainViewerSettings: store.terrainViewer.settings,
-  is3D: store.mainMap.is3D,
-  searchResults: store.searchResults.searchResults,
-  newPinsCount: store.pins.newPinsCount,
-  selectedProcessing: store.visualization.selectedProcessing,
-  processGraph: store.visualization.processGraph,
-  processGraphUrl: store.visualization.processGraphUrl,
-});
+function ToolsConnector(ownProps) {
+  const reduxProps = useSelector(
+    (state) => ({
+      user: state.auth.user,
+      access_token: state.auth.user.access_token,
+      zoom: state.mainMap.zoom,
+      lat: state.mainMap.lat,
+      lng: state.mainMap.lng,
+      fromTime: state.visualization.fromTime,
+      toTime: state.visualization.toTime,
+      dateMode: state.visualization.dateMode,
+      datasetId: state.visualization.datasetId,
+      visualizationUrl: state.visualization.visualizationUrl,
+      layerId: state.visualization.layerId,
+      customSelected: state.visualization.customSelected,
+      evalscript: state.visualization.evalscript,
+      evalscriptUrl: state.visualization.evalscriptUrl,
+      dataFusion: state.visualization.dataFusion,
+      cloudCoverage: state.visualization.cloudCoverage,
+      selectedTabIndex: state.tabs.selectedTabIndex,
+      selectedLanguage: state.language.selectedLanguage,
+      mode: state.modes.selectedMode,
+      ...getVisualizationEffectsFromStore(state),
+      orbitDirection: getOrbitDirectionFromList(state.visualization.orbitDirection),
+      demSource3D: state.visualization.demSource3D,
+      selectedThemesListId: state.themes.selectedThemesListId,
+      themesLists: state.themes.themesLists,
+      selectedThemeId: state.themes.selectedThemeId,
+      selectedModeId: state.themes.selectedModeId,
+      newCompareLayersCount: state.compare.newCompareLayersCount,
+      terrainViewerSettings: state.terrainViewer.settings,
+      is3D: state.mainMap.is3D,
+      searchResults: state.searchResults.searchResults,
+      newPinsCount: state.pins.newPinsCount,
+      selectedProcessing: state.visualization.selectedProcessing,
+      processGraph: state.visualization.processGraph,
+      processGraphUrl: state.visualization.processGraphUrl,
+    }),
+    shallowEqual,
+  );
+  return <Tools {...ownProps} {...reduxProps} />;
+}
 
-export default connect(mapStoreToProps, null)(Tools);
+export default ToolsConnector;

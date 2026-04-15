@@ -24,6 +24,7 @@ export const S2_QUARTERLY_MOSAIC_LAYER_ID = 'TRUE-COLOR-CLOUDLESS';
 // Map loading
 export const MAX_MAP_LOADING_TIME = 5 * 1000;
 export const TILE_REQUEST_DEBOUNCE_MS = 300;
+export const SERVER_ERROR_THRESHOLD = 3;
 
 type PathStyle = {
   weight?: number;

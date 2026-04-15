@@ -280,6 +280,7 @@ function VisualizationPanel({
               showLayerPanel={showLayerPanel}
               setShowLayerPanel={setShowLayerPanel}
               showHighlightPanel={showHighlightPanel}
+              showComparePanel={showComparePanel}
             />
           </div>
         )}

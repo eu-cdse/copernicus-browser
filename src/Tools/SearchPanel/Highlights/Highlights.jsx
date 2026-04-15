@@ -11,7 +11,7 @@ import store, {
   compareLayersSlice,
 } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { parsePosition, fetchEvalscriptFromEvalscriptUrl } from '../../../utils';
+import { parsePosition, resolveEvalscript } from '../../../utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
@@ -144,23 +144,21 @@ class Highlights extends Component {
       }),
     );
 
-    let resolvedEvalscript = evalscript;
-    if (!evalscript && evalscriptUrl) {
-      try {
-        const { data } = await fetchEvalscriptFromEvalscriptUrl(evalscriptUrl);
-        resolvedEvalscript = data;
-      } catch (e) {
-        console.error('Failed to fetch evalscript from URL', e);
-      }
-    }
-
     if (Array.isArray(comparedLayers) && comparedLayers.length > 0) {
       store.dispatch(clmsSlice.actions.reset());
       const compareModeOption =
         Object.values(COMPARE_OPTIONS).find((cm) => cm.value === compareMode) ??
         COMPARE_OPTIONS.COMPARE_SPLIT;
       const parentLayerBase = buildCompareLayerBase(pin, themeId);
-      const layersForCompare = comparedLayers.map((cl) => normalizePin({ ...parentLayerBase, ...cl }));
+      const resolvedComparedLayers = await Promise.all(
+        comparedLayers.map(async (cl) => {
+          const resolved = await resolveEvalscript(cl.evalscript, cl.evalscriptUrl);
+          return resolved !== null ? { ...cl, evalscript: resolved } : cl;
+        }),
+      );
+      const layersForCompare = resolvedComparedLayers.map((cl) =>
+        normalizePin({ ...parentLayerBase, ...cl }),
+      );
       store.dispatch(
         compareLayersSlice.actions.restoreComparedLayers({
           compareShare: false,
@@ -295,6 +293,8 @@ class Highlights extends Component {
       store.dispatch(visualizationSlice.actions.setVisualizationParams(visualizationParams));
       return;
     }
+
+    const resolvedEvalscript = await resolveEvalscript(evalscript, evalscriptUrl);
 
     visualizationParams = {
       ...visualizationParams,

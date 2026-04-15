@@ -2090,7 +2090,7 @@ export const DEFAULT_THEMES = [
             evalscriptUrl:
               'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-5p/no2_monthly_mean/script.js',
             fromTime: '2018-10-01T00:00:00.000Z',
-            toTime: '2018-10-31T23:59:59.999Z',
+            toTime: '2018-10-07T23:59:59.999Z',
             dateMode: 'TIME RANGE',
             cloudCoverage: 30,
           },
@@ -2107,13 +2107,13 @@ export const DEFAULT_THEMES = [
             evalscriptUrl:
               'https://raw.githubusercontent.com/sentinel-hub/custom-scripts/refs/heads/main/sentinel-5p/no2_monthly_mean/script.js',
             fromTime: '2025-10-01T00:00:00.000Z',
-            toTime: '2025-10-31T23:59:59.999Z',
+            toTime: '2025-10-07T23:59:59.999Z',
             dateMode: 'TIME RANGE',
             cloudCoverage: 30,
           },
         ],
         description:
-          'Nitrogen Dioxide is a public health hazard, causing respiratory problems and increasing the risk of lung cancer. It is mainly emitted by vehicles and also by industry. Starting in 2020, the city of Paris, France is implementing a series of measures to reduce car traffic and improve air quality, including new bicycle lanes, limited traffic zones and new urban green spaces. The effect is well visible on this comparison of Sentinel-5P NO2 monthly mosaics from October 2018 and October 2025: before the initiative, large areas of the city and its suburbs had hazardous NO2 concentrations, while currently the highly polluted area is concentrated in the city center. [Explore the visualisation](http://link.dataspace.copernicus.eu/gn47).',
+          'Nitrogen Dioxide is a public health hazard, causing respiratory problems and increasing the risk of lung cancer. It is mainly emitted by vehicles and also by industry. Starting in 2020, the city of Paris, France is implementing a series of measures to reduce car traffic and improve air quality, including new bicycle lanes, limited traffic zones and new urban green spaces. The effect is well visible on this comparison of Sentinel-5P NO2 weekly mosaics from October 2018 and October 2025: before the initiative, large areas of the city and its suburbs had hazardous NO2 concentrations, while currently the highly polluted area is concentrated in the city center. [Explore the visualisation](http://link.dataspace.copernicus.eu/gn47).',
       },
       {
         title: 'Sulfur Dioxide Plume from Hayli Gubbi Volcano, Ethiopia',
