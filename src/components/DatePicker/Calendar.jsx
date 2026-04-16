@@ -37,9 +37,10 @@ function Calendar(props) {
     isTimeRange,
     handleClickOutside,
     cloudCoverageSliderRef,
+    datepickerRef,
   } = props;
 
-  useOnClickOutside(wrapperRef, handleClickOutside || (() => {}), cloudCoverageSliderRef);
+  useOnClickOutside(wrapperRef, handleClickOutside || (() => {}), [cloudCoverageSliderRef, datepickerRef]);
 
   const modifiers = {
     highlighted: highlightedDays.map((d) => momentToDateWithUTCValues(d)),

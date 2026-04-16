@@ -9,6 +9,8 @@ export const DateTimeInput = (props) => {
     selectedTime,
     minDate,
     maxDate,
+    calendarMinDate,
+    calendarMaxDate,
     label,
     calendarContainer,
     onQueryDatesForActiveMonth,
@@ -38,7 +40,9 @@ export const DateTimeInput = (props) => {
       ?.clone()
       .set({ date: day.get('date'), month: day.get('month'), year: day.get('year') });
 
-    if (isWithinAvailableTimeRange(newSelectedDateTime)) {
+    const effectiveMin = calendarMinDate ?? minDate;
+    const effectiveMax = calendarMaxDate ?? maxDate;
+    if (newSelectedDateTime >= effectiveMin && newSelectedDateTime <= effectiveMax) {
       setSelectedTime(newSelectedDateTime.clone());
     }
   };
@@ -105,6 +109,8 @@ export const DateTimeInput = (props) => {
           setSelectedDay={setDay}
           minDate={minDate}
           maxDate={maxDate}
+          calendarMinDate={calendarMinDate}
+          calendarMaxDate={calendarMaxDate}
           onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
           hasCloudCoverFilter={hasCloudCoverage}
           showNextPrevDateArrows={showNextPrevDateArrows}

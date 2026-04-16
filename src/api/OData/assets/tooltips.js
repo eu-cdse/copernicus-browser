@@ -10,7 +10,7 @@ The *To order* filter should therefore only be used when searching for one of th
 
 const S1 = {
   [AttributeNames.platformSerialIdentifier]: () =>
-    t`The available Sentinel-1 data includes products from the Sentinel-1 satellite constellation, including Sentinel-1A (operational since 2014), Sentinel-1B (operational from 2016 to 2022) and Sentinel-1C (sample).`,
+    t`The available Sentinel-1 data includes products from the Sentinel-1 satellite constellation, including Sentinel-1A (operational since 2014), Sentinel-1B (operational from 2016 to 2022), Sentinel-1C (operational since 2025), Sentinel-1D (operational since 2026).`,
   [AttributeNames.orbitDirection]: () =>
     t`Determines whether the data was recorded during a descending orbit (flight direction: north - south) or an ascending orbit (flight direction: south - north).`,
   [AttributeNames.relativeOrbitNumber]: () =>

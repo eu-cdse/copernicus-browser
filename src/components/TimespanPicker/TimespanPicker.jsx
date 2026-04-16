@@ -110,6 +110,7 @@ export class TimespanPicker extends Component {
           setSelectedTime={this.setFromTime}
           minDate={this.props.minDate}
           maxDate={toTime && toTime.isValid() ? toTime : this.props.maxDate}
+          calendarMinDate={isTimeRange ? this.props.minDate : undefined}
           onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
           hasCloudCoverage={hasCloudCoverage}
           showNextPrevDateArrows={showNextPrevDateArrows}
@@ -138,6 +139,7 @@ export class TimespanPicker extends Component {
           setSelectedTime={this.setToTime}
           minDate={fromTime && fromTime.isValid() ? fromTime : this.props.minDate}
           maxDate={this.props.maxDate}
+          calendarMaxDate={isTimeRange ? this.props.maxDate : undefined}
           onQueryDatesForActiveMonth={onQueryDatesForActiveMonth}
           hasCloudCoverage={hasCloudCoverage}
           showNextPrevDateArrows={showNextPrevDateArrows}

@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 
-export function useOnClickOutside(ref, handler, additionalRef = null) {
+const EMPTY_REFS = [];
+
+export function useOnClickOutside(ref, handler, additionalRefs = EMPTY_REFS) {
   useEffect(() => {
     function listener(event) {
       if (
         !ref.current ||
         ref.current.contains(event.target) ||
-        (additionalRef && additionalRef.current && additionalRef.current.contains(event.target))
+        additionalRefs.some((r) => r && r.current && r.current.contains(event.target))
       ) {
         return;
       }
@@ -18,5 +20,5 @@ export function useOnClickOutside(ref, handler, additionalRef = null) {
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener);
     };
-  }, [ref, handler, additionalRef]);
+  }, [ref, handler, additionalRefs]);
 }

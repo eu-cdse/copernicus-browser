@@ -9,6 +9,7 @@ function DatePickerInput(props) {
     selectedDay,
     setSelectedDay,
     onValueConfirmed,
+    onNavigateToDate,
     showNextPrevDateArrows,
     getAndSetNextPrevDate,
     minDate,
@@ -54,8 +55,14 @@ function DatePickerInput(props) {
 
   function handleChange(e) {
     setDateValue(e.target.value);
+    const parsedDate = moment.utc(e.target.value, dateFormat, true);
+    if (!parsedDate.isValid()) {
+      return;
+    }
     if (isValueValidDate(e.target.value)) {
-      setSelectedDay(moment.utc(e.target.value));
+      setSelectedDay(parsedDate);
+    } else if (typeof onNavigateToDate === 'function') {
+      onNavigateToDate(parsedDate);
     }
   }
 

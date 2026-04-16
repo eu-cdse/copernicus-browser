@@ -24,6 +24,8 @@ class DatePicker extends Component {
     displayedDayMonth: null,
   };
 
+  datepickerRef = React.createRef();
+
   async componentDidMount() {
     await this.fetchDates();
     if (this.props.selectedDay !== null) {
@@ -95,9 +97,11 @@ class DatePicker extends Component {
   };
 
   handleMonthChange = (date) => {
-    const { selectedDay } = this.props;
-    const newSelectedDay = this.checkAndSetWithinAvailableRange(
+    const { selectedDay, minDate, calendarMinDate, calendarMaxDate, maxDate } = this.props;
+    const newSelectedDay = checkAndSetWithinAvailableRange(
       selectedDay.clone().month(date.getMonth()).year(date.getFullYear()),
+      calendarMinDate ?? minDate,
+      calendarMaxDate ?? maxDate,
     );
 
     const fromDate = newSelectedDay.clone().startOf('month');
@@ -105,11 +109,11 @@ class DatePicker extends Component {
   };
 
   onMonthOrYearDropdownChange = (month, year) => {
-    const { selectedDay, minDate, maxDate } = this.props;
+    const { selectedDay, minDate, maxDate, calendarMinDate, calendarMaxDate } = this.props;
     const newSelectedDay = checkAndSetWithinAvailableRange(
       selectedDay.clone().month(month).year(year),
-      minDate,
-      maxDate,
+      calendarMinDate ?? minDate,
+      calendarMaxDate ?? maxDate,
     );
 
     const fromDate = newSelectedDay.clone().startOf('month');
@@ -298,6 +302,8 @@ class DatePicker extends Component {
       setSelectedDay,
       minDate,
       maxDate,
+      calendarMinDate,
+      calendarMaxDate,
       locale,
       calendarContainer,
       id,
@@ -326,14 +332,22 @@ class DatePicker extends Component {
     );
     return (
       <>
-        <div className={`date-picker ${displayCalendar ? id : ''}`}>
+        <div ref={this.datepickerRef} className={`date-picker ${displayCalendar ? id : ''}`}>
           <DatePickerInput
             isTimeless={isTimeless}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
             dateFormat={STANDARD_STRING_DATE_FORMAT}
-            onClick={displayCalendar ? this.closeCalendar : this.openCalendar}
+            onClick={displayCalendar ? undefined : this.openCalendar}
             onValueConfirmed={this.closeCalendar}
+            onNavigateToDate={(date) => {
+              const clamped = checkAndSetWithinAvailableRange(
+                date,
+                calendarMinDate ?? minDate,
+                calendarMaxDate ?? maxDate,
+              );
+              this.setDisplayedDayMonth(momentToDateWithUTCValues(clamped));
+            }}
             showNextPrevDateArrows={showNextPrevDateArrows}
             getAndSetNextPrevDate={getAndSetNextPrevDate ?? this.handleGetAndSetNextPrevDate}
             minDate={minDate}
@@ -357,9 +371,9 @@ class DatePicker extends Component {
             setMaxCloudCover={setMaxCloudCover}
             setMaxCloudCoverAfterChange={setMaxCloudCoverAfterChange}
             selectedDay={selectedDay}
-            minDate={minDate}
+            minDate={calendarMinDate ?? minDate}
             handleMonthChange={this.handleMonthChange}
-            maxDate={maxDate}
+            maxDate={calendarMaxDate ?? maxDate}
             locale={locale}
             calendarContainer={calendarContainer}
             handleDayClick={this.handleDayClick}
@@ -374,6 +388,7 @@ class DatePicker extends Component {
             isZoomLevelOk={isZoomLevelOk}
             isTimeRange={isTimeRange}
             cloudCoverageSliderRef={cloudCoverageSliderRef}
+            datepickerRef={this.datepickerRef}
           />
         )}
       </>

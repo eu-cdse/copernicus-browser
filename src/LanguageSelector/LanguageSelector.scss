@@ -15,48 +15,74 @@
 
   .menu-flags {
     position: static;
-    color: vars.$whiteColor;
     padding: 0;
 
-    button {
-      padding: 0;
-      color: vars.$textColor;
-      text-transform: uppercase;
+    &__trigger {
       border: none;
+      border-radius: 0;
+      background: transparent;
+      width: 45px;
+      margin: 0;
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      color: vars.$whiteColor;
+      position: relative;
 
-      &[aria-expanded='true'] {
-        display: flex;
-        align-items: flex-start;
-        height: 50px;
-
-        &::after {
-          content: '';
-          position: relative;
-          top: 8px;
-        }
-      }
-
-      span {
-        font-size: 13px;
-        font-weight: vars.$fontWeightBold;
-        margin: 0;
-        padding: 0;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        right: 0;
+        width: 45px;
+        background: vars.$whiteColor;
+        height: 1px;
+        border-radius: 10px;
       }
     }
 
-    ul {
+    &--open &__trigger {
+      background-color: vars.$mainLight;
+      color: vars.$textColor;
+      position: relative;
+      z-index: 3;
+      height: 50px;
+      align-items: flex-start;
+      padding-top: 8px;
+    }
+
+    &__lang-code {
+      font-size: 13px;
+      font-weight: vars.$fontWeightBold;
+      text-transform: uppercase;
+    }
+
+    &__chevron {
+      margin-left: 7px;
+      transform: scale(0.8);
+
+      path {
+        stroke: currentcolor;
+      }
+    }
+
+    &__dropdown {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       list-style-type: none;
       position: absolute;
+      top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      width: max-content;
-      max-width: calc(100% - 57px);
+      width: 380px;
+      min-width: unset;
       max-height: none;
       color: vars.$textColor;
-      background-color: vars.$mainLight;
+      background-color: vars.$whiteBackground;
       padding: 20px;
       padding-bottom: 60px;
       border: none;
@@ -64,156 +90,66 @@
       text-transform: capitalize;
       box-shadow: vars.$boxShadow;
       z-index: 3;
-      margin: 0 0 0 -3px;
-
-      li {
-        font-size: 13px;
-        padding: 6px 10px;
-
-        &:last-child {
-          position: absolute;
-          bottom: 20px;
-          grid-column: 2/3;
-        }
-      }
-
-      li:hover {
-        background-color: vars.$primaryColor;
-        color: vars.$whiteColor;
-      }
+      margin: 0;
 
       @media only screen and (height <= 450px) {
         max-height: 200px;
+        overflow-y: auto;
       }
 
       @media only screen and (width <= 450px) {
         gap: 15px;
         padding: 15px;
         padding-bottom: 55px;
+        min-width: unset;
+      }
+    }
 
-        li:last-child {
+    &__option {
+      font-size: 13px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: vars.$primaryColor;
+        color: vars.$whiteColor;
+      }
+
+      &--more-info {
+        position: absolute;
+        bottom: 20px;
+        grid-column: 2/3;
+
+        .menu-flags__option-label {
+          color: vars.$primaryColor;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+
+        &:hover {
+          background-color: vars.$whiteBackground;
+
+          .menu-flags__option-label {
+            color: vars.$primaryColor;
+          }
+        }
+
+        @media only screen and (width <= 450px) {
           bottom: 15px;
         }
       }
     }
 
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='false'] {
-      /* stylelint-disable-line */
-      border-radius: 0;
-      width: 45px;
-      margin: 0;
-      padding: 5px 0;
-      display: flex;
-      justify-content: center;
-
-      &::after {
-        content: url("./icons/chevron-down.svg");
-        display: flex;
-        align-items: center;
-        border: none;
-        width: unset;
-        margin-left: 7px;
-        font-size: 0;
-        transform: scale(0.8);
-      }
-
-      span {
-        color: vars.$whiteColor;
+    .lang-flag {
+      &--svg,
+      &--custom {
+        width: 20px;
+        height: auto;
+        flex-shrink: 0;
       }
     }
-
-    .ReactFlagsSelect-module_selectFlag__2q5gC {
-      /* stylelint-disable-line */
-      display: none;
-    }
-
-    .ReactFlagsSelect-module_selectOptionValue__vS99- {
-      /* stylelint-disable-line */
-      .ReactFlagsSelect-module_selectFlag__2q5gC {
-        /* stylelint-disable-line */
-        display: inline-flex;
-      }
-    }
-
-    .ReactFlagsSelect-module_selectBtn__19wW7[aria-expanded='true'] {
-      /* stylelint-disable-line */
-      background-color: vars.$mainLight;
-      color: vars.$textColor;
-      border-radius: 0;
-      position: relative;
-      z-index: 3;
-      width: 45px;
-      margin: 0;
-      padding: 5px 0;
-      display: flex;
-      justify-content: center;
-
-      &::after {
-        content: url("../icons/chevron-up.svg");
-        display: flex;
-        align-items: center;
-        border: none;
-        width: unset;
-        margin-left: 7px;
-        font-size: 0;
-        transform: scale(0.8);
-      }
-
-      span {
-        color: vars.$textColor;
-      }
-    }
-
-    .ReactFlagsSelect-module_selectOption__3pcgW {
-      /* stylelint-disable-line */
-      margin: 0 2px;
-    }
-  }
-
-  .ReactFlagsSelect-module_flagsSelect__2pfa2 {
-    /* stylelint-disable-line */
-    ul {
-      #rfs-CA {
-        /* stylelint-disable-line */
-        .ReactFlagsSelect-module_selectFlag__2q5gC {
-          /* stylelint-disable-line */
-          content: url("../LanguageSelector/icons/catalan-flag.svg");
-        }
-      }
-
-      #rfs-TO {
-        /* stylelint-disable-line */
-        border-top: none;
-
-        .ReactFlagsSelect-module_selectFlag__2q5gC {
-          /* stylelint-disable-line */
-          content: url("../LanguageSelector/icons/people-group.svg");
-        }
-
-        .ReactFlagsSelect-module_label__27pw9 {
-          /* stylelint-disable-line */
-          color: vars.$primaryColor;
-          text-decoration: underline;
-          text-underline-offset: 2px;
-          overflow: visible;
-        }
-
-        &:hover {
-          background-color: vars.$whiteBackground;
-        }
-      }
-    }
-  }
-
-  .menu-flags::after {
-    content: '';
-    position: absolute;
-    bottom: 7px;
-    left: 0;
-    right: 0;
-    width: 45px;
-    background: vars.$whiteColor;
-    height: 1px;
-    border-radius: 10px;
   }
 }
