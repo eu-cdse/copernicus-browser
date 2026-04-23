@@ -16,6 +16,7 @@ import {
   S2L2ACDASLayer,
   S3OLCICDASLayer,
   S3SLSTRCDASLayer,
+  S3SLSTRL2CDASLayer,
   S3SYNL2CDASLayer,
   S5PL2CDASLayer,
   S1GRDCDASLayer,
@@ -58,6 +59,7 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
+  S3SLSTRL2_CDAS,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_AOD,
   S3SYNERGY_L2_VGP,
@@ -217,6 +219,17 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   checkIfCustom,
@@ -637,6 +650,7 @@ class SentinelHubLayer extends L.TileLayer {
   createCustomLayer = async (
     url,
     {
+      layer: layerId,
       datasetId,
       evalscript,
       evalscriptUrl,
@@ -711,6 +725,17 @@ class SentinelHubLayer extends L.TileLayer {
         });
       case S3SLSTR_CDAS:
         return await new S3SLSTRCDASLayer({
+          evalscript: evalscript,
+          evalscriptUrl: evalscriptUrl,
+          ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
+          upsampling: upsampling,
+          downsampling: downsampling,
+          ...(cloudCoverage !== undefined && cloudCoverage !== null
+            ? { maxCloudCoverPercent: cloudCoverage }
+            : {}),
+        });
+      case S3SLSTRL2_CDAS:
+        return await new S3SLSTRL2CDASLayer({
           evalscript: evalscript,
           evalscriptUrl: evalscriptUrl,
           ...(mosaickingOrder ? { mosaickingOrder: mosaickingOrder } : {}),
@@ -970,11 +995,42 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1:
       case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2:
       case COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6:
-      case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6: {
+      case COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021:
+      case COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1:
+      case COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT6:
+      case COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1: {
         const dsh = getDataSourceHandler(datasetId);
         const layer = await this.createBYOCLayer(
           url,
           dsh.KNOWN_COLLECTIONS[datasetId],
+          evalscript,
+          evalscriptUrl,
+          accessToken,
+          upsampling,
+          downsampling,
+          mosaickingOrder,
+        );
+        if (dsh?.supportsLowResolutionAlternativeCollection(layer.collectionId)) {
+          layer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(layer.collectionId);
+          layer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
+            layer.collectionId,
+          );
+        }
+        return layer;
+      }
+      case COPERNICUS_CLMS_DLT_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1: {
+        const dsh = getDataSourceHandler(datasetId);
+        const collectionId = dsh.getCollectionIdByDatasetIdAndLayerId(datasetId, layerId);
+        const layer = await this.createBYOCLayer(
+          url,
+          collectionId,
           evalscript,
           evalscriptUrl,
           accessToken,

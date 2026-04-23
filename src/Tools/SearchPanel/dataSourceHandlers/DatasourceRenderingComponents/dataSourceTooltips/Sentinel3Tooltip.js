@@ -68,12 +68,25 @@ const getS3V10L2Markdown = () => t`
 
 **Common usage**: Land Monitoring and Security, Climate Change Monitoring
 `;
+const getS3SLSTRL2Markdown = () => t`
+The **Sea and Land Surface Temperature (SLSTR)** instrument on board Sentinel-3 measures the global and regional sea and land surface temperature. The SLSTR L2 Land Surface Temperature (LST) product provides land surface temperature retrieved from the thermal infrared channels.
+
+**Spatial resolution:** 1km (that is, only details bigger than 1km can be seen).
+
+**Revisit time:** Maximum 1 day to revisit the same area, using both satellites.
+
+**Data availability:** Since May 2018 onwards.
+
+**Common usage:** Climate change monitoring, land surface temperature monitoring, drought monitoring, urban heat island studies.
+`;
+
 // const getS3AODL2Markdown = () => t`Global Aerosol parameter over land and sea on super pixel resolution (4.5 km x 4.5 km)`;
 // const getS3VGPL2Markdown = () => t`1 km VEGETATION-Like product (~VGT-P) - TOA Reflectance`;
 
 export {
   getS3Markdown,
   getS3SLSTRMarkdown,
+  getS3SLSTRL2Markdown,
   getS3OLCIMarkdown,
   getS3SynL2Markdown,
   getS3VG1L2Markdown,

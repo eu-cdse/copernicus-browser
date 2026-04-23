@@ -19,11 +19,39 @@ import oDataHelpers, {
 } from './ODataHelpers';
 import { AttributeNames, AttributeOriginValues, AttributeProcessorVersionValues } from './assets/attributes';
 import {
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
   COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import {
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+} from '../../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
   getDataSourceHandler: jest.fn(() => ({})),
@@ -1985,6 +2013,51 @@ describe('calculateMaxGeometryChars', () => {
   });
 });
 
+describe('getDatasetIdFromProductType - CTY/CTYCL dataset identifiers', () => {
+  const makeAttrs = (datasetIdentifier) => [
+    { Name: 'fileFormat', Value: 'cog' },
+    { Name: 'datasetIdentifier', Value: datasetIdentifier },
+  ];
+
+  test('CTY dataset identifier maps to COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1', () => {
+    const result = getDatasetIdFromProductType(
+      'crop_types',
+      makeAttrs(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY),
+    );
+    expect(result).toBe(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1);
+  });
+
+  test('CTYCL dataset identifier maps to COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1', () => {
+    const result = getDatasetIdFromProductType(
+      'crop_types',
+      makeAttrs(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL),
+    );
+    expect(result).toBe(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1);
+  });
+
+  test('CTY and CTYCL identifiers both map to the same dataset constant', () => {
+    const resultCTY = getDatasetIdFromProductType(
+      'crop_types',
+      makeAttrs(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY),
+    );
+    const resultCTYCL = getDatasetIdFromProductType(
+      'crop_types',
+      makeAttrs(COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL),
+    );
+    expect(resultCTY).toBe(resultCTYCL);
+  });
+
+  test('returns null when productType is null', () => {
+    const result = getDatasetIdFromProductType(null, []);
+    expect(result).toBeNull();
+  });
+
+  test('returns undefined for an unknown product type string', () => {
+    const result = getDatasetIdFromProductType('unknown_product_type', []);
+    expect(result).toBeUndefined();
+  });
+});
+
 describe('getDatasetIdFromProductType — urban_atlas', () => {
   const lcuDatasetIdentifier = 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1';
   const lcucDatasetIdentifier = 'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1';
@@ -2063,5 +2136,333 @@ describe('getODataCollectionInfoFromDatasetId — UA vector datasets', () => {
     expect(result[0].instrument).toBe('URBAN_ATLAS');
     expect(result[0].productType).toBe(expectedProductType);
     expect(result[0].selectedFilters).toEqual({});
+  });
+});
+
+describe('getODataCollectionInfoFromDatasetId — VLCC split-collection datasets', () => {
+  const expectedCollectionId = 'CLMS_LAND_COVER_AND_LAND_USE_MAPPING';
+
+  const assertSingleResult = (result, instrument, productType) => {
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(expectedCollectionId);
+    expect(result[0].instrument).toBe(instrument);
+    expect(result[0].productType).toBe(productType);
+    expect(result[0].selectedFilters).toEqual({});
+  };
+
+  const assertTwoResults = (result, instrument, productTypeA, productTypeB) => {
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe(expectedCollectionId);
+    expect(result[0].instrument).toBe(instrument);
+    expect(result[0].productType).toBe(productTypeA);
+    expect(result[0].selectedFilters).toEqual({});
+    expect(result[1].id).toBe(expectedCollectionId);
+    expect(result[1].instrument).toBe(instrument);
+    expect(result[1].productType).toBe(productTypeB);
+    expect(result[1].selectedFilters).toEqual({});
+  };
+
+  describe('COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1;
+    const instrument = 'CROP_TYPES';
+
+    test('confidence layerId returns single CTYCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTYCL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
+      );
+    });
+
+    test('main layerId returns single CTY entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTY,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
+        COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1;
+    const instrument = 'CROPPING_PATTERNS';
+
+    test('confidence layerId returns single FLPCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS.FLPCL,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL);
+    });
+
+    test('main layerId returns single FLP entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS.FLP,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP);
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL,
+        COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_DLT_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_DLT_10M_YEARLY_V1;
+    const instrument = 'DOMINANT_LEAF_TYPE';
+
+    test('confidence layerId returns single DLTCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS.DLTCL,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL);
+    });
+
+    test('main layerId returns single DLT entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS.DLT,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT);
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL,
+        COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1;
+    const instrument = 'CROPPING_PATTERNS';
+
+    test('confidence layerId returns single CPMCDCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS.CPMCDCL,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL);
+    });
+
+    test('main layerId returns single CPMCD entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS.CPMCD,
+      });
+      assertSingleResult(result, instrument, COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD);
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
+        COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1;
+    const instrument = 'TREE_COVER_DENSITY';
+
+    test('confidence layerId returns single TCPCCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS.TCPCCL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
+      );
+    });
+
+    test('main layerId returns single TCPC entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS.TCPC,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
+        COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1;
+    const instrument = 'GRASSLAND_AND_HERBACEOUS';
+
+    test('confidence layerId returns single GRACCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS.GRACCL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
+      );
+    });
+
+    test('main layerId returns single GRAC entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS.GRAC,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1;
+    const instrument = 'GRASSLAND_AND_HERBACEOUS';
+
+    test('confidence layerId returns single GRACL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRACL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
+      );
+    });
+
+    test('main layerId returns single GRA entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRA,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1;
+    const instrument = 'TREE_COVER_DENSITY';
+
+    test('confidence layerId returns single TCDCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS.TCDCL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
+      );
+    });
+
+    test('main layerId returns single TCD entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS.TCD,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
+        COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
+      );
+    });
+  });
+});
+
+describe('getODataCollectionInfoFromDatasetId — VLCC forest type (single collection)', () => {
+  const expectedCollectionId = 'CLMS_LAND_COVER_AND_LAND_USE_MAPPING';
+
+  test('always returns a single entry regardless of layerId', () => {
+    const result = getODataCollectionInfoFromDatasetId(
+      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+      {},
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(expectedCollectionId);
+    expect(result[0].instrument).toBe('FOREST_TYPE');
+    expect(result[0].productType).toBe(
+      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+    );
+    expect(result[0].selectedFilters).toEqual({});
+  });
+
+  test('returns the same single entry when an arbitrary layerId is provided', () => {
+    const result = getODataCollectionInfoFromDatasetId(
+      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+      {
+        layerId: 'some-layer-id',
+      },
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].instrument).toBe('FOREST_TYPE');
+    expect(result[0].productType).toBe(
+      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+    );
   });
 });

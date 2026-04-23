@@ -32,6 +32,7 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
+  S3SLSTRL2_CDAS,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -189,6 +190,17 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -200,6 +212,16 @@ import {
   getS5O3Markdown,
   getS5SO2Markdown,
 } from '../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/dataSourceTooltips/Sentinel5Tooltip';
+import {
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+} from '../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 export const PREDEFINED_LAYERS_METADATA = [
   {
@@ -1799,6 +1821,16 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '3_LAND_OTCI' }],
     description: () =>
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
+  },
+  {
+    match: [{ datasourceId: S3SLSTRL2_CDAS, layerId: 'LST' }],
+    description: () =>
+      t`# Land Surface Temperature (LST)\n\nThe Land Surface Temperature (LST) product provides the temperature of the Earth's surface as retrieved from the SLSTR thermal infrared channels. LST is a key parameter in the physics of land surface, controlling the partitioning of energy between the atmosphere and the land surface. It is used in climate change monitoring, drought monitoring, and urban heat island studies.\n\nMore info [here](https://sentiwiki.copernicus.eu/web/slstr-products#S3-SLSTR-Products-L2-LST-Products).`,
+  },
+  {
+    match: [{ datasourceId: S3SLSTRL2_CDAS, layerId: 'NDVI' }],
+    description: () =>
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe Normalized Difference Vegetation Index (NDVI) is a dimensionless index that describes the difference between visible and near-infrared reflectance of vegetation cover. It can be used to estimate the density of vegetation cover and monitor vegetation health.\n\nMore info [here](https://github.com/eu-cdse/sentinel-hub-custom-scripts/tree/main/sentinel-3/slstrl2/ndvi/).`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NDVI' }],
@@ -4374,5 +4406,184 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6, layerId: 'GDMP' }],
     description: () =>
       t`GDMP represents the total amount of dry matter produced by land plants per unit time through photosynthesis. It is expressed in kg of Dry Matter per hectare and per day (kg DM/ha/day).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+        layerId: 'UA BBH 3-yearly 2021',
+      },
+    ],
+    description: () =>
+      t`Urban Atlas Building Block Height 2021 is a 10 m high resolution raster layer containing height information generated for selected cities and urban areas as part of the Urban atlas suite of products.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS.FLP,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level a classification of the presence of fallow land over annual cropland area at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS.FLPCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for fallow land presence.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1, layerId: 'Dominant Leaf Type Change' },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 20 m information on the changes in six thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS.DLT,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m information on the dominant leaf type (broadleaved or coniferous).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS.DLTCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for dominant leaf type.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTY,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level a classification of cropland into one of the 19 crop type classes at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTYCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for crop types.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS.CPMCD,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the duration of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS.CPMCDCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for main crop duration.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS.TCPC,
+      },
+    ],
+    description: () =>
+      t`Provides information on the change between the reference years 2018 and 2021, classified into 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS.TCPCCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for tree cover presence change.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS.GRAC,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 20 m information on changes in grassland vegetation cover between the 2018 and 2021 reference years.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS.GRACCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for grassland change.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+        layerId: 'Forest Type over 3 years',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a forest classification for three thematic classes (all non-forest areas / broadleaved forest / coniferous forest) with the agricultural/urban trees removed for the 2018 reference year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRA,
+      },
+    ],
+    description: () =>
+      t`Classification of grassland / non-grassland. Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification with two thematic classes (grassland / non-grassland).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRACL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for grassland classification.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS.TCD,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m the level of tree cover density in a range from 0% to 100%.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS.TCDCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for tree cover density.`,
   },
 ];

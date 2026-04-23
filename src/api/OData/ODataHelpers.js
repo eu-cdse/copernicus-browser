@@ -35,6 +35,7 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   S3OLCIL2_LAND,
   S3OLCIL2_WATER,
+  S3SLSTRL2_CDAS,
   S3SYNERGY_L2_V10,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_VG1,
@@ -179,10 +180,21 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT2,
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
   COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -200,6 +212,26 @@ import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionS
 import { FilterElement } from './FilterElement';
 import moment from 'moment';
 import { isFunction } from '../../utils';
+import {
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+} from '../../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 export const PAGE_SIZE = 50;
 
@@ -211,6 +243,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S2MSI2A: S2_L2A_CDAS,
   OL_1_EFR___: S3OLCI_CDAS,
   SL_1_RBT___: S3SLSTR_CDAS,
+  SL_2_LST___: S3SLSTRL2_CDAS,
   OL_2_LFR___: S3OLCIL2_LAND,
   OL_2_WFR___: S3OLCIL2_WATER,
   SY_2_V10___: S3SYNERGY_L2_V10,
@@ -306,10 +339,84 @@ const PRODUCT_TYPE_TO_DATASETID = {
   fapar_global_300m_10daily_v2: COPERNICUS_CLMS_FAPAR_300M_10DAILY_V2_RT0,
   fcover_global_300m_10daily_v2: COPERNICUS_CLMS_FCOVER_GLOBAL_300M_10DAILY_V2_RT0,
   gpp_global_300m_10daily_v2: COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
+  [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP]: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL]: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER]: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+  [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT]: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL]: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY]:
+    COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL]:
+    COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD]: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL]: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC]:
+    COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL]:
+    COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC]:
+    COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL]:
+    COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER]:
+    COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA]:
+    COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL]:
+    COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD]:
+    COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL]:
+    COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
   'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018': COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
   'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021': COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
   'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1': COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1': COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  'clms_ua_building-height_europe_10m_3yearly_v1':
+    COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+};
+
+const VLCC_MULTI_LAYER_ODATA_CONFIG = {
+  [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1]: {
+    instrument: 'CROP_TYPES',
+    layerIds: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1]: {
+    instrument: 'CROPPING_PATTERNS',
+    layerIds: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_DLT_10M_YEARLY_V1]: {
+    instrument: 'DOMINANT_LEAF_TYPE',
+    layerIds: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1]: {
+    instrument: 'CROPPING_PATTERNS',
+    layerIds: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1]: {
+    instrument: 'TREE_COVER_DENSITY',
+    layerIds: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: {
+    instrument: 'GRASSLAND_AND_HERBACEOUS',
+    layerIds: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: {
+    instrument: 'TREE_COVER_DENSITY',
+    layerIds: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  },
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1]: {
+    instrument: 'GRASSLAND_AND_HERBACEOUS',
+    layerIds: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS,
+    datasetIdentifiers: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS,
+  },
 };
 
 const attributeObjectWithValues = (attributes) => {
@@ -383,6 +490,22 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     }
   }
 
+  // CLMS VLCC products
+  if (
+    checkProductTypeFileFormat(attributes) &&
+    [
+      'cropping_patterns',
+      'tree_cover_density',
+      'forest_type',
+      'dominant_leaf_type',
+      'grassland_and_herbaceous',
+      'crop_types',
+    ].includes(productType)
+  ) {
+    const { datasetIdentifier } = attributesObject;
+    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
   if (productType === 'urban_atlas') {
     const { datasetIdentifier, nominalDate } = attributesObject;
     if (datasetIdentifier === 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1') {
@@ -396,75 +519,26 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
   }
 
-  if (productType === 'dynamic_land_cover' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'evapotranspiration' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
+  // CLMS products
   if (
-    productType === 'vegetation_phenology_and_productivity_parameters' &&
-    checkProductTypeFileFormat(attributes)
+    checkProductTypeFileFormat(attributes) &&
+    [
+      'dynamic_land_cover',
+      'evapotranspiration',
+      'vegetation_phenology_and_productivity_parameters',
+      'vegetation_indices',
+      'surface_soil_moisture',
+      'land_surface_temperature',
+      'lake_surface_water_temperature',
+      'soil_water_index',
+      'burnt_area',
+      'water_bodies',
+      'snow_water_equivalent',
+      'snow_cover_extent',
+      'lake_water_quality',
+      'river_and_lake_ice_extent',
+    ].includes(productType)
   ) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'vegetation_indices' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'surface_soil_moisture' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'land_surface_temperature' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'lake_surface_water_temperature' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'soil_water_index' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'burnt_area' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'water_bodies' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'snow_water_equivalent' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'snow_cover_extent' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'lake_water_quality' && checkProductTypeFileFormat(attributes)) {
-    const { datasetIdentifier } = attributesObject;
-    return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
-  }
-
-  if (productType === 'river_and_lake_ice_extent' && checkProductTypeFileFormat(attributes)) {
     const { datasetIdentifier } = attributesObject;
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
   }
@@ -903,7 +977,37 @@ const getProductTypeFromDatasetId = (datasetId) => {
   return null;
 };
 
-export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection, maxCC }) => {
+const getVlccMultiLayerODataCollectionInfo = (datasetId, layerId) => {
+  const config = VLCC_MULTI_LAYER_ODATA_CONFIG[datasetId];
+  if (!config) {
+    return null;
+  }
+  const { instrument, layerIds, datasetIdentifiers } = config;
+  const layerIdToProductType = Object.fromEntries(
+    Object.keys(layerIds).map((key) => [layerIds[key], datasetIdentifiers[key]]),
+  );
+  const matchedProductType = layerIdToProductType[layerId];
+  if (matchedProductType) {
+    return [
+      {
+        id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+        instrument,
+        productType: matchedProductType,
+        selectedFilters: {},
+      },
+    ];
+  }
+  // fallback: return all product types if layerId is not provided or does not match expected values
+  // CL (confidence layer) is always returned first — reverse since objects define main layer first
+  return [...Object.values(datasetIdentifiers)].reverse().map((productType) => ({
+    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+    instrument,
+    productType,
+    selectedFilters: {},
+  }));
+};
+
+export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection, maxCC, layerId }) => {
   const dsh = getDataSourceHandler(datasetId);
   if (!dsh) {
     return null;
@@ -1012,12 +1116,40 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     ];
   }
 
+  if ([COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+        instrument: 'DOMINANT_LEAF_TYPE',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if ([COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+        instrument: 'FOREST_TYPE',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  const vlccResult = getVlccMultiLayerODataCollectionInfo(datasetId, layerId);
+  if (vlccResult) {
+    return vlccResult;
+  }
+
   if (
     [
       COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
       COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
       COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
       COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+      COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
     ].includes(datasetId)
   ) {
     return [
@@ -2482,10 +2614,19 @@ export const roundGeometryValues = (sourceGeometry) => {
 /*
 Construct query for basic search
 */
-const createBasicSearchQuery = ({ fromTime, toTime, orbitDirection, geometry, datasetId, maxCC }) => {
+const createBasicSearchQuery = ({
+  fromTime,
+  toTime,
+  orbitDirection,
+  geometry,
+  datasetId,
+  maxCC,
+  layerId,
+}) => {
   const oDataCollectionInfo = getODataCollectionInfoFromDatasetId(datasetId, {
     orbitDirection,
     maxCC,
+    layerId,
   });
   let collections = [];
   if (oDataCollectionInfo !== null) {

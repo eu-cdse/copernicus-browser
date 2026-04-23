@@ -69,6 +69,20 @@ export const getUtmCrsFromBbox = (bbox) => {
 };
 
 /**
+ * Returns a human-readable UTM zone label for a provided bbox
+ * @param {BBox} bbox - sentinelhub BBox
+ * @return {string} e.g. "UTM 33N (EPSG:32633)"
+ * @example
+ *
+ *    getUtmZoneLabel(new BBox(CRS_EPSG4326, 1, 2, 2, 3))
+ */
+export const getUtmZoneLabel = (bbox) => {
+  const { zone, hemisphere } = getUtmZoneFromBbox(bbox);
+  const epsgCode = getUtmEpsgCode({ zone, hemisphere });
+  return `UTM ${zone}${hemisphere} (EPSG:${epsgCode})`;
+};
+
+/**
  * Function to check if an authId is UTM.
  * Function assumes UTM epsg codes rage from 32601-32660 for nothern hepispheres and 32701-32760 for southern hemispheres
  * @param {string} authId An authId

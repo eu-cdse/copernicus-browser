@@ -4,10 +4,12 @@
   .area-interest-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 
     .row {
-      margin-bottom: 12px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+      align-items: start;
     }
   }
 

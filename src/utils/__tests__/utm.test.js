@@ -1,5 +1,5 @@
 import { BBox, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
-import { getUtmEpsgCode, getUtmZoneFromBbox, isAuthIdUtm } from '../utm';
+import { getUtmEpsgCode, getUtmZoneFromBbox, getUtmZoneLabel, isAuthIdUtm } from '../utm';
 
 const getUtmZoneFixtures = [
   [new BBox(CRS_EPSG4326, 175.933943, 65.379248, 180.505886, 66.548298), { zone: 60, hemisphere: 'N' }],
@@ -25,6 +25,18 @@ describe('Test: getUtmEpsgFromUtmZone', () => {
   test.each(getEpsgCodeFixtures)('given %p as argument, returns %p', (utmZoneObject, expectedResult) => {
     const zone = getUtmEpsgCode(utmZoneObject);
     expect(zone).toEqual(expectedResult);
+  });
+});
+
+const getUtmZoneLabelFixtures = [
+  [new BBox(CRS_EPSG4326, 1, 41, 2, 42), 'UTM 31N (EPSG:32631)'],
+  [new BBox(CRS_EPSG4326, -88, 36, -81, 41), 'UTM 16N (EPSG:32616)'],
+  [new BBox(CRS_EPSG4326, 174.737, -36.852, 174.789, -36.813), 'UTM 60S (EPSG:32760)'],
+];
+describe('Test: getUtmZoneLabel', () => {
+  test.each(getUtmZoneLabelFixtures)('given %p as argument, returns %p', (bbox, expectedResult) => {
+    const label = getUtmZoneLabel(bbox);
+    expect(label).toEqual(expectedResult);
   });
 });
 

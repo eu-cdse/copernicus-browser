@@ -481,6 +481,26 @@
             }
         ]
     },
+    "156b47-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPMCD 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Main Crop Duration",
+                "name": "Main Crop Duration",
+                "description": "Main crop growing season duration",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/156b47-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Duration&style=default"
+            },
+            {
+                "id": "Main Crop Duration Confidence Layer",
+                "name": "Main Crop Duration Confidence Layer",
+                "description": "Confidence of main crop duration",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/156b47-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Duration+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "16134e-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] dmp_global_1km_10daily_v2",
         "layers": [
@@ -1640,6 +1660,19 @@
                 "description": "NDVI is an indicator of the greenness of the biomass.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3825e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "38eb4e-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_forest-type_europe_10m_3yearly_v1",
+        "layers": [
+            {
+                "id": "Forest Type over 3 years",
+                "name": "Forest Type over 3 years",
+                "description": "Forest Type over 3 years (10m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/38eb4e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Forest+Type+over+3+years&style=default"
             }
         ],
         "datasets": []
@@ -2881,6 +2914,26 @@
         ],
         "datasets": []
     },
+    "533111-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | DLT 10m Yearly (2018-present)",
+        "layers": [
+            {
+                "id": "Dominant Leaf Type",
+                "name": "Dominant Leaf Type",
+                "description": "Dominant leaf type classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/533111-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Dominant+Leaf+Type&style=default"
+            },
+            {
+                "id": "Dominant Leaf Type Confidence Layer",
+                "name": "Dominant Leaf Type Confidence Layer",
+                "description": "Confidence of dominant leaf type",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/533111-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Dominant+Leaf+Type+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "57f9bd-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT6",
         "layers": [
@@ -2971,6 +3024,26 @@
                 "description": "Based on combination of bands (B4 - B3)/(B4 + B3)",
                 "dataset": "CUSTOM",
                 "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "5f8545-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPFLP 10m Yearly V1",
+        "layers": [
+            {
+                "id": "Fallow Land Presence",
+                "name": "Fallow Land Presence",
+                "description": "Annual fallow land presence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5f8545-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Fallow+Land+Presence&style=default"
+            },
+            {
+                "id": "Fallow Land Presence Confidence Layer",
+                "name": "Fallow Land Presence Confidence Layer",
+                "description": "Confidence of fallow land presence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/5f8545-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Fallow+Land+Presence+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -3741,6 +3814,26 @@
                 "description": "Length of the semi-period after the date [days]",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/75c925-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=5_LAFTER&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "76c32c-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CTY 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Crop Types",
+                "name": "Crop Types",
+                "description": "Cropland crop type classification (19 types)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/76c32c-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Crop+Types&style=default"
+            },
+            {
+                "id": "Crop Types Confidence Layer",
+                "name": "Crop Types Confidence Layer",
+                "description": "Confidence of crop type classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/76c32c-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Crop+Types+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -4518,6 +4611,26 @@
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "8823df-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | GRA 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Grassland",
+                "name": "Grassland",
+                "description": "Classification of grassland / non-grassland",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/8823df-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland&style=default"
+            },
+            {
+                "id": "Grassland Confidence Layer",
+                "name": "Grassland Confidence Layer",
+                "description": "Confidence of grassland classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/8823df-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -5603,6 +5716,19 @@
             }
         ]
     },
+    "b2d516-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_dominant-leaf-type-change_europe_20m_3yearly_v1",
+        "layers": [
+            {
+                "id": "Dominant Leaf Type Change",
+                "name": "Dominant Leaf Type Change",
+                "description": "Tree cover change classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b2d516-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Dominant+Leaf+Type+Change&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "b36fef-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] npp_global_300m_10daily_v1_RT0",
         "layers": [
@@ -5867,6 +5993,26 @@
         ],
         "datasets": []
     },
+    "b8b497-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | TCPC 20m 3yearly (2018-2021)",
+        "layers": [
+            {
+                "id": "Tree Cover Presence Change",
+                "name": "Tree Cover Presence Change",
+                "description": "Tree cover extent change",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b8b497-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree+Cover+Presence+Change&style=default"
+            },
+            {
+                "id": "Tree Cover Presence Change Confidence Layer",
+                "name": "Tree Cover Presence Change Confidence Layer",
+                "description": "Confidence of tree cover change",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b8b497-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree+Cover+Presence+Change+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "b8f74d-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lst-tci_global_5km_10daily_v1",
         "layers": [
@@ -6002,6 +6148,19 @@
                 ]
             }
         ]
+    },
+    "bf5fec-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_ua_building-height_europe_10m_3yearly_v1",
+        "layers": [
+            {
+                "id": "UA BBH 3-yearly 2021",
+                "name": "UA BBH 3-yearly 2021",
+                "description": "UA 2021 Building Height (10 m raster)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/bf5fec-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=UA+BBH+3-yearly+2021&style=default"
+            }
+        ],
+        "datasets": []
     },
     "c15b45-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] dmp_global_1km_10daily_v2_RT2",
@@ -6168,6 +6327,26 @@
                 "description": "NDVI is an indicator of the greenness of the biomass.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ca555d-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "cbb96f-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | GRAC 20m 3yearly (2018-2021)",
+        "layers": [
+            {
+                "id": "Grassland Change",
+                "name": "Grassland Change",
+                "description": "Grassland Change (20m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cbb96f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Change&style=default"
+            },
+            {
+                "id": "Grassland Change Confidence Layer",
+                "name": "Grassland Change Confidence Layer",
+                "description": "Confidence of grassland change",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cbb96f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Change+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -6720,6 +6899,26 @@
                 "description": "Gross Primary Production value",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e1f382-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "e20ca5-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | TCD 10m Yearly (2018-present)",
+        "layers": [
+            {
+                "id": "Tree Cover Density",
+                "name": "Tree Cover Density",
+                "description": "Tree cover density (10 m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20ca5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree+Cover+Density&style=default"
+            },
+            {
+                "id": "Tree Cover Density Confidence Layer",
+                "name": "Tree Cover Density Confidence Layer",
+                "description": "Confidence of tree cover density",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20ca5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree+Cover+Density+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -7823,6 +8022,26 @@
                 "description": "Provides information on the relative water content of the top few centimeters soil, describing how wet or dry the soil is in its topmost layer, expressed in percent saturation.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fc0140-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=SSM&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "fd0f28-YOUR-INSTANCEID-HERE": {
+        "title": "CDSE Sentinel-3 SLSTR L2",
+        "layers": [
+            {
+                "id": "LST",
+                "name": "LST",
+                "description": "",
+                "dataset": "S3SLSTRL2",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "S3SLSTRL2",
+                "legendUrl": null
             }
         ],
         "datasets": []

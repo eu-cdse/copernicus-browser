@@ -188,6 +188,13 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/ef19b6-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'Sentinel-3 SLSTR L2',
+        service: 'WMS',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/fd0f28-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'Sentinel-5P O3 / NO2 / ...',
         service: 'WMS',
         url: `${
@@ -1092,6 +1099,72 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/6d81d2-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_ua_building-height_europe_10m_3yearly_v1_2021',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/bf5fec-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'cpflp_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/5f8545-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_dominant-leaf-type-change_europe_20m_3yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/b2d516-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_dominant-leaf-type_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/533111-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_crop-types_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/76c32c-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_main-crop-duration_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/156b47-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'tcpc 20m 3-yearly (2018–2021)',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/b8b497-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'grac 20m 3-yearly (2018–2021)',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/cbb96f-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_forest-type_europe_10m_3yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/38eb4e-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_grassland_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/8823df-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_tree-cover-density_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/e20ca5-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

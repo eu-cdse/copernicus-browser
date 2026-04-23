@@ -45,8 +45,13 @@ const CustomVisualizationLayer = (props) => {
   const groupChannels =
     datasourceHandler && datasourceHandler.groupChannels && datasourceHandler.groupChannels(datasetId);
   const bands = datasourceHandler.getBands(datasetId);
+  const bandsByLayerId = datasourceHandler.getBandsByDatasetIdAndLayerId(datasetId, selectedVisualizationId);
+  const bandsToUse =
+    bandsByLayerId !== null && bandsByLayerId !== undefined
+      ? bands.filter((b) => bandsByLayerId.includes(b.name))
+      : bands;
   // Some datasets might have only 1 or 2 available bands. This assures `bands` always contains exactly 3.
-  let selectedBands = [...bands, ...bands, ...bands].slice(0, 3).map((b) => b.name);
+  let selectedBands = [...bandsToUse, ...bandsToUse, ...bandsToUse].slice(0, 3).map((b) => b.name);
   let selectedIndexBands = { a: null, b: null };
 
   if (evalscript) {
@@ -93,7 +98,7 @@ const CustomVisualizationLayer = (props) => {
     <div className="custom-visualization">
       <ActionBar actionsOpen={true} actions={layerActions} />
       <EOBAdvancedHolder
-        channels={bands}
+        channels={bandsToUse}
         evalscriptUrl={evalscriptUrl}
         evalscript={evalscript}
         dataFusion={dataFusion}

@@ -354,52 +354,140 @@ const getClmsUaLcuc20182021VectorMarkdown = () =>
 const getClmsUaStl2021VectorMarkdown = () =>
   t`Urban Atlas Street Tree Layer 2021 provides information about presence of trees within Functional Urban Areas (FUA). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
 
-const getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown = () => t`
-  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsDmpGlobal300m10dailyV2RT0Markdown = () =>
+  t`Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown = () => t`
-  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsDmpGlobal300m10dailyV2RT1Markdown = () =>
+  t`Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown = () => t`
-  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsDmpGlobal300m10dailyV2RT2Markdown = () =>
+  t`Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown = () => t`
-  Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsDmpGlobal300m10dailyV2RT6Markdown = () =>
+  t`Provides information about the overall growth rate, or net dry biomass increase, of the vegetation. It is equivalent to Net Primary Production (NPP) but expressed in kg of dry matter per hectare and per day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown = () => t`
-  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+const getCopernicusClmsGppGlobal300m10dailyV2RT0Markdown = () =>
+  t`Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown = () => t`
-  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+const getCopernicusClmsGppGlobal300m10dailyV2RT1Markdown = () =>
+  t`Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown = () => t`
-  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
+const getCopernicusClmsGppGlobal300m10dailyV2RT2Markdown = () =>
+  t`Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown = () => t`
-  Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
-const getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown = () => t`
-  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+const getCopernicusClmsGppGlobal300m10dailyV2RT6Markdown = () =>
+  t`Provides information about the total amount of carbon compounds produced by photosynthesis of plants in an ecosystem in a given period of time, expressed in gC/m²/day. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown = () => t`
-  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+const getCopernicusClmsNppGlobal300m10dailyV2RT0Markdown = () =>
+  t`Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown = () => t`
-  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+const getCopernicusClmsNppGlobal300m10dailyV2RT1Markdown = () =>
+  t`Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown = () => t`
-  Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
+const getCopernicusClmsNppGlobal300m10dailyV2RT2Markdown = () =>
+  t`Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown = () => t`
-  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsNppGlobal300m10dailyV2RT6Markdown = () =>
+  t`Provides information about the net amount of biomass, or carbon, produced by plants per unit area and time, expressed in gC/m²/day. It is equal to the difference between the Gross Primary Production (GPP), i.e. the total amount of carbon produced through photosynthesis, and the amount of energy used for plant respiration. Every 10-days, estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v2-0-300m).`;
 
-const getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown = () => t`
-  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT0Markdown = () =>
+  t`Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown = () => t`
-  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown = () =>
+  t`Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
 
-const getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown = () => t`
-  Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown = () =>
+  t`Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown = () =>
+  t`Provides information about the total amount of dry matter produced by land plants per unit time through photosynthesis. It is equivalent to Gross Primary Production (GPP) but expressed in kg of dry matter per hectare and per day. Every 10-days estimates are available at global scale, at a spatial resolution of ~ 300 m, from January 2014 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v2-0-300m).`;
+
+const getCopernicusClmsDlt10mYearlyV1Markdown = () => t`
+  The High Resolution Dominant Leaf Type (DLT) raster product provides a basic land cover classification with 3 thematic classes (all non-tree covered areas, broadleaved and coniferous).
+
+This dataset is provided annually starting with 2018 in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs)`;
+
+const getCopernicusClmsCpflp10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Fallow Land Presence (CPFLP) raster product provides the yearly fallow land classification indicating if arable land has been left fallow in the respective calendar year. This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries. High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsDltcEurope20m3yearlyV1Markdown = () =>
+  t`The High Resolution Layer Dominant Leaf Type Change (DLTC) 2018-2021 raster product provides information on the change between the reference years 2018 and 2021 and consists of 7 thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover / potential change among dominant leaf types).
+
+This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+The production of the high resolution forest layers was coordinated by the European Environment Agency (EEA) in the frame of the EU Copernicus programme.
+
+This dataset includes data from the French Overseas Territories (DOMs).`;
+
+const getCopernicusClmsVlccCropTypesEurope10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Crop Types (CTY) raster product provides high resolution crop type classification for 17 classes of both arable and permanent crops across the EEA38 extent. Using both Sentinel-1 and Sentinel-2, the model is finetuned to first map the crop field boundaries, and then determine the main crop for each field.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsCpmcd10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Main Crop Duration (CPMCD) raster product provides the duration (in days) of the growing season for the main (annual) crop.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries. High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsVlccTcpc20m3yearlyV1Markdown = () =>
+  t`The Copernicus High Resolution Layer Tree Cover Presence Change (TCPC) 2018-2021 raster product provides information on the change between the reference years 2018 and 2021 and consists of 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover). The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged. This layer for previous reference year comparisons is called Tree Cover Change Mask (TCCM).
+
+This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+The production of the high resolution forest layers was coordinated by the European Environment Agency (EEA) in the frame of the EU Copernicus programme. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
+const getCopernicusClmsVlccGrasslandChangeEurope20m3yearlyV1Markdown = () =>
+  t`The High Resolution Layer Grassland Change (GRAC) 2018-2021 raster product at 20m resolution provides information on changes in grassland vegetation cover between the reference years 2018 and 2021. The thematic classes indicate all non-grassland areas, grassland gain and grassland loss, unchanged grassland in both years and unverified grassland gain and loss areas.
+
+This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
+const getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown = () =>
+  t`The High Resolution Layer Forest Type (FTY) provides a forest classification with 3 thematic classes (all non-forest areas / broadleaved forest / coniferous forest) at 10m spatial resolution and with a Minimum Mapping Unit (MMU) of 0.5 ha. This raster layer is largely following the FAO (Food and Agriculture Organisation of the United Nations) forest definition with tree covered areas in agricultural and urban context excluded using the respective Forest Additional Support Layer (FADSL).
+
+This dataset is provided on a 3-yearly frequency in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union’s Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs)`;
+
+const getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Grassland (GRA) raster product provides a binary status layer of grassland/non-grassland mask. This grassy and non-woody vegetation baseline product includes all kinds of grasslands: managed grassland, semi-natural grassland and natural grassy vegetation. It does not include temporary grasslands, which are masked out using the corresponding Ploughing indicator (PLOUGH), indicating on the number of years since a pixel was last ploughed.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
+const getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Tree Cover Density (TCD) dataset provides information on the proportional crown coverage per pixel at 10 meter spatial resolution and ranges from 0% (all non-tree covered areas) to 100%, whereby Tree Cover Density is defined as the "vertical projection of tree crowns to a horizontal earth’s surface".
+
+This dataset is provided annually starting with 2018 in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs).`;
+
+const getCopernicusClmsUaBuildingHeightEurope10m3yearlyV12021Markdown = () => t`
+  Urban Atlas Building Block Height 2021 is a 10 m high resolution raster layer containing height information generated for selected cities and urban areas as part of the Urban atlas suite of products. Height information is based on satellite information and derived datasets like the digital surface model, the digital terrain model and the normalized digital surface model (DSM). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
 
 export {
   getCLMSCollectionMarkdown,
@@ -533,4 +621,15 @@ export {
   getCopernicusClmsGdmpGlobal300m10dailyV2RT1Markdown,
   getCopernicusClmsGdmpGlobal300m10dailyV2RT2Markdown,
   getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown,
+  getCopernicusClmsUaBuildingHeightEurope10m3yearlyV12021Markdown,
+  getCopernicusClmsCpflp10mYearlyV1Markdown,
+  getCopernicusClmsDltcEurope20m3yearlyV1Markdown,
+  getCopernicusClmsDlt10mYearlyV1Markdown,
+  getCopernicusClmsVlccCropTypesEurope10mYearlyV1Markdown,
+  getCopernicusClmsCpmcd10mYearlyV1Markdown,
+  getCopernicusClmsVlccTcpc20m3yearlyV1Markdown,
+  getCopernicusClmsVlccGrasslandChangeEurope20m3yearlyV1Markdown,
+  getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown,
+  getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown,
 };

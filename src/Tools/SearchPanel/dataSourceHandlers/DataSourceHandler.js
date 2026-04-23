@@ -320,4 +320,12 @@ export default class DataSourceHandler {
   isOnlyForBaseLayer = () => false;
 
   getDatasetLocationPolygons = () => null;
+
+  getCollectionIdByDatasetIdAndLayerId(_datasetId, _layerId) {
+    return null;
+  }
+
+  getBandsByDatasetIdAndLayerId(_datasetId, _layerId) {
+    return null;
+  }
 }

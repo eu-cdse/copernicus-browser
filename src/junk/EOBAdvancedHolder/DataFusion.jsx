@@ -15,6 +15,7 @@ import {
   DATASET_CDAS_L8_L9_LOTL1,
   BYOCSubTypes,
   SHV3_LOCATIONS_ROOT_URL,
+  DATASET_CDAS_S3SLSTRL2,
 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 import { connect } from 'react-redux';
@@ -84,6 +85,11 @@ const DATAFUSION_DATASETS = {
   [DATASET_CDAS_S3SLSTR.id]: {
     label: 'S-3 SLSTR',
     dataset: DATASET_CDAS_S3SLSTR,
+    additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
+  },
+  [DATASET_CDAS_S3SLSTRL2.id]: {
+    label: 'S-3 SLSTR L2',
+    dataset: DATASET_CDAS_S3SLSTRL2,
     additionalMosaickingOrders: [{ label: t`Least cloud coverage`, id: 'leastCC' }],
   },
   [DATASET_CDAS_S3OLCI.id]: {

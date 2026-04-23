@@ -13,6 +13,18 @@ import {
   ErrorMessage,
 } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/const';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import {
+  COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const FindProductsButton = ({
   enabled,
@@ -26,6 +38,7 @@ const FindProductsButton = ({
   userToken,
   maxCC,
   hasProductsWithinSelectedRange,
+  layerId,
 }) => {
   const [{ searchInProgress, searchError, oDataSearchResult }, productSearch, setODataSearchAuthToken] =
     useODataSearch();
@@ -40,8 +53,7 @@ const FindProductsButton = ({
         if (temporalResolution != null) {
           const possibleFromTime = fromTime
             .clone()
-            .subtract(temporalResolution.amount, temporalResolution.unit)
-            .toISOString();
+            .subtract(temporalResolution.amount, temporalResolution.unit);
 
           const minDate = moment.min([possibleFromTime, toTime]);
           const maxDate = moment.max([possibleFromTime, toTime]);
@@ -73,7 +85,7 @@ const FindProductsButton = ({
         searchResultsSlice.actions.setSearchFormData({
           fromMoment,
           toMoment,
-          collectionForm: createCollectionFormFromDatasetId(datasetId, { orbitDirection, maxCC }),
+          collectionForm: createCollectionFormFromDatasetId(datasetId, { orbitDirection, maxCC, layerId }),
         }),
       );
     }
@@ -121,6 +133,26 @@ const FindProductsButton = ({
       params['geometry'] = boundsToPolygon(aoiBounds ? aoiBounds : mapBounds);
     }
 
+    // VLCC datasets where each layer (main + confidence) is its own BYOC collection —
+    // layerId must be passed so the correct collection is selected for the OData query.
+    if (
+      [
+        COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+        COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+        COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+        COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+        COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+      ].includes(datasetId) &&
+      layerId
+    ) {
+      params['layerId'] = layerId;
+    }
+
     params['datasetId'] = datasetId;
     params['maxCC'] = maxCC || DEFAULT_CLOUD_COVER_PERCENT;
 
@@ -154,6 +186,7 @@ const FindProductsButton = ({
 
 const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
+  layerId: store.visualization.layerId,
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   orbitDirection: store.visualization.orbitDirection,

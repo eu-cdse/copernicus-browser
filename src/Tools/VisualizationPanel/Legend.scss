@@ -34,6 +34,8 @@ div.layer-details {
         height: 14px;
         flex-shrink: 0;
         border: 1px solid #777;
+        position: relative;
+        overflow: hidden;
       }
 
       label {

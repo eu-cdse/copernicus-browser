@@ -2291,3 +2291,101 @@ export const COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021_BANDS = [
+  {
+    name: 'BBH',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPFLPCL',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPFLP',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_BANDS = [
+  {
+    name: 'DLTC',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_DLT_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'DLT',
+    getDescription: () => ``,
+  },
+  {
+    name: 'DLTCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CTY',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CTYCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPMCD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPMCDCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_BANDS = [
+  {
+    name: 'TCPC',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TCPCCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_BANDS = [
+  {
+    name: 'GRAC',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRACCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_BANDS = [
+  {
+    name: 'FTY',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'GRA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRACL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'TCD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TCDCL',
+    getDescription: () => ``,
+  },
+];

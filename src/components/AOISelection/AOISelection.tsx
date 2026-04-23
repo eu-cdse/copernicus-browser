@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import type { Geometry } from 'geojson';
+import type { PluggableList } from 'unified';
 import geo_area from '@mapbox/geojson-area';
+import bbox from '@turf/bbox';
 import L from 'leaflet';
+import { BBox, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import { t } from 'ttag';
 import ReactMarkdown from 'react-markdown';
 import './AOISelection.scss';
@@ -11,13 +15,20 @@ import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFi
 import { getBoundsAndLatLng } from '../../Tools/CommercialDataPanel/commercialData.utils';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
+import { getUtmZoneLabel } from '../../utils/utm';
 
-export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
+type Props = {
+  aoiGeometry: Geometry | null | undefined;
+  aoiIsDrawing: boolean;
+  mapBounds: L.LatLngBounds | null | undefined;
+};
+
+export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }: Props) => {
   const [uploadDialog, setUploadDialog] = useState(false);
 
   const aoiTooltipText = t`AOI polygon constraints apply (polygon unicity, shape and size). See the [user manual](https://info.rapidresponse.copernicus.eu) for details.`;
 
-  const onFileUpload = (geometry) => {
+  const onFileUpload = (geometry: Geometry) => {
     const layer = L.geoJSON(geometry);
     store.dispatch(aoiSlice.actions.set({ geometry, bounds: layer.getBounds() }));
     setUploadDialog(false);
@@ -29,23 +40,30 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
 
   const setCurrentDisplayArea = () => {
     if (mapBounds) {
-      const geometry = {
+      const sw = mapBounds.getSouthWest();
+      const ne = mapBounds.getNorthEast();
+      const geometry: Geometry = {
         type: 'Polygon',
         coordinates: [
           [
-            [mapBounds._southWest.lng, mapBounds._southWest.lat],
-            [mapBounds._northEast.lng, mapBounds._southWest.lat],
-            [mapBounds._northEast.lng, mapBounds._northEast.lat],
-            [mapBounds._southWest.lng, mapBounds._northEast.lat],
-            [mapBounds._southWest.lng, mapBounds._southWest.lat],
+            [sw.lng, sw.lat],
+            [ne.lng, sw.lat],
+            [ne.lng, ne.lat],
+            [sw.lng, ne.lat],
+            [sw.lng, sw.lat],
           ],
         ],
       };
-      store.dispatch(aoiSlice.actions.set({ geometry: geometry, bounds: mapBounds }));
+      store.dispatch(aoiSlice.actions.set({ geometry, bounds: mapBounds }));
     }
   };
 
-  const formatArea = (geometry) => {
+  const formatUtmZone = (geometry: Geometry): string => {
+    const [minX, minY, maxX, maxY] = bbox(geometry);
+    return getUtmZoneLabel(new BBox(CRS_EPSG4326, minX, minY, maxX, maxY));
+  };
+
+  const formatArea = (geometry: Geometry): string => {
     const areaKm2 = parseFloat(geo_area.geometry(geometry)) / 1000000;
     if (areaKm2 < 0.01) {
       const areaM2 = areaKm2 * 1000000;
@@ -60,7 +78,9 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
       <div className="aoi-label-wrapper">
         <label title={`${t`Area of interest`}`}>{`${t`Area of interest`}:`}</label>
         <HelpTooltip direction="right" closeOnClickOutside={true} className="padOnLeft">
-          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{aoiTooltipText}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS as PluggableList}>
+            {aoiTooltipText}
+          </ReactMarkdown>
         </HelpTooltip>
       </div>
       <div className="aoi-selection">
@@ -70,6 +90,7 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }) => {
               {formatArea(aoiGeometry)}
               <sup>2</sup>
             </span>
+            <span className="utm-zone-text">{formatUtmZone(aoiGeometry)}</span>
           </div>
         )}
         <div className="aoi-buttons">
