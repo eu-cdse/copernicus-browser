@@ -60,10 +60,10 @@ import { CUSTOM_TAG } from './AnalyticalForm';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 
-function checkZoomLevel(datasetId, zoom) {
+function checkZoomLevel(datasetId, zoom, layerId) {
   const dsh = getDataSourceHandler(datasetId);
   if (dsh) {
-    const leafletZoomConfig = dsh.getLeafletZoomConfig(datasetId);
+    const leafletZoomConfig = dsh.getLeafletZoomConfig(datasetId, layerId);
     return (
       leafletZoomConfig &&
       leafletZoomConfig.min !== null &&
@@ -770,7 +770,8 @@ function ImageDownload(props) {
       imageWidth >= 1 &&
       imageHeight >= 1);
 
-  const isZoomLevelOK = checkZoomLevel(props.datasetId, props.zoom) || selectedTab === TABS.PRINT;
+  const isZoomLevelOK =
+    checkZoomLevel(props.datasetId, props.zoom, props.layerId) || selectedTab === TABS.PRINT;
 
   const hasLegendData = checkIfCurrentLayerHasLegend();
   const isUserLoggedIn = props.user && props.user.userdata;

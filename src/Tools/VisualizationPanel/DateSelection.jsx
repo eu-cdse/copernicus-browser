@@ -23,6 +23,7 @@ function DateSelection({
   fromTime,
   toTime,
   datasetId,
+  layerId,
   orbitDirection,
   datePanelExpanded,
   maxCloudCover,
@@ -54,7 +55,7 @@ function DateSelection({
       maxDateRange = maxDate;
     }
 
-    const zoomConfiguration = dsh.getLeafletZoomConfig(datasetId);
+    const zoomConfiguration = dsh.getLeafletZoomConfig(datasetId, layerId);
     isZoomLevelOk =
       zoomConfiguration &&
       zoomConfiguration.min !== undefined &&
@@ -243,6 +244,7 @@ const mapStoreToProps = (store) => ({
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   datasetId: store.visualization.datasetId,
+  layerId: store.visualization.layerId,
   dateMode: store.visualization.dateMode,
   selectedLanguage: store.language.selectedLanguage,
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

@@ -108,7 +108,7 @@
 
     .effect-slider {
       .rc-slider {
-        width: 120px;
+        width: 108px;
         height: 17px;
 
         .rc-slider-rail {
@@ -138,10 +138,10 @@
       }
 
       .slider-value-input {
-        width: 30px;
+        width: 40px;
         height: 22px;
         font-weight: 400;
-        text-align: center;
+        text-align: right;
         padding: 0;
         color: vars.$textColor;
         background-color: vars.$mainMedium;

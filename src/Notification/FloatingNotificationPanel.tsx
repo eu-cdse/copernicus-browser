@@ -75,6 +75,7 @@ function RenderMapLoadingMessage({
 type Props = {
   zoom: number;
   datasetId: string | undefined;
+  layerId: string | undefined;
   // fromTime, toTime, and selectedLanguage are not used directly but are mapped from the store
   // to trigger a re-render when dates or language change, keeping the notification panel in sync.
   fromTime: string | null | undefined;
@@ -90,6 +91,7 @@ type Props = {
 function FloatingNotificationPanel({
   zoom,
   datasetId,
+  layerId,
   selectedTabIndex,
   userAuthError,
   toolsOpen,
@@ -106,7 +108,7 @@ function FloatingNotificationPanel({
   }, [zoom]);
 
   function showZoomInAlert() {
-    const { min: minZoom } = getZoomConfiguration(datasetId);
+    const { min: minZoom } = getZoomConfiguration(datasetId, layerId);
     return selectedTabIndex === TABS.VISUALIZE_TAB && zoom < minZoom;
   }
 
@@ -131,6 +133,7 @@ function FloatingNotificationPanel({
 const mapStoreToProps = (store: RootState) => ({
   zoom: store.mainMap.zoom,
   datasetId: store.visualization.datasetId,
+  layerId: store.visualization.layerId,
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,
   selectedLanguage: store.language.selectedLanguage,

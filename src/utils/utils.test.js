@@ -145,6 +145,82 @@ test.each(allDatasetIds.map((d) => [d]))(
   },
 );
 
+describe('parseIndexEvalscript', () => {
+  test('returns null for a CLMS-style VERSION=3 evalscript without blank lines', () => {
+    const evalscript = `//VERSION=3
+const factor = 1;
+const offset = 0;
+function setup() {
+    return {
+        input: ["HER", "dataMask"],
+        output: [
+            { id: "default", bands: 4, sampleType: "UINT8" },
+            { id: "index", bands: 1, sampleType: "FLOAT32" },
+            { id: "eobrowserStats", bands: 1, sampleType: "FLOAT32" },
+            { id: "dataMask", bands: 1 },
+        ],
+    };
+}
+
+function evaluatePixel(samples) {
+    const originalValue = samples.HER;
+    const val = originalValue * factor + offset;
+    const dataMask = samples.dataMask;`;
+    expect(parseIndexEvalscript(evalscript)).toBeNull();
+  });
+
+  test('returns null for a CLMS-style VERSION=3 evalscript with extra blank lines', () => {
+    const evalscript = `//VERSION=3
+
+const factor = 1;
+
+const offset = 0;
+function setup() {
+    return {
+        input: ["HER", "dataMask"],
+        output: [
+            { id: "default", bands: 4, sampleType: "UINT8" },
+            { id: "index", bands: 1, sampleType: "FLOAT32" },
+            { id: "eobrowserStats", bands: 1, sampleType: "FLOAT32" },
+            { id: "dataMask", bands: 1 },
+        ],
+    };
+}
+
+function evaluatePixel(samples) {
+    const originalValue = samples.HER;
+    const val = originalValue * factor + offset;
+    const dataMask = samples.dataMask;`;
+    expect(parseIndexEvalscript(evalscript)).toBeNull();
+  });
+
+  test('returns the correct result for a genuine app-generated index evalscript', () => {
+    const evalscript = `//VERSION=3
+const colorRamp = [[0,0x000000],[1,0xffffff]]
+
+let viz = new ColorRampVisualizer(colorRamp);
+
+function setup() {
+  return {
+    input: ["B04","B08", "dataMask"],
+    output: [
+      { id:"default", bands: 4 },
+      { id: "index", bands: 1, sampleType: 'FLOAT32' }
+    ]
+  };
+}
+
+function evaluatePixel(samples) {
+  let index = (samples.B04-samples.B08)/(samples.B04+samples.B08);`;
+    expect(parseIndexEvalscript(evalscript)).toEqual({
+      bands: { a: 'B04', b: 'B08' },
+      equation: '(A-B)/(A+B)',
+      positions: [0, 1],
+      colors: ['#000000', '#ffffff'],
+    });
+  });
+});
+
 describe('updatePath URL serialization', () => {
   const baseProps = {
     currentZoom: 10,

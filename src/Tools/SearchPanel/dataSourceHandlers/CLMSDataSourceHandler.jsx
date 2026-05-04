@@ -418,6 +418,8 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS_BY_LAYER_ID,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_ID_BY_LAYER_ID,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS,
+  COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID,
 } from './CLMSVLCCSpecificConst';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
@@ -428,6 +430,38 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_TCD_10M_YEARLY_V1]: {
     lowResolutionCollectionId: '69c5ec78-34a6-46fb-ae6c-96f8ee2613fc',
     lowResolutionMetersPerPixelThreshold: 2800,
+  },
+  [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCD]: {
+    lowResolutionCollectionId: '41838ca1-7ec3-48bf-af5c-2faca5811296',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CTY]: {
+    lowResolutionCollectionId: '17d29231-2501-434f-80c0-e4355286b0c7',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLT]: {
+    lowResolutionCollectionId: 'd76f0242-25cf-4138-a902-992e986bded4',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID]: {
+    lowResolutionCollectionId: '92902b97-1f76-4778-b0f7-963b8b75697c',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID]: {
+    lowResolutionCollectionId: '15ecd505-5a4f-4d70-bd63-d20e480e4340',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRA]: {
+    lowResolutionCollectionId: '2e5b01c2-1382-4877-9863-c2d85dd23fa4',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_COLLECTION_IDS.GRAC]: {
+    lowResolutionCollectionId: 'dafe12ca-8522-4486-9dc5-936d901fa4e1',
+    lowResolutionMetersPerPixelThreshold: 1300,
+  },
+  [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCD]: {
+    lowResolutionCollectionId: '513257f1-9bb4-4987-ab88-b5c071cb522b',
+    lowResolutionMetersPerPixelThreshold: 1300,
   },
 };
 export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler {
@@ -1094,51 +1128,48 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       min: 2,
       max: 25,
     },
-    [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021]: {
-      min: 8,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_DLT_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
-    [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: {
-      min: 7,
-      max: 25,
-    },
+    [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021]: { min: 8, max: 25 },
+    // VLCC datasets have multiple BYOC sub-collections per dataset (e.g. DLT + DLTCL), each keyed by
+    // collection UUID below. Callers that only have datasetId (no layerId) look up by the dataset
+    // constant string, which wouldn't match any UUID key and would fall back to { min: 0, max: 25 }.
+    // These dataset-level entries give those callers the most restrictive min across sub-collections.
+    [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLP]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLPCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_DLT_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLT]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLTCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CTY]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CTYCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCD]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCDCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_COLLECTION_IDS.TCPC]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_COLLECTION_IDS.TCPCCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_COLLECTION_IDS.GRAC]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_COLLECTION_IDS.GRACCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRA]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRACL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCD]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCDCL]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: { min: 4, max: 25 },
+    [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID]: { min: 4, max: 25 },
   };
+
+  getLeafletZoomConfig(datasetId, layerId) {
+    const collectionId = this.getCollectionIdByDatasetIdAndLayerId(datasetId, layerId);
+    if (collectionId && this.leafletZoomConfig[collectionId] !== undefined) {
+      return this.leafletZoomConfig[collectionId];
+    }
+    return this.leafletZoomConfig[datasetId] || { min: 0, max: 25 };
+  }
 
   KNOWN_COLLECTIONS = {
     [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: ['61caacdf-8a23-471c-b3d3-e5a8a537c44d'], // collection id from byoc admin account (currenlty from Max's/Maxim's account)
@@ -1283,7 +1314,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLP,
       COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLPCL,
     ],
-    [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: ['9bdecd15-4101-4859-8d00-b2f49c2c6876'],
+    [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID],
     [COPERNICUS_CLMS_DLT_10M_YEARLY_V1]: [
       COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLT,
       COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLTCL,
@@ -1308,7 +1339,9 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRA,
       COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRACL,
     ],
-    [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: ['4d1aad1a-f800-43c5-87d0-5565a9a31c12'],
+    [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: [
+      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID,
+    ],
     [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: [
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCD,
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCDCL,
@@ -3211,10 +3244,11 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_ID_BY_LAYER_ID[
           layerId
         ];
+      case COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1:
+        return COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID;
+      case COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1:
+        return COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID;
       default:
-        // COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1 and COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1
-        // are intentionally absent: they are single-collection datasets with no main/confidence-layer split
-        // backed by separate BYOC collections, so there is no per-layer collection ID to return.
         return null;
     }
   }

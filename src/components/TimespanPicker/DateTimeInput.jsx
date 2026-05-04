@@ -36,8 +36,9 @@ export const DateTimeInput = (props) => {
   } = props;
 
   const setDay = (day) => {
-    const newSelectedDateTime = selectedTime
-      ?.clone()
+    const baseTime = selectedTime ?? day;
+    const newSelectedDateTime = baseTime
+      .clone()
       .set({ date: day.get('date'), month: day.get('month'), year: day.get('year') });
 
     const effectiveMin = calendarMinDate ?? minDate;

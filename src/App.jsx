@@ -161,9 +161,10 @@ class App extends Component {
   };
 
   render() {
-    const { modalId, modalParams, authToken, googleAPI, is3D, terrainViewerId, datasetId } = this.props;
+    const { modalId, modalParams, authToken, googleAPI, is3D, terrainViewerId, datasetId, layerId } =
+      this.props;
     const authenticated = Boolean(authToken);
-    const zoomConfig = getZoomConfiguration(datasetId);
+    const zoomConfig = getZoomConfiguration(datasetId, layerId);
     return (
       <div id="app">
         <Tools

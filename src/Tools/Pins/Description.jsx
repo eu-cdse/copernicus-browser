@@ -40,10 +40,10 @@ class Description extends React.Component {
 
   render() {
     const { newContent } = this.state;
-    const { canEdit, content, showContent } = this.props;
+    const { canEdit, content, showContent, isSelected } = this.props;
 
     return showContent ? (
-      <div className="pin-description-container">
+      <div className={`pin-description-container${isSelected ? ' selected' : ''}`}>
         {this.state.editing ? (
           <textarea name="description" rows={8} onChange={this.handleContentChange} value={newContent} />
         ) : content === '' || !content ? (

@@ -58,6 +58,7 @@ function TerrainViewer(props) {
     lat,
     lng,
     datasetId,
+    layerId,
     locale,
     auth,
     terrainViewerSettings,
@@ -86,7 +87,7 @@ function TerrainViewer(props) {
   if (dataSourcesInitialized && datasetId) {
     const dsh = getDataSourceHandler(datasetId);
     if (dsh) {
-      minZoom = dsh.getLeafletZoomConfig(datasetId).min;
+      minZoom = dsh.getLeafletZoomConfig(datasetId, layerId).min;
     }
   }
 

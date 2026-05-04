@@ -62,6 +62,7 @@ const getPolygonBounds = (geometry) => {
 
 const DatasetLocationPreview = ({
   datasetId,
+  layerId,
   zoom,
   maxCloudCover,
   orbitDirection,
@@ -78,11 +79,11 @@ const DatasetLocationPreview = ({
   const getDataSourceMinZoom = useCallback(() => {
     const dsh = getDataSourceHandler(datasetId);
     if (dsh && typeof dsh.getLeafletZoomConfig === 'function') {
-      const zoomConfig = dsh.getLeafletZoomConfig(datasetId);
+      const zoomConfig = dsh.getLeafletZoomConfig(datasetId, layerId);
       return zoomConfig?.min || 7; // Use min zoom from config, fallback to 7
     }
     return 7; // Default fallback
-  }, [datasetId]);
+  }, [datasetId, layerId]);
 
   const shouldRender = zoom >= minZoom && zoom <= maxZoom && (!visibleOnMap || zoom < getDataSourceMinZoom());
 
@@ -151,7 +152,7 @@ const DatasetLocationPreview = ({
       if (geometry) {
         const { lat, lng, zoom: lngLatZoom } = getBoundsAndLatLng(geometry);
         const dsh = getDataSourceHandler(datasetId);
-        const { min: minZoom, max: maxZoom } = (dsh && dsh.getLeafletZoomConfig(datasetId)) || {};
+        const { min: minZoom, max: maxZoom } = (dsh && dsh.getLeafletZoomConfig(datasetId, layerId)) || {};
 
         /*use best(highest) possible zoom calculated from 
         - current map zoom (.zoom), 
@@ -174,7 +175,7 @@ const DatasetLocationPreview = ({
         );
       }
     },
-    [datasetId, zoom],
+    [datasetId, layerId, zoom],
   );
 
   const handleVisualize = useCallback(async () => {
@@ -297,6 +298,7 @@ const DatasetLocationPreview = ({
 
 const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
+  layerId: store.visualization.layerId,
   zoom: store.mainMap.zoom,
   maxCloudCover: store.visualization.cloudCoverage,
   orbitDirection: getOrbitDirectionFromList(store.visualization.orbitDirection),

@@ -437,9 +437,16 @@ export function parseEvalscriptBands(evalscript) {
 export function parseIndexEvalscript(evalscript) {
   try {
     if (evalscript.startsWith('//VERSION=3')) {
+      const lines = evalscript.split('\n');
+
+      // App-generated index evalscripts always have a colorRamp with 0x hex values on line 1.
+      // Any other VERSION=3 evalscript (e.g. CLMS) must be rejected early.
+      if (!lines[1]?.includes('0x')) {
+        return null;
+      }
+
       let equation = '';
-      let bands = evalscript
-        .split('\n')[16]
+      let bands = lines[16]
         .split('=')[1]
         .split('/')
         .map((item) => item.replace('(', '').replace(')', '').replace(' ', ''));
@@ -454,15 +461,22 @@ export function parseIndexEvalscript(evalscript) {
 
       bands = { a: bands[0], b: bands[1] };
 
+      if (!bands.a || !bands.b) {
+        return null;
+      }
+
       // positions and coresponding color
-      let values = evalscript
-        .split('\n')[1]
+      let values = lines[1]
         .split('=')[1]
         .split(',')
         .map((item) => item.replace(/\[/g, '').replace(/]/g, '').replace(' ', ''));
 
       let colors = values.filter((item) => item.indexOf('0x') !== -1).map((item) => item.replace('0x', '#'));
       let positions = values.filter((item) => item.indexOf('0x') === -1).map((item) => parseFloat(item));
+
+      if (colors.length === 0 || positions.length === 0) {
+        return null;
+      }
 
       return {
         bands: bands,

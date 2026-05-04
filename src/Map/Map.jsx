@@ -149,7 +149,7 @@ class Map extends React.Component {
 
     //remove map's progress bar when  map is not displayed or on zoom limit
     if (this.progress.isStarted()) {
-      const { min: minZoom } = getZoomConfiguration(this.props.datasetId);
+      const { min: minZoom } = getZoomConfiguration(this.props.datasetId, this.props.visualizationLayerId);
 
       if (
         this.props.selectedTabIndex !== TABS.VISUALIZE_TAB ||
@@ -341,7 +341,7 @@ class Map extends React.Component {
     const hasCustomProcessGraph = customSelected && !!processGraph && isOpenEOSelected;
     const shouldRenderOpenEO = isOpenEOSelected && (supportsOpenEo || hasCustomProcessGraph);
 
-    const zoomConfig = getZoomConfiguration(datasetId);
+    const zoomConfig = getZoomConfiguration(datasetId, visualizationLayerId);
     let speckleFilterProp = speckleFilter;
     const dsh = getDataSourceHandler(datasetId);
     if (dsh && !dsh.canApplySpeckleFilter(datasetId, this.props.zoom)) {
@@ -629,7 +629,7 @@ class Map extends React.Component {
                   min: minZoom,
                   max: maxZoom = DEFAULT_COMPARED_LAYERS_MAX_ZOOM,
                   allowOverZoomBy = DEFAULT_COMPARED_LAYERS_OVERZOOM,
-                } = getZoomConfiguration(datasetId);
+                } = getZoomConfiguration(datasetId, layerId);
 
                 const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, supportsTimeRange);
                 const index = comparedLayers.length - 1 - i;

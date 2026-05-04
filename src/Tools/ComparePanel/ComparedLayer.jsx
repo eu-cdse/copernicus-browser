@@ -98,7 +98,7 @@ const ComparedLayer = ({ layer, compareMode, opacity, clipping, index, onDrop })
                   onChange={onChange}
                 />
               </span>
-              <span>{opacity != null ? opacity : 1.0}</span>
+              <div className="opacity-slider-value">{opacity != null ? opacity : 1.0}</div>
             </div>
           )}
           {compareMode === COMPARE_OPTIONS.COMPARE_SPLIT.value && (

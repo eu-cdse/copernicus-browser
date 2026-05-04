@@ -535,7 +535,7 @@ async function getImageFromTerrainViewer({
   ) => {
     let minZoom = 7;
     if (datasetId) {
-      minZoom = getDataSourceHandler(datasetId).getLeafletZoomConfig(datasetId).min;
+      minZoom = getDataSourceHandler(datasetId).getLeafletZoomConfig(datasetId, getMapParams.layerId).min;
     }
     const tileCoord = getTileCoord(minX, minY, maxX, maxY);
     const mapTilerUrl = getBackgroundTileUrl(tileCoord);

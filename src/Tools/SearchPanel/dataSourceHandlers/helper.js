@@ -7,10 +7,10 @@ export const DEFAULT_ZOOM_CONFIGURATION = {
 
 export const DEFAULT_TILES_SIZE_CONFIG = 512;
 
-export const getZoomConfiguration = (datasetId) => {
+export const getZoomConfiguration = (datasetId, layerId) => {
   try {
     const dataSourceHandler = getDataSourceHandler(datasetId);
-    const zoomConfiguration = dataSourceHandler.getLeafletZoomConfig(datasetId);
+    const zoomConfiguration = dataSourceHandler.getLeafletZoomConfig(datasetId, layerId);
     return zoomConfiguration ? zoomConfiguration : DEFAULT_ZOOM_CONFIGURATION;
   } catch (e) {
     // this catches a race condition where datasetId is not defined when rendering the component

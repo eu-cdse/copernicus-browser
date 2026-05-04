@@ -94,6 +94,12 @@
       color: #b24626;
     }
   }
+
+  &.selected {
+    a {
+      color: vars.$mainLight;
+    }
+  }
 }
 
 .pin-item {
@@ -377,7 +383,8 @@
         text-align: start;
         width: 160px;
 
-        &.order-by-select--is-disabled { // stylelint-disable-line
+        &.order-by-select--is-disabled {
+          // stylelint-disable-line
           opacity: 0.5;
         }
 

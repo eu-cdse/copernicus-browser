@@ -39,7 +39,7 @@ const TimelapseButton = (props) => {
       dataSourcesInitialized && (layerId || customSelected) && datasetId && visualizationUrl;
     if (isVisualizationSet) {
       const dsh = getDataSourceHandler(datasetId);
-      const zoomConfig = dsh.getLeafletZoomConfig(datasetId);
+      const zoomConfig = dsh.getLeafletZoomConfig(datasetId, layerId);
       zTooLow = zTooLow || (zoomConfig && zoom < zoomConfig.min);
 
       if (zTooLow) {

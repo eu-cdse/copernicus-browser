@@ -20,12 +20,22 @@ function DatePickerInput(props) {
     isDisabled,
     datePickerInputStyle,
   } = props;
+
   const [dateValue, setDateValue] = useState(null);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [prevDateDisabled, setPrevDateDisabled] = useState(false);
   const [nextDateDisabled, setNextDateDisabled] = useState(false);
 
   useEffect(() => {
+    if (isTimeless) {
+      setInputDisabled(true);
+      setPrevDateDisabled(true);
+      setNextDateDisabled(true);
+      return;
+    }
+
+    setInputDisabled(false);
+
     if (selectedDay && !isDisabled) {
       setDateValue(selectedDay.utc().format(dateFormat));
       setPrevDateDisabled(false);
@@ -33,12 +43,9 @@ function DatePickerInput(props) {
     } else {
       // If no date is set we only allow to look for prev date from current day
       setDateValue(null);
+      setPrevDateDisabled(false);
       setNextDateDisabled(true);
     }
-
-    setInputDisabled(isTimeless);
-    setPrevDateDisabled(isTimeless);
-    setNextDateDisabled(isTimeless);
   }, [selectedDay, dateFormat, isTimeless, isDisabled]);
 
   useEffect(() => {

@@ -28,7 +28,7 @@ const ImageDownloadBtn = (props) => {
       return { enabled: false, errorMessage: getDatasourceNotSupportedMsg() };
     }
 
-    const zoomConfig = datasourceHandler.getLeafletZoomConfig(datasetId);
+    const zoomConfig = datasourceHandler.getLeafletZoomConfig(datasetId, props.layerId);
     if (zoomConfig && props.zoom < zoomConfig.min) {
       return { enabled: false, errorMessage: t`Zoom too low. Please zoom in.` };
     }

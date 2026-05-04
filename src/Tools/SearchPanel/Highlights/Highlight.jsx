@@ -110,7 +110,13 @@ class Highlight extends Component {
           </div>
         </div>
         {this.canDisplayDescription() && (
-          <Description canEdit={false} content={description} showContent={showDescription} />
+          <Description
+            canEdit={false}
+            content={description}
+            showContent={showDescription}
+            isSelected={isSelected}
+            className={`highlight-item highlight-item-${isSelected ? 'selected' : ''} normal-mode`}
+          />
         )}
       </div>
     );

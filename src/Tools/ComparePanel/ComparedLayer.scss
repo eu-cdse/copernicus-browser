@@ -92,6 +92,12 @@
           display: contents;
         }
 
+        div.opacity-slider-value {
+          width: 40px;
+          padding-right: 8px;
+          text-align: right;
+        }
+
         .rc-slider {
           width: 100%;
           margin: 0 15px;
