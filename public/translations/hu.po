@@ -9624,3 +9624,71 @@ msgid ""
 "\n"
 "**Spatial Resolution:** ~20 meters."
 msgstr ""
+
+msgid "Land Surface Temperature, expressed in Kelvin."
+msgstr ""
+
+msgid "LST 3km Hourly V3"
+msgstr ""
+
+msgid ""
+"Provides Land Surface Temperature estimates at global scale, at a spatial "
+"resolution of ~3 km. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-"
+"reflectance?tab=land_surface_temperature)."
+msgstr ""
+
+msgid ""
+"Minimum of Land Surface Temperature observed during the 10-days period, per "
+"hour. Expressed in Kelvin."
+msgstr ""
+
+msgid ""
+"Median of Land Surface Temperature observed during the 10-days period, per "
+"hour. Expressed in Kelvin."
+msgstr ""
+
+msgid ""
+"Maximum of Land Surface Temperature observed during the 10-days period, per "
+"hour. Expressed in Kelvin."
+msgstr ""
+
+msgid ""
+"Fraction of valid observations as used to calculate the minimum, median and "
+"maximum temperature values, per hour."
+msgstr ""
+
+msgid ""
+"Provides Land Surface Temperature estimates at global scale, at a spatial "
+"resolution of ~3 km. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/"
+"daily-land-surface-temperature-global-v3-0-3km)."
+msgstr ""
+
+msgid "LST Daily-cycle 3km 10-daily V3"
+msgstr ""
+
+msgid ""
+"Median of Land Surface Temperature observed during the 10-days period, "
+"regardless the time of the day. Expressed in Kelvin."
+msgstr ""
+
+msgid ""
+"Thermal Condition Index for the compositing period, estimated using LST "
+"observations around local solar noon."
+msgstr ""
+
+msgid ""
+"Fraction of valid observations as used to calculate the minimum, median and "
+"maximum temperature values, regardless the time of the day."
+msgstr ""
+
+msgid "LST TCI 3km 10-daily V3"
+msgstr ""
+
+msgid ""
+"Provides Land Surface Temperature estimates at global scale, at a spatial "
+"resolution of ~3 km. More information "
+"[here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10"
+"daily-land-surface-temperature-synthesis-global-v3-0-3km)."
+msgstr ""

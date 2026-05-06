@@ -52,6 +52,7 @@ import { IMAGE_FORMATS } from '../ImgDownload/consts';
 import {
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const TIME_UNITS = {
@@ -334,6 +335,7 @@ class Timelapse extends Component {
     const overrideOrbitTimeMinutes = [
       COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
       COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+      COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
     ].includes(datasetId)
       ? 59
       : null;

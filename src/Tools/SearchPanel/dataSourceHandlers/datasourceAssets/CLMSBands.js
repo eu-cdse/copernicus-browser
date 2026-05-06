@@ -1126,6 +1126,20 @@ export const COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3_BANDS = [
+  {
+    name: 'FRAC_VALID_OBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MEDIAN',
+    getDescription: () => ``,
+  },
+  {
+    name: 'TCI',
+    getDescription: () => ``,
+  },
+];
 export const COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2_BANDS = [
   {
     name: 'CHLAMEAN',
@@ -2386,6 +2400,30 @@ export const COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS 
   },
   {
     name: 'TCDCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3_BANDS = [
+  {
+    name: 'MIN',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MEDIAN',
+    getDescription: () => ``,
+  },
+  {
+    name: 'MAX',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FOBS',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3_BANDS = [
+  {
+    name: 'LST',
     getDescription: () => ``,
   },
 ];

@@ -352,6 +352,7 @@
   "DEFAULT-THEME-175a80-O_DATA_DENSITY_INDICATOR.png",
   "DEFAULT-THEME-ef904d-LST.png",
   "DEFAULT-THEME-4d1f63-LST.png",
+  "DEFAULT-THEME-9d31e3-LST.png",
   "DEFAULT-THEME-4a35da-GDMP.png",
   "DEFAULT-THEME-e8aa5e-GDMP.png",
   "DEFAULT-THEME-89a110-GDMP.png",
@@ -380,6 +381,10 @@
   "DEFAULT-THEME-36a9b6-MAX.png",
   "DEFAULT-THEME-36a9b6-MEDIAN.png",
   "DEFAULT-THEME-36a9b6-MIN.png",
+  "DEFAULT-THEME-a516e1-FOBS.png",
+  "DEFAULT-THEME-a516e1-MAX.png",
+  "DEFAULT-THEME-a516e1-MEDIAN.png",
+  "DEFAULT-THEME-a516e1-MIN.png",
   "DEFAULT-THEME-356bcf-CHLAMEAN.png",
   "DEFAULT-THEME-356bcf-FCBPROB.png",
   "DEFAULT-THEME-356bcf-RW1020.png",
@@ -962,5 +967,8 @@
   "DEFAULT-THEME-8823df-Grassland.png",
   "DEFAULT-THEME-8823df-Grassland Confidence Layer.png",
   "DEFAULT-THEME-e20ca5-Tree Cover Density.png",
-  "DEFAULT-THEME-e20ca5-Tree Cover Density Confidence Layer.png"
+  "DEFAULT-THEME-e20ca5-Tree Cover Density Confidence Layer.png",
+  "DEFAULT-THEME-3c94a9-Fraction of valid observations.png",
+  "DEFAULT-THEME-3c94a9-LST Synthesis Median.png",
+  "DEFAULT-THEME-3c94a9-LST TCI.png"
 ]

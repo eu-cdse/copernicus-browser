@@ -608,6 +608,12 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/67d7b1-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'lst-tci_global_3km_10daily_v3',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'clms_global_ndvi_1km_v2_statistics_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1099,6 +1105,18 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/6d81d2-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lst-daily-cycle_global_3km_10daily_v3',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/a516e1-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'lst_global_3km_hourly_v3',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/9d31e3-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_ua_building-height_europe_10m_3yearly_v1_2021',

@@ -89,6 +89,8 @@ import {
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
+  COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
@@ -148,6 +150,7 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
 } from './dataSourceConstants';
 import moment from 'moment';
 import { LocationIdSHv3 } from '@sentinel-hub/sentinelhub-js';
@@ -293,6 +296,9 @@ import {
   getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown,
   getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown,
   getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown,
+  getCopernicusClmsLstTciGlobal3km10dailyV3Markdown,
+  getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown,
+  getCopernicusClmsLstGlobal3kmHourlyV3Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 
 import {
@@ -339,6 +345,8 @@ import {
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1_BANDS,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1_BANDS,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2_BANDS,
+  COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3_BANDS,
+  COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3_BANDS,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2_BANDS,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1_BANDS,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1_BANDS,
@@ -392,6 +400,7 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3_BANDS,
 } from './datasourceAssets/CLMSBands';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_BANDS_BY_LAYER_ID,
@@ -541,6 +550,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_LCC_100M_YEARLY_V3]: t`LCC 100m Yearly V3`,
     [COPERNICUS_CLMS_LST_5KM_HOURLY_V1]: t`LST 5km Hourly V1`,
     [COPERNICUS_CLMS_LST_5KM_HOURLY_V2]: t`LST 5km Hourly V2`,
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: t`LST 3km Hourly V3`,
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2]: t`GDMP 1km 10-daily V2`,
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0]: t`GDMP 1km 10-daily V2 RT0`,
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1]: t`GDMP 1km 10-daily V2 RT1`,
@@ -564,6 +574,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_WB_100M_MONTHLY_V1]: t`WB 100m Monthly V1`,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1]: t`LST Daily-cycle 5km 10-daily V1`,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2]: t`LST Daily-cycle 5km 10-daily V2`,
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: t`LST TCI 3km 10-daily V3`,
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: t`LST Daily-cycle 3km 10-daily V3`,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: t`LWQ NRT 300m 10-daily V2`,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: t`LWQ REPROC 300m 10-daily V1`,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: t`LWQ NRT 300m 10-daily V1`,
@@ -715,6 +727,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_WB_100M_MONTHLY_V1]: [],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1]: [],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2]: [],
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: [],
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: [],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: [],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: [],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: [],
@@ -770,6 +784,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: [],
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: [],
   };
   datasets = [];
   allLayers = [];
@@ -1001,6 +1016,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_LCC_100M_YEARLY_V3]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_HOURLY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_HOURLY_V2]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: {
+      min: 2,
+      max: 25,
+    },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1]: { min: 2, max: 25 },
@@ -1024,6 +1043,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_WB_100M_MONTHLY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: { min: 2, max: 25 },
@@ -1265,6 +1286,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_WB_100M_MONTHLY_V1]: ['69577a6b-80e0-4507-8b99-57b5ef167d41'],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1]: ['3069a818-ac7f-4b8d-9369-22f91887fd02'],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2]: ['07aa0606-7c61-41a2-9c37-7272e9d3d934'],
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: ['21ee9e5d-bfca-4553-98d8-62f9fa07eedf'],
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: ['7f175dfe-eee2-4c4c-93a6-db8072e76a44'],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: ['5c2c9b2c-2893-41d9-b2bc-fbd6e5b8b31d'],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: ['bc5c3c52-d88d-4756-9793-524dce1cd6a4'],
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: ['71b198f7-eec7-45aa-bcb9-87a28b5c4e73'],
@@ -1346,6 +1369,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCD,
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCDCL,
     ],
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: ['12225aec-26dd-4e2c-bbfd-994c253c1ba8'],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -1442,6 +1466,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_WB_100M_MONTHLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1]: LocationIdSHv3.cdse,
@@ -1497,6 +1523,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1851,6 +1878,14 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       minDate: moment.utc('2021-01-11'),
       maxDate: moment.utc(),
     },
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: {
+      minDate: moment.utc('2018-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: {
+      minDate: moment.utc('2018-01-01'),
+      maxDate: moment.utc(),
+    },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: {
       minDate: moment.utc('2024-09-01'),
       maxDate: moment.utc(),
@@ -2070,6 +2105,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: {
       minDate: moment.utc('2018-01-01'),
       maxDate: moment.utc('2021-01-01'),
+    },
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: {
+      minDate: moment.utc('2018-01-01'),
+      maxDate: moment.utc(),
     },
   };
 
@@ -2423,6 +2462,14 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       amount: 10,
       unit: 'day',
     },
+    [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: {
+      amount: 10,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: {
+      amount: 10,
+      unit: 'day',
+    },
     [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: {
       amount: 10,
       unit: 'day',
@@ -2643,6 +2690,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       amount: 3,
       unit: 'year',
     },
+    [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: {
+      amount: 0, // Will search for whole day
+      unit: 'day',
+    },
   };
 
   getDescription = () => getCLMSCollectionMarkdown();
@@ -2789,6 +2840,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1_BANDS;
       case COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2:
         return COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2_BANDS;
+      case COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3:
+        return COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3_BANDS;
+      case COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3:
+        return COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3_BANDS;
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2:
         return COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2_BANDS;
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1:
@@ -2893,6 +2948,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS;
       case COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1:
         return COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_BANDS;
+      case COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3:
+        return COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3_BANDS;
       default:
         return null;
     }
@@ -3081,6 +3138,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return getClmsGlobalLst5kmV110DailyDailyCycleMarkdown();
       case COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2:
         return getClmsGlobalLst5kmV210DailyDailyCycleMarkdown();
+      case COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3:
+        return getCopernicusClmsLstTciGlobal3km10dailyV3Markdown();
+      case COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3:
+        return getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown();
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2:
         return getClmsGlobalLwq300mV210DailyNrtMarkdown();
       case COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1:
@@ -3185,6 +3246,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown();
       case COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1:
         return getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown();
+      case COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3:
+        return getCopernicusClmsLstGlobal3kmHourlyV3Markdown();
       default:
         return null;
     }

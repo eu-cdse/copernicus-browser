@@ -93,6 +93,8 @@ import {
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
+  COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
@@ -157,6 +159,7 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 
@@ -774,6 +777,12 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
+  [COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
   [COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2]: [
     {
       ...copernicus,
@@ -1123,6 +1132,18 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

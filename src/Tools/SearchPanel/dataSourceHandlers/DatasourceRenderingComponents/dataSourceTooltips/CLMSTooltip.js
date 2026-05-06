@@ -489,6 +489,15 @@ This dataset includes data from the French Overseas Territories (DOMs).`;
 const getCopernicusClmsUaBuildingHeightEurope10m3yearlyV12021Markdown = () => t`
   Urban Atlas Building Block Height 2021 is a 10 m high resolution raster layer containing height information generated for selected cities and urban areas as part of the Urban atlas suite of products. Height information is based on satellite information and derived datasets like the digital surface model, the digital terrain model and the normalized digital surface model (DSM). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
 
+const getCopernicusClmsLstTciGlobal3km10dailyV3Markdown = () => t`
+  Provides Land Surface Temperature estimates at global scale, at a spatial resolution of ~3 km. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10daily-land-surface-temperature-synthesis-global-v3-0-3km).`;
+
+const getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown = () => t`
+  Provides Land Surface Temperature estimates at global scale, at a spatial resolution of ~3 km. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/daily-land-surface-temperature-global-v3-0-3km).`;
+
+const getCopernicusClmsLstGlobal3kmHourlyV3Markdown = () => t`
+  Provides Land Surface Temperature estimates at global scale, at a spatial resolution of ~3 km. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance?tab=land_surface_temperature).`;
+
 export {
   getCLMSCollectionMarkdown,
   getClmsGlobalLcc100mV3YearlyMarkdown,
@@ -632,4 +641,7 @@ export {
   getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown,
   getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown,
   getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown,
+  getCopernicusClmsLstTciGlobal3km10dailyV3Markdown,
+  getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown,
+  getCopernicusClmsLstGlobal3kmHourlyV3Markdown,
 };

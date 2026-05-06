@@ -2421,6 +2421,16 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
+                id: 'lst_global_3km_hourly_v3',
+                label: 'Global, Hourly, 3km, (2018–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst_global_3km_hourly_v3',
+                )})`,
+              },
+              {
                 id: 'lst_global_5km_hourly_v1',
                 label: 'Global, Hourly, 5km, (2010–2021), V1',
                 type: 'productType',
@@ -2441,6 +2451,16 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
+                id: 'lst-tci_global_3km_10daily_v3',
+                label: 'Synthesis and Thermal Condition Index, Global, 3km, 10-daily, (2018–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-tci_global_3km_10daily_v3',
+                )})`,
+              },
+              {
                 id: 'lst-tci_global_5km_10daily_v1',
                 label: 'Synthesis and Thermal Condition Index, Global, 5km, 10-daily, (2017–2021), V1',
                 type: 'productType',
@@ -2458,6 +2478,16 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'lst-tci_global_5km_10daily_v2',
+                )})`,
+              },
+              {
+                id: 'lst-daily-cycle_global_3km_10daily_v3',
+                label: 'Daily Cycle, Global, 10-daily, 3km, (2018–present), V3',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'lst-daily-cycle_global_3km_10daily_v3',
                 )})`,
               },
               {

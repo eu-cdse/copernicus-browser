@@ -103,6 +103,7 @@ import {
   COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
   COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2,
   COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0,
   COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT1,
@@ -125,6 +126,8 @@ import {
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
+  COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
@@ -2552,6 +2555,10 @@ temperatures of atmospheric window channels within the infrared range. LST descr
 temperatures of atmospheric window channels within the infrared range. LST describes processes such as the exchange of energy and water between the land surface and atmosphere, and influences the rate and timing of plant growth.`,
   },
   {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3, layerId: 'LST' }],
+    description: () => t`Land Surface Temperature, expressed in Kelvin.`,
+  },
+  {
     match: [
       { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2, layerId: 'GDMP' },
       { datasourceId: COPERNICUS_CLMS_GDMP_1KM_10DAILY_V2_RT0, layerId: 'GDMP' },
@@ -4585,5 +4592,45 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () => t`Confidence layer - a quality indicator for tree cover density.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3, layerId: 'LST Synthesis Median' }],
+    description: () =>
+      t`Median of Land Surface Temperature observed during the 10-days period, regardless the time of the day. Expressed in Kelvin.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3, layerId: 'LST TCI' }],
+    description: () =>
+      t`Thermal Condition Index for the compositing period, estimated using LST observations around local solar noon.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
+        layerId: 'Fraction of valid observations',
+      },
+    ],
+    description: () =>
+      t`Fraction of valid observations as used to calculate the minimum, median and maximum temperature values, regardless the time of the day.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3, layerId: 'MIN' }],
+    description: () =>
+      t`Minimum of Land Surface Temperature observed during the 10-days period, per hour. Expressed in Kelvin.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3, layerId: 'MEDIAN' }],
+    description: () =>
+      t`Median of Land Surface Temperature observed during the 10-days period, per hour. Expressed in Kelvin.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3, layerId: 'MAX' }],
+    description: () =>
+      t`Maximum of Land Surface Temperature observed during the 10-days period, per hour. Expressed in Kelvin.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3, layerId: 'FOBS' }],
+    description: () =>
+      t`Fraction of valid observations as used to calculate the minimum, median and maximum temperature values, per hour.`,
   },
 ];

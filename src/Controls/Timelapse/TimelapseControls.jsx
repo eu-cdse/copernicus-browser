@@ -11,6 +11,7 @@ import ReactMarkdown from 'react-markdown';
 import {
   COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
   COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 const getPeriodsForBestImg = () => [
@@ -71,7 +72,11 @@ export class TimelapseControls extends Component {
 
     const isHourlyDatasetWithOrbit =
       selectedPeriod === 'orbit' &&
-      [COPERNICUS_CLMS_LST_5KM_HOURLY_V1, COPERNICUS_CLMS_LST_5KM_HOURLY_V2].includes(datasetId);
+      [
+        COPERNICUS_CLMS_LST_5KM_HOURLY_V1,
+        COPERNICUS_CLMS_LST_5KM_HOURLY_V2,
+        COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
+      ].includes(datasetId);
     const fromToDiff = toTime !== null && fromTime !== null ? toTime.diff(fromTime, 'hours') : 0;
     const shouldShowOrbitWarning = isHourlyDatasetWithOrbit && fromToDiff > ORBIT_HOURLY_LIMIT_IN_DAYS * 24;
 

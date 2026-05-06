@@ -97,6 +97,8 @@ import {
   COPERNICUS_CLMS_WB_100M_MONTHLY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V2,
+  COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
+  COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V2,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_REPROC_V1,
   COPERNICUS_CLMS_LWQ_300M_10DAILY_NRT_V1,
@@ -152,6 +154,7 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -447,10 +450,16 @@ export const CLMS_OPTIONS = [
             label: 'Land Surface Temperature',
             id: 'Land Surface Temperature',
             options: [
+              { label: 'lst_global_3km_hourly_v3', id: COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3 },
               { label: 'clms_global_lst_5km_v1_hourly_geotiff', id: COPERNICUS_CLMS_LST_5KM_HOURLY_V1 },
               { label: 'clms_global_lst_5km_v2_hourly_geotiff', id: COPERNICUS_CLMS_LST_5KM_HOURLY_V2 },
+              { label: 'lst-tci_global_3km_10daily_v3', id: COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3 },
               { label: 'lst-tci_global_5km_10daily_v1', id: COPERNICUS_CLMS_LST_5KM_10DAILY_V1 },
               { label: 'lst-tci_global_5km_10daily_v2', id: COPERNICUS_CLMS_LST_5KM_10DAILY_V2 },
+              {
+                label: 'lst-daily-cycle_global_3km_10daily_v3',
+                id: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3,
+              },
               {
                 label: 'clms_global_lst_5km_v1_10daily-daily-cycle_geotiff',
                 id: COPERNICUS_CLMS_LST_5KM_10DAILY_DAILY_CYCLE_V1,

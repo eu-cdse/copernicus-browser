@@ -1819,6 +1819,33 @@
         ],
         "datasets": []
     },
+    "3c94a9-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | lst-tci_global_3km_10daily_v3",
+        "layers": [
+            {
+                "id": "Fraction of valid observations",
+                "name": "Fraction of valid observations",
+                "description": "Fraction of valid observations.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Fraction+of+valid+observations&style=default"
+            },
+            {
+                "id": "LST Synthesis Median",
+                "name": "LST Synthesis Median",
+                "description": "Median of Land Surface Temperature observed during the 10-days period, regardless the time of the day.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST+Synthesis+Median&style=default"
+            },
+            {
+                "id": "LST TCI",
+                "name": "LST TCI",
+                "description": "Thermal Condition Index for the compositing period.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST+TCI&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "3d4b9f-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fapar_global_300m_10daily_v1_RT6",
         "layers": [
@@ -5197,6 +5224,19 @@
         ],
         "datasets": []
     },
+    "9d31e3-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | lst_global_3km_hourly_v3",
+        "layers": [
+            {
+                "id": "LST",
+                "name": "LST",
+                "description": "Land Surface Temperature [K].",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9d31e3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "9e5254-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fcover_global_1km_10daily_v2_RT1",
         "layers": [
@@ -5299,6 +5339,40 @@
                 "description": "Gross Primary Production",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a4948b-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "a516e1-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | lst-daily-cycle_global_3km_10daily_v3",
+        "layers": [
+            {
+                "id": "FOBS",
+                "name": "Fraction of valid observations",
+                "description": "Fraction of valid observations, per hour.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a516e1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FOBS&style=default"
+            },
+            {
+                "id": "MAX",
+                "name": "LST Maximum",
+                "description": "Maximum of Land Surface Temperature observed during the 10-days period, per hour.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a516e1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MAX&style=default"
+            },
+            {
+                "id": "MEDIAN",
+                "name": "LST Median",
+                "description": "Median of Land Surface Temperature observed during the 10-days period, per hour.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a516e1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MEDIAN&style=default"
+            },
+            {
+                "id": "MIN",
+                "name": "LST Minimum",
+                "description": "Minimum of Land Surface Temperature observed during the 10-days period, per hour.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a516e1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=MIN&style=default"
             }
         ],
         "datasets": []
