@@ -416,6 +416,36 @@ const getCopernicusClmsCpflp10mYearlyV1Markdown = () =>
 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
+const getCopernicusClmsCpbsa10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Bare Soil After (CPBSA) raster product provides bare soil period (in days) after the harvest of the main annual crop. Note that the bare soil period cannot transcend the calendar year for which the product is generated.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsCpfld10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Fallow Land Duration (CPFLD) raster product provides the total fallow land duration (in days) over the complete period 2017-2021.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+Note: each product covers a rolling 4-year window and is referenced by the end year of that window. The available years in this browser (2021–2023) correspond to the periods 2017–2021, 2018–2022, and 2019–2023 respectively.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsCpbsb10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Bare Soil Before (CPBSB) raster product provides the bare soil period (in days) before the emergence of the main annual crop. Note that the bare soil period cannot transcend the calendar year for which the product is generated.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
 const getCopernicusClmsDltcEurope20m3yearlyV1Markdown = () =>
   t`The High Resolution Layer Dominant Leaf Type Change (DLTC) 2018-2021 raster product provides information on the change between the reference years 2018 and 2021 and consists of 7 thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover / potential change among dominant leaf types).
 
@@ -469,7 +499,7 @@ High Resolution Layer Tree Cover and Forest product is part of the European Unio
 This dataset includes data from the French Overseas Territories (DOMs)`;
 
 const getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown = () => t`
-  The High Resolution Layer Grassland (GRA) raster product provides a binary status layer of grassland/non-grassland mask. This grassy and non-woody vegetation baseline product includes all kinds of grasslands: managed grassland, semi-natural grassland and natural grassy vegetation. It does not include temporary grasslands, which are masked out using the corresponding Ploughing indicator (PLOUGH), indicating on the number of years since a pixel was last ploughed.
+The High Resolution Layer Grassland (GRA) raster product provides a binary status layer of grassland/non-grassland mask. This grassy and non-woody vegetation baseline product includes all kinds of grasslands: managed grassland, semi-natural grassland and natural grassy vegetation. It does not include temporary grasslands, which are masked out using the corresponding Ploughing indicator (PLOUGH), indicating on the number of years since a pixel was last ploughed.
 
 This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
@@ -478,7 +508,7 @@ High Resolution Layer Grasslands product is part of the European Union’s Coper
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
 
 const getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown = () => t`
-  The High Resolution Layer Tree Cover Density (TCD) dataset provides information on the proportional crown coverage per pixel at 10 meter spatial resolution and ranges from 0% (all non-tree covered areas) to 100%, whereby Tree Cover Density is defined as the "vertical projection of tree crowns to a horizontal earth’s surface".
+The High Resolution Layer Tree Cover Density (TCD) dataset provides information on the proportional crown coverage per pixel at 10 meter spatial resolution and ranges from 0% (all non-tree covered areas) to 100%, whereby Tree Cover Density is defined as the "vertical projection of tree crowns to a horizontal earth’s surface".
 
 This dataset is provided annually starting with 2018 in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
@@ -486,8 +516,70 @@ High Resolution Layer Tree Cover and Forest product is part of the European Unio
 
 This dataset includes data from the French Overseas Territories (DOMs).`;
 
+const getCopernicusClmsVlccPloughingIndicatorEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Ploughing indicator (PLOUGH) raster product continues the 2015 and 2018 PLOUGH Layer following a rolling archive principle by adding current information and removing historic years. It indicates the number of years since the last indication of ploughing within the permanent grassland area. PLOUGH is derived by taking into account the series of binary HER layers, the BVL classifications and HR VPP PPI (Plant Phenology Index) quantiles. BVL classes 4 (crop) and 7 (overlaying layer between herbaceous and crop) indicate a ploughing event. Low HR VPP PPI quantiles indicate low vegetation at a certain time of the year. For years with missing information (2016 and earlier) the ploughing information from the historic PLOUGH product is considered which causes some issues.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
 const getCopernicusClmsUaBuildingHeightEurope10m3yearlyV12021Markdown = () => t`
-  Urban Atlas Building Block Height 2021 is a 10 m high resolution raster layer containing height information generated for selected cities and urban areas as part of the Urban atlas suite of products. Height information is based on satellite information and derived datasets like the digital surface model, the digital terrain model and the normalized digital surface model (DSM). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+Urban Atlas Building Block Height 2021 is a 10 m high resolution raster layer containing height information generated for selected cities and urban areas as part of the Urban atlas suite of products. Height information is based on satellite information and derived datasets like the digital surface model, the digital terrain model and the normalized digital surface model (DSM). More information [here](https://land.copernicus.eu/en/products/urban-atlas).`;
+
+const getCopernicusClmsVlccSecondaryCropTypesEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Cropping Patterns - Secondary Crop Type (CPSCT) raster product indicates if a cover crop was present within the respective calendar year and further segregates the types of cover crop into: short summer, long summer, short winter and long winter cover crop.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsVlccGrasslandMowingDatesEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Grassland Mowing Dates (GRAMD) raster product provides at pan-European level in the spatial resolution of 10 m a basic land cover classification, flagging and mapping the start date (DOY) (GRAMD) within the detected Herbaceous cover layer (temporal and permanent grassland)) with a Minimum Mapping Unit (MMU) of 0.25 ha. The GRAMD product will flag and map the dates (Day of Year) of each mowing event on temporary or permanent grassland per year, resulting in a product split in four different rasters per year.
+
+This dataset is provided annually starting with 2017 in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+const getCopernicusClmsVlccCroppingSeasonsTypesEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Cropping Patterns - Cropping Seasons Types (CPCSY) raster product provides the number of different crop types grown in a 3-year period [0-3] (excluding cover crops).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsVlccGrasslandMowingEventsEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Grassland Mowing Events (GRAME) raster product provides a basic land cover classification containing respectively the number of grassland mowing events within the detected Herbaceous cover layer (temporal and permanent grassland) with a Minimum Mapping Unit (MMU) of 0.25 ha. The GRAME product will flag and map the number of mowing events (1, 2, 3, or 4+) on temporary or permanent grassland detected per year.
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
+const getCopernicusClmsVlccHerbaceousCoverEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Herbaceous cover (HER) raster product provides a basic land cover classification with 2 thematic classes (temporal and permanent herbaceous / non-herbaceous). The production of the herbaceous layer is primarily based on the probability estimates obtained from the Base Vegetation Layer (BVL) which also serves to harmonize the different vegetated HRL products (Grasslands, Tree Cover and Forests, Croplands). HER is further used as input for the Grassland status layer (GRA) extracting the permanent herbaceous in combination with the Ploughing indicator (PLOUGH).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union’s Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
+const getCopernicusClmsVlccCroppingSeasonsEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Cropping Patterns - Cropping Seasons Yearly (CPCSY) raster product provides number of growing seasons detected within 1 year (0/1/2).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsLstTciGlobal3km10dailyV3Markdown = () => t`
   Provides Land Surface Temperature estimates at global scale, at a spatial resolution of ~3 km. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance/10daily-land-surface-temperature-synthesis-global-v3-0-3km).`;
@@ -497,6 +589,27 @@ const getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown = () => t`
 
 const getCopernicusClmsLstGlobal3kmHourlyV3Markdown = () => t`
   Provides Land Surface Temperature estimates at global scale, at a spatial resolution of ~3 km. More information [here](https://land.copernicus.eu/en/products/temperature-and-reflectance?tab=land_surface_temperature).`;
+
+const getCopernicusClmsCpsce10mYearlyV1Markdown = () =>
+  t`The High Resolution Layer Cropping Patterns - Secondary Crop Emergence (CPSCE) raster product provides the date of emergence of the cover crop in days of the year (DOY). YYDOY where YY = last 2 digits of the year (e.g. 19 for 2019) and DOY is the day of the year (1-365)
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsVlccForestAdditionalSupportLayerEurope10m3yearlyV1Markdown = () => t`
+  The High Resolution Layer Forest Additional Support Layer (FADSL) provides information on trees under agricultural use or in urban context to be excluded from the Forest Type (FTY) product and at 10m spatial resolution. The derivation of Forest Additional Support Layer (FADSL) is based on the spatial intersection of the 10m DLT and TCD layers with CORINE Land Cover (CLC) 2018 and HRL Imperviousness Degree 2018 with 10 m spatial resolution; TCD range of 10-100%; with a MMW of 10m and no MMU (pixel base).\nThis dataset is provided on a 3-yearly frequency in 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.\nHigh Resolution Layer Tree Cover and Forest product is part of the European Union’s Copernicus Land Monitoring Service.\nThis dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
+const getCopernicusClmsVlccSecondaryCropDurationEurope10mYearlyV1Markdown = () => t`
+The High Resolution Layer Cropping Patterns - Secondary Crop Duration (CPSCD) raster product provides the duration (in days) of the cover crop season (can exceed the calendar year).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 export {
   getCLMSCollectionMarkdown,
@@ -632,6 +745,9 @@ export {
   getCopernicusClmsGdmpGlobal300m10dailyV2RT6Markdown,
   getCopernicusClmsUaBuildingHeightEurope10m3yearlyV12021Markdown,
   getCopernicusClmsCpflp10mYearlyV1Markdown,
+  getCopernicusClmsCpbsa10mYearlyV1Markdown,
+  getCopernicusClmsCpfld10mYearlyV1Markdown,
+  getCopernicusClmsCpbsb10mYearlyV1Markdown,
   getCopernicusClmsDltcEurope20m3yearlyV1Markdown,
   getCopernicusClmsDlt10mYearlyV1Markdown,
   getCopernicusClmsVlccCropTypesEurope10mYearlyV1Markdown,
@@ -641,7 +757,17 @@ export {
   getCopernicusClmsVlccForestTypeEurope10m3yearlyV1Markdown,
   getCopernicusClmsVlccGrasslandEurope10mYearlyV1Markdown,
   getCopernicusClmsVlccTreeCoverDensityEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccPloughingIndicatorEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccGrasslandMowingEventsEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccSecondaryCropTypesEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccGrasslandMowingDatesEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccCroppingSeasonsTypesEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccHerbaceousCoverEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccCroppingSeasonsEurope10mYearlyV1Markdown,
   getCopernicusClmsLstTciGlobal3km10dailyV3Markdown,
   getCopernicusClmsLstDailyCycleGlobal3km10dailyV3Markdown,
   getCopernicusClmsLstGlobal3kmHourlyV3Markdown,
+  getCopernicusClmsCpsce10mYearlyV1Markdown,
+  getCopernicusClmsVlccForestAdditionalSupportLayerEurope10m3yearlyV1Markdown,
+  getCopernicusClmsVlccSecondaryCropDurationEurope10mYearlyV1Markdown,
 };

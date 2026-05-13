@@ -36,7 +36,7 @@ import { withODataSearchHOC } from './withODataSearchHOC';
 
 import { applyFilterMonthsToDateRange } from './search';
 import ReactMarkdown from 'react-markdown';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
 import { themesSlice } from '../../../../store';
 import { ODATA_SEARCH_ERROR_MESSAGE } from '../../../../hooks/useODataSearch';
 import { ErrorCode, ErrorMessage } from './const';

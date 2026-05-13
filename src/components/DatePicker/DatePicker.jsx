@@ -88,7 +88,7 @@ class DatePicker extends Component {
   };
 
   handleDayClick = (day) => {
-    this.props.setSelectedDay(moment.utc(day).startOf(day));
+    this.props.setSelectedDay(moment.utc([day.getFullYear(), day.getMonth(), day.getDate()]));
     this.closeCalendar();
 
     if (this.props.setNextDateBtnDisabled) {

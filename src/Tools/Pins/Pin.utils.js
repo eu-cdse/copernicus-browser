@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
-import isEqual from 'lodash.isequal';
+import isEqual from 'fast-deep-equal';
 import { t } from 'ttag';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 

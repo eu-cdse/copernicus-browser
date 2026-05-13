@@ -1,5 +1,10 @@
 import { configureStore, combineReducers, createSlice } from '@reduxjs/toolkit';
+import { aoiSlice } from './store/slices/aoiSlice';
 import { notificationSlice } from './store/slices/notificationSlice';
+import { floatingPanelNotificationSlice } from './store/slices/floatingPanelNotificationSlice';
+import { tabsSlice } from './store/slices/tabsSlice';
+import { languageSlice } from './store/slices/languageSlice';
+import { collapsiblePanelSlice } from './store/slices/collapsiblePanelSlice';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
@@ -11,7 +16,6 @@ import {
   EDUCATION_MODE,
   DEFAULT_LAT_LNG,
   DEFAULT_ZOOM,
-  TABS,
   EXPORT_FORMAT,
   DEFAULT_CLOUD_COVER_PERCENT,
   COMPARE_OPTIONS,
@@ -31,42 +35,6 @@ import {
   ResultsSectionSortProperties,
 } from './Tools/RapidResponseDesk/rapidResponseProperties';
 import { DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX } from './Tools/VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
-
-export const aoiSlice = createSlice({
-  name: 'aoi',
-  initialState: {},
-  reducers: {
-    set: (state, action) => {
-      state.geometry = action.payload.geometry;
-      state.bounds = action.payload.bounds;
-      state.lastEdited = new Date().toISOString();
-      state.isPlacingVertex = action.payload.isPlacingVertex;
-    },
-    setisPlacingVertex: (state, action) => {
-      state.isPlacingVertex = action.payload;
-    },
-    reset: (state) => {
-      state.geometry = null;
-      state.bounds = null;
-      state.lastEdited = new Date().toISOString();
-      state.isDrawing = false;
-      state.shape = null;
-      state.isPlacingVertex = false;
-      state.editMode = false;
-    },
-    startDrawing: (state, action) => {
-      state.isDrawing = action.payload.isDrawing;
-      state.shape = action.payload.shape;
-      state.isPlacingVertex = action.payload;
-    },
-    clearMap: (state, action) => {
-      state.clearMap = action.payload;
-    },
-    setEditMode: (state, action) => {
-      state.editMode = action.payload;
-    },
-  },
-});
 
 export const loiSlice = createSlice({
   name: 'loi',
@@ -196,29 +164,17 @@ export const mainMapSlice = createSlice({
   },
 });
 
+export { aoiSlice };
+
 export { notificationSlice };
 
-export const floatingPanelNotificationSlice = createSlice({
-  name: 'floatingPanelNotification',
-  initialState: {
-    notificationUniqueId: null,
-    notificationAlertType: null,
-    notificationMsg: null,
-  },
-  reducers: {
-    setFloatingPanelNotification: (state, action) => {
-      state.notificationUniqueId = action.payload.notificationUniqueId;
-      state.notificationAlertType = action.payload.notificationAlertType;
-      state.notificationMsg = action.payload.notificationMsg;
-    },
+export { floatingPanelNotificationSlice };
 
-    reset: (state) => {
-      state.notificationUniqueId = null;
-      state.notificationAlertType = null;
-      state.notificationMsg = null;
-    },
-  },
-});
+export { tabsSlice };
+
+export { languageSlice };
+
+export { collapsiblePanelSlice };
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -781,26 +737,6 @@ export const visualizationSlice = createSlice({
   },
 });
 
-export const tabsSlice = createSlice({
-  name: 'tabs',
-  initialState: {
-    selectedTabIndex: TABS.VISUALIZE_TAB,
-    savedWorkspaceProducts: [],
-    scrollTop: null,
-  },
-  reducers: {
-    setTabIndex: (state, action) => {
-      state.selectedTabIndex = action.payload;
-    },
-    setScrollTop: (state, action) => {
-      state.scrollTop = action.payload;
-    },
-    setSavedWorkspaceProducts: (state, action) => {
-      state.savedWorkspaceProducts = action.payload;
-    },
-  },
-});
-
 export const compareLayersSlice = createSlice({
   name: 'compare',
   initialState: {
@@ -905,21 +841,6 @@ export const compareLayersSlice = createSlice({
       state.compareMode = action.payload.compareMode;
       state.comparedOpacity = action.payload.comparedOpacity;
       state.comparedClipping = action.payload.comparedClipping;
-    },
-  },
-});
-
-export const languageSlice = createSlice({
-  name: 'language',
-  initialState: {
-    selectedLanguage: null,
-  },
-  reducers: {
-    setLanguage: (state, action) => {
-      state.selectedLanguage = action.payload;
-    },
-    reset: (state) => {
-      state.selectedLanguage = null;
     },
   },
 });
@@ -1147,67 +1068,6 @@ export const terrainViewerSlice = createSlice({
     reset: (state) => {
       state.settings = null;
       state.id = null;
-    },
-  },
-});
-
-export const collapsiblePanelSlice = createSlice({
-  name: 'collapsiblePanel',
-  initialState: {
-    datePanelExpanded: true,
-    themePanelExpanded: true,
-    collectionPanelExpanded: true,
-    highlightsPanelExpanded: true,
-    areaTimeExpanded: true,
-    providerExpanded: true,
-    advancedExpanded: false,
-    resultsExpanded: true,
-    projectDetailsExpanded: true,
-  },
-  reducers: {
-    setDatePanelExpanded: (state, action) => {
-      state.datePanelExpanded = action.payload;
-    },
-    setThemePanelExpanded: (state, action) => {
-      state.themePanelExpanded = action.payload;
-    },
-    setCollectionPanelExpanded: (state, action) => {
-      state.collectionPanelExpanded = action.payload;
-    },
-    setHighlightsPanelExpanded: (state, action) => {
-      state.highlightsPanelExpanded = action.payload;
-    },
-    setAreaTimeExpanded: (state, action) => {
-      state.areaTimeExpanded = action.payload;
-    },
-    setProviderExpanded: (state, action) => {
-      state.providerExpanded = action.payload;
-    },
-    setAdvancedExpanded: (state, action) => {
-      state.advancedExpanded = action.payload;
-    },
-    setResultsExpanded: (state, action) => {
-      state.resultsExpanded = action.payload;
-    },
-    setprojectDetailsExpanded: (state, action) => {
-      state.projectDetailsExpanded = action.payload;
-    },
-    setOrderPanels: (state, action) => {
-      state.areaTimeExpanded = action.payload;
-      state.providerExpanded = action.payload;
-      if (!action.payload) {
-        state.advancedExpanded = action.payload;
-      }
-    },
-    reset: (state) => {
-      state.datePanelExpanded = true;
-      state.themePanelExpanded = true;
-      state.collectionPanelExpanded = true;
-      state.highlightsPanelExpanded = true;
-      state.areaTimeExpanded = true;
-      state.providerExpanded = true;
-      state.advancedExpanded = true;
-      state.projectDetailsExpanded = true;
     },
   },
 });

@@ -314,7 +314,7 @@ describe('parse wkt string', () => {
     ['POLYGON (),', UPLOAD_GEOMETRY_TYPE.LINE, undefined, uploadGeoFileErrorMessages.ERROR_PARSING_FILE()],
   ])('Test parseContent for wkt ', (inputString, uploadType, expectedResult, errorMessage) => {
     if (errorMessage) {
-      expect(() => parseContent(inputString, uploadType, 'wkt')).toThrowError(errorMessage);
+      expect(() => parseContent(inputString, uploadType, 'wkt')).toThrow(errorMessage);
     } else {
       expect(parseContent(inputString, uploadType, 'wkt')).toStrictEqual(expectedResult);
     }
@@ -509,9 +509,7 @@ describe('extractGeometriesByType', () => {
     [multiline, SUPPORTED_GEOMETRY_TYPES[UPLOAD_GEOMETRY_TYPE.LINE], [multiline.geometry], false],
   ])('Test geojson type Feature', (inputGeoJson, allowedGeometryTypes, expectedResult, errorMessage) => {
     if (errorMessage) {
-      expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrowError(
-        errorMessage,
-      );
+      expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrow(errorMessage);
     } else {
       expect(extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toStrictEqual(expectedResult);
     }
@@ -626,9 +624,7 @@ describe('extractGeometriesByType', () => {
     'Test geojson type FeatureCollection',
     (inputGeoJson, allowedGeometryTypes, expectedResult, errorMessage) => {
       if (errorMessage) {
-        expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrowError(
-          errorMessage,
-        );
+        expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrow(errorMessage);
       } else {
         expect(extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toStrictEqual(
           expectedResult,
@@ -709,9 +705,7 @@ describe('extractGeometriesByType', () => {
     'Test geojson type GeometryCollection',
     (inputGeoJson, allowedGeometryTypes, expectedResult, errorMessage) => {
       if (errorMessage) {
-        expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrowError(
-          errorMessage,
-        );
+        expect(() => extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toThrow(errorMessage);
       } else {
         expect(extractGeometriesFromGeoJson(inputGeoJson, allowedGeometryTypes)).toStrictEqual(
           expectedResult,
@@ -856,7 +850,7 @@ describe('createUnion', () => {
     ],
   ])('Test createUnion', (geometries, type, expectedResult, errorMessage) => {
     if (errorMessage) {
-      expect(() => createUnion(geometries, type)).toThrowError(errorMessage);
+      expect(() => createUnion(geometries, type)).toThrow(errorMessage);
     } else {
       expect(createUnion(geometries, type)).toStrictEqual(expectedResult);
     }
@@ -1228,7 +1222,7 @@ describe('removeExtraCoordDimensionsIfNeeded', () => {
     ],
   ])('Test createUnion', (geometry, expectedResult, errorMessage) => {
     if (errorMessage) {
-      expect(() => removeExtraCoordDimensionsIfNeeded(geometry)).toThrowError(errorMessage);
+      expect(() => removeExtraCoordDimensionsIfNeeded(geometry)).toThrow(errorMessage);
     } else {
       expect(removeExtraCoordDimensionsIfNeeded(geometry)).toStrictEqual(expectedResult);
     }

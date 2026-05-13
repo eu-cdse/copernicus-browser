@@ -150,6 +150,9 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1,
   COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
   COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
@@ -158,8 +161,18 @@ import {
   COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
+  COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 
@@ -1083,6 +1096,24 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
+  [COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
   [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: [
     {
       ...copernicus,
@@ -1102,6 +1133,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
@@ -1137,13 +1174,67 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
+  [COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
   [COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
     },
   ],
+  [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
   [COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

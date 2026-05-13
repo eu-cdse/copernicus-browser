@@ -1,5 +1,4 @@
 module.exports = {
-  preset: 'ts-jest',
   setupFiles: ['./jest.setup.js'],
   collectCoverage: false,
   testEnvironment: 'jsdom',
@@ -15,18 +14,8 @@ module.exports = {
   testEnvironmentOptions: {
     customExportConditions: ['node', 'node-addons'],
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        module: 'es2022',
-        target: 'es2022',
-        jsx: 'react-jsx',
-      },
-    },
-  },
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$))'],

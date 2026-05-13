@@ -145,6 +145,9 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1,
   COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
   COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
@@ -154,7 +157,17 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3,
+  COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -213,6 +226,46 @@ export const CLMS_OPTIONS = [
             id: 'Cropping Patterns',
             options: [
               {
+                label: 'Bare Soil After',
+                id: 'Bare Soil After',
+                options: [
+                  {
+                    label: 'clms_vlcc_bare-soil-after_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Bare Soil Before',
+                id: 'Bare Soil Before',
+                options: [{ label: 'cpbsb_10m_yearly_v1', id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1 }],
+              },
+              {
+                label: 'Cropping Seasons',
+                id: 'Cropping Seasons',
+                options: [
+                  {
+                    label: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Cropping Seasons Types',
+                id: 'Cropping Seasons Types',
+                options: [
+                  {
+                    label: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Fallow Land Duration',
+                id: 'Fallow Land Duration',
+                options: [{ label: 'cpfld_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1 }],
+              },
+              {
                 label: 'Fallow Land Presence',
                 id: 'Fallow Land Presence',
                 options: [{ label: 'cpflp_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1 }],
@@ -224,6 +277,36 @@ export const CLMS_OPTIONS = [
                   {
                     label: 'clms_vlcc_main-crop-duration_europe_10m_yearly_v1',
                     id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Duration',
+                id: 'Secondary Crop Duration',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-duration_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Emergence',
+                id: 'Secondary Crop Emergence',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Types',
+                id: 'Secondary Crop Types',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
                   },
                 ],
               },
@@ -284,6 +367,52 @@ export const CLMS_OPTIONS = [
                   },
                 ],
               },
+              {
+                label: 'Ploughing Indicator',
+                id: 'Ploughing Indicator',
+                options: [
+                  {
+                    label: 'clms_vlcc_ploughing-indicator_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Herbaceous Cover',
+                id: 'Herbaceous Cover',
+                options: [
+                  {
+                    label: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Grassland Mowing Events',
+            id: 'Grassland Mowing Events',
+            options: [
+              {
+                label: 'Grassland Mowing Dates',
+                id: 'Grassland Mowing Dates',
+                options: [
+                  {
+                    label: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Grassland Mowing Events',
+                id: 'Grassland Mowing Events 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_grassland-mowing-events_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -329,6 +458,16 @@ export const CLMS_OPTIONS = [
                   {
                     label: 'clms_vlcc_forest-type_europe_10m_3yearly_v1',
                     id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Forest Additional Support Layer',
+                id: 'Forest Additional Support Layer',
+                options: [
+                  {
+                    label: 'clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
                   },
                 ],
               },

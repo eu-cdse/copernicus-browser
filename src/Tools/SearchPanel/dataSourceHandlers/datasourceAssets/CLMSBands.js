@@ -2321,6 +2321,27 @@ export const COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_BANDS = [
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPBSA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPBSACL',
+    getDescription: () => ``,
+  },
+];
+
+export const COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPBSB',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPBSBCL',
+    getDescription: () => ``,
+  },
+];
 export const COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_BANDS = [
   {
     name: 'DLTC',
@@ -2403,6 +2424,65 @@ export const COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_BANDS 
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'PLOUGH',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'GRAME',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRAMECL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPSCT',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'GRAMD1',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRAMD2',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRAMD3',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GRAMD4',
+  },
+];
+
+export const COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPCST',
+    getDescription: () => ``,
+  },
+];
+
+export const COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'HER',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPCSY',
+    getDescription: () => ``,
+  },
+];
 export const COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3_BANDS = [
   {
     name: 'MIN',
@@ -2424,6 +2504,38 @@ export const COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3_BANDS = [
 export const COPERNICUS_CLMS_LST_GLOBAL_3KM_HOURLY_V3_BANDS = [
   {
     name: 'LST',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_BANDS = [
+  {
+    name: 'FADSL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPSCD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPSCDCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPFLD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPFLDCL',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPSCE',
     getDescription: () => ``,
   },
 ];

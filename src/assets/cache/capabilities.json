@@ -172,6 +172,19 @@
         ],
         "datasets": []
     },
+    "0a7763-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1",
+        "layers": [
+            {
+                "id": "Secondary Crop Emergence",
+                "name": "Secondary Crop Emergence",
+                "description": "Secondary crop emergence data",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0a7763-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Secondary+Crop+Emergence&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "0b0f5a-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-5P",
         "layers": [
@@ -364,6 +377,19 @@
                 "description": "Gross Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/10a347-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "11e0d4-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | HER 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Herbaceous cover",
+                "name": "Herbaceous cover",
+                "description": "Classification of herbaceous / non-herbaceous",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/11e0d4-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Herbaceous+cover&style=default"
             }
         ],
         "datasets": []
@@ -892,6 +918,19 @@
         ],
         "datasets": []
     },
+    "22a786-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_secondary-crop-types_europe_10m_yearly_v1",
+        "layers": [
+            {
+                "id": "Secondary Crops Type",
+                "name": "Secondary Crops Type",
+                "description": "Classification of secondary crop type",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/22a786-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Secondary+Crops+Type&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "22c171-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fcover_global_300m_10daily_v1_RT1",
         "layers": [
@@ -1324,6 +1363,26 @@
                 "description": "Gross Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2d2b27-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "3373b5-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPBSB 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Bare Soil Before",
+                "name": "Bare Soil Before",
+                "description": "Bare soil duration before main season",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3373b5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Bare+Soil+Before&style=default"
+            },
+            {
+                "id": "Bare Soil Before Confidence Layer",
+                "name": "Bare Soil Before Confidence Layer",
+                "description": "Confidence of bare soil before season",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3373b5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Bare+Soil+Before+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -1868,6 +1927,19 @@
                 "description": "Net Primary Production",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3dcee6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "3dd603-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | PLOUGH 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Ploughing indicator",
+                "name": "Ploughing indicator",
+                "description": "Years since last ploughing (herbaceous)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3dd603-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Ploughing+indicator&style=default"
             }
         ],
         "datasets": []
@@ -2648,6 +2720,26 @@
         ],
         "datasets": []
     },
+    "46bd2a-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPBSA 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Bare Soil After",
+                "name": "Bare Soil After",
+                "description": "Bare soil duration after main season",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/46bd2a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Bare+Soil+After&style=default"
+            },
+            {
+                "id": "Bare Soil After Confidence Layer",
+                "name": "Bare Soil After Confidence Layer",
+                "description": "Confidence of bare soil after season",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/46bd2a-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Bare+Soil+After+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "48c7bb-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | LAI Global 300m 10-Daily V2 RT1",
         "layers": [
@@ -2961,6 +3053,26 @@
         ],
         "datasets": []
     },
+    "54a015-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPSCD 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Secondary Crop Duration",
+                "name": "Secondary Crop Duration",
+                "description": "Secondary crop season duration",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/54a015-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Secondary+Crop+Duration&style=default"
+            },
+            {
+                "id": "Secondary Crop Duration Confidence Layer",
+                "name": "Secondary Crop Duration Confidence Layer",
+                "description": "Confidence of secondary crop duration",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/54a015-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Secondary+Crop+Duration+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "57f9bd-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Fraction of Absorbed Photosynthetically Active Radiation RT6",
         "layers": [
@@ -3129,6 +3241,40 @@
             }
         ]
     },
+    "61143e-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1",
+        "layers": [
+            {
+                "id": "Grassland Mowing Dates 1st event",
+                "name": "Grassland Mowing Dates 1st event",
+                "description": "Classification of grassland mowing dates",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61143e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Dates+1st+event&style=default"
+            },
+            {
+                "id": "Grassland Mowing Dates 2nd event",
+                "name": "Grassland Mowing Dates 2nd event",
+                "description": "Classification of grassland mowing dates",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61143e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Dates+2nd+event&style=default"
+            },
+            {
+                "id": "Grassland Mowing Dates 3rd event",
+                "name": "Grassland Mowing Dates 3rd event",
+                "description": "Classification of grassland mowing dates",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61143e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Dates+3rd+event&style=default"
+            },
+            {
+                "id": "Grassland Mowing Dates 4th event",
+                "name": "Grassland Mowing Dates 4th event",
+                "description": "Classification of grassland mowing dates",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61143e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Dates+4th+event&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "61e911-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] ndvi_global_1km_10daily_v2",
         "layers": [
@@ -3138,6 +3284,19 @@
                 "description": "Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61e911-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "648c40-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPCST 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Cropping Seasons Types over 3 years",
+                "name": "Cropping Seasons Types over 3 years",
+                "description": "Crop type diversity over 3 years",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/648c40-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Cropping+Seasons+Types+over+3+years&style=default"
             }
         ],
         "datasets": []
@@ -5158,6 +5317,19 @@
         ],
         "datasets": []
     },
+    "9aeee3-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1",
+        "layers": [
+            {
+                "id": "FADSL",
+                "name": "Forest Additional Support Layer",
+                "description": "Forest Additional Support Layer over 3 years",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9aeee3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FADSL&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "9bec27-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fcover_global_300m_10daily_v1",
         "layers": [
@@ -6191,6 +6363,26 @@
         ],
         "datasets": []
     },
+    "bc69f6-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | GRAME 10m Yearly (2017-present)",
+        "layers": [
+            {
+                "id": "Grassland Mowing Events",
+                "name": "Grassland Mowing Events",
+                "description": "Count of grassland mowing events ",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/bc69f6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Events&style=default"
+            },
+            {
+                "id": "Grassland Mowing Events Confidence Layer",
+                "name": "Grassland Mowing Events Confidence Layer",
+                "description": "Confidence of grassland mowing events",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/bc69f6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Events+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "bf279a-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Volcanoes (Sentinel-5) API",
         "layers": [
@@ -6320,6 +6512,26 @@
                 "description": "Large Fraction Probability",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c283f3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LFP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "c6d700-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | CPFLD 10m Yearly (2017-2021)",
+        "layers": [
+            {
+                "id": "Fallow Land Duration",
+                "name": "Fallow Land Duration",
+                "description": "Fallow land duration (5-year period)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c6d700-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Fallow+Land+Duration&style=default"
+            },
+            {
+                "id": "Fallow Land Duration Confidence Layer",
+                "name": "Fallow Land Duration Confidence Layer",
+                "description": "Confidence of fallow land duration",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c6d700-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Fallow+Land+Duration+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -6747,6 +6959,19 @@
                 "description": "Gross Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/db73ac-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "db8241-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_cropping-seasons_europe_10m_yearly_v1",
+        "layers": [
+            {
+                "id": "Cropping Seasons Yearly",
+                "name": "Cropping Seasons Yearly",
+                "description": "Number of growing seasons per year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/db8241-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Cropping+Seasons+Yearly&style=default"
             }
         ],
         "datasets": []

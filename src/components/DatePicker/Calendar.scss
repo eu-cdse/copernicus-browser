@@ -5,9 +5,37 @@
   margin-top: 5px;
   box-shadow: 0 0 6px rgb(0 0 0 / 20%);
 
+  .calendar-header {
+    position: relative;
+    background-color: vars.$mainLight;
+    padding-top: 14px;
+  }
+
+  .calendar-caption-hidden {
+    display: none;
+  }
+
+  // Nav container: overlays the header, flex space-between for left/right buttons
+  // stylelint-disable
+  .date-picker-nav {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+
+    .date-nav-button.left,
+    .date-nav-button.right {
+      float: none;
+      pointer-events: auto;
+    }
+  }
+  // stylelint-enable
+
   .year-month-form {
+    display: block;
     padding: 0 2.5rem;
-    display: table-caption;
     text-align: center;
     margin-bottom: 10px;
 
@@ -30,89 +58,107 @@
   }
 
   // stylelint-disable
-  .DayPicker-wrapper {
+
+  // Override v10 fixed-size day dimensions — let the table distribute width evenly
+  .rdp-root {
+    --rdp-accent-color: #{vars.$primaryColor};
+    --rdp-accent-background-color: #{vars.$primaryColor};
+    --rdp-day-height: auto;
+    --rdp-day-width: auto;
+    --rdp-day_button-height: auto;
+    --rdp-day_button-width: 100%;
+    --rdp-day_button-border-radius: 0;
+    --rdp-day_button-border: none;
+    --rdp-disabled-opacity: 1;
+    --rdp-outside-opacity: 0.5;
+
     background-color: vars.$mainLight;
-    padding-bottom: 10px;
-
-    select {
-      background: vars.$mainLight;
-      color: vars.$textColor;
-      cursor: default;
-      border: 1px solid #797373;
-      font-size: 14px;
-      text-transform: capitalize;
-      padding: 1px 2px;
-      margin: 0 2px;
-      max-width: 100px;
-      appearance: auto;
-    }
-  }
-
-  .DayPicker {
+    padding: 0 2.4rem 10px;
     display: block;
     width: 100%;
     font-size: 0.8rem;
   }
 
-  .DayPicker-Day {
-    padding: 0.5em;
+  // Override v10's max-width: fit-content on the months flex container
+  .rdp-months {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .rdp-month {
+    width: 100%;
+  }
+
+  // The actual <table> inside rdp-month
+  .rdp-month_grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    table-layout: fixed;
+    margin: 0 0 1rem 0;
+  }
+
+  .rdp-day {
+    width: auto;
+    height: auto;
+    padding: 0;
     border: 2px solid vars.$mainLight;
     min-width: 30px;
+    text-align: center;
 
     @media screen and (max-width: 400px) {
       min-width: 15px;
     }
   }
 
-  .DayPicker-Month {
-    margin: 1rem 0;
+  .rdp-day_button {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 1px;
-  }
-
-  .DayPicker-Weekday {
-    font-size: 0.9rem;
-  }
-
-  .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-    position: relative;
-    color: vars.$whiteColor;
-    background-color: vars.$primaryColor;
+    height: auto;
+    padding: 0.5em;
     border-radius: 0;
     border: none;
-    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    color: inherit;
   }
 
-  .DayPicker-Day--available {
-    background-color: vars.$mainMedium;
-    color: vars.$textColor;
-    border-radius: 0;
+  .rdp-weekday {
+    font-size: 0.9rem;
+    color: vars.$textColorGray;
   }
 
-  .DayPicker:not(.DayPicker--interactionDisabled)
-    .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  // stylelint-enable
+
+  // stylelint-disable
+  .rdp-root .rdp-day:not(.rdp-disabled):not(.rdp-selected):not(.rdp-outside):hover {
     background-color: vars.$mainDark;
     border: 2px solid vars.$mainDark;
     border-radius: 0;
   }
 
-  .DayPicker-Day--disabled {
-    color: vars.$mainDark;
-    cursor: default;
+  .rdp-day.rdp-disabled {
     pointer-events: none;
+
+    .rdp-day_button {
+      color: vars.$mainDark;
+    }
   }
 
-  .DayPicker-Day--highlighted {
+  .rdp-day.rdp-highlighted {
     background-color: vars.$mainDark;
     border: 2px solid vars.$primaryColor;
     color: vars.$textColor;
     border-radius: 0;
 
-    &.DayPicker-Day--disabled {
-      color: vars.$textColor;
+    &.rdp-disabled {
       opacity: 0.5;
       pointer-events: none;
+
+      .rdp-day_button {
+        color: vars.$textColor;
+      }
     }
 
     &:hover {
@@ -120,34 +166,48 @@
     }
   }
 
-  .DayPicker-Day--highlightedCloudy {
+  .rdp-day.rdp-highlightedCloudy {
     background-color: vars.$mainMedium;
     border: 2px solid vars.$mainMedium;
     color: vars.$textColor;
     border-radius: 0;
 
-    &.DayPicker-Day--disabled {
-      color: vars.$mainDark;
+    &.rdp-disabled {
       pointer-events: none;
+
+      .rdp-day_button {
+        color: vars.$mainDark;
+      }
     }
   }
 
-  .DayPicker-Weekdays {
+  // v10 adds font-weight: bold + font-size: large to .rdp-selected — reset those
+  .rdp-day.rdp-selected {
+    position: relative;
+    background-color: vars.$primaryColor;
+    border: none;
+    border-radius: 0;
+    cursor: default;
+    font-weight: inherit;
+    font-size: inherit;
+
+    .rdp-day_button {
+      background-color: vars.$primaryColor;
+      color: vars.$whiteColor;
+      border: none;
+    }
+  }
+
+  .rdp-weekdays {
     margin-top: 1rem;
-    display: table-header-group;
     text-transform: capitalize;
   }
 
-  .DayPicker-Caption {
-    padding: 0 2.5rem;
-    display: table-caption;
-    text-align: center;
-    margin-bottom: 1px;
-  }
-
-  .DayPicker-Day--today {
-    color: vars.$primaryColor;
-    font-weight: 600;
+  .rdp-day.rdp-today:not(.rdp-selected) {
+    .rdp-day_button {
+      color: vars.$primaryColor;
+      font-weight: 600;
+    }
   }
 
   // stylelint-enable
@@ -156,11 +216,12 @@
     background-color: #eee0;
     border: none;
     cursor: pointer;
-    padding: 24px 14px 14px;
+    padding: 34px 14px 14px;
     position: relative;
 
     i {
       color: vars.$textColor;
+      font-size: 13px;
     }
   }
 
@@ -174,7 +235,7 @@
 
   .date-nav-button.disabled {
     i {
-      color: rgba(vars.$color: vars.$textColor, vars.$alpha: 25%);
+      color: rgba(vars.$textColor, 0.25);
     }
   }
 

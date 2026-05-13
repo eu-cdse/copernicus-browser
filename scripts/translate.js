@@ -27,7 +27,7 @@ const initializedLanguages = async () => {
 };
 
 // Return a clean array of objects with the proper format
-const excludePseudoLanguage = (sLang) => sLang.filter((l) => l.langCode !== null);
+const excludePseudoLanguage = (sLang) => sLang.filter((l) => l.langCode != null);
 
 // creates .po files for each supported translation if these files were not created before
 const initializeTranslations = async () => {

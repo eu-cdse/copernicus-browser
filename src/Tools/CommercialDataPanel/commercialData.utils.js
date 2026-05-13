@@ -3,9 +3,9 @@ import L from 'leaflet';
 import geo_area from '@mapbox/geojson-area';
 import intersect from '@turf/intersect';
 import moment from 'moment';
-import inside from 'turf-inside';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { t } from 'ttag';
-import jwt_dec from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import {
   AirbusConstellation,
   BYOCLayer,
@@ -130,7 +130,7 @@ export const filterSearchResults = (results, provider, location) => {
         coordinates: [location.lng, location.lat],
       },
     };
-    searchResults = searchResults.filter((result) => inside(clickedPoint, result));
+    searchResults = searchResults.filter((result) => booleanPointInPolygon(clickedPoint, result));
   }
 
   return searchResults;
@@ -174,7 +174,7 @@ export const checkUserAccount = async (user) => {
     },
   };
 
-  const accountId = jwt_dec(user.access_token)?.user_context_id;
+  const accountId = jwtDecode(user.access_token)?.user_context_id;
   const shServicesAccountInfoEndpoint = `${SH_SERVICES_URL}/ims/accounts/${accountId}/account-info`;
 
   const accountInfo = await axios.get(shServicesAccountInfoEndpoint, requestConfig);

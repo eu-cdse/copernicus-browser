@@ -45,7 +45,7 @@ describe('ODataFilterBuilder', () => {
     const ofb = new ODataFilterBuilder();
 
     if (error) {
-      expect(() => ofb.intersects(wkt)).toThrowError(error);
+      expect(() => ofb.intersects(wkt)).toThrow(error);
     } else {
       ofb.intersects(wkt);
       expect(expect(ofb.getQueryString()).toBe(expected));

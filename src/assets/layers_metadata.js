@@ -195,6 +195,9 @@ import {
   COPERNICUS_CLMS_GDMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1,
   COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
   COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
@@ -204,6 +207,16 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -217,6 +230,9 @@ import {
 } from '../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/dataSourceTooltips/Sentinel5Tooltip';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_DLT_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_LAYER_IDS,
@@ -224,6 +240,8 @@ import {
   COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_LAYER_IDS,
 } from '../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 export const PREDEFINED_LAYERS_METADATA = [
@@ -4445,6 +4463,63 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   },
   {
     match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_LAYER_IDS.CPBSA,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the duration of the bare soil period after the harvest of the main annual crop at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_LAYER_IDS.CPBSACL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for bare soil after.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_LAYER_IDS.CPFLD,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the duration of the fallow land period over a five-year period at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_LAYER_IDS.CPFLDCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for fallow land duration.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_LAYER_IDS.CPBSB,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the duration of the bare soil period before the start of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_LAYER_IDS.CPBSBCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for bare soil before.`,
+  },
+  {
+    match: [
       { datasourceId: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1, layerId: 'Dominant Leaf Type Change' },
     ],
     description: () =>
@@ -4594,6 +4669,115 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     description: () => t`Confidence layer - a quality indicator for tree cover density.`,
   },
   {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+        layerId: 'Ploughing indicator',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m an indication on the number of years since a ploughing event for each pixel in the herbaceous cover. This dataset is auxiliary and is used in production of the Grassland status products to distinguish between temporary and permanent grasslands.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRAME,
+      },
+    ],
+    description: () =>
+      t`Count of grassland mowing events. Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification containing respectively the number of grassland mowing events (GRAME) within the detected temporal and permanent grassland (Herbaceous cover Layer) at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_LAYER_IDS.GRAMECL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for grassland mowing events.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Secondary Crops Type',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the type (4 categories) of the secondary crop season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Grassland Mowing Dates 1st event',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification containing respectively the grassland mowing dates (GRAMD) within the detected temporal and permanent grassland (Herbaceous cover Layer) at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Grassland Mowing Dates 2nd event',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification containing respectively the grassland mowing dates (GRAMD) within the detected temporal and permanent grassland (Herbaceous cover Layer) at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Grassland Mowing Dates 3rd event',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification containing respectively the grassland mowing dates (GRAMD) within the detected temporal and permanent grassland (Herbaceous cover Layer) at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Grassland Mowing Dates 4th event',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification containing respectively the grassland mowing dates (GRAMD) within the detected temporal and permanent grassland (Herbaceous cover Layer) at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+        layerId: 'Cropping Seasons Types over 3 years',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the annual crop type diversity over a three-year period at a spatial resolution of 10 m and a MMU of 0.25 ha. `,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+        layerId: 'Herbaceous cover',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 10 m a basic land cover classification with two thematic classes (herbaceous / non-herbaceous).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
+        layerId: 'Cropping Seasons Yearly',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the number (max 2) of growing seasons (main and secondary) within a calendar year at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
     match: [{ datasourceId: COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3, layerId: 'LST Synthesis Median' }],
     description: () =>
       t`Median of Land Surface Temperature observed during the 10-days period, regardless the time of the day. Expressed in Kelvin.`,
@@ -4632,5 +4816,39 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     match: [{ datasourceId: COPERNICUS_CLMS_LST_DAILY_CYCLE_GLOBAL_3KM_10DAILY_V3, layerId: 'FOBS' }],
     description: () =>
       t`Fraction of valid observations as used to calculate the minimum, median and maximum temperature values, per hour.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1, layerId: 'Secondary Crop Emergence' }],
+    description: () =>
+      t`Provides at pan-European level the emergence date of the secondary crop season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
+        layerId: 'FADSL',
+      },
+    ],
+    description: () =>
+      t`Provides auxiliary information in the spatial resolution of 10 m on the trees in agricultural use and urban context, used for production of the Forest Type dataset for the 2021 reference year. Data is sourced from Corine Land Cover and High Resolution Layer Imperviousness.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPSCD,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the duration of the secondary crop season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPSCDCL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for secondary crops duration.`,
   },
 ];

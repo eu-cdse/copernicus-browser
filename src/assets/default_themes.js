@@ -1131,6 +1131,24 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/5f8545-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'clms_vlcc_bare-soil-after_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/46bd2a-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'cpfld_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/c6d700-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'cpbsb_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3373b5-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'clms_vlcc_dominant-leaf-type-change_europe_20m_3yearly_v1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1173,6 +1191,30 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/38eb4e-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/22a786-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/61143e-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/648c40-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/db8241-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'clms_vlcc_grassland_europe_10m_yearly_v1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
@@ -1183,6 +1225,42 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/e20ca5-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_ploughing-indicator_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3dd603-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_grassland-mowing-events_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/bc69f6-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/11e0d4-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/0a7763-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/9aeee3-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_vlcc_secondary-crop-duration_europe_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/54a015-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

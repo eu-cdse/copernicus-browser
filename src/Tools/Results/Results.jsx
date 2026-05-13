@@ -13,7 +13,7 @@ import { addProductsToWorkspace, BATCH_SIZE } from '../../api/OData/workspace';
 import { ResultItemLabels } from './ResultItemFooter';
 import store, { floatingPanelNotificationSlice, notificationSlice } from '../../store';
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'fast-deep-equal';
 import Loader from '../../Loader/Loader';
 
 const MAX_PRODUCTS_TO_ADD_AT_ONCE = 1000;
@@ -254,7 +254,7 @@ class Results extends Component {
             </div>
           </div>
           <div className="results-panel">
-            <div className="results-list">
+            <div className="results-list" role="list">
               {products &&
                 products.map((p, i) => (
                   <ResultItem

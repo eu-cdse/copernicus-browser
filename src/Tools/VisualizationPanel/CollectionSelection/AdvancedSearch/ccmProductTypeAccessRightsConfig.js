@@ -1,4 +1,4 @@
-import jwt_dec from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 import { ACCESS_ROLES } from '../../../../api/OData/assets/accessRoles';
 
@@ -20,7 +20,7 @@ export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
     return false;
   }
 
-  const userRoles = jwt_dec(accessToken).realm_access?.roles;
+  const userRoles = jwtDecode(accessToken).realm_access?.roles;
 
   if (userRoles === undefined) {
     return false;

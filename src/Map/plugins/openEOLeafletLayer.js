@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import isEqual from 'lodash.isequal';
+import isEqual from 'fast-deep-equal';
 import { GridLayer, withLeaflet } from 'react-leaflet';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';

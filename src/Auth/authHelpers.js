@@ -1,4 +1,4 @@
-import jwt_dec from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import store, { authSlice, notificationSlice } from '../store';
 import axios from 'axios';
 import Keycloak from 'keycloak-js';
@@ -146,7 +146,7 @@ export const getTokenExpiration = (token) => {
     if (!token?.access_token) {
       return 0;
     }
-    const decodedToken = jwt_dec(token.access_token);
+    const decodedToken = jwtDecode(token.access_token);
     return decodedToken?.exp * 1000 ?? 0;
   } catch (e) {
     console.error('Error decoding token', e.message);

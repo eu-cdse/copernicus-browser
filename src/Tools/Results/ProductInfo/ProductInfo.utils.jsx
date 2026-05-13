@@ -1,5 +1,5 @@
 import React from 'react';
-import jwt_dec from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 import oDataHelpers from '../../../api/OData/ODataHelpers';
@@ -159,7 +159,7 @@ export const hasDownloadAccessForConfig = (userToken, product, config, productKe
   }
 
   try {
-    const roles = jwt_dec(userToken).realm_access?.roles;
+    const roles = jwtDecode(userToken).realm_access?.roles;
     const downloadProductRoles = config[product[productKey]]?.DOWNLOAD_PRODUCT_ROLES;
 
     return !!downloadProductRoles?.some((accessRight) => roles.includes(accessRight));

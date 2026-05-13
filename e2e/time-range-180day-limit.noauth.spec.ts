@@ -80,7 +80,7 @@ test('selecting a From date via the calendar sets it without jumping back', asyn
   await fromCalendar.locator('.date-nav-button.right').click();
 
   // Click day 15 — always in the middle of the month, never an outside day
-  await fromCalendar.locator('.DayPicker-Day:not(.DayPicker-Day--outside)').filter({ hasText: /^15$/ }).click();
+  await fromCalendar.locator('.rdp-day:not(.rdp-outside)').filter({ hasText: /^15$/ }).click();
 
   // From must have changed to the 15th of the new month — must not revert to the initial value
   await expect(fromInput).not.toHaveValue(initialFrom);
