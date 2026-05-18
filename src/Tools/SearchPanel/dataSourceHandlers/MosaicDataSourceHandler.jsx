@@ -17,6 +17,7 @@ import {
 } from './dataSourceConstants';
 import moment from 'moment';
 import { S2_ANNUAL_MOSAIC_BANDS, S2_QUARTERLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
+import { MOSAIC_AVAILABILITY } from './mosaicAvailability';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: {
@@ -46,17 +47,6 @@ export default class MosaicDataSourceHandler extends AbstractBYOCDataSourceHandl
   KNOWN_COLLECTIONS = {
     [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC],
     [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC],
-  };
-
-  MIN_MAX_DATES = {
-    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: {
-      minDate: moment.utc('2020-01-01'),
-      maxDate: moment.utc('2021-01-01'),
-    },
-    [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: {
-      minDate: moment.utc('2015-07-01'),
-      maxDate: null,
-    },
   };
 
   leafletZoomConfig = {
@@ -134,10 +124,14 @@ export default class MosaicDataSourceHandler extends AbstractBYOCDataSourceHandl
 
   getMinMaxDates(datasetId) {
     const collectionId = this.getCollectionByDatasetId(datasetId);
-    if (!collectionId) {
+    const availability = collectionId && MOSAIC_AVAILABILITY[collectionId];
+    if (!availability) {
       return { minDate: null, maxDate: null };
     }
-    return this.MIN_MAX_DATES[collectionId];
+    return {
+      minDate: availability.minDate ? moment.utc(availability.minDate) : null,
+      maxDate: availability.maxDate ? moment.utc(availability.maxDate) : null,
+    };
   }
 
   getLayers = (data, datasetId, url, _layersExclude, _layersInclude) => {

@@ -6,7 +6,6 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_IW_LR,
 } from './dataSourceConstants';
-import moment from 'moment';
 import MosaicDataSourceHandler from './MosaicDataSourceHandler';
 import {
   getSentinel1IWMosaic,
@@ -38,17 +37,6 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
   KNOWN_COLLECTIONS = {
     [S1_MONTHLY_MOSAIC_DH]: [S1_MONTHLY_MOSAIC_DH],
     [S1_MONTHLY_MOSAIC_IW]: [S1_MONTHLY_MOSAIC_IW],
-  };
-
-  MIN_MAX_DATES = {
-    [S1_MONTHLY_MOSAIC_DH]: {
-      minDate: moment.utc('2014-10-01'),
-      maxDate: null,
-    },
-    [S1_MONTHLY_MOSAIC_IW]: {
-      minDate: moment.utc('2014-10-01'),
-      maxDate: null,
-    },
   };
 
   leafletZoomConfig = {

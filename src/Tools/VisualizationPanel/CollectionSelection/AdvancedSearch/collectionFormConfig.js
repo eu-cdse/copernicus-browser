@@ -2447,6 +2447,36 @@ export const recursiveCollectionCLMS = [
     supportsCloudCover: false,
     items: [
       {
+        id: 'AUXILIARY_DATA',
+        label: 'Auxiliary Data',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'auxiliary_data',
+        )})`,
+        items: [
+          {
+            id: 'CLOUD_MASK',
+            label: 'Cloud Mask',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_wsi_cloud-classification_europe_utm_20m_daily_v1',
+                label: 'Cloud Classification, Sentinel-2, Europe, Daily, 20m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_cloud-classification_europe_utm_20m_daily_v1',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+      {
         id: 'EVAPOTRANSPIRATION',
         label: 'Evapotranspiration',
         type: 'instrument',
@@ -2493,6 +2523,26 @@ export const recursiveCollectionCLMS = [
             )})`,
             items: [
               {
+                id: 'clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2',
+                label: 'Fractional Snow Cover, Europe, Daily, 20m, (2016–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2',
+                )})`,
+              },
+              {
+                id: 'clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1',
+                label: 'Gap-filled Fractional Snow Cover, Europe, Daily, 60m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1',
+                )})`,
+              },
+              {
                 id: 'sce_europe_500m_daily_v1',
                 label: 'Europe, Daily, 500m, (2017–present), V1',
                 type: 'productType',
@@ -2522,20 +2572,61 @@ export const recursiveCollectionCLMS = [
                   'sce_global_1km_daily_v1',
                 )})`,
               },
+              {
+                id: 'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1',
+                label: 'Snow Phenology S1+S2, Europe (high mountains), Yearly, 60m/100m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1',
+                )})`,
+              },
+              {
+                id: 'clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1',
+                label: 'Snow Phenology S2, Europe, Yearly, 20m/100m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1',
+                )})`,
+              },
             ],
           },
-          // {
-          //   id: 'SNOW_STATE',
-          //   label: 'Snow State',
-          //   type: 'instrument',
-          //   supportsCloudCover: false,
-          //   customFilterExpression: `(${FilterElement.Attribute(
-          //     ODataAttributes.productType,
-          //     ODataFilterOperator.eq,
-          //     'snow_state',
-          //   )})`,
-          //   items: [],
-          // },
+          {
+            id: 'SNOW_STATE',
+            label: 'Snow State',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'snow_state',
+            )})`,
+            items: [
+              {
+                id: 'clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2',
+                label: 'SAR Wet Snow, Europe (high mountains), Daily, 60m, (2016–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2',
+                )})`,
+              },
+              {
+                id: 'clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2',
+                label: 'Wet/Dry Snow, Europe, Daily, 60m, (2016–present), V2',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2',
+                )})`,
+              },
+            ],
+          },
           {
             id: 'SNOW_WATER_EQUIVALENT',
             label: 'Snow Water Equivalent',
@@ -3068,16 +3159,6 @@ export const recursiveCollectionCLMS = [
                 )})`,
               },
               {
-                id: 'ndvi_global_1km_10daily_v2',
-                label: 'NDVI, Global, 10-daily, 1km, (1998–2020), V2',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'ndvi_global_1km_10daily_v2',
-                )})`,
-              },
-              {
                 id: 'ndvi_global_300m_10daily_v3',
                 label: 'NDVI, Global, 10-daily, 300m, (2014–present), V3',
                 type: 'productType',
@@ -3115,16 +3196,6 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'ndvi-lts_global_1km_10daily_v3',
-                )})`,
-              },
-              {
-                id: 'ndvi-lts_global_1km_10daily_v2',
-                label: 'NDVI Long Term Statistics, Global, 10-daily, 1km, (1999–2017), V2',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'ndvi-lts_global_1km_10daily_v2',
                 )})`,
               },
             ],

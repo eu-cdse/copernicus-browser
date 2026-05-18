@@ -22,7 +22,8 @@ import {
 } from './LayerSelection.utils';
 import store, { visualizationSlice, notificationSlice } from '../../store';
 import { t } from 'ttag';
-import { parseEvalscriptBands, parseIndexEvalscript } from '../../utils';
+import { parseEvalscriptBands } from '../../utils';
+import { parseIndexEvalscript } from '../../utils/parseIndexEvalscript.util';
 import { usePrevious } from '../../hooks/usePrevious';
 
 import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';

@@ -5,7 +5,8 @@ import cloneDeep from 'lodash.clonedeep';
 import EOBAdvancedHolder from '../../../junk/EOBAdvancedHolder/EOBAdvancedHolder';
 
 import { getDataSourceHandler } from '../../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { parseEvalscriptBands, parseIndexEvalscript } from '../../../utils';
+import { parseEvalscriptBands } from '../../../utils';
+import { parseIndexEvalscript } from '../../../utils/parseIndexEvalscript.util';
 import ActionBar from '../../../components/ActionBar/ActionBar';
 import { createLayerActions } from './createLayerActions';
 import { getVisualizationEffectsFromStore } from '../../../utils/effectsUtils';
@@ -62,12 +63,6 @@ const CustomVisualizationLayer = (props) => {
     const parsedIndexEvalscript = parseIndexEvalscript(evalscript);
     if (parsedIndexEvalscript) {
       selectedIndexBands = parsedIndexEvalscript.bands;
-      if (selectedIndexBands.a === 'null') {
-        selectedIndexBands.a = null;
-      }
-      if (selectedIndexBands.b === 'null') {
-        selectedIndexBands.b = null;
-      }
     }
   }
 

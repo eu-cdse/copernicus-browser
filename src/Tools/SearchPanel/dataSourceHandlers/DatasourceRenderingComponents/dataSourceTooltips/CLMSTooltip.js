@@ -150,14 +150,8 @@ const getClmsGlobalGdmp300mV110dailyRt5Markdown = () => t`
 const getClmsGlobalGdmp300mV110dailyRt6Markdown = () => t`
   Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
-const getClmsGlobalNdvi1kmV2StatisticsMarkdown = () => t`
-  Based upon SPOT/VEGETATION and PROBA-V NDVI 1km version 2, long-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 19-years period 1999-2017. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-long-term-statistics-v2-0-1km).`;
-
 const getClmsGlobalNdvi1kmV3StatisticsMarkdown = () => t`
   Based upon PROBA-V NDVI 1km version 3, short-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 5-years period 2015-2019. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
-
-const getClmsGlobalNdvi1kmV210dailyMarkdown = () => t`
-  Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from April 1998 to 2013 based upon SPOT/VEGETATION data and from 2014 to 2020 based upon PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
 
 const getClmsGlobalNdvi300mV110dailyMarkdown = () => t`
   Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalized-difference-vegetation-index-300m-v1.0).`;
@@ -426,13 +420,13 @@ High Resolution Layer Croplands product is part of the European Union's Copernic
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsCpfld10mYearlyV1Markdown = () =>
-  t`The High Resolution Layer Cropping Patterns - Fallow Land Duration (CPFLD) raster product provides the total fallow land duration (in days) over the complete period 2017-2021.
+  t`The High Resolution Layer Cropping Patterns - Fallow Land Duration (CPFLD) raster product provides information on the duration of fallow land periods, expressed in days, over a five-year period.
 
 This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
-Note: each product covers a rolling 4-year window and is referenced by the end year of that window. The available years in this browser (2021–2023) correspond to the periods 2017–2021, 2018–2022, and 2019–2023 respectively.
+Note: each product covers a five-year window and is referenced by the end year of that window (e.g. the 2021 product covers the period 2017–2021).
 
-High Resolution Layer Croplands product is part of the European Union’s Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
@@ -611,6 +605,27 @@ High Resolution Layer Croplands product is part of the European Union’s Copern
 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
+const getCopernicusClmsWsiCloudClassificationEuropeUtm20mDailyV1Markdown = () => t`
+  The Cloud Classification (CC) product provides information on the extent of clouds and cloud shadows derived from optical satellite data acquired by the Sentinel-2 constellation. It is generated in near real-time at European scale, with a pixel spacing of 20 m x 20 m. Cloud detection is performed at a 120m spatial resolution. It is available for the period from 2016 to the present and used to produce the CLMS High-Resolution Water, Snow and Ice datasets (HR-WSI), which rely on Sentinel-2 imagery. More information [here](https://land.copernicus.eu/en/products/snow/fractional-snow-cover).`;
+
+const getCopernicusClmsWsiFractionalSnowCoverEuropeUtm20mDailyV2Markdown = () => t`
+  The Fractional Snow Cover (FSC) product provides the fraction of the surface covered by snow at the top of canopy (FSC-TOC) and on ground (FSC-OG) per pixel as a percentage (0% – 100%). It is generated in near real-time at European scale based on optical satellite data from the Sentinel-2 constellation, with a spatial resolution of 20 m x 20 m. It is available for the period from 2016 to the present. More information [here](https://land.copernicus.eu/en/products/snow/fractional-snow-cover).`;
+
+const getCopernicusClmsWsiSarWetSnowEuropeUtm60mDailyV2Markdown = () => t`
+  The SAR Wet Snow (SWS) product provides the wet snow extent for high mountain areas with a spatial resolution of 60 m x 60 m. It is generated in near real-time for selected high mountain areas at European scale based on C-band Synthetic Aperture Radar satellite data from the Sentinel-1 constellation. It is available for the period from 2016 to the present. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-sar-wet-snow).`;
+
+const getCopernicusClmsWsiWetDrySnowEuropeUtm60mDailyV2Markdown = () => t`
+  The Wet / Dry Snow (WDS) product provides information on the snow state (wet or dry) by combining Sentinel-1 radar-based wet snow maps within the snow cover extent derived from Sentinel-2 optical data. It is generated in near real-time at European scale, with a spatial resolution of 60 m x 60 m in areas where Sentinel-1 and Sentinel-2 observation tracks overlap. It is available for the period from 2016 to the present. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-wet-dry-snow).`;
+
+const getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown = () => t`
+  The daily cumulative Gap-filled Fractional Snow Cover (GFSC) product provides pixel-wise snow cover extent as a percentage (0% – 100%) with a spatial resolution of 60 m x 60 m. It is generated on a daily basis at European scale based on synthetic aperture radar (SAR) data from the Sentinel-1 constellation and optical imagery from the Sentinel-2 constellation. The product is generated by merging all available Sentinel-1 and Sentinel-2 observations acquired over the previous seven days to produce a spatially complete composite of snow conditions, thereby reducing data gaps caused by cloud cover and sensor coverage limitations. Snow information derived from Sentinel-1 is focused on the detection of wet snow in high-mountain areas. It is available for the period from 2016 to the present. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-gap-filled-fractional-snow-cover).`;
+
+const getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown = () => t`
+  The Sentinel-2 Snow Phenology (SP S2) product characterizes the timing and duration of the snow season. For each pixel and for a given hydrological year, it provides the number of days with snow cover, as well as the first and last day of the longest continuous snow period. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 20 m × 20 m, consistent with the input snow cover maps derived from optical satellite data acquired by the Sentinel-2 constellation (Fractional Snow Cover – FSC). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-snow-phenology).`;
+
+const getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown = () => t`
+  The Sentinel-1 & Sentinel-2 Snow Phenology (SP S1+S2) product characterizes the timing and duration of the snow season. For each pixel and for a given hydrological year, it provides the number of days with snow cover, as well as the first and last day of the longest continuous snow period. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 60 m × 60 m, consistent with the input snow cover maps derived from optical satellite data acquired by the Sentinel-2 constellation and from C-band Synthetic Aperture Radar satellite data acquired by the Sentinel-1 constellation (Gap-filled Fractional Snow Cover - GFSC). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-snow-phenology).`;
+
 export {
   getCLMSCollectionMarkdown,
   getClmsGlobalLcc100mV3YearlyMarkdown,
@@ -658,9 +673,7 @@ export {
   getClmsGlobalGdmp300mV110dailyRt2Markdown,
   getClmsGlobalGdmp300mV110dailyRt5Markdown,
   getClmsGlobalGdmp300mV110dailyRt6Markdown,
-  getClmsGlobalNdvi1kmV2StatisticsMarkdown,
   getClmsGlobalNdvi1kmV3StatisticsMarkdown,
-  getClmsGlobalNdvi1kmV210dailyMarkdown,
   getClmsGlobalNdvi300mV110dailyMarkdown,
   getClmsGlobalNdvi300mV210dailyMarkdown,
   getClmsGlobalNdvi300mV310dailyMarkdown,
@@ -770,4 +783,11 @@ export {
   getCopernicusClmsCpsce10mYearlyV1Markdown,
   getCopernicusClmsVlccForestAdditionalSupportLayerEurope10m3yearlyV1Markdown,
   getCopernicusClmsVlccSecondaryCropDurationEurope10mYearlyV1Markdown,
+  getCopernicusClmsWsiCloudClassificationEuropeUtm20mDailyV1Markdown,
+  getCopernicusClmsWsiFractionalSnowCoverEuropeUtm20mDailyV2Markdown,
+  getCopernicusClmsWsiSarWetSnowEuropeUtm60mDailyV2Markdown,
+  getCopernicusClmsWsiWetDrySnowEuropeUtm60mDailyV2Markdown,
+  getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown,
+  getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown,
+  getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown,
 };

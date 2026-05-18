@@ -56,9 +56,7 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
@@ -164,6 +162,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 } from './dataSourceConstants';
 import moment from 'moment';
 import { LocationIdSHv3 } from '@sentinel-hub/sentinelhub-js';
@@ -218,8 +223,6 @@ import {
   getClmsGlobalGdmp300mV110dailyRt2Markdown,
   getClmsGlobalGdmp300mV110dailyRt5Markdown,
   getClmsGlobalGdmp300mV110dailyRt6Markdown,
-  getClmsGlobalNdvi1kmV210dailyMarkdown,
-  getClmsGlobalNdvi1kmV2StatisticsMarkdown,
   getClmsGlobalNdvi1kmV3StatisticsMarkdown,
   getClmsGlobalNdvi300mV110dailyMarkdown,
   getClmsGlobalNdvi300mV210dailyMarkdown,
@@ -325,6 +328,13 @@ import {
   getCopernicusClmsCpsce10mYearlyV1Markdown,
   getCopernicusClmsVlccForestAdditionalSupportLayerEurope10m3yearlyV1Markdown,
   getCopernicusClmsVlccSecondaryCropDurationEurope10mYearlyV1Markdown,
+  getCopernicusClmsWsiCloudClassificationEuropeUtm20mDailyV1Markdown,
+  getCopernicusClmsWsiFractionalSnowCoverEuropeUtm20mDailyV2Markdown,
+  getCopernicusClmsWsiSarWetSnowEuropeUtm60mDailyV2Markdown,
+  getCopernicusClmsWsiWetDrySnowEuropeUtm60mDailyV2Markdown,
+  getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown,
+  getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown,
+  getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 
 import {
@@ -346,9 +356,7 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_BANDS,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1_BANDS,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2_BANDS,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2_BANDS,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3_BANDS,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2_BANDS,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1_BANDS,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2_BANDS,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1_BANDS,
@@ -440,6 +448,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_BANDS,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1_BANDS,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2_BANDS,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1_BANDS,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1_BANDS,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1_BANDS,
 } from './datasourceAssets/CLMSBands';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_BANDS_BY_LAYER_ID,
@@ -592,10 +607,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: t`DMP 300m 10-daily V1 RT6`,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V1]: t`LST TCI 5km 10-daily V1`,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: t`LST TCI 5km 10-daily V2`,
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: t`NDVI LTS 1km V2`,
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: t`NDVI LTS 1km V3`,
     [COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL]: t`NDVI 1km 10-daily V3`,
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: t`NDVI 1km 10-daily V2`,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: t`NDVI 300m 10-daily V1`,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: t`NDVI 300m 10-daily V2`,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: t`NDVI 300m 10-daily V3`,
@@ -678,7 +691,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021]: t`UA BBH 3-yearly 2021`,
     [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1]: t`CPFLP 10m Yearly (2017–present)`,
     [COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1]: t`CPBSA 10m Yearly (2017–present)`,
-    [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1]: t`CPFLD 10m Yearly (2021–2023)`,
+    [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1]: t`CPFLD 10m Yearly (2017–present)`,
     [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1]: t`CPBSB 10m Yearly (2017–present)`,
     [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1]: t`DLTC 20m 3-yearly (2018–2021)`,
     [COPERNICUS_CLMS_DLT_10M_YEARLY_V1]: t`DLT 10m Yearly (2018–present)`,
@@ -699,6 +712,13 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1]: t`CPSCE 10m Yearly (2017–present)`,
     [COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1]: t`FADSL 10m 3-yearly (2018–2021)`,
     [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: t`CPSCD 10m Yearly (2017–present)`,
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: t`Sentinel-2 CC Europe 20m Daily V1`,
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: t`FSC Europe 20m Daily V2`,
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: t`SWS Europe (high mountains) 60m Daily V2`,
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: t`WDS Europe 60m Daily V2`,
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: t`GFSC Europe 60m Daily V1`,
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: t`SP S2 Europe 20m Yearly V1`,
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: t`SP S1+S2 Europe (high mountains) 60m Yearly V1`,
   });
 
   urls = {
@@ -760,9 +780,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: [],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V1]: [],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: [],
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: [],
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: [],
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: [],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: [],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: [],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: [],
@@ -866,6 +884,13 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: [],
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: [],
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: [],
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: [],
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: [],
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: [],
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: [],
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: [],
   };
   datasets = [];
   allLayers = [];
@@ -1085,9 +1110,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: { min: 2, max: 25 },
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: { min: 2, max: 25 },
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: { min: 2, max: 25 },
@@ -1263,6 +1286,34 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       max: 25,
     },
     [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021]: { min: 8, max: 25 },
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: {
+      min: 7,
+      max: 25,
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: {
+      min: 7,
+      max: 25,
+    },
     // VLCC datasets have multiple BYOC sub-collections per dataset (e.g. DLT + DLTCL), each keyed by
     // collection UUID below. Callers that only have datasetId (no layerId) look up by the dataset
     // constant string, which wouldn't match any UUID key and would fall back to { min: 0, max: 25 }.
@@ -1387,9 +1438,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: ['e6352a02-c52e-4258-8541-6f92ca98359c'],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V1]: ['2dd2d9e0-8f02-4adc-8b14-dea6c56e8d2b'],
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: ['d216f9f3-a7bd-45d6-bdd3-820f8223ebc4'],
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: ['35976c51-6ea0-4feb-b433-a24706d621fa'],
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: ['1b1b0b08-19c4-42b7-8ea1-bf9b43769b42'],
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: ['93f4493e-be2a-43c7-8aa2-53820985280d'],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: ['41f33765-18a0-4e1a-ade2-b4093254ce68'],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: ['ab0e1e8e-508c-4faa-9b5b-c9c4734ef29e'],
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: ['6303088f-3c19-4967-9038-119267c6d090'],
@@ -1543,6 +1592,23 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPSCD,
       COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPSCDCL,
     ],
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: [
+      '64d015da-e225-48d8-9643-30a453657beb',
+    ],
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: [
+      '2bb9974a-0eb8-484d-adf1-20cc307021b6',
+    ],
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: ['41fc21f0-b657-4346-a4ab-aafc8cc636f2'],
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: ['e52773f2-d35d-492d-8144-371a9e741212'],
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: [
+      '0b5265f5-3664-44c2-96ab-e91aba67b0c3',
+    ],
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: [
+      '0316f5d4-1320-41a1-994e-d756902efa9f',
+    ],
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: [
+      '1896152f-75d8-4daf-9db9-987773559a2c',
+    ],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -1604,9 +1670,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_DMP_300M_10DAILY_RT6]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_LST_5KM_10DAILY_V2]: LocationIdSHv3.cdse,
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: LocationIdSHv3.cdse,
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V2]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V3]: LocationIdSHv3.cdse,
@@ -1710,6 +1774,13 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -1945,17 +2016,9 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       minDate: moment.utc('2021-01-11'),
       maxDate: moment.utc(),
     },
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: {
-      minDate: moment.utc('1999-01-01'),
-      maxDate: moment.utc('1999-01-01'),
-    },
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: {
       minDate: moment.utc('1999-01-01'),
       maxDate: moment.utc('1999-01-01'),
-    },
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: {
-      minDate: moment.utc('1998-04-01'),
-      maxDate: moment.utc('2020-12-21'),
     },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: {
       minDate: moment.utc('2014-01-01'),
@@ -2261,8 +2324,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1]: {
-      minDate: moment.utc('2021-01-01'),
-      maxDate: moment.utc('2023-12-31'),
+      minDate: moment.utc('2017-01-01'),
+      maxDate: moment.utc(),
     },
     [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1]: {
       minDate: moment.utc('2017-01-01'),
@@ -2342,6 +2405,34 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     },
     [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: {
       minDate: moment.utc('2017-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: {
+      minDate: moment.utc('2016-01-01'),
+      maxDate: moment.utc(),
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: {
+      minDate: moment.utc('2016-01-01'),
       maxDate: moment.utc(),
     },
   };
@@ -2580,16 +2671,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       amount: 10,
       unit: 'day',
     },
-    [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: {
-      amount: 0,
-      unit: 'day',
-    },
     [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: {
       amount: 0,
-      unit: 'day',
-    },
-    [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: {
-      amount: -10, // set to -10 because the sensing date is the same as contentStart, where other collections have it on contentEnd, subtract(-10) === add(10)
       unit: 'day',
     },
     [COPERNICUS_CLMS_NDVI_300M_10DAILY_V1]: {
@@ -2893,7 +2976,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       unit: 'year',
     },
     [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1]: {
-      amount: 4,
+      amount: 5,
       unit: 'year',
     },
     [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1]: {
@@ -2977,6 +3060,34 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       unit: 'year',
     },
     [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: {
+      amount: 1,
+      unit: 'year',
+    },
+    [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: {
+      amount: 1,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: {
+      amount: 1,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      amount: 1,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: {
+      amount: 1,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: {
+      amount: 1,
+      unit: 'day',
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: {
+      amount: 1,
+      unit: 'year',
+    },
+    [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: {
       amount: 1,
       unit: 'year',
     },
@@ -3064,12 +3175,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return COPERNICUS_CLMS_LST_5KM_10DAILY_V1_BANDS;
       case COPERNICUS_CLMS_LST_5KM_10DAILY_V2:
         return COPERNICUS_CLMS_LST_5KM_10DAILY_V2_BANDS;
-      case COPERNICUS_CLMS_NDVI_1KM_STATS_V2:
-        return COPERNICUS_CLMS_NDVI_1KM_STATS_V2_BANDS;
       case COPERNICUS_CLMS_NDVI_1KM_STATS_V3:
         return COPERNICUS_CLMS_NDVI_1KM_STATS_V3_BANDS;
-      case COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2:
-        return COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2_BANDS;
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V1:
         return COPERNICUS_CLMS_NDVI_300M_10DAILY_V1_BANDS;
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V2:
@@ -3262,6 +3369,20 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_BANDS;
       case COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1:
         return COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_BANDS;
+      case COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1:
+        return COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1_BANDS;
+      case COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2:
+        return COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2_BANDS;
+      case COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2:
+        return COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS;
+      case COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2:
+        return COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS;
+      case COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1:
+        return COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1_BANDS;
+      case COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1:
+        return COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1_BANDS;
+      case COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1:
+        return COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1_BANDS;
       default:
         return null;
     }
@@ -3380,12 +3501,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return getClmsGlobalLst5kmV110dailytciMarkdown();
       case COPERNICUS_CLMS_LST_5KM_10DAILY_V2:
         return getClmsGlobalLst5kmV210dailytciMarkdown();
-      case COPERNICUS_CLMS_NDVI_1KM_STATS_V2:
-        return getClmsGlobalNdvi1kmV2StatisticsMarkdown();
       case COPERNICUS_CLMS_NDVI_1KM_STATS_V3:
         return getClmsGlobalNdvi1kmV3StatisticsMarkdown();
-      case COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2:
-        return getClmsGlobalNdvi1kmV210dailyMarkdown();
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V1:
         return getClmsGlobalNdvi300mV110dailyMarkdown();
       case COPERNICUS_CLMS_NDVI_300M_10DAILY_V2:
@@ -3586,6 +3703,20 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
         return getCopernicusClmsVlccForestAdditionalSupportLayerEurope10m3yearlyV1Markdown();
       case COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1:
         return getCopernicusClmsVlccSecondaryCropDurationEurope10mYearlyV1Markdown();
+      case COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1:
+        return getCopernicusClmsWsiCloudClassificationEuropeUtm20mDailyV1Markdown();
+      case COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2:
+        return getCopernicusClmsWsiFractionalSnowCoverEuropeUtm20mDailyV2Markdown();
+      case COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2:
+        return getCopernicusClmsWsiSarWetSnowEuropeUtm60mDailyV2Markdown();
+      case COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2:
+        return getCopernicusClmsWsiWetDrySnowEuropeUtm60mDailyV2Markdown();
+      case COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1:
+        return getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown();
+      case COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1:
+        return getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown();
+      case COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1:
+        return getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown();
       default:
         return null;
     }

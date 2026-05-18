@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { t } from 'ttag';
 
 import { BandsToRGB } from '../BandsToRGB/BandsToRGB';
@@ -58,188 +58,168 @@ An OpenEO process graph is a chain of processes that defines how satellite data 
 Read more about processes and process graphs [here](${processGraphUrl}).
 `;
 
-class EOBAdvancedHolder extends React.Component {
-  state = {
-    selectedTab: null,
-  };
+const EOBAdvancedHolder = ({
+  router,
+  channels,
+  layers,
+  evalscript,
+  evalscriptUrl,
+  processGraphUrl,
+  dataFusion = [],
+  activeLayer: activeDatasource,
+  initialTimespan,
+  isUrlMode,
+  indexLayers,
+  onUpdateScript,
+  onDataFusionChange,
+  onEvalscriptRefresh,
+  onCompositeChange,
+  onIndexScriptChange,
+  areBandsClasses,
+  supportsIndex,
+  style,
+  selectedVisualizationId,
+  visualizationUrl,
+  selectedProcessing,
+  processGraph,
+  onRefreshOpenEO,
+}) => {
+  const [selectedTab, setSelectedTab] = useState(null);
 
-  initTabs = () => {
+  useEffect(() => {
     const hashIndex = CUSTOM_VISUALIZATION_URL_ROUTES.findIndex((hash) =>
-      this.props.router.location.hash.includes(hash),
+      router.location.hash.includes(hash),
     );
     if (hashIndex !== -1) {
-      this.setState({ selectedTab: hashIndex });
+      setSelectedTab(hashIndex);
     }
+  }, [router.location.hash]);
+
+  const handleSetSelectedTab = (index) => {
+    setSelectedTab(index);
+    router.navigate({ hash: CUSTOM_VISUALIZATION_URL_ROUTES[index] }, { replace: true });
   };
 
-  componentDidMount() {
-    if (this.props.router.location.hash) {
-      this.initTabs();
-    }
-  }
+  const groupedChannels =
+    activeDatasource && activeDatasource.datasetId && activeDatasource.groupChannels
+      ? activeDatasource.groupChannels(activeDatasource.datasetId)
+      : null;
 
-  componentDidUpdate(prevProps) {
-    if (this.props.router.location.hash !== prevProps.router.location.hash) {
-      this.initTabs();
-    }
-  }
+  const supportsOpenEO = isOpenEoSupported(visualizationUrl, selectedVisualizationId, IMAGE_FORMATS.PNG);
+  const customProcessingOptions = [
+    {
+      label: t`OpenEO process graph`,
+      value: PROCESSING_OPTIONS.OPENEO,
+      className: 'radio-button-label',
+      disabled: !supportsOpenEO,
+      getTooltipContent: supportsOpenEO
+        ? getProcessGraphTooltipContent
+        : getUnsupportedProcessGraphTooltipContent,
+      title: !supportsOpenEO
+        ? t`OpenEO process graph is currently not supported for this collection.`
+        : undefined,
+    },
+    {
+      label: t`Custom script`,
+      value: PROCESSING_OPTIONS.PROCESS_API,
+      className: 'radio-button-label',
+      disabled: false,
+      getTooltipContent: getEvalscriptTooltipContent,
+    },
+  ];
 
-  setSelectedTab(index) {
-    this.setState({ selectedTab: index });
-    window.location.hash = CUSTOM_VISUALIZATION_URL_ROUTES[index];
-  }
+  return layers && channels ? (
+    <div className="advancedPanel" style={style}>
+      <div className="custom-visualisation-content">
+        <ul className="custom-visualisation-tabs">
+          <li
+            className={`tab-button ${
+              selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB ? `active` : ``
+            }`}
+            onClick={() => handleSetSelectedTab(CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB)}
+          >{t`Composite`}</li>
+          <li
+            className={`tab-button ${selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB ? `active` : ``}`}
+            onClick={() => handleSetSelectedTab(CUSTOM_VISUALISATION_TABS.INDEX_TAB)}
+          >{t`Index`}</li>
+          <li
+            className={`tab-button ${
+              selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB ? `active` : ``
+            }`}
+            onClick={() => handleSetSelectedTab(CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB)}
+          >{t`Custom`}</li>
+        </ul>
 
-  render() {
-    const { selectedTab } = this.state;
-    const {
-      channels,
-      layers,
-      evalscript,
-      evalscriptUrl,
-      processGraphUrl,
-      dataFusion = [],
-      activeLayer: activeDatasource,
-      initialTimespan,
-      isUrlMode,
-      indexLayers,
-      onUpdateScript,
-      onDataFusionChange,
-      onEvalscriptRefresh,
-      onCompositeChange,
-      onIndexScriptChange,
-      areBandsClasses,
-      supportsIndex,
-      style,
-      selectedVisualizationId,
-      visualizationUrl,
-      selectedProcessing,
-      processGraph,
-      onRefreshOpenEO,
-    } = this.props;
-
-    const groupedChannels =
-      activeDatasource && activeDatasource.datasetId && activeDatasource.groupChannels
-        ? activeDatasource.groupChannels(activeDatasource.datasetId)
-        : null;
-
-    const supportsOpenEO = isOpenEoSupported(visualizationUrl, selectedVisualizationId, IMAGE_FORMATS.PNG);
-    const customProcessingOptions = [
-      {
-        label: t`OpenEO process graph`,
-        value: PROCESSING_OPTIONS.OPENEO,
-        className: 'radio-button-label',
-        disabled: !supportsOpenEO,
-        getTooltipContent: supportsOpenEO
-          ? getProcessGraphTooltipContent
-          : getUnsupportedProcessGraphTooltipContent,
-        title: !supportsOpenEO
-          ? t`OpenEO process graph is currently not supported for this collection.`
-          : undefined,
-      },
-      {
-        label: t`Custom script`,
-        value: PROCESSING_OPTIONS.PROCESS_API,
-        className: 'radio-button-label',
-        disabled: false,
-        getTooltipContent: getEvalscriptTooltipContent,
-      },
-    ];
-
-    return layers && channels ? (
-      <div className="advancedPanel" style={style}>
-        <div className="custom-visualisation-content">
-          <ul className="custom-visualisation-tabs">
-            <li
-              className={`tab-button ${
-                selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB ? `active` : ``
-              }`}
-              onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB)}
-            >{t`Composite`}</li>
-            <li
-              className={`tab-button ${selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB ? `active` : ``}`}
-              onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.INDEX_TAB)}
-            >{t`Index`}</li>
-            <li
-              className={`tab-button ${
-                selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB ? `active` : ``
-              }`}
-              onClick={() => this.setSelectedTab(CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB)}
-            >{t`Custom`}</li>
-          </ul>
-
-          {selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB && (
-            <div className="custom-visualisation-wrapper">
-              {groupedChannels ? (
-                <GroupedBandsToRGB
-                  groupedBands={groupedChannels}
-                  value={layers}
-                  onChange={onCompositeChange}
-                />
-              ) : (
-                <BandsToRGB
-                  bands={channels}
-                  value={layers}
-                  onChange={onCompositeChange}
-                  areBandsClasses={areBandsClasses}
-                  datasetId={activeDatasource.datasetId}
-                />
-              )}
-            </div>
-          )}
-
-          {selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB && supportsIndex && (
-            <div className="custom-visualisation-wrapper">
-              <IndexBands
+        {selectedTab === CUSTOM_VISUALISATION_TABS.COMPOSITE_TAB && (
+          <div className="custom-visualisation-wrapper">
+            {groupedChannels ? (
+              <GroupedBandsToRGB groupedBands={groupedChannels} value={layers} onChange={onCompositeChange} />
+            ) : (
+              <BandsToRGB
                 bands={channels}
-                layers={indexLayers}
-                onChange={onIndexScriptChange}
-                evalscript={evalscript}
+                value={layers}
+                onChange={onCompositeChange}
+                areBandsClasses={areBandsClasses}
                 datasetId={activeDatasource.datasetId}
               />
-            </div>
-          )}
+            )}
+          </div>
+        )}
 
-          {selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
-            <div className="custom-visualisation-wrapper" key={selectedProcessing}>
-              <RadioButtonGroup
-                value={customProcessingOptions.find((opt) => opt.value === selectedProcessing)}
-                options={customProcessingOptions}
-                onChange={(val) => {
-                  store.dispatch(
-                    visualizationSlice.actions.setVisualizationParams({ selectedProcessing: val }),
-                  );
-                }}
+        {supportsIndex && (
+          <div
+            className="custom-visualisation-wrapper"
+            style={{ display: selectedTab === CUSTOM_VISUALISATION_TABS.INDEX_TAB ? '' : 'none' }}
+          >
+            <IndexBands
+              bands={channels}
+              layers={indexLayers}
+              onChange={onIndexScriptChange}
+              evalscript={evalscript}
+            />
+          </div>
+        )}
+
+        {selectedTab === CUSTOM_VISUALISATION_TABS.CUSTOM_SCRIPT_TAB && (
+          <div className="custom-visualisation-wrapper" key={selectedProcessing}>
+            <RadioButtonGroup
+              value={customProcessingOptions.find((opt) => opt.value === selectedProcessing)}
+              options={customProcessingOptions}
+              onChange={(val) => {
+                store.dispatch(
+                  visualizationSlice.actions.setVisualizationParams({ selectedProcessing: val }),
+                );
+              }}
+            />
+            {selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && activeDatasource && (
+              <DataFusion
+                key={activeDatasource.baseUrls.WMS}
+                baseUrlWms={activeDatasource.baseUrls.WMS}
+                settings={dataFusion}
+                onChange={onDataFusionChange}
+                initialTimespan={initialTimespan}
               />
-              {selectedProcessing === PROCESSING_OPTIONS.PROCESS_API && activeDatasource && (
-                <DataFusion
-                  key={activeDatasource.baseUrls.WMS}
-                  baseUrlWms={activeDatasource.baseUrls.WMS}
-                  settings={dataFusion}
-                  onChange={onDataFusionChange}
-                  initialTimespan={initialTimespan}
-                />
+            )}
+            <CustomScriptInput
+              selectedProcessing={selectedProcessing}
+              onRefreshEvalscript={onEvalscriptRefresh}
+              onRefreshOpenEO={onRefreshOpenEO}
+              scriptContent={selectedProcessing === PROCESSING_OPTIONS.OPENEO ? processGraph : evalscript}
+              scriptUrl={window.decodeURIComponent(
+                selectedProcessing === PROCESSING_OPTIONS.OPENEO
+                  ? processGraphUrl || ''
+                  : evalscriptUrl || '',
               )}
-              <CustomScriptInput
-                selectedProcessing={selectedProcessing}
-                onRefreshEvalscript={onEvalscriptRefresh}
-                onRefreshOpenEO={onRefreshOpenEO}
-                scriptContent={selectedProcessing === PROCESSING_OPTIONS.OPENEO ? processGraph : evalscript}
-                scriptUrl={window.decodeURIComponent(
-                  selectedProcessing === PROCESSING_OPTIONS.OPENEO
-                    ? processGraphUrl || ''
-                    : evalscriptUrl || '',
-                )}
-                isUrlMode={isUrlMode}
-                onChange={onUpdateScript}
-              />
-            </div>
-          )}
-        </div>
+              isUrlMode={isUrlMode}
+              onChange={onUpdateScript}
+            />
+          </div>
+        )}
       </div>
-    ) : (
-      <div />
-    );
-  }
-}
+    </div>
+  ) : (
+    <div />
+  );
+};
 
 export default withRouter(EOBAdvancedHolder);

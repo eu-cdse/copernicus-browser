@@ -3,7 +3,6 @@ import { fromBlob } from 'geotiff';
 import { LayersFactory, ApiType, BBox } from '@sentinel-hub/sentinelhub-js';
 
 import {
-  getMapDimensions,
   getImageDimensionFromBoundsWithCap,
   constructBBoxFromBounds,
 } from '../../Controls/ImgDownload/ImageDownload.utils.js';
@@ -39,28 +38,10 @@ export async function getLayerName(visualizationUrl, layerId, cancelToken) {
 // When width and height do not exceed the limit, the function requests 1 image and
 // returns an array with 1 element for the sake of consistency.
 async function getTiffImages(layer, props, cancelToken) {
-  const { bounds, fromTime, toTime, pixelBounds, aoiGeometry, datasetId } = props;
+  const { bounds, fromTime, toTime, aoiGeometry, datasetId } = props;
 
-  const { width: defaultWidth, height: defaultHeight } = getImageDimensionFromBoundsWithCap(
-    bounds,
-    datasetId,
-  );
+  const { width, height } = getImageDimensionFromBoundsWithCap(bounds, datasetId);
   const originalBBox = constructBBoxFromBounds(bounds);
-  let { width, height } = getMapDimensions(pixelBounds);
-
-  // code copied from ImageDownload.js
-  if (aoiGeometry) {
-    // defaultWidth and defaultHeight are in this case referring to bounds of the geometry
-    // We keep one of the map dimensions and scale the other
-    const ratio = defaultWidth / defaultHeight;
-
-    if (ratio >= 1) {
-      height = Math.floor(width / ratio);
-    } else {
-      width = Math.floor(ratio * height);
-    }
-  }
-
   const getMapParams = {
     fromTime,
     toTime,

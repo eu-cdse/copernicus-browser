@@ -61,7 +61,6 @@
     "react": "^18.3.1",
     "react-bootstrap-typeahead": "^6.3.2",
     "react-checkbox-group": "^3.0.1",
-    "react-compound-slider": "^2.5.0",
     "react-day-picker": "^10.0.0",
     "react-device-detect": "^2.0.0",
     "react-dnd": "^11.1.3",

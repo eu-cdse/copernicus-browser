@@ -176,7 +176,6 @@ class HistogramModal extends Component {
 
 const mapStoreToProps = (store) => ({
   bounds: store.aoi.bounds ? store.aoi.bounds : store.mainMap.bounds,
-  pixelBounds: store.mainMap.pixelBounds,
   aoiGeometry: store.aoi.geometry ?? null,
   fromTime: store.visualization.fromTime,
   toTime: store.visualization.toTime,

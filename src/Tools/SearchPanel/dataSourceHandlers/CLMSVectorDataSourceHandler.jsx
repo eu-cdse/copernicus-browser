@@ -14,6 +14,7 @@ import {
   COPERNICUS_CLMS_UA_STL_2021_RASTER,
 } from './dataSourceConstants';
 import { DATASOURCES } from '../../../const';
+import { GFI_IMAGE_SIZE } from '../../../Controls/CLMSVectorFeatureInfo/CLMSVectorFeatureInfo.utils';
 import { filterLayers } from './filter';
 import {
   getCLMSCollectionMarkdown,
@@ -23,22 +24,24 @@ import {
   getClmsUaStl2021VectorMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 
+// The WMS server switches from vector to raster at scale 1:150,000 (~39.7 m/px).
+// 39 is used as a slightly conservative round value below the official threshold.
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_UA_LCU_2018_VECTOR]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_UA_LCU_2018_RASTER,
-    lowResolutionMetersPerPixelThreshold: 100,
+    lowResolutionMetersPerPixelThreshold: 39,
   },
   [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_UA_LCU_2021_RASTER,
-    lowResolutionMetersPerPixelThreshold: 100,
+    lowResolutionMetersPerPixelThreshold: 39,
   },
   [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_UA_LCUC_2018_2021_RASTER,
-    lowResolutionMetersPerPixelThreshold: 100,
+    lowResolutionMetersPerPixelThreshold: 39,
   },
   [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_UA_STL_2021_RASTER,
-    lowResolutionMetersPerPixelThreshold: 100,
+    lowResolutionMetersPerPixelThreshold: 39,
   },
 };
 
@@ -231,6 +234,35 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
 
   getLowResolutionMetersPerPixelThreshold = (collectionId) => {
     return LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId]?.lowResolutionMetersPerPixelThreshold;
+  };
+
+  buildGetFeatureInfoUrl = (datasetId, lat, lng) => {
+    const layerName = this.getCapabilitiesDatasetIds[datasetId];
+    const baseUrl = this.getKnownUrl();
+    // Fixed 1 m bbox centered on the click point. At GFI_IMAGE_SIZE pixels this gives
+    // ~0.002 m/px — far below the 39.7 m/px vector threshold — so the server always
+    // returns vector feature data regardless of the map's current zoom level.
+    const halfWidthDeg = 0.5 / (111320 * Math.cos((lat * Math.PI) / 180));
+    const halfHeightDeg = 0.5 / 111320;
+    const west = lng - halfWidthDeg;
+    const east = lng + halfWidthDeg;
+    const south = lat - halfHeightDeg;
+    const north = lat + halfHeightDeg;
+    const params = new URLSearchParams({
+      SERVICE: 'WMS',
+      VERSION: '1.1.1',
+      REQUEST: 'GetFeatureInfo',
+      LAYERS: layerName,
+      QUERY_LAYERS: layerName,
+      BBOX: `${west},${south},${east},${north}`,
+      WIDTH: String(GFI_IMAGE_SIZE),
+      HEIGHT: String(GFI_IMAGE_SIZE),
+      X: String(GFI_IMAGE_SIZE / 2),
+      Y: String(GFI_IMAGE_SIZE / 2),
+      SRS: 'EPSG:4326',
+      INFO_FORMAT: 'application/vnd.ogc.gml',
+    });
+    return `${baseUrl}?${params.toString()}`;
   };
 
   supportsAnalyticalImgExport = () => false;

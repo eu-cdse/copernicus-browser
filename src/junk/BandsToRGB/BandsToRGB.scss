@@ -275,10 +275,22 @@ select:-moz-focusring {
 
   .slider {
     width: 100%;
-    height: 42px;
+
+    div.rc-slider {
+      display: inline-block;
+      width: 100%;
+      height: 34px;
+      padding: 0;
+
+      .rc-slider-rail,
+      .rc-slider-track {
+        border-radius: 0;
+      }
+    }
 
     .slider-keyboard-handle {
       min-width: initial;
+      outline: none;
 
       .handle-value {
         position: relative;

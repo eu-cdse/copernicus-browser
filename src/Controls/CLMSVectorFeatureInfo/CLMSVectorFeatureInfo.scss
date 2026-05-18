@@ -1,0 +1,69 @@
+.clms-gfi-dialog {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .title-bar {
+    flex-shrink: 0;
+  }
+
+  .title {
+    max-width: 85%;
+  }
+}
+
+.clms-gfi-content {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  position: relative;
+}
+
+.clms-gfi-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 16px;
+}
+
+.clms-gfi-error {
+  color: #c00;
+}
+
+.clms-gfi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th,
+  td {
+    padding: 6px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    color: #666;
+    font-weight: 600;
+    white-space: nowrap;
+    width: 30%;
+  }
+
+  td {
+    color: #222;
+  }
+
+  tr:last-child th,
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover th,
+  tr:hover td {
+    background: #f5f7fa;
+  }
+}

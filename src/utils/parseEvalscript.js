@@ -189,6 +189,9 @@ export function setEvalscriptOutputBandNumber(evalscript, nBands) {
 }
 
 export function checkIfIndexOutputInEvalscript(evalscript) {
+  if (!evalscript) {
+    return false;
+  }
   const OUTPUT_ID = 'index';
   const N_BANDS = 1;
   const SAMPLE_TYPE = 'FLOAT32';

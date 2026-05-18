@@ -614,22 +614,10 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE`,
       },
       {
-        name: 'clms_global_ndvi_1km_v2_statistics_geotiff',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/0ec96e-YOUR-INSTANCEID-HERE`,
-      },
-      {
         name: 'clms_global_ndvi_1km_v3_statistics_geotiff',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/148ba1-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_global_ndvi_1km_v2_10daily_geotiff',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/61e911-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_global_ndvi_300m_v1_10daily_geotiff',
@@ -1261,6 +1249,48 @@ export const DEFAULT_THEMES = [
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/54a015-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_cloud-classification_europe_utm_20m_daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/3d2bd5-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/875be0-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/9decad-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/b8e848-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/91b09f-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/a574ce-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/943cee-YOUR-INSTANCEID-HERE`,
       },
     ],
   },

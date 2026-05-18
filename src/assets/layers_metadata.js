@@ -92,9 +92,7 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
@@ -217,6 +215,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -2245,26 +2250,6 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`TCI, long used as a suitable indicator of vegetation health, characterises how hot any given land pixel is with respect to its maximum temperature range. Since over vegetated surfaces, temperature is strongly controlled by energy fluxes (sensible and latent heat), the TCI indirectly characterizes the moisture availability through the near-surface radiation and aerodynamic conditions.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MAX_LTS' }],
-    description: () =>
-      t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEAN_LTS' }],
-    description: () =>
-      t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MEDIAN_LTS' }],
-    description: () =>
-      t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V2, layerId: 'NDVI_MIN_LTS' }],
-    description: () =>
-      t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
-  },
-  {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MAX_LTS' }],
     description: () =>
       t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
@@ -2283,11 +2268,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MIN_LTS' }],
     description: () =>
       t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2, layerId: 'NDVI' }],
-    description: () =>
-      t`The Normalized Difference Vegetation Index (NDVI) can be related to the vegetation photosynthetic activity. It is computed from the RED and NIR reflectances only: NDVI = (NIR - RED) / (NIR+RED) = (B3 - B2) / (B3 + B2), where B2 and B3 are the atmospherically corrected surface reflectances in the RED and NIR bands from the SPOT/VEGETATION and PROBA-V 10-daily synthesis dataset.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1, layerId: 'NDVI' }],
@@ -4850,5 +4830,328 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () => t`Confidence layer - a quality indicator for secondary crops duration.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1, layerId: 'CC' },
+    ],
+    description: () =>
+      t`Classification of the Sentinel-2 image using the MAJA cloud screening and atmospheric correction software, developed by CNES and CESBIO with contributions from DLR. Cloud detection is performed at a spatial resolution of 120 m.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1, layerId: 'CC-QA' },
+    ],
+    description: () =>
+      t`Quality layer providing basic assessment of the cloud and cloud shadow classification layer.`,
+  },
+  {
+    match: [
+      { datasourceId: COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1, layerId: 'QAFLAGS' },
+    ],
+    description: () =>
+      t`Bitmask layer with pixel quality flags. The default visualisation highlights pixels where clouds have been detected using a single-scene, threshold-based approach. These correspond to pixels where bit 0 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '1_FSCOG',
+      },
+    ],
+    description: () =>
+      t`Fraction of the surface covered by snow (ranging from 0% to 100%). In the presence of tree cover, estimate of the fraction of snow under the canopy. The dataset has also the following classes: cloud or cloud shadow (205), inland water (210), and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '2_FSCOGQA',
+      },
+    ],
+    description: () => t`Quality layer providing basic assessment of the on-ground snow fraction layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '3_FSCTOC',
+      },
+    ],
+    description: () =>
+      t`Fraction of the surface covered by snow as seen above the top of the canopy, i.e. visible from space (ranging from 0% to 100%). The dataset has also the following classes: cloud or cloud shadow (205), inland water (210), and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '4_FSCTOCQA',
+      },
+    ],
+    description: () => t`Quality layer providing basic assessment of the Top-of-canopy snow fraction layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '5_QAFLAGS',
+      },
+    ],
+    description: () =>
+      t`Bitmask layer with pixel quality flags. The default visualisation displays whether the pixel is located in the hillshade. These correspond to pixels where bit 0 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '6_CLD',
+      },
+    ],
+    description: () =>
+      t`Bitmask layer defining cloud and cloud-shadow masks derived from the input MAJA Sentinel-2 Level-2A product. The default visualisation displays all clouds except the thinnest ones, as well as all cloud shadows. These correspond to pixels where bit 0 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+        layerId: '7_NDSI',
+      },
+    ],
+    description: () =>
+      t`Values of the spectral index Normalized Difference Snow Index for snow-covered-pixels (ranging from 0% to 100%). The index is derived from the input MAJA Sentinel-2 level 2A product. The dataset has also the following classes: cloud or cloud shadow (205), inland water (210), and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+        layerId: 'wsm',
+      },
+    ],
+    description: () =>
+      t`Wet Snow classification performed in high Mountains areas as described in the documentation. The possible values are wet snow (110), and Dry snow or snow-free or patchy snow (125). The dataset is also masked with the following classes: radar Shadow, layover, or foreshortening (200), water (210), forest (220), urban areas (230), non-mountain areas (240) and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+        layerId: 'wsmqa',
+      },
+    ],
+    description: () => t`Quality layer providing basic assessment of the wet snow classification layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+        layerId: 'ssc',
+      },
+    ],
+    description: () =>
+      t`Snow State Classification (SSC) within the Sentinel-2 snow cover map derived from the CLMS FSC product - top-of canopy FSC layer (FSCTOC). It provides binary discrimination of wet (110) and dry (115) snow and identifies patchy snow or snow-free areas (120). The dataset has also the following classes: radar shadow, layover, foreshortening (200), shadow, and clouds and cloud shadow (205) from the aggregated FSCTOC layer, water (210), forest (220), urban areas (230), and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+        layerId: 'sscqa',
+      },
+    ],
+    description: () => t`Quality layer providing basic assessment of the wet snow state classification.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+        layerId: 'GF',
+      },
+    ],
+    description: () =>
+      t`Fraction of the surface covered by snow (ranging from 0% to 100%). The dataset has also the following classes: cloud or cloud shadow (205), inland water (210), and no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+        layerId: 'GFQA',
+      },
+    ],
+    description: () =>
+      t`Quality layer providing basic assessment of the snow fraction GF layer. For pixels with a QAFLAGS bit 7 value of 0, the data quality refers to the Sentinel-2 optical snow data quality. For pixels with a QAFLAGS bit 7 value of 1, the data quality refers to the Sentinel-1 SAR wet snow data quality.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+        layerId: 'QAFLAGS',
+      },
+    ],
+    description: () =>
+      t`Bitmask layer with pixel quality flags. The default visualisation displays the sensor type of the satellite data (optical=0, radar=1). These correspond to pixels where bit 7 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '1_SCD',
+      },
+    ],
+    description: () => t`Number of days of snow cover over the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '2_SCO',
+      },
+    ],
+    description: () =>
+      t`Snow cover onset date, expressed as the number of days from the beginning of the hydrological year (1st September = day 0). Note that SCO is not given when the snow cover duration SCD is less than 60 days.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '3_SCM',
+      },
+    ],
+    description: () =>
+      t`Snow cover melt out date, expressed as the number of days from the beginning of the hydrological year (1st September = day 0). Note that SCM is not given when the snow cover duration SCD is less than 60 days.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '4_NOBS',
+      },
+    ],
+    description: () =>
+      t`Number of days with clear sky observations used in the interpolation of the snow cover time series within the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '5_QAFLAGS',
+      },
+    ],
+    description: () =>
+      t`Bitmask layer with pixel quality flags. The default visualisation displays areas where the snow cover duration is less than 60 days. These correspond to pixels where bit 4 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '6_SCD-QA',
+      },
+    ],
+    description: () => t`Quality layer providing a basic assessment of the snow cover duration layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '7_SCO-QA',
+      },
+    ],
+    description: () =>
+      t`Number of days between the estimated snow onset date and the closest snow observation date.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: '8_SCM-QA',
+      },
+    ],
+    description: () =>
+      t`Number of days between the estimated snow melt out date and the closest snow observation date.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '1_SCD',
+      },
+    ],
+    description: () => t`Number of days of snow cover over the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '2_SCO',
+      },
+    ],
+    description: () =>
+      t`Snow cover onset date, expressed as the number of days from the beginning of the hydrological year (1st September = day 0). Note that SCO is not given when the snow cover duration SCD is less than 60 days.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '3_SCM',
+      },
+    ],
+    description: () =>
+      t`Snow cover melt out date, expressed as the number of days from the beginning of the hydrological year (1st September = day 0). Note that SCM is not given when the snow cover duration SCD is less than 60 days.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '4_NCSO',
+      },
+    ],
+    description: () =>
+      t`Number of days with clear sky observations used in the interpolation of the snow cover time series within the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '5_NWSO',
+      },
+    ],
+    description: () =>
+      t`Number of days with Sentinel-1-based wet snow observations used in the interpolation of the snow cover time series within the hydrological year (used where Sentinel-2-based observations have gaps).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '6_QAFLAGS',
+      },
+    ],
+    description: () =>
+      t`Bitmask layer with pixel quality flags. The default visualisation displays areas where the snow cover duration is less than 60 days. These correspond to pixels where bit 4 is activated. Additional information can also be visualised by selecting other bits. More details are available in the </> Custom option.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '7_SCD-QA',
+      },
+    ],
+    description: () => t`Quality layer providing a basic assessment of the snow cover duration layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '8_SCO-QA',
+      },
+    ],
+    description: () =>
+      t`Number of days between the estimated snow onset date and the closest snow observation date.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+        layerId: '9_SCM-QA',
+      },
+    ],
+    description: () =>
+      t`Number of days between the estimated snow melt out date and the closest snow observation date.`,
   },
 ];

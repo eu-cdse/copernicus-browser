@@ -8,7 +8,6 @@ import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/da
 import { BAND_UNIT } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { PROCESSING_OPTIONS, TABS } from '../const';
 import { ModalId } from '../const';
-import { rgbToHex } from '../junk/BandsToRGB/utils';
 import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
 import { encrypt } from './encrypt';
 
@@ -431,88 +430,6 @@ export function parseEvalscriptBands(evalscript) {
       .map((b) => b.replace('2.5*', ''));
   } catch (e) {
     return [];
-  }
-}
-
-export function parseIndexEvalscript(evalscript) {
-  try {
-    if (evalscript.startsWith('//VERSION=3')) {
-      const lines = evalscript.split('\n');
-
-      // App-generated index evalscripts always have a colorRamp with 0x hex values on line 1.
-      // Any other VERSION=3 evalscript (e.g. CLMS) must be rejected early.
-      if (!lines[1]?.includes('0x')) {
-        return null;
-      }
-
-      let equation = '';
-      let bands = lines[16]
-        .split('=')[1]
-        .split('/')
-        .map((item) => item.replace('(', '').replace(')', '').replace(' ', ''));
-
-      if (bands[0].indexOf('-') !== -1) {
-        equation = '(A-B)/(A+B)';
-        bands = bands[0].split('-').map((item) => item.replace('samples.', '').replace(';', ''));
-      } else {
-        equation = '(A/B)';
-        bands = bands.map((item) => item.replace('samples.', '').replace(';', ''));
-      }
-
-      bands = { a: bands[0], b: bands[1] };
-
-      if (!bands.a || !bands.b) {
-        return null;
-      }
-
-      // positions and coresponding color
-      let values = lines[1]
-        .split('=')[1]
-        .split(',')
-        .map((item) => item.replace(/\[/g, '').replace(/]/g, '').replace(' ', ''));
-
-      let colors = values.filter((item) => item.indexOf('0x') !== -1).map((item) => item.replace('0x', '#'));
-      let positions = values.filter((item) => item.indexOf('0x') === -1).map((item) => parseFloat(item));
-
-      if (colors.length === 0 || positions.length === 0) {
-        return null;
-      }
-
-      return {
-        bands: bands,
-        equation: equation,
-        positions: positions,
-        colors: colors,
-      };
-    } else {
-      const bands = evalscript
-        .split('\n')[0]
-        .replace('var index = ', '')
-        .replace(/[\W_]+/g, ',')
-        .split(',')
-        .filter((b) => b !== '')
-        .slice(0, 2);
-      const equation = evalscript
-        .split('\n')[0]
-        .replace('var index = ', '')
-        .split(bands[0])
-        .join('A')
-        .split(bands[1])
-        .join('B')
-        .replace(';', '');
-      const positions = JSON.parse(evalscript.split('\n')[3].slice(0, -1));
-      const colors = JSON.parse(evalscript.split('\n')[4]).map((rgb) =>
-        rgbToHex(rgb.map((c) => Math.ceil(255 * c))),
-      );
-      return {
-        bands: { a: bands[0], b: bands[1] },
-        equation: equation,
-        positions: positions,
-        colors: colors,
-      };
-    }
-  } catch (e) {
-    return null;
   }
 }
 

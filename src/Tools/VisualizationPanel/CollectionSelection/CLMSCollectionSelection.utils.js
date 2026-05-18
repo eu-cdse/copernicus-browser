@@ -64,9 +64,7 @@ import {
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
@@ -168,6 +166,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -517,6 +522,22 @@ export const CLMS_OPTIONS = [
     id: 'Bio-geophysical Parameters',
     options: [
       {
+        label: 'Auxiliary data',
+        id: 'Auxiliary data',
+        options: [
+          {
+            label: 'Cloud Mask',
+            id: 'Cloud Mask',
+            options: [
+              {
+                label: 'clms_wsi_cloud-classification_europe_utm_20m_daily_v1',
+                id: COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+              },
+            ],
+          },
+        ],
+      },
+      {
         label: 'Evapotranspiration',
         id: 'Evapotranspiration',
         options: [
@@ -536,16 +557,44 @@ export const CLMS_OPTIONS = [
             id: 'Snow Cover Extent',
             options: [
               {
+                label: 'clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2',
+                id: COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+              },
+              {
+                label: 'clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1',
+                id: COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+              },
+              {
                 label: 'clms_global_sce_500m_v1_daily_geotiff',
                 id: COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
               },
               { label: 'clms_nh_sce_1km_v1_daily_geotiff', id: COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1 },
               { label: 'sce_global_1km_daily_v1', id: COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1 },
+              {
+                label: 'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1',
+                id: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+              },
+              {
+                label: 'clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1',
+                id: COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+              },
             ],
           },
 
-          // { label: 'Snow State', id: 'Snow State 1' },
-          // { label: 'Snow State', id: 'Snow State 2' },
+          {
+            label: 'Snow State',
+            id: 'Snow State',
+            options: [
+              {
+                label: 'clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2',
+                id: COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+              },
+              {
+                label: 'clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2',
+                id: COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+              },
+            ],
+          },
           {
             label: 'Snow Water Equivalent',
             id: 'Snow Water Equivalent',
@@ -903,16 +952,8 @@ export const CLMS_OPTIONS = [
                 id: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
               },
               {
-                label: 'ndvi_global_1km_10daily_v2',
-                id: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
-              },
-              {
                 label: 'ndvi_global_1km_10daily_v3',
                 id: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
-              },
-              {
-                label: 'ndvi_global_lst_1km_v2',
-                id: COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
               },
               {
                 label: 'ndvi_global_lst_1km_v3',

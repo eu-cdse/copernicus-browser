@@ -6,6 +6,9 @@ import '../EOBPanel.scss';
 import PixelExplorer from '../../Controls/PixelExplorer/PixelExplorer';
 import SpectralExplorerButton from '../../Controls/SpectralExplorer/SpectralExplorerButton';
 import { connect } from 'react-redux';
+import { modalSlice } from '../../store';
+import { ModalId, DATASOURCES } from '../../const';
+import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 function EOBPOIPanelButton(props) {
   const errMsg = props.disabled ? getLoggedInErrorMsg() : null;
@@ -68,6 +71,22 @@ function EOBPOIPanelButton(props) {
           geometryType="poi"
         />
       )}
+      {getDataSourceHandler(props.datasetId)?.datasource === DATASOURCES.CLMS_VECTOR && (
+        /* eslint-disable-next-line */
+        <a
+          title={t`Show feature info`}
+          onClick={(e) => {
+            e.stopPropagation();
+            props.openFeatureInfo({
+              datasetId: props.datasetId,
+              lat: props.poiPosition.lat,
+              lng: props.poiPosition.lng,
+            });
+          }}
+        >
+          <i className="fa fa-info-circle" />
+        </a>
+      )}
     </span>
   );
 
@@ -84,6 +103,12 @@ function EOBPOIPanelButton(props) {
 const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   poiGeometry: store.poi.geometry,
+  poiPosition: store.poi.position,
 });
 
-export default connect(mapStoreToProps)(EOBPOIPanelButton);
+const mapDispatchToProps = (dispatch) => ({
+  openFeatureInfo: (params) =>
+    dispatch(modalSlice.actions.addModal({ modal: ModalId.CLMS_VECTOR_FEATURE_INFO, params })),
+});
+
+export default connect(mapStoreToProps, mapDispatchToProps)(EOBPOIPanelButton);

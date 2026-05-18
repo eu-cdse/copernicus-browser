@@ -60,9 +60,7 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
@@ -173,6 +171,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 
@@ -579,19 +584,7 @@ export const credits = {
       link: 'https://land.copernicus.eu/en',
     },
   ],
-  [COPERNICUS_CLMS_NDVI_1KM_STATS_V2]: [
-    {
-      ...copernicus,
-      link: 'https://land.copernicus.eu/en',
-    },
-  ],
   [COPERNICUS_CLMS_NDVI_1KM_STATS_V3]: [
-    {
-      ...copernicus,
-      link: 'https://land.copernicus.eu/en',
-    },
-  ],
-  [COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',
@@ -1235,6 +1228,48 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

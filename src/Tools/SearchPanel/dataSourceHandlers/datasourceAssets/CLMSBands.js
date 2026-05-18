@@ -527,32 +527,6 @@ export const COPERNICUS_CLMS_LST_5KM_10DAILY_V2_BANDS = [
     getDescription: () => ``,
   },
 ];
-export const COPERNICUS_CLMS_NDVI_1KM_STATS_V2_BANDS = [
-  {
-    name: 'NDVI_MAX_LTS',
-    getDescription: () => ``,
-  },
-  {
-    name: 'NDVI_MEAN_LTS',
-    getDescription: () => ``,
-  },
-  {
-    name: 'NDVI_MEDIAN_LTS',
-    getDescription: () => ``,
-  },
-  {
-    name: 'NDVI_MIN_LTS',
-    getDescription: () => ``,
-  },
-  {
-    name: 'NDVI_NOBS_LTS',
-    getDescription: () => ``,
-  },
-  {
-    name: 'NDVI_STDEV_LTS',
-    getDescription: () => ``,
-  },
-];
 export const COPERNICUS_CLMS_NDVI_1KM_STATS_V3_BANDS = [
   {
     name: 'NDVI_MAX_LTS',
@@ -576,16 +550,6 @@ export const COPERNICUS_CLMS_NDVI_1KM_STATS_V3_BANDS = [
   },
   {
     name: 'NDVI_STDEV_LTS',
-    getDescription: () => ``,
-  },
-];
-export const COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2_BANDS = [
-  {
-    name: 'NDVI',
-    getDescription: () => ``,
-  },
-  {
-    name: 'TIMEGRID',
     getDescription: () => ``,
   },
 ];
@@ -2536,6 +2500,156 @@ export const COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_BANDS = [
 export const COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_BANDS = [
   {
     name: 'CPSCE',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1_BANDS = [
+  {
+    name: 'CC',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CC_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QAFLAGS',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2_BANDS = [
+  {
+    name: 'FSCOG',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FSCOG_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FSCTOC',
+    getDescription: () => ``,
+  },
+  {
+    name: 'FSCTOC_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QAFLAGS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CLD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NDSI',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS = [
+  {
+    name: 'WSM',
+    getDescription: () => ``,
+  },
+  {
+    name: 'WSM_QA',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS = [
+  {
+    name: 'SSC',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SSC_QA',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1_BANDS = [
+  {
+    name: 'GF',
+    getDescription: () => ``,
+  },
+  {
+    name: 'GF_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QAFLAGS',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1_BANDS = [
+  {
+    name: 'SCD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCO',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCM',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NOBS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QAFLAGS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCD_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCO_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCM_QA',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1_BANDS = [
+  {
+    name: 'SCD',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCO',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCM',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NCSO',
+    getDescription: () => ``,
+  },
+  {
+    name: 'NWSO',
+    getDescription: () => ``,
+  },
+  {
+    name: 'QAFLAGS',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCD_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCO_QA',
+    getDescription: () => ``,
+  },
+  {
+    name: 'SCM_QA',
     getDescription: () => ``,
   },
 ];

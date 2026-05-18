@@ -321,40 +321,6 @@
         ],
         "datasets": []
     },
-    "0ec96e-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] ndvi-lts_global_1km_10daily_v2",
-        "layers": [
-            {
-                "id": "NDVI_MAX_LTS",
-                "name": "MAX NDVI",
-                "description": "Maximum of the physical NDVI values",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0ec96e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MAX_LTS&style=default"
-            },
-            {
-                "id": "NDVI_MEAN_LTS",
-                "name": "MEAN NDVI",
-                "description": "Mean of the physical NDVI values",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0ec96e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MEAN_LTS&style=default"
-            },
-            {
-                "id": "NDVI_MEDIAN_LTS",
-                "name": "MEDIAN NDVI",
-                "description": "Median of the physical NDVI values",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0ec96e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MEDIAN_LTS&style=default"
-            },
-            {
-                "id": "NDVI_MIN_LTS",
-                "name": "MIN NDVI",
-                "description": "Minimum of the physical NDVI values",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0ec96e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MIN_LTS&style=default"
-            }
-        ],
-        "datasets": []
-    },
     "0f84d9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lai_global_300m_10daily_v1_RT0",
         "layers": [
@@ -1905,6 +1871,33 @@
         ],
         "datasets": []
     },
+    "3d2bd5-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_cloud-classification_europe_utm_20m_daily_v1",
+        "layers": [
+            {
+                "id": "CC",
+                "name": "CC",
+                "description": "Cloud and cloud shadow classification of the Sentinel-2 image",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3d2bd5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CC&style=default"
+            },
+            {
+                "id": "CC-QA",
+                "name": "CC-QA",
+                "description": "Quality layer for the cloud and cloud shadow classification (CC) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3d2bd5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=CC-QA&style=default"
+            },
+            {
+                "id": "QAFLAGS",
+                "name": "QAFLAGS",
+                "description": "Quality flags",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "3d4b9f-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fapar_global_300m_10daily_v1_RT6",
         "layers": [
@@ -3271,19 +3264,6 @@
                 "description": "Classification of grassland mowing dates",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61143e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland+Mowing+Dates+4th+event&style=default"
-            }
-        ],
-        "datasets": []
-    },
-    "61e911-YOUR-INSTANCEID-HERE": {
-        "title": "[NEW] ndvi_global_1km_10daily_v2",
-        "layers": [
-            {
-                "id": "NDVI",
-                "name": "NDVI",
-                "description": "Normalized Difference Vegetation Index",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/61e911-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
             }
         ],
         "datasets": []
@@ -4801,6 +4781,61 @@
         ],
         "datasets": []
     },
+    "875be0-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2",
+        "layers": [
+            {
+                "id": "1_FSCOG",
+                "name": "FSC OG",
+                "description": "Snow fraction on-ground (%)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/875be0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=1_FSCOG&style=default"
+            },
+            {
+                "id": "2_FSCOGQA",
+                "name": "FSC OG-QA",
+                "description": "Quality layer for the on-ground snow fraction (FSC OG) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/875be0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=2_FSCOGQA&style=default"
+            },
+            {
+                "id": "3_FSCTOC",
+                "name": "FSC TOC",
+                "description": "Snow fraction on top of canopy (%)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/875be0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=3_FSCTOC&style=default"
+            },
+            {
+                "id": "4_FSCTOCQA",
+                "name": "FSC TOC-QA",
+                "description": "Quality layer for the Top-of-canopy snow fraction (FSC TOC) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/875be0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4_FSCTOCQA&style=default"
+            },
+            {
+                "id": "5_QAFLAGS",
+                "name": "QAFLAGS",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "6_CLD",
+                "name": "CLD",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "7_NDSI",
+                "name": "NDSI",
+                "description": "Normalised Difference Snow Index (%) of detected snow areas",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/875be0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=7_NDSI&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "8823df-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | GRA 10m Yearly (2017-present)",
         "layers": [
@@ -5094,6 +5129,33 @@
         ],
         "datasets": []
     },
+    "91b09f-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1",
+        "layers": [
+            {
+                "id": "GF",
+                "name": "GF",
+                "description": "Snow fraction (%)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/91b09f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GF&style=default"
+            },
+            {
+                "id": "GFQA",
+                "name": "GF-QA",
+                "description": "Quality layer for the snow fraction (GF) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/91b09f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GFQA&style=default"
+            },
+            {
+                "id": "QAFLAGS",
+                "name": "QAFLAGS",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "91d827-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Urban (S3-SLSTR) API",
         "layers": [
@@ -5130,6 +5192,75 @@
                 ]
             }
         ]
+    },
+    "943cee-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1",
+        "layers": [
+            {
+                "id": "1_SCD",
+                "name": "SCD",
+                "description": "Snow cover duration (in days)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=1_SCD&style=default"
+            },
+            {
+                "id": "2_SCO",
+                "name": "SCO",
+                "description": "Snow cover onset date defined as the first day of the longest snow cover period",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=2_SCO&style=default"
+            },
+            {
+                "id": "3_SCM",
+                "name": "SCM",
+                "description": "Snow cover melt out date defined as the last day of the longest snow cover period",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=3_SCM&style=default"
+            },
+            {
+                "id": "4_NCSO",
+                "name": "NCSO",
+                "description": "Number of days with clear sky observations within the hydrological year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4_NCSO&style=default"
+            },
+            {
+                "id": "5_NWSO",
+                "name": "NWSO",
+                "description": "Number of days with Sentinel-1-based wet snow observations within the hydrological year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=5_NWSO&style=default"
+            },
+            {
+                "id": "6_QAFLAGS",
+                "name": "QAFLAGS",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "7_SCD-QA",
+                "name": "SCD-QA",
+                "description": "Quality layer for the snow cover duration (SCD) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=7_SCD-QA&style=default"
+            },
+            {
+                "id": "8_SCO-QA",
+                "name": "SCO-QA",
+                "description": "Quality layer for the snow cover onset date (SCO) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=8_SCO-QA&style=default"
+            },
+            {
+                "id": "9_SCM-QA",
+                "name": "SCM-QA",
+                "description": "Quality layer for the snow cover melt out date (SCM) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/943cee-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=9_SCM-QA&style=default"
+            }
+        ],
+        "datasets": []
     },
     "96ac73-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-1-EW_VV",
@@ -5409,6 +5540,26 @@
         ],
         "datasets": []
     },
+    "9decad-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2",
+        "layers": [
+            {
+                "id": "wsm",
+                "name": "WSM",
+                "description": "Wet Snow classification in high Mountains areas",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9decad-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=wsm&style=default"
+            },
+            {
+                "id": "wsmqa",
+                "name": "WSM-QA",
+                "description": "Quality layer for the wet snow classification (WSM) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/9decad-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=wsmqa&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "9e5254-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fcover_global_1km_10daily_v2_RT1",
         "layers": [
@@ -5614,6 +5765,68 @@
                 ]
             }
         ]
+    },
+    "a574ce-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1",
+        "layers": [
+            {
+                "id": "1_SCD",
+                "name": "SCD",
+                "description": "Snow cover duration (in days)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=1_SCD&style=default"
+            },
+            {
+                "id": "2_SCO",
+                "name": "SCO",
+                "description": "Snow cover onset date defined as the first day of the longest snow cover period",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=2_SCO&style=default"
+            },
+            {
+                "id": "3_SCM",
+                "name": "SCM",
+                "description": "Snow cover melt out date defined as the last day of the longest snow cover period",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=3_SCM&style=default"
+            },
+            {
+                "id": "4_NOBS",
+                "name": "NOBS",
+                "description": "Number of days with clear sky observations within the hydrological year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=4_NOBS&style=default"
+            },
+            {
+                "id": "5_QAFLAGS",
+                "name": "QAFLAGS",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "6_SCD-QA",
+                "name": "SCD-QA",
+                "description": "Quality layer for the snow cover duration (SCD) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=6_SCD-QA&style=default"
+            },
+            {
+                "id": "7_SCO-QA",
+                "name": "SCO-QA",
+                "description": "Quality layer for the snow cover onset date (SCO) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=7_SCO-QA&style=default"
+            },
+            {
+                "id": "8_SCM-QA",
+                "name": "SCM-QA",
+                "description": "Quality layer for the snow cover melt out date (SCM) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/a574ce-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=8_SCM-QA&style=default"
+            }
+        ],
+        "datasets": []
     },
     "a6c316-YOUR-INSTANCEID-HERE": {
         "title": "[NEW]  CLMS | LSWT Offline 1km 10-Daily V1",
@@ -6255,6 +6468,26 @@
                 "description": "Confidence of tree cover change",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b8b497-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Tree+Cover+Presence+Change+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "b8e848-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2",
+        "layers": [
+            {
+                "id": "ssc",
+                "name": "SSC",
+                "description": "Snow State Classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b8e848-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=ssc&style=default"
+            },
+            {
+                "id": "sscqa",
+                "name": "SSC-QA",
+                "description": "Quality layer for the snow state classification (SSC) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/b8e848-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=sscqa&style=default"
             }
         ],
         "datasets": []

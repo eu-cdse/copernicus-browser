@@ -102,9 +102,7 @@ import {
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT6,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
-  COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   COPERNICUS_CLMS_SSM_1KM_DAILY_V1,
@@ -211,6 +209,13 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -320,9 +325,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'lst-tci_global_5km_10daily_v1': COPERNICUS_CLMS_LST_5KM_10DAILY_V1,
   'lst-tci_global_5km_10daily_v2': COPERNICUS_CLMS_LST_5KM_10DAILY_V2,
   'lst-tci_global_3km_10daily_v3': COPERNICUS_CLMS_LST_TCI_GLOBAL_3KM_10DAILY_V3,
-  'ndvi-lts_global_1km_10daily_v2': COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
   'ndvi-lts_global_1km_10daily_v3': COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-  ndvi_global_1km_10daily_v2: COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
   ndvi_global_300m_10daily_v1: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
   ndvi_global_300m_10daily_v2: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
   ndvi_global_300m_10daily_v3: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,
@@ -434,6 +437,18 @@ const PRODUCT_TYPE_TO_DATASETID = {
     COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
   [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCDCL]:
     COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+  'clms_wsi_cloud-classification_europe_utm_20m_daily_v1':
+    COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1,
+  'clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2':
+    COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+  'clms_wsi_sar-wet-snow_europe_utm_60m_daily_v2': COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  'clms_wsi_wet-dry-snow_europe_utm_60m_daily_v2': COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+  'clms_wsi_gap-filled-fractional-snow-cover_europe_utm_60m_daily_v1':
+    COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+  'clms_wsi_snow-phenology-s2_europe_utm_20m_yearly_v1':
+    COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+  'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1':
+    COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
 };
 
 const VLCC_MULTI_LAYER_ODATA_CONFIG = {
@@ -621,8 +636,11 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       'water_bodies',
       'snow_water_equivalent',
       'snow_cover_extent',
+      'fractional_snow_cover',
+      'snow_state',
       'lake_water_quality',
       'river_and_lake_ice_extent',
+      'auxiliary_data',
     ].includes(productType)
   ) {
     const { datasetIdentifier } = attributesObject;
@@ -1304,6 +1322,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     ];
   }
 
+  if ([COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'AUXILIARY_DATA',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
   if (
     [
       COPERNICUS_CLMS_LCC_100M_YEARLY_V3,
@@ -1434,12 +1463,32 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       COPERNICUS_CLMS_SCE_NH_1KM_DAILY_V1,
       COPERNICUS_CLMS_SCE_EUROPE_500M_DAILY_V1,
       COPERNICUS_CLMS_SCE_GLOBAL_1KM_DAILY_V1,
+      COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2,
+      COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
+      COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
+      COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
     ].includes(datasetId)
   ) {
     return [
       {
         id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
         instrument: 'SNOW_COVER_EXTENT',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if (
+    [
+      COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2,
+      COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2,
+    ].includes(datasetId)
+  ) {
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'SNOW_STATE',
         productType: getProductTypeFromDatasetId(datasetId),
         selectedFilters: {},
       },
@@ -1478,9 +1527,7 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
   if (
     [
       COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
-      COPERNICUS_CLMS_NDVI_1KM_STATS_V2,
       COPERNICUS_CLMS_NDVI_1KM_STATS_V3,
-      COPERNICUS_CLMS_NDVI_1KM_10DAILY_V2,
       COPERNICUS_CLMS_NDVI_300M_10DAILY_V1,
       COPERNICUS_CLMS_NDVI_300M_10DAILY_V2,
       COPERNICUS_CLMS_NDVI_300M_10DAILY_V3,

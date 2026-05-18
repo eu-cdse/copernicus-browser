@@ -34,6 +34,7 @@ export const ModalId = {
   SPECTRAL_EXPLORER: 'SpectralExplorer',
   BROWSE_PRODUCT: 'BrowseProduct',
   RRD_PRODUCT_DETAILS: 'RRDProductDetails',
+  CLMS_VECTOR_FEATURE_INFO: 'CLMSVectorFeatureInfo',
 } as const;
 
 // --- Themes & modes ---
