@@ -172,6 +172,26 @@
         ],
         "datasets": []
     },
+    "097656-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2020)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2020",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/097656-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2020&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/097656-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "0a7763-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1",
         "layers": [
@@ -308,6 +328,19 @@
             }
         ]
     },
+    "0e1196-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_broadleaved-cover-density_europe_100m_yearly_v1",
+        "layers": [
+            {
+                "id": "Broadleaved Cover Density",
+                "name": "Broadleaved Cover Density",
+                "description": "Broadleaved cover density (100 m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0e1196-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Broadleaved+Cover+Density&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "0e9c96-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | gpp_global_300m_10daily_v2_RT6",
         "layers": [
@@ -317,6 +350,19 @@
                 "description": "Gross Primary Production value",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0e9c96-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "0f72be-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_tree-cover-density_europe_100m_yearly_v1",
+        "layers": [
+            {
+                "id": "tree_cover_density",
+                "name": "Tree Cover Density",
+                "description": "Tree cover density (100 m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/0f72be-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=tree_cover_density&style=default"
             }
         ],
         "datasets": []
@@ -884,6 +930,26 @@
         ],
         "datasets": []
     },
+    "218710-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2018)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2018",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/218710-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2018&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/218710-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "22a786-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | clms_vlcc_secondary-crop-types_europe_10m_yearly_v1",
         "layers": [
@@ -1329,6 +1395,26 @@
                 "description": "Gross Dry Matter Productivity",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2d2b27-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GDMP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "2f12aa-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2021)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2021",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2f12aa-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2021&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/2f12aa-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -1844,6 +1930,26 @@
         ],
         "datasets": []
     },
+    "3c17cc-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2017)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2017",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c17cc-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2017&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c17cc-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "3c94a9-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | lst-tci_global_3km_10daily_v3",
         "layers": [
@@ -1867,6 +1973,19 @@
                 "description": "Thermal Condition Index for the compositing period.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3c94a9-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST+TCI&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "3cea8f-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_grassland_europe_100m_yearly_v1",
+        "layers": [
+            {
+                "id": "Grassland",
+                "name": "Grassland",
+                "description": "Grassland presence and percentage coverage",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3cea8f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Grassland&style=default"
             }
         ],
         "datasets": []
@@ -2700,6 +2819,26 @@
         ],
         "datasets": []
     },
+    "45367d-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2023)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2023",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/45367d-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2023&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/45367d-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "4578b2-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] fcover_global_1km_10daily_v2",
         "layers": [
@@ -2882,6 +3021,26 @@
             }
         ]
     },
+    "4bbac8-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2022)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2022",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/4bbac8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2022&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/4bbac8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "4d1f63-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] lst_global_5km_hourly_v2",
         "layers": [
@@ -3042,6 +3201,26 @@
                 "description": "Confidence of dominant leaf type",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/533111-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Dominant+Leaf+Type+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "539690-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2020)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2020",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/539690-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2020&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/539690-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
             }
         ],
         "datasets": []
@@ -4781,6 +4960,19 @@
         ],
         "datasets": []
     },
+    "86e613-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_forest-type_europe_100m_3yearly_v1",
+        "layers": [
+            {
+                "id": "forest_type_over_3years",
+                "name": "Forest Type over 3-years",
+                "description": "Forest Type over 3 years (100m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/86e613-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=forest_type_over_3years&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "875be0-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | clms_wsi_fractional-snow-cover_europe_utm_20m_daily_v2",
         "layers": [
@@ -6033,6 +6225,26 @@
         ],
         "datasets": []
     },
+    "ae22b8-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2019)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2019",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ae22b8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2019&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ae22b8-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "af6744-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | ba_global_300m_daily_v4",
         "layers": [
@@ -6749,6 +6961,26 @@
         ],
         "datasets": []
     },
+    "c611ba-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2021)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2021",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c611ba-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2021&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/c611ba-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "c6d700-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | CPFLD 10m Yearly (2017-2021)",
         "layers": [
@@ -7068,6 +7300,26 @@
         ],
         "datasets": []
     },
+    "d11800-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2017)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2017",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/d11800-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2017&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/d11800-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "d24515-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | gdmp_global_300m_10daily_v2_RT1",
         "layers": [
@@ -7110,6 +7362,26 @@
                 ]
             }
         ]
+    },
+    "d63bf3-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2023)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2023",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/d63bf3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2023&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/d63bf3-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
     },
     "d7cc04-YOUR-INSTANCEID-HERE": {
         "title": "Copernicus Geology (S2L2A) API",
@@ -8541,6 +8813,66 @@
                 "description": "Fraction of Absorbed PAR",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/f6ff91-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=FAPAR&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "faea48-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2018)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2018",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/faea48-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2018&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/faea48-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "fb90a6-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCH 10m Yearly (2019)",
+        "layers": [
+            {
+                "id": "Main Crop Harvest - 2019",
+                "name": "Main Crop Harvest",
+                "description": "Main crop harvest date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fb90a6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+-+2019&style=default"
+            },
+            {
+                "id": "Main Crop Harvest Confidence Layer",
+                "name": "Main Crop Harvest Confidence Layer",
+                "description": "Confidence of main crop harvest",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fb90a6-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Harvest+Confidence+Layer&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "fbcb8e-YOUR-INSTANCEID-HERE": {
+        "title": "CLMS | CPMCE 10m Yearly (2022)",
+        "layers": [
+            {
+                "id": "Main Crop Emergence - 2022",
+                "name": "Main Crop Emergence",
+                "description": "Main crop emergence date",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fbcb8e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+-+2022&style=default"
+            },
+            {
+                "id": "Main Crop Emergence Confidence Layer",
+                "name": "Main Crop Emergence Confidence Layer",
+                "description": "Confidence of main crop emergence",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fbcb8e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Main+Crop+Emergence+Confidence+Layer&style=default"
             }
         ],
         "datasets": []

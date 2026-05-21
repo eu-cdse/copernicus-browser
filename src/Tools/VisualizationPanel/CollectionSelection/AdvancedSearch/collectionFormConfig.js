@@ -49,6 +49,12 @@ import {
   COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS,
 } from '../../../SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 export const collections = [
@@ -113,6 +119,7 @@ export const collections = [
         supportsInstrumentName: false,
         productTypes: [
           { id: 'AUX_CAL', name: 'AUX_CAL', label: 'AUX_CAL', supportsGeometry: false },
+          { id: 'AUX_INS', name: 'AUX_INS', label: 'AUX_INS', supportsGeometry: false },
           { id: 'AUX_ML2', name: 'AUX_ML2', label: 'AUX_ML2', supportsGeometry: false },
           { id: 'AUX_PP1', name: 'AUX_PP1', label: 'AUX_PP1', supportsGeometry: false },
           { id: 'AUX_PP2', name: 'AUX_PP2', label: 'AUX_PP2', supportsGeometry: false },
@@ -1500,945 +1507,6 @@ export const collectionsComplementaryData = [
 
 export const recursiveCollectionCLMS = [
   {
-    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
-    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.label,
-    type: 'collection',
-    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.collection,
-    supportsGeometry: false,
-    supportsCloudCover: false,
-    items: [
-      {
-        id: 'URBAN_ATLAS',
-        label: 'Urban Atlas',
-        type: 'instrument',
-        supportsCloudCover: false,
-        customFilterExpression: `(${FilterElement.Attribute(
-          ODataAttributes.productType,
-          ODataFilterOperator.eq,
-          'urban_atlas',
-        )})`,
-        items: [
-          {
-            id: 'BUILDING_HEIGHT',
-            label: 'Building Height',
-            type: 'group',
-            items: [
-              {
-                id: 'clms_ua_building-height_europe_10m_3yearly_v1',
-                label: 'Building Height, Europe, 10m, 3-yearly, 2021, V1',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'clms_ua_building-height_europe_10m_3yearly_v1',
-                )})`,
-              },
-            ],
-          },
-          {
-            id: 'LAND_COVER_LAND_USE',
-            label: 'Land Cover and Land Use',
-            type: 'group',
-            items: [
-              {
-                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018',
-                label: 'Land Cover and Land Use, 3-yearly, 2018',
-                type: 'productType',
-                multiCustomFilterExpression: [
-                  `(${FilterElement.Attribute(
-                    ODataAttributes.datasetIdentifier,
-                    ODataFilterOperator.eq,
-                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
-                  )})`,
-                  `(${FilterElement.Attribute(
-                    ODataAttributes.nominalDate,
-                    ODataFilterOperator.eq,
-                    '2018-01-01T00:00:00.000000Z',
-                  )})`,
-                ],
-              },
-              {
-                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021',
-                label: 'Land Cover and Land Use, 3-yearly, 2021',
-                type: 'productType',
-                multiCustomFilterExpression: [
-                  `(${FilterElement.Attribute(
-                    ODataAttributes.datasetIdentifier,
-                    ODataFilterOperator.eq,
-                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
-                  )})`,
-                  `(${FilterElement.Attribute(
-                    ODataAttributes.nominalDate,
-                    ODataFilterOperator.eq,
-                    '2021-01-01T00:00:00.000000Z',
-                  )})`,
-                ],
-              },
-            ],
-          },
-          {
-            id: 'LAND_COVER_LAND_USE_CHANGE',
-            label: 'Land Cover and Land Use Change',
-            type: 'group',
-            items: [
-              {
-                id: 'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
-                label: 'Land Cover and Land Use Change, 3-yearly, 2018-2021',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
-                )})`,
-              },
-            ],
-          },
-          {
-            id: 'STREET_TREE_LAYER',
-            label: 'Street Tree Layer',
-            type: 'group',
-            items: [
-              {
-                id: 'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
-                label: 'Street Tree Layer, 3-yearly, 2021',
-                type: 'productType',
-                customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
-                  ODataFilterOperator.eq,
-                  'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
-                )})`,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
-    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.label,
-    type: 'collection',
-    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.collection,
-    supportsGeometry: false,
-    supportsCloudCover: false,
-    items: [
-      {
-        id: 'CROPLANDS',
-        label: 'Croplands',
-        type: 'group',
-        items: [
-          {
-            id: 'CROPPING_PATTERNS',
-            label: 'Cropping Patterns',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'cropping_patterns',
-            )})`,
-            items: [
-              {
-                id: 'BARE_SOIL_AFTER',
-                label: 'Bare Soil After',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSA,
-                    label: 'BSA, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSA,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSACL,
-                    label: 'BSA Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSACL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'BARE_SOIL_BEFORE',
-                label: 'Bare Soil Before',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSB,
-                    label: 'BSB, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSB,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSBCL,
-                    label: 'BSB Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSBCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'CROPPING_SEASONS',
-                label: 'Cropping Seasons',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
-                    label: 'CPCSY, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'CROPPING_SEASONS_TYPES',
-                label: 'Cropping Seasons Types',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
-                    label: 'CPCST, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'FALLOW_LAND_DURATION',
-                label: 'Fallow Land Duration',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLD,
-                    label: 'FLD, Europe, 10m, Yearly, (2021–2023), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLD,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLDCL,
-                    label: 'FLD Confidence Layer, Europe, 10m, Yearly, (2021–2023), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLDCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'FALLOW_LAND_PRESENCE',
-                label: 'Fallow Land Presence',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP,
-                    label: 'FLP, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL,
-                    label: 'FLP Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'MAIN_CROP_DURATION',
-                label: 'Main Crop Duration',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
-                    label: 'CPMCD, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
-                    label: 'CPMCD Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'SECONDARY_CROP_DURATION',
-                label: 'Secondary Crop Duration',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCD,
-                    label: 'CPSCD, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCD,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCDCL,
-                    label: 'CPSCD Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCDCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'SECONDARY_CROP_EMERGENCE',
-                label: 'Secondary Crop Emergence',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
-                    label: 'SCE, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'SECONDARY_CROP_TYPES',
-                label: 'Secondary Crop Types',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
-                    label: 'CPSCT, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'CROP_TYPES',
-            label: 'Crop Types',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'crop_types',
-            )})`,
-            items: [
-              {
-                id: 'CROP_TYPES_GROUP',
-                label: 'Crop Types',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
-                    label: 'CTY, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
-                    label: 'CTY Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'DYNAMIC_LAND_COVER',
-        label: 'Dynamic Land Cover',
-        type: 'instrument',
-        supportsCloudCover: false,
-        customFilterExpression: `(${FilterElement.Attribute(
-          ODataAttributes.productType,
-          ODataFilterOperator.eq,
-          'dynamic_land_cover',
-        )})`,
-        items: [
-          {
-            id: 'lc_global_100m_yearly_v3',
-            label: 'Global, Yearly, 100m, (2015–2019), V3',
-            type: 'productType',
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.datasetIdentifier,
-              ODataFilterOperator.eq,
-              'lc_global_100m_yearly_v3',
-            )})`,
-          },
-          {
-            id: 'lcm_global_10m_yearly_v1',
-            label: 'LCM Global, Yearly, 10m, 2020, V1',
-            type: 'productType',
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.datasetIdentifier,
-              ODataFilterOperator.eq,
-              'lcm_global_10m_yearly_v1',
-            )})`,
-          },
-          {
-            id: 'tcd_pantropical_10m_yearly_v1',
-            label: 'TCD Pan-tropical, Yearly, 10m, 2020, V1',
-            type: 'productType',
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.datasetIdentifier,
-              ODataFilterOperator.eq,
-              'tcd_pantropical_10m_yearly_v1',
-            )})`,
-          },
-        ],
-      },
-      {
-        id: 'GRASSLANDS',
-        label: 'Grasslands',
-        type: 'group',
-        items: [
-          {
-            id: 'GRASSLAND_AND_HERBACEOUS',
-            label: 'Grassland and Herbaceous',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'grassland_and_herbaceous',
-            )})`,
-            items: [
-              {
-                id: 'GRASSLAND',
-                label: 'Grassland',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
-                    label: 'GRA, Europe, 10m, yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
-                    label: 'GRA Confidence Layer, Europe, 10m, yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'GRASSLAND_CHANGE',
-                label: 'Grassland Change',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
-                    label: 'GRAC, Europe, 20m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
-                    label: 'GRAC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'PLOUGHING_INDICATOR',
-                label: 'Ploughing Indicator',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIER,
-                    label: 'PLOUGH, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIER,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'HERBACEOUS_COVER',
-                label: 'Herbaceous Cover',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
-                    label: 'HER, Europe, 10m, yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'GRASSLAND_MOWING_EVENTS',
-            label: 'Grassland Mowing Events',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'grassland_mowing_events',
-            )})`,
-            items: [
-              {
-                id: 'GRASSLAND_MOWING_DATES',
-                label: 'Grassland Mowing Dates',
-                type: 'group',
-                items: [
-                  {
-                    id: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
-                    label: 'GRAMD, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'GRASSLAND_MOWING_EVENTS_GROUP',
-                label: 'Grassland Mowing Events',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAME,
-                    label: 'GRAME, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAME,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAMECL,
-                    label: 'GRAME Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAMECL,
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'TREE_COVER_AND_FORESTS',
-        label: 'Tree Cover and Forests',
-        type: 'group',
-        items: [
-          {
-            id: 'DOMINANT_LEAF_TYPE',
-            label: 'Dominant Leaf Type',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'dominant_leaf_type',
-            )})`,
-            items: [
-              {
-                id: 'DOMINANT_LEAF_TYPE_GROUP',
-                label: 'Dominant Leaf Type',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT,
-                    label: 'DLT, Europe, 10m, Yearly, (2018–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL,
-                    label: 'DLT Confidence Layer, Europe, 10m, Yearly, (2018–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'DOMINANT_LEAF_TYPE_CHANGE',
-                label: 'Dominant Leaf Type Change',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    label: 'Dominant Leaf Type Change, Europe, 20m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'FOREST_TYPE',
-            label: 'Forest Type',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'forest_type',
-            )})`,
-            items: [
-              {
-                id: 'FOREST_TYPE_GROUP',
-                label: 'Forest Type',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    label: 'FTY, Europe, 10m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'FOREST_ADDITIONAL_SUPPORT_LAYER_GROUP',
-                label: 'Forest Additional Support Layer',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    label: 'FADSL, Europe, 10m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'TREE_COVER_DENSITY',
-            label: 'Tree Cover Density',
-            type: 'instrument',
-            supportsCloudCover: false,
-            customFilterExpression: `(${FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'tree_cover_density',
-            )})`,
-            items: [
-              {
-                id: 'TREE_COVER_DENSITY_PRODUCT',
-                label: 'Tree Cover Density',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
-                    label: 'TCD, Europe, 10m, yearly, (2018–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
-                    label: 'TCD Confidence Layer, Europe, 10m, yearly, (2018–present), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
-                    )})`,
-                  },
-                ],
-              },
-              {
-                id: 'TREE_COVER_PRESENCE_CHANGE',
-                label: 'Tree Cover Presence Change',
-                type: 'group',
-                items: [
-                  {
-                    id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
-                    label: 'TCPC, Europe, 20m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
-                    )})`,
-                  },
-                  {
-                    id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
-                    label: 'TCPC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
-                    type: 'productType',
-                    customFilterExpression: `(${FilterElement.Attribute(
-                      ODataAttributes.datasetIdentifier,
-                      ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
-                    )})`,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    additionalFilters: [
-      {
-        id: AttributeNames.fileFormat,
-        render: MultiSelectInput,
-        getOptions: () => [
-          { value: 'nc', label: 'NetCDF' },
-          { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
-        ],
-      },
-      {
-        id: AttributeNames.consolidationPeriod,
-        title: FormatedAttributeNames.consolidationPeriod(),
-        render: MultiSelectInput,
-        getOptions: () => [
-          AttributeConsolidationPeriodValues.RT0,
-          AttributeConsolidationPeriodValues.RT1,
-          AttributeConsolidationPeriodValues.RT2,
-          AttributeConsolidationPeriodValues.RT5,
-          AttributeConsolidationPeriodValues.RT6,
-        ],
-      },
-      {
-        id: AttributeNames.datasetIdentifier,
-        render: DefaultInput,
-        type: 'text',
-        placeholder: FormatedAttributeNames.datasetIdentifier(),
-      },
-      {
-        id: AttributeNames.productType,
-        render: DefaultInput,
-        type: 'text',
-        placeholder: FormatedAttributeNames.productType(),
-      },
-    ],
-  },
-  // {
-  //   id: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.id,
-  //   label: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.label,
-  //   type: 'collection',
-  //   collectionName: ODataCollections.CLMS_PRIORITY_AREA_MONITORING.collection,
-  //   supportsGeometry: false,
-  //   supportsCloudCover: false,
-  //   items: [
-  //     {
-  //       id: 'COASTAL_ZONES',
-  //       label: 'Coastal Zones',
-  //       type: 'instrument',
-  //       supportsCloudCover: false,
-  //       customFilterExpression: `(${FilterElement.Attribute(
-  //         ODataAttributes.productType,
-  //         ODataFilterOperator.eq,
-  //         'vegetation_phenology_and_productivity_parameters', // fix this
-  //       )})`,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 'N2K',
-  //       label: 'N2K',
-  //       type: 'instrument',
-  //       supportsCloudCover: false,
-  //       customFilterExpression: `(${FilterElement.Attribute(
-  //         ODataAttributes.productType,
-  //         ODataFilterOperator.eq,
-  //         'vegetation_phenology_and_productivity_parameters', // fix this
-  //       )})`,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 'RIPARIAN_ZONES',
-  //       label: 'Riparian Zones',
-  //       type: 'instrument',
-  //       supportsCloudCover: false,
-  //       customFilterExpression: `(${FilterElement.Attribute(
-  //         ODataAttributes.productType,
-  //         ODataFilterOperator.eq,
-  //         'vegetation_phenology_and_productivity_parameters', // fix this
-  //       )})`,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 'URBAN_ATLAS',
-  //       label: 'Urban Atlas',
-  //       type: 'instrument',
-  //       supportsCloudCover: false,
-  //       customFilterExpression: `(${FilterElement.Attribute(
-  //         ODataAttributes.productType,
-  //         ODataFilterOperator.eq,
-  //         'vegetation_phenology_and_productivity_parameters', // fix this
-  //       )})`,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 'REFERENCE_LAND_COVER_AND_LAND_COVER_CHANGE_IN_SELECTED_HOT_SPOTS',
-  //       label: 'Reference Land Cover and Land Cover Change in selected Hot Spots',
-  //       type: 'instrument',
-  //       supportsCloudCover: false,
-  //       customFilterExpression: `(${FilterElement.Attribute(
-  //         ODataAttributes.productType,
-  //         ODataFilterOperator.eq,
-  //         'vegetation_phenology_and_productivity_parameters', // fix this
-  //       )})`,
-  //       items: [],
-  //     },
-  //   ],
-  //   additionalFilters: [
-  //     {
-  //       id: AttributeNames.fileFormat,
-  //       render: MultiSelectInput,
-  //       getOptions: () => [
-  //         { value: 'nc', label: 'NetCDF' },
-  //         { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
-  //       ],
-  //     },
-  //     {
-  //       id: AttributeNames.consolidationPeriod,
-  //       title: FormatedAttributeNames.consolidationPeriod(),
-  //       render: MultiSelectInput,
-  //       getOptions: () => [
-  //         AttributeConsolidationPeriodValues.RT0,
-  //         AttributeConsolidationPeriodValues.RT1,
-  //         AttributeConsolidationPeriodValues.RT2,
-  //         AttributeConsolidationPeriodValues.RT5,
-  //         AttributeConsolidationPeriodValues.RT6,
-  //       ],
-  //     },
-  //     {
-  //       id: AttributeNames.datasetIdentifier,
-  //       render: DefaultInput,
-  //       type: 'text',
-  //       placeholder: FormatedAttributeNames.datasetIdentifier(),
-  //     },
-  //     {
-  //       id: AttributeNames.productType,
-  //       render: DefaultInput,
-  //       type: 'text',
-  //       placeholder: FormatedAttributeNames.productType(),
-  //     },
-  //   ],
-  // },
-  {
     id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
     label: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.label,
     type: 'collection',
@@ -3558,6 +2626,942 @@ export const recursiveCollectionCLMS = [
                   ODataFilterOperator.eq,
                   'wb_global_1km_10daily_v2',
                 )})`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    additionalFilters: [
+      {
+        id: AttributeNames.fileFormat,
+        render: MultiSelectInput,
+        getOptions: () => [
+          { value: 'nc', label: 'NetCDF' },
+          { value: 'cog', label: 'Cloud Optimized GeoTIFF' },
+        ],
+      },
+      {
+        id: AttributeNames.consolidationPeriod,
+        title: FormatedAttributeNames.consolidationPeriod(),
+        render: MultiSelectInput,
+        getOptions: () => [
+          AttributeConsolidationPeriodValues.RT0,
+          AttributeConsolidationPeriodValues.RT1,
+          AttributeConsolidationPeriodValues.RT2,
+          AttributeConsolidationPeriodValues.RT5,
+          AttributeConsolidationPeriodValues.RT6,
+        ],
+      },
+      {
+        id: AttributeNames.datasetIdentifier,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.datasetIdentifier(),
+      },
+      {
+        id: AttributeNames.productType,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.productType(),
+      },
+    ],
+  },
+  {
+    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
+    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.label,
+    type: 'collection',
+    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.collection,
+    supportsGeometry: false,
+    supportsCloudCover: false,
+    items: [
+      {
+        id: 'URBAN_ATLAS',
+        label: 'Urban Atlas',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'urban_atlas',
+        )})`,
+        items: [
+          {
+            id: 'BUILDING_HEIGHT',
+            label: 'Building Height',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_building-height_europe_10m_3yearly_v1',
+                label: 'Building Height, Europe, 10m, 3-yearly, 2021, V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_ua_building-height_europe_10m_3yearly_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'LAND_COVER_LAND_USE',
+            label: 'Land Cover and Land Use',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2018',
+                label: 'Land Cover and Land Use, 3-yearly, 2018',
+                type: 'productType',
+                multiCustomFilterExpression: [
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.datasetIdentifier,
+                    ODataFilterOperator.eq,
+                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
+                  )})`,
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.nominalDate,
+                    ODataFilterOperator.eq,
+                    '2018-01-01T00:00:00.000000Z',
+                  )})`,
+                ],
+              },
+              {
+                id: 'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1_2021',
+                label: 'Land Cover and Land Use, 3-yearly, 2021',
+                type: 'productType',
+                multiCustomFilterExpression: [
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.datasetIdentifier,
+                    ODataFilterOperator.eq,
+                    'clms_ua_land-cover-land-use_europe_V025ha_3yearly_v1',
+                  )})`,
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.nominalDate,
+                    ODataFilterOperator.eq,
+                    '2021-01-01T00:00:00.000000Z',
+                  )})`,
+                ],
+              },
+            ],
+          },
+          {
+            id: 'LAND_COVER_LAND_USE_CHANGE',
+            label: 'Land Cover and Land Use Change',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
+                label: 'Land Cover and Land Use Change, 3-yearly, 2018-2021',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'STREET_TREE_LAYER',
+            label: 'Street Tree Layer',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
+                label: 'Street Tree Layer, 3-yearly, 2021',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1',
+                )})`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+    label: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.label,
+    type: 'collection',
+    collectionName: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.collection,
+    supportsGeometry: false,
+    supportsCloudCover: false,
+    items: [
+      {
+        id: 'CROPLANDS',
+        label: 'Croplands',
+        type: 'group',
+        items: [
+          {
+            id: 'CROPPING_PATTERNS',
+            label: 'Cropping Patterns',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'cropping_patterns',
+            )})`,
+            items: [
+              {
+                id: 'BARE_SOIL_AFTER',
+                label: 'Bare Soil After',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSA,
+                    label: 'BSA, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSA,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSACL,
+                    label: 'BSA Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSACL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'BARE_SOIL_BEFORE',
+                label: 'Bare Soil Before',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSB,
+                    label: 'BSB, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSB,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSBCL,
+                    label: 'BSB Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPBSBCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'CROPPING_SEASONS',
+                label: 'Cropping Seasons',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
+                    label: 'CPCSY, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'CROPPING_SEASONS_TYPES',
+                label: 'Cropping Seasons Types',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
+                    label: 'CPCST, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'FALLOW_LAND_DURATION',
+                label: 'Fallow Land Duration',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLD,
+                    label: 'FLD, Europe, 10m, Yearly, (2021–2023), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLD,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLDCL,
+                    label: 'FLD Confidence Layer, Europe, 10m, Yearly, (2021–2023), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPFLDCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'FALLOW_LAND_PRESENCE',
+                label: 'Fallow Land Presence',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP,
+                    label: 'FLP, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLP,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL,
+                    label: 'FLP Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS.FLPCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'MAIN_CROP_DURATION',
+                label: 'Main Crop Duration',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
+                    label: 'CPMCD, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
+                    label: 'CPMCD Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'MAIN_CROP_EMERGENCE',
+                label: 'Main Crop Emergence',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE_2017,
+                    label: 'CPMCE, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE_2017,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+                    label: 'CPMCE Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'MAIN_CROP_HARVEST',
+                label: 'Main Crop Harvest',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH_2017,
+                    label: 'CPMCH, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH_2017,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+                    label: 'CPMCH Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'SECONDARY_CROP_DURATION',
+                label: 'Secondary Crop Duration',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCD,
+                    label: 'CPSCD, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCD,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCDCL,
+                    label: 'CPSCD Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPSCDCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'SECONDARY_CROP_EMERGENCE',
+                label: 'Secondary Crop Emergence',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
+                    label: 'SCE, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'SECONDARY_CROP_TYPES',
+                label: 'Secondary Crop Types',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
+                    label: 'CPSCT, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'CROP_TYPES',
+            label: 'Crop Types',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'crop_types',
+            )})`,
+            items: [
+              {
+                id: 'CROP_TYPES_GROUP',
+                label: 'Crop Types',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
+                    label: 'CTY, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTY,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
+                    label: 'CTY Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL,
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'DYNAMIC_LAND_COVER',
+        label: 'Dynamic Land Cover',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'dynamic_land_cover',
+        )})`,
+        items: [
+          {
+            id: 'lc_global_100m_yearly_v3',
+            label: 'Global, Yearly, 100m, (2015–2019), V3',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'lc_global_100m_yearly_v3',
+            )})`,
+          },
+          {
+            id: 'lcm_global_10m_yearly_v1',
+            label: 'LCM Global, Yearly, 10m, 2020, V1',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'lcm_global_10m_yearly_v1',
+            )})`,
+          },
+          {
+            id: 'tcd_pantropical_10m_yearly_v1',
+            label: 'TCD Pan-tropical, Yearly, 10m, 2020, V1',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'tcd_pantropical_10m_yearly_v1',
+            )})`,
+          },
+        ],
+      },
+      {
+        id: 'GRASSLANDS',
+        label: 'Grasslands',
+        type: 'group',
+        items: [
+          {
+            id: 'GRASSLAND_AND_HERBACEOUS',
+            label: 'Grassland and Herbaceous',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'grassland_and_herbaceous',
+            )})`,
+            items: [
+              {
+                id: 'GRASSLAND',
+                label: 'Grassland',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
+                    label: 'GRA, Europe, 10m, yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRA,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'GRA, Europe, 100m, yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
+                    label: 'GRA Confidence Layer, Europe, 10m, yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRACL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'GRASSLAND_CHANGE',
+                label: 'Grassland Change',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
+                    label: 'GRAC, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
+                    label: 'GRAC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'PLOUGHING_INDICATOR',
+                label: 'Ploughing Indicator',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'PLOUGH, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'HERBACEOUS_COVER',
+                label: 'Herbaceous Cover',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
+                    label: 'HER, Europe, 10m, yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'GRASSLAND_MOWING_EVENTS',
+            label: 'Grassland Mowing Events',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'grassland_mowing_events',
+            )})`,
+            items: [
+              {
+                id: 'GRASSLAND_MOWING_DATES',
+                label: 'Grassland Mowing Dates',
+                type: 'group',
+                items: [
+                  {
+                    id: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
+                    label: 'GRAMD, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'GRASSLAND_MOWING_EVENTS_GROUP',
+                label: 'Grassland Mowing Events',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAME,
+                    label: 'GRAME, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAME,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAMECL,
+                    label: 'GRAME Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.GRAMECL,
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'TREE_COVER_AND_FORESTS',
+        label: 'Tree Cover and Forests',
+        type: 'group',
+        items: [
+          {
+            id: 'DOMINANT_LEAF_TYPE',
+            label: 'Dominant Leaf Type',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'dominant_leaf_type',
+            )})`,
+            items: [
+              {
+                id: 'BROADLEAVED_COVER_DENSITY',
+                label: 'Broadleaved Cover Density',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'BCD, Europe, 100m, Yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'DOMINANT_LEAF_TYPE_GROUP',
+                label: 'Dominant Leaf Type',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT,
+                    label: 'DLT, Europe, 10m, Yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLT,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL,
+                    label: 'DLT Confidence Layer, Europe, 10m, Yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DATASET_IDENTIFIERS.DLTCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'DOMINANT_LEAF_TYPE_CHANGE',
+                label: 'Dominant Leaf Type Change',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'Dominant Leaf Type Change, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'FOREST_TYPE',
+            label: 'Forest Type',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'forest_type',
+            )})`,
+            items: [
+              {
+                id: 'FOREST_TYPE_GROUP',
+                label: 'Forest Type',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'FTY, Europe, 10m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'FTY, Europe, 100m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'FOREST_ADDITIONAL_SUPPORT_LAYER_GROUP',
+                label: 'Forest Additional Support Layer',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'FADSL, Europe, 10m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'TREE_COVER_DENSITY',
+            label: 'Tree Cover Density',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'tree_cover_density',
+            )})`,
+            items: [
+              {
+                id: 'TREE_COVER_DENSITY_PRODUCT',
+                label: 'Tree Cover Density',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
+                    label: 'TCD, Europe, 10m, yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCD,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'TCD, Europe, 100m, yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
+                    label: 'TCD Confidence Layer, Europe, 10m, yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.TCDCL,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'TREE_COVER_PRESENCE_CHANGE',
+                label: 'Tree Cover Presence Change',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
+                    label: 'TCPC, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
+                    )})`,
+                  },
+                  {
+                    id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
+                    label: 'TCPC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
+                    )})`,
+                  },
+                ],
               },
             ],
           },

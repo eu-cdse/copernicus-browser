@@ -6,6 +6,7 @@ import BasicForm from './BasicForm';
 import AnalyticalForm from './AnalyticalForm';
 import PrintForm from './PrintForm';
 import TerrainViewerForm from './TerrainViewerForm';
+import StickerForm from './StickerForm';
 import { RESOLUTION_OPTIONS, RESOLUTION_DIVISORS, AVAILABLE_CRS } from './consts';
 import { constructBBoxFromBounds, getDimensionsInMeters, getImageDimensions } from './ImageDownload.utils';
 import store, { notificationSlice } from '../../store';
@@ -17,6 +18,7 @@ export const TABS = {
   ANALYTICAL: 'analytical',
   PRINT: 'print',
   TERRAIN_VIEWER: '3d',
+  STICKER: 'sticker',
 };
 
 export function ImageDownloadForms(props) {
@@ -47,6 +49,8 @@ export function ImageDownloadForms(props) {
     setAnalyticalFormState,
     setPrintFormState,
     setTerrainViewerFormState,
+    stickerFormState,
+    setStickerFormState,
     showComparePanel,
     isAnalyticalModeAndLayersNotLoaded,
     isAnalyticalModeAndNothingSelected,
@@ -208,6 +212,12 @@ export function ImageDownloadForms(props) {
           isUserLoggedIn={isUserLoggedIn}
         />
       )}
+      {selectedTab === TABS.STICKER && (
+        <StickerForm
+          {...stickerFormState}
+          updateFormData={(field, newValue) => updateFormData(field, newValue, setStickerFormState)}
+        />
+      )}
       {!disabledImagePreviewDownload && (
         <ImageDownloadPreview
           analyticalFormLayers={analyticalFormState.selectedLayers}
@@ -221,6 +231,8 @@ export function ImageDownloadForms(props) {
           imageFormat={
             selectedTab === TABS.BASIC ? basicFormState.imageFormat : analyticalFormState.imageFormat
           }
+          overlayVariant={stickerFormState?.overlayVariant}
+          showStickerText={stickerFormState?.showText}
         />
       )}
     </div>

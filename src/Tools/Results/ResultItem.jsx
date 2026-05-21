@@ -61,6 +61,12 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_CPMCE_DATASET_ID_TO_LAYER_ID,
+  COPERNICUS_CLMS_CPMCH_DATASET_ID_TO_LAYER_ID,
 } from '../SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 const VLCC_DATASET_IDENTIFIER_TO_LAYER_ID = {
@@ -108,6 +114,11 @@ const VLCC_DATASET_IDENTIFIER_TO_LAYER_ID = {
     COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTY,
   [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CTYCL]:
     COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS.CTYCL,
+  // CPMCECL/CPMCHCL have unique identifiers; yearly CPMCE products resolve via CPMCE_DATASET_ID_TO_LAYER_ID below; CPMCH via nominalDate.
+  [COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL]:
+    COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_LAYER_IDS.CPMCECL,
+  [COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL]:
+    COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_LAYER_IDS.CPMCHCL,
 };
 
 export const ErrorMessage = {
@@ -163,7 +174,7 @@ const visualizationButtonDisabled = (tile, user) => {
   return false;
 };
 
-const checkProductVisualization = async (datasetId, { geometry, sensingTime, attributes }) => {
+const checkProductVisualization = async (datasetId, { geometry, sensingTime, attributes }, layerId) => {
   const dsh = getDataSourceHandler(datasetId);
 
   if (!(datasetId && dsh && geometry && sensingTime)) {
@@ -184,6 +195,7 @@ const checkProductVisualization = async (datasetId, { geometry, sensingTime, att
 
   const { tiles } = await dsh.findTiles({
     datasetId: datasetId,
+    layerId: layerId,
     bbox: bbox,
     fromTime: fromTime,
     toTime: toTime,
@@ -251,6 +263,7 @@ const ResultItem = ({
 
   const visualize = async ({ onResultSelected, tile }) => {
     const datasetId = getDatasetIdFromProductType(tile?.productType, tile?.attributes);
+    let vlccLayerId;
     const collectionName = tile?.attributes.find((att) => att.Name === 'collectionName');
     if (collectionName?.Value === DATASOURCES.CLMS) {
       const clmsOptionsWithParent = flattenCLMSOptionsWithParent(CLMS_OPTIONS, DATASOURCES.CLMS);
@@ -270,13 +283,22 @@ const ResultItem = ({
       // BYOC collection. The datasetIdentifier attribute on the search result tells us which layer
       // the product belongs to, so we set the layerId accordingly before visualizing.
       const datasetIdentifier = tile?.attributes.find((att) => att.Name === 'datasetIdentifier')?.Value;
-      const vlccLayerId = VLCC_DATASET_IDENTIFIER_TO_LAYER_ID[datasetIdentifier];
+      vlccLayerId = VLCC_DATASET_IDENTIFIER_TO_LAYER_ID[datasetIdentifier];
+
+      // For per-year CPMCE/CPMCH datasets, datasetId is year-specific — resolve the year layer directly.
+      if (!vlccLayerId) {
+        vlccLayerId = COPERNICUS_CLMS_CPMCE_DATASET_ID_TO_LAYER_ID[datasetId];
+      }
+      if (!vlccLayerId) {
+        vlccLayerId = COPERNICUS_CLMS_CPMCH_DATASET_ID_TO_LAYER_ID[datasetId];
+      }
+
       if (vlccLayerId) {
         store.dispatch(visualizationSlice.actions.setLayerId(vlccLayerId));
       }
     }
 
-    const productVisualizationError = await checkProductVisualization(datasetId, tile);
+    const productVisualizationError = await checkProductVisualization(datasetId, tile, vlccLayerId);
     if (productVisualizationError) {
       store.dispatch(notificationSlice.actions.displayError(productVisualizationError));
       return;

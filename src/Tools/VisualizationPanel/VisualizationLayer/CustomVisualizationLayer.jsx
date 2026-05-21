@@ -62,7 +62,8 @@ const CustomVisualizationLayer = (props) => {
     }
     const parsedIndexEvalscript = parseIndexEvalscript(evalscript);
     if (parsedIndexEvalscript) {
-      selectedIndexBands = parsedIndexEvalscript.bands;
+      const { a, b } = parsedIndexEvalscript.bands;
+      selectedIndexBands = { a: a === 'null' ? null : a, b: b === 'null' ? null : b };
     }
   }
 

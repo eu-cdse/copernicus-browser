@@ -707,7 +707,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
     return super.getPreselectedDataset();
   }
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const { polarization, acquisitionMode, resolution } =
       Sentinel1DataSourceHandler.getDatasetParams(datasetId);
     switch (datasetId) {
@@ -736,7 +736,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   };
 
   findTiles = ({ datasetId, bbox, fromTime, toTime, nDates, offset, reqConfig, orbitDirection }) => {
-    const searchLayer = this._getSearchLayer(datasetId);
+    const searchLayer = this._getSearchLayer({ datasetId });
     if (orbitDirection) {
       searchLayer.orbitDirection = orbitDirection;
     }
@@ -744,7 +744,7 @@ export default class Sentinel1DataSourceHandler extends DataSourceHandler {
   };
 
   findDates = ({ datasetId, bbox, fromTime, toTime, reqConfig, orbitDirection }) => {
-    const searchLayer = this._getSearchLayer(datasetId);
+    const searchLayer = this._getSearchLayer({ datasetId });
     if (orbitDirection) {
       searchLayer.orbitDirection = orbitDirection;
     }

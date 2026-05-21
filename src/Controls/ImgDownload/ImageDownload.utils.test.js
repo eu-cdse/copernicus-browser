@@ -1,4 +1,8 @@
-import { getImageDimensionFromBoundsWithCap, getRawBandsScalingFactor } from './ImageDownload.utils';
+import {
+  getImageDimensionFromBoundsWithCap,
+  getRawBandsScalingFactor,
+  addImageOverlays,
+} from './ImageDownload.utils';
 import { dataSourceHandlers } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { DATASOURCES } from '../../const';
 
@@ -87,5 +91,300 @@ describe('Test imageDimensions with 2500px cap', () => {
   test.each(imageDimensionsFixtures)('Fixtures', (bounds, datasetId, expectedResults) => {
     const results = getImageDimensionFromBoundsWithCap(bounds, datasetId);
     expect(results).toEqual(expectedResults);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// addImageOverlays / drawLogo — logoVariant tests
+// ---------------------------------------------------------------------------
+
+describe('addImageOverlays — early-return path (showLogo: false)', () => {
+  test('returns the original blob unchanged when no overlay flags are set', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    const result = await addImageOverlays(
+      blob,
+      200,
+      100,
+      'image/png',
+      46,
+      14,
+      10,
+      false,
+      false,
+      false,
+      false,
+      '',
+      [],
+      null,
+      null,
+      '',
+      '',
+      true,
+      true,
+      true,
+      false,
+      [],
+      null,
+      null,
+      null,
+      true,
+    );
+    expect(result).toBe(blob);
+  });
+
+  test('returns the original blob when logoVariant is light but showLogo is false', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    const result = await addImageOverlays(
+      blob,
+      200,
+      100,
+      'image/png',
+      46,
+      14,
+      10,
+      false,
+      false,
+      false,
+      false,
+      '',
+      [],
+      null,
+      null,
+      '',
+      '',
+      true,
+      true,
+      true,
+      false,
+      [],
+      null,
+      null,
+      null,
+      true,
+      'light',
+    );
+    expect(result).toBe(blob);
+  });
+
+  test('returns the original blob when logoVariant is dark but showLogo is false', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    const result = await addImageOverlays(
+      blob,
+      200,
+      100,
+      'image/png',
+      46,
+      14,
+      10,
+      false,
+      false,
+      false,
+      false,
+      '',
+      [],
+      null,
+      null,
+      '',
+      '',
+      true,
+      true,
+      true,
+      false,
+      [],
+      null,
+      null,
+      null,
+      true,
+      'dark',
+    );
+    expect(result).toBe(blob);
+  });
+});
+
+describe('addImageOverlays — drawLogo variant smoke tests (showLogo: true)', () => {
+  let OriginalImage;
+  let origCreateElement;
+
+  beforeEach(() => {
+    // URL.createObjectURL is mocked in setupTests.js; define revokeObjectURL too
+    // so that drawBlobOnCanvas's finally-block doesn't throw.
+    global.URL.revokeObjectURL = jest.fn();
+
+    // Intercept ALL img element creation (both via new Image() and
+    // document.createElement('img')) so that setting src immediately fires
+    // onload — without a real network request.  This covers:
+    //   - drawBlobOnCanvas (sentinelhub-js) which uses new Image()
+    //   - loadImage (ImageDownload.utils.js) which uses document.createElement
+    origCreateElement = document.createElement.bind(document);
+    document.createElement = function (tag, ...args) {
+      const el = origCreateElement(tag, ...args);
+      if (tag === 'img') {
+        Object.defineProperty(el, 'src', {
+          set(_value) {
+            setTimeout(() => {
+              if (el.onload) {
+                el.onload();
+              }
+            }, 0);
+          },
+          get() {
+            return '';
+          },
+          configurable: true,
+        });
+      }
+      return el;
+    };
+
+    OriginalImage = global.Image;
+    global.Image = function MockImageConstructor() {
+      return document.createElement('img');
+    };
+  });
+
+  afterEach(() => {
+    global.Image = OriginalImage;
+    document.createElement = origCreateElement;
+    jest.restoreAllMocks();
+  });
+
+  test('completes without error when logoVariant is "light"', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    await expect(
+      addImageOverlays(
+        blob,
+        200,
+        100,
+        'image/png',
+        46,
+        14,
+        10,
+        false,
+        false,
+        false,
+        true,
+        '',
+        [],
+        null,
+        null,
+        '',
+        '',
+        true,
+        true,
+        true,
+        false,
+        [],
+        null,
+        null,
+        null,
+        true,
+        'light',
+      ),
+    ).resolves.toBeDefined();
+  });
+
+  test('completes without error when logoVariant is "dark"', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    await expect(
+      addImageOverlays(
+        blob,
+        200,
+        100,
+        'image/png',
+        46,
+        14,
+        10,
+        false,
+        false,
+        false,
+        true,
+        '',
+        [],
+        null,
+        null,
+        '',
+        '',
+        true,
+        true,
+        true,
+        false,
+        [],
+        null,
+        null,
+        null,
+        true,
+        'dark',
+      ),
+    ).resolves.toBeDefined();
+  });
+
+  test('defaults to "light" behavior when logoVariant is omitted', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    // Call without the logoVariant argument — the default 'light' should apply.
+    await expect(
+      addImageOverlays(
+        blob,
+        200,
+        100,
+        'image/png',
+        46,
+        14,
+        10,
+        false,
+        false,
+        false,
+        true,
+        '',
+        [],
+        null,
+        null,
+        '',
+        '',
+        true,
+        true,
+        true,
+        false,
+        [],
+        null,
+        null,
+        null,
+        true,
+        // logoVariant intentionally omitted
+      ),
+    ).resolves.toBeDefined();
+  });
+
+  test('returns a Blob result when showLogo is true', async () => {
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+    const result = await addImageOverlays(
+      blob,
+      200,
+      100,
+      'image/png',
+      46,
+      14,
+      10,
+      false,
+      false,
+      false,
+      true,
+      '',
+      [],
+      null,
+      null,
+      '',
+      '',
+      true,
+      true,
+      true,
+      false,
+      [],
+      null,
+      null,
+      null,
+      true,
+      'light',
+    );
+    expect(result).toBeInstanceOf(Blob);
   });
 });

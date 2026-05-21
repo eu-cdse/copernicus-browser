@@ -97,7 +97,10 @@ const EOBAdvancedHolder = ({
 
   const handleSetSelectedTab = (index) => {
     setSelectedTab(index);
-    router.navigate({ hash: CUSTOM_VISUALIZATION_URL_ROUTES[index] }, { replace: true });
+    router.navigate(
+      { search: router.location.search, hash: CUSTOM_VISUALIZATION_URL_ROUTES[index] },
+      { replace: true },
+    );
   };
 
   const groupedChannels =

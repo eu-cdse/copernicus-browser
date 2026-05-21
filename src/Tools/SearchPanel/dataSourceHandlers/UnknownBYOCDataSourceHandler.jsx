@@ -178,7 +178,7 @@ export default class UnknownBYOCDataSourceHandler extends DataSourceHandler {
 
   getSearchGroupLabel = () => this.collections[this.datasets[0]].themeName;
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const layer = this.allLayers.find((l) => l.collectionId === datasetId);
     if (layer) {
       return new BYOCLayer({

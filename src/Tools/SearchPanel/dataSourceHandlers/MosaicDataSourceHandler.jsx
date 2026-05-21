@@ -193,7 +193,7 @@ export default class MosaicDataSourceHandler extends AbstractBYOCDataSourceHandl
     return true;
   }
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const layer = this.allLayers.find((l) => l.collectionId === datasetId);
     if (layer) {
       const newLayer = new BYOCLayer({

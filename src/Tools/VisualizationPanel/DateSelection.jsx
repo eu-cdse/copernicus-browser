@@ -119,6 +119,7 @@ function DateSelection({
     const bbox = generateAppropriateSearchBBox(mapBounds);
     const dates = await dsh.findDates({
       datasetId: datasetId,
+      layerId: layerId,
       bbox: bbox,
       fromTime: fromMoment.toDate(),
       toTime: toMoment.toDate(),
@@ -189,6 +190,7 @@ function DateSelection({
   async function getLatestAvailableDate() {
     const date = await findLatestDateWithData({
       datasetId: datasetId,
+      layerId: layerId,
       bounds: mapBounds,
       pixelBounds: pixelBounds,
       maxCloudCoverPercent: maxCloudCover,

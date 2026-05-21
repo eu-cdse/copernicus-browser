@@ -31,7 +31,7 @@ export default class AbstractBYOCDataSourceHandler extends DataSourceHandler {
   willHandle(service, url, name, layers, _preselected) {
     let handlesAny = false;
 
-    for (let datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
+    for (const datasetId of Object.keys(this.KNOWN_COLLECTIONS)) {
       const layersWithDataset = layers.filter((l) =>
         this.KNOWN_COLLECTIONS[datasetId].includes(l.collectionId),
       );
@@ -134,10 +134,12 @@ export default class AbstractBYOCDataSourceHandler extends DataSourceHandler {
     return bands && !!bands.length;
   }
 
-  /**
-   * Get base layer for a dataset
-   */
-  getBaseLayerForDatasetId = (datasetId) => {
+  // Arrow function class field — written as an own property on each instance during construction.
+  // Subclasses that need different resolution logic (e.g. CLMSDataSourceHandler for VLCC
+  // multi-collection datasets) must also declare this as an arrow function field so their
+  // definition overwrites this one. A regular prototype method in the subclass would be
+  // shadowed by this own property and never reached.
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const collectionIds = this.KNOWN_COLLECTIONS[datasetId];
     if (collectionIds) {
       return new BYOCLayer({

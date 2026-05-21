@@ -5,14 +5,26 @@ import { reqConfigMemoryCache } from '../const';
 import { handleError } from '.';
 import { generateAppropriateSearchBBox } from './coords';
 
-export async function findLatestDateWithData({ datasetId, bounds, maxCloudCoverPercent, orbitDirection }) {
+export async function findLatestDateWithData({
+  datasetId,
+  layerId,
+  bounds,
+  maxCloudCoverPercent,
+  orbitDirection,
+}) {
   if (!bounds) {
     return null;
   }
 
   try {
     const bbox = generateAppropriateSearchBBox(bounds);
-    const results = await findLatestTileInArea({ bbox, datasetId, maxCloudCoverPercent, orbitDirection });
+    const results = await findLatestTileInArea({
+      bbox,
+      datasetId,
+      layerId,
+      maxCloudCoverPercent,
+      orbitDirection,
+    });
 
     if (results && results.tiles && results.tiles.length > 0) {
       return getLatestTile(results.tiles).sensingTime;
@@ -24,7 +36,7 @@ export async function findLatestDateWithData({ datasetId, bounds, maxCloudCoverP
   }
 }
 
-async function findLatestTileInArea({ bbox, datasetId, maxCloudCoverPercent, orbitDirection }) {
+async function findLatestTileInArea({ bbox, datasetId, layerId, maxCloudCoverPercent, orbitDirection }) {
   const datasourceHandler = getDataSourceHandler(datasetId);
   if (!datasourceHandler) {
     throw new Error(`No datasource handler for datasetId ${datasetId}`);
@@ -34,6 +46,7 @@ async function findLatestTileInArea({ bbox, datasetId, maxCloudCoverPercent, orb
   const maxDateRange = maxDate ? maxDate : moment.utc().endOf('day').toDate();
   return await datasourceHandler.findTiles({
     datasetId: datasetId,
+    layerId: layerId,
     bbox: bbox,
     fromTime: minDateRange,
     toTime: maxDateRange,

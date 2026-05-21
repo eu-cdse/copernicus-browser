@@ -616,7 +616,7 @@ export default class Sentinel3CDASDataSourceHandler extends DataSourceHandler {
     return true;
   }
 
-  getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
+  getBaseLayerForDatasetId = ({ datasetId, maxCloudCoverPercent }) => {
     switch (datasetId) {
       case S3SLSTR_CDAS:
         return new S3SLSTRCDASLayer({

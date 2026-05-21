@@ -48,6 +48,8 @@ import {
 } from '../../const';
 
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
+import stickerLogoLight from './cdse-sticker-logo-light.png';
+import stickerLogoDark from './cdse-sticker-logo-dark.png';
 import { isAuthIdUtm } from '../../utils/utm';
 import { reprojectGeometry } from '../../utils/reproject';
 import { getBboxFromCoords } from '../../utils/geojson.utils';
@@ -536,6 +538,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     cropToAoi,
     selectedProcessing,
     processGraph,
+    logoVariant = null,
   } = params;
   const layer = layerFromParams ?? (await getLayerFromParams(params, cancelToken));
 
@@ -712,6 +715,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
           aoiWidthInMeters,
           mapWidthInMeters,
           cropToAoi,
+          logoVariant,
         );
 
         const nicename = getNicename(
@@ -784,6 +788,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
       aoiWidthInMeters,
       mapWidthInMeters,
       cropToAoi,
+      logoVariant,
     );
 
     const nicename = getNicename(
@@ -1094,6 +1099,7 @@ export async function addImageOverlays(
   aoiWidthInMeters,
   mapWidthInMeters,
   cropToAoi = true,
+  logoVariant = null,
 ) {
   if (!(showLegend || showCaptions || addMapOverlays || showLogo || drawGeoToImg)) {
     return blob;
@@ -1127,7 +1133,7 @@ export async function addImageOverlays(
   }
   if (showLogo) {
     const logoPartitionWidth = ctx.canvas.width * 0.4 - PARTITION_PADDING;
-    await drawLogo(ctx, logoPartitionWidth, getLowerYAxis(ctx), drawCopernicusLogo);
+    await drawLogo(ctx, logoPartitionWidth, getLowerYAxis(ctx), drawCopernicusLogo, logoVariant);
   }
   if (drawGeoToImg) {
     geometriesToDraw.forEach((geometry) => drawGeometryOnImg(ctx, geometry, bounds));
@@ -1528,14 +1534,21 @@ export function getPixelCoordinates(lng, lat, mercatorBBox, imageWidth, imageHei
   };
 }
 
-async function drawLogo(ctx, logoPartitionWidth, bottomY, drawCopernicusLogo) {
+async function drawLogo(ctx, logoPartitionWidth, bottomY, drawCopernicusLogo, logoVariant = null) {
   if (!drawCopernicusLogo) {
     return;
   }
 
   let copernicusLogo;
   if (drawCopernicusLogo) {
-    copernicusLogo = await loadImage(copernicus);
+    let logoAsset = copernicus;
+    // Note: opposite semantics to addStickerOverlays — here 'dark' selects the dark-coloured logo asset
+    if (logoVariant === 'dark') {
+      logoAsset = stickerLogoDark;
+    } else if (logoVariant === 'light') {
+      logoAsset = stickerLogoLight;
+    }
+    copernicusLogo = await loadImage(logoAsset);
   }
 
   const proposedWidth = Math.max(ctx.canvas.width * 0.05, 50);
@@ -1572,6 +1585,52 @@ async function drawLogo(ctx, logoPartitionWidth, bottomY, drawCopernicusLogo) {
       copernicusLogoHeight,
     );
   }
+}
+
+const STICKER_DPI = 300;
+const STICKER_WIDTH_CM = 10.2;
+const STICKER_HEIGHT_CM = 7.6;
+export const STICKER_WIDTH_PX = Math.round((STICKER_WIDTH_CM / 2.54) * STICKER_DPI);
+export const STICKER_HEIGHT_PX = Math.round((STICKER_HEIGHT_CM / 2.54) * STICKER_DPI);
+const STICKER_TEXT = 'My favourite place!';
+
+export async function addStickerOverlays(blob, mimeType, logoVariant, showText = true) {
+  const canvas = document.createElement('canvas');
+  canvas.width = STICKER_WIDTH_PX;
+  canvas.height = STICKER_HEIGHT_PX;
+  const ctx = canvas.getContext('2d');
+  await drawBlobOnCanvas(ctx, blob, 0, 0);
+
+  // stickerLogoLight has light/white colours (for dark backgrounds)
+  // stickerLogoDark has dark colours (for light backgrounds)
+  // 'dark' variant = dark-background sticker → use light/white logo for contrast
+  const logoAsset = logoVariant === 'dark' ? stickerLogoLight : stickerLogoDark;
+  const logo = await loadImage(logoAsset);
+
+  const padding = Math.round(STICKER_WIDTH_PX * 0.02);
+  const logoHeight = Math.round(STICKER_HEIGHT_PX * 0.22);
+  const logoWidth = Math.round(logoHeight * (logo.width / logo.height));
+  ctx.drawImage(logo, padding, padding, logoWidth, logoHeight);
+
+  if (showText) {
+    const isDark = logoVariant === 'dark';
+    const fontSize = Math.round(STICKER_HEIGHT_PX * 0.1);
+    const textY = Math.round(STICKER_HEIGHT_PX * 0.85);
+    ctx.font = `${fontSize}px "Arial Black", sans-serif`;
+    ctx.fillStyle = isDark ? '#0a4393' : 'white';
+    ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    ctx.shadowBlur = Math.round(fontSize * 0.05);
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.textAlign = 'right';
+    ctx.fillText(STICKER_TEXT, STICKER_WIDTH_PX - padding * 2, textY);
+    ctx.textAlign = 'start';
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+  }
+
+  return await canvasToBlob(canvas, mimeType);
 }
 
 function getFontSize(width, font) {

@@ -2653,3 +2653,39 @@ export const COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1_B
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_BANDS = [
+  {
+    name: 'BCD',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_BANDS = [
+  {
+    name: 'FTY',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_BANDS = [
+  {
+    name: 'GRA',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_BANDS = [
+  {
+    name: 'TCD',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPMCE',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPMCH',
+    getDescription: () => ``,
+  },
+];

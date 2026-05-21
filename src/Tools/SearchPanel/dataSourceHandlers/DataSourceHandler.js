@@ -274,10 +274,12 @@ export default class DataSourceHandler {
     return searchableDataset;
   }
 
-  getBaseLayerForDatasetId = () => null;
+  // layerId is passed through so subclasses that map multiple SH collections to a single
+  // datasetId (e.g. VLCC yearly layers) can resolve the correct collection for the active layer.
+  getBaseLayerForDatasetId = (_params) => null;
 
-  _getSearchLayer = (datasetId, maxCloudCoverPercent = DEFAULT_CLOUD_COVER_PERCENT) => {
-    const searchLayer = this.getBaseLayerForDatasetId(datasetId, maxCloudCoverPercent);
+  _getSearchLayer = ({ datasetId, layerId, maxCloudCoverPercent = DEFAULT_CLOUD_COVER_PERCENT }) => {
+    const searchLayer = this.getBaseLayerForDatasetId({ datasetId, layerId, maxCloudCoverPercent });
     if (!searchLayer) {
       throw new Error(`No layer for datasetId ${datasetId}`);
     }
@@ -293,13 +295,14 @@ export default class DataSourceHandler {
     offset,
     reqConfig,
     maxCloudCoverPercent = DEFAULT_CLOUD_COVER_PERCENT,
+    layerId,
   }) => {
-    const searchLayer = this._getSearchLayer(datasetId, maxCloudCoverPercent);
+    const searchLayer = this._getSearchLayer({ datasetId, layerId, maxCloudCoverPercent });
     return searchLayer.findTiles(bbox, fromTime, toTime, nDates, offset, reqConfig);
   };
 
-  findDates = ({ datasetId, bbox, fromTime, toTime, reqConfig }) => {
-    const searchLayer = this._getSearchLayer(datasetId);
+  findDates = ({ datasetId, bbox, fromTime, toTime, reqConfig, layerId }) => {
+    const searchLayer = this._getSearchLayer({ datasetId, layerId });
     return searchLayer.findDatesUTC(bbox, fromTime, toTime, reqConfig);
   };
 

@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { t } from 'ttag';
 import moment from 'moment';
-import { IMAGE_FORMATS } from './consts';
+import { IMAGE_FORMATS, IMAGE_FORMATS_INFO } from './consts';
 import {
+  addStickerOverlays,
   adjustClippingForAoi,
   fetchAndPatchImagesFromParams,
   fetchImageFromParams,
@@ -101,6 +102,8 @@ const ImageDownloadPreview = (props) => {
     selectedProcessing,
     processGraph,
     evalscript,
+    overlayVariant,
+    showStickerText,
   } = props;
 
   useEffect(() => {
@@ -134,8 +137,16 @@ const ImageDownloadPreview = (props) => {
 
     const runPreviewFetch = async () => {
       try {
-        const blob = await fetchPreviewImage(options);
+        let blob = await fetchPreviewImage(options);
         if (blob instanceof Blob) {
+          if (selectedTab === TABS.STICKER) {
+            blob = await addStickerOverlays(
+              blob,
+              IMAGE_FORMATS_INFO[IMAGE_FORMATS.PNG].mimeType,
+              overlayVariant,
+              showStickerText,
+            );
+          }
           setPreviewUrl(URL.createObjectURL(blob));
         } else {
           const error = new Error(t`Preview unavailable. Try zooming in or adjusting your selection.`);
@@ -149,7 +160,18 @@ const ImageDownloadPreview = (props) => {
     };
 
     runPreviewFetch();
-  }, [analyticalFormLayers, auth, layerId, props, selectedTab, selectedProcessing, processGraph, evalscript]);
+  }, [
+    analyticalFormLayers,
+    auth,
+    layerId,
+    overlayVariant,
+    showStickerText,
+    props,
+    selectedTab,
+    selectedProcessing,
+    processGraph,
+    evalscript,
+  ]);
 
   if (disabledDownload || is3D) {
     return null;

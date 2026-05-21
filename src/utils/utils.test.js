@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { parseDataFusion, parseEvalscriptBands, updatePath } from './index';
+import { parseDataFusion, updatePath } from './index';
 import { parseIndexEvalscript } from './parseIndexEvalscript.util';
 import { PROCESSING_OPTIONS, TABS } from '../const';
 import {
@@ -109,39 +109,33 @@ const allDatasetIds = [
 ];
 
 test.each(allDatasetIds.map((d) => [d]))(
-  'Test if generated evalscripts are parsed correctly for %s',
+  'Test if generated index evalscripts are parsed correctly for %s',
   (datasetId) => {
     const datasourceHandler = getDataSourceHandler(datasetId);
-    if (datasourceHandler.supportsCustomLayer()) {
+    if (datasourceHandler.supportsCustomLayer() && datasourceHandler.supportsIndex(datasetId)) {
       const availableBands = datasourceHandler.getBands(datasetId);
       const selectedBands = [...availableBands, ...availableBands, ...availableBands]
         .slice(0, 3)
         .map((b) => b.name);
-      const evalscript = datasourceHandler.generateEvalscript(selectedBands, datasetId);
-      const parsedBands = parseEvalscriptBands(evalscript);
-      expect(parsedBands).toEqual(selectedBands);
-
-      if (datasourceHandler.supportsIndex(datasetId)) {
-        const indexBands = { a: selectedBands[0], b: selectedBands[1] };
-        const equation = '(A/B)';
-        const colorRamp = ['#000000', '#8f8f8f', '#f5f5f5'];
-        const values = [0.2, 0.75, 0.9];
-        const evalscript = datasourceHandler.generateEvalscript(indexBands, datasetId, {
-          equation: equation,
-          colorRamp: colorRamp,
-          values: values,
-        });
-        const {
-          bands: parsedIndexBands,
-          equation: parsedEquation,
-          positions: parsedValues,
-          colors: parsedColorRamp,
-        } = parseIndexEvalscript(evalscript);
-        expect(parsedIndexBands).toEqual(indexBands);
-        expect(parsedEquation).toEqual(equation);
-        expect(parsedValues).toEqual(values);
-        expect(parsedColorRamp).toEqual(colorRamp);
-      }
+      const indexBands = { a: selectedBands[0], b: selectedBands[1] };
+      const equation = '(A/B)';
+      const colorRamp = ['#000000', '#8f8f8f', '#f5f5f5'];
+      const values = [0.2, 0.75, 0.9];
+      const evalscript = datasourceHandler.generateEvalscript(indexBands, datasetId, {
+        equation: equation,
+        colorRamp: colorRamp,
+        values: values,
+      });
+      const {
+        bands: parsedIndexBands,
+        equation: parsedEquation,
+        positions: parsedValues,
+        colors: parsedColorRamp,
+      } = parseIndexEvalscript(evalscript);
+      expect(parsedIndexBands).toEqual(indexBands);
+      expect(parsedEquation).toEqual(equation);
+      expect(parsedValues).toEqual(values);
+      expect(parsedColorRamp).toEqual(colorRamp);
     }
   },
 );

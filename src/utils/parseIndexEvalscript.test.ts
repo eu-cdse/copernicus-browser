@@ -117,6 +117,24 @@ function evaluatePixel(samples) {
     });
   });
 
+  test('returns null for a 3-band equation where samples. references remain after A/B substitution', () => {
+    const evalscript = `//VERSION=3
+const colorRamp = [[0,0x000000],[1,0xffffff]]
+
+function setup() {
+  return {
+    input: ["B03","B04","B08", "dataMask"],
+    output: [{ id:"default", bands: 4 }]
+  };
+}
+
+function evaluatePixel(samples) {
+  let index = (samples.B03-samples.B08)*samples.B04/(samples.B03+samples.B08);
+  return { default: [] };
+}`;
+    expect(parseIndexEvalscript(evalscript)).toBeNull();
+  });
+
   test('returns null for pre-//VERSION=3 format', () => {
     const evalscript = 'return [B03 * 2.5, B08 * 2.5, B04* 2.5]';
     expect(parseIndexEvalscript(evalscript)).toBeNull();

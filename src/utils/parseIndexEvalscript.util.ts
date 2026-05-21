@@ -1,8 +1,5 @@
-import { parseScript } from 'esprima';
 import { rgbToHex } from '../junk/BandsToRGB/utils';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AstNode = any;
+import { AstNode, tryParseScript } from './esprimaHelpers';
 
 interface ParsedColorRamp {
   positions: number[];
@@ -19,19 +16,6 @@ export interface ParseIndexEvalscriptResult {
   equation: string;
   positions: number[];
   colors: string[];
-}
-
-// Tries to parse the evalscript as a complete script. If parsing fails (e.g. because the script
-// is truncated), up to 5 closing braces are appended one at a time until it succeeds.
-function tryParseScript(code: string): AstNode | null {
-  for (let closingBraces = 0; closingBraces <= 5; closingBraces++) {
-    try {
-      return parseScript(code + '\n}'.repeat(closingBraces), { range: true });
-    } catch {
-      continue;
-    }
-  }
-  return null;
 }
 
 // ─── //VERSION=3 format ────────────────────────────────────────────────────
@@ -115,6 +99,10 @@ function buildEquation(initSrc: string): ParsedEquation | null {
       .replace(new RegExp(`samples\\.${bandB}`, 'g'), 'B');
   }
 
+  if (equation.includes('samples.')) {
+    return null;
+  }
+
   return { bands: { a: bandA, b: bandB }, equation };
 }
 
@@ -158,7 +146,7 @@ function parseColorRamp(colorRampDeclarator: AstNode): ParsedColorRamp | null {
 }
 
 function parseVersionedEvalscript(evalscript: string): ParseIndexEvalscriptResult | null {
-  const ast = tryParseScript(evalscript);
+  const ast = tryParseScript(evalscript, true);
   if (!ast) {
     return null;
   }
@@ -310,7 +298,7 @@ function parseOldFormatEvalscript(evalscript: string): ParseIndexEvalscriptResul
   // function body. Wrap it so esprima can parse it, then navigate into the function's body.
   const WRAPPER_PREFIX = '(function(){';
   const wrappedCode = `${WRAPPER_PREFIX}${evalscript}})`;
-  const ast = tryParseScript(wrappedCode);
+  const ast = tryParseScript(wrappedCode, true);
   if (!ast) {
     return null;
   }

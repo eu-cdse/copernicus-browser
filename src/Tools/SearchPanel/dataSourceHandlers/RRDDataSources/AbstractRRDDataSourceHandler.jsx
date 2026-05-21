@@ -73,7 +73,7 @@ export default class AbstractRRDDataSourceHandler extends AbstractBYOCDataSource
     return availableBands && !!availableBands.length;
   }
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const layer = this.allLayers.find((l) => l.collectionId === datasetId);
     if (layer) {
       return new BYOCLayer({

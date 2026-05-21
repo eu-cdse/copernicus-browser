@@ -290,7 +290,7 @@ export default class Sentinel2CDASDataSourceHandler extends DataSourceHandler {
     }
   };
 
-  getBaseLayerForDatasetId = (datasetId, maxCloudCoverPercent) => {
+  getBaseLayerForDatasetId = ({ datasetId, maxCloudCoverPercent }) => {
     switch (datasetId) {
       case S2_L1C_CDAS:
         return new S2L1CCDASLayer({

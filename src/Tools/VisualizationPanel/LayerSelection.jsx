@@ -102,7 +102,9 @@ const LayerSelection = ({
       if (!customSelected && layer?.layerId === selectedLayerId && layer?.url === visualizationUrl) {
         return;
       }
-      saveCustomState();
+      if (customSelected) {
+        saveCustomState();
+      }
       setLocationHash('');
       const { supportsOpenEO, processGraphValue } = getLayerProcessingInfo(layer);
 

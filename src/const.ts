@@ -354,6 +354,7 @@ export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consen
 export const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';
 export const LOCAL_STORAGE_ANON_AUTH_KEY = 'cdsebrowser_anon_auth';
 export const OSM_BACKGROUND_NAME = 'osm-background';
+export const STICKER_URL_PARAM_VALUE = 'active';
 export const SELECTED_BASE_LAYER_KEY = 'selectedBaseLayerId';
 
 export const XmlParserOptions = Object.freeze({

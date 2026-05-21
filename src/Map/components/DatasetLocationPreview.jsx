@@ -184,6 +184,7 @@ const DatasetLocationPreview = ({
         const polygonBounds = getPolygonBounds(selectedPolygon.geometry);
         const latestDateWithAvailableData = await findLatestDateWithData({
           datasetId: datasetId,
+          layerId: layerId,
           bounds: polygonBounds,
           maxCloudCoverPercent: maxCloudCover,
           orbitDirection: orbitDirection,
@@ -218,7 +219,7 @@ const DatasetLocationPreview = ({
         setErrorMessage(e);
       }
     }
-  }, [selectedPolygon, datasetId, maxCloudCover, orbitDirection, zoomToGeometry]);
+  }, [selectedPolygon, datasetId, layerId, maxCloudCover, orbitDirection, zoomToGeometry]);
 
   // Style function that considers hover state
   const getFeatureStyle = useCallback(

@@ -6,7 +6,7 @@ import request from 'axios';
 import { b64EncodeUnicode } from './base64MDN';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BAND_UNIT } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
-import { PROCESSING_OPTIONS, TABS } from '../const';
+import { PROCESSING_OPTIONS, TABS, STICKER_URL_PARAM_VALUE } from '../const';
 import { ModalId } from '../const';
 import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
 import { encrypt } from './encrypt';
@@ -272,6 +272,10 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     params.useEvoland = useEvoland;
   }
 
+  if (getUrlParams().sticker === STICKER_URL_PARAM_VALUE) {
+    params.sticker = STICKER_URL_PARAM_VALUE;
+  }
+
   const escapedParams = Object.keys(params)
     .map((k) => `${k}=${encodeURIComponent(params[k])}`)
     .join('&');
@@ -392,46 +396,7 @@ return colorBlend(
     .join(',')}];`;
 }
 
-export function parseEvalscriptBands(evalscript) {
-  try {
-    if (evalscript.startsWith('//VERSION=3')) {
-      const lines = evalscript.split('\n');
-      const listLine =
-        lines.find((line) => line.includes('return [')) || lines.find((line) => line.includes('let val = ['));
-      const listContent = listLine?.split('[')[1]?.split(']')[0];
-
-      if (listContent) {
-        return listContent
-          .split(',')
-          .map((b) => {
-            // Remove factor coefficients
-            let result = b.replace(/[\d.]+\s*\*\s*/g, '');
-            // Remove function calls
-            result = result
-              .replace('visualizer.process(sample.', '')
-              .replace('visualizer.process(', '')
-              .replace('factor * sample.', '')
-              .replace('sample.CLC === ', '')
-              .replace('samples.', '')
-              .replace('sample.', '')
-              .replace(')', '')
-              .trim();
-            return result;
-          })
-          .filter((b) => b && b !== 'dataMask');
-      }
-      return [];
-    }
-
-    return evalscript
-      .split('[')[1]
-      .split(']')[0]
-      .split(',')
-      .map((b) => b.replace('2.5*', ''));
-  } catch (e) {
-    return [];
-  }
-}
+export { parseEvalscriptBands } from './parseEvalscriptBands.util';
 
 export function parsePosition(lat, lng, zoom) {
   zoom = isNaN(parseInt(zoom)) ? undefined : parseInt(zoom);

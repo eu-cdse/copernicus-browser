@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { t } from 'ttag';
 import ReactMarkdown from 'react-markdown';
 import type { PluggableList } from 'unified';
 import store, { indexSlice } from '../../store';
+import { usePrevious } from '../../hooks/usePrevious';
 
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import { SelectedBand } from './SelectedBand';
@@ -80,6 +81,9 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
   const [loading, setLoading] = useState(true);
   const [handlePositions, setHandlePositions] = useState<number[]>(DEFAULT_VALUES);
 
+  const prevEvalscript = usePrevious(evalscript);
+  const isInternalChange = React.useRef(false);
+
   const { gradient: reduxGradient } = useSelector((state: RootState) => state.index);
 
   React.useEffect(() => {
@@ -106,15 +110,51 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
     store.dispatch(indexSlice.actions.setGradient(GRADIENTS[0]));
     setHandlePositions(DEFAULT_VALUES);
   }
+  const applyParsedIndex = useCallback(
+    (parsed: ParseIndexEvalscriptResult) => {
+      const positions = !parsed.positions.includes(NaN) ? parsed.positions : DEFAULT_VALUES;
+      const newMin = parsed.positions[0] ?? DEFAULT_DOMAIN.min;
+      const newMax = parsed.positions[parsed.positions.length - 1] ?? DEFAULT_DOMAIN.max;
+      // Preserve all dragged handle positions so they stay where the user dropped them.
+      // Fall back to parsed positions only when the handle count changes.
+      // Clamp to new domain in case it changed.
+      const clamp = (v: number) => Math.max(newMin, Math.min(v, newMax));
+      const newHandlePositions =
+        positions.length === handlePositions.length ? handlePositions.map(clamp) : positions;
+      // Restore the gradient from the evalscript only for external changes (user edited the
+      // custom script tab). For internal changes (slider drag, equation change, etc.) the
+      // gradient is already correct in Redux — overwriting it would corrupt it because the
+      // stored colors reflect dragged handle positions, not the gradient endpoints.
+      const isExternal = !isInternalChange.current;
+      isInternalChange.current = false;
+      const activeGradient = isExternal
+        ? [parsed.colors[0].replace('#', '0x'), parsed.colors[parsed.colors.length - 1].replace('#', '0x')]
+        : gradient;
+      if (isExternal) {
+        store.dispatch(indexSlice.actions.setGradient(activeGradient));
+      }
+      setValues(positions);
+      setHandlePositions(newHandlePositions);
+      setEquation(parsed.equation);
+      setColorRamp(initColors(newHandlePositions, activeGradient, newMin, newMax));
+      setMin(newMin);
+      setMax(newMax);
+    },
+    [gradient, handlePositions],
+  );
+
+  React.useEffect(() => {
+    if (prevEvalscript === undefined || evalscript === prevEvalscript) {
+      return;
+    }
+    const parsed = evalscript ? parseIndexEvalscript(evalscript) : null;
+    if (parsed !== null) {
+      applyParsedIndex(parsed);
+    }
+  }, [applyParsedIndex, evalscript, prevEvalscript]);
 
   const initEvalFromUrl = (parsed: ParseIndexEvalscriptResult) => {
-    const positions = !parsed.positions.includes(NaN) ? parsed.positions : DEFAULT_VALUES;
-    setValues(positions);
-    setHandlePositions(positions);
-    setEquation(parsed.equation);
-    setColorRamp(parsed.colors);
-    setMin(parsed.positions[0] || DEFAULT_DOMAIN.min); // because we don't save slider min/max use first/last values from evalscript
-    setMax(parsed.positions[parsed.positions.length - 1] || DEFAULT_DOMAIN.max);
+    applyParsedIndex(parsed);
     onChange(layers, { equation: parsed.equation, colorRamp: parsed.colors, values: parsed.positions });
   };
 
@@ -127,18 +167,23 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
     return vals.map((item) => pickColor(currentGradient[0], currentGradient[1], item, minVal, maxVal));
   };
 
+  const notifyChange = (...args: Parameters<typeof onChange>) => {
+    isInternalChange.current = true;
+    onChange(...args);
+  };
+
   const onDraggableBandChange = (selectedIndexBands: IndexLayer) => {
-    onChange(selectedIndexBands, { equation, colorRamp, values });
+    notifyChange(selectedIndexBands, { equation, colorRamp, values });
   };
 
   const onEquationChange = (selectedEquation: string) => {
     setEquation(selectedEquation);
-    onChange(layers, { equation: selectedEquation, colorRamp, values });
+    notifyChange(layers, { equation: selectedEquation, colorRamp, values });
   };
 
   const onGradientChange = (selectedGradient: string[]) => {
     const newColors = initColors(handlePositions, selectedGradient, min, max);
-    onChange(layers, { equation, colorRamp: newColors, values });
+    notifyChange(layers, { equation, colorRamp: newColors, values });
     store.dispatch(indexSlice.actions.setGradient(selectedGradient));
     setColorRamp(newColors);
     setOpen(false);
@@ -153,7 +198,8 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
       return;
     }
     const newColors = initColors(newValues, gradient, min, max);
-    onChange(layers, { equation, colorRamp: newColors, values });
+    setColorRamp(newColors);
+    notifyChange(layers, { equation, colorRamp: newColors, values });
   };
 
   const onSliderUpdate = (newValues: number[]) => {
@@ -174,7 +220,7 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
     let newValues = values.filter((_val, index) => index !== values.length - 1);
     newValues = spreadHandlersEvenly(newValues.length, min, max);
     const newColors = initColors(newValues, gradient, min, max);
-    onChange(layers, { equation, colorRamp: newColors, values: newValues });
+    notifyChange(layers, { equation, colorRamp: newColors, values: newValues });
     setValues(newValues);
     setColorRamp(newColors);
     setHandlePositions(newValues);
@@ -183,7 +229,7 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
   const addHandle = () => {
     const newValues = spreadHandlersEvenly(values.length + 1, min, max);
     const newColors = initColors(newValues, gradient, min, max);
-    onChange(layers, { equation, colorRamp: newColors, values: newValues });
+    notifyChange(layers, { equation, colorRamp: newColors, values: newValues });
     setHandlePositions(newValues);
     setValues(newValues);
     setColorRamp(newColors);
@@ -196,7 +242,7 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
       setMin(newMin);
       const newValues = spreadHandlersEvenly(values.length, parsedMin, max);
       const newColors = initColors(newValues, gradient, parsedMin, max);
-      onChange(layers, { equation, colorRamp: newColors, values: newValues });
+      notifyChange(layers, { equation, colorRamp: newColors, values: newValues });
       setValues(newValues);
       setColorRamp(newColors);
       setHandlePositions(newValues);
@@ -212,7 +258,7 @@ export const IndexBands = ({ bands, layers, onChange, evalscript }: IndexBandsPr
       setMax(newMax);
       const newValues = spreadHandlersEvenly(values.length, min, parsedMax);
       const newColors = initColors(newValues, gradient, min, parsedMax);
-      onChange(layers, { equation, colorRamp: newColors, values: newValues });
+      notifyChange(layers, { equation, colorRamp: newColors, values: newValues });
       setValues(newValues);
       setHandlePositions(newValues);
       setColorRamp(newColors);

@@ -163,7 +163,7 @@ export default class Sentinel5PCDASDataSourceHandler extends DataSourceHandler {
     return getS5ProductType(datasetId);
   };
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const productType = this.getS5ProductType(datasetId);
     if (productType) {
       return new this.shLayer({

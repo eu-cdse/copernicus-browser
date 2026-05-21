@@ -141,7 +141,7 @@ export default class DEMCDASDataSourceHandler extends DataSourceHandler {
   filterLayersByDEMInstance = (layer, datasetId) =>
     this.getDatasetFromDEMInstance(layer.demInstance) === datasetId;
 
-  getBaseLayerForDatasetId = (datasetId) => {
+  getBaseLayerForDatasetId = ({ datasetId }) => {
     const { demInstance } = this.getDatasetParams(datasetId);
     if (demInstance) {
       return new this.shLayer({

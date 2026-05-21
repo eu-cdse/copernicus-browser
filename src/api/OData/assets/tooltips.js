@@ -135,7 +135,6 @@ const ProductTypeTooltips = {
     t`Sentinel-3 altimetry non-operational demonstration products for Lakes and Reservoirs. \n\n More info [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_LPP_HY_v1.2.pdf).`,
   OL_2_WFR___: eumetsatProcessedTooltip,
   SL_2_AOD___: eumetsatProcessedTooltip,
-  SL_2_FRP___: eumetsatProcessedTooltip,
   SL_2_WST___: eumetsatProcessedTooltip,
   SR_2_WAT___: eumetsatProcessedTooltip,
 };

@@ -626,6 +626,58 @@ const getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown = () => t`
 const getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown = () => t`
   The Sentinel-1 & Sentinel-2 Snow Phenology (SP S1+S2) product characterizes the timing and duration of the snow season. For each pixel and for a given hydrological year, it provides the number of days with snow cover, as well as the first and last day of the longest continuous snow period. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 60 m × 60 m, consistent with the input snow cover maps derived from optical satellite data acquired by the Sentinel-2 constellation and from C-band Synthetic Aperture Radar satellite data acquired by the Sentinel-1 constellation (Gap-filled Fractional Snow Cover - GFSC). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-snow-phenology).`;
 
+const getCopernicusClmsVlccBroadleavedCoverDensityEurope100mYearlyV1Markdown = () => t`
+  The High Resolution Layer Broadleaved Density (BCD) dataset provides information on the percentage of broadleaved pixels at 100m spatial resolution, and is derived through aggregation of the 10m DLT for the respective reference year. Within each cell the number of broadleaved pixels are counted and the percentages stored into in the 100m pixel of the BCD. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
+
+This dataset is provided annually starting with 2018 in 100 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
+const getCopernicusClmsVlccForestTypeEurope100m3yearlyV1Markdown = () => t`
+  The High Resolution Layer Forest Type (FTY) dataset provides the Forest Type estimation at 100 meter spatial resolution. The number of broadleaved and coniferous pixels are counted and the percentages stored in the 100m cell. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
+
+This dataset is provided on a 3-yearly frequency in 100 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
+const getCopernicusClmsVlccGrasslandEurope100mYearlyV1Markdown = () => t`
+  The High Resolution Layer Grassland (GRA) raster product provides a binary status layer of grassland/non-grassland mask. This grassy and non-woody vegetation baseline product includes all kinds of grasslands: managed grassland, semi-natural grassland and natural grassy vegetation. It does not include temporary grasslands, which are masked out using the corresponding Ploughing indicator (PLOUGH), indicating on the number of years since a pixel was last ploughed. In the 100 meter raster product, the number of Grassland pixels are counted and the percentages stored in each 100 meter cell. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
+
+This dataset is provided annually starting in 2017 with 100 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Grasslands product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-grasslands).`;
+
+const getCopernicusClmsVlccTreeCoverDensityEurope100mYearlyV1Markdown = () => t`
+  The High Resolution Layer Tree Cover Density (TCD) dataset provides information on the proportional crown coverage per pixel at 100 meter spatial resolution and ranges from 0% (all non-tree covered areas) to 100%, whereby Tree Cover Density is defined as the "vertical projection of tree crowns to a horizontal earth's surface". This product is an aggregation of its corresponding high resolution dataset.
+
+This dataset is provided annually starting with 2018 in 100 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union's Copernicus Land Monitoring Service. More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
+const getCopernicusClmsVlccMainCropEmergenceEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Cropping Patterns - Main Crop Emergence (CPMCE) raster product provides the emergence date of the main (annual) crop expressed in DOY (day of year). YYDOY where YY = last 2 digits of the year (e.g. 19 for 2019) and DOY is the day of the year (1-365).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
+const getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown = () => t`
+  The High Resolution Layer Cropping Patterns - Main Crop Harvest (CPMCH) raster product provides the harvest date of the main (annual) crop expressed in DOY (day of year). YYDOY where YY = last 2 digits of the year (e.g. 19 for 2019) and DOY is the day of the year (1-365).
+
+This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+
 export {
   getCLMSCollectionMarkdown,
   getClmsGlobalLcc100mV3YearlyMarkdown,
@@ -790,4 +842,10 @@ export {
   getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown,
   getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown,
   getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown,
+  getCopernicusClmsVlccBroadleavedCoverDensityEurope100mYearlyV1Markdown,
+  getCopernicusClmsVlccForestTypeEurope100m3yearlyV1Markdown,
+  getCopernicusClmsVlccGrasslandEurope100mYearlyV1Markdown,
+  getCopernicusClmsVlccTreeCoverDensityEurope100mYearlyV1Markdown,
+  getCopernicusClmsVlccMainCropEmergenceEurope10mYearlyV1Markdown,
+  getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown,
 };

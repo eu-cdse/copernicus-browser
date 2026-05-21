@@ -30,6 +30,9 @@ import {
   getDimensionsInMeters,
   adjustClippingForAoi,
   isKMZ,
+  addStickerOverlays,
+  STICKER_WIDTH_PX,
+  STICKER_HEIGHT_PX,
 } from './ImageDownload.utils';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
@@ -45,7 +48,7 @@ import {
   getLoggedInErrorMsg,
   getOnlyBasicImgDownloadAvailableMsg,
 } from '../../junk/ConstMessages';
-import { isDataFusionEnabled } from '../../utils';
+import { isDataFusionEnabled, getUrlParams } from '../../utils';
 import {
   constructGetMapParamsEffects,
   getVisualizationEffectsFromStore,
@@ -55,7 +58,7 @@ import { getGetMapAuthToken } from '../../App';
 import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 
 import './ImageDownload.scss';
-import { MAX_SH_IMAGE_SIZE, PROCESSING_OPTIONS } from '../../const';
+import { MAX_SH_IMAGE_SIZE, PROCESSING_OPTIONS, STICKER_URL_PARAM_VALUE } from '../../const';
 import { CUSTOM_TAG } from './AnalyticalForm';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
@@ -123,6 +126,11 @@ function ImageDownload(props) {
     imageFormat: IMAGE_FORMATS.JPG,
     width: getMapDimensions(props.pixelBounds).width,
     height: getMapDimensions(props.pixelBounds).height,
+  });
+  const [stickerFormState, setStickerFormState] = useState({
+    overlayVariant: 'light',
+    imageFormat: IMAGE_FORMATS.PNG,
+    showText: true,
   });
 
   function updateSelectedLayers(layers) {
@@ -640,6 +648,58 @@ function ImageDownload(props) {
     setLoadingImages(false);
   }
 
+  async function downloadSticker(formData) {
+    setError(null);
+    setWarnings(null);
+    setLoadingImages(true);
+    cancelTokenRef.current = new CancelToken();
+
+    const bounds = props.aoiBounds ? props.aoiBounds : props.mapBounds;
+    const { mimeType } = IMAGE_FORMATS_INFO[formData.imageFormat];
+
+    let image;
+    try {
+      image = await fetchImageFromParams(
+        {
+          ...props,
+          cancelToken: cancelTokenRef.current,
+          imageFormat: formData.imageFormat,
+          width: STICKER_WIDTH_PX,
+          height: STICKER_HEIGHT_PX,
+          bounds,
+          showLogo: false,
+          showCaptions: false,
+          showLegend: false,
+          addMapOverlays: false,
+          selectedCrs: CRS_EPSG4326.authId,
+          getMapAuthToken: getMapAuthToken,
+          aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+          mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
+        },
+        setWarnings,
+      );
+    } catch (err) {
+      setError(err);
+      setLoadingImages(false);
+      return;
+    }
+
+    try {
+      const finalBlob = await addStickerOverlays(
+        image.blob,
+        mimeType,
+        formData.overlayVariant,
+        formData.showText,
+      );
+      const { ext: imageExt } = IMAGE_FORMATS_INFO[formData.imageFormat];
+      FileSaver.saveAs(finalBlob, `${image.nicename}.${imageExt}`);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoadingImages(false);
+    }
+  }
+
   async function download3D(formData) {
     setLoadingImages(true);
     const { fromTime, toTime, datasetId, layerId, customSelected } = props;
@@ -741,6 +801,9 @@ function ImageDownload(props) {
     if (selectedTab === TABS.TERRAIN_VIEWER) {
       download3D(terrainViewerFormState);
     }
+    if (selectedTab === TABS.STICKER) {
+      downloadSticker(stickerFormState);
+    }
   }
 
   const isAnalyticalModeAndNothingSelected =
@@ -771,11 +834,14 @@ function ImageDownload(props) {
       imageHeight >= 1);
 
   const isZoomLevelOK =
-    checkZoomLevel(props.datasetId, props.zoom, props.layerId) || selectedTab === TABS.PRINT;
+    checkZoomLevel(props.datasetId, props.zoom, props.layerId) ||
+    selectedTab === TABS.PRINT ||
+    selectedTab === TABS.STICKER;
 
   const hasLegendData = checkIfCurrentLayerHasLegend();
   const isUserLoggedIn = props.user && props.user.userdata;
   const isOnCompareTab = props.showComparePanel;
+  const isStickerMode = getUrlParams().sticker === STICKER_URL_PARAM_VALUE;
   const dsh = getDataSourceHandler(props.datasetId);
   const supportsAnalyticalImgExport = dsh && dsh.supportsAnalyticalImgExport();
   return (
@@ -785,7 +851,7 @@ function ImageDownload(props) {
         height: 'auto',
         maxHeight: '80vh',
         bottom: 'auto',
-        width: '650px',
+        width: '690px',
         maxWidth: '90vw',
         top: '5vh',
         padding: 0,
@@ -829,6 +895,13 @@ function ImageDownload(props) {
                     isOnCompareTab ? displayOnlyBasicDownloadPossibleMessage : displayLogInToAccessMessage
                   }
                 />
+                {isStickerMode && (
+                  <EOBButton
+                    text={t`Sticker`}
+                    className={selectedTab === TABS.STICKER ? 'selected' : ''}
+                    onClick={() => setSelectedTab(TABS.STICKER)}
+                  />
+                )}
               </>
             )}
             {props.is3D && (
@@ -889,10 +962,12 @@ function ImageDownload(props) {
             analyticalFormState={analyticalFormState}
             printFormState={printFormState}
             terrainViewerFormState={terrainViewerFormState}
+            stickerFormState={stickerFormState}
             setBasicFormState={setBasicFormState}
             setAnalyticalFormState={setAnalyticalFormState}
             setPrintFormState={setPrintFormState}
             setTerrainViewerFormState={setTerrainViewerFormState}
+            setStickerFormState={setStickerFormState}
             showComparePanel={props.showComparePanel}
             isAnalyticalModeAndNothingSelected={isAnalyticalModeAndNothingSelected}
             isAnalyticalModeAndLayersNotLoaded={isAnalyticalModeAndLayersNotLoaded}

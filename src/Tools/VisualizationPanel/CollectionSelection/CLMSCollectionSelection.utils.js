@@ -173,350 +173,29 @@ import {
   COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
 
 export const CLMS_OPTIONS = [
-  {
-    label: 'Land Cover and Land Use in Priority Areas',
-    id: 'Land Cover and Land Use in Priority Areas',
-    options: [
-      {
-        label: 'Urban Atlas',
-        id: 'Urban Atlas',
-        options: [
-          {
-            id: 'UA_BBH',
-            label: 'Building Height',
-            options: [
-              {
-                label: 'clms_ua_building-height_europe_10m_3yearly_v1',
-                id: COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
-              },
-            ],
-          },
-          {
-            id: 'UA_LCU',
-            label: 'Land Cover and Land Use',
-            options: [
-              { label: 'UA_LCU_2018_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2018_VECTOR },
-              { label: 'UA_LCU_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2021_VECTOR },
-            ],
-          },
-          {
-            id: 'UA_LCUC',
-            label: 'Land Cover and Land Use Change',
-            options: [{ label: 'UA_LCUC_2018_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR }],
-          },
-          {
-            id: 'UA_STL',
-            label: 'Street Tree Layer',
-            options: [{ label: 'UA_STL_2021_VECTOR', id: COPERNICUS_CLMS_UA_STL_2021_VECTOR }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Land Cover and Land Use Mapping',
-    id: 'Land Cover and Land Use Mapping',
-    options: [
-      {
-        label: 'Croplands',
-        id: 'Croplands',
-        options: [
-          {
-            label: 'Cropping Patterns',
-            id: 'Cropping Patterns',
-            options: [
-              {
-                label: 'Bare Soil After',
-                id: 'Bare Soil After',
-                options: [
-                  {
-                    label: 'clms_vlcc_bare-soil-after_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Bare Soil Before',
-                id: 'Bare Soil Before',
-                options: [{ label: 'cpbsb_10m_yearly_v1', id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1 }],
-              },
-              {
-                label: 'Cropping Seasons',
-                id: 'Cropping Seasons',
-                options: [
-                  {
-                    label: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Cropping Seasons Types',
-                id: 'Cropping Seasons Types',
-                options: [
-                  {
-                    label: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Fallow Land Duration',
-                id: 'Fallow Land Duration',
-                options: [{ label: 'cpfld_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1 }],
-              },
-              {
-                label: 'Fallow Land Presence',
-                id: 'Fallow Land Presence',
-                options: [{ label: 'cpflp_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1 }],
-              },
-              {
-                label: 'Main Crop Duration',
-                id: 'Main Crop Duration',
-                options: [
-                  {
-                    label: 'clms_vlcc_main-crop-duration_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Secondary Crop Duration',
-                id: 'Secondary Crop Duration',
-                options: [
-                  {
-                    label: 'clms_vlcc_secondary-crop-duration_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Secondary Crop Emergence',
-                id: 'Secondary Crop Emergence',
-                options: [
-                  {
-                    label: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Secondary Crop Types',
-                id: 'Secondary Crop Types',
-                options: [
-                  {
-                    label: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: 'Crop Types',
-            id: 'Crop Types 1',
-            options: [
-              {
-                label: 'Crop Types',
-                id: 'Crop Types 2',
-                options: [
-                  {
-                    label: 'clms_vlcc_crop-types_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Dynamic Land Cover',
-        id: 'Dynamic Land Cover',
-        options: [
-          { label: 'clms_global_lcc_100m_v3_yearly_geotiff', id: COPERNICUS_CLMS_LCC_100M_YEARLY_V3 },
-          { label: 'lcm_global_10m_yearly_v1', id: COPERNICUS_CLMS_LCM_10M_YEARLY_V1 },
-          { label: 'tcd_pantropical_10m_yearly_v1', id: COPERNICUS_CLMS_TCD_10M_YEARLY_V1 },
-        ],
-      },
-      {
-        label: 'Grasslands',
-        id: 'Grasslands',
-        options: [
-          {
-            label: 'Grassland and Herbaceous',
-            id: 'Grassland and Herbaceous',
-            options: [
-              {
-                label: 'Grassland',
-                id: 'Grassland',
-                options: [
-                  {
-                    label: 'clms_vlcc_grassland_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Grassland Change',
-                id: 'Grassland Change',
-                options: [
-                  {
-                    label: 'grac_20m_3yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Ploughing Indicator',
-                id: 'Ploughing Indicator',
-                options: [
-                  {
-                    label: 'clms_vlcc_ploughing-indicator_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Herbaceous Cover',
-                id: 'Herbaceous Cover',
-                options: [
-                  {
-                    label: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: 'Grassland Mowing Events',
-            id: 'Grassland Mowing Events',
-            options: [
-              {
-                label: 'Grassland Mowing Dates',
-                id: 'Grassland Mowing Dates',
-                options: [
-                  {
-                    label: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Grassland Mowing Events',
-                id: 'Grassland Mowing Events 2',
-                options: [
-                  {
-                    label: 'clms_vlcc_grassland-mowing-events_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Tree Cover and Forests',
-        id: 'Tree Cover and Forests',
-        options: [
-          {
-            label: 'Dominant Leaf Type',
-            id: 'Dominant Leaf Type',
-            options: [
-              {
-                label: 'Dominant Leaf Type',
-                id: 'Dominant Leaf Type 2',
-                options: [
-                  {
-                    label: 'clms_vlcc_dominant-leaf-type_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Dominant Leaf Type Change',
-                id: 'Dominant Leaf Type Change',
-                options: [
-                  {
-                    label: 'clms_vlcc_dominant-leaf-type-change_europe_20m_3yearly_v1',
-                    id: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: 'Forest Type',
-            id: 'Forest Type',
-            options: [
-              {
-                label: 'Forest Type',
-                id: 'Forest Type 2',
-                options: [
-                  {
-                    label: 'clms_vlcc_forest-type_europe_10m_3yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Forest Additional Support Layer',
-                id: 'Forest Additional Support Layer',
-                options: [
-                  {
-                    label: 'clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: 'Tree Cover Density',
-            id: 'Tree Cover Density',
-            options: [
-              {
-                label: 'Tree Cover Density',
-                id: 'Tree Cover Density 2',
-                options: [
-                  {
-                    label: 'clms_vlcc_tree-cover-density_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
-                  },
-                ],
-              },
-              {
-                label: 'Tree Cover Presence Change',
-                id: 'Tree Cover Presence Change',
-                options: [{ label: 'tcpc_20m_3yearly_v1', id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1 }],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  // {
-  //   label: 'Priority Area Monitoring',
-  //   id: 'Priority Area Monitoring',
-  //   options: [
-  //     { label: 'Coastal Zones', id: 'Coastal Zones' },
-  //     { label: 'N2K', id: 'N2K' },
-  //     { label: 'Riperian Zones', id: 'Riperian Zones' },
-  //     { label: 'Urban Atlas', id: 'Urban Atlas' },
-  //     {
-  //       label: 'Reference Land Cover and Land Cover Change in selected Hot Spots',
-  //       id: 'Reference Land Cover and Land Cover Change in selected Hot Spots',
-  //     },
-  //   ],
-  // },
   {
     label: 'Bio-geophysical Parameters',
     id: 'Bio-geophysical Parameters',
@@ -1275,6 +954,421 @@ export const CLMS_OPTIONS = [
               { label: 'clms_global_wb_300m_v2_monthly_geotiff', id: COPERNICUS_CLMS_WB_300M_MONTHLY_V2 },
               { label: 'clms_global_wb_300m_v1_10daily_geotiff', id: COPERNICUS_CLMS_WB_300M_10DAILY_V1 },
               { label: 'clms_global_wb_1km_v2_10daily_geotiff', id: COPERNICUS_CLMS_WB_1KM_10DAILY_V2 },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Land Cover and Land Use in Priority Areas',
+    id: 'Land Cover and Land Use in Priority Areas',
+    options: [
+      {
+        label: 'Urban Atlas',
+        id: 'Urban Atlas',
+        options: [
+          {
+            id: 'UA_BBH',
+            label: 'Building Height',
+            options: [
+              {
+                label: 'clms_ua_building-height_europe_10m_3yearly_v1',
+                id: COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+              },
+            ],
+          },
+          {
+            id: 'UA_LCU',
+            label: 'Land Cover and Land Use',
+            options: [
+              { label: 'UA_LCU_2018_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2018_VECTOR },
+              { label: 'UA_LCU_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCU_2021_VECTOR },
+            ],
+          },
+          {
+            id: 'UA_LCUC',
+            label: 'Land Cover and Land Use Change',
+            options: [{ label: 'UA_LCUC_2018_2021_VECTOR', id: COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR }],
+          },
+          {
+            id: 'UA_STL',
+            label: 'Street Tree Layer',
+            options: [{ label: 'UA_STL_2021_VECTOR', id: COPERNICUS_CLMS_UA_STL_2021_VECTOR }],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Land Cover and Land Use Mapping',
+    id: 'Land Cover and Land Use Mapping',
+    options: [
+      {
+        label: 'Croplands',
+        id: 'Croplands',
+        options: [
+          {
+            label: 'Cropping Patterns',
+            id: 'Cropping Patterns',
+            options: [
+              {
+                label: 'Bare Soil After',
+                id: 'Bare Soil After',
+                options: [
+                  {
+                    label: 'clms_vlcc_bare-soil-after_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Bare Soil Before',
+                id: 'Bare Soil Before',
+                options: [{ label: 'cpbsb_10m_yearly_v1', id: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1 }],
+              },
+              {
+                label: 'Cropping Seasons',
+                id: 'Cropping Seasons',
+                options: [
+                  {
+                    label: 'clms_vlcc_cropping-seasons_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Cropping Seasons Types',
+                id: 'Cropping Seasons Types',
+                options: [
+                  {
+                    label: 'clms_vlcc_cropping-seasons-types_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Fallow Land Duration',
+                id: 'Fallow Land Duration',
+                options: [{ label: 'cpfld_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1 }],
+              },
+              {
+                label: 'Fallow Land Presence',
+                id: 'Fallow Land Presence',
+                options: [{ label: 'cpflp_10m_yearly_v1', id: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1 }],
+              },
+              {
+                label: 'Main Crop Duration',
+                id: 'Main Crop Duration',
+                options: [
+                  {
+                    label: 'clms_vlcc_main-crop-duration_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Main Crop Emergence',
+                id: 'Main Crop Emergence',
+                options: [
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2017_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2018_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2019_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2020_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2021_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2022_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-emergence-2023_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Main Crop Harvest',
+                id: 'Main Crop Harvest',
+                options: [
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2017_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2018_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2019_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2020_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2021_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2022_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_main-crop-harvest-2023_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Duration',
+                id: 'Secondary Crop Duration',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-duration_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Emergence',
+                id: 'Secondary Crop Emergence',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Secondary Crop Types',
+                id: 'Secondary Crop Types',
+                options: [
+                  {
+                    label: 'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Crop Types',
+            id: 'Crop Types 1',
+            options: [
+              {
+                label: 'Crop Types',
+                id: 'Crop Types 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_crop-types_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'Dynamic Land Cover',
+        id: 'Dynamic Land Cover',
+        options: [
+          { label: 'clms_global_lcc_100m_v3_yearly_geotiff', id: COPERNICUS_CLMS_LCC_100M_YEARLY_V3 },
+          { label: 'lcm_global_10m_yearly_v1', id: COPERNICUS_CLMS_LCM_10M_YEARLY_V1 },
+          { label: 'tcd_pantropical_10m_yearly_v1', id: COPERNICUS_CLMS_TCD_10M_YEARLY_V1 },
+        ],
+      },
+      {
+        label: 'Grasslands',
+        id: 'Grasslands',
+        options: [
+          {
+            label: 'Grassland and Herbaceous',
+            id: 'Grassland and Herbaceous',
+            options: [
+              {
+                label: 'Grassland',
+                id: 'Grassland',
+                options: [
+                  {
+                    label: 'clms_vlcc_grassland_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_grassland_europe_100m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Grassland Change',
+                id: 'Grassland Change',
+                options: [
+                  {
+                    label: 'grac_20m_3yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Ploughing Indicator',
+                id: 'Ploughing Indicator',
+                options: [
+                  {
+                    label: 'clms_vlcc_ploughing-indicator_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Herbaceous Cover',
+                id: 'Herbaceous Cover',
+                options: [
+                  {
+                    label: 'clms_vlcc_herbaceous-cover_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Grassland Mowing Events',
+            id: 'Grassland Mowing Events',
+            options: [
+              {
+                label: 'Grassland Mowing Dates',
+                id: 'Grassland Mowing Dates',
+                options: [
+                  {
+                    label: 'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Grassland Mowing Events',
+                id: 'Grassland Mowing Events 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_grassland-mowing-events_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'Tree Cover and Forests',
+        id: 'Tree Cover and Forests',
+        options: [
+          {
+            label: 'Dominant Leaf Type',
+            id: 'Dominant Leaf Type',
+            options: [
+              {
+                label: 'Broadleaved Cover Density',
+                id: 'Broadleaved Cover Density',
+                options: [
+                  {
+                    label: 'clms_vlcc_broadleaved-cover-density_europe_100m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Dominant Leaf Type',
+                id: 'Dominant Leaf Type 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_dominant-leaf-type_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_DLT_10M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Dominant Leaf Type Change',
+                id: 'Dominant Leaf Type Change',
+                options: [
+                  {
+                    label: 'clms_vlcc_dominant-leaf-type-change_europe_20m_3yearly_v1',
+                    id: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Forest Type',
+            id: 'Forest Type',
+            options: [
+              {
+                label: 'Forest Type',
+                id: 'Forest Type 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_forest-type_europe_10m_3yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_forest-type_europe_100m_3yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Forest Additional Support Layer',
+                id: 'Forest Additional Support Layer',
+                options: [
+                  {
+                    label: 'clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Tree Cover Density',
+            id: 'Tree Cover Density',
+            options: [
+              {
+                label: 'Tree Cover Density',
+                id: 'Tree Cover Density 2',
+                options: [
+                  {
+                    label: 'clms_vlcc_tree-cover-density_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
+                  },
+                  {
+                    label: 'clms_vlcc_tree-cover-density_europe_100m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
+                label: 'Tree Cover Presence Change',
+                id: 'Tree Cover Presence Change',
+                options: [{ label: 'tcpc_20m_3yearly_v1', id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1 }],
+              },
             ],
           },
         ],

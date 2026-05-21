@@ -18,12 +18,12 @@ export const MOSAIC_AVAILABILITY: Record<string, MosaicAvailabilityEntry> = {
   [S1_MONTHLY_MOSAIC_DH]: {
     minDate: '2014-10-01',
     maxDate: null,
-    displayRange: 'Oct 2014 – Mar 2026',
+    displayRange: 'Oct 2014 – Apr 2026',
   },
   [S1_MONTHLY_MOSAIC_IW]: {
     minDate: '2014-10-01',
     maxDate: null,
-    displayRange: 'Oct 2014 – Mar 2026',
+    displayRange: 'Oct 2014 – Apr 2026',
   },
   [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: {
     minDate: '2020-01-01',

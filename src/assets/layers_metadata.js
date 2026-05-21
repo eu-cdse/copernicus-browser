@@ -222,6 +222,24 @@ import {
   COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5153,5 +5171,179 @@ temperatures of atmospheric window channels within the infrared range. LST descr
     ],
     description: () =>
       t`Number of days between the estimated snow melt out date and the closest snow observation date.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+        layerId: 'Broadleaved Cover Density',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 100m information on the broadleaved cover density.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
+        layerId: 'forest_type_over_3years',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 100m a forest classification for three thematic classes (broadleaved forest / coniferous forest / mixed zones) with the agricultural/urban trees removed for the 2018 reference year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
+        layerId: 'Grassland',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 100 m the percentage of grassland coverage within each 100 m cell.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+        layerId: 'tree_cover_density',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 100 m the level of tree cover density in a range from 0% to 100%.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2017',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2018',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2019',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2020',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2021',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2022',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence - 2023',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the emergence date of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Emergence Confidence Layer',
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for main crop emergence.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2017',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2018',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2019',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2020',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2021',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2022',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest - 2023',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the harvest date of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+        layerId: 'Main Crop Harvest Confidence Layer',
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for main crop harvest.`,
   },
 ];
