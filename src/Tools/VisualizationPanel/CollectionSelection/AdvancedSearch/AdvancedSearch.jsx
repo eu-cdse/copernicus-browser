@@ -870,7 +870,7 @@ class AdvancedSearch extends Component {
           </div>
           <div className="clear" />
           <div className="select-time-range">
-            <div className="time-range-advanced-title">{t`Time range`}:</div>
+            <div className="time-range-advanced-title">{t`Time Range`}:</div>
             <TimespanPicker
               id="visualization-time-select"
               minDate={minDateRange}

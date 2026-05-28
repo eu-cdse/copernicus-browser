@@ -1,10 +1,5 @@
 import moment from 'moment';
-import {
-  AttributeNames,
-  AttributeOriginValues,
-  AttributeProcessorVersionValues,
-  ODataAttributes,
-} from '../../../../../api/OData/assets/attributes';
+import { AttributeNames, ODataAttributes } from '../../../../../api/OData/assets/attributes';
 import { AttributeTooltips } from '../../../../../api/OData/assets/tooltips';
 import { ExpressionTreeOperator } from '../../../../../api/OData/ExpressionTree';
 import { ODataFilterBuilder } from '../../../../../api/OData/ODataFilterBuilder';
@@ -35,21 +30,6 @@ export const getAllFiltersForCollection = (collection) =>
     getAdditionalFilterData(collection.id, additionalFilter.id, additionalFilter),
   );
 
-// creates a filter tree for "origin" attribute where option AttributeOriginValues.CLOUDFERRO
-// needs an additional attribute ODataAttributes.processorVersion to be added to the filter query
-export const createOriginFilter = (key, value) => {
-  const originOptionFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
-  originOptionFilter.attribute(ODataAttributes[key], ODataFilterOperator.eq, value);
-  if (value === AttributeOriginValues.CLOUDFERRO.value) {
-    originOptionFilter.attribute(
-      ODataAttributes.processorVersion,
-      ODataFilterOperator.eq,
-      AttributeProcessorVersionValues.V99_99.value,
-    );
-  }
-  return originOptionFilter;
-};
-
 export const createS1GRDResolutionFilter = (key, value) => {
   const s1GRDResolutionFilter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
   s1GRDResolutionFilter.contains(AttributeNames.productName, `GRD${value}`, 'string');
@@ -61,6 +41,20 @@ export const createAcrossTrackIncidenceAngleFilter = (key, value) => {
   const filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
   filter.attribute(ODataAttributes.acrossTrackIncidenceAngle, ODataFilterOperator.le, Math.max(...values));
   filter.attribute(ODataAttributes.acrossTrackIncidenceAngle, ODataFilterOperator.ge, Math.min(...values));
+  return filter;
+};
+
+export const createBiogeophysicalCloudCoverFilter = (key, value) => {
+  const filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
+  filter.attribute(ODataAttributes.cloudCover, ODataFilterOperator.le, value);
+  return filter;
+};
+
+export const createBiogeophysicalProjectionGridFilter = (key, value) => {
+  const [projection, grid] = value.split('|');
+  const filter = new ODataFilterBuilder(ExpressionTreeOperator.AND);
+  filter.attribute(ODataAttributes.projectionName, ODataFilterOperator.eq, projection);
+  filter.attribute(ODataAttributes.gridLabel, ODataFilterOperator.eq, grid);
   return filter;
 };
 

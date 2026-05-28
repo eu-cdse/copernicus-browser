@@ -114,6 +114,18 @@ async function changeOgcRequestsState(client, instances, isOgcRequestsDisable) {
   }
 }
 
+export async function updateLayer(client, instanceId, layer) {
+  try {
+    const { id: layerId } = layer;
+    await client.put(
+      `${SH_SERVICE_BASE_URL}/api/v2/configuration/instances/${instanceId}/layers/${layerId}`,
+      { ...layer, layerId },
+    );
+  } catch (error) {
+    throw new Error(`Failed to update layer ${layer.id} for instance ${instanceId}: ${error.message}`);
+  }
+}
+
 export function getCsvFullPath(scriptParameter) {
   if (scriptParameter.length === 0) {
     return null;

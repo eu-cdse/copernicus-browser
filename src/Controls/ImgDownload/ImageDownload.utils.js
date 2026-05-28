@@ -19,7 +19,7 @@ import {
   datasetLabels,
   checkIfCustom,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { CUSTOM } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { CUSTOM, BAND_UNIT } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { isDataFusionEnabled } from '../../utils';
 import { overlayTileLayers } from '../../Map/Layers';
 import { createGradients } from '../../Tools/VisualizationPanel/legendUtils';
@@ -1202,26 +1202,138 @@ export function getRawBandsScalingFactor({ datasetId, imageSampleType, bandsInfo
   return factor;
 }
 
-export function constructV3Evalscript(layer, datasetId, imageFormat, bands, addDataMask = false) {
+export function constructRawBandEvalscript(layer, datasetId, imageFormat, bands, addDataMask = false) {
   const sampleType = IMAGE_FORMATS_INFO[imageFormat].sampleType;
+
+  const bandInfo = bands.find((b) => b.name === layer);
+  const isKelvin = bandInfo?.unit === BAND_UNIT.KELVIN;
+
+  const dataMaskInput = addDataMask ? ', "dataMask"' : '';
+  const dataMaskOutput = addDataMask ? ', sample.dataMask' : '';
+  const outputBands = addDataMask ? 2 : 1;
+
+  if (isKelvin && sampleType !== 'FLOAT32') {
+    if (sampleType === 'UINT16') {
+      // Multiply Kelvin by 100 to store 2 decimal places of precision in UINT16.
+      // Pair the downloaded TIFF with an aux.xml file (scale=0.01) so QGIS displays correct values.
+      // Note: values above 655.35 K will saturate at 65535; use FLOAT32 for fire channels.
+      return `//VERSION=3
+function setup() {
+  return {
+    input: ["${layer}"${dataMaskInput}],
+    output: { bands: ${outputBands}, sampleType: "${sampleType}" }
+  };
+}
+
+function evaluatePixel(sample) {
+  return [Math.round(100 * sample.${layer})${dataMaskOutput}];
+}`;
+    }
+    // UINT8: visual mapping of the typical surface temperature range
+    return `//VERSION=3
+function setup() {
+  return {
+    input: ["${layer}"${dataMaskInput}],
+    output: { bands: ${outputBands}, sampleType: "${sampleType}" }
+  };
+}
+
+function evaluatePixel(sample) {
+  const visualizer = new HighlightCompressVisualizer(200, 375);
+  return [255 * visualizer.process(sample.${layer})${dataMaskOutput}];
+}`;
+  }
 
   let factor = getRawBandsScalingFactor({
     datasetId: datasetId,
     imageSampleType: sampleType,
     bandsInfo: bands,
   });
-  factor = factor ? `${factor} *` : '';
+  const factorPrefix = factor ? `${factor} * ` : '';
 
   return `//VERSION=3
 function setup() {
   return {
-    input: ["${layer}"${addDataMask ? ', "dataMask"' : ''}],
-    output: { bands: ${addDataMask ? 2 : 1}, sampleType: "${sampleType}" }
+    input: ["${layer}"${dataMaskInput}],
+    output: { bands: ${outputBands}, sampleType: "${sampleType}" }
   };
 }
 
 function evaluatePixel(sample) {
-  return [${`${factor} sample.` + layer}${addDataMask ? ', sample.dataMask' : ''} ];}`;
+  return [${factorPrefix}sample.${layer}${dataMaskOutput}];
+}`;
+}
+
+// Injects a GDAL_METADATA tag (42112) into an existing TIFF blob so that
+// GDAL/QGIS reads the scale, offset, and unit type directly from the file
+// without needing a sidecar .aux.xml. The new IFD is appended to the end of
+// the file and the header is updated to point to it; original data is intact.
+export async function injectGdalMetadataIntoTiff(tiffBlob, scale, offset, unitType) {
+  const GDAL_METADATA_TAG = 42112;
+  const xmlString =
+    `<GDALMetadata>\n` +
+    `  <Item name="scale" sample="0" role="scale">${scale}</Item>\n` +
+    `  <Item name="offset" sample="0" role="offset">${offset}</Item>\n` +
+    `  <Item name="unittype" sample="0" role="unittype">${unitType}</Item>\n` +
+    `</GDALMetadata>`;
+
+  const buffer = await tiffBlob.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  const view = new DataView(buffer);
+
+  const le = bytes[0] === 0x49; // 'I' = little-endian, 'M' = big-endian
+  if (view.getUint16(2, le) !== 42) {
+    throw new Error('Not a standard TIFF');
+  }
+
+  const ifdOffset = view.getUint32(4, le);
+  const entryCount = view.getUint16(ifdOffset, le);
+
+  const originalEntries = [];
+  for (let i = 0; i < entryCount; i++) {
+    const off = ifdOffset + 2 + i * 12;
+    originalEntries.push({
+      tag: view.getUint16(off, le),
+      rawBytes: bytes.slice(off, off + 12),
+    });
+  }
+  const nextIfdOffset = view.getUint32(ifdOffset + 2 + entryCount * 12, le);
+
+  const xmlBytes = new TextEncoder().encode(xmlString + '\0');
+  const xmlOffset = buffer.byteLength;
+  const newIfdOffset = xmlOffset + xmlBytes.length;
+
+  const newEntryBuf = new ArrayBuffer(12);
+  const newEntryView = new DataView(newEntryBuf);
+  newEntryView.setUint16(0, GDAL_METADATA_TAG, le);
+  newEntryView.setUint16(2, 2, le); // ASCII
+  newEntryView.setUint32(4, xmlBytes.length, le);
+  newEntryView.setUint32(8, xmlOffset, le);
+
+  const allEntries = originalEntries.filter((e) => e.tag !== GDAL_METADATA_TAG);
+  const gdalEntry = { tag: GDAL_METADATA_TAG, rawBytes: new Uint8Array(newEntryBuf) };
+  const insertAt = allEntries.findIndex((e) => e.tag > GDAL_METADATA_TAG);
+  if (insertAt === -1) {
+    allEntries.push(gdalEntry);
+  } else {
+    allEntries.splice(insertAt, 0, gdalEntry);
+  }
+
+  const newIfdSize = 2 + allEntries.length * 12 + 4;
+  const out = new Uint8Array(buffer.byteLength + xmlBytes.length + newIfdSize);
+  const outView = new DataView(out.buffer);
+
+  out.set(bytes, 0);
+  outView.setUint32(4, newIfdOffset, le); // redirect header → new IFD
+  out.set(xmlBytes, xmlOffset);
+
+  outView.setUint16(newIfdOffset, allEntries.length, le);
+  for (let i = 0; i < allEntries.length; i++) {
+    out.set(allEntries[i].rawBytes, newIfdOffset + 2 + i * 12);
+  }
+  outView.setUint32(newIfdOffset + 2 + allEntries.length * 12, nextIfdOffset, le);
+
+  return new Blob([out.buffer], { type: 'image/tiff' });
 }
 
 export function constructBasicEvalscript(band) {

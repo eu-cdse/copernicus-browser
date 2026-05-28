@@ -45,6 +45,7 @@ export const RRD_DATASOURCE_KEYWORD_RULES = [
 
   // SPOT (Airbus FR)
   { keyword: 'NAO', value: 'AIRBUS_FE_SPOT' },
+  { keyword: 'GENERAL_SPOT', value: 'AIRBUS_FE_SPOT' },
 
   // SKYSAT (Planet)
   { keyword: 'SKY', value: 'SKYSAT' },

@@ -151,16 +151,16 @@ const getClmsGlobalGdmp300mV110dailyRt6Markdown = () => t`
   Equivalent to Gross Primary Production (GPP). Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to June 2020 based upon PROBA-V data with version 1.0 and from July 2020 onwards based upon Sentinel-3/OLCI data with version 1.1. More information [here](https://land.copernicus.eu/en/products/vegetation/gross-dry-matter-productivity-v1-0-300m).`;
 
 const getClmsGlobalNdvi1kmV3StatisticsMarkdown = () => t`
-  Based upon PROBA-V NDVI 1km version 3, short-term statistics include the minimum, median, maximum, mean, standard deviation and the number of observations over the 5-years period 2015-2019. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
+  Provides the Long-Term Statistics of the Normalized Difference Vegetation Index. Every 10-days, minimum, median, maximum and mean are available at global scale, at a spatial resolution of ~1km over the 21-years period 1999-2019. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-long-term-statistics-v3-0-1km).`;
 
 const getClmsGlobalNdvi300mV110dailyMarkdown = () => t`
   Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 300 m from 2014 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalized-difference-vegetation-index-300m-v1.0).`;
 
 const getClmsGlobalNdvi300mV210dailyMarkdown = () => t`
-  Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from July 2020 to the present. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v2-0-300m).`;
+  Provides information on the Normalized Difference Vegetation Index, a spectral index quantifying the amount and vigour of vegetation. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300m. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v2-0-300m).`;
 
 const getClmsGlobalNdvi300mV310dailyMarkdown = () => t`
-  Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available in near real time at global scale in the spatial resolution of about 300 m from January 2014 to the present.`;
+  Provides information on the Normalized Difference Vegetation Index, a spectral index quantifying the amount and vigour of vegetation. Every 10-days, estimates are available at global scale, at a spatial resolution of ~300m. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v3-0-300m).`;
 
 const getClmsGlobalSsm1kmV1DailyMarkdown = () => t`
   Provides information on the relative water content of the top few centimeters soil, describing how wet or dry the soil is in its topmost layer, expressed in percent saturation. Daily observations are available for the continental Europe in the spatial resolution of 1 km and with the temporal extent from October 2014 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/daily-surface-soil-moisture-v1.0).`;
@@ -222,8 +222,8 @@ const getClmsGlobalNpp300mV110dailyRt2Markdown = () => t`
 const getClmsGlobalNpp300mV110dailyRt6Markdown = () => t`
   Provides the amount of carbon retained in an ecosystem (increase in biomass); it is equal to the difference between the amount of carbon produced through photosynthesis (GPP) and the amount of energy that is used for respiration (R). 10-daily observations are available at global scale in the spatial resolution of 300 m and with the temporal extent from 2023 to present. More information [here](https://land.copernicus.eu/en/products/vegetation/net-primary-production-v1-0-300m).`;
 
-const getClmsGlobalNdvi1kmV310dailyMarkdown = () => t`
-  Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. Every 10-days estimates are available at global scale in the spatial resolution of about 1 km from 1999 to 2013 based upon SPOT/VEGETATION data and from 2014 to June 2020 based upon PROBA-V data. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v3-0-1km).`;
+const getClmsGlobalNdvi1kmV310dailyMarkdown = () =>
+  t`Provides the Normalized Difference Vegetation Index, a spectral index quantifying the amount and vigour of vegetation. Every 10-days, estimates are available at global scale, at a spatial resolution of ~1km from January 1999 to June 2020. More information [here](https://land.copernicus.eu/en/products/vegetation/normalised-difference-vegetation-index-v3-0-1km).`;
 
 const getClmsGlobalSwi125kmV310dailyMarkdown = () => t`
   Averages the daily Soil Water Index product over 10 days. The data are produced every 10 days over the globe at the spatial resolution of 0.1° and with the temporal extent from January 2007 to present. More information [here](https://land.copernicus.eu/en/products/soil-moisture/10-daily-soil-water-index-global-v3-0-12-5-km).`;
@@ -284,7 +284,7 @@ const getClmsGlobalLcm10mV1YearlyMarkdown = () =>
   t`Provides spatial information at global level on different types (classes) of physical coverage of the Earth's surface, e.g. forests, grasslands, croplands, water bodies, wetlands for the base year 2020. More information [here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__use).`;
 
 const getClmsPantropicalTcd10mV1YearlyMarkdown = () =>
-  t`Provides spatial information at pantropical level on tree canopy density in percent per pixel for 2020 reference year in a discrete range between 0% and 100%. More information [here](https://land.copernicus.eu/en/products?tab=full_coverage_land_cover__use).`;
+  t`Provides yearly tree cover density for the pantropical region at 10 m resolution, expressed as percentage of tree cover. More information [here](https://land.copernicus.eu/en/products/global-dynamic-land-cover/tree-cover-density-2020-raster-10-m-pantropical-annual).`;
 
 const getClmsGlobalLie500mV2DailyMarkdown = () =>
   t`On a daily basis classifies pixels in Global freshwater bodies into 1) Snow-covered ice, 2) Partially snow-covered or snow-free ice, 3) Open water, and 4) Cloud. The data is updated in near-real time with the spatial resolution of 500 m and with a temporal extent from July 2025 to present. More information [here](https://land.copernicus.eu/en/products/water-bodies/lake-ice-extent-global-500m_v2).`;

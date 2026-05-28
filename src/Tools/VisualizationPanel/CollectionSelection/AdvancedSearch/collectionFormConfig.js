@@ -3,7 +3,6 @@ import { FilterElement } from '../../../../api/OData/FilterElement';
 import { ODataCollections, ODataFilterOperator } from '../../../../api/OData/ODataTypes';
 import {
   AttributeNames,
-  AttributeOriginValues,
   AttributeOnlineValues,
   AttributeOperationalModeValues,
   AttributeOrbitDirectionValues,
@@ -23,7 +22,8 @@ import {
 import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
   createAcrossTrackIncidenceAngleFilter,
-  createOriginFilter,
+  createBiogeophysicalCloudCoverFilter,
+  createBiogeophysicalProjectionGridFilter,
   createS1GRDResolutionFilter,
   getS5MaxAbsoluteOrbit,
 } from './filters/AdditionalFilters.utils';
@@ -287,13 +287,6 @@ export const collections = [
         min: 1,
         max: 143,
         placeholder: '1-143',
-      },
-      {
-        id: AttributeNames.origin,
-        render: MultiSelectInput,
-        getOptions: () => [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
-        filterElement: FilterElement.CustomFilter,
-        customFilter: (key, value) => createOriginFilter(key, value),
       },
       {
         id: AttributeNames.productType,
@@ -2664,6 +2657,40 @@ export const recursiveCollectionCLMS = [
         render: DefaultInput,
         type: 'text',
         placeholder: FormatedAttributeNames.productType(),
+      },
+      {
+        id: AttributeNames.cloudCover,
+        render: NumericInput,
+        type: 'integer',
+        min: 0,
+        max: 100,
+        placeholder: '0-100',
+        filterElement: FilterElement.CustomFilter,
+        customFilter: createBiogeophysicalCloudCoverFilter,
+      },
+      {
+        id: 'Projection & Resolution',
+        render: MultiSelectInput,
+        getOptions: () => [
+          { value: 'utm|10m', label: 'UTM 10 m' },
+          { value: 'utm|20m', label: 'UTM 20 m' },
+          { value: 'utm|60m', label: 'UTM 60 m' },
+          { value: 'laea|10m', label: 'LAEA 10 m' },
+          { value: 'laea|20m', label: 'LAEA 20 m' },
+          { value: 'laea|60m', label: 'LAEA 60 m' },
+          { value: 'laea|100m', label: 'LAEA 100 m' },
+        ],
+        filterElement: FilterElement.CustomFilter,
+        customFilter: createBiogeophysicalProjectionGridFilter,
+      },
+      {
+        id: AttributeNames.missionShortName,
+        render: MultiSelectInput,
+        getOptions: () => [
+          { value: 'SENTINEL1', label: 'S1' },
+          { value: 'SENTINEL2', label: 'S2' },
+          { value: 'COMBINED', label: 'S1 + S2' },
+        ],
       },
     ],
   },

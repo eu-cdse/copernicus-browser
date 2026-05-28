@@ -23,12 +23,11 @@ const usePixelExplorer = () => {
     const getValue = async (requestCancelToken) => {
       try {
         setLoading(true);
-        const { enabled, statisticsLayer, indexValueFetchingFunction } = await initializeStatisticsLayer(
-          params,
-        );
+        const { enabled, statisticsLayer, statsOutputName, indexValueFetchingFunction } =
+          await initializeStatisticsLayer(params);
         setEnabled(enabled);
         if (enabled) {
-          const indexValue = await indexValueFetchingFunction(statisticsLayer, {
+          const indexValue = await indexValueFetchingFunction(statisticsLayer, statsOutputName, {
             ...params,
             cancelToken: requestCancelToken,
           });

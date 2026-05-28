@@ -1,5 +1,6 @@
 import { parseScript } from 'esprima';
 import escodegen from 'escodegen';
+import { BROWSERSTATS_OUTPUT, EOBROWSERSTATS_OUTPUT } from '../const';
 
 const DEFAULT_OUTPUT_ID = 'default';
 
@@ -252,11 +253,32 @@ export function checkAllMandatoryOutputsExist(evalscript, outputIds) {
   if (!evalscript || !outputIds || outputIds.length === 0) {
     return false;
   }
-  try {
-    const outputArr = getOutputIds(evalscript);
 
-    return outputIds.every((outputId) => outputArr.indexOf(outputId) > -1);
-  } catch (err) {
+  const outputArr = getOutputIds(evalscript);
+
+  if (!outputArr) {
     return false;
   }
+
+  return outputIds.every((outputId) => {
+    if (Array.isArray(outputId)) {
+      return outputId.some((id) => outputArr.indexOf(id) > -1);
+    }
+    return outputArr.indexOf(outputId) > -1;
+  });
+}
+
+export function getStatsOutputName(evalscript) {
+  const outputIds = getOutputIds(evalscript);
+  //the null-only guard is intentional (empty array and undefined-element arrays are handled by the fallthrough)
+  if (!outputIds) {
+    return null;
+  }
+  if (outputIds.indexOf(BROWSERSTATS_OUTPUT) > -1) {
+    return BROWSERSTATS_OUTPUT;
+  }
+  if (outputIds.indexOf(EOBROWSERSTATS_OUTPUT) > -1) {
+    return EOBROWSERSTATS_OUTPUT;
+  }
+  return null;
 }

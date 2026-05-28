@@ -17,7 +17,10 @@ import oDataHelpers, {
   countGeometryRepetitions,
   calculateMaxGeometryChars,
 } from './ODataHelpers';
-import { AttributeNames, AttributeOriginValues, AttributeProcessorVersionValues } from './assets/attributes';
+import {
+  createBiogeophysicalCloudCoverFilter,
+  createBiogeophysicalProjectionGridFilter,
+} from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/filters/AdditionalFilters.utils';
 import {
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
@@ -630,107 +633,6 @@ describe('roundGeometryValues', () => {
   test('roundGeometryValues', () => {
     const roundedGeometry = roundGeometryValues(geometry);
     expect(roundedGeometry).toEqual(geometry2);
-  });
-});
-
-describe('createAdvancedSearchQuery', () => {
-  const collectionS2 = { id: 'S2' };
-  const fromTime = '2023-06-29T00:00:00.000Z';
-  const toTime = '2023-06-29T23:59:59.999Z';
-  const geometry = {
-    type: 'Polygon',
-    coordinates: [
-      [
-        [1, 1],
-        [1, 2],
-        [2, 2],
-        [2, 1],
-        [1, 1],
-      ],
-    ],
-  };
-
-  const originEsaString = `Attributes/OData.CSC.StringAttribute/any(att:att/Name eq '${AttributeNames.origin}' and att/OData.CSC.StringAttribute/Value eq '${AttributeOriginValues.ESA.value}')`;
-  const originCfString = `(Attributes/OData.CSC.StringAttribute/any(att:att/Name eq '${AttributeNames.origin}' and att/OData.CSC.StringAttribute/Value eq '${AttributeOriginValues.CLOUDFERRO.value}') and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq '${AttributeNames.processorVersion}' and att/OData.CSC.StringAttribute/Value eq '${AttributeProcessorVersionValues.V99_99.value}'))`;
-  const originBothString = `(${originEsaString} or ${originCfString})`;
-
-  test('origin filter no option selected', () => {
-    const params = {
-      collections: [collectionS2],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).not.toContain(originEsaString);
-    expect(filter.value).not.toContain(originCfString);
-  });
-
-  test('origin filter ESA selected', () => {
-    const params = {
-      collections: [
-        { ...collectionS2, additionalFilters: { [AttributeNames.origin]: [AttributeOriginValues.ESA] } },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toContain(originEsaString);
-    expect(filter.value).not.toContain(originCfString);
-  });
-
-  test('origin filter CLOUDFERRO selected', () => {
-    const params = {
-      collections: [
-        {
-          ...collectionS2,
-          additionalFilters: { [AttributeNames.origin]: [AttributeOriginValues.CLOUDFERRO] },
-        },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter.value).not.toBeNull();
-    expect(filter.value).not.toContain(originEsaString);
-    expect(filter.value).toContain(originCfString);
-  });
-
-  test('origin filter both options selected', () => {
-    const params = {
-      collections: [
-        {
-          ...collectionS2,
-          additionalFilters: {
-            [AttributeNames.origin]: [AttributeOriginValues.ESA, AttributeOriginValues.CLOUDFERRO],
-          },
-        },
-      ],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toContain(originEsaString);
-    expect(filter.value).toContain(originCfString);
-    expect(filter.value).toContain(originBothString);
   });
 });
 
@@ -2582,5 +2484,55 @@ describe('getODataCollectionInfoFromDatasetId — CPSCE (single collection)', ()
     expect(result).toHaveLength(1);
     expect(result[0].instrument).toBe('CROPPING_PATTERNS');
     expect(result[0].productType).toBe('clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1');
+  });
+});
+
+describe('CLMS Bio-geophysical Parameters filter helpers', () => {
+  const cloudCoverAttrPrefix =
+    "Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value";
+  const projectionAttrPrefix =
+    "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'projectionName' and att/OData.CSC.StringAttribute/Value eq";
+  const gridLabelAttrPrefix =
+    "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'gridLabel' and att/OData.CSC.StringAttribute/Value eq";
+
+  describe('createBiogeophysicalCloudCoverFilter', () => {
+    test('uses le operator for cloud cover', () => {
+      const filter = createBiogeophysicalCloudCoverFilter('cloudCover', 50);
+      const queryString = filter.getQueryString();
+      expect(queryString).toContain(`${cloudCoverAttrPrefix} le 50)`);
+      expect(queryString).not.toContain(`${cloudCoverAttrPrefix} eq 50)`);
+    });
+
+    test('applies the provided value', () => {
+      const filter = createBiogeophysicalCloudCoverFilter('cloudCover', 0);
+      expect(filter.getQueryString()).toContain(`${cloudCoverAttrPrefix} le 0)`);
+    });
+  });
+
+  describe('createBiogeophysicalProjectionGridFilter', () => {
+    test('parses UTM 20m compound value into projectionName and gridLabel filters', () => {
+      const filter = createBiogeophysicalProjectionGridFilter('gridLabel', 'utm|20m');
+      const queryString = filter.getQueryString();
+      expect(queryString).toContain(`${projectionAttrPrefix} 'utm')`);
+      expect(queryString).toContain(`${gridLabelAttrPrefix} '20m')`);
+    });
+
+    test('parses LAEA 100m compound value into projectionName and gridLabel filters', () => {
+      const filter = createBiogeophysicalProjectionGridFilter('gridLabel', 'laea|100m');
+      const queryString = filter.getQueryString();
+      expect(queryString).toContain(`${projectionAttrPrefix} 'laea')`);
+      expect(queryString).toContain(`${gridLabelAttrPrefix} '100m')`);
+    });
+
+    test('combines projectionName and gridLabel with AND', () => {
+      const filter = createBiogeophysicalProjectionGridFilter('gridLabel', 'utm|60m');
+      const queryString = filter.getQueryString();
+      const projPos = queryString.indexOf("Name eq 'projectionName'");
+      const gridPos = queryString.indexOf("Name eq 'gridLabel'");
+      const andPos = queryString.indexOf(' and ');
+      expect(projPos).toBeGreaterThanOrEqual(0);
+      expect(gridPos).toBeGreaterThanOrEqual(0);
+      expect(andPos).toBeGreaterThanOrEqual(0);
+    });
   });
 });

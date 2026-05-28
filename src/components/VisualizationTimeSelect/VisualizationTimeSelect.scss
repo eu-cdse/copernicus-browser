@@ -164,6 +164,13 @@
             display: flex;
             gap: 4px;
 
+            button {
+              background: none;
+              border: none;
+              padding: 0;
+              display: flex;
+            }
+
             .single-mode-svg,
             .mosaic-mode-svg,
             .time-range-mode-svg {

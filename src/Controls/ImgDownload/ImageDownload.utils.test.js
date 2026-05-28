@@ -1,6 +1,7 @@
 import {
   getImageDimensionFromBoundsWithCap,
   getRawBandsScalingFactor,
+  constructRawBandEvalscript,
   addImageOverlays,
 } from './ImageDownload.utils';
 import { dataSourceHandlers } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -10,7 +11,12 @@ import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
 import { getPixelCoordinates } from './ImageDownload.utils';
 import { reprojectGeometry } from '../../utils/reproject';
 import { latLngBounds } from 'leaflet';
-import { S2_L1C_CDAS, S2_L2A_CDAS } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import {
+  S2_L1C_CDAS,
+  S2_L2A_CDAS,
+  BAND_UNIT,
+} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { IMAGE_FORMATS } from './consts';
 
 const TESTING_BYOC_ID = 'test-byoc_id';
 
@@ -91,6 +97,70 @@ describe('Test imageDimensions with 2500px cap', () => {
   test.each(imageDimensionsFixtures)('Fixtures', (bounds, datasetId, expectedResults) => {
     const results = getImageDimensionFromBoundsWithCap(bounds, datasetId);
     expect(results).toEqual(expectedResults);
+  });
+});
+
+describe('constructRawBandEvalscript', () => {
+  const kelvinBand = 'B10';
+  const kelvinBands = [{ name: kelvinBand, unit: BAND_UNIT.KELVIN }];
+
+  const reflectanceBand = 'B04';
+  const reflectanceBands = [{ name: reflectanceBand, unit: BAND_UNIT.REFLECTANCE }];
+
+  test('Kelvin band with UINT8 uses HighlightCompressVisualizer for visual mapping', () => {
+    const result = constructRawBandEvalscript(kelvinBand, S2_L1C_CDAS, IMAGE_FORMATS.TIFF_UINT8, kelvinBands);
+    expect(result).toContain('HighlightCompressVisualizer(200, 375)');
+    expect(result).toContain(`255 * visualizer.process(sample.${kelvinBand})`);
+    expect(result).toContain('sampleType: "UINT8"');
+  });
+
+  test('Kelvin band with UINT16 multiplies by 100 for 0.01 K precision', () => {
+    const result = constructRawBandEvalscript(
+      kelvinBand,
+      S2_L1C_CDAS,
+      IMAGE_FORMATS.TIFF_UINT16,
+      kelvinBands,
+    );
+    expect(result).not.toContain('HighlightCompressVisualizer');
+    expect(result).toContain(`Math.round(100 * sample.${kelvinBand})`);
+    expect(result).toContain('sampleType: "UINT16"');
+  });
+
+  test('Kelvin band with FLOAT32 does not use HighlightCompressVisualizer', () => {
+    const result = constructRawBandEvalscript(
+      kelvinBand,
+      S2_L1C_CDAS,
+      IMAGE_FORMATS.TIFF_FLOAT32,
+      kelvinBands,
+    );
+    expect(result).not.toContain('HighlightCompressVisualizer');
+    expect(result).toContain(`sample.${kelvinBand}`);
+    expect(result).toContain('sampleType: "FLOAT32"');
+  });
+
+  test('Non-Kelvin band does not use HighlightCompressVisualizer', () => {
+    const result = constructRawBandEvalscript(
+      reflectanceBand,
+      S2_L1C_CDAS,
+      IMAGE_FORMATS.TIFF_UINT16,
+      reflectanceBands,
+    );
+    expect(result).not.toContain('HighlightCompressVisualizer');
+    expect(result).toContain(`sample.${reflectanceBand}`);
+  });
+
+  test('Kelvin band with UINT8 and addDataMask includes dataMask in evalscript', () => {
+    const result = constructRawBandEvalscript(
+      kelvinBand,
+      S2_L1C_CDAS,
+      IMAGE_FORMATS.TIFF_UINT8,
+      kelvinBands,
+      true,
+    );
+    expect(result).toContain('"dataMask"');
+    expect(result).toContain('sample.dataMask');
+    expect(result).toContain('bands: 2');
+    expect(result).toContain(`255 * visualizer.process(sample.${kelvinBand})`);
   });
 });
 

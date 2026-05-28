@@ -2,7 +2,7 @@ import { CRS_EPSG4326, LayersFactory } from '@sentinel-hub/sentinelhub-js';
 import { reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../../const';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getRecommendedResolution, switchGeometryCoordinates } from '../../utils/coords';
-import { checkAllMandatoryOutputsExist } from '../../utils/parseEvalscript';
+import { checkAllMandatoryOutputsExist, getStatsOutputName } from '../../utils/parseEvalscript';
 import { reprojectGeometry } from '../../utils/reproject';
 
 export function constructCSVFromData(data, dropColumns) {
@@ -83,7 +83,10 @@ async function layerSupportsStatisticalApi(
     layerEvalscript = layer.evalscript;
   }
 
-  return checkAllMandatoryOutputsExist(layerEvalscript, outputs);
+  return {
+    isSupported: checkAllMandatoryOutputsExist(layerEvalscript, outputs),
+    resolvedEvalscript: layerEvalscript,
+  };
 }
 
 async function createStatisticsLayer({
@@ -133,7 +136,7 @@ export async function getStatisticsLayer(
   { customSelected, datasetId, evalscript, layerId, visualizationUrl },
   outputs = STATISTICS_MANDATORY_OUTPUTS,
 ) {
-  const supportStatisticalApi = await layerSupportsStatisticalApi(
+  const { isSupported, resolvedEvalscript } = await layerSupportsStatisticalApi(
     {
       customSelected,
       evalscript,
@@ -147,9 +150,13 @@ export async function getStatisticsLayer(
     datasetId,
     evalscript,
     layerId,
-    supportStatisticalApi,
+    supportStatisticalApi: isSupported,
     visualizationUrl,
   });
 
-  return { statisticsLayer, supportStatisticalApi };
+  return {
+    statisticsLayer,
+    supportStatisticalApi: isSupported,
+    statsOutputName: getStatsOutputName(resolvedEvalscript),
+  };
 }

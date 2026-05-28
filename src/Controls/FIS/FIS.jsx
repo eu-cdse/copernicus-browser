@@ -24,7 +24,6 @@ import {
   getStatisticsLayer,
 } from './FIS.utils';
 import { DraggableDialogBox } from '../../components/DraggableDialogBox/DraggableDialogBox';
-import { STATISTICS_MANDATORY_OUTPUTS } from '../../const';
 
 import styleVariables from '../../variables.module.scss';
 
@@ -112,7 +111,7 @@ class FIS extends Component {
       poiOrAoi,
     } = this.props;
 
-    const { supportStatisticalApi, statisticsLayer } = await getStatisticsLayer({
+    const { supportStatisticalApi, statisticsLayer, statsOutputName } = await getStatisticsLayer({
       customSelected,
       datasetId,
       evalscript,
@@ -151,7 +150,7 @@ class FIS extends Component {
       };
 
       if (supportStatisticalApi) {
-        statsParams['output'] = STATISTICS_MANDATORY_OUTPUTS[0];
+        statsParams['output'] = statsOutputName;
       }
 
       const statisticsProvider = supportStatisticalApi
@@ -186,7 +185,7 @@ class FIS extends Component {
       }
 
       if (statisticsProvider === StatisticsProviderType.STAPI) {
-        data = StatisticsUtils.convertToFISResponse(data.data, STATISTICS_MANDATORY_OUTPUTS[0]);
+        data = StatisticsUtils.convertToFISResponse(data.data, statsOutputName);
       }
 
       this.onDataReceived(batchFromTime, batchToTime, data, true);

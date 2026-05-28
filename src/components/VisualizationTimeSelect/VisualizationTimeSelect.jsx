@@ -179,23 +179,35 @@ export function VisualizationTimeSelect({
           </b>
 
           <div className="date-tabs">
-            <Single
-              title={t`Single date`}
-              className={`single-mode-svg ${isSingle ? 'active' : ''}`}
+            <button
+              title={DATE_MODES.SINGLE.description()}
+              aria-label={DATE_MODES.SINGLE.description()}
+              aria-pressed={isSingle}
               onClick={() => store.dispatch(visualizationSlice.actions.setDateMode(DATE_MODES.SINGLE.value))}
-            />
-            <Mosaic
-              title={t`Mosaic`}
-              className={`mosaic-mode-svg ${isMosaic ? 'active' : ''}`}
+            >
+              <Single className={`single-mode-svg ${isSingle ? 'active' : ''}`} aria-hidden="true" />
+            </button>
+            <button
+              title={DATE_MODES.MOSAIC.description()}
+              aria-label={DATE_MODES.MOSAIC.description()}
+              aria-pressed={isMosaic}
               onClick={() => store.dispatch(visualizationSlice.actions.setDateMode(DATE_MODES.MOSAIC.value))}
-            />
-            <TimeRange
-              title={t`Time range`}
-              className={`time-range-mode-svg ${isTimeRange ? 'active' : ''}`}
+            >
+              <Mosaic className={`mosaic-mode-svg ${isMosaic ? 'active' : ''}`} aria-hidden="true" />
+            </button>
+            <button
+              title={DATE_MODES['TIME RANGE'].description()}
+              aria-label={DATE_MODES['TIME RANGE'].description()}
+              aria-pressed={isTimeRange}
               onClick={() =>
                 store.dispatch(visualizationSlice.actions.setDateMode(DATE_MODES['TIME RANGE'].value))
               }
-            />
+            >
+              <TimeRange
+                className={`time-range-mode-svg ${isTimeRange ? 'active' : ''}`}
+                aria-hidden="true"
+              />
+            </button>
           </div>
         </div>
       </>

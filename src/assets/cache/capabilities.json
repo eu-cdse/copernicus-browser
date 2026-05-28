@@ -4,8 +4,8 @@
         "layers": [
             {
                 "id": "TCD10",
-                "name": "TCD-10",
-                "description": "Tree Cover Density Map at 10m - Annual V1",
+                "name": "Tree Cover Density",
+                "description": "Tree Cover Density (%)",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/01a8e5-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TCD10&style=default"
             }
@@ -425,28 +425,28 @@
             {
                 "id": "NDVI_MAX_LTS",
                 "name": "MAX NDVI",
-                "description": "Maximum of the physical NDVI values",
+                "description": "Maximum value of Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/148ba1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MAX_LTS&style=default"
             },
             {
                 "id": "NDVI_MEAN_LTS",
                 "name": "MEAN NDVI",
-                "description": "Mean of the physical NDVI values",
+                "description": "Mean value of Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/148ba1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MEAN_LTS&style=default"
             },
             {
                 "id": "NDVI_MEDIAN_LTS",
                 "name": "MEDIAN NDVI",
-                "description": "Median of the physical NDVI values",
+                "description": "Median value of Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/148ba1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MEDIAN_LTS&style=default"
             },
             {
                 "id": "NDVI_MIN_LTS",
                 "name": "MIN NDVI",
-                "description": "Minimum of the physical NDVI values",
+                "description": "Minimum value of Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/148ba1-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI_MIN_LTS&style=default"
             }
@@ -1768,9 +1768,23 @@
             {
                 "id": "NDVI",
                 "name": "NDVI",
-                "description": "NDVI is an indicator of the greenness of the biomass.",
+                "description": "Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3825e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+            },
+            {
+                "id": "NDVI-UNCERTAINTY",
+                "name": "NDVI Uncertainty",
+                "description": "Uncertainty on NDVI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3825e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI-UNCERTAINTY&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of clear-sky surface reflectance in the dekad time window",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/3825e2-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
             }
         ],
         "datasets": []
@@ -2465,9 +2479,23 @@
             {
                 "id": "NDVI",
                 "name": "NDVI",
-                "description": "NDVI is an indicator of the greenness of the biomass.",
+                "description": "Normalized Difference Vegetation Index",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40c16f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
+            },
+            {
+                "id": "NDVI-UNCERTAINTY",
+                "name": "NDVI Uncertainty",
+                "description": "Uncertainty on NDVI",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40c16f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI-UNCERTAINTY&style=default"
+            },
+            {
+                "id": "NOBS",
+                "name": "NOBS",
+                "description": "Number of clear-sky surface reflectance in the dekad time window.",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/40c16f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
             }
         ],
         "datasets": []
@@ -7272,28 +7300,14 @@
             {
                 "id": "NOBS",
                 "name": "NOBS",
-                "description": "Number of observations used in the BRDF inversion",
+                "description": "Number of clear-sky surface reflectance in the dekad time window.",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cef8d0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NOBS&style=default"
             },
             {
-                "id": "QFLAG",
-                "name": "QFLAG",
-                "description": "Quality flag",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cef8d0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=QFLAG&style=default"
-            },
-            {
-                "id": "TIMEGRID",
-                "name": "TIMEGRID",
-                "description": "Time between the median date of observations used to compute NDVI and the reference time given in the file name.",
-                "dataset": "CUSTOM",
-                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cef8d0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=TIMEGRID&style=default"
-            },
-            {
                 "id": "UNC",
-                "name": "UNC",
-                "description": "Uncertainty associated to NDVI",
+                "name": "NDVI Uncertainty",
+                "description": "Uncertainty on NDVI",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/cef8d0-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=UNC&style=default"
             }

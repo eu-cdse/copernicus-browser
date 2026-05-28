@@ -52,6 +52,8 @@ export const AttributeNames = {
   dayNightFlag: 'dayNightFlag',
   horizontalTileNumber: 'horizontalTileNumber',
   verticalTileNumber: 'verticalTileNumber',
+  projectionName: 'projectionName',
+  missionShortName: 'missionShortName',
 };
 
 /**
@@ -194,6 +196,7 @@ export const FormatedAttributeNames = {
   dayNightFlag: () => t`Day night flag`,
   horizontalTileNumber: () => t`Horizontal tile number`,
   verticalTileNumber: () => t`Vertical tile number`,
+  projectionName: () => t`Projection name`,
 };
 
 export const AttributesDescriptions = {
@@ -275,6 +278,8 @@ export const ODataAttributes = {
   gridLabel: new ODataStringAttribute(AttributeNames.gridLabel),
   consolidationPeriod: new ODataIntegerAttribute(AttributeNames.consolidationPeriod),
   nominalDate: new ODataDateTimeAttribute(AttributeNames.nominalDate),
+  projectionName: new ODataStringAttribute(AttributeNames.projectionName),
+  missionShortName: new ODataStringAttribute(AttributeNames.missionShortName),
 };
 
 export const AttributeOriginValues = {

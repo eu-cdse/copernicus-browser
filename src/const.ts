@@ -241,9 +241,13 @@ export const defaultEffects = {
 // --- Evalscript outputs ---
 
 export const DATAMASK_OUTPUT = 'dataMask';
-export const EOBROWSERSTATS_OUTPUT = 'eobrowserStats';
+export const EOBROWSERSTATS_OUTPUT = 'eobrowserStats'; // deprecated but preserved for backward compatibility of old evalscripts that use it
+export const BROWSERSTATS_OUTPUT = 'browserStats'; // new name for eobrowserStats, should be used in new evalscripts
 export const ALL_BANDS_OUTPUT = 'bands';
-export const STATISTICS_MANDATORY_OUTPUTS = [EOBROWSERSTATS_OUTPUT, DATAMASK_OUTPUT];
+export const STATISTICS_MANDATORY_OUTPUTS: (string | string[])[] = [
+  [BROWSERSTATS_OUTPUT, EOBROWSERSTATS_OUTPUT],
+  DATAMASK_OUTPUT,
+];
 
 // --- Local storage & session keys ---
 
@@ -311,14 +315,17 @@ export const DATE_MODES = {
   SINGLE: {
     value: 'SINGLE',
     label: () => t`Single`,
+    description: () => t`Single Date`,
   },
   MOSAIC: {
     value: 'MOSAIC',
     label: () => t`Mosaic`,
+    description: () => t`Mosaic`,
   },
   'TIME RANGE': {
     value: 'TIME RANGE',
-    label: () => t`Time range`,
+    label: () => t`Time Range`,
+    description: () => t`Time Range`,
   },
 };
 

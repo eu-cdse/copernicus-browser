@@ -5,6 +5,7 @@ import {
   setEvalscriptOutputBandNumber,
   getOutputIds,
   checkAllMandatoryOutputsExist,
+  getStatsOutputName,
 } from './parseEvalscript';
 
 const inputEvalscript1 = `
@@ -119,6 +120,87 @@ function setup() {
   }
 }`;
 
+const inputEvalscript4_without_stats = `
+//VERSION=3
+function evaluatePixel(samples) {
+
+    let val = index(samples.B3, samples.B2);
+  const viz= colorBlend(val,
+    [0.0, 0.5, 1.0],
+    [
+      [1,0,0], 
+      [1,1,0], 
+      [0.1,0.31,0], 
+    ]);
+  
+     return {
+       default: [...viz,samples.dataMask],
+       dataMask: [samples.dataMask]
+    };
+}
+
+function setup() {
+  return {
+    input: [{
+      bands: [
+        "B2",
+        "B3",
+        "dataMask"
+      ]
+    }],
+     output: [
+          { id: "default", bands:4 },   
+          { id: "dataMask", bands: 1 }
+        ]
+  }
+}`;
+
+const inputEvalscript5 = `
+//VERSION=3
+function evaluatePixel(samples) {
+    let val = index(samples.B3, samples.B2);
+    return {
+      default: [val, samples.dataMask],
+      browserStats: [val, samples.dataMask],
+      dataMask: [samples.dataMask]
+    };
+}
+
+function setup() {
+  return {
+    input: [{ bands: ["B2", "B3", "dataMask"] }],
+    output: [
+      { id: "default", bands: 2 },
+      { id: "browserStats", bands: 2 },
+      { id: "dataMask", bands: 1 }
+    ]
+  }
+}`;
+
+const inputEvalscript6 = `
+//VERSION=3
+function evaluatePixel(samples) {
+    let val = index(samples.B3, samples.B2);
+    return {
+      default: [val, samples.dataMask],
+      browserStats: [val, samples.dataMask],
+      eobrowserStats: [val, samples.dataMask],
+      dataMask: [samples.dataMask]
+    };
+}
+
+function setup() {
+  return {
+    input: [{ bands: ["B2", "B3", "dataMask"] }],
+    output: [
+      { id: "default", bands: 2 },
+      { id: "browserStats", bands: 2 },
+      { id: "eobrowserStats", bands: 2 },
+      { id: "dataMask", bands: 1 }
+    ]
+  }
+}`;
+
 const expectedSetup3 = {
   id: 'default',
   sampleType: 'AUTO',
@@ -193,6 +275,7 @@ test.each([
   [inputEvalscript2, ['some-id']], //evalscript output is an array
   [inputEvalscript3, [undefined]], //evalscript output is an array of 1 element without id
   [inputEvalscript4, ['default', 'eobrowserStats', 'dataMask']], //evalscript output is an array of 3 elements
+  [inputEvalscript5, ['default', 'browserStats', 'dataMask']], //evalscript output uses browserStats
 ])('Test getOutputIds method', (evalscript, expectedOutputs) => {
   const outputs = getOutputIds(evalscript);
   expect(outputs).toEqual(expectedOutputs);
@@ -209,7 +292,25 @@ test.each([
   [inputEvalscript4, ['eobrowserStats', 'dataMask'], true],
   [inputEvalscript4, ['dataMask', 'eobrowserStats'], true],
   [inputEvalscript4, ['dataMask', 'index'], false],
+  // OR-group: either eobrowserStats or browserStats is acceptable
+  [inputEvalscript4, [['browserStats', 'eobrowserStats'], 'dataMask'], true],
+  [inputEvalscript5, ['browserStats', 'dataMask'], true],
+  [inputEvalscript5, [['browserStats', 'eobrowserStats'], 'dataMask'], true],
 ])('Test checkAllMandatoryOutputsExist method', (evalscript, mandatoryOutputs, expected) => {
   const result = checkAllMandatoryOutputsExist(evalscript, mandatoryOutputs);
   expect(result).toEqual(expected);
+});
+
+test.each([
+  [null, null],
+  ['evalscript', null],
+  [inputEvalscript1, null], // output has no id — getOutputIds returns [undefined]
+  [inputEvalscript2, null], // output id is 'some-id' — valid array, but no stats output present
+  [inputEvalscript4, 'eobrowserStats'],
+  [inputEvalscript4_without_stats, null], // getOutputIds returns a valid non-empty array that simply does not contain either stats name (e.g. ['default', 'dataMask'])
+  [inputEvalscript5, 'browserStats'],
+  [inputEvalscript6, 'browserStats'],
+])('Test getStatsOutputName method', (evalscript, expectedName) => {
+  const name = getStatsOutputName(evalscript);
+  expect(name).toEqual(expectedName);
 });

@@ -226,7 +226,7 @@ const updateRRDHandlers = (handlersFilePath, groupedMap, constants) => {
   }
 
   const finalHandlersContent = `
-import { DATASOURCES } from '../../../const.js';
+import { DATASOURCES } from '../../../const';
 import {
 ${constantsForImport}
 } from './RRDDataSources/dataSourceRRDConstants';

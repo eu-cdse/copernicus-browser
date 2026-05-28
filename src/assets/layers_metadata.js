@@ -1879,27 +1879,17 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NDVI' }],
     description: () =>
-      t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The CGLS NDVI V3 product is a 10-day synthesis product derived from SPOT/VEGETATION or PROBA-V top-of-atmosphere orbital segments.`,
+      t`The Normalized Difference Vegetation Index is a spectral index indicating the greenness of the vegetation.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'NOBS' }],
     description: () =>
-      t`The NOBS variable contains the number of observations used in the inversion procedure.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'QFLAGS' }],
-    description: () =>
-      t`The QFLAG (quality flag) of the NDVI V3 describes the BRDF inversion quality in both RED and NIR bands.`,
-  },
-  {
-    match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'TIMEGRID' }],
-    description: () =>
-      t`The TIMEGRID (Time Grid) variable indicates the median date of the observations used in the BRDF modelling. It provides an indication of the most representative date of the observations used to compute the BRDF corrected NDVI. Hence, it is recommended to use this layer for time series analyses. Time is measured in minutes passed since the start time of the synthesis, hence day 01, 11 or 21 of the 10-day period.`,
+      t`Number of clear-sky surface reflectance used for the inversion of the bidirectional reflectance distribution function.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL, layerId: 'UNC' }],
     description: () =>
-      t`The UNC variable contains the uncertainty associated to the angular normalized NDVI estimation. The uncertainties of the normalized reflectances are estimated by propagating the uncertainties associated to the BRDF model parameters found via the inversion.`,
+      t`Uncertainty of the NDVI is calculated by propagating the uncertainties associated to the model parameters resulting from the inversion of the bidirectional reflectance distribution function.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_BURNT_AREA_DAILY, layerId: 'day_of_burn' }],
@@ -2270,22 +2260,22 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MAX_LTS' }],
     description: () =>
-      t`Maximum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+      t`Maximum value of the Normalized Difference Vegetation Index calculated over the 21-years period 1999-2019.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEAN_LTS' }],
     description: () =>
-      t`Mean of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+      t`Mean value of the Normalized Difference Vegetation Index calculated over the 21-years period 1999-2019.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MEDIAN_LTS' }],
     description: () =>
-      t`Median of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+      t`Median value of the Normalized Difference Vegetation Index calculated over the 21-years period 1999-2019.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_1KM_STATS_V3, layerId: 'NDVI_MIN_LTS' }],
     description: () =>
-      t`Minimum of the physical NDVI values. The time series of dekadal (10-daily) NDVI V2.2 observations over 1999-2017 is used to generate Long Term Statistics (LTS) per dekad. The LTS that are calculated for each of the 36 10-daily periods of the year are the minimum, median, maximum, average, standard deviation and the number of observations in the covered time series period. These data allow evaluating whether vegetation conditions deviate from a ‘normal’ situation.`,
+      t`Minimum value of the Normalized Difference Vegetation Index calculated over the 21-years period 1999-2019.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V1, layerId: 'NDVI' }],
@@ -2295,7 +2285,17 @@ export const PREDEFINED_LAYERS_METADATA = [
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2, layerId: 'NDVI' }],
     description: () =>
-      t`NDVI, or Normalized Difference Vegetation Index, is a dimensionless index that is indicative for vegetation density and is calculated by comparing the visible and near-infrared sunlight reflected by the surface (reflectance). The Global Land NDVI Collection 300m product is a 10-day synthesis product derived from Top of Canopy PROBA-V 300m data.`,
+      t`The Normalized Difference Vegetation Index is a spectral index indicating the greenness of the vegetation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2, layerId: 'NDVI-UNCERTAINTY' }],
+    description: () =>
+      t`Uncertainty of the NDVI is calculated by propagating the uncertainties associated to the model parameters resulting from the inversion of the bidirectional reflectance distribution function.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V2, layerId: 'NOBS' }],
+    description: () =>
+      t`Number of clear-sky surface reflectance used for the inversion of the bidirectional reflectance distribution function.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_SSM_1KM_DAILY_V1, layerId: 'SSM' }],
@@ -3135,7 +3135,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_TCD_10M_YEARLY_V1, layerId: 'TCD10' }],
-    description: () => t`Tree Cover Density Map at 10m resolution.`,
+    description: () => t`Tree Cover Density expressed as percentage of tree cover at 10 m resolution.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LIE_500M_DAILY_V2, layerId: 'LIE' }],
@@ -3685,7 +3685,17 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3, layerId: 'NDVI' }],
     description: () =>
-      t`NDVI is computed after atmospheric correction and BRDF normalization done with Sentinel-3 TOC V2.3 and PROBA-V C2 S1 TOC data, using ReBeLS v1.6.`,
+      t`The Normalized Difference Vegetation Index is a spectral index indicating the greenness of the vegetation.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3, layerId: 'NDVI-UNCERTAINTY' }],
+    description: () =>
+      t`Uncertainty of the NDVI is calculated by error propagation of the uncertainty associated to input spectral surface reflectances.`,
+  },
+  {
+    match: [{ datasourceId: COPERNICUS_CLMS_NDVI_300M_10DAILY_V3, layerId: 'NOBS' }],
+    description: () =>
+      t`Number of clear-sky surface reflectance in the dekad time window, minimum over the spectral bands used for the NDVI calculation.`,
   },
   {
     match: [{ datasourceId: COPERNICUS_CLMS_LSWT_NRT_GLOBAL_1KM_10DAILY_V1, layerId: 'LSWT' }],

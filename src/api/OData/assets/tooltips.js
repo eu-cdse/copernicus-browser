@@ -126,6 +126,12 @@ const DEM = {
     t`This attribute allows selection of available data for a specific grid ID. See more [here](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem).`,
 };
 
+const CLMS_BIOGEOPHYSICAL_PARAMETERS = {
+  [AttributeNames.cloudCover]: () => t`Only applies to data sources within the Snow category.`,
+  'Projection & Resolution': () => t`Only applies to data sources within the Snow and Water Bodies category.`,
+  [AttributeNames.missionShortName]: () => t`Only applies to data sources within the Water Bodies category.`,
+};
+
 const eumetsatProcessedTooltip = () => t`This data product was processed by EUMETSAT.`;
 
 const ProductTypeTooltips = {
@@ -152,6 +158,7 @@ const AttributeTooltips = {
   OPTICAL,
   CCM_SAR,
   DEM,
+  CLMS_BIOGEOPHYSICAL_PARAMETERS,
 };
 
 export { ProductTypeTooltips, InstrumentTooltips, AttributeTooltips };

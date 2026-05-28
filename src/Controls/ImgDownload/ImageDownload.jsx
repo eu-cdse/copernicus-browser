@@ -16,7 +16,7 @@ import {
   getMapDimensions,
   getAllBands,
   getAllLayers,
-  constructV3Evalscript,
+  constructRawBandEvalscript,
   fetchImageFromParams,
   getSupportedImageFormats,
   getImageDimensionFromBoundsWithCap,
@@ -30,10 +30,12 @@ import {
   getDimensionsInMeters,
   adjustClippingForAoi,
   isKMZ,
+  injectGdalMetadataIntoTiff,
   addStickerOverlays,
   STICKER_WIDTH_PX,
   STICKER_HEIGHT_PX,
 } from './ImageDownload.utils';
+import { BAND_UNIT } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_DIVISORS, RESOLUTION_OPTIONS } from './consts';
 import {
@@ -459,15 +461,18 @@ function ImageDownload(props) {
     const supportsV3Evalscript = dsh && dsh.supportsV3Evalscript(datasetId);
 
     for (let band of selectedBands) {
+      const bandInfo = allBands.find((b) => b.name === band);
+      const isKelvinBand = bandInfo?.unit === BAND_UNIT.KELVIN;
       requestsParams.push({
         ...baseParams,
         layerId: props.layerId,
         customSelected: true,
         evalscript: supportsV3Evalscript
-          ? constructV3Evalscript(band, datasetId, imageFormat, allBands, addDataMask)
+          ? constructRawBandEvalscript(band, datasetId, imageFormat, allBands, addDataMask)
           : constructBasicEvalscript(band),
         isRawBand: true,
         bandName: band,
+        needsKelvinAuxXml: isKelvinBand && imageFormat === IMAGE_FORMATS.TIFF_UINT16,
         selectedProcessing:
           selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
           isOpenEoSupported(visualizationUrl, props.layerId, imageFormat) // check if the image format from the form is supported for openEO, if not fallback to process api
@@ -493,16 +498,22 @@ function ImageDownload(props) {
 
     const images = await Promise.all(
       requestsParams.map((params) =>
-        fetchImageFromParams(params, addWarning).catch((err) => {
-          setError(err);
-          return null;
-        }),
+        fetchImageFromParams(params, addWarning)
+          .then((result) => ({ ...result, needsKelvinAuxXml: !!params.needsKelvinAuxXml }))
+          .catch((err) => {
+            setError(err);
+            return null;
+          }),
       ),
     ).then((images) => images.filter((img) => img !== null));
 
     if (images.length === 1) {
       if (images[0].multipleImages) {
-        await setFileSaverOrAddToZipForAntimeridianCrossingImages(images[0].multipleImages);
+        await setFileSaverOrAddToZipForAntimeridianCrossingImages(
+          images[0].multipleImages,
+          undefined,
+          images[0].needsKelvinAuxXml,
+        );
       } else {
         await setFileSaverOrAddToZipForSingleImage();
       }
@@ -510,20 +521,28 @@ function ImageDownload(props) {
       const zip = new JSZip();
       for (let i = 0; i < images.length; i++) {
         if (images[i].multipleImages) {
-          await setFileSaverOrAddToZipForAntimeridianCrossingImages(images[i].multipleImages, zip);
+          await setFileSaverOrAddToZipForAntimeridianCrossingImages(
+            images[i].multipleImages,
+            zip,
+            images[i].needsKelvinAuxXml,
+          );
         } else {
           await setFileSaverOrAddToZipForSingleImage(zip);
         }
       }
 
       if (Object.keys(zip.files).length > 0) {
-        const content = await zip.generateAsync({ type: 'blob' });
+        const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
         const zipFilename = 'Browser_images.zip';
         FileSaver.saveAs(content, zipFilename);
       }
     }
 
-    async function setFileSaverOrAddToZipForAntimeridianCrossingImages(multipleImages, zip) {
+    async function setFileSaverOrAddToZipForAntimeridianCrossingImages(
+      multipleImages,
+      zip,
+      needsKelvinAuxXml = false,
+    ) {
       if (imageExt === 'kmz') {
         const kml = generateKmlFile(
           multipleImages.map((image) => image.bbAndPolygons.bounds),
@@ -538,15 +557,21 @@ function ImageDownload(props) {
       } else if (imageExt === 'tiff') {
         if (zip) {
           for (let i = 0; i < multipleImages.length; i++) {
-            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, multipleImages[i].blob);
+            const tiffBlob = needsKelvinAuxXml
+              ? await injectGdalMetadataIntoTiff(multipleImages[i].blob, 0.01, 0, 'K')
+              : multipleImages[i].blob;
+            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, tiffBlob);
           }
         } else {
           zip = new JSZip();
           for (let i = 0; i < multipleImages.length; i++) {
-            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, multipleImages[i].blob);
+            const tiffBlob = needsKelvinAuxXml
+              ? await injectGdalMetadataIntoTiff(multipleImages[i].blob, 0.01, 0, 'K')
+              : multipleImages[i].blob;
+            zip.file(`${multipleImages[i].nicename}_${i}.tiff`, tiffBlob);
           }
 
-          const content = await zip.generateAsync({ type: 'blob' });
+          const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
           const zipFilename = multipleImages[0].nicename;
           FileSaver.saveAs(content, zipFilename);
         }
@@ -566,10 +591,16 @@ function ImageDownload(props) {
       } else {
         if (zip) {
           for (let i = 0; i < images.length; i++) {
-            zip.file(`${images[i].nicename}.${imageExt}`, images[i].blob);
+            const tiffBlob = images[i].needsKelvinAuxXml
+              ? await injectGdalMetadataIntoTiff(images[i].blob, 0.01, 0, 'K')
+              : images[i].blob;
+            zip.file(`${images[i].nicename}.${imageExt}`, tiffBlob);
           }
         } else {
-          FileSaver.saveAs(images[0].blob, `${images[0].nicename}.${imageExt}`);
+          const tiffBlob = images[0].needsKelvinAuxXml
+            ? await injectGdalMetadataIntoTiff(images[0].blob, 0.01, 0, 'K')
+            : images[0].blob;
+          FileSaver.saveAs(tiffBlob, `${images[0].nicename}.${imageExt}`);
         }
       }
     }
