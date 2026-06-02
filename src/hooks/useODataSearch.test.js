@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { ODATA_SEARCH_ERROR_MESSAGE, useODataSearch } from './useODataSearch';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import oDataHelpers from '../api/OData/ODataHelpers';
+import oDataHelpers, { PAGE_SIZE } from '../api/OData/ODataHelpers';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { oDataApi } from '../api/OData/ODataApi';
@@ -127,5 +127,98 @@ describe('useODataSearch no-results behavior', () => {
 
     expect(result.current[0].searchError.message).toBe(ODATA_SEARCH_ERROR_MESSAGE.NO_PRODUCTS_FOUND);
     expect(result.current[0].searchError.availabilityMessage).toBeUndefined();
+  });
+});
+
+describe('useODataSearch hydrate', () => {
+  const fakeResults = [{ id: 'product-1' }, { id: 'product-2' }];
+  const fakeQuery = { skip: jest.fn().mockReturnThis(), options: [] };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    // jest.restoreAllMocks() only resets spies; fakeQuery.skip is a jest.fn()
+    // shared across tests, so clear its accumulated calls explicitly.
+    fakeQuery.skip.mockClear();
+  });
+
+  it('emits oDataSearchResult with seeded allResults, totalCount, hasMore, page and a callable next', async () => {
+    jest.spyOn(oDataApi, 'search').mockResolvedValue({ value: [] });
+
+    const { result } = renderHook(() => useODataSearch());
+
+    act(() => {
+      result.current[3]({
+        query: fakeQuery,
+        results: fakeResults,
+        page: 2,
+        totalCount: 150,
+        hasMore: true,
+      });
+    });
+
+    await waitFor(() => {
+      expect(result.current[0].oDataSearchResult).not.toBeNull();
+    });
+
+    const hydrated = result.current[0].oDataSearchResult;
+    expect(hydrated.allResults).toEqual(fakeResults);
+    expect(hydrated.page).toBe(2);
+    expect(hydrated.totalCount).toBe(150);
+    expect(hydrated.hasMore).toBe(true);
+    expect(typeof hydrated.next).toBe('function');
+  });
+
+  it('calling next() after hydrate issues exactly one search with skip = PAGE_SIZE * (page + 1)', async () => {
+    const searchSpy = jest.spyOn(oDataApi, 'search').mockResolvedValue({
+      value: Array.from({ length: 1 }, (_, i) => ({ Id: `p${i}`, Name: `p${i}`, Footprint: null })),
+      '@odata.count': 151,
+    });
+
+    const { result } = renderHook(() => useODataSearch());
+
+    act(() => {
+      result.current[3]({
+        query: fakeQuery,
+        results: fakeResults,
+        page: 2,
+        totalCount: 150,
+        hasMore: true,
+      });
+    });
+
+    await waitFor(() => {
+      expect(result.current[0].oDataSearchResult).not.toBeNull();
+    });
+
+    expect(searchSpy).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await result.current[0].oDataSearchResult.next();
+    });
+
+    expect(searchSpy).toHaveBeenCalledTimes(1);
+    expect(fakeQuery.skip).toHaveBeenCalledWith(PAGE_SIZE * 3);
+  });
+
+  it('hydrate itself triggers zero oDataApi.search calls', async () => {
+    const searchSpy = jest.spyOn(oDataApi, 'search').mockResolvedValue({ value: [] });
+
+    const { result } = renderHook(() => useODataSearch());
+
+    act(() => {
+      result.current[3]({
+        query: fakeQuery,
+        results: fakeResults,
+        page: 0,
+        totalCount: 2,
+        hasMore: false,
+      });
+    });
+
+    await waitFor(() => {
+      expect(result.current[0].oDataSearchResult).not.toBeNull();
+    });
+
+    expect(searchSpy).not.toHaveBeenCalled();
   });
 });

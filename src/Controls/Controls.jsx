@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useMap } from 'react-leaflet';
 import Measure from './Measure/Measure';
 import AOI from './AOI/AOI';
 import POI from './POI/POI';
@@ -8,65 +9,46 @@ import TimelapseButton from './Timelapse/TimelapseButton';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import TerrainViewerButton from '../TerrainViewer/TerrainViewerButton';
 import HistogramWrapper from './Histogram/HistogramWrapper';
-import { withLeaflet } from 'react-leaflet';
 
 import './Controls.scss';
 import LOI from './LOI/LOI';
 
-class Controls extends Component {
-  render() {
-    const { is3D, shouldAnimateControls } = this.props;
-    const animatedClass = shouldAnimateControls ? 'animated' : '';
-    return (
-      <div className="controls-wrapper">
-        {!is3D && (
-          <>
-            <LeafletPMLanguage map={this.props.leaflet.map} />
-            <AOI
-              className={animatedClass}
-              map={this.props.leaflet.map}
-              locale={this.props.selectedLanguage}
-            />
-            <LOI
-              className={animatedClass}
-              map={this.props.leaflet.map}
-              locale={this.props.selectedLanguage}
-            />
-            <POI
-              className={animatedClass}
-              map={this.props.leaflet.map}
-              locale={this.props.selectedLanguage}
-            />
-            <Measure
-              className={animatedClass}
-              map={this.props.leaflet.map}
-              locale={this.props.selectedLanguage}
-            />
-          </>
-        )}
-        <ImageDownloadBtn
-          locale={this.props.selectedLanguage}
-          showComparePanel={this.props.showComparePanel}
-        />
-        <TimelapseButton
-          locale={this.props.selectedLanguage}
-          showComparePanel={this.props.showComparePanel}
-        />
-        {IS_3D_MODULE_ENABLED && (
-          <TerrainViewerButton
-            locale={this.props.selectedLanguage}
-            showComparePanel={this.props.showComparePanel}
-          />
-        )}
-        {!is3D && (
-          <HistogramWrapper
-            locale={this.props.selectedLanguage}
-            histogramContainer={this.props.histogramContainer}
-          />
-        )}
-      </div>
-    );
-  }
-}
+const MapControls = ({ shouldAnimateControls, selectedLanguage, histogramContainer }) => {
+  const map = useMap();
+  const animatedClass = shouldAnimateControls ? 'animated' : '';
+  return (
+    <>
+      <LeafletPMLanguage map={map} />
+      <AOI className={animatedClass} map={map} locale={selectedLanguage} />
+      <LOI className={animatedClass} map={map} locale={selectedLanguage} />
+      <POI className={animatedClass} map={map} locale={selectedLanguage} />
+      <Measure className={animatedClass} map={map} locale={selectedLanguage} />
+      <HistogramWrapper locale={selectedLanguage} histogramContainer={histogramContainer} />
+    </>
+  );
+};
 
-export default withLeaflet(Controls);
+const Controls = ({
+  is3D,
+  shouldAnimateControls,
+  selectedLanguage,
+  showComparePanel,
+  histogramContainer,
+}) => (
+  <div className="controls-wrapper">
+    {!is3D && (
+      <MapControls
+        shouldAnimateControls={shouldAnimateControls}
+        selectedLanguage={selectedLanguage}
+        histogramContainer={histogramContainer}
+      />
+    )}
+    <ImageDownloadBtn locale={selectedLanguage} showComparePanel={showComparePanel} />
+    <TimelapseButton locale={selectedLanguage} showComparePanel={showComparePanel} />
+    {IS_3D_MODULE_ENABLED && (
+      <TerrainViewerButton locale={selectedLanguage} showComparePanel={showComparePanel} />
+    )}
+  </div>
+);
+
+export default Controls;

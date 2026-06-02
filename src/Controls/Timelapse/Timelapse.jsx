@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { t } from 'ttag';
 import moment from 'moment';
 import { isMobile } from 'react-device-detect';
@@ -1131,7 +1131,7 @@ class Timelapse extends Component {
     const screenCoverage = timelapseSharePreviewMode ? (isMobile ? 80 : 90) : 100;
 
     return (
-      <Rodal
+      <Modal
         animation="fade"
         visible={true}
         customStyles={{ height: screenCoverage + 'vh', width: screenCoverage + 'vw', padding: 0, border: 0 }}
@@ -1139,7 +1139,7 @@ class Timelapse extends Component {
         closeOnEsc={true}
       >
         {errorMessage && (
-          <Rodal
+          <Modal
             visible={true}
             customStyles={{ height: '100px', width: '500px' }}
             onClose={() => {
@@ -1147,7 +1147,7 @@ class Timelapse extends Component {
             }}
           >
             <NotificationPanel msg={errorMessage} type="info" />
-          </Rodal>
+          </Modal>
         )}
         <div className="timelapse">
           <div className="title">
@@ -1253,7 +1253,7 @@ class Timelapse extends Component {
             />
           </div>
         </div>
-      </Rodal>
+      </Modal>
     );
   }
 }

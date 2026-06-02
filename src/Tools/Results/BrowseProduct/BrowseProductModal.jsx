@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../../../components/Modal/Modal';
 import { t } from 'ttag';
 import store, { modalSlice } from '../../../store';
 import BrowseProduct from './BrowseProduct';
@@ -11,7 +11,7 @@ const BrowseProductModal = ({ selectedResult, params, userToken }) => {
   const { onDownload, downloadInProgress } = params;
 
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       className="browse-product-modal"
       customStyles={{
@@ -33,7 +33,7 @@ const BrowseProductModal = ({ selectedResult, params, userToken }) => {
           userToken={userToken}
         />
       </>
-    </Rodal>
+    </Modal>
   );
 };
 

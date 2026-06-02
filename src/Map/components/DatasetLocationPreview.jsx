@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createPortal } from 'react-dom';
 import { GeoJSON, FeatureGroup } from 'react-leaflet';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import L from 'leaflet';
 
 import './DatasetLocationPreview.scss';
@@ -240,9 +240,11 @@ const DatasetLocationPreview = ({
             key={polygon.id}
             data={polygon}
             style={getFeatureStyle}
-            onMouseOver={handlePolygonMouseOver}
-            onMouseOut={handlePolygonMouseOut}
-            onClick={handlePolygonClick}
+            eventHandlers={{
+              mouseover: handlePolygonMouseOver,
+              mouseout: handlePolygonMouseOut,
+              click: handlePolygonClick,
+            }}
           />
         ))}
       </FeatureGroup>
@@ -250,7 +252,7 @@ const DatasetLocationPreview = ({
       {modalOpened &&
         selectedPolygon &&
         createPortal(
-          <Rodal
+          <Modal
             animation="slideUp"
             visible={modalOpened}
             width={500}
@@ -290,7 +292,7 @@ const DatasetLocationPreview = ({
                 </button>
               </div>
             </div>
-          </Rodal>,
+          </Modal>,
           document.body,
         )}
     </>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Rodal from 'rodal';
+import Modal from '../../../components/Modal/Modal';
 import moment from 'moment';
 import { TPDProvider } from '@sentinel-hub/sentinelhub-js';
 import store, { commercialDataSlice } from '../../../store';
@@ -224,7 +224,7 @@ export const Results = ({
         />
       </div>
       {!!location && (
-        <Rodal
+        <Modal
           animation="slideUp"
           visible={true}
           width={600}
@@ -253,7 +253,7 @@ export const Results = ({
               ))}
             </div>
           </div>
-        </Rodal>
+        </Modal>
       )}
       <PreviewLarge
         imgUrl={previewLarge && previewLarge.url ? previewLarge.url : null}

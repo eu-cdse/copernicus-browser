@@ -34,7 +34,7 @@ function EnsureTermsPrivacy({ userToken, termsPrivacyAccepted }) {
 
 const mapStoreToProps = (store) => ({
   userToken: store.auth.user.access_token,
-  termsPrivacyAccepted: store.auth.terms_privacy_accepted,
+  termsPrivacyAccepted: store.auth.termsPrivacyAccepted,
 });
 
 export default connect(mapStoreToProps, null)(EnsureTermsPrivacy);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { t, ngettext, msgid } from 'ttag';
 
 import ResultItem, { ErrorMessage } from './ResultItem';
@@ -285,7 +285,7 @@ class Results extends Component {
             ) : null}
 
             {displayModal ? (
-              <Rodal
+              <Modal
                 animation="slideUp"
                 visible={true}
                 width={600}
@@ -309,7 +309,7 @@ class Results extends Component {
                     />
                   ))}
                 </div>
-              </Rodal>
+              </Modal>
             ) : null}
           </div>
         </div>

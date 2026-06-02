@@ -526,9 +526,6 @@ msgstr "Centruokite žemėlapį ant funkcijos"
 msgid "Area of interest"
 msgstr "Dominanti sritis"
 
-msgid "Select mode"
-msgstr "Pasirinkti režimą"
-
 msgid "km"
 msgstr "km"
 
@@ -11754,6 +11751,18 @@ msgid "Toggle the visibility of the text on the exported image."
 msgstr ""
 
 msgid "Show text"
+msgstr ""
+
+#, javascript-format
+msgid "AOI area exceeds the maximum allowed area of ${ v } km²"
+msgstr ""
+
+#, javascript-format
+msgid "AOI height exceeds the maximum allowed height of ${ v } km"
+msgstr ""
+
+#, javascript-format
+msgid "AOI width exceeds the maximum allowed width of ${ v } km"
 msgstr ""
 
 msgid ""

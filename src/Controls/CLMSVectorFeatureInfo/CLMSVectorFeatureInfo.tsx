@@ -37,9 +37,7 @@ type CLMSGFIModalParams = { datasetId: string; lat: number; lng: number };
 
 const CLMSVectorFeatureInfo = () => {
   const dispatch = useAppDispatch();
-  const params = useAppSelector(
-    (state) => (state.modal as unknown as { params: CLMSGFIModalParams | null }).params,
-  );
+  const params = useAppSelector((state) => state.modal.params as CLMSGFIModalParams | null);
   const [loading, setLoading] = useState(true);
   const [attributes, setAttributes] = useState<FeatureAttributes | null>(null);
   const [error, setError] = useState<string | null>(null);

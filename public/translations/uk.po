@@ -518,9 +518,6 @@ msgstr "Відцентрувати карту на об'єкт"
 msgid "Area of interest"
 msgstr "Область інтересу"
 
-msgid "Select mode"
-msgstr "Вибрати режим"
-
 msgid "km"
 msgstr "км"
 
@@ -11753,6 +11750,18 @@ msgid "Toggle the visibility of the text on the exported image."
 msgstr ""
 
 msgid "Show text"
+msgstr ""
+
+#, javascript-format
+msgid "AOI area exceeds the maximum allowed area of ${ v } km²"
+msgstr ""
+
+#, javascript-format
+msgid "AOI height exceeds the maximum allowed height of ${ v } km"
+msgstr ""
+
+#, javascript-format
+msgid "AOI width exceeds the maximum allowed width of ${ v } km"
 msgstr ""
 
 msgid ""

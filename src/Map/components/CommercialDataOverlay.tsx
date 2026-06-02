@@ -45,7 +45,6 @@ const CommercialDataOverlay = ({
     <>
       {displaySearchResults && !!highlightedResult && (
         <GeoJSON
-          id="commercialDataResult"
           data={highlightedResult.geometry}
           key={highlightedResult.id}
           style={() => highlightedTileStyle}
@@ -54,8 +53,12 @@ const CommercialDataOverlay = ({
 
       {displaySearchResults && searchResults.length > 0 && (
         <FeatureGroup
-          onClick={(e: LeafletMouseEvent) => {
-            store.dispatch(commercialDataSlice.actions.setLocation({ lat: e.latlng.lat, lng: e.latlng.lng }));
+          eventHandlers={{
+            click: (e: LeafletMouseEvent) => {
+              store.dispatch(
+                commercialDataSlice.actions.setLocation({ lat: e.latlng.lat, lng: e.latlng.lng }),
+              );
+            },
           }}
         >
           {searchResults.map((result, i) => (
@@ -66,7 +69,6 @@ const CommercialDataOverlay = ({
 
       {!!selectedOrder?.input?.bounds?.geometry && (
         <GeoJSON
-          id="commercialDataSelectedOrder"
           data={selectedOrder.input.bounds.geometry}
           key={selectedOrder.id}
           style={selectedOrderStyle}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { t } from 'ttag';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { EXPORT_FORMAT } from '../../const';
 import InputWithBouncyLimit from '../../components/InputWithBouncyLimit/InputWithBouncyLimit';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
@@ -44,7 +44,7 @@ export default function TimelapseSettings({
   }
 
   return (
-    <Rodal
+    <Modal
       className="settings"
       visible={true}
       customStyles={{
@@ -134,6 +134,6 @@ export default function TimelapseSettings({
       <div className="notes">{t`For optimisation reasons MPEG4 output format will always be used for generating a timelapse with transition "fade", even when GIF is selected.`}</div>
 
       <EOBButton onClick={onSaveButtonClick} text={t`Apply`} className="timelapse-download-btn" />
-    </Rodal>
+    </Modal>
   );
 }

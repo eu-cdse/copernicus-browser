@@ -5,6 +5,9 @@ import { floatingPanelNotificationSlice } from './store/slices/floatingPanelNoti
 import { tabsSlice } from './store/slices/tabsSlice';
 import { languageSlice } from './store/slices/languageSlice';
 import { collapsiblePanelSlice } from './store/slices/collapsiblePanelSlice';
+import { mainMapSlice } from './store/slices/mainMapSlice';
+import { modalSlice } from './store/slices/modalSlice';
+import { authSlice } from './store/slices/authSlice';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
@@ -14,8 +17,6 @@ import {
   USER_INSTANCES_THEMES_LIST,
   URL_THEMES_LIST,
   EDUCATION_MODE,
-  DEFAULT_LAT_LNG,
-  DEFAULT_ZOOM,
   EXPORT_FORMAT,
   DEFAULT_CLOUD_COVER_PERCENT,
   COMPARE_OPTIONS,
@@ -25,7 +26,6 @@ import {
   PROCESSING_OPTIONS,
 } from './const';
 import { DEMInstanceType } from '@sentinel-hub/sentinelhub-js';
-import { getInitialBaseLayerId } from './Map/Layers';
 import { isValidMosaickingOrder } from './utils/mosaickingOrder.utils';
 import {
   getResultsSectionFilterDefaultValue,
@@ -76,95 +76,9 @@ export const poiSlice = createSlice({
   },
 });
 
-const initialBaseLayerId = getInitialBaseLayerId();
-
-export const mainMapSlice = createSlice({
-  name: 'mainMap',
-  initialState: {
-    lat: DEFAULT_LAT_LNG.lat,
-    lng: DEFAULT_LAT_LNG.lng,
-    zoom: DEFAULT_ZOOM,
-    baseLayerId: initialBaseLayerId,
-    enabledOverlaysId: ['labels'],
-    is3D: false,
-    loadingMessage: null,
-    quicklookOverlays: [],
-    filteredQuicklookOverlays: [],
-  },
-  reducers: {
-    setPosition: (state, action) => {
-      const { lat, lng, zoom } = action.payload;
-      if (lat !== undefined && lng !== undefined) {
-        state.lat = lat;
-        state.lng = lng;
-      }
-      if (zoom !== undefined) {
-        state.zoom = zoom;
-      }
-    },
-    setViewport: (state, action) => {
-      const {
-        center: [lat, lng],
-        zoom,
-      } = action.payload;
-      state.lat = lat;
-      state.lng = lng;
-      state.zoom = zoom;
-    },
-    setBounds: (state, action) => {
-      const { bounds, pixelBounds } = action.payload;
-      state.bounds = bounds;
-      state.pixelBounds = pixelBounds;
-    },
-    setBaseLayerId: (state, action) => {
-      state.baseLayerId = action.payload;
-    },
-    addOverlay: (state, action) => {
-      state.enabledOverlaysId.push(action.payload);
-    },
-    removeOverlay: (state, action) => {
-      const overlayIndex = state.enabledOverlaysId.indexOf(action.payload);
-      if (overlayIndex !== -1) {
-        state.enabledOverlaysId.splice(overlayIndex, 1);
-      }
-    },
-    setIs3D: (state, action) => {
-      state.is3D = action.payload;
-    },
-    setLoadingMessage: (state, action) => {
-      state.loadingMessage = action.payload;
-    },
-    addQuicklookOverlay: (state, action) => {
-      if (!state.quicklookOverlays.some((o) => o._internalId === action.payload._internalId)) {
-        state.quicklookOverlays.push(action.payload);
-      }
-    },
-    removeQuicklookOverlay: (state, action) => {
-      state.quicklookOverlays = state.quicklookOverlays.filter((o) => o._internalId !== action.payload);
-    },
-    clearQuicklookOverlays: (state) => {
-      state.quicklookOverlays = [];
-    },
-    setFilteredQuicklookOverlays: (state, action) => {
-      state.filteredQuicklookOverlays = action.payload;
-    },
-    clearFilteredQuicklookOverlays: (state) => {
-      state.filteredQuicklookOverlays = [];
-    },
-    reset: (state) => {
-      state.lat = DEFAULT_LAT_LNG.lat;
-      state.lng = DEFAULT_LAT_LNG.lng;
-      state.zoom = DEFAULT_ZOOM;
-      state.enabledOverlaysId = ['labels'];
-      state.is3D = false;
-      state.loadingMessage = null;
-      state.quicklookOverlay = null;
-      state.filteredQuicklookOverlays = null;
-    },
-  },
-});
-
 export { aoiSlice };
+
+export { mainMapSlice };
 
 export { notificationSlice };
 
@@ -176,46 +90,9 @@ export { languageSlice };
 
 export { collapsiblePanelSlice };
 
-export const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
-    user: {
-      userdata: null,
-      token_expiration: null,
-      access_token: null,
-      terms_privacy_accepted: false,
-      error: null,
-    },
-    anonToken: null,
-    tokenRefreshInProgress: false,
-  },
-  reducers: {
-    setUser: (state, action) => {
-      state.user.userdata = action.payload.userdata;
-      state.user.access_token = action.payload.access_token;
-      state.user.token_expiration = action.payload.token_expiration;
-      state.user.error = null;
-    },
-    resetUser: (state) => {
-      state.user.userdata = null;
-      state.user.access_token = null;
-      state.user.token_expiration = null;
-      state.user.error = null;
-    },
-    setAnonToken: (state, action) => {
-      state.anonToken = action.payload;
-    },
-    setTermsPrivacyAccepted: (state, action) => {
-      state.terms_privacy_accepted = action.payload;
-    },
-    setTokenRefreshInProgress: (state, action) => {
-      state.tokenRefreshInProgress = action.payload;
-    },
-    setUserAuthError: (state, action) => {
-      state.user.error = action.payload;
-    },
-  },
-});
+export { modalSlice };
+
+export { authSlice };
 
 export const themesSlice = createSlice({
   name: 'themes',
@@ -342,26 +219,6 @@ export const themesSlice = createSlice({
       state.failedThemeParts = [];
       state.currentProjectName = null;
       state.useEvoland = false;
-    },
-  },
-});
-
-export const modalSlice = createSlice({
-  name: 'modal',
-  initialState: {
-    id: null,
-  },
-  reducers: {
-    addModal: (state, action) => {
-      state.id = action.payload.modal;
-      state.params = action.payload.params;
-    },
-    removeModal: (state) => {
-      state.id = null;
-      state.params = null;
-    },
-    reset: (state) => {
-      state.id = null;
     },
   },
 });

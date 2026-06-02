@@ -1,5 +1,4 @@
 import { test, expect, Page } from '@playwright/test';
-import { dismissAnonymousSession } from './fixtures/helpers';
 import { CODE_EDITOR_URLS } from './fixtures/urls';
 
 // s2L2aTrueColor URL with dateMode overridden to TIME RANGE and a 180-day window as starting point
@@ -14,7 +13,6 @@ async function openVisualisationInTimeRangeMode(page: Page) {
 
   // Navigate directly to a known S2-L2A visualisation in TIME RANGE mode — no search needed
   await page.goto(TIME_RANGE_URL);
-  await dismissAnonymousSession(page);
 
   // Wait for the visualisation to be fully ready (Download image confirms full app load)
   await page.getByTitle(/Download image/).waitFor({ state: 'visible', timeout: 15000 });
@@ -71,15 +69,21 @@ test('selecting a From date via the calendar sets it without jumping back', asyn
   // Record the initial From value
   const initialFrom = await fromInput.inputValue();
 
+  // Wait for any in-flight loader to clear so the calendar trigger is clickable.
+  const loader = vizTab.locator('.loader.within-collapse-panel');
+  await loader.waitFor({ state: 'hidden' }).catch(() => {});
+
   // Open the From calendar — portal renders into .timespan-calendar-holder, not inside .date-time-input
   await fromInput.click();
   const fromCalendar = vizTab.locator('.calendar-wrapper');
   await fromCalendar.waitFor({ state: 'visible' });
 
   // Navigate forward one month from whatever month is currently shown
+  await loader.waitFor({ state: 'hidden' }).catch(() => {});
   await fromCalendar.locator('.date-nav-button.right').click();
 
   // Click day 15 — always in the middle of the month, never an outside day
+  await loader.waitFor({ state: 'hidden' }).catch(() => {});
   await fromCalendar.locator('.rdp-day:not(.rdp-outside)').filter({ hasText: /^15$/ }).click();
 
   // From must have changed to the 15th of the new month — must not revert to the initial value
@@ -110,14 +114,19 @@ test('clicking an Until date more than 180 days from From in the calendar auto-a
   const calendar = vizTab.locator('.calendar-wrapper');
   await calendar.waitFor({ state: 'visible' });
 
-  // Navigate forward 3 months to October 2023 (Jul → Aug → Sep → Oct)
+  // Navigate forward 3 months to October 2023 (Jul → Aug → Sep → Oct).
+  // The visualization-time-select panel renders a loader between renders that briefly
+  // intercepts pointer events on the calendar nav button — wait for it to clear between clicks.
+  const loader = vizTab.locator('.loader.within-collapse-panel');
   const nextMonthBtn = calendar.locator('.date-nav-button.right');
   for (let i = 0; i < 3; i++) {
+    await loader.waitFor({ state: 'hidden' }).catch(() => {});
     await nextMonthBtn.click();
   }
+  await loader.waitFor({ state: 'hidden' }).catch(() => {});
 
   // Click Oct 1 — 273 days after From=Jan 1, well beyond the 180-day window
-  await calendar.getByRole('gridcell', { name: 'Sun Oct 01 2023' }).click();
+  await calendar.getByRole('gridcell', { name: 'Sunday, October 1st, 2023' }).click();
 
   // Until should update to the clicked date
   await expect(untilInput).toHaveValue('2023-10-01');

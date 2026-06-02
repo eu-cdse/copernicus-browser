@@ -1,5 +1,37 @@
 @use '../../../../variables.module.scss' as vars;
 
+.collection-tooltip-popup {
+  padding: 5px 10px;
+  overflow-wrap: anywhere;
+
+  p {
+    margin: 5px 0;
+
+    a {
+      color: vars.$primaryColor;
+    }
+  }
+
+  .tooltip-credits {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    a {
+      color: vars.$primaryColor;
+    }
+
+    div {
+      padding-top: 5px;
+      padding-right: 6px;
+    }
+
+    .tooltip-logo {
+      width: 61px;
+    }
+  }
+}
+
 .collection-tooltip {
   .collection-tooltip-icon {
     display: flex;
@@ -26,25 +58,6 @@
     }
   }
 
-  .tooltip-credits {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    a {
-      color: vars.$primaryColor;
-    }
-
-    div {
-      padding-top: 5px;
-      padding-right: 6px;
-    }
-
-    .tooltip-logo {
-      width: 61px;
-    }
-  }
-
   &.disabled {
     pointer-events: none;
 
@@ -52,43 +65,6 @@
       opacity: 0.15;
       cursor: not-allowed;
     }
-  }
-
-  .react-tooltip-lite {
-    box-shadow: vars.$boxShadow;
-    background: vars.$mainMedium;
-    color: vars.$textColor;
-    border-radius: 5px;
-    max-width: 300px !important;
-    font-size: 0.8em;
-    padding: 5px 10px !important;
-    margin-left: 5px;
-    overflow-wrap: anywhere;
-
-    p {
-      margin: 5px 0;
-
-      a {
-        color: vars.$primaryColor;
-      }
-    }
-  }
-
-  .react-tooltip-lite-up-arrow {
-    border-top: 10px solid vars.$mainMedium;
-  }
-
-  .react-tooltip-lite-down-arrow {
-    border-bottom: 10px solid vars.$mainMedium;
-  }
-
-  .react-tooltip-lite-right-arrow {
-    border-right: 10px solid vars.$mainMedium;
-    margin-left: 5px;
-  }
-
-  .react-tooltip-lite-left-arrow {
-    border-left: 10px solid vars.$mainMedium;
   }
 }
 

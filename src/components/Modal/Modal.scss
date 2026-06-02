@@ -1,0 +1,74 @@
+/* Structural styles — preserved from rodal/lib/rodal.css so existing
+   .rodal-* SCSS overrides in the codebase continue to work unchanged. */
+
+.rodal,
+.rodal-mask {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.rodal {
+  position: fixed;
+}
+
+.rodal-mask {
+  position: absolute;
+  background: rgb(0 0 0 / 30%);
+}
+
+.rodal-dialog {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: 101;
+  padding: 15px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.rodal-dialog:focus {
+  outline: none;
+}
+
+.rodal-close {
+  position: absolute;
+  cursor: pointer;
+  top: 16px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.rodal-close::before,
+.rodal-close::after {
+  position: absolute;
+  content: '';
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  background: #999;
+  border-radius: 100%;
+  transition: background 0.2s;
+}
+
+.rodal-close::before {
+  transform: rotate(45deg);
+}
+
+.rodal-close::after {
+  transform: rotate(-45deg);
+}
+
+.rodal-close:hover::before,
+.rodal-close:hover::after {
+  background: #333;
+}

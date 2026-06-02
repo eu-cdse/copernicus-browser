@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../../../../components/Modal/Modal';
 import { t } from 'ttag';
 import store, { modalSlice } from '../../../../store';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
@@ -80,7 +80,7 @@ const RRDProductInfoModal = ({ selectedResult, params, lng, lat, previewImageUrl
 
   const { onDownload, downloadInProgress } = params;
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       className="product-info-rrd-modal"
       customStyles={{
@@ -155,7 +155,7 @@ const RRDProductInfoModal = ({ selectedResult, params, lng, lat, previewImageUrl
           }}
         /> */}
       </>
-    </Rodal>
+    </Modal>
   );
 };
 
@@ -164,7 +164,7 @@ const mapStoreToProps = (store) => ({
   selectedLanguage: store.language.selectedLanguage,
   lat: store.mainMap.lat,
   lng: store.mainMap.lng,
-  previewImageUrl: store.modal.params.previewImageUrl,
+  previewImageUrl: store.modal.params?.previewImageUrl ?? null,
 });
 
 export default connect(mapStoreToProps, null)(RRDProductInfoModal);

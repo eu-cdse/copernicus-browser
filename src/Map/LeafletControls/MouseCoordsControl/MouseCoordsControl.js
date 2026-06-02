@@ -1,60 +1,39 @@
 import L from 'leaflet';
-import { withLeaflet, MapControl } from 'react-leaflet';
+import { createControlComponent } from '@react-leaflet/core';
+import { roundDegrees } from '../../../junk/EOBCommon/utils/coords';
 
-class MouseCoordsControl extends MapControl {
-  state = {
-    mouseCcoords: null,
-  };
+const createMouseCoordsControl = (props) => {
+  let panelDiv;
+  let mouseCoords = null;
 
-  componentDidMount() {
-    const { map } = this.props.leaflet;
-    map.on('mousemove', this.handleMouseMoveAndZoomChange);
-    map.on('zoomend', this.handleMouseMoveAndZoomChange);
-    map.addControl(this.leafletElement);
-  }
-
-  componentWillUnmount() {
-    const { map } = this.props.leaflet;
-    map.off('mousemove', this.handleMouseMoveAndZoomChange);
-    map.off('zoomend', this.handleMouseMoveAndZoomChange);
-    map.removeControl(this.leafletElement);
-  }
-
-  handleMouseMoveAndZoomChange = (e) => {
-    let mouseCoords;
+  const handleMouseMoveAndZoomChange = (e) => {
     if (e.type === 'mousemove') {
       mouseCoords = e.latlng.wrap();
-      this.setState({ mouseCcoords: e.latlng.wrap() });
     } else {
-      mouseCoords = this.state.mouseCcoords ? this.state.mouseCcoords : e.target._lastCenter;
+      mouseCoords = mouseCoords ?? e.target._lastCenter;
     }
-
     const zoom = e.target.getZoom();
-    const lng = this.formatDegrees(mouseCoords.lng, zoom);
-    const lat = this.formatDegrees(mouseCoords.lat, zoom);
-    const value = `Lat: ${lat}, Lng: ${lng}`;
-    this.panelDiv.innerHTML = value;
-    this.panelDiv.classList.remove('no-coordinates');
+    const lng = roundDegrees(mouseCoords.lng, zoom);
+    const lat = roundDegrees(mouseCoords.lat, zoom);
+    panelDiv.innerHTML = `Lat: ${lat}, Lng: ${lng}`;
+    panelDiv.classList.remove('no-coordinates');
   };
 
-  formatDegrees(deg, zoom) {
-    if (!Number.isFinite(deg) || !Number.isFinite(zoom)) {
-      return '';
-    }
-    const zRnd = Math.min(31, Math.max(0, Math.ceil(zoom))); // [0..31] is needed for shifting
-    const degPerPix = 360 / 256 / (1 << zRnd);
-    return deg.toFixed(Math.max(0, -Math.floor(Math.log10(0.5 * degPerPix))));
-  }
+  const MouseCoordsLeafletControl = L.Control.extend({
+    onAdd(map) {
+      panelDiv = L.DomUtil.create('div', 'leaflet-control-map-coordinates no-coordinates');
+      map.on('mousemove', handleMouseMoveAndZoomChange);
+      map.on('zoomend', handleMouseMoveAndZoomChange);
+      return panelDiv;
+    },
+    onRemove(map) {
+      map.off('mousemove', handleMouseMoveAndZoomChange);
+      map.off('zoomend', handleMouseMoveAndZoomChange);
+    },
+  });
 
-  createLeafletElement(props) {
-    const MouseCoordsControl = L.Control.extend({
-      onAdd: () => {
-        this.panelDiv = L.DomUtil.create('div', 'leaflet-control-map-coordinates no-coordinates');
-        return this.panelDiv;
-      },
-    });
-    return new MouseCoordsControl({ position: props.position });
-  }
-}
+  return new MouseCoordsLeafletControl({ position: props.position });
+};
 
-export default withLeaflet(MouseCoordsControl);
+const MouseCoordsControl = createControlComponent(createMouseCoordsControl);
+export default MouseCoordsControl;

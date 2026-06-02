@@ -172,6 +172,109 @@ describe('handleRRDError', () => {
     });
   });
 
+  it('should handle AOI constraint violations with known codes from Airbus FR Pleiades', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error:
+            'Research Feasibility: Error calling feasibility request:\n[{code: ERR_MAX_AOI_AREA, locator: AOI, message: 800.5}, {code: ERR_AOI_MAX_HEIGHT, locator: AOI, message: 40.0}, {code: ERR_AOI_MAX_WIDTH, locator: AOI, message: 18.9}]',
+          status: 400,
+          title: 'Bad Request',
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI height exceeds the maximum allowed height of 40.0 km\nAOI width exceeds the maximum allowed width of 18.9 km',
+    });
+  });
+
+  it('should handle AOI constraint violations with unknown codes showing locator and raw values', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error:
+            'Research Feasibility: Error calling feasibility request:\n[{code: ERR_UNKNOWN_CONSTRAINT, locator: AOI, message: 99.9}]',
+          status: 400,
+          title: 'Bad Request',
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Research Feasibility: Error calling feasibility request:\n\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9)',
+    });
+  });
+
+  it('should handle mixed known and unknown AOI constraint codes', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error:
+            'Research Feasibility: Error calling feasibility request:\n[{code: ERR_MAX_AOI_AREA, locator: AOI, message: 800.5}, {code: ERR_UNKNOWN_CONSTRAINT, locator: AOI, message: 99.9}]',
+          status: 400,
+          title: 'Bad Request',
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9)',
+    });
+  });
+
+  it('should handle AOI constraint violations with non-numeric message values', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error:
+            'Research Feasibility: Error calling feasibility request:\n[{code: ERR_MAX_AOI_AREA, locator: AOI, message: INVALID_AREA_ID}]',
+          status: 400,
+          title: 'Bad Request',
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of INVALID_AREA_ID km²',
+    });
+  });
+
+  it('should use errorData.title as prefix when error string has no newline before the constraint array', async () => {
+    const mockError = {
+      response: {
+        data: {
+          error: '[{code: ERR_MAX_AOI_AREA, locator: AOI, message: 800.5}]',
+          status: 400,
+          title: 'Bad Request',
+        },
+        status: 400,
+      },
+    };
+
+    await handleRRDError(mockError);
+
+    expect(handleError).toHaveBeenCalledWith({
+      message: 'Bad Request\n\nAOI area exceeds the maximum allowed area of 800.5 km²',
+    });
+  });
+
   it('should handle a fallback for unknown errors', async () => {
     const mockError = new Error('An unknown error occurred');
 

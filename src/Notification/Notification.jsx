@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../components/Modal/Modal';
 
 import { NotificationPanel } from './NotificationPanel';
 import store, { notificationSlice } from '../store';
-import 'rodal/lib/rodal.css';
 
 class Notification extends Component {
   render() {
     return (
-      <Rodal
+      <Modal
         onClose={() => store.dispatch(notificationSlice.actions.removeNotification())}
         animation="slideUp"
         visible={!!this.props.msg}
@@ -24,7 +23,7 @@ class Notification extends Component {
         className="notification-modal"
       >
         <NotificationPanel type={this.props.type} msg={this.props.msg} />
-      </Rodal>
+      </Modal>
     );
   }
 }

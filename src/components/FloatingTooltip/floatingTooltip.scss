@@ -1,0 +1,15 @@
+@use '../../variables.module.scss' as vars;
+
+.floating-tooltip-content {
+  background: vars.$mainMedium;
+  color: vars.$textColor;
+  border-radius: 5px;
+  max-width: 300px;
+  font-size: 0.8em;
+  z-index: 1000;
+  box-shadow: vars.$boxShadow;
+}
+
+.floating-tooltip-arrow {
+  fill: vars.$mainMedium;
+}

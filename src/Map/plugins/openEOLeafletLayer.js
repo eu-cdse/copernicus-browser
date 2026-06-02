@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import isEqual from 'fast-deep-equal';
-import { GridLayer, withLeaflet } from 'react-leaflet';
+import { createLayerComponent } from '@react-leaflet/core';
 import processGraphBuilder from '../../api/openEO/processGraphBuilder';
 import openEOApi from '../../api/openEO/openEO.api';
 import {
@@ -20,6 +20,7 @@ import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
 import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
 import { DATASOURCES } from '../../const';
 import { TILE_REQUEST_DEBOUNCE_MS } from '../const';
+import { getCommonLayerOptions } from './commonLayerOptions';
 
 class OpenEoLayer extends L.TileLayer {
   constructor(options) {
@@ -250,165 +251,77 @@ class OpenEoLayer extends L.TileLayer {
   };
 }
 
-class OpenEoLayerComponent extends GridLayer {
-  createLeafletElement(props) {
+function getOpenEoOptions(params) {
+  const options = getCommonLayerOptions(params);
+
+  if (params.processGraph) {
+    options.processGraph = params.processGraph;
+  }
+  if (params.cachedProcessGraph) {
+    options.cachedProcessGraph = params.cachedProcessGraph;
+  } else {
+    options.cachedProcessGraph = null;
+  }
+  if (params.fromTime) {
+    options.fromTime = params.fromTime;
+  }
+
+  const effects = constructGetMapParamsEffects(params);
+  if (effects) {
+    options.effects = effects;
+  } else {
+    options.effects = {};
+  }
+
+  if (params.previewMode) {
+    options.previewMode = params.previewMode;
+  } else {
+    options.previewMode = null;
+  }
+
+  return options;
+}
+
+const OpenEoLayerComponent = createLayerComponent(
+  (props, context) => {
     const { progress, ...params } = props;
-    const { leaflet: _l, ...options } = this.getOptions(params);
-    const layer = new OpenEoLayer(options);
+    const options = getOpenEoOptions(params);
+    const instance = new OpenEoLayer(options);
     if (progress) {
-      layer.on('loading', function () {
+      instance.on('loading', function () {
         progress.start();
         progress.inc();
       });
-
-      layer.on('load', function () {
+      instance.on('load', function () {
         progress.done();
       });
-
-      layer.on('tileerror', function () {
-        if (layer._noTilesToLoad()) {
+      instance.on('tileerror', function () {
+        if (instance._noTilesToLoad()) {
           progress.done();
         }
       });
     }
-    layer.on('tileunload', function (e) {
+    instance.on('tileunload', function (e) {
       if (e !== undefined && e.tile !== undefined && e.tile.controller !== undefined) {
         e.tile.controller.abort();
       }
     });
-    layer.setClipping(params.clipping);
-    layer.setOpacity(params.opacity);
-    return layer;
-  }
-
-  updateLeafletElement(fromProps, toProps) {
-    super.updateLeafletElement(fromProps, toProps);
-    const { ...prevProps } = fromProps;
-    const { ...prevParams } = this.getOptions(prevProps);
-    const { ...props } = toProps;
-    const { ...params } = this.getOptions(props);
-
+    instance.setClipping(params.clipping);
+    instance.setOpacity(params.opacity);
+    return { instance, context };
+  },
+  (instance, props, prevProps) => {
+    const params = getOpenEoOptions(props);
+    const prevParams = getOpenEoOptions(prevProps);
     if (!isEqual(params, prevParams)) {
-      this.leafletElement.setParams(params);
+      instance.setParams(params);
     }
-    if (fromProps.opacity !== toProps.opacity) {
-      this.leafletElement.setOpacity(toProps.opacity);
+    if (prevProps.opacity !== props.opacity) {
+      instance.setOpacity(props.opacity);
     }
-    if (fromProps.clipping !== toProps.clipping) {
-      this.leafletElement.setClipping(toProps.clipping);
+    if (prevProps.clipping !== props.clipping) {
+      instance.setClipping(props.clipping);
     }
-  }
-
-  getOptions(params) {
-    let options = {};
-    if (params.processGraph) {
-      options.processGraph = params.processGraph;
-    }
-    if (params.cachedProcessGraph) {
-      options.cachedProcessGraph = params.cachedProcessGraph;
-    } else {
-      options.cachedProcessGraph = null;
-    }
-    if (params.datasetId) {
-      options.datasetId = params.datasetId;
-    }
-    if (params.fromTime) {
-      options.fromTime = params.fromTime;
-    }
-
-    if (params.toTime) {
-      options.toTime = params.toTime;
-    }
-
-    if (params.getMapAuthToken) {
-      options.getMapAuthToken = params.getMapAuthToken;
-    }
-
-    if (params.onTileImageError) {
-      options.onTileImageError = params.onTileImageError;
-    }
-
-    if (params.onTileImageLoad) {
-      options.onTileImageLoad = params.onTileImageLoad;
-    }
-
-    if (params.pane || params.leaflet.pane) {
-      options.pane = params.pane || params.leaflet.pane;
-    }
-
-    if (params.minZoom) {
-      options.minZoom = params.minZoom;
-    }
-    if (params.maxZoom && params.allowOverZoomBy) {
-      options.maxNativeZoom = params.maxZoom;
-      options.maxZoom = params.maxZoom + params.allowOverZoomBy;
-    } else if (params.maxZoom) {
-      options.maxNativeZoom = params.maxZoom;
-      options.maxZoom = params.maxZoom;
-    }
-
-    const effects = constructGetMapParamsEffects(params);
-    if (effects) {
-      options.effects = effects;
-    } else {
-      options.effects = {};
-    }
-
-    if (params.minQa !== undefined) {
-      options.minQa = params.minQa;
-    } else {
-      options.minQa = null;
-    }
-
-    if (params.mosaickingOrder) {
-      options.mosaickingOrder = params.mosaickingOrder;
-    } else {
-      options.mosaickingOrder = null;
-    }
-
-    if (params.upsampling) {
-      options.upsampling = params.upsampling;
-    } else {
-      options.upsampling = null;
-    }
-
-    if (params.downsampling) {
-      options.downsampling = params.downsampling;
-    } else {
-      options.downsampling = null;
-    }
-
-    if (params.speckleFilter) {
-      options.speckleFilter = params.speckleFilter;
-    } else {
-      options.speckleFilter = null;
-    }
-
-    if (params.orthorectification) {
-      options.orthorectification = params.orthorectification;
-    } else {
-      options.orthorectification = null;
-    }
-
-    if (params.backscatterCoeff) {
-      options.backscatterCoeff = params.backscatterCoeff;
-    } else {
-      options.backscatterCoeff = null;
-    }
-
-    if (params.orbitDirection) {
-      options.orbitDirection = params.orbitDirection;
-    } else {
-      options.orbitDirection = null;
-    }
-
-    if (params.previewMode) {
-      options.previewMode = params.previewMode;
-    } else {
-      options.previewMode = null;
-    }
-
-    return options;
-  }
-}
-export default withLeaflet(OpenEoLayerComponent);
+  },
+);
+export default OpenEoLayerComponent;

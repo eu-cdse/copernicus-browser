@@ -1,9 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
-import { dismissAnonymousSession } from './fixtures/helpers';
 
 async function setupSearchTab(page: Page) {
   await page.goto('/');
-  await dismissAnonymousSession(page);
   await page.getByRole('listitem').getByText('Search', { exact: true }).click();
   await page.getByRole('checkbox', { name: 'Complementary Data' }).check();
 }

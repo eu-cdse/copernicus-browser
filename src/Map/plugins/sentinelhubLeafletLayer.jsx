@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { GridLayer, withLeaflet } from 'react-leaflet';
+import { createLayerComponent } from '@react-leaflet/core';
 import isEqual from 'fast-deep-equal';
 import {
   LayersFactory,
@@ -281,6 +281,7 @@ import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import { reqConfigMemoryCache, reqConfigGetMap, DISABLED_ORTHORECTIFICATION } from '../../const';
 import { RRD_COLLECTIONS } from '../../Tools/SearchPanel/dataSourceHandlers/RRDDataSources/dataSourceRRDConstants';
 import { TILE_REQUEST_DEBOUNCE_MS } from '../const';
+import { getCommonLayerOptions } from './commonLayerOptions';
 
 class SentinelHubLayer extends L.TileLayer {
   constructor(options) {
@@ -1221,193 +1222,103 @@ class SentinelHubLayer extends L.TileLayer {
   };
 }
 
-class SentinelHubLayerComponent extends GridLayer {
-  createLeafletElement(props) {
+function getSentinelHubOptions(params) {
+  const options = getCommonLayerOptions(params);
+
+  if (params.url) {
+    options.url = params.url;
+  }
+  if (params.layers) {
+    options.layers = params.layers;
+  }
+  if (params.fromTime) {
+    options.fromTime = params.fromTime;
+  } else {
+    options.fromTime = null;
+  }
+  if (params.tileSize) {
+    options.tileSize = params.tileSize;
+  }
+  if (params.cloudCoverage !== undefined && params.cloudCoverage !== null) {
+    options.cloudCoverage = params.cloudCoverage;
+  }
+  if (params.format) {
+    options.format = MimeTypes[params.format];
+  }
+  if (params.customSelected && (params.evalscript || params.evalscriptUrl)) {
+    options.customSelected = true;
+    if (params.evalscript) {
+      options.evalscript = params.evalscript;
+      options.evalscriptUrl = null;
+    } else if (params.evalscriptUrl) {
+      options.evalscriptUrl = params.evalscriptUrl;
+    }
+    if (params.dataFusion) {
+      options.dataFusion = params.dataFusion;
+    }
+  } else {
+    options.customSelected = false;
+  }
+
+  const effects = constructGetMapParamsEffects(params);
+  if (effects) {
+    options.effects = effects;
+  } else {
+    options.effects = null;
+  }
+
+  if (params.constellation) {
+    options.constellation = params.constellation;
+  } else {
+    options.constellation = null;
+  }
+
+  if (params.showlogo !== undefined) {
+    options.showlogo = params.showlogo;
+  } else {
+    options.showlogo = false;
+  }
+
+  if (params.accessToken) {
+    options.accessToken = params.accessToken;
+  }
+
+  return options;
+}
+
+const SentinelHubLayerComponent = createLayerComponent(
+  (props, context) => {
     const { progress, ...params } = props;
-    const { leaflet: _l, ...options } = this.getOptions(params);
-    const layer = new SentinelHubLayer(options);
+    const options = getSentinelHubOptions(params);
+    const instance = new SentinelHubLayer(options);
     if (progress) {
-      layer.on('loading', function () {
+      instance.on('loading', function () {
         progress.start();
         progress.inc();
       });
-
-      layer.on('load', function () {
+      instance.on('load', function () {
         progress.done();
       });
     }
-    layer.on('tileunload', function (e) {
+    instance.on('tileunload', function (e) {
       e.tile.cancelToken.cancel();
     });
-    layer.setClipping(params.clipping);
-    layer.setOpacity(params.opacity);
-    return layer;
-  }
-
-  updateLeafletElement(fromProps, toProps) {
-    super.updateLeafletElement(fromProps, toProps);
-    const { ...prevProps } = fromProps;
-    const { ...prevParams } = this.getOptions(prevProps);
-    const { ...props } = toProps;
-    const { ...params } = this.getOptions(props);
-
+    instance.setClipping(params.clipping);
+    instance.setOpacity(params.opacity);
+    return { instance, context };
+  },
+  (instance, props, prevProps) => {
+    const params = getSentinelHubOptions(props);
+    const prevParams = getSentinelHubOptions(prevProps);
     if (!isEqual(params, prevParams)) {
-      this.leafletElement.setParams(params);
+      instance.setParams(params);
     }
-    if (fromProps.opacity !== toProps.opacity) {
-      this.leafletElement.setOpacity(toProps.opacity);
+    if (prevProps.opacity !== props.opacity) {
+      instance.setOpacity(props.opacity);
     }
-    if (fromProps.clipping !== toProps.clipping) {
-      this.leafletElement.setClipping(toProps.clipping);
+    if (prevProps.clipping !== props.clipping) {
+      instance.setClipping(props.clipping);
     }
-  }
-
-  getOptions(params) {
-    let options = {};
-
-    if (params.url) {
-      options.url = params.url;
-    }
-    if (params.datasetId) {
-      options.datasetId = params.datasetId;
-    }
-    if (params.layers) {
-      options.layers = params.layers;
-    }
-    if (params.fromTime) {
-      options.fromTime = params.fromTime;
-    } else {
-      options.fromTime = null;
-    }
-    if (params.toTime) {
-      options.toTime = params.toTime;
-    }
-    if (params.tileSize) {
-      options.tileSize = params.tileSize;
-    }
-    if (params.cloudCoverage !== undefined && params.cloudCoverage !== null) {
-      options.cloudCoverage = params.cloudCoverage;
-    }
-    if (params.format) {
-      options.format = MimeTypes[params.format];
-    }
-    if (params.customSelected && (params.evalscript || params.evalscriptUrl)) {
-      options.customSelected = true;
-      if (params.evalscript) {
-        options.evalscript = params.evalscript;
-        options.evalscriptUrl = null;
-      } else if (params.evalscriptUrl) {
-        options.evalscriptUrl = params.evalscriptUrl;
-      }
-      if (params.dataFusion) {
-        options.dataFusion = params.dataFusion;
-      }
-    } else {
-      options.customSelected = false;
-    }
-
-    if (params.tileSize) {
-      options.tileSize = params.tileSize;
-    }
-    if (params.minZoom) {
-      options.minZoom = params.minZoom;
-    }
-    if (params.maxZoom && params.allowOverZoomBy) {
-      options.maxNativeZoom = params.maxZoom;
-      options.maxZoom = params.maxZoom + params.allowOverZoomBy;
-    } else if (params.maxZoom) {
-      options.maxNativeZoom = params.maxZoom;
-      options.maxZoom = params.maxZoom;
-    }
-
-    if (params.pane || params.leaflet.pane) {
-      options.pane = params.pane || params.leaflet.pane;
-    }
-
-    const effects = constructGetMapParamsEffects(params);
-    if (effects) {
-      options.effects = effects;
-    } else {
-      options.effects = null;
-    }
-
-    if (params.minQa !== undefined) {
-      options.minQa = params.minQa;
-    } else {
-      options.minQa = null;
-    }
-
-    if (params.mosaickingOrder) {
-      options.mosaickingOrder = params.mosaickingOrder;
-    } else {
-      options.mosaickingOrder = null;
-    }
-
-    if (params.upsampling) {
-      options.upsampling = params.upsampling;
-    } else {
-      options.upsampling = null;
-    }
-
-    if (params.downsampling) {
-      options.downsampling = params.downsampling;
-    } else {
-      options.downsampling = null;
-    }
-
-    if (params.constellation) {
-      options.constellation = params.constellation;
-    } else {
-      options.constellation = null;
-    }
-
-    if (params.orbitDirection) {
-      options.orbitDirection = params.orbitDirection;
-    } else {
-      options.orbitDirection = null;
-    }
-
-    if (params.speckleFilter) {
-      options.speckleFilter = params.speckleFilter;
-    } else {
-      options.speckleFilter = null;
-    }
-
-    if (params.orthorectification) {
-      options.orthorectification = params.orthorectification;
-    } else {
-      options.orthorectification = null;
-    }
-
-    if (params.backscatterCoeff) {
-      options.backscatterCoeff = params.backscatterCoeff;
-    } else {
-      options.backscatterCoeff = null;
-    }
-
-    if (params.showlogo !== undefined) {
-      options.showlogo = params.showlogo;
-    } else {
-      options.showlogo = false;
-    }
-
-    if (params.accessToken) {
-      options.accessToken = params.accessToken;
-    }
-
-    if (params.getMapAuthToken) {
-      options.getMapAuthToken = params.getMapAuthToken;
-    }
-
-    if (params.onTileImageError) {
-      options.onTileImageError = params.onTileImageError;
-    }
-
-    if (params.onTileImageLoad) {
-      options.onTileImageLoad = params.onTileImageLoad;
-    }
-
-    return options;
-  }
-}
-export default withLeaflet(SentinelHubLayerComponent);
+  },
+);
+export default SentinelHubLayerComponent;

@@ -3,8 +3,12 @@ import { useODataSearch } from '../../../../hooks/useODataSearch';
 
 export const withODataSearchHOC = (WrappedComponent) => {
   return (props) => {
-    const [{ searchInProgress, searchError, oDataSearchResult }, productSearch, setODataSearchAuthToken] =
-      useODataSearch();
+    const [
+      { searchInProgress, searchError, oDataSearchResult },
+      productSearch,
+      setODataSearchAuthToken,
+      hydrate,
+    ] = useODataSearch();
 
     return (
       <WrappedComponent
@@ -13,6 +17,7 @@ export const withODataSearchHOC = (WrappedComponent) => {
         oDataSearchResult={oDataSearchResult}
         productSearch={productSearch}
         setODataSearchAuthToken={setODataSearchAuthToken}
+        hydrateODataSearch={hydrate}
         {...props}
       />
     );

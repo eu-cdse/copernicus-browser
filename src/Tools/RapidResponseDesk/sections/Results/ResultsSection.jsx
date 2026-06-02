@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CollapsiblePanel from '../../../../components/CollapsiblePanel/CollapsiblePanel';
 import { connect } from 'react-redux';
 import { msgid, ngettext, t } from 'ttag';
-import Rodal from 'rodal';
+import Modal from '../../../../components/Modal/Modal';
 import './ResultsSection.scss';
 import {
   getResultsSectionFilterProperties,
@@ -181,7 +181,7 @@ Try adjusting the date range, data providers, advanced fields, or select a bigge
       </CollapsiblePanel>
 
       {displayModal ? (
-        <Rodal
+        <Modal
           animation="slideUp"
           visible={true}
           width={600}
@@ -213,7 +213,7 @@ Try adjusting the date range, data providers, advanced fields, or select a bigge
               </div>
             </>
           )}
-        </Rodal>
+        </Modal>
       ) : null}
     </div>
   );

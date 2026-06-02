@@ -16,7 +16,47 @@ const keycloakInstance = new Keycloak({
   clientId: import.meta.env.VITE_CLIENTID,
 });
 
+// evalscript, processGraph, and visualizationUrl make the Keycloak redirect_uri too long to pass validation.
+// Both initKeycloak (page load) and openLogin (user clicks Login) strip those params before
+// handing the redirect_uri to Keycloak, and save the originals under this sessionStorage key
+// so they can be restored afterwards. The single restoration point is initKeycloak's finally
+// block, which runs after Keycloak resolves — whether that is on the same load (iframe-based
+// check-sso) or on the next load after a full-page redirect.
+// openLogin only writes to sessionStorage and never restores; its catch block removes the entry
+// if login() throws before the redirect, so a stale entry never reaches a future initKeycloak.
+const REDIRECT_PARAMS_KEY = 'cdse_keycloak_redirect_params';
+
+// Params whose encoded content is too large for Keycloak's redirect_uri validation.
+const LONG_URL_PARAMS = ['evalscript', 'processGraph', 'visualizationUrl'];
+
+// Snapshots the current search+hash into sessionStorage and removes LONG_URL_PARAMS from the
+// search string. Returns { hasLongParams, cleanSearch } so each caller can apply the stripped
+// URL in its own way (replaceState vs. redirectUri option).
+const snapshotAndStripLongParams = (search, hash) => {
+  const searchParams = new URLSearchParams(search);
+  const hasLongParams = LONG_URL_PARAMS.some((p) => searchParams.has(p));
+  if (!hasLongParams) {
+    return { hasLongParams: false, cleanSearch: search };
+  }
+  sessionStorage.setItem(REDIRECT_PARAMS_KEY, JSON.stringify({ search, hash }));
+  LONG_URL_PARAMS.forEach((p) => searchParams.delete(p));
+  return { hasLongParams: true, cleanSearch: searchParams.toString() };
+};
+
 export const initKeycloak = async () => {
+  const originalSearch = window.location.search;
+  const originalHash = window.location.hash;
+
+  const { hasLongParams, cleanSearch } = snapshotAndStripLongParams(originalSearch, originalHash);
+  if (hasLongParams) {
+    // Use a relative URL — history.replaceState does not require an absolute origin.
+    window.history.replaceState(
+      null,
+      '',
+      window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + originalHash,
+    );
+  }
+
   try {
     const authenticated = await keycloakInstance.init({
       onLoad: 'check-sso',
@@ -30,6 +70,24 @@ export const initKeycloak = async () => {
   } catch (error) {
     console.error('Failed to initialize keycloak:', error);
     return false;
+  } finally {
+    // Restore evalscript/processGraph/visualizationUrl so URLParamsParser sees the full original URL.
+    // Works for both the iframe case (finally runs immediately) and the full-page redirect
+    // case (finally runs on the second load after Keycloak redirects back).
+    // sessionStorage is per-tab, so there is no risk of restoring a URL from a different tab
+    // or page — no pathname guard is needed.
+    const saved = sessionStorage.getItem(REDIRECT_PARAMS_KEY);
+    if (saved) {
+      sessionStorage.removeItem(REDIRECT_PARAMS_KEY);
+      try {
+        const { search: savedSearch, hash: savedHash } = JSON.parse(saved);
+        window.history.replaceState(null, '', window.location.pathname + savedSearch + savedHash);
+      } catch {
+        console.error(
+          'Failed to restore URL params after Keycloak redirect — sessionStorage entry was malformed.',
+        );
+      }
+    }
   }
 };
 
@@ -52,16 +110,28 @@ export const getAccessToken = () => {
 };
 
 export const openLogin = async () => {
-  try {
-    const authenticated = await keycloakInstance.login();
+  const search = window.location.search;
+  const hash = window.location.hash;
+  const { hasLongParams, cleanSearch } = snapshotAndStripLongParams(search, hash);
 
-    // This will not be reached anymore
+  const loginOptions = {};
+  if (hasLongParams) {
+    // keycloakInstance.login() requires an absolute redirectUri (unlike history.replaceState
+    // which accepts a relative path), so we must include the origin here.
+    loginOptions.redirectUri =
+      window.location.origin + window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + hash;
+  }
+
+  try {
+    const authenticated = await keycloakInstance.login(loginOptions);
 
     if (authenticated) {
       setAuthenticatedUser();
     }
     return authenticated;
   } catch (error) {
+    // Clean up saved params — login did not redirect, so initKeycloak won't restore them.
+    sessionStorage.removeItem(REDIRECT_PARAMS_KEY);
     store.dispatch(notificationSlice.actions.displayError(t`An error has occurred during login process`));
     return false;
   }

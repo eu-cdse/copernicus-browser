@@ -24,7 +24,7 @@ const ResultsPreviewGroup = ({ tiles = [], highlightedId, idKey = 'id', onClick 
   }
 
   return (
-    <FeatureGroup onClick={onClick}>
+    <FeatureGroup eventHandlers={{ click: onClick }}>
       {tiles.map((tile) => {
         const keyVal = tile?.[idKey];
         const isHighlighted = keyVal === highlightedId;

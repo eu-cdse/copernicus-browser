@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Dropzone from 'react-dropzone';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { t } from 'ttag';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
@@ -84,7 +84,7 @@ export class EOBUploadGeoFile extends Component {
 
     const { inputGeometry } = this.state;
     return ReactDOM.createPortal(
-      <Rodal
+      <Modal
         animation="slideUp"
         visible={true}
         customStyles={{
@@ -129,7 +129,7 @@ export class EOBUploadGeoFile extends Component {
 
           {this.state.error && <p className="error">{this.state.error}</p>}
         </div>
-      </Rodal>,
+      </Modal>,
       document.querySelector('#app'),
     );
   }

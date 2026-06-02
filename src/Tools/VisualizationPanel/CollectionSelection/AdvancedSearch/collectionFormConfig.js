@@ -428,9 +428,12 @@ export const collections = [
       {
         id: AttributeNames.platformSerialIdentifier,
         render: MultiSelectInput,
-        getOptions: () => [
+        getOptions: ({ userToken }) => [
           AttributePlatformSerialIdentifierValues.S3A,
           AttributePlatformSerialIdentifierValues.S3B,
+          ...(hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING)
+            ? [AttributePlatformSerialIdentifierValues.S3C]
+            : []),
         ],
       },
       {

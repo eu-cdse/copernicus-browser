@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
+import { t } from 'ttag';
 import { handleError } from '../utils';
+
+const AOI_CONSTRAINT_ERROR_MESSAGES = {
+  ERR_MAX_AOI_AREA: (v) => t`AOI area exceeds the maximum allowed area of ${v} km²`,
+  ERR_AOI_MAX_HEIGHT: (v) => t`AOI height exceeds the maximum allowed height of ${v} km`,
+  ERR_AOI_MAX_WIDTH: (v) => t`AOI width exceeds the maximum allowed width of ${v} km`,
+};
 
 export const handleRRDError = async (error) => {
   try {
@@ -22,6 +29,19 @@ export const handleRRDError = async (error) => {
     }
 
     if (errorData?.error && typeof errorData.error === 'string') {
+      const aoiConstraintRegex = /\{code:\s*(\w+),\s*locator:\s*(\w+),\s*message:\s*([^}]+?)\s*\}/g;
+      const aoiMatches = [...errorData.error.matchAll(aoiConstraintRegex)];
+      if (aoiMatches.length > 0) {
+        const prefixMatch = errorData.error.match(/^(.*?)\n\[/s);
+        const prefix = prefixMatch ? prefixMatch[1].trim() : errorData.title || t`Error`;
+        const entries = aoiMatches.map(([, code, locator, value]) => {
+          const messageFn = AOI_CONSTRAINT_ERROR_MESSAGES[code];
+          return messageFn ? messageFn(value) : `${locator}: ${code} (${value})`;
+        });
+        await handleError({ message: `${prefix}\n\n${entries.join('\n')}` });
+        return;
+      }
+
       const jsonMatch = errorData.error.match(/{.*}/);
       if (jsonMatch) {
         try {

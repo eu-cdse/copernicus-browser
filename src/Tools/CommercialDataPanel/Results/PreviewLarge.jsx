@@ -1,5 +1,5 @@
 import React from 'react';
-import Rodal from 'rodal';
+import Modal from '../../../components/Modal/Modal';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 import { t } from 'ttag';
 
@@ -7,7 +7,7 @@ import './PreviewLarge.scss';
 
 const PreviewLarge = ({ imgUrl, onClose, title }) => {
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       visible={!!imgUrl}
       customStyles={{
@@ -24,7 +24,7 @@ const PreviewLarge = ({ imgUrl, onClose, title }) => {
         </div>
         <EOBButton className="button" fluid onClick={onClose} text={t`Close`} />
       </div>
-    </Rodal>
+    </Modal>
   );
 };
 

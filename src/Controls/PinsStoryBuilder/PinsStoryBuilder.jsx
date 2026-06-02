@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Toggle from 'react-toggle';
 import { t } from 'ttag';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import {
   ApiType,
@@ -370,7 +370,7 @@ class PinsStoryBuilder extends React.Component {
     const selectedSlides = slides.filter((s) => s.withinBounds && s.selected);
     const allImagesDownloaded = selectedSlides.every((s) => images[s.id] !== undefined);
     return (
-      <Rodal
+      <Modal
         animation="slideUp"
         visible={true}
         customStyles={{ height: '95vh', width: '95vw', padding: 0, border: 0 }}
@@ -416,7 +416,7 @@ class PinsStoryBuilder extends React.Component {
             </div>
           </div>
         </div>
-      </Rodal>
+      </Modal>
     );
   }
 }

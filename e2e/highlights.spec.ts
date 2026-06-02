@@ -114,10 +114,13 @@ test.describe.serial('highlights', () => {
     await page.getByText('The "Corn Belt" in the United States of America').waitFor({ state: 'visible' });
 
     // Register BEFORE clicking so we don't miss early tile responses.
-    // If Process API is called, it proves Corn Belt is routed through PROCESSING API, not OpenEO.
-    const processApiResponse = page.waitForResponse((r) => r.url().includes('/api/v1/process'), {
-      timeout: 30_000,
-    });
+    // Filter on status === 200 so unrelated preview-thumbnail requests for other
+    // highlights in the panel (which may legitimately 4xx) don't win the race and
+    // make the test fail. We only care that Corn Belt's tile succeeded via Process API.
+    const processApiResponse = page.waitForResponse(
+      (r) => r.url().includes('/api/v1/process') && r.status() === 200,
+      { timeout: 30_000 },
+    );
 
     // Click the Corn Belt highlight
     await page.getByText('The "Corn Belt" in the United States of America').click();

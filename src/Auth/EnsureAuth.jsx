@@ -1,7 +1,6 @@
 import React from 'react';
 import { t } from 'ttag';
-import Rodal from 'rodal';
-import 'rodal/lib/rodal.css';
+import Modal from '../components/Modal/Modal';
 
 import UserAuth from './UserAuth';
 
@@ -19,7 +18,7 @@ const AnonAuthButton = ({ executeAnonAuth }) => {
 };
 
 const LoginRequired = ({ user, executeAnonAuth }) => (
-  <Rodal
+  <Modal
     animation="slideUp"
     customStyles={{
       height: '250px',
@@ -45,7 +44,7 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
         {t`By continuing anonymously, you consent to the use of cookies by recaptcha.net and related collection, sharing and use of personal data by recaptcha.net. Alternatively, you can sign-in. See also [Terms and conditions](https://dataspace.copernicus.eu/terms-and-conditions)`}
       </ReactMarkdown>
     </div>
-  </Rodal>
+  </Modal>
 );
 
 const EnsureAuth = ({ user, anonToken, tokenRefreshInProgress, executeAnonAuth, userAuthCompleted }) => {

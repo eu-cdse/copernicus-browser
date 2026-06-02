@@ -330,6 +330,7 @@ export const AttributePlatformSerialIdentifierValues = {
   S2C: { value: 'C', label: 'S2C' },
   S3A: { value: 'A', label: 'S3A' },
   S3B: { value: 'B', label: 'S3B' },
+  S3C: { value: 'C', label: 'S3C' },
 };
 
 export const AttributeOrbitDirectionValues = {

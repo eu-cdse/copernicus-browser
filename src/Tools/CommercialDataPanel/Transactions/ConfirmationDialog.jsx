@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Rodal from 'rodal';
+import Modal from '../../../components/Modal/Modal';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 import { t } from 'ttag';
 
@@ -9,7 +9,7 @@ import { NotificationPanel } from '../../../Notification/NotificationPanel';
 export const ConfirmationDialog = ({ confirmAction, setConfirmAction }) => {
   const [inProgress, setInProgress] = useState(false);
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       visible={true}
       width={500}
@@ -44,6 +44,6 @@ export const ConfirmationDialog = ({ confirmAction, setConfirmAction }) => {
           )}
         </div>
       </div>
-    </Rodal>
+    </Modal>
   );
 };

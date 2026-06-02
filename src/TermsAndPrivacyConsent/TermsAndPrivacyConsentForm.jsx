@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Rodal from 'rodal';
+import Modal from '../components/Modal/Modal';
 import { t } from 'ttag';
 
 import ExternalLink from '../ExternalLink/ExternalLink';
@@ -32,7 +32,7 @@ export default function TermsAndPrivacyConsentForm() {
   }
 
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       visible={true}
       customStyles={{
@@ -99,6 +99,6 @@ export default function TermsAndPrivacyConsentForm() {
           </>
         )}
       </div>
-    </Rodal>
+    </Modal>
   );
 }

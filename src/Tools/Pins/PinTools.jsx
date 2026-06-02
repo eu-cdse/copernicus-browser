@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { t } from 'ttag';
 
 import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
@@ -116,7 +116,7 @@ class PinTools extends Component {
   getFileExtension = (filename) => filename.toLowerCase().split('.').pop();
 
   renderModal = () => (
-    <Rodal
+    <Modal
       animation="slideUp"
       visible={true}
       width={400}
@@ -146,7 +146,7 @@ class PinTools extends Component {
 
         {this.state.error && <pre className="error">{this.state.error}</pre>}
       </div>
-    </Rodal>
+    </Modal>
   );
 
   preparePinForExport = (pin) => {

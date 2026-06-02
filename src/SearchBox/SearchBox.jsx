@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback } from 'react';
 import LocationSearchBox from '../LocationSearchBox/LocationSearchBox';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
-import { withLeaflet } from 'react-leaflet';
 import L from 'leaflet';
 import store, { mainMapSlice } from '../store';
 import { t } from 'ttag';
@@ -92,4 +91,4 @@ function SearchBox(props) {
   );
 }
 
-export default withLeaflet(SearchBox);
+export default SearchBox;

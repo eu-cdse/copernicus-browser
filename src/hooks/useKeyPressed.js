@@ -18,7 +18,7 @@ const useKeyPressed = (keyName, callback) => {
     return () => {
       document.removeEventListener(KEY_EVENT_TYPE, handleKeyPressed);
     };
-  });
+  }, [handleKeyPressed]);
 };
 
 export default useKeyPressed;

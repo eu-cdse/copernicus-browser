@@ -1,33 +1,36 @@
-import React, { useRef, useState } from 'react';
-import Tooltip from 'react-tooltip-lite';
-
+import React from 'react';
+import { FloatingPortal, FloatingArrow } from '@floating-ui/react';
+import { useFloatingTooltip } from '../../../../components/FloatingTooltip/useFloatingTooltip';
+import '../../../../components/FloatingTooltip/floatingTooltip.scss';
 import './CollectionTooltip.scss';
-import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
 
-export default function CollectionTooltipContainer(props) {
-  const [isOpened, setIsOpened] = useState(false);
-  const ref = useRef();
-  useOnClickOutside(ref, (e) => {
-    const tooltipClassName = 'react-tooltip-lite';
-    const clickIsInside = Array.from(document.querySelectorAll(`[class^="${tooltipClassName}"]`)).some(
-      (elem) => elem.contains(e.target),
-    );
-    if (props.closeOnClickOutside && !clickIsInside) {
-      setIsOpened(false);
-    }
-  });
-  const { direction, children, className } = props;
+export default function CollectionTooltipContainer({
+  direction,
+  children,
+  className = '',
+  closeOnClickOutside,
+}) {
+  const { refs, floatingStyles, context, getReferenceProps, getFloatingProps, arrowRef, isOpen } =
+    useFloatingTooltip({ direction, closeOnClickOutside, defaultPlacement: 'right' });
+
   return (
-    <Tooltip
-      isOpen={isOpened}
-      tagName="div"
-      direction={direction}
-      content={children}
-      className={`collection-tooltip ${className} ${isOpened ? 'opened' : 'closed'}`}
-    >
-      <div ref={ref} onClick={() => setIsOpened((o) => !o)} className="collection-tooltip-icon">
+    <div className={`collection-tooltip ${className}`}>
+      <div ref={refs.setReference} {...getReferenceProps()} className="collection-tooltip-icon">
         <i className="fa fa-info"></i>
       </div>
-    </Tooltip>
+      {isOpen && (
+        <FloatingPortal>
+          <div
+            ref={refs.setFloating}
+            style={floatingStyles}
+            {...getFloatingProps()}
+            className="floating-tooltip-content collection-tooltip-popup"
+          >
+            {children}
+            <FloatingArrow ref={arrowRef} context={context} className="floating-tooltip-arrow" />
+          </div>
+        </FloatingPortal>
+      )}
+    </div>
   );
 }

@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { dismissAnonymousSession } from './fixtures/helpers';
 
 test('search latest S2 L2A image and verify process graph is selected in code editor', async ({ page }) => {
   await page.goto('/');
-  await dismissAnonymousSession(page);
 
   // Switch to Search tab
   await page.getByRole('listitem').getByText('Search', { exact: true }).click();

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
-import 'rodal/lib/rodal.css';
+import Modal from '../../components/Modal/Modal';
 import './SharePinsLink.scss';
 import { t } from 'ttag';
 
@@ -55,7 +54,7 @@ class SharePinsLink extends Component {
   render() {
     const { error, loading, shareLink, isCopiedToClipboard } = this.state;
     return (
-      <Rodal
+      <Modal
         animation="slideUp"
         visible={true}
         width={500}
@@ -87,7 +86,7 @@ class SharePinsLink extends Component {
             </div>
           )}
         </div>
-      </Rodal>
+      </Modal>
     );
   }
 }

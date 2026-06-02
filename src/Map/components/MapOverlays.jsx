@@ -32,7 +32,6 @@ const MapOverlays = ({
   displayTimelapseAreaPreview,
   lat,
   lng,
-  zoom,
   mapBounds,
 
   // quicklooks
@@ -76,7 +75,7 @@ const MapOverlays = ({
 
       {/* Timelapse area preview */}
       {displayTimelapseAreaPreview && selectedTabIndex === TABS.VISUALIZE_TAB && (
-        <TimelapseAreaPreview lat={lat} lng={lng} zoom={zoom} mapBounds={mapBounds} />
+        <TimelapseAreaPreview lat={lat} lng={lng} mapBounds={mapBounds} />
       )}
 
       {/* Quicklook overlays */}

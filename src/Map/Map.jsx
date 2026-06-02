@@ -1,5 +1,13 @@
 import React from 'react';
-import { Map as LeafletMap, Pane, LayersControl, TileLayer, LayerGroup } from 'react-leaflet';
+import {
+  MapContainer,
+  Pane,
+  LayersControl,
+  TileLayer,
+  LayerGroup,
+  useMapEvents,
+  useMap,
+} from 'react-leaflet';
 
 import { connect } from 'react-redux';
 import 'nprogress/nprogress.css';
@@ -66,11 +74,43 @@ import MapPanes from './components/MapPanes';
 import CommercialDataOverlay from './components/CommercialDataOverlay';
 import MapOverlays from './components/MapOverlays';
 
-// import EOBModeSelection from '../junk/EOBModeSelection/EOBModeSelection';
-
 const { BaseLayer, Overlay } = LayersControl;
+
+const MapEventHandler = ({
+  onViewportChanged,
+  onMoveEnd,
+  onOverlayAdd,
+  onOverlayRemove,
+  onBaseLayerChange,
+}) => {
+  useMapEvents({
+    // v4 removed onViewportChanged and onMoveEnd props from MapContainer; both
+    // are replaced here by a single moveend handler that covers both use cases.
+    moveend: (e) => {
+      onViewportChanged(e);
+      onMoveEnd(e);
+    },
+    overlayadd: onOverlayAdd,
+    overlayremove: onOverlayRemove,
+    baselayerchange: onBaseLayerChange,
+  });
+  return null;
+};
+
+const MapPositionSync = ({ lat, lng, zoom }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    const center = map.getCenter();
+    const currentZoom = map.getZoom();
+    if (currentZoom !== zoom || Math.abs(center.lat - lat) > 1e-10 || Math.abs(center.lng - lng) > 1e-10) {
+      map.setView([lat, lng], zoom, { animate: false });
+    }
+  }, [lat, lng, zoom, map]);
+  return null;
+};
 class Map extends React.Component {
-  mapRef = undefined;
+  mapLeafletElement = undefined;
+  _shownBaseLayers = [];
   serverErrorCount = 0;
   progress = progressWithDelayedAction({
     parent: '#map',
@@ -90,12 +130,8 @@ class Map extends React.Component {
   };
   resizeDebounceTimer;
 
-  async componentDidMount() {
-    this.setupMapResizeObserver();
-  }
-
   setupMapResizeObserver = () => {
-    const mapElement = this.mapRef?.leafletElement;
+    const mapElement = this.mapLeafletElement;
     if (!mapElement) {
       return;
     }
@@ -107,8 +143,8 @@ class Map extends React.Component {
       clearTimeout(this.resizeDebounceTimer);
 
       this.resizeDebounceTimer = setTimeout(() => {
-        if (this.mapRef?.leafletElement) {
-          this.mapRef.leafletElement.invalidateSize();
+        if (this.mapLeafletElement) {
+          this.mapLeafletElement.invalidateSize();
         }
       }, 100);
     });
@@ -204,11 +240,12 @@ class Map extends React.Component {
     }
   }
 
-  updateViewport = (viewport) => {
-    if (viewport?.center) {
-      viewport.center = Object.values(L.latLng(...viewport.center).wrap());
-      store.dispatch(mainMapSlice.actions.setViewport(viewport));
-    }
+  updateViewport = (ev) => {
+    const map = ev.target;
+    const center = map.getCenter();
+    const zoom = map.getZoom();
+    const viewport = { center: Object.values(L.latLng(center.lat, center.lng).wrap()), zoom };
+    store.dispatch(mainMapSlice.actions.setViewport(viewport));
   };
 
   setBounds = (ev) => {
@@ -262,6 +299,28 @@ class Map extends React.Component {
     }
   };
 
+  onOverlayAdd = (ev) => {
+    store.dispatch(mainMapSlice.actions.addOverlay(ev.layer.options.overlayTileLayerId));
+    if (ev.layer.options.pane === SENTINELHUB_LAYER_PANE_ID) {
+      store.dispatch(visualizationSlice.actions.setVisibleOnMap(true));
+    }
+  };
+
+  onOverlayRemove = (ev) => {
+    store.dispatch(mainMapSlice.actions.removeOverlay(ev.layer.options.overlayTileLayerId));
+    if (ev.layer.options.pane === SENTINELHUB_LAYER_PANE_ID) {
+      store.dispatch(visualizationSlice.actions.setVisibleOnMap(false));
+    }
+  };
+
+  onBaseLayerChange = (ev) => {
+    const selectedBaseLayerId = this._shownBaseLayers.find((baseLayer) => baseLayer.name === ev.name)?.id;
+    if (selectedBaseLayerId) {
+      store.dispatch(mainMapSlice.actions.setBaseLayerId(selectedBaseLayerId));
+      saveToLocalStorage(SELECTED_BASE_LAYER_KEY, selectedBaseLayerId);
+    }
+  };
+
   onSelectMode = (modeId) => {
     store.dispatch(visualizationSlice.actions.reset());
     store.dispatch(themesSlice.actions.setSelectedModeIdAndDefaultTheme(modeId));
@@ -271,7 +330,6 @@ class Map extends React.Component {
     const {
       lat,
       lng,
-      zoom,
       mapBounds,
       datasetId,
       baseLayerId,
@@ -394,16 +452,18 @@ class Map extends React.Component {
     });
 
     const osmLayer = getDefaultBaseLayer();
+    this._shownBaseLayers = shownBaseLayers;
 
     return (
-      <LeafletMap
-        ref={(el) => (this.mapRef = el)}
+      <MapContainer
         minZoom={2}
-        onViewportChanged={this.updateViewport}
         center={[this.props.lat, this.props.lng]}
         zoom={this.props.zoom}
-        onMoveEnd={this.setBounds}
-        whenReady={this.setBounds}
+        whenReady={(e) => {
+          this.mapLeafletElement = e.target;
+          this.setupMapResizeObserver();
+          this.setBounds(e);
+        }}
         zoomControl={false}
         attributionControl={false}
         scaleControl={false}
@@ -411,27 +471,15 @@ class Map extends React.Component {
         tap={false}
         id="map"
         className={`${toolsOpen ? '' : 'left-align-attribution'}`}
-        onOverlayAdd={(ev) => {
-          store.dispatch(mainMapSlice.actions.addOverlay(ev.layer.options.overlayTileLayerId));
-          if (ev.layer.options.pane === SENTINELHUB_LAYER_PANE_ID) {
-            store.dispatch(visualizationSlice.actions.setVisibleOnMap(true));
-          }
-        }}
-        onOverlayRemove={(ev) => {
-          store.dispatch(mainMapSlice.actions.removeOverlay(ev.layer.options.overlayTileLayerId));
-          if (ev.layer.options.pane === SENTINELHUB_LAYER_PANE_ID) {
-            store.dispatch(visualizationSlice.actions.setVisibleOnMap(false));
-          }
-        }}
-        onBaseLayerChange={(ev) => {
-          const selectedBaseLayerId = shownBaseLayers.find((baseLayer) => baseLayer.name === ev.name)?.id;
-
-          if (selectedBaseLayerId) {
-            store.dispatch(mainMapSlice.actions.setBaseLayerId(selectedBaseLayerId));
-            saveToLocalStorage(SELECTED_BASE_LAYER_KEY, selectedBaseLayerId);
-          }
-        }}
       >
+        <MapPositionSync lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} />
+        <MapEventHandler
+          onViewportChanged={this.updateViewport}
+          onMoveEnd={this.setBounds}
+          onOverlayAdd={this.onOverlayAdd}
+          onOverlayRemove={this.onOverlayRemove}
+          onBaseLayerChange={this.onBaseLayerChange}
+        />
         <MapPanes />
 
         <LayersControl
@@ -439,16 +487,6 @@ class Map extends React.Component {
           // also force rerender when S2QMosaic name changes to reorder the layers
           key={`${shownBaseLayers.map(({ id }) => id).join('|')}-${S2QMosaicReady}`}
           position="topright"
-          sortLayers={true}
-          sortFunction={(a, b) => {
-            if (!this.mapRef) {
-              return;
-            }
-            return (
-              this.mapRef.leafletElement.getPane(a.options.pane).style.zIndex -
-              this.mapRef.leafletElement.getPane(b.options.pane).style.zIndex
-            );
-          }}
         >
           {shownBaseLayers.map((baseLayer) => (
             <BaseLayer checked={baseLayer.checked} name={baseLayer.name} key={baseLayer.id}>
@@ -775,7 +813,6 @@ class Map extends React.Component {
           displayTimelapseAreaPreview={displayTimelapseAreaPreview}
           lat={lat}
           lng={lng}
-          zoom={zoom}
           mapBounds={mapBounds}
           // quicklooks
           filteredQuicklookOverlays={filteredQuicklookOverlays}
@@ -788,14 +825,6 @@ class Map extends React.Component {
           selectedOrder={this.props.commercialDataSelectedOrder}
         />
         {selectedTabIndex === TABS.VISUALIZE_TAB && <DatasetLocationPreview />}
-        {/* {selectedModeId && !is3D && (
-          <EOBModeSelection
-            highlighted={this.props.selectedModeId === EDUCATION_MODE.id}
-            modes={MODES}
-            onSelectMode={this.onSelectMode}
-            selectedModeId={this.props.selectedModeId}
-          />
-        )} */}
 
         <LeafletControls key={selectedLanguage} />
         <SearchBox
@@ -812,7 +841,7 @@ class Map extends React.Component {
           shouldAnimateControls={shouldAnimateControls}
           showComparePanel={this.props.showComparePanel}
         />
-      </LeafletMap>
+      </MapContainer>
     );
   }
 }

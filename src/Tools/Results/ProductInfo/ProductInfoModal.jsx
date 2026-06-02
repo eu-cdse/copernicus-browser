@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../../../components/Modal/Modal';
 import { t } from 'ttag';
 import store, { modalSlice } from '../../../store';
 import ProductInfo from './ProductInfo';
@@ -10,7 +10,7 @@ const onClose = () => store.dispatch(modalSlice.actions.removeModal());
 const ProductInfoModal = ({ selectedResult, params }) => {
   const { onDownload, downloadInProgress } = params;
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       className="product-info-modal"
       customStyles={{
@@ -33,7 +33,7 @@ const ProductInfoModal = ({ selectedResult, params }) => {
           }}
         />
       </>
-    </Rodal>
+    </Modal>
   );
 };
 

@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import maplibregl from 'maplibre-gl';
-import { GridLayer, withLeaflet } from 'react-leaflet';
+import { createLayerComponent } from '@react-leaflet/core';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -10,12 +10,17 @@ maplibregl.setRTLTextPlugin(
   null,
   true, // By setting the lazy parameter to true, the plugin is only loaded when the map first encounters Hebrew or Arabic text.
 );
-class GlTileLayer extends GridLayer {
-  createLeafletElement(props) {
-    return new MaplibreGL(props);
-  }
-}
-export default withLeaflet(GlTileLayer);
+
+const GlTileLayer = createLayerComponent(
+  (props, context) => ({ instance: new MaplibreGL(props), context }),
+  (instance, props, prevProps) => {
+    if (props.style !== prevProps.style) {
+      instance.getMapboxMap()?.setStyle(props.style);
+    }
+  },
+);
+
+export default GlTileLayer;
 
 /*
 Copyright (c) 2014, Mapbox

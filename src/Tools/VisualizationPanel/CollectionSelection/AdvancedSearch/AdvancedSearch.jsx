@@ -144,29 +144,40 @@ class AdvancedSearch extends Component {
         store.dispatch(searchResultsSlice.actions.setSearchFormData(searchConfigFromSession.searchFormData));
       }
 
-      // Restore cached results immediately for instant UI and trigger background refresh
+      // Restore cached results to Redux immediately for instant UI display, then
+      // reconstruct next() locally via hydrate (no network call needed). The hydrate
+      // step is deferred so this.setState above has flushed — getQuery() reads state.
       if (searchConfigFromSession.cachedResults && searchConfigFromSession.resultsAvailable) {
-        const cachedResultObject = {
-          allResults: searchConfigFromSession.cachedResults,
-          totalCount: searchConfigFromSession.cachedTotalCount || 0,
-          hasMore: searchConfigFromSession.cachedHasMore || false,
-          next: null, // Will be restored by re-running the search
-        };
-        store.dispatch(searchResultsSlice.actions.setSearchResult(cachedResultObject));
+        const cachedPage = searchConfigFromSession.cachedPage ?? 0;
+        const cachedTotalCount = searchConfigFromSession.cachedTotalCount ?? 0;
+        const cachedHasMore = searchConfigFromSession.cachedHasMore ?? false;
 
-        // Re-run the search in background to restore the next() function.
-        // Regenerate query from current state (session-stored query loses methods).
-        if (this.props.userToken) {
-          setTimeout(() => {
-            try {
-              const freshQuery = this.getQuery();
-              this.props.setODataSearchAuthToken(this.props.userToken);
-              this.props.productSearch(freshQuery);
-            } catch (e) {
-              // Swallow to avoid blocking UI; error will be shown via searchError if relevant.
-            }
-          }, 0);
-        }
+        store.dispatch(
+          searchResultsSlice.actions.setSearchResult({
+            allResults: searchConfigFromSession.cachedResults,
+            page: cachedPage,
+            totalCount: cachedTotalCount,
+            hasMore: cachedHasMore,
+            // next is transiently null until hydrate runs below; loadMoreProducts
+            // guards on this.props.searchResult?.next so the brief gap is safe.
+            next: null,
+          }),
+        );
+
+        setTimeout(() => {
+          try {
+            const freshQuery = this.getQuery();
+            this.props.hydrateODataSearch({
+              query: freshQuery,
+              results: searchConfigFromSession.cachedResults,
+              page: cachedPage,
+              totalCount: cachedTotalCount,
+              hasMore: cachedHasMore,
+            });
+          } catch (e) {
+            // Swallow to avoid blocking UI; user can trigger a manual search.
+          }
+        }, 0);
       }
     }
   }
@@ -181,22 +192,6 @@ class AdvancedSearch extends Component {
     }
     if (!prevProps.isExpanded && this.props.isExpanded) {
       this.shouldDisplayTileGeometries(true);
-    }
-
-    // If user token just became available and we have cached results, trigger background search.
-    if (!prevProps.userToken && this.props.userToken) {
-      const searchConfigFromSession = JSON.parse(
-        sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-      );
-      if (searchConfigFromSession?.cachedResults && searchConfigFromSession?.resultsAvailable) {
-        try {
-          const freshQuery = this.getQuery();
-          this.props.setODataSearchAuthToken(this.props.userToken);
-          this.props.productSearch(freshQuery);
-        } catch (e) {
-          // Ignore regeneration errors here; user can trigger manual search.
-        }
-      }
     }
 
     if (this.props.oDataSearchResult !== prevProps?.oDataSearchResult) {
@@ -226,6 +221,7 @@ class AdvancedSearch extends Component {
           cachedResults: cachedResults,
           cachedTotalCount: cachedTotalCount,
           cachedHasMore: cachedHasMore,
+          cachedPage: this.props.oDataSearchResult?.page ?? 0,
         }),
       );
     }
@@ -533,6 +529,9 @@ class AdvancedSearch extends Component {
     if (!this.props.searchResult?.next) {
       // If next() isn't available yet (still restoring from cache), do nothing
       return;
+    }
+    if (this.props.userToken) {
+      this.props.setODataSearchAuthToken(this.props.userToken);
     }
     await this.props.searchResult.next();
   };

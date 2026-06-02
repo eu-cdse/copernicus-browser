@@ -34,7 +34,6 @@ import ExternalLink from '../ExternalLink/ExternalLink';
 
 import IconSun from './icons/icon-sun.svg?react';
 
-import 'rodal/lib/rodal.css';
 import { getBoundsZoomLevel } from '../utils/coords';
 import { isMobile } from 'react-device-detect';
 import { getOrbitDirectionFromList } from '../Tools/VisualizationPanel/VisualizationPanel.utils';

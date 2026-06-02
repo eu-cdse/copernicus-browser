@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withLeaflet, Rectangle, Tooltip, Marker } from 'react-leaflet';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useMap, useMapEvents, Rectangle, Tooltip, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import { t } from 'ttag';
 
@@ -9,75 +9,64 @@ import { ModalId } from '../../const';
 import './TimelapseAreaPreview.scss';
 import { getTimelapseBounds } from './Timelapse.utils';
 
-class TimelapseAreaPreview extends Component {
-  state = {
-    lat: this.props.lat,
-    lng: this.props.lng,
-    zoom: this.props.zoom,
-    mapBounds: this.props.mapBounds,
-  };
+const TimelapseAreaPreview = ({ lat: initialLat, lng: initialLng, mapBounds: initialMapBounds }) => {
+  const map = useMap();
+  const isVisibleRef = useRef(false);
+  const [lat, setLat] = useState(initialLat);
+  const [lng, setLng] = useState(initialLng);
+  const [mapBounds, setMapBounds] = useState(initialMapBounds);
 
-  // Close the timelapse area preview when clicking on controls buttons or user menu
-  handleGlobalClick = (event) => {
-    let closeOnParentClasses = ['controls-wrapper', 'user-menu-button'];
-    let foundElement = closeOnParentClasses.some((className) => event.target.closest(`.${className}`));
-    if (this.state.isVisible && foundElement) {
-      this.setState({ isVisible: false });
+  const handleGlobalClick = useCallback((event) => {
+    const closeOnParentClasses = ['controls-wrapper', 'user-menu-button'];
+    const foundElement = closeOnParentClasses.some((className) => event.target.closest(`.${className}`));
+    if (isVisibleRef.current && foundElement) {
+      isVisibleRef.current = false;
       store.dispatch(timelapseSlice.actions.setTimelapseAreaPreview(false));
     }
-  };
+  }, []);
 
-  componentDidMount() {
-    this.props.leaflet.map.on('move', this.setMovingMapValues);
-    document.addEventListener('click', this.handleGlobalClick);
-  }
+  useMapEvents({
+    move: () => {
+      const center = map.getCenter();
+      setLat(center.lat);
+      setLng(center.lng);
+      setMapBounds(map.getBounds());
+      map.fire('viewreset');
+    },
+  });
 
-  componentWillUnmount() {
-    this.props.leaflet.map.off('move', this.setMovingMapValues);
-    document.removeEventListener('click', this.handleGlobalClick);
-  }
+  useEffect(() => {
+    document.addEventListener('click', handleGlobalClick);
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  }, [handleGlobalClick]);
 
-  startTimelapse = () => {
-    this.setState({ isVisible: true });
+  const startTimelapse = useCallback(() => {
+    isVisibleRef.current = true;
     store.dispatch(modalSlice.actions.addModal({ modal: ModalId.TIMELAPSE }));
-  };
+  }, []);
 
-  setMovingMapValues = () => {
-    const { lat, lng } = this.props.leaflet.map.getCenter();
-    this.setState({
-      lat: lat,
-      lng: lng,
-      zoom: this.props.leaflet.map.getZoom(),
-      mapBounds: this.props.leaflet.map.getBounds(),
-    });
-    // Forces the map to redraw it's content
-    // Without it the rectangle won't redraw until moveend
-    this.props.leaflet.map.fire('viewreset');
-  };
+  return (
+    <>
+      <Rectangle bounds={getTimelapseBounds(mapBounds)} interactive={false}>
+        <Marker
+          eventHandlers={{ click: startTimelapse }}
+          position={[lat, lng]}
+          opacity={1}
+          icon={L.divIcon({
+            className: 'fas fa-play-circle timelapse-area-play-icon',
+            iconAnchor: [20, 20],
+          })}
+        >
+          <Tooltip className="timelapse-area-tooltip" permanent={true} opacity={1.0} direction={'center'}>
+            <div className="timelapse-area-tooltip-content">{t`Create a timelapse of this area`}</div>
+            <div className="timelapse-area-tooltip-content description">{t`To create a timelapse of a custom area, create AOI first`}</div>
+          </Tooltip>
+        </Marker>
+      </Rectangle>
+    </>
+  );
+};
 
-  render() {
-    const { lat, lng, mapBounds } = this.state;
-    return (
-      <span onBlur={(e) => console.log(e)}>
-        <Rectangle bounds={getTimelapseBounds(mapBounds)} interactive={false}>
-          <Marker
-            onClick={this.startTimelapse}
-            position={[lat, lng]}
-            opacity={1}
-            icon={L.divIcon({
-              className: 'fas fa-play-circle timelapse-area-play-icon',
-              iconAnchor: [20, 20],
-            })}
-          >
-            <Tooltip className="timelapse-area-tooltip" permanent={true} opacity={1.0} direction={'center'}>
-              <div className="timelapse-area-tooltip-content">{t`Create a timelapse of this area`}</div>
-              <div className="timelapse-area-tooltip-content description">{t`To create a timelapse of a custom area, create AOI first`}</div>
-            </Tooltip>
-          </Marker>
-        </Rectangle>
-      </span>
-    );
-  }
-}
-
-export default withLeaflet(TimelapseAreaPreview);
+export default TimelapseAreaPreview;

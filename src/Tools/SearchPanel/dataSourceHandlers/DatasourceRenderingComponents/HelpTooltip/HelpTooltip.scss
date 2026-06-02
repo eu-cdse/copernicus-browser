@@ -1,38 +1,8 @@
-@use '../../../../../variables.module.scss' as vars;
+.floating-tooltip-content {
+  padding: 5px;
+}
 
 .help-tooltip {
-  .react-tooltip-lite {
-    background: vars.$mainMedium;
-    color: vars.$textColor;
-    border-radius: 5px;
-    max-width: 300px !important;
-    font-size: 0.8em;
-  }
-
-  &.closed .react-tooltip-lite,
-  .react-tooltip-lite-arrow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  .react-tooltip-lite-up-arrow {
-    border-top: 10px solid vars.$mainMedium;
-  }
-
-  .react-tooltip-lite-down-arrow {
-    border-bottom: 10px solid vars.$mainMedium;
-  }
-
-  .react-tooltip-lite-right-arrow {
-    border-right: 10px solid vars.$mainMedium;
-  }
-
-  .react-tooltip-lite-left-arrow {
-    border-left: 10px solid vars.$mainMedium;
-  }
-
   .help-tooltip-icon {
     vertical-align: middle;
     opacity: 0.5;

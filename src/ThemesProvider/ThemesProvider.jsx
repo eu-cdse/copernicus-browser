@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { t } from 'ttag';
-import Rodal from 'rodal';
+import Modal from '../components/Modal/Modal';
 
 import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
@@ -429,7 +429,7 @@ class ThemesProvider extends React.Component {
       <>
         {this.props.modalId === ModalId.PRIVATE_THEMEID_LOGIN && <div className="login-overlay" />}
         {confirmDialog && (
-          <Rodal
+          <Modal
             animation="slideUp"
             visible={true}
             customStyles={{
@@ -472,7 +472,7 @@ class ThemesProvider extends React.Component {
                 </button>
               </div>
             </div>
-          </Rodal>
+          </Modal>
         )}
         {this.props.children}
       </>
@@ -482,7 +482,7 @@ class ThemesProvider extends React.Component {
 
 const mapStoreToProps = (store) => ({
   anonToken: store.auth.anonToken,
-  termsPrivacyAccepted: store.auth.terms_privacy_accepted,
+  termsPrivacyAccepted: store.auth.termsPrivacyAccepted,
   selectedThemeId: store.themes.selectedThemeId,
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   themesUrl: store.themes.themesUrl,

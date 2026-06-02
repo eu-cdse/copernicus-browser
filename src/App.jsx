@@ -288,7 +288,7 @@ const mapStoreToProps = (store) => ({
   timelapse: store.timelapse,
   terrainViewerId: store.terrainViewer.id,
   timelapseSharePreviewMode: store.timelapse.timelapseSharePreviewMode,
-  termsPrivacyAccepted: store.auth.terms_privacy_accepted,
+  termsPrivacyAccepted: store.auth.termsPrivacyAccepted,
   tokenRefreshInProgress: store.auth.tokenRefreshInProgress,
   toolsOpen: store.tools.open,
   clmsSelectedPath: store.clms.selectedPath,

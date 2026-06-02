@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import Rodal from 'rodal';
+import Modal from '../../components/Modal/Modal';
 import { t } from 'ttag';
 import FileSaver from 'file-saver';
 import { CancelToken, CRS_EPSG3857, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import JSZip from 'jszip';
 import moment from 'moment';
-
-import 'rodal/lib/rodal.css';
 
 import store, { modalSlice, notificationSlice } from '../../store';
 import { ImageDownloadForms, TABS } from './ImageDownloadForms';
@@ -876,7 +874,7 @@ function ImageDownload(props) {
   const dsh = getDataSourceHandler(props.datasetId);
   const supportsAnalyticalImgExport = dsh && dsh.supportsAnalyticalImgExport();
   return (
-    <Rodal
+    <Modal
       animation="slideUp"
       customStyles={{
         height: 'auto',
@@ -1011,7 +1009,7 @@ function ImageDownload(props) {
           <ImageDownloadErrorPanel error={error} />
         </div>
       </div>
-    </Rodal>
+    </Modal>
   );
 }
 
