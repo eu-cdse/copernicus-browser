@@ -27,7 +27,7 @@ const UserAuth = (props) => {
             t`By logging in you will revoke the consent to the use of cookies by recaptcha.net and related collection, sharing and use of personal data by recaptcha.net.`
           }
         >
-          {t`Login`}
+          {t`Log in`}
         </div>
       )}
     </span>

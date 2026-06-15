@@ -8,8 +8,12 @@ import { collapsiblePanelSlice } from './store/slices/collapsiblePanelSlice';
 import { mainMapSlice } from './store/slices/mainMapSlice';
 import { modalSlice } from './store/slices/modalSlice';
 import { authSlice } from './store/slices/authSlice';
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
+import { poiSlice } from './store/slices/poiSlice';
+import { loiSlice } from './store/slices/loiSlice';
+import { compareLayersSlice } from './store/slices/compareLayersSlice';
+import { spectralExplorerSlice } from './store/slices/spectralExplorerSlice';
+import { indexSlice } from './store/slices/indexSlice';
+import { timelapseSlice } from './store/slices/timelapseSlice';
 
 import {
   MODES,
@@ -17,9 +21,7 @@ import {
   USER_INSTANCES_THEMES_LIST,
   URL_THEMES_LIST,
   EDUCATION_MODE,
-  EXPORT_FORMAT,
   DEFAULT_CLOUD_COVER_PERCENT,
-  COMPARE_OPTIONS,
   DEFAULT_THEME_ID,
   DATE_MODES,
   RRD_INSTANCES_THEMES_LIST,
@@ -36,45 +38,15 @@ import {
 } from './Tools/RapidResponseDesk/rapidResponseProperties';
 import { DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX } from './Tools/VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 
-export const loiSlice = createSlice({
-  name: 'loi',
-  initialState: {
-    geometry: null,
-    bounds: null,
-    lastEdited: null,
-  },
-  reducers: {
-    set: (state, action) => {
-      state.geometry = action.payload.geometry;
-      state.bounds = action.payload.bounds;
-      state.lastEdited = new Date().toISOString();
-    },
-    reset: (state) => {
-      state.geometry = null;
-      state.bounds = null;
-      state.lastEdited = null;
-    },
-  },
-});
+export { poiSlice };
 
-export const poiSlice = createSlice({
-  name: 'poi',
-  initialState: {},
-  reducers: {
-    set: (state, action) => {
-      state.position = action.payload.position;
-      state.geometry = action.payload.geometry;
-      state.bounds = action.payload.bounds;
-      state.lastEdited = new Date().toISOString();
-    },
-    reset: (state) => {
-      state.position = null;
-      state.geometry = null;
-      state.bounds = null;
-      state.lastEdited = new Date().toISOString();
-    },
-  },
-});
+export { loiSlice };
+
+export { compareLayersSlice };
+
+export { spectralExplorerSlice };
+
+export { indexSlice };
 
 export { aoiSlice };
 
@@ -93,6 +65,8 @@ export { collapsiblePanelSlice };
 export { modalSlice };
 
 export { authSlice };
+
+export { timelapseSlice };
 
 export const themesSlice = createSlice({
   name: 'themes',
@@ -594,114 +568,6 @@ export const visualizationSlice = createSlice({
   },
 });
 
-export const compareLayersSlice = createSlice({
-  name: 'compare',
-  initialState: {
-    compareShare: null,
-    compareSharedPinsId: null,
-    compareMode: COMPARE_OPTIONS.COMPARE_SPLIT,
-    comparedLayers: [],
-    comparedOpacity: [],
-    comparedClipping: [],
-    newCompareLayersCount: 0,
-  },
-  reducers: {
-    addToCompare: (state, action) => {
-      const newLayer = { id: uuid(), ...action.payload };
-      state.comparedLayers = [newLayer, ...state.comparedLayers];
-      state.newCompareLayersCount = state.newCompareLayersCount + 1;
-      state.comparedOpacity = [1.0, ...state.comparedOpacity];
-      state.comparedClipping = [[0, 1], ...state.comparedClipping];
-    },
-    setCompareShare: (state, action) => {
-      state.compareShare = action.payload;
-    },
-    setCompareSharedPinsId: (state, action) => {
-      state.compareSharedPinsId = action.payload;
-    },
-    setCompareMode: (state, action) => {
-      state.compareMode = action.payload;
-    },
-    resetComparedLayers: (state) => {
-      state.comparedLayers = [];
-      state.comparedOpacity = [];
-      state.comparedClipping = [];
-    },
-    addComparedLayers: (state, action) => {
-      const layers = action.payload.map((l) => ({ id: uuid(), ...l }));
-      state.comparedLayers = [...layers, ...state.comparedLayers];
-      state.comparedOpacity = [...new Array(action.payload.length).fill(1.0), ...state.comparedOpacity];
-      state.comparedClipping = [...new Array(action.payload.length).fill([0, 1]), ...state.comparedClipping];
-    },
-    setNewCompareLayersCount: (state, action) => {
-      state.newCompareLayersCount = action.payload;
-    },
-    updateOpacity: (state, action) => {
-      const { index, value } = action.payload;
-      const newState = [...state.comparedOpacity];
-      newState[index] = value;
-      state.comparedOpacity = newState;
-    },
-    updateClipping: (state, action) => {
-      const { index, value } = action.payload;
-      const newState = [...state.comparedClipping];
-      newState[index] = value;
-      state.comparedClipping[index] = value;
-    },
-    resetOpacityAndClipping: (state) => {
-      state.comparedOpacity = new Array(state.comparedLayers.length).fill(1.0);
-      state.comparedClipping = new Array(state.comparedLayers.length).fill([0, 1]);
-    },
-    updateOrder: (state, action) => {
-      const { oldIndex, newIndex } = action.payload;
-
-      const newComparedLayers = [...state.comparedLayers];
-      const layer = newComparedLayers.splice(oldIndex, 1)[0];
-      newComparedLayers.splice(newIndex, 0, layer);
-      state.comparedLayers = newComparedLayers;
-
-      const newComparedOpacity = [...state.comparedOpacity];
-      const opacity = newComparedOpacity.splice(oldIndex, 1)[0];
-      newComparedOpacity.splice(newIndex, 0, opacity);
-      state.comparedOpacity = newComparedOpacity;
-
-      const newComparedClipping = [...state.comparedClipping];
-      const clipping = newComparedClipping.splice(oldIndex, 1)[0];
-      newComparedClipping.splice(newIndex, 0, clipping);
-      state.comparedClipping = newComparedClipping;
-    },
-    removeFromCompare: (state, action) => {
-      const index = action.payload;
-      const newComparedLayers = [...state.comparedLayers];
-      newComparedLayers.splice(index, 1);
-      state.comparedLayers = newComparedLayers;
-
-      const newComparedOpacity = [...state.comparedOpacity];
-      newComparedOpacity.splice(index, 1);
-      state.comparedOpacity = newComparedOpacity;
-
-      const newComparedClipping = [...state.comparedClipping];
-      newComparedClipping.splice(index, 1);
-      state.comparedClipping = newComparedClipping;
-    },
-    reset: (state) => {
-      state.compareMode = COMPARE_OPTIONS.COMPARE_SPLIT;
-      state.comparedLayers = [];
-      state.comparedOpacity = [];
-      state.comparedClipping = [];
-      state.newCompareLayersCount = 0;
-    },
-    restoreComparedLayers: (state, action) => {
-      state.compareShare = action.payload.compareShare;
-      state.compareSharedPinsId = action.payload.compareSharedPinsId;
-      state.comparedLayers = action.payload.layers.map((l) => ({ id: uuid(), ...l }));
-      state.compareMode = action.payload.compareMode;
-      state.comparedOpacity = action.payload.comparedOpacity;
-      state.comparedClipping = action.payload.comparedClipping;
-    },
-  },
-});
-
 export const modeSlice = createSlice({
   name: 'modes',
   initialState: {
@@ -757,151 +623,6 @@ export const pinsSlice = createSlice({
     reset: (state) => {
       state.items = [];
       state.newPinsCount = 0;
-    },
-  },
-});
-
-export const timelapseSlice = createSlice({
-  name: 'timelapse',
-  initialState: {
-    displayTimelapseAreaPreview: false,
-    fromTime: null,
-    toTime: null,
-    filterMonths: null,
-    selectedPeriod: 'day',
-    minCoverageAllowed: 0,
-    maxCCPercentAllowed: null,
-    isSelectAllChecked: true,
-    showBorders: false,
-    timelapseFPS: 1,
-    transition: 'none',
-    pins: [],
-    timelapseSharePreviewMode: false,
-    previewFileUrl: null,
-    size: null,
-    format: EXPORT_FORMAT.gif,
-    fadeDuration: 0.5,
-    delayLastFrame: false,
-    newLayersCount: 0,
-  },
-  reducers: {
-    set: (state, action) => {
-      Object.keys(action.payload).forEach((key) => {
-        state[key] = ['fromTime', 'toTime'].includes(key)
-          ? moment.utc(action.payload[key])
-          : action.payload[key];
-      });
-    },
-    reset: (state) => {
-      state.displayTimelapseAreaPreview = false;
-      state.fromTime = null;
-      state.toTime = null;
-      state.filterMonths = null;
-      state.selectedPeriod = 'day';
-      state.minCoverageAllowed = 0;
-      state.maxCCPercentAllowed = null;
-      state.isSelectAllChecked = true;
-      state.showBorders = false;
-      state.timelapseFPS = 1;
-      state.transition = 'none';
-      state.pins = [];
-      state.timelapseSharePreviewMode = false;
-      state.previewFileUrl = null;
-      state.size = null;
-      state.format = EXPORT_FORMAT.gif;
-      state.fadeDuration = 0.5;
-      state.delayLastFrame = false;
-      state.newLayersCount = 0;
-    },
-    toggleTimelapseAreaPreview: (state) => {
-      state.displayTimelapseAreaPreview = !state.displayTimelapseAreaPreview;
-    },
-    setTimelapseAreaPreview: (state, action) => {
-      state.displayTimelapseAreaPreview = action.payload;
-    },
-    setInitialTime: (state, action) => {
-      state.fromTime = action.payload.time.clone().subtract(1, action.payload.interval);
-      state.toTime = action.payload.time.clone();
-    },
-    setFromTime: (state, action) => {
-      state.fromTime = action.payload;
-    },
-    setToTime: (state, action) => {
-      state.toTime = action.payload;
-    },
-    setFilterMonths: (state, action) => {
-      state.filterMonths = action.payload;
-    },
-    setSelectedPeriod: (state, action) => {
-      state.selectedPeriod = action.payload;
-    },
-    setMinCoverageAllowed: (state, action) => {
-      state.minCoverageAllowed = action.payload;
-    },
-    setMaxCCPercentAllowed: (state, action) => {
-      state.maxCCPercentAllowed = action.payload;
-    },
-    setIsSelectAllChecked: (state, action) => {
-      state.isSelectAllChecked = action.payload;
-    },
-    setShowBorders: (state, action) => {
-      state.showBorders = action.payload;
-    },
-    setTimelapseSharePreviewMode: (state, action) => {
-      state.timelapseSharePreviewMode = action.payload;
-    },
-    setPreviewFileUrl: (state, action) => {
-      state.previewFileUrl = action.payload;
-    },
-    setTimelapseFPS: (state, action) => {
-      state.timelapseFPS = action.payload;
-    },
-    setTransition: (state, action) => {
-      state.transition = action.payload;
-    },
-    addPin: (state, action) => {
-      state.pins = [...state.pins, action.payload];
-      state.newLayersCount = state.newLayersCount + 1;
-    },
-    removePin: (state, action) => {
-      if (action.payload > -1) {
-        state.pins = state.pins.filter((p, i) => i !== action.payload);
-      }
-    },
-    setSize: (state, action) => {
-      state.size = action.payload;
-    },
-    setFormat: (state, action) => {
-      state.format = action.payload;
-    },
-    setFadeDuration: (state, action) => {
-      state.fadeDuration = action.payload;
-    },
-    setDelayLastFrame: (state, action) => {
-      state.delayLastFrame = action.payload;
-    },
-    setNewLayersCount: (state, action) => {
-      state.newLayersCount = action.payload;
-    },
-  },
-});
-
-export const indexSlice = createSlice({
-  name: 'index',
-  initialState: {
-    handlePositions: null,
-    gradient: null,
-  },
-  reducers: {
-    setHandlePositions: (state, action) => {
-      state.handlePositions = action.payload;
-    },
-    setGradient: (state, action) => {
-      state.gradient = action.payload;
-    },
-    reset: (state) => {
-      state.handlePositions = null;
-      state.gradient = null;
     },
   },
 });
@@ -1194,22 +915,6 @@ export const searchResultsSlice = createSlice({
       state.selectedResult = null;
       state.resultsAvailable = false;
       state.resultsPanelSelected = false;
-    },
-  },
-});
-
-export const spectralExplorerSlice = createSlice({
-  name: 'spectralExplorer',
-  initialState: {
-    selectedSeries: {},
-  },
-  reducers: {
-    setSelectedSeries: (state, action) => {
-      const { datasetId, series } = action.payload;
-      state.selectedSeries = { ...state.selectedSeries, [datasetId]: series };
-    },
-    reset: (state) => {
-      state.series = {};
     },
   },
 });

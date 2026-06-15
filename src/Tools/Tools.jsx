@@ -47,8 +47,39 @@ class Tools extends Component {
   };
 
   componentDidMount() {
-    if (this.props.user && isInGroup(RRD_GROUP) && !this.props.layerId) {
+    const showRapidResponseDeskTab = this.props.user && isInGroup(RRD_GROUP) && !this.props.layerId;
+    if (showRapidResponseDeskTab) {
       store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
+    }
+
+    // Restore the persisted tab on page refresh. URLParamsParser gates rendering of
+    // its children (App, Tools) until its async componentDidMount completes — its
+    // render() returns null until params is set via setState, which happens right after
+    // setStore() dispatches the URL-derived tab. So this mount always runs after that
+    // tab dispatch (not because of parent-before-child mount order — React mounts
+    // children first), letting us override to the Search tab when the user's last
+    // session ended there. Kept out of componentDidUpdate so it doesn't fight
+    // programmatic switches to the Visualise tab (pins, RRD, etc.).
+    //
+    // Note: this uses sessionStorage, which is cleared when the tab/session ends, so
+    // the flag only ever reflects the current session. A datasetId in the URL therefore
+    // does NOT mean "fresh shared link" here — when the flag is set the user genuinely
+    // switched to Search in this session, and Search must win on refresh (issue #1065).
+    //
+    // The RRD tab override above takes precedence: when it fires, skip the Search restore
+    // so an RRD user isn't bounced off their tab on refresh.
+    if (!showRapidResponseDeskTab) {
+      let searchConfigFromSession = null;
+      try {
+        searchConfigFromSession = JSON.parse(
+          sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
+        );
+      } catch {
+        // Corrupted sessionStorage entry — treat as absent.
+      }
+      if (searchConfigFromSession?.shouldShowAdvancedSearchTab) {
+        store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
+      }
     }
   }
 
@@ -81,13 +112,6 @@ class Tools extends Component {
       if (this.props.selectedTabIndex === TABS.COMMERCIAL_TAB) {
         store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
       }
-    }
-
-    const searchConfigFromSession = JSON.parse(
-      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-    );
-    if (searchConfigFromSession?.shouldShowAdvancedSearchTab) {
-      store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
     }
   }
 

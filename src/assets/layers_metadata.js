@@ -223,6 +223,7 @@ import {
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
@@ -655,7 +656,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L2A_CDAS, layerId: '4_EVI' },
     ],
     description: () =>
-      t`# Enhanced Vegetation Index (EVI)\n\nThe enhanced vegetation index (EVI) is an 'optimized' vegetation index as it corrects for soil background signals and atmospheric influences. It is very useful in areas of dense canopy cover. The range of values for EVI is -1 to 1, with healthy vegetation generally around 0.20 to 0.80.\n\n\n\n\n\nMore infos [here](https://custom-scripts.sentinel-hub.com/sentinel-2/evi/) and [here.](https://earthobservatory.nasa.gov/features/MeasuringVegetation/measuring_vegetation_4.php)`,
+      t`# Enhanced Vegetation Index (EVI)\n\nThe enhanced vegetation index (EVI) is an 'optimized' vegetation index as it corrects for soil background signals and atmospheric influences. It is very useful in areas of dense canopy cover. The range of values for EVI is -1 to 1, with healthy vegetation generally around 0.20 to 0.80.\n\n\n\n\n\nMore infos [here](https://custom-scripts.sentinel-hub.com/sentinel-2/evi/) and [here.](https://en.wikipedia.org/wiki/Enhanced_vegetation_index)`,
   },
   {
     match: [
@@ -795,7 +796,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S3SLSTR_CDAS, layerId: 'FALSE_COLOR' },
     ],
     description: () =>
-      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/) and [here.](https://earthobservatory.nasa.gov/features/FalseColor/page6.php)`,
+      t`# False color composite\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false colour composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/false_color_infrared/) and [here.](https://eo.belspo.be/en/colour-composites)`,
   },
   {
     match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '4_FALSE_COLOR' }],
@@ -863,7 +864,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# Agriculture composite\n\nThis composite uses short-wave infrared, near-infrared and blue bands to monitor crop health (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Both short-wave and near infrared bands are particularly good at highlighting dense vegetation, which appears dark green in the composite. Crops appear in a vibrant green and bare earth appears magenta.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page5.php) and [here.](https://gisgeography.com/sentinel-2-bands-combinations/)`,
+      t`# Agriculture composite\n\nThis composite uses short-wave infrared, near-infrared and blue bands to monitor crop health (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Both short-wave and near infrared bands are particularly good at highlighting dense vegetation, which appears dark green in the composite. Crops appear in a vibrant green and bare earth appears magenta.\n\n\n\nMore info [here](https://eo.belspo.be/en/colour-composites) and [here.](https://gisgeography.com/sentinel-2-bands-combinations/)`,
   },
   {
     match: [
@@ -925,6 +926,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L1C_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: S2_L2A_CDAS, layerId: '2_TONEMAPPED_NATURAL_COLOR' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '3_TONEMAPPED_NATURAL_COLOR' },
+      { datasourceId: S2_L2A_CDAS, layerId: 'HIGHLIGHT-OPTIMIZED-NATURAL-COLOR' },
     ],
 
     description: () =>
@@ -946,7 +948,7 @@ export const PREDEFINED_LAYERS_METADATA = [
     ],
 
     description: () =>
-      t`# Geology 8, 11, 12 composite\n\nThis composite uses both short-wave infrared (SWIR) bands 11 and 12 to differentiate among different rock types (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Each rock and mineral type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light. Near Infrared (NIR) band 8 highlights vegetation, contributing to differentiation of ground materials. Vegetation in the composite appears red. The composite is useful for differentiating vegetation, and land especially geologic features that can be useful for mining and mineral exploration.\n\n\n\nMore info [here](https://earthobservatory.nasa.gov/features/FalseColor/page5.php) and [here.](http://murphygeological.com/new---sentinel-2.html#)`,
+      t`# Geology 8, 11, 12 composite\n\nThis composite uses both short-wave infrared (SWIR) bands 11 and 12 to differentiate among different rock types (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). Each rock and mineral type reflects shortwave infrared light differently, making it possible to map out geology by comparing reflected SWIR light. Near Infrared (NIR) band 8 highlights vegetation, contributing to differentiation of ground materials. Vegetation in the composite appears red. The composite is useful for differentiating vegetation, and land especially geologic features that can be useful for mining and mineral exploration.\n\n\n\nMore info [here.](http://murphygeological.com/new---sentinel-2.html#)`,
   },
   {
     match: [
@@ -1575,7 +1577,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Total suspended matter concentration\n\nSatellite-derived total suspended matter (TSM) is a measure of the concentration of particulate material in surface water such as mud, silt and other fine-grainded sedimentss, including organic and inorganic fractions. The TSM product is calculated based on the MERIS 1999 Baseline Atmospheric Correction and the OCI neural net TSM algorithm by [Hieronymi et al. 2017](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2017.00140/full). The product has variable accuracy and schould be considert experimental.\n\nMore info [here](https://eastcoast.coastwatch.noaa.gov/cw_olci_tsmnn.php).`,
+      t`# Total suspended matter concentration\n\nSatellite-derived total suspended matter (TSM) is a measure of the concentration of particulate material in surface water such as mud, silt and other fine-grainded sedimentss, including organic and inorganic fractions. The TSM product is calculated based on the MERIS 1999 Baseline Atmospheric Correction and the OCI neural net TSM algorithm by [Hieronymi et al. 2017](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2017.00140/full). The product has variable accuracy and schould be considert experimental.\n\nMore info [here.](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-olci-level-2)`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_WATER, layerId: '7_WATER_T865' }],
@@ -1608,7 +1610,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Aerosol optical thickness\n\nAerosol optical thickness (AOT) is a measure of the extent to which aerosols in the atmosphere prevent the transmission of light through absorption and scattering. Optical thickness, also knwon as optical depth depends on the physical nature, the shape and the concentration of particles. AOT is often used in climatology and atmospheric research to assess the effects of aerosols on weather, climate, and air quality.\n\nMore info [here](https://earth.gsfc.nasa.gov/climate/data/deep-blue/science).`,
+      t`# Aerosol optical thickness\n\nAerosol optical thickness (AOT) is a measure of the extent to which aerosols in the atmosphere prevent the transmission of light through absorption and scattering. Optical thickness, also knwon as optical depth depends on the physical nature, the shape and the concentration of particles. AOT is often used in climatology and atmospheric research to assess the effects of aerosols on weather, climate, and air quality.\n\nMore info [here.](https://user.eumetsat.int/resources/user-guides/sentinel-3-ocean-colour-level-2-data-guide#ID-Data)`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_WATER, layerId: '4_WATER_PAR' }],
@@ -1839,7 +1841,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       ],
     },
     description: () =>
-      t`# Aerosol Angstrom exponent\n\nThe Aerosol Angstrom exponent is a parameter that describes how the optical thickness of aerosols in the atmosphere varies with wavelength. It provides information about the size distribution of aerosol particles, with higher values indicating smaller particles and lower values indicating larger particles. This exponent is often used in atmospheric research and climatology to analyse the properties of aerosols and their effects on climate and air quality.\n\nMore info [here](https://earth.gsfc.nasa.gov/climate/data/deep-blue/science).`,
+      t`# Aerosol Angstrom exponent\n\nThe Aerosol Angstrom exponent is a parameter that describes how the optical thickness of aerosols in the atmosphere varies with wavelength. It provides information about the size distribution of aerosol particles, with higher values indicating smaller particles and lower values indicating larger particles. This exponent is often used in atmospheric research and climatology to analyse the properties of aerosols and their effects on climate and air quality.\n\nMore info [here.](https://user.eumetsat.int/resources/user-guides/sentinel-3-ocean-colour-level-2-data-guide#ID-Data)`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '5_LAND_RC865' }],
@@ -4636,7 +4638,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () =>
-      t`Provides at pan-European level in the spatial resolution of 10 m a forest classification for three thematic classes (all non-forest areas / broadleaved forest / coniferous forest) with the agricultural/urban trees removed for the 2018 reference year.`,
+      t`Provides at pan-European level in the spatial resolution of 10 m a forest classification with 3 thematic classes (all non-forest areas / broadleaved forest / coniferous forest).`,
   },
   {
     match: [
@@ -5195,12 +5197,22 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [
       {
+        datasourceId: COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+        layerId: 'coniferous_cover_density',
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level in the spatial resolution of 100 m information on the coniferous cover density.`,
+  },
+  {
+    match: [
+      {
         datasourceId: COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
         layerId: 'forest_type_over_3years',
       },
     ],
     description: () =>
-      t`Provides at pan-European level in the spatial resolution of 100m a forest classification for three thematic classes (broadleaved forest / coniferous forest / mixed zones) with the agricultural/urban trees removed for the 2018 reference year.`,
+      t`Provides at a pan-European level the Forest Type estimation at 100 meter spatial resolution.`,
   },
   {
     match: [

@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import store, { clmsSlice } from '../../../store';
 import {
   CLMS_OPTIONS,
-  DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
   filterCLMSOptionsByDatasets,
   flattenCLMSOptionsWithParent,
 } from './CLMSCollectionSelection.utils';
@@ -69,6 +68,7 @@ function Breadcrumbs({
   selectedPath,
   selectedCollection,
   selectedConsolidationPeriodIndex,
+  availableDatasets,
 }) {
   const onPathChange = (id) => {
     store.dispatch(clmsSlice.actions.setSelectedPath(id));
@@ -83,8 +83,8 @@ function Breadcrumbs({
     selectedPath === null
       ? menus
       : parent && parent.options && parent.options.length > 0
-      ? parent.options
-      : [parent];
+        ? parent.options
+        : [parent];
 
   return (
     <div className="breadcrumb-wrapper">
@@ -140,6 +140,9 @@ function Breadcrumbs({
           const dsh = getDataSourceHandler(item.id);
           const descriptionForDataset = dsh?.getDescriptionForDataset(item.id);
           const itemLabel = dsh?.getDatasetSearchLabels()[item.id] ?? item.label;
+          const availableConsolidationPeriods = item.consolidationPeriods?.filter(
+            (cp) => !availableDatasets?.length || availableDatasets.includes(cp.id),
+          );
 
           return (
             <React.Fragment key={i}>
@@ -152,14 +155,27 @@ function Breadcrumbs({
                     if (item.options) {
                       onPathChange(item.id);
                     } else {
-                      onSelect({ datasource: datasource, dataset: item.id });
+                      const firstAvailableCpIndex =
+                        item.consolidationPeriods?.findIndex(
+                          (cp) => !availableDatasets?.length || availableDatasets.includes(cp.id),
+                        ) ?? null;
+                      const firstAvailableCp =
+                        firstAvailableCpIndex !== null && firstAvailableCpIndex > -1
+                          ? item.consolidationPeriods[firstAvailableCpIndex]
+                          : undefined;
+                      onSelect({
+                        datasource: datasource,
+                        dataset: firstAvailableCp ? firstAvailableCp.id : item.id,
+                      });
                       store.dispatch(clmsSlice.actions.setSelectedCollection(item.id));
+                      store.dispatch(
+                        clmsSlice.actions.setSelectedConsolidationPeriodIndex(
+                          firstAvailableCpIndex !== null && firstAvailableCpIndex > -1
+                            ? firstAvailableCpIndex
+                            : null,
+                        ),
+                      );
                     }
-                    store.dispatch(
-                      clmsSlice.actions.setSelectedConsolidationPeriodIndex(
-                        DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX,
-                      ),
-                    );
                   }}
                   key={item.id}
                   title={itemLabel}
@@ -177,18 +193,24 @@ function Breadcrumbs({
                   className={descriptionForDataset ? '' : 'hidden-tooltip'}
                 />
               </div>
-              {selectedCollection === item.id && item.consolidationPeriods && (
+              {selectedCollection === item.id && availableConsolidationPeriods?.length > 0 && (
                 <div className="consolidation-period-wrapper">
-                  {item.consolidationPeriods.map((cp, idx) => {
+                  {availableConsolidationPeriods.map((cp) => {
+                    // indexOf is correct: filter() preserves object references from item.consolidationPeriods
+                    const cpIndex = item.consolidationPeriods.indexOf(cp);
+
                     return (
                       <EOBButton
                         key={cp.label}
                         className={`collection-button secondary consolidation-period ${
-                          idx === selectedConsolidationPeriodIndex ? 'active' : ''
+                          cpIndex === selectedConsolidationPeriodIndex &&
+                          selectedConsolidationPeriodIndex !== null
+                            ? 'active'
+                            : ''
                         }`}
                         text={cp.label}
                         onClick={() => {
-                          store.dispatch(clmsSlice.actions.setSelectedConsolidationPeriodIndex(idx));
+                          store.dispatch(clmsSlice.actions.setSelectedConsolidationPeriodIndex(cpIndex));
                           onSelect({ datasource: datasource, dataset: cp.id });
                         }}
                       />
@@ -233,6 +255,7 @@ function CLMSCollectionSelection({
       selectedPath={selectedPath || datasource}
       selectedCollection={selectedCollection}
       selectedConsolidationPeriodIndex={selectedConsolidationPeriodIndex}
+      availableDatasets={availableDatasets}
     />
   );
 }

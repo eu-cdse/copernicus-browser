@@ -224,6 +224,10 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
 
   supportsCustomLayer = () => false;
 
+  supportsWebPVisualization() {
+    return false;
+  }
+
   supportsLowResolutionAlternativeCollection = (collectionId) => {
     return !!LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS[collectionId];
   };

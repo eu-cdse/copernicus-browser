@@ -74,28 +74,6 @@
     padding: 15px;
   }
 
-  svg.background-graphics {
-    text {
-      fill: vars.$textColor;
-    }
-
-    path,
-    line {
-      fill: none;
-    }
-
-    path.tick-line {
-      shape-rendering: crispedges;
-      stroke: #666;
-      stroke-dasharray: 5, 5;
-    }
-
-    line.axis-baseline {
-      shape-rendering: crispedges;
-      stroke: vars.$textColor;
-    }
-  }
-
   svg.legend {
     margin-left: 50px;
 
@@ -104,45 +82,7 @@
     }
   }
 
-  svg.visualization-layer {
-    text {
-      fill: vars.$textColor;
-    }
-
-    path,
-    line {
-      fill: vars.$primaryColor;
-    }
-
-    .data-visualization {
-      .lines {
-        .xyframe-line {
-          path {
-            stroke: vars.$primaryColor;
-          }
-        }
-      }
-
-      .points {
-        .frame-piece {
-          fill: vars.$primaryColor;
-        }
-      }
-    }
-
-    path.tick-line {
-      shape-rendering: crispedges;
-      stroke: #666;
-      stroke-dasharray: 5, 5;
-    }
-
-    line.axis-baseline {
-      shape-rendering: crispedges;
-      stroke: vars.$textColor;
-    }
-  }
-
-  div.annotation {
+  .fis-tooltip {
     background-color: vars.$mainMedium;
     color: vars.$textColor;
     padding: 20px;
@@ -157,6 +97,19 @@
       border: none;
       background-color: #666;
       height: 1px;
+    }
+
+    .series-label {
+      display: flex;
+      align-items: center;
+      font-weight: vars.$fontWeightBold;
+    }
+
+    .series-color {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 5px;
     }
   }
 }

@@ -1,5 +1,6 @@
 import styles from '../variables.module.scss';
 import { COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { MimeTypes } from '@sentinel-hub/sentinelhub-js';
 
 const { warningColor } = styles;
 
@@ -25,6 +26,10 @@ export const S2_QUARTERLY_MOSAIC_LAYER_ID = 'TRUE-COLOR-CLOUDLESS';
 export const MAX_MAP_LOADING_TIME = 5 * 1000;
 export const TILE_REQUEST_DEBOUNCE_MS = 300;
 export const SERVER_ERROR_THRESHOLD = 3;
+
+// MimeTypes key used as the format prop for SH Processing API tile layers (resolved via MimeTypes[format] in sentinelhubLeafletLayer)
+export const VISUALIZATION_TILE_FORMAT: keyof typeof MimeTypes = 'WEBP';
+export const FALLBACK_TILE_FORMAT: keyof typeof MimeTypes = 'PNG';
 
 type PathStyle = {
   weight?: number;

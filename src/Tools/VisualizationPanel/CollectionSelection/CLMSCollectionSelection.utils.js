@@ -174,6 +174,7 @@ import {
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
@@ -1295,6 +1296,16 @@ export const CLMS_OPTIONS = [
                 ],
               },
               {
+                label: 'Coniferous Cover Density',
+                id: 'Coniferous Cover Density',
+                options: [
+                  {
+                    label: 'clms_vlcc_coniferous-cover-density_europe_100m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+                  },
+                ],
+              },
+              {
                 label: 'Dominant Leaf Type',
                 id: 'Dominant Leaf Type 2',
                 options: [
@@ -1391,7 +1402,8 @@ export const filterCLMSOptionsByDatasets = (options, allowedDatasetIds = []) => 
       return null;
     }
 
-    return allowedDatasetIds.includes(node.id) ? node : null;
+    const allIds = [node.id, ...(node.consolidationPeriods?.map((cp) => cp.id) ?? [])]; // CP-level filtering is left intentionally to the render layer
+    return allIds.some((id) => allowedDatasetIds.includes(id)) ? node : null;
   };
 
   return options.map(filterNode).filter(Boolean);

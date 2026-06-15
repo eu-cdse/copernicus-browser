@@ -33,8 +33,8 @@ const renderFilterItemValue = ({ collectionId, filterItem, filterItemId, value, 
   const render = filterItem.customTag
     ? filterItem.customTag
     : Array.isArray(value)
-    ? renderArrayAsTags
-    : renderValueAsTag;
+      ? renderArrayAsTags
+      : renderValueAsTag;
   return render({ collectionId, filterItemId, value, onChange, Tag });
 };
 

@@ -135,12 +135,13 @@ function getMapTileUrlInternal({
   const apiType = layer.supportsApiType(ApiType.PROCESSING)
     ? ApiType.PROCESSING
     : layer.supportsApiType(ApiType.WMTS)
-    ? ApiType.WMTS
-    : ApiType.WMS;
+      ? ApiType.WMTS
+      : ApiType.WMS;
 
   const shouldUseOpenEO =
     params.selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
-    (params.processGraph || isOpenEoSupported(layer.instanceId, layer.layerId, params.format));
+    (params.processGraph ||
+      isOpenEoSupported(layer.instanceId, layer.layerId, MIMETYPE_TO_OPENEO_FORMAT[params.format]));
 
   const tryLayerGetMap = () =>
     layer

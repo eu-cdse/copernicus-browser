@@ -32,14 +32,12 @@ test('evalscript and visualizationUrl are stripped from Keycloak redirect_uri on
   await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 });
 
-test('evalscript and visualizationUrl are stripped from Keycloak redirect_uri on login', async ({
-  page,
-}) => {
+test('evalscript and visualizationUrl are stripped from Keycloak redirect_uri on login', async ({ page }) => {
   await page.goto(CODE_EDITOR_URLS.customScript);
   await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 
   const loginAuthRequest = waitForKeycloakAuthRequest(page);
-  await page.locator('.ensure-auth').getByText('Login', { exact: true }).click();
+  await page.locator('.ensure-auth').getByText('Log in', { exact: true }).click();
 
   const redirectUri = new URL((await loginAuthRequest).url()).searchParams.get('redirect_uri');
   expect(redirectUri).not.toBeNull();
@@ -70,7 +68,7 @@ test('processGraph is stripped from Keycloak redirect_uri on login', async ({ pa
   await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 
   const loginAuthRequest = waitForKeycloakAuthRequest(page);
-  await page.locator('.ensure-auth').getByText('Login', { exact: true }).click();
+  await page.locator('.ensure-auth').getByText('Log in', { exact: true }).click();
 
   const redirectUri = new URL((await loginAuthRequest).url()).searchParams.get('redirect_uri');
   expect(redirectUri).not.toBeNull();

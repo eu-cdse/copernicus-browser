@@ -663,15 +663,15 @@ class Timelapse extends Component {
       const newActiveImageIndex = newImages[index].isSelected
         ? index
         : prevState.activeImageIndex === index
-        ? findNextActiveImageIndex(
-            newImages,
-            prevState.canWeFilterByClouds,
-            prevState.canWeFilterByCoverage,
-            maxCCPercentAllowed,
-            minCoverageAllowed,
-            0,
-          )
-        : prevState.activeImageIndex;
+          ? findNextActiveImageIndex(
+              newImages,
+              prevState.canWeFilterByClouds,
+              prevState.canWeFilterByCoverage,
+              maxCCPercentAllowed,
+              minCoverageAllowed,
+              0,
+            )
+          : prevState.activeImageIndex;
 
       store.dispatch(
         timelapseSlice.actions.setIsSelectAllChecked(newImages.every((image) => image.isSelected)),

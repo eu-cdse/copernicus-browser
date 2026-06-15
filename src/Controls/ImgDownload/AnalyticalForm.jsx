@@ -3,8 +3,8 @@ import Toggle from 'react-toggle';
 import { t } from 'ttag';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
 
-import { RESOLUTION_DIVISORS, IMAGE_FORMATS, IMAGE_FORMATS_INFO, RESOLUTION_OPTIONS } from './consts';
-import { isTiff } from './ImageDownload.utils';
+import { RESOLUTION_DIVISORS, IMAGE_FORMATS_INFO, RESOLUTION_OPTIONS } from './consts';
+import { isTiff, isSimpleImageFormat } from './ImageDownload.utils';
 import ExternalLink from '../../ExternalLink/ExternalLink';
 import Loader from '../../Loader/Loader';
 
@@ -22,14 +22,13 @@ export default class AnalyticalForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.imageFormat !== this.props.imageFormat) {
-      const JPGandPNG = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG];
-      if (JPGandPNG.includes(prevProps.imageFormat) && !JPGandPNG.includes(this.props.imageFormat)) {
+      if (isSimpleImageFormat(prevProps.imageFormat) && !isSimpleImageFormat(this.props.imageFormat)) {
         if (this.props.showLogo) {
-          // Logo can only be applied to PNG and JPG
+          // Logo overlay requires a simple image format (PNG, JPG, or WebP); disable it when switching to TIFF/KMZ
           this.props.updateFormData('showLogo', false);
         }
         this.props.updateFormData('addDataMask', false);
-      } else if (!JPGandPNG.includes(prevProps.imageFormat) && JPGandPNG.includes(this.props.imageFormat)) {
+      } else if (!isSimpleImageFormat(prevProps.imageFormat) && isSimpleImageFormat(this.props.imageFormat)) {
         this.props.updateFormData('addDataMask', true);
       }
     }
@@ -63,7 +62,7 @@ export default class AnalyticalForm extends React.Component {
       hasActiveEffects,
     } = this.props;
 
-    const isJPGorPNG = imageFormat === IMAGE_FORMATS.JPG || imageFormat === IMAGE_FORMATS.PNG;
+    const isSimpleFormat = isSimpleImageFormat(imageFormat);
 
     if (allLayers.length === 0) {
       return <Loader />;
@@ -71,7 +70,7 @@ export default class AnalyticalForm extends React.Component {
 
     return (
       <div className="analytical-mode">
-        {allowShowLogoAnalytical && isJPGorPNG && (
+        {allowShowLogoAnalytical && isSimpleFormat && (
           <div className="form-field">
             <label title={this.CAPTIONS_TITLE}>
               {t`Show logo`}
@@ -180,7 +179,7 @@ export default class AnalyticalForm extends React.Component {
             </small>
           </div>
         </div>
-        {selectedBands.length > 0 && !isJPGorPNG && (
+        {selectedBands.length > 0 && !isSimpleFormat && (
           <div className="form-field">
             <label title={this.DATAMASK_TITLE}>
               {t`Add dataMask band to raw layers`}

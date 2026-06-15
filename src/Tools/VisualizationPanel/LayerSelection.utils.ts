@@ -98,8 +98,7 @@ export const validateEvalscript = (script: string): { isValid: boolean; error?: 
   }
 
   try {
-    // Attempt to create a new function from the script to detect syntax errors
-    /* eslint-disable no-new-func */
+    // Intentional: uses new Function only to check for syntax errors, never executes user data
     new Function(script);
     return { isValid: true };
   } catch (e) {

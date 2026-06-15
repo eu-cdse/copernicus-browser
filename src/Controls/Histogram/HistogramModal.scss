@@ -29,51 +29,10 @@
 
   .histogram {
     cursor: crosshair;
-    display: flex;
-    justify-content: center;
+    width: 100%;
   }
 
-  svg.visualization-layer {
-    text {
-      fill: vars.$textColor;
-    }
-
-    path.tick-line {
-      shape-rendering: crispedges;
-      stroke: #666;
-      stroke-dasharray: 5, 5;
-    }
-
-    line.axis-baseline {
-      shape-rendering: crispedges;
-      stroke: vars.$textColor;
-    }
-
-    .data-visualization {
-      .pieces {
-        fill: vars.$primaryColor;
-      }
-    }
-  }
-
-  svg.background-graphics {
-    text {
-      fill: vars.$textColor;
-    }
-
-    path.tick-line {
-      shape-rendering: crispedges;
-      stroke: #666;
-      stroke-dasharray: 5, 5;
-    }
-
-    line.axis-baseline {
-      shape-rendering: crispedges;
-      stroke: vars.$textColor;
-    }
-  }
-
-  div.annotation {
+  .histogram-tooltip {
     background-color: vars.$mainLight;
     color: vars.$textColor;
     border: 1px solid vars.$textColor;

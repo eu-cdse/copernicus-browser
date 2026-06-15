@@ -185,8 +185,8 @@ class Highlights extends Component {
         const primarySelectedProcessing = primaryHasEvalscript
           ? PROCESSING_OPTIONS.PROCESS_API
           : isOpenEoSupported(primaryLayer.visualizationUrl, primaryLayer.layerId, IMAGE_FORMATS.PNG, false)
-          ? PROCESSING_OPTIONS.OPENEO
-          : PROCESSING_OPTIONS.PROCESS_API;
+            ? PROCESSING_OPTIONS.OPENEO
+            : PROCESSING_OPTIONS.PROCESS_API;
         const primaryScriptParams = primaryHasEvalscript
           ? {
               customSelected: true,

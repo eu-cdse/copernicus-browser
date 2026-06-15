@@ -104,8 +104,8 @@ export const CollectionSelection = ({
       return defaultCollection
         ? defaultCollection.id
         : userCollections.length
-        ? userCollections[0].id
-        : CollectionSelectionType.CREATE;
+          ? userCollections[0].id
+          : CollectionSelectionType.CREATE;
     }
 
     return collectionId;

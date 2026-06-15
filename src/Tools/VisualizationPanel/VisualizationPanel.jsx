@@ -59,8 +59,8 @@ const getActions = ({
         displayEffects
           ? showVisualizationsText()
           : haveEffectsChanged
-          ? appliedEffectsText()
-          : showEffectsText(),
+            ? appliedEffectsText()
+            : showEffectsText(),
       onClick: (e) => {
         e.stopPropagation();
         toggleEffects(!displayEffects);

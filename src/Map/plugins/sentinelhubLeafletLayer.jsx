@@ -252,6 +252,7 @@ import {
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
@@ -288,7 +289,7 @@ class SentinelHubLayer extends L.TileLayer {
     super(options);
     const defaultOptions = {
       tileSize: 512,
-      format: MimeTypes.JPEG,
+      format: MimeTypes.WEBP,
       attribution: '<a href="https://www.sentinel-hub.com" target="_blank">&copy Sentinel Hub</a>',
       preview: 2,
       transparent: true,
@@ -469,8 +470,8 @@ class SentinelHubLayer extends L.TileLayer {
       const apiType = canUseProcessingApi
         ? ApiType.PROCESSING
         : layer.supportsApiType(ApiType.WMTS)
-        ? ApiType.WMTS
-        : ApiType.WMS;
+          ? ApiType.WMTS
+          : ApiType.WMS;
 
       if (this.options.getMapAuthToken) {
         reqConfig.authToken = this.options.getMapAuthToken;
@@ -1048,6 +1049,7 @@ class SentinelHubLayer extends L.TileLayer {
       case COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1:
+      case COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1:

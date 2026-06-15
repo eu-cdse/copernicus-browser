@@ -31,7 +31,7 @@
     "save5": {
       "process_id": "save_result",
       "arguments": {
-        "format": "PNG",
+        "format": "webp",
         "data": {
           "from_node": "trueColor"
         }
@@ -65,7 +65,7 @@
     "save5": {
       "process_id": "save_result",
       "arguments": {
-        "format": "PNG",
+        "format": "webp",
         "data": {
           "from_node": "highlight"
         }
@@ -299,7 +299,7 @@
         "data": {
           "from_node": "applydimension2"
         },
-        "format": "png",
+        "format": "webp",
         "options": {}
       },
       "result": true
@@ -324,7 +324,7 @@
           "from_node": "colorRamp"
         },
 
-        "format": "PNG"
+        "format": "webp"
       },
       "result": true
     },
@@ -391,7 +391,7 @@
     "save5": {
       "process_id": "save_result",
       "arguments": {
-        "format": "PNG",
+        "format": "webp",
         "data": {
           "from_node": "highlight"
         }
@@ -418,7 +418,7 @@
           "from_node": "colorRamp"
         },
 
-        "format": "PNG"
+        "format": "webp"
       },
       "result": true
     },
@@ -478,7 +478,7 @@
     "save5": {
       "process_id": "save_result",
       "arguments": {
-        "format": "PNG",
+        "format": "webp",
         "data": {
           "from_node": "highlight"
         }
@@ -505,7 +505,7 @@
           "from_node": "colorRamp"
         },
 
-        "format": "PNG"
+        "format": "webp"
       },
       "result": true
     },
@@ -734,7 +734,7 @@
         "data": {
           "from_node": "applydimension1"
         },
-        "format": "png"
+        "format": "webp"
       },
       "result": true
     }
@@ -752,7 +752,7 @@
     "save5": {
       "process_id": "save_result",
       "arguments": {
-        "format": "png",
+        "format": "webp",
         "data": {
           "from_node": "load1"
         }

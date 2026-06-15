@@ -5,6 +5,7 @@ import { createUtmCrsListPerHemisphere, HEMISPHERES } from '../../utils/utm';
 export const IMAGE_FORMATS = {
   JPG: 'jpg',
   PNG: 'png',
+  WEBP: 'webp',
   KMZ_JPG: 'kmz-jpg',
   KMZ_PNG: 'kmz-png',
   TIFF_UINT8: 'tiff-8-bit-int',
@@ -34,6 +35,13 @@ export const IMAGE_FORMATS_INFO: Record<string, ImageFormatInfo> = {
     mimeType: MimeTypes.PNG,
     mimeTypeProcessing: MimeTypes.PNG,
     ext: 'png',
+    sampleType: 'AUTO',
+  },
+  [IMAGE_FORMATS.WEBP]: {
+    text: 'WebP (no georeference)',
+    mimeType: MimeTypes.WEBP,
+    mimeTypeProcessing: MimeTypes.WEBP,
+    ext: 'webp',
     sampleType: 'AUTO',
   },
   [IMAGE_FORMATS.KMZ_JPG]: {

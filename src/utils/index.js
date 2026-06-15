@@ -287,7 +287,6 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     ? window.history.pushState({}, '', newUrl)
     : window.history.replaceState({}, '', newUrl);
 }
-// eslint-disable-next-line
 function hexToRgb(hex) {
   var bigint = parseInt(hex, 16);
   var r = (bigint >> 16) & 255;

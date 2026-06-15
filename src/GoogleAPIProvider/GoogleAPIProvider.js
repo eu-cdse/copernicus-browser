@@ -28,7 +28,6 @@ function GoogleAPIProvider({ children }) {
     };
 
     loadGoogleApi();
-    // eslint-disable-next-line
   }, []);
 
   return children({ googleAPI: googleAPI });

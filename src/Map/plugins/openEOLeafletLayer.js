@@ -7,7 +7,6 @@ import {
   OPENEO_DOWNLOADABLE_FORMATS,
   findNodeByProcessId,
   OPENEO_VALID_FORMATS,
-  MIMETYPE_TO_OPENEO_FORMAT,
   getOpenEOS1Options,
 } from '../../api/openEO/openEOHelpers';
 import Sentinel1DataSourceHandler from '../../Tools/SearchPanel/dataSourceHandlers/Sentinel1DataSourceHandler';
@@ -27,7 +26,6 @@ class OpenEoLayer extends L.TileLayer {
     super(options);
     const defaultOptions = {
       tileSize: 512,
-      format: MIMETYPE_TO_OPENEO_FORMAT['image/png'],
       attribution: '<a href="https://www.sentinel-hub.com" target="_blank">&copy Sentinel Hub</a>',
     };
 
@@ -118,30 +116,42 @@ class OpenEoLayer extends L.TileLayer {
       backscatterCoeff: this.options.backscatterCoeff,
     });
 
-    const newProcessGraph = processGraphBuilder.loadCollection(
-      processGraph,
-      {
-        id: collectionId,
-        datasetId: this.options.datasetId,
-        spatial_extent: {
-          west: nw.x,
-          east: se.x,
-          south: se.y,
-          north: nw.y,
-          height: this.options.tileSize,
-          width: this.options.tileSize,
-          crs: CRS_EPSG3857.authId,
-        },
-        temporal_extent: [this.options.fromTime, this.options.toTime],
-        minQa: this.options.minQa,
-        mosaickingOrder: this.options.mosaickingOrder,
-        upsampling: this.options.upsampling,
-        downsampling: this.options.downsampling,
-        previewMode: this.options.previewMode,
-        ...s1Options,
-      },
-      this.options.cachedProcessGraph,
-    );
+    let newProcessGraph;
+    try {
+      newProcessGraph = processGraphBuilder.saveResult(
+        processGraphBuilder.loadCollection(
+          processGraph,
+          {
+            id: collectionId,
+            datasetId: this.options.datasetId,
+            spatial_extent: {
+              west: nw.x,
+              east: se.x,
+              south: se.y,
+              north: nw.y,
+              height: this.options.tileSize,
+              width: this.options.tileSize,
+              crs: CRS_EPSG3857.authId,
+            },
+            temporal_extent: [this.options.fromTime, this.options.toTime],
+            minQa: this.options.minQa,
+            mosaickingOrder: this.options.mosaickingOrder,
+            upsampling: this.options.upsampling,
+            downsampling: this.options.downsampling,
+            previewMode: this.options.previewMode,
+            ...s1Options,
+          },
+          this.options.cachedProcessGraph,
+        ),
+        {},
+      );
+    } catch {
+      store.dispatch(
+        notificationSlice.actions.displayError(t`The custom process graph must include a save_result node.`),
+      );
+      done(null, tile);
+      return tile;
+    }
 
     openEOApi
       .getResult(newProcessGraph, this.options.getMapAuthToken, signal)
@@ -185,7 +195,7 @@ class OpenEoLayer extends L.TileLayer {
         } else {
           store.dispatch(
             notificationSlice.actions.displayError(
-              t`Format "${format}" is not supported. Only PNG and JPG formats are supported for map visualization.`,
+              t`Format "${format}" is not supported. Only PNG, JPG, and WebP formats are supported for map visualization.`,
             ),
           );
         }

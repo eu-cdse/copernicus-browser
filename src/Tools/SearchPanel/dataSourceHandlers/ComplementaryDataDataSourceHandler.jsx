@@ -69,7 +69,7 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
       maxDate: moment.utc('2024-12-31'),
     },
     [CDAS_L8_L9_LOTL1]: {
-      minDate: moment.utc('2021-01-01'),
+      minDate: moment.utc('2015-01-01'),
       maxDate: moment.utc(),
     },
   };

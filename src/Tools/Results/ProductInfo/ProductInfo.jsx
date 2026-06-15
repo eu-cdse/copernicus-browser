@@ -82,10 +82,10 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
     let errorMessage = !userToken
       ? getLoggedInErrorMsg()
       : !availableProcessors.length
-      ? ResultItemLabels.noAvailableProcessors()
-      : !selectedWorkflow
-      ? ResultItemLabels.noWorkspaceSelected()
-      : t`Unknown error`;
+        ? ResultItemLabels.noAvailableProcessors()
+        : !selectedWorkflow
+          ? ResultItemLabels.noWorkspaceSelected()
+          : t`Unknown error`;
 
     store.dispatch(notificationSlice.actions.displayError(`${t`Order Processing`}\n${errorMessage}`));
   };

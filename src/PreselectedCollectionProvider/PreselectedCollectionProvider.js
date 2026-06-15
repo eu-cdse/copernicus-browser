@@ -45,9 +45,7 @@ function PreselectedCollectionProvider({ children, selectedThemeId, dataSourcesI
         store.dispatch(notificationSlice.actions.displayError(t`Selected dataset does not exist!`));
       }
     }
-
-    // eslint-disable-next-line
-  }, [selectedThemeId, dataSourcesInitialized]);
+  }, [selectedThemeId, dataSourcesInitialized, datasetId]);
   return children;
 }
 

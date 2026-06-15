@@ -138,7 +138,7 @@ function saveResult(processGraph, options) {
     throw new Error('No save_result node found');
   }
   if (options.format) {
-    copyProcessGraph[saveResultNode]['arguments']['format'] = options.format;
+    copyProcessGraph[saveResultNode]['arguments']['format'] = options.format.toLowerCase();
   }
 
   return copyProcessGraph;

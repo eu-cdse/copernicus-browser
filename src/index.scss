@@ -157,3 +157,20 @@ div.rc-slider {
 .uppercase-text {
   text-transform: uppercase;
 }
+
+// recharts: stop the chart being text-selected (blue highlight) on click/drag.
+// Keyboard/screen-reader ARIA via accessibilityLayer is kept; only the wrapper's own
+// focus outline is removed so inner focusable elements keep their focus ring.
+.recharts-wrapper,
+.recharts-wrapper *,
+.recharts-surface,
+.recharts-surface * {
+  user-select: none;
+}
+
+.recharts-wrapper {
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}

@@ -188,8 +188,8 @@ class PinPreviewImage extends React.Component {
       const apiType = canUseProcessingApi
         ? ApiType.PROCESSING
         : layer.supportsApiType(ApiType.WMTS)
-        ? ApiType.WMTS
-        : ApiType.WMS;
+          ? ApiType.WMTS
+          : ApiType.WMS;
 
       const getMapAuthToken = getGetMapAuthToken(this.props.auth);
       const cancelToken = new CancelToken();

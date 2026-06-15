@@ -14,7 +14,6 @@ const redTextColor = '\x1b[31m';
 const greenTextColor = '\x1b[32m';
 const resetColor = '\x1b[0m';
 
-/* eslint-disable-next-line no-console */
 const consoleLogWithColors = (text, color) => console.log(color, text, resetColor);
 
 if (!semver.satisfies(actualNodeVersion, requiredNodeVersion)) {

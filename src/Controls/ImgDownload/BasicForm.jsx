@@ -17,7 +17,7 @@ export default class BasicForm extends React.Component {
   CROP_TO_AOI_DISABLED_TITLE = t`To use Crop to AOI, area of interest needs to be selected first.`;
   DRAW_GEOMETRY_ON_IMAGE_TITLE = t`Draw an area of interest or line geometry on the exported image.`;
   DRAW_GEOMETRY_ON_IMAGE_DISABLED_TITLE = t`To use Draw AOI or Line geometry on image, an area or line needs to be selected first.`;
-  ADD_OSM_BACKGROUND_TITLE = t`Draw Open Street Map layer as image background. Image will be exported in PNG format.`;
+  ADD_OSM_BACKGROUND_TITLE = t`Draw Open Street Map layer as image background.`;
 
   componentDidMount() {
     const { updateFormData, addingMapOverlaysPossible } = this.props;
@@ -36,7 +36,11 @@ export default class BasicForm extends React.Component {
   handleBackgroundLayerChange = () => {
     const { updateFormData, showOSMBackgroundLayer, imageFormat } = this.props;
     const newShowOSMBackgroundLayer = !showOSMBackgroundLayer;
-    const newImageFormat = newShowOSMBackgroundLayer ? IMAGE_FORMATS.PNG : imageFormat;
+    // The OSM base is composited under the layer, which must keep transparency for it to show
+    // through. JPEG has no alpha, so when enabling OSM switch a JPG selection to PNG; PNG and WEBP
+    // both support transparency and stay available.
+    const newImageFormat =
+      newShowOSMBackgroundLayer && imageFormat === IMAGE_FORMATS.JPG ? IMAGE_FORMATS.PNG : imageFormat;
     updateFormData('showOSMBackgroundLayer', newShowOSMBackgroundLayer);
     updateFormData('imageFormat', newImageFormat);
   };
@@ -219,11 +223,13 @@ export default class BasicForm extends React.Component {
             <select
               className="dropdown"
               value={imageFormat}
-              disabled={showOSMBackgroundLayer}
               onChange={(e) => updateFormData('imageFormat', e.target.value)}
             >
-              <option value={IMAGE_FORMATS.JPG}>{IMAGE_FORMATS_INFO[IMAGE_FORMATS.JPG].text}</option>
+              <option value={IMAGE_FORMATS.JPG} disabled={showOSMBackgroundLayer}>
+                {IMAGE_FORMATS_INFO[IMAGE_FORMATS.JPG].text}
+              </option>
               <option value={IMAGE_FORMATS.PNG}>{IMAGE_FORMATS_INFO[IMAGE_FORMATS.PNG].text}</option>
+              <option value={IMAGE_FORMATS.WEBP}>{IMAGE_FORMATS_INFO[IMAGE_FORMATS.WEBP].text}</option>
             </select>
           </div>
         </div>

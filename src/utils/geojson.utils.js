@@ -59,7 +59,7 @@ export const boundsToPolygon = (bounds) => {
   };
 };
 
-export const isPolygon = (geometry) => geometry?.type === 'Polygon' ?? false;
+export const isPolygon = (geometry) => geometry?.type === 'Polygon';
 
 export const isRectangle = (geometry) => {
   if (!isPolygon(geometry)) {

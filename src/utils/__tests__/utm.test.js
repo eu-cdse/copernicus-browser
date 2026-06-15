@@ -15,6 +15,22 @@ describe('Test: getUtmZone', () => {
   });
 });
 
+// Regression: world-wrapped longitudes outside [-180, 180] (e.g. after panning across
+// the antimeridian) must normalize to a valid 1-60 zone instead of throwing
+// "Found zone -2, which is not a valid UTM zone".
+const getUtmZoneOutOfRangeFixtures = [
+  [new BBox(CRS_EPSG4326, -196, 36, -194, 41), { zone: 58, hemisphere: 'N' }], // center lng -195
+  [new BBox(CRS_EPSG4326, -187, 36, -185, 41), { zone: 60, hemisphere: 'N' }], // center lng -186
+  [new BBox(CRS_EPSG4326, 199, -36, 201, -30), { zone: 4, hemisphere: 'S' }], // center lng 200
+];
+describe('Test: getUtmZone with out-of-range longitudes', () => {
+  test.each(getUtmZoneOutOfRangeFixtures)('given %p as argument, returns %p', (geometry, expectedResult) => {
+    const zone = getUtmZoneFromBbox(geometry);
+    expect(zone).toEqual(expectedResult);
+    expect(() => getUtmEpsgCode(zone)).not.toThrow();
+  });
+});
+
 const getEpsgCodeFixtures = [
   [{ zone: 60, hemisphere: 'N' }, '32660'],
   [{ zone: 1, hemisphere: 'N' }, '32601'],

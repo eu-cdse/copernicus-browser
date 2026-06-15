@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
 
 import {
   getUrlParams,
@@ -36,13 +35,6 @@ import { ModalId } from '../const';
 import { IS_3D_MODULE_ENABLED } from '../TerrainViewer/TerrainViewer.const';
 import { getSharedPins, normalizePin } from '../Tools/Pins/Pin.utils';
 import { decrypt } from '../utils/encrypt';
-import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
-import {
-  CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
-  CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
-  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
-  S2_L2A_CDAS,
-} from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
 import { isOpenEoSupported } from '../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
@@ -77,18 +69,6 @@ class URLParamsParser extends React.Component {
     }
     if (params.processGraphUrl || params.processgraphurl) {
       params = await this.parseProcessGraphFromProcessGraphUrl(params);
-    }
-    const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(this.props.user.access_token);
-    if (
-      [
-        CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
-        CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
-        CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
-      ].includes(params.datasetId) &&
-      !hasAccessToCCMVisualization
-    ) {
-      params.datasetId = S2_L2A_CDAS;
-      params.layerId = '1_TRUE_COLOR';
     }
 
     this.checkAndDisplayTutorial(params);
@@ -254,13 +234,13 @@ class URLParamsParser extends React.Component {
         processGraph || processGraphUrl
           ? PROCESSING_OPTIONS.OPENEO
           : isOpenEoSupported(
-              decryptedVisualisationUrl,
-              layerId,
-              IMAGE_FORMATS.PNG,
-              evalscript || evalscriptUrl,
-            )
-          ? PROCESSING_OPTIONS.OPENEO
-          : PROCESSING_OPTIONS.PROCESS_API,
+                decryptedVisualisationUrl,
+                layerId,
+                IMAGE_FORMATS.PNG,
+                evalscript || evalscriptUrl,
+              )
+            ? PROCESSING_OPTIONS.OPENEO
+            : PROCESSING_OPTIONS.PROCESS_API,
     };
     store.dispatch(visualizationSlice.actions.setVisualizationParams(newVisualizationParams));
     if (datasetId && !compareShare) {
@@ -364,8 +344,4 @@ class URLParamsParser extends React.Component {
   }
 }
 
-const mapStoreToProps = (store) => ({
-  user: store.auth.user,
-});
-
-export default connect(mapStoreToProps, null)(URLParamsParser);
+export default URLParamsParser;

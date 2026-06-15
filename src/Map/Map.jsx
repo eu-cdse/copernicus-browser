@@ -41,6 +41,8 @@ import {
   S2_QUARTERLY_MOSAIC_DATASET_ID,
   S2_QUARTERLY_MOSAIC_LAYER_ID,
   MAX_MAP_LOADING_TIME,
+  VISUALIZATION_TILE_FORMAT,
+  FALLBACK_TILE_FORMAT,
   SERVER_ERROR_THRESHOLD,
 } from './const';
 import SearchBox from '../SearchBox/SearchBox';
@@ -73,6 +75,17 @@ import DatasetLocationPreview from './components/DatasetLocationPreview';
 import MapPanes from './components/MapPanes';
 import CommercialDataOverlay from './components/CommercialDataOverlay';
 import MapOverlays from './components/MapOverlays';
+
+// Defaults to WebP when dsh is null; only falls back to PNG if the handler explicitly opts out.
+function getTileFormat(dsh) {
+  return dsh?.supportsWebPVisualization() !== false ? VISUALIZATION_TILE_FORMAT : FALLBACK_TILE_FORMAT;
+}
+
+// Equivalent to MIMETYPE_TO_OPENEO_FORMAT[MimeTypes[tileFormat]] but avoids the extra import.
+// Only two tile formats are produced by getTileFormat(), so the ternary is explicit and stable.
+function tileFormatToImageFormat(tileFormat) {
+  return tileFormat === VISUALIZATION_TILE_FORMAT ? IMAGE_FORMATS.WEBP : IMAGE_FORMATS.PNG;
+}
 
 const { BaseLayer, Overlay } = LayersControl;
 
@@ -392,16 +405,24 @@ class Map extends React.Component {
     const isCustomEvalscript = customSelected && !!(evalscript || evalscriptUrl);
     const shouldBlockOpenEoForEvalscriptUrl = !!evalscriptUrl && !evalscript;
     const isOpenEOSelected = selectedProcessing === PROCESSING_OPTIONS.OPENEO;
+
+    const dsh = getDataSourceHandler(datasetId);
+    const tileFormat = getTileFormat(dsh);
+
     const supportsOpenEo =
       !shouldBlockOpenEoForEvalscriptUrl &&
-      isOpenEoSupported(visualizationUrl, visualizationLayerId, IMAGE_FORMATS.PNG, isCustomEvalscript);
+      isOpenEoSupported(
+        visualizationUrl,
+        visualizationLayerId,
+        tileFormatToImageFormat(tileFormat),
+        isCustomEvalscript,
+      );
 
     const hasCustomProcessGraph = customSelected && !!processGraph && isOpenEOSelected;
     const shouldRenderOpenEO = isOpenEOSelected && (supportsOpenEo || hasCustomProcessGraph);
 
     const zoomConfig = getZoomConfiguration(datasetId, visualizationLayerId);
     let speckleFilterProp = speckleFilter;
-    const dsh = getDataSourceHandler(datasetId);
     if (dsh && !dsh.canApplySpeckleFilter(datasetId, this.props.zoom)) {
       speckleFilterProp = { type: SpeckleFilterType.NONE };
     }
@@ -514,7 +535,7 @@ class Map extends React.Component {
                       datasetId={S2_QUARTERLY_MOSAIC_DATASET_ID}
                       url={baseLayer.url}
                       layers={S2_QUARTERLY_MOSAIC_LAYER_ID}
-                      format="PNG"
+                      format={getTileFormat(getDataSourceHandler(S2_QUARTERLY_MOSAIC_DATASET_ID))}
                       fromTime={moment(latestS2QMosaicDate).utc().startOf('day').toDate()}
                       toTime={moment(latestS2QMosaicDate).utc().endOf('day').toDate()}
                       minZoom={S2QMosaicZoom.min}
@@ -591,7 +612,7 @@ class Map extends React.Component {
                 datasetId={datasetId}
                 url={visualizationUrl}
                 layers={visualizationLayerId}
-                format="PNG"
+                format={tileFormat}
                 fromTime={fromTime ? fromTime.toDate() : null}
                 toTime={toTime ? toTime.toDate() : null}
                 customSelected={customSelected}
@@ -663,6 +684,7 @@ class Map extends React.Component {
                 } = p;
                 const dsh = getDataSourceHandler(datasetId);
                 const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true; //We can only check if a datasetId is BYOC when the datasource handler for it is instantiated (thus, we are on the user instance which includes that BYOC collection), so we set default to `true` to cover other cases.
+                const compareTileFormat = getTileFormat(dsh);
                 let {
                   min: minZoom,
                   max: maxZoom = DEFAULT_COMPARED_LAYERS_MAX_ZOOM,
@@ -675,7 +697,12 @@ class Map extends React.Component {
                   (evalscript != null && evalscript.length > 0) || !!evalscriptUrl;
                 const supportsOpenEoComparedLayer =
                   !(!!evalscriptUrl && !evalscript) &&
-                  isOpenEoSupported(visualizationUrl, layerId, IMAGE_FORMATS.PNG, isCustomVisualisation);
+                  isOpenEoSupported(
+                    visualizationUrl,
+                    layerId,
+                    tileFormatToImageFormat(compareTileFormat),
+                    isCustomVisualisation,
+                  );
 
                 if (supportsOpenEoComparedLayer && isOpenEOSelected) {
                   let processGraphToUse = processGraph
@@ -721,7 +748,7 @@ class Map extends React.Component {
                     datasetId={datasetId}
                     url={visualizationUrl}
                     layers={layerId}
-                    format="PNG"
+                    format={compareTileFormat}
                     fromTime={pinTimeFrom}
                     toTime={pinTimeTo}
                     customSelected={!!(evalscript || evalscriptUrl)}

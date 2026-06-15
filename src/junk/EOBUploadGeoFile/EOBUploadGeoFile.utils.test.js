@@ -359,6 +359,52 @@ describe('parse bbox string', () => {
   });
 });
 
+describe('parse pasted geometry (auto-detect format)', () => {
+  // A bare Polygon coordinate ring is valid JSON but not valid GeoJSON (no `type`) and
+  // not a 4-element bbox, so it should produce the specific INVALID_GEOJSON warning.
+  test('bare coordinate ring throws the invalid-GeoJSON warning', () => {
+    const ring =
+      '[[[10.257111,43.51395],[10.257111,43.583624],[10.363541,43.583624],[10.363541,43.51395],[10.257111,43.51395]]]';
+    expect(() => parseContent(ring, UPLOAD_GEOMETRY_TYPE.POLYGON, null)).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOJSON(),
+    );
+  });
+
+  // A JSON object that parses but isn't a recognized geometry should also warn.
+  test('JSON object that is not GeoJSON throws the invalid-GeoJSON warning', () => {
+    expect(() => parseContent('{"foo":"bar"}', UPLOAD_GEOMETRY_TYPE.POLYGON, null)).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOJSON(),
+    );
+  });
+
+  // A geometry whose `type` does not match its `coordinates` nesting (here a Polygon whose
+  // coordinates are a flat bbox-style array of numbers) must be rejected, not silently accepted.
+  test('GeoJSON geometry with coordinates that do not match its type throws the invalid-GeoJSON warning', () => {
+    const malformedPolygon = '{"type":"Polygon","coordinates":[10.257111,43.51395,10.363541,43.583624]}';
+    expect(() => parseContent(malformedPolygon, UPLOAD_GEOMETRY_TYPE.POLYGON, null)).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOJSON(),
+    );
+  });
+
+  // A simple bbox array is still accepted via auto-detect.
+  test('bbox array [minX, minY, maxX, maxY] is auto-detected into a Polygon', () => {
+    expect(
+      parseContent('[10.257111,43.51395,10.363541,43.583624]', UPLOAD_GEOMETRY_TYPE.POLYGON, null),
+    ).toStrictEqual({
+      type: 'Polygon',
+      coordinates: [
+        [
+          [10.257111, 43.51395],
+          [10.363541, 43.51395],
+          [10.363541, 43.583624],
+          [10.257111, 43.583624],
+          [10.257111, 43.51395],
+        ],
+      ],
+    });
+  });
+});
+
 const createPolygonFeature = (lng, lat) => {
   return {
     type: 'Feature',
@@ -862,6 +908,13 @@ describe('removeExtraCoordDimensionsIfNeeded', () => {
     [undefined, null, false],
     [null, null, false],
     [{}, null, uploadGeoFileErrorMessages.ERROR_PARSING_GEOMETRY()],
+    // type/coordinates mismatch (flat numbers where rings are expected) — this is the path
+    // exercised by shp and kml imports, which reach validation via removeExtraCoordDimensionsIfNeeded.
+    [
+      { type: 'Polygon', coordinates: [10.257111, 43.51395, 10.363541, 43.583624] },
+      null,
+      uploadGeoFileErrorMessages.ERROR_PARSING_GEOMETRY(),
+    ],
     [
       {
         coordinates: [0, 0],

@@ -293,7 +293,6 @@ const CustomScriptInput = (props: CustomScriptInputProps) => {
                   className={`fa fa-${success ? 'check' : 'warning'}`}
                 />
               ) : scriptUrl ? (
-                // eslint-disable-next-line
                 <a onClick={loadCode}>
                   <i
                     className={`fa fa-refresh ${loading ? 'fa-spin' : ''} valid`}

@@ -14,8 +14,10 @@ import { usePrevious } from '../hooks/usePrevious';
 
 import './Auth.scss';
 import store, { authSlice } from '../store';
+import { ModalId } from '../const';
 
-const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => {
+const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, modalId, children }) => {
+  const blockingModalOpen = modalId === ModalId.PRIVATE_THEMEID_LOGIN;
   const [userAuthCompleted, setUserAuthCompleted] = useState(false);
   const [, setAnonAuthCompleted] = useState(false);
 
@@ -89,6 +91,7 @@ const AuthProvider = ({ user, anonToken, tokenRefreshInProgress, children }) => 
         anonToken={anonToken}
         userAuthCompleted={userAuthCompleted}
         tokenRefreshInProgress={tokenRefreshInProgress}
+        blockingModalOpen={blockingModalOpen}
         executeAnonAuth={() => {
           executeAnonAuth();
         }}
@@ -108,5 +111,6 @@ const mapStoreToProps = (store) => ({
   anonToken: store.auth.anonToken,
   user: store.auth.user.userdata,
   tokenRefreshInProgress: store.auth.tokenRefreshInProgress,
+  modalId: store.modal.id,
 });
 export default connect(mapStoreToProps)(AuthProvider);

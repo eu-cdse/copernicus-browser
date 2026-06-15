@@ -105,7 +105,6 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }: Props) =>
               <i
                 className="fa fa-upload"
                 // jsx-a11y/anchor-is-valid
-                // eslint-disable-next-line
                 title={t`Upload a file to create an area of interest`}
                 onClick={() => setUploadDialog(true)}
               />

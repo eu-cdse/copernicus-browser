@@ -910,8 +910,8 @@ function ImageDownload(props) {
                     isOnCompareTab
                       ? displayOnlyBasicDownloadPossibleMessage
                       : !supportsAnalyticalImgExport
-                      ? displayAnalyticalModeNotSupportedByDatasource
-                      : displayLogInToAccessMessage
+                        ? displayAnalyticalModeNotSupportedByDatasource
+                        : displayLogInToAccessMessage
                   }
                 />
 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+import { HTML5toTouch } from 'rdndmb-html5-to-touch';
 import { BrowserRouter } from 'react-router-dom';
 
 import store from './store';

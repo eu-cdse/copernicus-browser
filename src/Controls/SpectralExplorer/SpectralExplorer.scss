@@ -98,52 +98,6 @@
         }
       }
 
-      .chart {
-        svg.background-graphics {
-          text {
-            fill: vars.$textColor;
-          }
-
-          path,
-          line {
-            fill: none;
-          }
-
-          path.tick-line {
-            shape-rendering: crispedges;
-            stroke: #666;
-            stroke-dasharray: 5, 5;
-          }
-
-          line.axis-baseline {
-            shape-rendering: crispedges;
-            stroke: vars.$textColor;
-          }
-        }
-
-        svg.visualization-layer {
-          text {
-            fill: vars.$textColor;
-          }
-
-          path,
-          line {
-            fill: none;
-          }
-
-          path.tick-line {
-            shape-rendering: crispedges;
-            stroke: #666;
-            stroke-dasharray: 5, 5;
-          }
-
-          line.axis-baseline {
-            shape-rendering: crispedges;
-            stroke: vars.$textColor;
-          }
-        }
-      }
-
       .values-table {
         overflow-x: auto;
         width: 100%;

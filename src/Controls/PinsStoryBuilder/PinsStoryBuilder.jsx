@@ -171,8 +171,8 @@ class PinsStoryBuilder extends React.Component {
       const legendImageUrl = legendDefinition
         ? 'data:image/svg+xml;base64,' + b64EncodeUnicode(createSVGLegend(legendDefinition))
         : legendUrl
-        ? legendUrl
-        : null;
+          ? legendUrl
+          : null;
       if (legendImageUrl !== null) {
         const legendImage = await loadImage(legendImageUrl);
         drawLegendImage(ctx, legendImage, true, showCaptions);

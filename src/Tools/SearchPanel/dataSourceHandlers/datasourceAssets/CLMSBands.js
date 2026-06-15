@@ -2506,150 +2506,184 @@ export const COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_BANDS = [
 export const COPERNICUS_CLMS_WSI_CLOUD_CLASSIFICATION_EUROPE_UTM_20M_DAILY_V1_BANDS = [
   {
     name: 'CC',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'CC_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'QAFLAGS',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_FRACTIONAL_SNOW_COVER_EUROPE_UTM_20M_DAILY_V2_BANDS = [
   {
     name: 'FSCOG',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'FSCOG_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'FSCTOC',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'FSCTOC_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'QAFLAGS',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'CLD',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'NDSI',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_SAR_WET_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS = [
   {
     name: 'WSM',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'WSM_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_WET_DRY_SNOW_EUROPE_UTM_60M_DAILY_V2_BANDS = [
   {
     name: 'SSC',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SSC_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1_BANDS = [
   {
     name: 'GF',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'GF_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'QAFLAGS',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1_BANDS = [
   {
     name: 'SCD',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'SCO',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'SCM',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'NOBS',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'QAFLAGS',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCD_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCO_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCM_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
 export const COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1_BANDS = [
   {
     name: 'SCD',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'SCO',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'SCM',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'NCSO',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'NWSO',
+    sampleType: 'UINT16',
     getDescription: () => ``,
   },
   {
     name: 'QAFLAGS',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCD_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCO_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
   {
     name: 'SCM_QA',
+    sampleType: 'UINT8',
     getDescription: () => ``,
   },
 ];
@@ -2686,6 +2720,12 @@ export const COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_BANDS
 export const COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS = [
   {
     name: 'CPMCH',
+    getDescription: () => ``,
+  },
+];
+export const COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_BANDS = [
+  {
+    name: 'CCD',
     getDescription: () => ``,
   },
 ];

@@ -31,7 +31,11 @@ export const UTM_EPSG_CODE_BASES = {
  *    getUtmZoneFromBounds(new BBox(CRS_EPSG4326, 1, 2, 2, 3))
  */
 export const getUtmZoneFromBbox = (bbox) => {
-  const center = [(bbox.minX + bbox.maxX) / 2, (bbox.minY + bbox.maxY) / 2];
+  const rawLng = (bbox.minX + bbox.maxX) / 2;
+  // Normalize longitude into [-180, 180) so world-wrapped coordinates (e.g. after
+  // panning across the antimeridian) don't produce an out-of-range UTM zone.
+  const lng = ((((rawLng + 180) % 360) + 360) % 360) - 180;
+  const center = [lng, (bbox.minY + bbox.maxY) / 2];
   const zone = ((30 + Math.floor(center[0] / 6.0)) % 60) + 1;
   return {
     zone: zone,

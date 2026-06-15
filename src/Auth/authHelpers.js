@@ -217,7 +217,7 @@ export const getTokenExpiration = (token) => {
       return 0;
     }
     const decodedToken = jwtDecode(token.access_token);
-    return decodedToken?.exp * 1000 ?? 0;
+    return (decodedToken?.exp ?? 0) * 1000;
   } catch (e) {
     console.error('Error decoding token', e.message);
   }

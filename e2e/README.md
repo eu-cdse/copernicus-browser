@@ -138,7 +138,7 @@ import { test, expect } from '@playwright/test';
 
 test('anonymous flow', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByText('Login')).toBeVisible();
+  await expect(page.getByText('Log in')).toBeVisible();
 });
 ```
 
@@ -174,15 +174,33 @@ Use this Docker command to generate or update snapshots locally using the same L
 
 ```bash
 docker run --rm \
-  -v $(pwd):/work \
+  -v "$(pwd)":/work \
+  -v /work/node_modules \
   -w /work \
   mcr.microsoft.com/playwright:v1.58.2-noble \
-  npx playwright test --project=chromium --update-snapshots
+  bash -c "npm ci && npx playwright test --project=chromium --update-snapshots"
 ```
 
 Then commit the updated `.png` files.
 
+> **Why `-v /work/node_modules` and `npm ci`?** When developing on macOS, the mounted
+> `node_modules` contains macOS-native binaries (e.g. `@rollup/rollup-darwin-*`), which fail
+> inside the Linux container with errors like `Cannot find module @rollup/rollup-linux-arm64-gnu`.
+> The anonymous volume `-v /work/node_modules` shadows the host's `node_modules` with an empty
+> one, and `npm ci` populates it with Linux binaries — leaving your local install untouched so
+> `npm run start` still works on the host afterwards.
+>
+> To regenerate a single spec's snapshots, pass the file name before the flags, e.g.
+> `… npx playwright test visualization-service-routing.spec.ts --project=chromium --update-snapshots`.
+
 > **Note:** Keep the Docker image version in this command in sync with the `image:` in the `e2e_tests` CI job in `.gitlab-ci.yml`.
+
+> **Authenticated tests:** Specs that depend on the `setup` (SSO login) project — i.e. anything
+> not named `*.noauth.spec.ts` — need valid `E2E_SSO_USERNAME` / `E2E_SSO_PASSWORD` and the
+> `VITE_*` vars in your `.env` (mounted with the repo), or the login step fails before any
+> screenshot is taken. As an alternative for these, let CI run the failing test and download
+> the `…-actual.png` from the `e2e_tests` job artifacts, rename it to the baseline name
+> (e.g. `compare-view-chromium-linux.png`), and commit it.
 
 ### Running snapshot tests locally on macOS
 

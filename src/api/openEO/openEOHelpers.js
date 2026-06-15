@@ -1,18 +1,27 @@
+import { MimeTypes } from '@sentinel-hub/sentinelhub-js';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 export const MIMETYPE_TO_OPENEO_FORMAT = {
-  'image/png': 'png',
-  'image/jpeg': 'jpg',
+  [MimeTypes.PNG]: IMAGE_FORMATS.PNG,
+  [MimeTypes.JPEG]: IMAGE_FORMATS.JPG,
   'image/tiff': 'gtiff',
+  [MimeTypes.WEBP]: IMAGE_FORMATS.WEBP,
 };
-
-export const OPENEO_VALID_FORMATS = ['png', 'jpg'];
 
 export const OPENEO_DOWNLOADABLE_FORMATS = ['geotiff', 'gtiff'];
 
+export const OPENEO_VALID_FORMATS = Object.values(MIMETYPE_TO_OPENEO_FORMAT).filter(
+  (f) => !OPENEO_DOWNLOADABLE_FORMATS.includes(f),
+);
+
 window.useOpenEO = true;
 
-const SUPPORTED_IMAGE_FORMATS = [IMAGE_FORMATS.JPG, IMAGE_FORMATS.PNG, IMAGE_FORMATS.TIFF_FLOAT32];
+const SUPPORTED_IMAGE_FORMATS = [
+  IMAGE_FORMATS.JPG,
+  IMAGE_FORMATS.PNG,
+  IMAGE_FORMATS.WEBP,
+  IMAGE_FORMATS.TIFF_FLOAT32,
+];
 
 export function getProcessGraph(instanceUrl, layerId) {
   if (!instanceUrl || !layerId) {
@@ -26,10 +35,16 @@ export function getProcessGraph(instanceUrl, layerId) {
   return graphs[layerId];
 }
 
+/**
+ * @param {string} instanceUrl
+ * @param {string} layerId
+ * @param {string} imageFormat
+ * @param {boolean} isCustomVisualization - when true, skips the format check and returns false
+ */
 export function isOpenEoSupported(
   instanceUrl,
   layerId,
-  imageFormat = IMAGE_FORMATS.PNG,
+  imageFormat = IMAGE_FORMATS.WEBP,
   isCustomVisualization = false,
 ) {
   // enables switching between openEO and process api from developer tools

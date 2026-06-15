@@ -25,6 +25,7 @@ $blueColor: #2e85ea;
 $customCheckboxBackgroundColor: #e4e7eb;
 $dropdownHoverBackground: #dcdfe3;
 $customBorderBottomColor: #6f707b;
+$chartGridColor: #666;
 
 $tutorialBackgroundColor: $whiteColor;
 $tutorialTextColor: #333;
@@ -84,6 +85,7 @@ $breakpoint-1300: 1300px;
   whiteBackground: $whiteColor;
   textColor: $textColor;
   grayColor: $grayColor;
+  chartGridColor: $chartGridColor;
   fontWeightNormal: $fontWeightNormal;
   fontWeightBold: $fontWeightBold;
   boxShadowStrong: $boxShadowStrong;

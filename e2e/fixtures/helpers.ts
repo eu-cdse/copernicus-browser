@@ -1,4 +1,18 @@
 import { Page } from '@playwright/test';
+// Shared source of truth for the storage key, imported from a dependency-free
+// module so the app and the e2e fixtures cannot drift apart. See
+// src/constants/storageKeys.ts.
+import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY } from '../../src/constants/storageKeys';
+
+type ProcessNode = { process_id: string; arguments: Record<string, unknown> };
+type ProcessGraph = Record<string, ProcessNode>;
+
+// Test-fixture equivalent of findNodeByProcessId + format read from src/api/openEO/openEOHelpers.js.
+// Kept here because e2e fixtures cannot import from src/ without pulling in app-internal modules.
+export function getSaveResultFormat(processGraph: ProcessGraph): string | undefined {
+  const node = Object.values(processGraph).find((n) => n.process_id === 'save_result');
+  return node?.arguments?.format as string | undefined;
+}
 
 /**
  * Bypass the EnsureAuth consent modal and the onboarding tour for anonymous flows.
@@ -49,4 +63,22 @@ export async function dismissAnonymousSession(page: Page) {
       JSON.stringify({ access_token: fakeJwt, expires_in: 3600 }),
     );
   });
+}
+
+/**
+ * Seed the persisted search-config sessionStorage entry BEFORE navigation, so the
+ * app reads it on first load and restores the tab accordingly. Like
+ * `dismissAnonymousSession`, this uses `addInitScript` and therefore MUST be called
+ * before `page.goto(...)` — calling it afterwards is a silent no-op.
+ *
+ * Pass `{ shouldShowAdvancedSearchTab: true }` to simulate a session whose last
+ * active sidebar tab was Search.
+ */
+export async function seedSearchConfig(page: Page, config: Record<string, unknown>) {
+  await page.addInitScript(
+    ({ key, value }) => {
+      sessionStorage.setItem(key, JSON.stringify(value));
+    },
+    { key: ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, value: config },
+  );
 }

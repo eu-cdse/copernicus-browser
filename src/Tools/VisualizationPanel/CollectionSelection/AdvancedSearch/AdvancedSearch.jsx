@@ -129,11 +129,21 @@ class AdvancedSearch extends Component {
   calendarHolder = React.createRef();
   errorPanelRef = React.createRef();
 
+  // True only while restoring cached results on page refresh, so componentDidUpdate
+  // preserves the persisted tab instead of forcing the Search tab open (see below).
+  hydratingFromCache = false;
+
+  // Captured from sessionStorage at mount so the cache-restore branch in
+  // componentDidUpdate can reference it directly instead of re-reading storage.
+  persistedShouldShowAdvancedSearchTab = false;
+
   componentDidMount() {
     const searchConfigFromSession = JSON.parse(
       sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
     );
     if (searchConfigFromSession) {
+      this.persistedShouldShowAdvancedSearchTab =
+        searchConfigFromSession.shouldShowAdvancedSearchTab ?? false;
       if (searchConfigFromSession.searchFormData) {
         this.setState({
           fromMoment: searchConfigFromSession.searchFormData.fromMoment,
@@ -167,6 +177,10 @@ class AdvancedSearch extends Component {
         setTimeout(() => {
           try {
             const freshQuery = this.getQuery();
+            // Mark this oDataSearchResult change as a cache restore (not a fresh user
+            // search) so componentDidUpdate doesn't force the search tab back open and
+            // override the tab restored from the URL on refresh.
+            this.hydratingFromCache = true;
             this.props.hydrateODataSearch({
               query: freshQuery,
               results: searchConfigFromSession.cachedResults,
@@ -211,13 +225,21 @@ class AdvancedSearch extends Component {
       const cachedTotalCount = this.props.oDataSearchResult?.totalCount || 0;
       const cachedHasMore = this.props.oDataSearchResult?.hasMore || false;
 
+      // A genuine new search should bring the user to the search tab. A cache restore
+      // (hydrate on page refresh) must not — it would override the tab the URL params
+      // already restored (e.g. Visualise). In that case preserve the persisted flag.
+      const shouldShowAdvancedSearchTab = this.hydratingFromCache
+        ? this.persistedShouldShowAdvancedSearchTab
+        : true;
+      this.hydratingFromCache = false;
+
       sessionStorage.setItem(
         ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
         JSON.stringify({
           searchFormData: newSearchFormData,
           resultsAvailable: true,
           resultsPanelSelected: true,
-          shouldShowAdvancedSearchTab: true,
+          shouldShowAdvancedSearchTab,
           cachedResults: cachedResults,
           cachedTotalCount: cachedTotalCount,
           cachedHasMore: cachedHasMore,

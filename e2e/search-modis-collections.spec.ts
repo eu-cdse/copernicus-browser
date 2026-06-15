@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 
 async function setupSearchTab(page: Page) {
   await page.goto('/');
-  await page.getByRole('listitem').getByText('Search', { exact: true }).click();
+  await page.getByRole('tab', { name: 'Search' }).click();
   await page.getByRole('checkbox', { name: 'Complementary Data' }).check();
 }
 

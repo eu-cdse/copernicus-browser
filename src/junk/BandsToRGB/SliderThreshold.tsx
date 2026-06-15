@@ -2,17 +2,7 @@ import React from 'react';
 import { Range } from 'rc-slider';
 import { KeyboardHandle } from './SliderComponents';
 import { pickColor } from './utils';
-
-interface SliderThresholdProps {
-  values: number[];
-  colors?: string[];
-  domain: [number | string, number | string];
-  gradient: string[];
-  invalidMinMax: () => boolean;
-  handlePositions: number[];
-  onSliderUpdate: (values: number[]) => void;
-  onSliderChange: (values: number[]) => void;
-}
+import { SliderThresholdProps } from './types';
 
 interface RcHandleProps {
   index: number;

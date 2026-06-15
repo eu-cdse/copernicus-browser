@@ -47,7 +47,20 @@ const LoginRequired = ({ user, executeAnonAuth }) => (
   </Modal>
 );
 
-const EnsureAuth = ({ user, anonToken, tokenRefreshInProgress, executeAnonAuth, userAuthCompleted }) => {
+const EnsureAuth = ({
+  user,
+  anonToken,
+  tokenRefreshInProgress,
+  executeAnonAuth,
+  userAuthCompleted,
+  blockingModalOpen,
+}) => {
+  // Don't show this modal while ThemesProvider is already showing its own auth dialog
+  // (private theme URL or CCM access denied) — prevents two login prompts stacking.
+  if (blockingModalOpen) {
+    return null;
+  }
+
   if (
     !(anonToken || user || tokenRefreshInProgress) &&
     !getRecaptchaConsentFromLocalStorage() &&

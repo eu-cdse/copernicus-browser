@@ -355,7 +355,9 @@ export const MAX_NUM_ANON_TOKEN_REQUESTS = 1;
 // --- Misc ---
 
 export const SHOW_TUTORIAL_LC = 'cdsebrowser_show_tutorial';
-export const ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY = 'cdsebrowser_search_config';
+// Re-exported from the dependency-free storage-keys module so the e2e fixtures
+// can share the exact same value without importing this heavy module.
+export { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY } from './constants/storageKeys';
 export const DEFAULT_HASHTAGS = 'EarthObservation,RemoteSensing';
 export const LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY = 'cdsebrowser_recaptcha_consent';
 export const LOCAL_STORAGE_SHARED_LINKS = 'cdsebrowser_shared_links';

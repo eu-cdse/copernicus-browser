@@ -51,59 +51,6 @@
         transform: translateX(-50%) translateY(5px);
         min-width: 150px;
       }
-
-      .axis-label {
-        font-size: 14px;
-      }
-
-      circle.frame-hover {
-        stroke: vars.$textColor;
-        r: 4;
-      }
-
-      svg.background-graphics {
-        text {
-          fill: vars.$textColor;
-        }
-
-        path,
-        line {
-          fill: none;
-        }
-
-        path.tick-line {
-          shape-rendering: crispedges;
-          stroke: vars.$mainDarkest;
-          stroke-dasharray: 5, 5;
-        }
-
-        line.axis-baseline {
-          shape-rendering: crispedges;
-          stroke: vars.$textColor;
-        }
-      }
-
-      svg.visualization-layer {
-        text {
-          fill: vars.$textColor;
-        }
-
-        path,
-        line {
-          fill: none;
-        }
-
-        path.tick-line {
-          shape-rendering: crispedges;
-          stroke: red;
-          stroke-dasharray: 5, 5;
-        }
-
-        line.axis-baseline {
-          shape-rendering: crispedges;
-          stroke: vars.$textColor;
-        }
-      }
     }
 
     .legend {

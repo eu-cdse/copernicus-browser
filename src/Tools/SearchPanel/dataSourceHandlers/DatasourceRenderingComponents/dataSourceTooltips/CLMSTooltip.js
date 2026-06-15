@@ -635,6 +635,15 @@ High Resolution Layer Tree Cover and Forest product is part of the European Unio
 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
 
+const getCopernicusClmsVlccConiferousCoverDensityEurope100mYearlyV1Markdown = () => t`
+  The High Resolution Layer Coniferous Cover Density (CCD) dataset provides information on the percentage of coniferous pixels at 100m spatial resolution, and is derived through aggregation of the 10m DLT for the respective reference year. Within each cell the number of coniferous pixels are counted and the percentages stored into in the 100m pixel of the CCD. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
+
+This dataset is provided annually starting with 2018 in 100 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+
+High Resolution Layer Tree Cover and Forest product is part of the European Union's Copernicus Land Monitoring Service.
+
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
+
 const getCopernicusClmsVlccForestTypeEurope100m3yearlyV1Markdown = () => t`
   The High Resolution Layer Forest Type (FTY) dataset provides the Forest Type estimation at 100 meter spatial resolution. The number of broadleaved and coniferous pixels are counted and the percentages stored in the 100m cell. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
 
@@ -843,6 +852,7 @@ export {
   getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown,
   getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown,
   getCopernicusClmsVlccBroadleavedCoverDensityEurope100mYearlyV1Markdown,
+  getCopernicusClmsVlccConiferousCoverDensityEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccForestTypeEurope100m3yearlyV1Markdown,
   getCopernicusClmsVlccGrasslandEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccTreeCoverDensityEurope100mYearlyV1Markdown,

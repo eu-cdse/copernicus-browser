@@ -112,12 +112,12 @@ const AdvancedSection = (props) => {
             {item.inputType === INPUT_TYPES.CHECKBOX
               ? renderCheckBox(item)
               : item.inputType === INPUT_TYPES.SLIDER
-              ? renderSlider(item)
-              : item.inputType === INPUT_TYPES.RANGE_SLIDER
-              ? renderRange(item)
-              : item.inputType === INPUT_TYPES.MULTI_SELECT_CHECKBOX
-              ? renderMultiSelectCheckBox(item)
-              : null}
+                ? renderSlider(item)
+                : item.inputType === INPUT_TYPES.RANGE_SLIDER
+                  ? renderRange(item)
+                  : item.inputType === INPUT_TYPES.MULTI_SELECT_CHECKBOX
+                    ? renderMultiSelectCheckBox(item)
+                    : null}
           </div>
         ))}
       </div>

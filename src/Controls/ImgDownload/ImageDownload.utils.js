@@ -18,6 +18,7 @@ import {
   getDataSourceHandler,
   datasetLabels,
   checkIfCustom,
+  getCollectionBandTypes,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { CUSTOM, BAND_UNIT } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { isDataFusionEnabled } from '../../utils';
@@ -494,11 +495,19 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
   return {
     finalImage: finalBlob,
     finalFileName: imageTitles
-      .map((imgTit) => imgTit.split(' ').join('_'))
+      .map((imgTit) => sanitizeFilenameSegment(imgTit))
       .slice()
       .reverse()
       .join('_'),
   };
+}
+
+export function isSimpleImageFormat(imageFormat) {
+  return (
+    imageFormat === IMAGE_FORMATS.JPG ||
+    imageFormat === IMAGE_FORMATS.PNG ||
+    imageFormat === IMAGE_FORMATS.WEBP
+  );
 }
 
 export async function fetchImageFromParams(params, raiseWarning) {
@@ -562,10 +571,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     shouldClipExtraBands,
   );
 
-  if (
-    !(imageFormat === IMAGE_FORMATS.JPG || imageFormat === IMAGE_FORMATS.PNG) &&
-    (width > MAX_SH_IMAGE_SIZE || height > MAX_SH_IMAGE_SIZE)
-  ) {
+  if (!isSimpleImageFormat(imageFormat) && (width > MAX_SH_IMAGE_SIZE || height > MAX_SH_IMAGE_SIZE)) {
     throw Error(
       `Can't download images with mimetype '${mimeType}' having any dimension greater than ${MAX_SH_IMAGE_SIZE} pixels.`,
     );
@@ -810,7 +816,24 @@ export async function fetchImageFromParams(params, raiseWarning) {
   }
 }
 
-async function overrideEvalscriptIfNeeded(
+export function hasIntegerNativeBands(layer, setupInfo) {
+  if (!layer.collectionId) {
+    return false;
+  }
+  const bandTypes = getCollectionBandTypes(layer.collectionId);
+  if (!bandTypes) {
+    return false;
+  }
+  const inputBands = (Array.isArray(setupInfo.bands) ? setupInfo.bands : []).filter(
+    (name) => name !== 'dataMask',
+  );
+  if (inputBands.length === 0) {
+    return false;
+  }
+  return inputBands.every((name) => bandTypes[name] === 'uint8' || bandTypes[name] === 'uint16');
+}
+
+export async function overrideEvalscriptIfNeeded(
   apiType,
   imageFormat,
   layer,
@@ -842,8 +865,15 @@ async function overrideEvalscriptIfNeeded(
   }
   if (setupInfo.sampleType !== sampleType) {
     layer.evalscript = setEvalscriptSampleType(layer.evalscript, sampleType);
-    if (scaleFactor && !(layer instanceof DEMLayer)) {
+    if (scaleFactor && !(layer instanceof DEMLayer) && !hasIntegerNativeBands(layer, setupInfo)) {
       layer.evalscript = setEvalscriptOutputScale(layer.evalscript, scaleFactor);
+    } else if (!(layer instanceof DEMLayer) && sampleType === 'UINT16') {
+      // Integer DN bands downloading as UINT16: the evalscript sampleType has been changed to
+      // UINT16 above, but the output values are still in the native UINT8 range (0–255).
+      // Multiply by 255 to stretch them into the full UINT16 range (0–65280), preserving
+      // relative magnitude without saturating. No stretch is needed for UINT8 targets because
+      // the native values already fit in the 0–255 output range.
+      layer.evalscript = setEvalscriptOutputScale(layer.evalscript, 255);
     }
   }
   if (shouldClipExtraBands && setupInfo.nBands > 3) {
@@ -885,16 +915,23 @@ export function getTitle(fromTime, toTime, datasetId, layerTitle, customSelected
     .format(format)}, ${datasetLabel}, ${customSelected ? 'custom' : layerTitle}`;
 }
 
+function sanitizeFilenameSegment(str) {
+  if (!str) {
+    return '';
+  }
+  return str.replace(/[ \\/:*?"<>|]/g, '_');
+}
+
 export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelected, isRawBand, bandName) {
-  const format = 'YYYY-MM-DD-HH:mm';
+  const format = 'YYYY-MM-DD-HH_mm';
   let layerName;
 
   if (isRawBand) {
-    layerName = `${bandName}_(Raw)`;
+    layerName = `${sanitizeFilenameSegment(bandName)}_(Raw)`;
   } else if (customSelected) {
     layerName = 'custom';
   } else {
-    layerName = layerTitle?.replace(/ /gi, '_');
+    layerName = sanitizeFilenameSegment(layerTitle);
   }
 
   const datasetLabel = checkIfCustom(datasetId) ? datasetLabels[CUSTOM] : datasetLabels[datasetId];
@@ -902,7 +939,7 @@ export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelec
   return `${fromTime ? fromTime.clone().utc().format(format) + '_' : ''}${toTime
     .clone()
     .utc()
-    .format(format)}_${datasetLabel ? datasetLabel.replace(/ /gi, '_') + '_' : ''}${layerName}`;
+    .format(format)}_${datasetLabel ? sanitizeFilenameSegment(datasetLabel) + '_' : ''}${layerName}`;
 }
 
 export async function getLayerFromParams(params, cancelToken, authToken) {
@@ -1124,8 +1161,8 @@ export async function addImageOverlays(
     const legendImageUrl = legendDefinition
       ? 'data:image/svg+xml;base64,' + b64EncodeUnicode(createSVGLegend(legendDefinition))
       : legendUrl
-      ? legendUrl
-      : null;
+        ? legendUrl
+        : null;
     if (legendImageUrl !== null) {
       const legendImage = await loadImage(legendImageUrl);
       drawLegendImage(ctx, legendImage, true, showCaptions);

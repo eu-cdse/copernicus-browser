@@ -103,8 +103,8 @@ export const getAllProductAttributes = (product) => {
       value === null || value === undefined
         ? value
         : typeof value === 'number'
-        ? value.toFixed(2)
-        : `${value}`,
+          ? value.toFixed(2)
+          : `${value}`,
   }));
 
   const sortedAttributes = allAttributes.sort((a, b) => {

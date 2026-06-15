@@ -1,22 +1,45 @@
+import moment from 'moment';
 import {
-  getImageDimensionFromBoundsWithCap,
-  getRawBandsScalingFactor,
-  constructRawBandEvalscript,
   addImageOverlays,
+  constructRawBandEvalscript,
+  getImageDimensionFromBoundsWithCap,
+  getNicename,
+  getPixelCoordinates,
+  getRawBandsScalingFactor,
+  hasIntegerNativeBands,
+  isSimpleImageFormat,
+  overrideEvalscriptIfNeeded,
 } from './ImageDownload.utils';
-import { dataSourceHandlers } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import {
+  dataSourceHandlers,
+  getCollectionBandTypes,
+} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { DATASOURCES } from '../../const';
 
-import { BBox, CRS_EPSG3857 } from '@sentinel-hub/sentinelhub-js';
-import { getPixelCoordinates } from './ImageDownload.utils';
-import { reprojectGeometry } from '../../utils/reproject';
+import { BBox, CRS_EPSG3857, ApiType } from '@sentinel-hub/sentinelhub-js';
 import { latLngBounds } from 'leaflet';
+
 import {
+  BAND_UNIT,
   S2_L1C_CDAS,
   S2_L2A_CDAS,
-  BAND_UNIT,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+
+import { reprojectGeometry } from '../../utils/reproject';
 import { IMAGE_FORMATS } from './consts';
+import { getEvalscriptSetup, setEvalscriptOutputScale } from '../../utils/parseEvalscript';
+
+jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
+  ...jest.requireActual('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers'),
+  getCollectionBandTypes: jest.fn(),
+}));
+
+jest.mock('../../utils/parseEvalscript', () => ({
+  ...jest.requireActual('../../utils/parseEvalscript'),
+  getEvalscriptSetup: jest.fn(),
+  setEvalscriptSampleType: jest.fn((evalscript) => evalscript),
+  setEvalscriptOutputScale: jest.fn((evalscript) => evalscript),
+}));
 
 const TESTING_BYOC_ID = 'test-byoc_id';
 
@@ -97,6 +120,21 @@ describe('Test imageDimensions with 2500px cap', () => {
   test.each(imageDimensionsFixtures)('Fixtures', (bounds, datasetId, expectedResults) => {
     const results = getImageDimensionFromBoundsWithCap(bounds, datasetId);
     expect(results).toEqual(expectedResults);
+  });
+});
+
+describe('isSimpleImageFormat', () => {
+  test.each([
+    [IMAGE_FORMATS.JPG, true],
+    [IMAGE_FORMATS.PNG, true],
+    [IMAGE_FORMATS.WEBP, true],
+    [IMAGE_FORMATS.KMZ_JPG, false],
+    [IMAGE_FORMATS.KMZ_PNG, false],
+    [IMAGE_FORMATS.TIFF_UINT8, false],
+    [IMAGE_FORMATS.TIFF_UINT16, false],
+    [IMAGE_FORMATS.TIFF_FLOAT32, false],
+  ])('%s → %s', (format, expected) => {
+    expect(isSimpleImageFormat(format)).toBe(expected);
   });
 });
 
@@ -268,6 +306,41 @@ describe('addImageOverlays — early-return path (showLogo: false)', () => {
       'dark',
     );
     expect(result).toBe(blob);
+  });
+});
+
+describe('getNicename', () => {
+  const fromTime = moment.utc('2024-03-15T10:30:00Z');
+  const toTime = moment.utc('2024-03-15T10:45:00Z');
+
+  test('builds a correct filename from dates, dataset label and layer title', () => {
+    expect(getNicename(fromTime, toTime, S2_L2A_CDAS, 'True Color', false, false)).toBe(
+      '2024-03-15-10_30_2024-03-15-10_45_Sentinel-2_L2A_True_Color',
+    );
+  });
+
+  test('replaces forbidden Windows characters in layer title with underscores', () => {
+    expect(getNicename(fromTime, toTime, S2_L2A_CDAS, 'ratio: B04/B03', false, false)).toBe(
+      '2024-03-15-10_30_2024-03-15-10_45_Sentinel-2_L2A_ratio__B04_B03',
+    );
+  });
+
+  test('appends (Raw) suffix for raw band downloads', () => {
+    expect(getNicename(fromTime, toTime, S2_L2A_CDAS, null, false, true, 'B04')).toBe(
+      '2024-03-15-10_30_2024-03-15-10_45_Sentinel-2_L2A_B04_(Raw)',
+    );
+  });
+
+  test('uses "custom" as layer name when customSelected is true', () => {
+    expect(getNicename(fromTime, toTime, S2_L2A_CDAS, 'True Color', true, false)).toBe(
+      '2024-03-15-10_30_2024-03-15-10_45_Sentinel-2_L2A_custom',
+    );
+  });
+
+  test('omits the from-date prefix when fromTime is null', () => {
+    expect(getNicename(null, toTime, S2_L2A_CDAS, 'True Color', false, false)).toBe(
+      '2024-03-15-10_45_Sentinel-2_L2A_True_Color',
+    );
   });
 });
 
@@ -456,5 +529,170 @@ describe('addImageOverlays — drawLogo variant smoke tests (showLogo: true)', (
       'light',
     );
     expect(result).toBeInstanceOf(Blob);
+  });
+});
+
+describe('hasIntegerNativeBands', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('returns false when layer has no collectionId', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
+    const layer = {};
+    const setupInfo = { bands: ['B01'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('returns false when getCollectionBandTypes returns null (unknown collection)', () => {
+    getCollectionBandTypes.mockReturnValue(null);
+    const layer = { collectionId: 'unknown-collection' };
+    const setupInfo = { bands: ['B01'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('returns false when setupInfo.bands is an empty array', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: [] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('returns false when setupInfo.bands is not an array', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: null };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('returns true when all input bands are uint8', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'uint8', B03: 'uint8' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'B02', 'B03'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
+  });
+
+  test('returns true when all input bands are uint16', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint16', B02: 'uint16' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'B02'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
+  });
+
+  test('returns true when input bands are a mix of uint8 and uint16', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'uint16' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'B02'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
+  });
+
+  test('returns false when any input band is float32', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'float32' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'B02'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('returns false when any input band has an unknown type (not in bandTypes)', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint16' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'B99'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+
+  test('ignores dataMask when checking band types', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['B01', 'dataMask'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
+  });
+
+  test('returns false when bands consist only of dataMask (no real bands to check)', () => {
+    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
+    const layer = { collectionId: 'my-collection' };
+    const setupInfo = { bands: ['dataMask'] };
+    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
+  });
+});
+
+describe('overrideEvalscriptIfNeeded', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // setEvalscriptSampleType and setEvalscriptOutputScale return the evalscript
+    // unchanged by default (implementations set in jest.mock factory are preserved).
+  });
+
+  test('does not apply scale factor when downloading integer DN bands as UINT8', async () => {
+    getCollectionBandTypes.mockReturnValue({ FSCOG: 'uint8', FSCTOC: 'uint8' });
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['FSCOG', 'FSCTOC'], nBands: 2 });
+    const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT8,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).not.toHaveBeenCalled();
+  });
+
+  test('does not apply scale factor when downloading UINT16-native integer DN bands as UINT16', async () => {
+    getCollectionBandTypes.mockReturnValue({ SCD: 'uint16', SCO: 'uint16' });
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'UINT16', bands: ['SCD', 'SCO'], nBands: 2 });
+    const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT16,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).not.toHaveBeenCalled();
+  });
+
+  test('applies 255x stretch when downloading UINT8-range integer DN bands as UINT16', async () => {
+    getCollectionBandTypes.mockReturnValue({ FSCOG: 'uint8', FSCTOC: 'uint8' });
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['FSCOG', 'FSCTOC'], nBands: 2 });
+    const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT16,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).toHaveBeenCalledTimes(1);
+    expect(setEvalscriptOutputScale).toHaveBeenCalledWith(expect.anything(), 255);
+  });
+
+  test('applies full scale factor for reflectance bands downloading as UINT16', async () => {
+    getCollectionBandTypes.mockReturnValue(null);
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['B01', 'B02'], nBands: 2 });
+    const layer = { collectionId: null, evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT16,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).toHaveBeenCalledTimes(1);
+    expect(setEvalscriptOutputScale).toHaveBeenCalledWith(expect.anything(), 65536);
   });
 });

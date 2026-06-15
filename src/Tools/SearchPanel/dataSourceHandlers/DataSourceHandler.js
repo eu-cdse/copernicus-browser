@@ -205,6 +205,10 @@ export default class DataSourceHandler {
     return Object.values(IMAGE_FORMATS);
   }
 
+  supportsWebPVisualization() {
+    return true;
+  }
+
   areBandsClasses = () => {
     return false;
   };

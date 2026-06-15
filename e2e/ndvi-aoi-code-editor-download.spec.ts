@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CODE_EDITOR_URLS } from './fixtures/urls';
+import { getSaveResultFormat } from './fixtures/helpers';
 
 declare const monaco: {
   editor: {
@@ -109,10 +110,7 @@ test('NDVI layer → AOI → code editor process graph edit → download format 
   expect(tiff32.url()).toContain('openeosh.dataspace.copernicus.eu/1.2/result');
 
   const body = tiff32.postDataJSON();
-  const saveNode = Object.values(
-    body.process.process_graph as Record<string, { process_id: string; arguments: { format: string } }>,
-  ).find((n) => n.process_id === 'save_result');
-  expect(saveNode?.arguments?.format).toBe('gtiff');
+  expect(getSaveResultFormat(body.process.process_graph)).toBe('gtiff');
 
   // --- TIFF 8-bit: should route to the SentinelHub process API, not openEO ---
   await formatSelect.selectOption('TIFF (8-bit)');

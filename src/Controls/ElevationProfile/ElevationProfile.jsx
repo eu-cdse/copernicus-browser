@@ -67,12 +67,7 @@ const ElevationProfile = ({ geometry, bounds }) => {
     >
       <Loading loading={loading} />
       <ErrorMessage error={error} onClose={() => store.dispatch(modalSlice.actions.removeModal())} />
-      <div
-        className="content"
-        onMouseLeave={() => {
-          store.dispatch(elevationProfileSlice.actions.reset());
-        }}
-      >
+      <div className="content">
         {data && data.length && (
           <ElevationProfileChart
             data={data[selectedLineIdx]}

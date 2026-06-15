@@ -18,5 +18,7 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$|react-leaflet|@react-leaflet/))'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(.*\\.mjs$|react-leaflet|@react-leaflet/|react-dnd|dnd-core|dnd-multi-backend|rdndmb-html5-to-touch|@react-dnd/|uuid))',
+  ],
 };

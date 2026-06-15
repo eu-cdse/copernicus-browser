@@ -9,7 +9,6 @@ export default function TerrainViewerScriptProvider({ children }) {
     const script = document.createElement('script');
     script.src = EOB3D_SCRIPT_SRC;
     document.body.appendChild(script);
-    // eslint-disable-next-line
   }, []);
 
   function on3DInitialized() {

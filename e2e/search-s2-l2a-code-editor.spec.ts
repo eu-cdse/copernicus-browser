@@ -4,7 +4,7 @@ test('search latest S2 L2A image and verify process graph is selected in code ed
   await page.goto('/');
 
   // Switch to Search tab
-  await page.getByRole('listitem').getByText('Search', { exact: true }).click();
+  await page.getByRole('tab', { name: 'Search' }).click();
 
   // Select SENTINEL-2 and L2A sub-filter
   await page.getByRole('checkbox', { name: 'SENTINEL-2' }).check();

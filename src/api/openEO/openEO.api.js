@@ -41,6 +41,8 @@ async function getData(response) {
     return await clonedResponse.blob();
   } else if (contentType && contentType.includes('image/jpeg')) {
     return await clonedResponse.blob();
+  } else if (contentType && contentType.includes('image/webp')) {
+    return await clonedResponse.blob();
   } else if (contentType && contentType.includes('image/tiff')) {
     return await clonedResponse.blob();
   } else {

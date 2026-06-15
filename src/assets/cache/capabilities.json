@@ -1794,7 +1794,7 @@
         "layers": [
             {
                 "id": "Forest Type over 3 years",
-                "name": "Forest Type over 3 years",
+                "name": "Forest Type",
                 "description": "Forest Type over 3 years (10m)",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/38eb4e-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=Forest+Type+over+3+years&style=default"
@@ -4993,7 +4993,7 @@
         "layers": [
             {
                 "id": "forest_type_over_3years",
-                "name": "Forest Type over 3-years",
+                "name": "Forest Type",
                 "description": "Forest Type over 3 years (100m)",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/86e613-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=forest_type_over_3years&style=default"
@@ -8176,6 +8176,19 @@
         ],
         "datasets": []
     },
+    "ed175f-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_vlcc_coniferous-cover-density_europe_100m_yearly_v1",
+        "layers": [
+            {
+                "id": "coniferous_cover_density",
+                "name": "Coniferous Cover Density",
+                "description": "Coniferous cover density (100 m)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ed175f-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=coniferous_cover_density&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "ed94c7-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Landsat 8-9 L1",
         "layers": [
@@ -8912,14 +8925,14 @@
                 "name": "LST",
                 "description": "",
                 "dataset": "S3SLSTRL2",
-                "legendUrl": null
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fd0f28-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST&style=default"
             },
             {
                 "id": "NDVI",
                 "name": "NDVI",
                 "description": "",
                 "dataset": "S3SLSTRL2",
-                "legendUrl": null
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/fd0f28-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=NDVI&style=default"
             }
         ],
         "datasets": []

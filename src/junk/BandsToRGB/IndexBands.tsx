@@ -15,6 +15,7 @@ import { pickColor, spreadHandlersEvenly } from './utils';
 import { parseIndexEvalscript, ParseIndexEvalscriptResult } from '../../utils/parseIndexEvalscript.util';
 import { RootState } from '../../hooks';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
+import { IndexLayer, IndexBandsProps } from './types';
 
 import './BandsToRGB.scss';
 
@@ -25,29 +26,6 @@ export const GRADIENTS: string[][] = [
   ['0xffffff', '0xFF0000'],
   ['0x2079B5', '0x2079B5'],
 ];
-
-interface Band {
-  name: string;
-  [key: string]: unknown;
-}
-
-interface IndexLayer {
-  a: string | null;
-  b: string | null;
-}
-
-interface IndexConfig {
-  equation: string;
-  colorRamp: string[];
-  values: number[];
-}
-
-interface IndexBandsProps {
-  bands: Band[];
-  layers: IndexLayer;
-  onChange: (layers: IndexLayer, config: IndexConfig) => void;
-  evalscript?: string;
-}
 
 const FLOAT_REGEX = /^[-]?\d{0,2}\.?\d{0,2}$/; // limited on two decimals
 const ALLOWED_CHARS_REGEX = /^$|^\.$|^-$/; // if empty string or first char is dot or minus

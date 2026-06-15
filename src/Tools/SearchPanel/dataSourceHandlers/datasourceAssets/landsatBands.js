@@ -6,6 +6,7 @@ import { BAND_UNIT } from '../dataSourceConstants';
 const L8_L9_LOTL1_BANDS = [
   {
     name: 'B01',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 1 - Coastal Aerosol (Ultra Blue) - 443 nm`,
     color: '#4B0082',
     unit: BAND_UNIT.REFLECTANCE,
@@ -13,6 +14,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B02',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 2 - Blue - 482 nm`,
     color: '#0000FF',
     unit: BAND_UNIT.REFLECTANCE,
@@ -20,6 +22,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B03',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 3 - Green - 561.5 nm`,
     color: '#00FF00',
     unit: BAND_UNIT.REFLECTANCE,
@@ -27,6 +30,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B04',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 4 - Red - 654.5 nm`,
     color: '#FF0000',
     unit: BAND_UNIT.REFLECTANCE,
@@ -34,6 +38,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B05',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 5 - Near Infrared (NIR) - 865 nm`,
     color: '#B22222',
     unit: BAND_UNIT.REFLECTANCE,
@@ -41,6 +46,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B06',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 6 - Shortwave Infrared (SWIR) 1 - 1608.5 nm`,
     color: '#8B4513',
     unit: BAND_UNIT.REFLECTANCE,
@@ -48,6 +54,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B07',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 7 - Shortwave Infrared (SWIR) 2 - 2200.5 nm`,
     color: '#556B2F',
     unit: BAND_UNIT.REFLECTANCE,
@@ -55,6 +62,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B08',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 8 - Panchromatic - 589.5 nm`,
     color: '#ADFF2F',
     unit: BAND_UNIT.REFLECTANCE,
@@ -62,6 +70,7 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B09',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 9 - Cirrus - 1373.5 nm`,
     color: '#E0E0E0',
     unit: BAND_UNIT.REFLECTANCE,
@@ -69,12 +78,14 @@ const L8_L9_LOTL1_BANDS = [
   },
   {
     name: 'B10',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 10 - Thermal Infrared (TIRS) 1 - 10895.5 nm`,
     color: '#483D8B',
     unit: BAND_UNIT.KELVIN,
   },
   {
     name: 'B11',
+    sampleType: 'UINT16',
     getDescription: () => t`Band 11 - Thermal Infrared (TIRS) 2 - 12005 nm`,
     color: '#191970',
     unit: BAND_UNIT.KELVIN,
@@ -88,6 +99,7 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#699aff',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 482,
+    sampleType: 'UINT8',
   },
   {
     name: 'B02',
@@ -95,6 +107,7 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#a4d26f',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 561,
+    sampleType: 'UINT8',
   },
   {
     name: 'B03',
@@ -102,6 +115,7 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#e47121',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 655,
+    sampleType: 'UINT8',
   },
   {
     name: 'B04',
@@ -109,6 +123,7 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#c31e20',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 865,
+    sampleType: 'UINT8',
   },
   {
     name: 'B05',
@@ -116,6 +131,7 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#990134',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 1609,
+    sampleType: 'UINT8',
   },
   {
     name: 'B06',
@@ -123,18 +139,22 @@ const CDAS_LANDSAT_MOSAIC_BANDS = [
     color: '#800000',
     unit: BAND_UNIT.REFLECTANCE,
     centralWL: 2215,
+    sampleType: 'UINT8',
   },
   {
     name: 'B07',
     getDescription: () => t`Thermal Infrared (10400-12500 nm)`,
     color: '#d51234',
     unit: BAND_UNIT.REFLECTANCE,
+    centralWL: 10896,
+    sampleType: 'UINT8',
   },
   {
     name: 'clear_sky_mask',
     getDescription: () => '',
     color: '#d51234',
     unit: BAND_UNIT.KELVIN,
+    sampleType: 'UINT8',
   },
 ];
 

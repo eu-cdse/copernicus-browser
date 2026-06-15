@@ -50,6 +50,7 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
@@ -3411,6 +3412,23 @@ export const recursiveCollectionCLMS = [
                       ODataAttributes.datasetIdentifier,
                       ODataFilterOperator.eq,
                       COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    )})`,
+                  },
+                ],
+              },
+              {
+                id: 'CONIFEROUS_COVER_DENSITY',
+                label: 'Coniferous Cover Density',
+                type: 'group',
+                items: [
+                  {
+                    id: COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
+                    label: 'CCD, Europe, 100m, Yearly, (2018–present), V1',
+                    type: 'productType',
+                    customFilterExpression: `(${FilterElement.Attribute(
+                      ODataAttributes.datasetIdentifier,
+                      ODataFilterOperator.eq,
+                      COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
                     )})`,
                   },
                 ],

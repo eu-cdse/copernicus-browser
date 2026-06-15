@@ -15,7 +15,10 @@ const uploadGeoFileErrorMessages = {
   ERROR_PARSING_SHP: () => t`There was a problem parsing the shp file`,
   INVALID_SHP_CONTENT: () => t`The .zip file is missing content. The .prj and .shp files are required`,
   INVALID_PROJECTION: () => t`Invalid geodetic system detected`,
-  ERROR_PARSING_GEOMETRY: () => t`There was a problem parsing input geometry`,
+  ERROR_PARSING_GEOMETRY: () =>
+    t`Could not parse the geometry. Paste a GeoJSON geometry, a bounding box array [minX, minY, maxX, maxY], WKT, or a GEOREF/MGRS reference.`,
+  INVALID_GEOJSON: () =>
+    t`The input is not valid GeoJSON. Paste a GeoJSON geometry, or a bounding box array [minX, minY, maxX, maxY].`,
   UNSUPORTED_GEOJSON_TYPE: (
     supportedGeometryTypes = SUPPORTED_GEOMETRY_TYPES[UPLOAD_GEOMETRY_TYPE.POLYGON],
   ) => {
@@ -38,20 +41,68 @@ const SUPPORTED_GEOMETRY_TYPES = {
 
 const isValidBbox = (inputArr) => inputArr && inputArr.length === 4 && !inputArr.some((e) => isNaN(e));
 
-const isValidGeoJson = (json) =>
-  json &&
-  json.type &&
-  [
-    'Point',
-    'MultiPoint',
-    'LineString',
-    'MultiLineString',
-    'Polygon',
-    'MultiPolygon',
-    'GeometryCollection',
-    'Feature',
-    'FeatureCollection',
-  ].includes(json.type);
+const isParseableJson = (input) => {
+  try {
+    JSON.parse(input);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// Number of array nestings between a geometry's `coordinates` and an individual
+// position (e.g. Polygon coordinates are `[[[x, y], ...]]`, i.e. 2 levels deep).
+// Feature/FeatureCollection/GeometryCollection carry no top-level coordinates.
+const COORDINATE_DEPTH = {
+  Point: 0,
+  MultiPoint: 1,
+  LineString: 1,
+  MultiLineString: 2,
+  Polygon: 2,
+  MultiPolygon: 3,
+};
+
+const isValidPosition = (coord) =>
+  Array.isArray(coord) && coord.length >= 2 && coord.every((n) => typeof n === 'number' && isFinite(n));
+
+const hasValidCoordinates = (coords, depth) => {
+  if (depth === 0) {
+    return isValidPosition(coords);
+  }
+  // Empty arrays are left untouched (e.g. `POLYGON EMPTY`); only the nesting shape is
+  // checked, so a position appearing where an array is expected is rejected.
+  return Array.isArray(coords) && coords.every((c) => hasValidCoordinates(c, depth - 1));
+};
+
+const isValidGeoJson = (json) => {
+  if (
+    !(
+      json &&
+      json.type &&
+      [
+        'Point',
+        'MultiPoint',
+        'LineString',
+        'MultiLineString',
+        'Polygon',
+        'MultiPolygon',
+        'GeometryCollection',
+        'Feature',
+        'FeatureCollection',
+      ].includes(json.type)
+    )
+  ) {
+    return false;
+  }
+  // For plain geometry types, the `coordinates` nesting must match the geometry type.
+  // This rejects structurally invalid input such as a Polygon whose coordinates are a
+  // bare bbox array. Composite types (Feature/FeatureCollection/GeometryCollection) have
+  // no top-level coordinates; their child geometries are validated separately.
+  if (json.type in COORDINATE_DEPTH) {
+    return hasValidCoordinates(json.coordinates, COORDINATE_DEPTH[json.type]);
+  }
+  return true;
+};
 
 const validateGeometryTypes = (geometries, supportedGeometryTypes) => {
   if (!(geometries && geometries.every((geometry) => supportedGeometryTypes.includes(geometry.type)))) {
@@ -177,6 +228,14 @@ const convertKmlToGeoJson = (input) => {
   return kml?.features?.length ? kml : null;
 };
 
+const parseGeoJson = (input) => {
+  const geoJson = JSON.parse(input);
+  if (!isValidGeoJson(geoJson)) {
+    return null;
+  }
+  return geoJson;
+};
+
 const conversionFunctions = {
   wkt: (input) => {
     if (!input) {
@@ -194,20 +253,10 @@ const conversionFunctions = {
     }
     return bboxPolygon(arr);
   },
-  geojson: (input) => {
-    let geoJson = JSON.parse(input);
-    if (!isValidGeoJson(geoJson)) {
-      return null;
-    }
-    return geoJson;
-  },
-  json: (input) => {
-    let geoJson = JSON.parse(input);
-    if (!isValidGeoJson(geoJson)) {
-      return null;
-    }
-    return geoJson;
-  },
+  // `.geojson` and `.json` file uploads share the same parser; both keys are kept so
+  // getFileExtension() can resolve either extension via conversionFunctions[format].
+  geojson: parseGeoJson,
+  json: parseGeoJson,
   kml: (input) => convertKmlToGeoJson(input),
   gpx: (input) => {
     const xml = new DOMParser().parseFromString(input, 'text/xml');
@@ -228,6 +277,14 @@ const convertToGeoJson = (data, format = null) => {
   if (format) {
     // use appropriate convert function when format is provided
     geoJson = conversionFunctions[format](data);
+  } else if (isParseableJson(data)) {
+    // JSON input can only be GeoJSON or a bbox array. Restrict it to those converters so
+    // the permissive string-based converters (wkt/kml/mgrs/georef) can't mis-parse it into
+    // garbage geometry, and surface a specific warning when it is neither.
+    geoJson = conversionFunctions.bbox(data) || conversionFunctions.geojson(data);
+    if (!geoJson) {
+      throw new Error(uploadGeoFileErrorMessages.INVALID_GEOJSON());
+    }
   } else {
     // iterate over all supported formats and use first one that returns something
     for (let format of Object.keys(conversionFunctions)) {

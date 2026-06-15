@@ -197,6 +197,7 @@ import {
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
@@ -386,6 +387,7 @@ hardcoding collectionIds or without assuming there will always be only one diffe
 collectionId and only way to get it is to query service.
 */
 const collectionTitles = {};
+const collectionBandTypes = {}; // collectionId → { [bandName]: 'uint8' | 'uint16' | 'float32' }
 
 async function updateLayersFromServiceIfNeeded(layers) {
   const updateLayersFromService = layers.filter(
@@ -460,7 +462,10 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
     Object.keys(uniqueCollections).map(async (collectionId) => {
       const collection = uniqueCollections[collectionId];
       try {
-        //check "cache"
+        // collectionTitles acts as the shared cache gate for the catalog API path:
+        // both collectionTitles and collectionBandTypes are populated together on
+        // the first catalog miss, so a title cache hit means band types are already
+        // cached too. This invariant does not hold for other fetch paths.
         if (collectionTitles[collection.collectionId]) {
           updateLayersWithCollectionTitle(
             byocLayers,
@@ -482,6 +487,15 @@ async function updateCollectionsFromServiceIfNeeded(layers) {
               ).then((r) => r.data);
               collectionTitles[collection.collectionId] = collectionInfo.title;
               updateLayersWithCollectionTitle(byocLayers, collectionId, collectionInfo.title);
+              const eoBands = collectionInfo.summaries?.['eo:bands'] ?? [];
+              const rasterBands = collectionInfo.summaries?.['raster:bands'] ?? [];
+              if (eoBands.length && eoBands.length === rasterBands.length) {
+                collectionBandTypes[collection.collectionId] = Object.fromEntries(
+                  eoBands
+                    .map((b, i) => [b.name, rasterBands[i].data_type?.toLowerCase()])
+                    .filter(([, type]) => type != null),
+                );
+              }
             }
           }
         }
@@ -511,6 +525,14 @@ const checkKnownCollections = (collectionId) => {
     );
     if (datasetId && dsh.getDatasetSearchLabels) {
       collectionTitle = dsh.getDatasetSearchLabels()[datasetId];
+      if (dsh.getBands && !collectionBandTypes[collectionId]) {
+        const bands = dsh.getBands(datasetId);
+        if (bands?.length) {
+          collectionBandTypes[collectionId] = Object.fromEntries(
+            bands.filter((b) => b.sampleType).map((b) => [b.name, b.sampleType.toLowerCase()]),
+          );
+        }
+      }
       break;
     }
   }
@@ -856,6 +878,7 @@ export function datasourceForDatasetId(datasetId) {
     case COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1:
     case COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1:
     case COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1:
+    case COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1:
     case COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1:
     case COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1:
     case COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_COLLECTION_ID:
@@ -1122,7 +1145,7 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1]: t`CPMCD 10m Yearly (2017–present)`,
   [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1]: t`TCPC 20m 3-yearly (2018–2021)`,
   [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1]: t`GRAC 20m 3-yearly (2018–2021)`,
-  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: t`FTY 10m 3-yearly (2018–2021)`,
+  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1]: t`FTY 10m 3-yearly (2018–present)`,
   [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1]: t`GRA 10m Yearly (2017–present)`,
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1]: t`TCD 10m Yearly (2018–present)`,
   [COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1]: t`PLOUGH 10m Yearly (2017–present)`,
@@ -1171,7 +1194,8 @@ export const datasetLabels = {
   [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1]: t`SP S2 Europe 20m Yearly V1`,
   [COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1]: t`SP S1+S2 Europe (high mountains) 60m Yearly V1`,
   [COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1]: t`BCD 100m Yearly (2018-present)`,
-  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1]: t`FTY 100m 3-yearly (2018-2021)`,
+  [COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1]: t`CCD 100m Yearly (2018-present)`,
+  [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1]: t`FTY 100m 3-yearly (2018–present)`,
   [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1]: t`GRA 100m Yearly (2017-present)`,
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1]: t`TCD 100m Yearly (2018-present)`,
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1]: t`CPMCE 2017 10m Yearly`,
@@ -1303,3 +1327,7 @@ export function getDataSourceHashtags(datasetId) {
 }
 
 export const getSHServiceRootUrl = () => `${global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL}/`;
+
+export function getCollectionBandTypes(collectionId) {
+  return collectionBandTypes[collectionId] ?? null;
+}

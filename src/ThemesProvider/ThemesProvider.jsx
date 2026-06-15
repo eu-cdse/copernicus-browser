@@ -20,23 +20,23 @@ import {
   ModalId,
   RRD_INSTANCES_THEMES_LIST,
 } from '../const';
-import { isInGroup, logoutUser, openLogin } from '../Auth/authHelpers';
+import { isInGroup, openLogin, logoutUser } from '../Auth/authHelpers';
 
 import './ThemesProvider.scss';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
 import { RRD_THEMES } from '../assets/cache/rrdThemes';
 import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import {
+  CCM_VHR_COLLECTIONS,
+  CCM_VHR_THEME_NAMES,
+} from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { rrdApi } from '../api/RRD/RRDApi';
+
+const TRIGGER_LOGIN_AFTER_LOGOUT_KEY = 'triggerLoginAfterLogout';
 
 const DEFAULT_SELECTED_MODE = import.meta.env.VITE_DEFAULT_MODE_ID
   ? MODES.find((mode) => mode.id === import.meta.env.VITE_DEFAULT_MODE_ID)
   : DEFAULT_MODE;
-
-const EXCLUDED_CONFIG_NAMES_FOR_USERS_WITHOUT_ACCESS = [
-  'CCM VHR Europe 2018',
-  'CCM VHR Europe 2021',
-  'CCM VHR Europe 2024',
-];
 
 function getAllowedIdentifiersForProject(identifier) {
   const allowed = ['GENERAL'];
@@ -65,6 +65,8 @@ class ThemesProvider extends React.Component {
 
   _confirmResolve = null;
 
+  _isHandlingLogout = false;
+
   showConfirm = (text, { title, okLabel, cancelLabel }) => {
     return new Promise((resolve) => {
       this._confirmResolve = resolve;
@@ -73,18 +75,39 @@ class ThemesProvider extends React.Component {
   };
 
   handleConfirm = (result) => {
+    store.dispatch(modalSlice.actions.removeModal());
     this._confirmResolve(result);
     this.setState({ confirmDialog: null });
   };
 
   async componentDidMount() {
+    // Check if we need to trigger login after logout
+    const shouldTriggerLogin = sessionStorage.getItem(TRIGGER_LOGIN_AFTER_LOGOUT_KEY);
+    if (shouldTriggerLogin === 'true') {
+      sessionStorage.removeItem(TRIGGER_LOGIN_AFTER_LOGOUT_KEY);
+      await openLogin();
+      return;
+    }
+
+    if (!this.props.anonToken && !this.props.user?.access_token) {
+      return;
+    }
+
+    await this.handleInitialLoad();
+  }
+
+  async handleInitialLoad() {
     const { themesUrl } = this.props;
 
-    // Check if we need to trigger login after logout
-    const shouldTriggerLogin = sessionStorage.getItem('triggerLoginAfterLogout');
-    if (shouldTriggerLogin === 'true') {
-      sessionStorage.removeItem('triggerLoginAfterLogout');
-      await openLogin();
+    const isCCMDataset = CCM_VHR_COLLECTIONS.includes(this.props.datasetId);
+
+    // A share link that points at a gated CCM collection is opened by someone without access —
+    // both anonymous visitors (no access_token) and logged-in users lacking a CCM role hit this.
+    // We intentionally prompt both: showAuthModal renders the appropriate copy (log in vs. switch
+    // account) based on login state. Letting an anonymous user fall through instead would leave the
+    // unloadable CCM datasetId in the store and reproduce the cryptic "Invalid URL" error (#718).
+    if (isCCMDataset && !doesUserHaveAccessToCCMVisualization(this.props.user?.access_token)) {
+      await this.showCCMAccessDeniedModal();
       return;
     }
 
@@ -97,53 +120,101 @@ class ThemesProvider extends React.Component {
     await this.setThemes();
   }
 
-  async privateConfigurationAlert(selectedMode, loginAsDifferentUser = false) {
+  async showAuthModal({ title, loggedInText, anonymousText, onCancel }) {
+    let modalActive = true;
     try {
       store.dispatch(modalSlice.actions.addModal({ modal: ModalId.PRIVATE_THEMEID_LOGIN }));
-      const isUserLoggedIn = this.props.user && this.props.user.access_token;
+      const isUserLoggedIn = !!this.props.user?.access_token;
 
-      const modalText = isUserLoggedIn
-        ? t`The configuration you are trying to access is private. Do you want to switch to another account to access this content?`
-        : t`The configuration you are trying to access is private. Please log in to continue.`;
-
-      const shouldExecuteLogin = await this.showConfirm(modalText, {
-        title: t`Authentication Required`,
-        okLabel: isUserLoggedIn ? t`Login as a different user` : t`Log in`,
+      const shouldLogin = await this.showConfirm(isUserLoggedIn ? loggedInText : anonymousText, {
+        title,
+        okLabel: isUserLoggedIn ? t`Log in as a different user` : t`Log in`,
         cancelLabel: isUserLoggedIn ? t`Cancel` : t`Continue without logging in`,
       });
 
-      if (shouldExecuteLogin) {
-        if (isUserLoggedIn && loginAsDifferentUser) {
-          // Set flag to trigger login after logout redirect
-          sessionStorage.setItem('triggerLoginAfterLogout', 'true');
+      // handleConfirm (or setThemesOnLogout) has already removed the modal at this point.
+      modalActive = false;
+
+      // null signals the dialog was force-closed by a logout — skip onCancel.
+      if (shouldLogin === null) {
+        return;
+      }
+
+      if (shouldLogin) {
+        if (isUserLoggedIn) {
+          sessionStorage.setItem(TRIGGER_LOGIN_AFTER_LOGOUT_KEY, 'true');
           await logoutUser();
           return;
         }
         await openLogin();
+        return;
       }
+
+      await onCancel();
     } catch (err) {
-      console.error('Error in privateConfigurationAlert:', err);
+      console.error('Error in showAuthModal:', err);
+      // Last-resort recovery: if the auth flow throws unexpectedly, tear down the modal and reset
+      // visualization + themes so the user lands on a clean default state rather than a half-built map.
+      if (modalActive) {
+        store.dispatch(modalSlice.actions.removeModal());
+      }
       store.dispatch(visualizationSlice.actions.reset());
       store.dispatch(themesSlice.actions.reset());
-    } finally {
-      store.dispatch(modalSlice.actions.removeModal());
     }
   }
 
+  async privateConfigurationAlert() {
+    await this.showAuthModal({
+      title: t`Authentication Required`,
+      loggedInText: t`The configuration you are trying to access is private. Do you want to switch to another account to access this content?`,
+      anonymousText: t`The configuration you are trying to access is private. Please log in to continue.`,
+      onCancel: async () => {
+        // setThemes() is not called here — the call site wraps privateConfigurationAlert in a
+        // try/finally that runs setSelectedThemeIdFromMode regardless, which handles theme reinit.
+        store.dispatch(visualizationSlice.actions.reset());
+      },
+    });
+  }
+
+  showCCMAccessDeniedModal = async () => {
+    await this.showAuthModal({
+      title: t`Access Denied`,
+      loggedInText: t`You do not have permission to view this collection. Please switch to another account to access this content.`,
+      anonymousText: t`You do not have permission to view this collection. Please log in to continue.`,
+      onCancel: async () => {
+        store.dispatch(visualizationSlice.actions.reset());
+        await this.setThemes();
+      },
+    });
+  };
+
   async componentDidUpdate(prevProps) {
+    // Run logout handler regardless of modal state — a forced external logout should always reset the map.
+    if (this.props.user !== prevProps.user && !this.props.user?.access_token) {
+      await this.setThemesOnLogout();
+      // After the await, this._isHandlingLogout is false and this.props reflects the latest state,
+      // so any anon token that arrived while we were awaiting will be picked up below.
+    }
+
+    // A concurrent componentDidUpdate fired while setThemesOnLogout was awaiting.
+    // The call that triggered the logout will handle the anon-token / login check when it resumes.
+    if (this._isHandlingLogout) {
+      return;
+    }
+
+    if (this.props.modalId === ModalId.PRIVATE_THEMEID_LOGIN) {
+      return;
+    }
+
     if (!this.props.anonToken && !this.props.user?.access_token) {
       return;
     }
 
     if (
       (!prevProps.anonToken && this.props.anonToken) ||
-      (this.props.user !== prevProps.user && this.props.user.access_token)
+      (this.props.user !== prevProps.user && this.props.user?.access_token)
     ) {
-      await this.setThemes();
-    }
-
-    if (this.props.user !== prevProps.user && !this.props.user.access_token) {
-      await this.setThemesOnLogout();
+      await this.handleInitialLoad();
     }
 
     if (
@@ -155,21 +226,39 @@ class ThemesProvider extends React.Component {
   }
 
   setThemesOnLogout = async () => {
-    const { selectedThemesListId, modeThemesList, selectedThemeId } = this.props;
-    let themeId = selectedThemeId;
-    if (selectedThemesListId === USER_INSTANCES_THEMES_LIST) {
-      themeId = modeThemesList[0].id;
-      store.dispatch(
-        themesSlice.actions.setSelectedThemeId({
-          selectedThemeId: themeId,
-          selectedThemesListId: MODE_THEMES_LIST,
-        }),
-      );
-      store.dispatch(visualizationSlice.actions.reset());
+    this._isHandlingLogout = true;
+    try {
+      if (this.state.confirmDialog) {
+        // Force-close whichever auth dialog is open (private-theme alert or CCM access-denied) by
+        // resolving showConfirm with null. showAuthModal treats null as "closed by logout" and skips
+        // its onCancel — safe here because setThemesOnLogout below performs its own full reset
+        // (visualization + themes via updateDataSourceHandlers), making the per-modal onCancel redundant.
+        store.dispatch(modalSlice.actions.removeModal());
+        this.setState({ confirmDialog: null });
+        if (this._confirmResolve) {
+          this._confirmResolve(null);
+          this._confirmResolve = null;
+        }
+      }
+
+      const { selectedThemesListId, modeThemesList, selectedThemeId } = this.props;
+      let themeId = selectedThemeId;
+      if (selectedThemesListId === USER_INSTANCES_THEMES_LIST) {
+        themeId = modeThemesList[0].id;
+        store.dispatch(
+          themesSlice.actions.setSelectedThemeId({
+            selectedThemeId: themeId,
+            selectedThemesListId: MODE_THEMES_LIST,
+          }),
+        );
+        store.dispatch(visualizationSlice.actions.reset());
+      }
+      store.dispatch(themesSlice.actions.setUserInstancesThemesList([]));
+      store.dispatch(notificationSlice.actions.displayPanelError(null));
+      await this.updateDataSourceHandlers(themeId);
+    } finally {
+      this._isHandlingLogout = false;
     }
-    store.dispatch(themesSlice.actions.setUserInstancesThemesList([]));
-    store.dispatch(notificationSlice.actions.displayPanelError(null));
-    await this.updateDataSourceHandlers(themeId);
   };
 
   setThemes = async () => {
@@ -194,7 +283,7 @@ class ThemesProvider extends React.Component {
 
       if (selectedMode.themes.length > 0 && !isThemeIdInModeThemesList && currentThemeId) {
         try {
-          await this.privateConfigurationAlert(selectedMode, !!this.props.user.access_token);
+          await this.privateConfigurationAlert();
         } finally {
           this.setSelectedThemeIdFromMode(selectedMode, null, userInstances, rrdInstances);
         }
@@ -271,19 +360,19 @@ class ThemesProvider extends React.Component {
     }
   };
 
-  fetchThemesFromUrl = (themesUrl) => {
-    return axios
-      .get(themesUrl, { responseType: 'json', timeout: 30000 })
-      .then((r) => r.data)
-      .catch((err) => {
-        console.error(err);
-        store.dispatch(
-          notificationSlice.actions.displayError(
-            'Error loading specified theme, see console for more info (common causes: ad blockers, network errors). Using default themes instead.',
-          ),
-        );
-        return [];
-      });
+  fetchThemesFromUrl = async (themesUrl) => {
+    try {
+      const response = await axios.get(themesUrl, { responseType: 'json', timeout: 30000 });
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      store.dispatch(
+        notificationSlice.actions.displayError(
+          'Error loading specified theme, see console for more info (common causes: ad blockers, network errors). Using default themes instead.',
+        ),
+      );
+      return [];
+    }
   };
 
   guessMode = (themeId, userInstances = null, rrdInstances = null) => {
@@ -414,9 +503,7 @@ class ThemesProvider extends React.Component {
     if (!hasAccessToCCMVisualization && selectedTheme.id === DEFAULT_THEME_ID) {
       selectedTheme = {
         ...selectedTheme,
-        content: selectedTheme.content.filter(
-          (t) => !EXCLUDED_CONFIG_NAMES_FOR_USERS_WITHOUT_ACCESS.includes(t.name),
-        ),
+        content: selectedTheme.content.filter((t) => !CCM_VHR_THEME_NAMES.includes(t.name)),
       };
     }
     const failedThemeParts = await prepareDataSourceHandlers(selectedTheme);
@@ -487,6 +574,7 @@ const mapStoreToProps = (store) => ({
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   themesUrl: store.themes.themesUrl,
   user: store.auth.user,
+  datasetId: store.visualization.datasetId,
   modeThemesList: store.themes.themesLists[MODE_THEMES_LIST],
   userInstancesThemesList: store.themes.themesLists[USER_INSTANCES_THEMES_LIST],
   urlThemesList: store.themes.themesLists[URL_THEMES_LIST],

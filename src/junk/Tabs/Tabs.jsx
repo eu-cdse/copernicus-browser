@@ -43,7 +43,7 @@ const Tabs = (props) => {
     const defaultErrorMsg = t`Search for data first.`;
     return (
       <div className={`tabs-wrapper `}>
-        <ul className="tab-list">
+        <ul className="tab-list" role="tablist">
           {props.children
             .filter((t) => t)
             .map(
@@ -76,6 +76,8 @@ const Tabs = (props) => {
                     id={`${tab.props.id}Button`}
                     key={tab.props.renderKey}
                     value={tab.props.renderKey}
+                    role="tab"
+                    aria-selected={props.activeIndex === tab.props.renderKey}
                     onClick={() =>
                       tab.props.enabled
                         ? handleSelect(tab.props.renderKey)

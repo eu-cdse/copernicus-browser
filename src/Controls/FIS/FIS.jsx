@@ -13,7 +13,7 @@ import {
   StatisticsUtils,
 } from '@sentinel-hub/sentinelhub-js';
 import moment from 'moment';
-import { XYFrame } from 'semiotic';
+import { ComposedChart, Line, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 import store, { modalSlice } from '../../store';
 import { getDatasetLabel } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -293,7 +293,6 @@ class FIS extends Component {
 
     // we need to pre-process data as expected by chart lib:
     let lineData = [];
-    let areaData = [];
     let seriesIndex = 0; // remember the channel key in each point - you will need it later to colorize the series data
     let minY = Number.POSITIVE_INFINITY;
     let maxY = Number.NEGATIVE_INFINITY;
@@ -325,27 +324,6 @@ class FIS extends Component {
         lineData.push(currentLineData);
       }
 
-      if (drawDistribution) {
-        areaData.push({
-          label: channelId,
-          seriesIndex,
-          // to draw an area, you need to supply a list of bottom coordinates + (reversed) list of top coordinates,
-          // all in one list:
-          coordinates: [
-            // area bounds - bottom:
-            ...currentLineData.coordinates.map((coord) => ({
-              date: coord.date,
-              value: coord.p10,
-            })),
-            // area bounds - top:
-            ...currentLineData.coordinates.reverse().map((coord) => ({
-              date: coord.date,
-              value: coord.p90,
-            })),
-          ],
-        });
-      }
-
       // update min and max value:
       minY = Math.min(
         minY,
@@ -367,7 +345,6 @@ class FIS extends Component {
 
     this.setState({
       lineData,
-      areaData,
       minY: Math.floor(minY * 100) / 100,
       maxY: Math.ceil(maxY * 100) / 100,
       dataAvailableFromTime: this.availableData.fromTime,
@@ -434,80 +411,107 @@ class FIS extends Component {
   }
 
   renderChart(drawLegend) {
-    const {
-      lineData,
-      areaData,
-      fromTime,
-      toTime,
-      minY,
-      maxY,
-      dataAvailableFromTime,
-      fetchingBatches,
-      maxCCAllowed,
-    } = this.state;
-    // Semiotic handles data changes badly - areas get updated, but lines and points do not (always). The
-    // solution is to use React's key property on elements so they are replaced whenever any constraint
-    // changes. This is the key that includes all the constraints:
+    const { lineData, fromTime, toTime, minY, maxY, dataAvailableFromTime, fetchingBatches, maxCCAllowed } =
+      this.state;
+    // Re-render the whole chart whenever any constraint changes - this key includes all the constraints:
     const chartDataKey = `${fromTime}-${dataAvailableFromTime}-${maxCCAllowed}`;
-    const sharedProps = {
-      size: [650, 320],
-      xAccessor: (d) => moment(d.date),
-      xExtent: [fromTime, toTime],
-      yExtent: [minY, maxY],
-      margin: { bottom: 50, left: 50, top: 10, right: 30 }, // otherwise axis labels are clipped on edges
-    };
+    const drawDistribution = this.shouldDrawDistribution();
+
+    // recharts shares a single data array across all series, so merge the per-channel
+    // coordinates into one array keyed by date:
+    const pointsByDate = {};
+    lineData.forEach((serie) => {
+      const channelId = serie.title;
+      serie.coordinates
+        .filter((v) => moment(v.date).isSameOrAfter(fromTime))
+        .forEach((coordinate) => {
+          const dateMs = +moment(coordinate.date);
+          if (!pointsByDate[dateMs]) {
+            pointsByDate[dateMs] = { date: dateMs };
+          }
+          pointsByDate[dateMs][`mean__${channelId}`] = coordinate.mean;
+          pointsByDate[dateMs][`band__${channelId}`] =
+            drawDistribution && coordinate.p10 != null && coordinate.p90 != null
+              ? [coordinate.p10, coordinate.p90]
+              : null;
+          pointsByDate[dateMs][`point__${channelId}`] = coordinate;
+        });
+    });
+    const chartData = Object.values(pointsByDate).sort((a, b) => a.date - b.date);
+
+    // Pre-compute evenly spaced x-axis ticks across the whole selected time range, so all
+    // date labels are shown up front regardless of how much data has loaded so far:
+    const fromMs = +moment(fromTime);
+    const toMs = +moment(toTime);
+    const X_TICK_COUNT = 5;
+    const xTicks = Array.from({ length: X_TICK_COUNT }, (_, i) =>
+      Math.round(fromMs + ((toMs - fromMs) * i) / (X_TICK_COUNT - 1)),
+    );
+
     return (
       <div>
-        {Object.keys(lineData).length === 0 ? (
-          <span>No data found</span>
+        {lineData.length === 0 ? (
+          <span>{t`No data found`}</span>
         ) : (
           <div style={{ position: 'relative' }}>
-            <div style={{ position: 'absolute' }}>
-              <XYFrame
-                key={chartDataKey} // Semiotic chart handles data changes badly - re-render the whole chart
-                {...sharedProps}
-                areas={areaData}
-                yAccessor={'value'}
-                areaDataAccessor={(d) => d.coordinates.filter((v) => moment(v.date).isSameOrAfter(fromTime))}
-                areaStyle={(d) => ({
-                  fillOpacity: 0.15,
-                  fill: chooseChartSeriesColor(d.seriesIndex, lineData.length),
-                })}
+            <ComposedChart
+              key={chartDataKey}
+              width={650}
+              height={320}
+              data={chartData}
+              margin={{ top: 10, right: 30, bottom: 30, left: 10 }}
+            >
+              <CartesianGrid strokeDasharray="5 5" stroke={styleVariables.chartGridColor} />
+              <XAxis
+                type="number"
+                dataKey="date"
+                domain={[fromMs, toMs]}
+                ticks={xTicks}
+                interval={0}
+                allowDataOverflow={true}
+                tickFormatter={(d) => moment(d).format('D. MMM YY')}
+                stroke={styleVariables.textColor}
+                tick={{ fill: styleVariables.textColor }}
+                tickMargin={10}
               />
-            </div>
-            <div>
-              <XYFrame
-                key={chartDataKey} // Semiotic chart handles data changes badly - re-render the whole chart
-                {...sharedProps}
-                lines={lineData}
-                yAccessor={'mean'}
-                lineDataAccessor={(d) => d.coordinates.filter((v) => moment(v.date).isSameOrAfter(fromTime))}
-                lineStyle={(d) => ({
-                  stroke: chooseChartSeriesColor(d.key, lineData.length),
-                  fill: chooseChartSeriesColor(d.key, lineData.length),
-                })}
-                axes={[
-                  {
-                    orient: 'left',
-                  },
-                  {
-                    orient: 'bottom',
-                    tickFormat: (d) => moment(d).format('D. MMM YY'),
-                    ticks: 5,
-                  },
-                ]}
-                showLinePoints={true}
-                pointStyle={(d) => ({
-                  fill: chooseChartSeriesColor(d.seriesIndex, lineData.length),
-                  stroke: chooseChartSeriesColor(d.seriesIndex, lineData.length),
-                })}
-                hoverAnnotation={true}
-                tooltipContent={(dataPoint) =>
-                  this.getTooltipContent(dataPoint, this.shouldDrawDistribution())
-                }
-                svgAnnotationRules={svgAnnotationRules}
+              <YAxis
+                domain={[minY, maxY]}
+                stroke={styleVariables.textColor}
+                tick={{ fill: styleVariables.textColor }}
+                tickMargin={10}
               />
-            </div>
+              <Tooltip content={this.renderTooltip} isAnimationActive={false} />
+              {lineData.map((serie, index) => {
+                const color = chooseChartSeriesColor(index, lineData.length);
+                return (
+                  <Area
+                    key={`area-${serie.title}`}
+                    dataKey={`band__${serie.title}`}
+                    stroke="none"
+                    fill={color}
+                    fillOpacity={0.15}
+                    connectNulls
+                    activeDot={false}
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+              {lineData.map((serie, index) => {
+                const color = chooseChartSeriesColor(index, lineData.length);
+                return (
+                  <Line
+                    key={`line-${serie.title}`}
+                    type="linear"
+                    dataKey={`mean__${serie.title}`}
+                    stroke={color}
+                    dot={{ r: 2, fill: color, stroke: color }}
+                    activeDot={{ r: 3, fill: styleVariables.primaryColor, stroke: 'none' }}
+                    connectNulls
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+            </ComposedChart>
             {fetchingBatches && (
               <div className="fetching-small" style={{ position: 'absolute' }}>
                 <i className="fa fa-cog fa-spin fa-3x fa-fw" />
@@ -519,7 +523,7 @@ class FIS extends Component {
         {drawLegend && (
           <div>
             <svg width={600} height={30} className="legend">
-              {/* Semiotic's Legend only supports vertical placing of elements, so we must construct our own SVG: */}
+              {/* The chart legend only supports vertical placing of elements, so we construct our own SVG: */}
               {lineData.map((serie, index) => {
                 const DIST_HORIZ = 50;
                 const DIST_VERT = 20;
@@ -552,10 +556,42 @@ class FIS extends Component {
     );
   }
 
+  renderTooltip = ({ active, payload }) => {
+    if (!active || !payload || !payload.length) {
+      return null;
+    }
+    const row = payload[0].payload;
+    const { lineData } = this.state;
+    return (
+      <div className="fis-tooltip">
+        <div>{moment(row.date).format('ddd, DD. MMM YYYY')}</div>
+        {lineData.map((serie, index) => {
+          const dataPoint = row[`point__${serie.title}`];
+          if (!dataPoint) {
+            return null;
+          }
+          return (
+            <div key={`tooltip-${serie.title}`}>
+              {lineData.length > 1 && (
+                <div className="series-label">
+                  <span
+                    className="series-color"
+                    style={{ backgroundColor: chooseChartSeriesColor(index, lineData.length) }}
+                  />
+                  {serie.title}
+                </div>
+              )}
+              {this.getTooltipContent(dataPoint)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   getTooltipContent(dataPoint) {
     return (
       <div>
-        <div>{moment(dataPoint.date).format('ddd, DD. MMM YYYY')}</div>
         <ul>
           <li>
             {t`mean`}: {dataPoint.mean.toFixed(2)}
@@ -674,22 +710,6 @@ const mapStoreToProps = (store) => ({
 
 export default connect(mapStoreToProps, null)(FIS);
 
-const svgAnnotationRules = (params) => {
-  const { d, xScale, yScale } = params;
-  if (d.type !== 'frame-hover') {
-    return null;
-  }
-  return (
-    <circle
-      key="annotation-circle"
-      r={3}
-      style={{ fill: styleVariables.primaryColor, stroke: 'none' }}
-      cx={xScale(d.x)}
-      cy={yScale(d.y)}
-    />
-  );
-};
-
 function chooseChartSeriesColor(lineIndex, countTotal = 3) {
   switch (lineIndex) {
     case 0:
@@ -699,7 +719,7 @@ function chooseChartSeriesColor(lineIndex, countTotal = 3) {
     case 2:
       return '#0000ee';
     default:
-      // note: Semiotic chart lib has problems if saturation & level are set to 100%
+      // note: charting libs can have problems if saturation & level are set to 100%
       let hue = 30 + lineIndex * 60;
       return `hsl(${hue}, 70%, 70%)`;
   }

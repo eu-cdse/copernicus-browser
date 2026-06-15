@@ -36,8 +36,8 @@ export const customSelectStyle = {
       backgroundColor: isSelected
         ? `${primaryColor}`
         : isFocused
-        ? `${dropdownHoverBackground}`
-        : `${whiteColor}`,
+          ? `${dropdownHoverBackground}`
+          : `${whiteColor}`,
       color: isSelected ? `${whiteColor}` : `${textColor}`,
       height: '25px',
       lineHeight: '25px',
