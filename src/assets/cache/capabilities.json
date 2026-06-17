@@ -6810,6 +6810,19 @@
             }
         ]
     },
+    "ba009b-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_clcplus_lulucf-instance_europe_100m_yearly_v1",
+        "layers": [
+            {
+                "id": "lulucf_instance",
+                "name": "LULUCF Instance",
+                "description": "Pan-European annual raster LULUCF dataset",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/ba009b-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=lulucf_instance&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "ba2928-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] dmp_global_1km_10daily_v2_RT1",
         "layers": [

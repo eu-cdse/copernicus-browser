@@ -197,6 +197,7 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 } from '../../dataSourceConstants';
 import logoCopernicus from './images/logo-tooltips-copernicus.png';
 
@@ -1365,5 +1366,11 @@ export const credits = {
   ],
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1]: [
     { ...copernicus, link: 'https://land.copernicus.eu/en/products/high-resolution-layer-croplands' },
+  ],
+  [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
   ],
 };

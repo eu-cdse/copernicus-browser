@@ -1406,6 +1406,12 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/45367d-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'clms_clcplus_lulucf-instance_europe_100m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/ba009b-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

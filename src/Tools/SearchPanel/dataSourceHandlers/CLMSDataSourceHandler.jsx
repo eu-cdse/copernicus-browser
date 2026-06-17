@@ -189,6 +189,8 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS,
 } from './dataSourceConstants';
 import moment from 'moment';
 import { BYOCLayer, BYOCSubTypes, LocationIdSHv3 } from '@sentinel-hub/sentinelhub-js';
@@ -363,6 +365,7 @@ import {
   getCopernicusClmsVlccTreeCoverDensityEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccMainCropEmergenceEurope10mYearlyV1Markdown,
   getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown,
+  getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 
 import {
@@ -490,6 +493,7 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_BANDS,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_BANDS,
 } from './datasourceAssets/CLMSBands';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_BANDS_BY_LAYER_ID,
@@ -556,6 +560,11 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021_COLLECTION_ID.LOW_RES,
     lowResolutionMetersPerPixelThreshold: 650,
+  },
+  [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS.ACTUAL]: {
+    lowResolutionCollectionId:
+      COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS.LOW_RES,
+    lowResolutionMetersPerPixelThreshold: 1300,
   },
   [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCD]: {
     lowResolutionCollectionId: '41838ca1-7ec3-48bf-af5c-2faca5811296',
@@ -830,6 +839,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1]: t`FTY 100m 3-yearly (2018–present)`,
     [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1]: t`GRA 100m Yearly (2017-present)`,
     [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1]: t`TCD 100m Yearly (2018-present)`,
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: t`CLCplus LULUCF Instance Europe 100m Yearly V1`,
   });
 
   urls = {
@@ -1021,6 +1031,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1]: [],
     [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1]: [],
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: [],
   };
   datasets = [];
   allLayers = [];
@@ -1533,6 +1544,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1]: { min: 7, max: 25 },
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: { min: 2, max: 25 },
   };
 
   getLeafletZoomConfig(datasetId, layerId) {
@@ -1840,6 +1852,9 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_COLLECTION_IDS.CPMCH_2023,
       COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_COLLECTION_IDS.CPMCHCL,
     ],
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: [
+      COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS.ACTUAL,
+    ],
   };
 
   KNOWN_COLLECTIONS_LOCATIONS = {
@@ -2031,6 +2046,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1]: LocationIdSHv3.cdse,
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -2761,6 +2777,10 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       minDate: moment.utc('2023-01-01'),
       maxDate: moment.utc('2023-12-31'),
     },
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: {
+      minDate: moment.utc('2018-01-01'),
+      maxDate: moment.utc(),
+    },
   };
 
   TEMPORAL_RESOLUTION = {
@@ -3451,6 +3471,7 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1]: { amount: 1, unit: 'year' },
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1]: { amount: 1, unit: 'year' },
     [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1]: { amount: 1, unit: 'year' },
+    [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1]: { amount: 1, unit: 'year' },
   };
 
   getDescription = () => getCLMSCollectionMarkdown();
@@ -3769,6 +3790,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       case COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1:
         return COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS;
+      case COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1:
+        return COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_BANDS;
       default:
         return null;
     }
@@ -4129,6 +4152,8 @@ export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler
       case COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1:
       case COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1:
         return getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown();
+      case COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1:
+        return getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown();
       default:
         return null;
     }

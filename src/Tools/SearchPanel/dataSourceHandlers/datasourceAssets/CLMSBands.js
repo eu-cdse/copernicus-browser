@@ -2729,3 +2729,10 @@ export const COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_BANDS = [
+  {
+    name: 'LULUCF_INSTANCE',
+    sampleType: 'UINT8',
+    getDescription: () => ``,
+  },
+];

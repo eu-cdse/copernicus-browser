@@ -236,6 +236,7 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
@@ -508,6 +509,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1':
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  'clms_clcplus_lulucf-instance_europe_100m_yearly_v1':
+    COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 };
 
 const VLCC_MULTI_LAYER_ODATA_CONFIG = {
@@ -805,6 +808,7 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       'lake_water_quality',
       'river_and_lake_ice_extent',
       'auxiliary_data',
+      'clcplus_instance',
     ].includes(productType)
   ) {
     const { datasetIdentifier } = attributesObject;
@@ -1531,6 +1535,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       {
         id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
         instrument: 'DYNAMIC_LAND_COVER',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if ([COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_MAPPING.id,
+        instrument: 'CLCPLUS_LULUCF_INSTANCE',
         productType: getProductTypeFromDatasetId(datasetId),
         selectedFilters: {},
       },

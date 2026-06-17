@@ -241,6 +241,7 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -5367,5 +5368,15 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () => t`Confidence layer - a quality indicator for main crop harvest.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
+        layerId: 'lulucf_instance',
+      },
+    ],
+    description: () =>
+      t`Provides an annually updated, pan-European spatially consistent and seamless geospatial proxy for the 6 main land use categories (and some sub-categories) as reported for the LULUCF regulation (Land Use, Land Use Change and Forestry) by the countries. Each pixel is corresponding to the 6 main LULUCF land use categories but including sub-categories the product has 27 classes. The dataset is available as a 100 m raster.`,
   },
 ];

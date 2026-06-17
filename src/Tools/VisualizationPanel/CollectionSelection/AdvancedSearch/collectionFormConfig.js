@@ -2822,6 +2822,30 @@ export const recursiveCollectionCLMS = [
     supportsCloudCover: false,
     items: [
       {
+        id: 'CLCPLUS_LULUCF_INSTANCE',
+        label: 'CLCplus LULUCF Instance',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'clcplus_instance',
+        )})`,
+        items: [
+          {
+            id: 'clms_clcplus_lulucf-instance_europe_100m_yearly_v1',
+            label:
+              'CLCplus Land Use, Land-Use Change and Forestry Instance, Europe, Yearly, 100m, (2018-present), V1',
+            type: 'productType',
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.datasetIdentifier,
+              ODataFilterOperator.eq,
+              'clms_clcplus_lulucf-instance_europe_100m_yearly_v1',
+            )})`,
+          },
+        ],
+      },
+      {
         id: 'CROPLANDS',
         label: 'Croplands',
         type: 'group',

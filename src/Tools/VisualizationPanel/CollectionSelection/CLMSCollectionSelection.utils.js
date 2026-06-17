@@ -192,6 +192,7 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 export const DEFAULT_SELECTED_CONSOLIDATION_PERIOD_INDEX = 0;
@@ -1005,6 +1006,16 @@ export const CLMS_OPTIONS = [
     label: 'Land Cover and Land Use Mapping',
     id: 'Land Cover and Land Use Mapping',
     options: [
+      {
+        label: 'CLCplus LULUCF Instance',
+        id: 'CLCplus LULUCF Instance',
+        options: [
+          {
+            label: 'clms_clcplus_lulucf-instance_europe_100m_yearly_v1',
+            id: COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
+          },
+        ],
+      },
       {
         label: 'Croplands',
         id: 'Croplands',
