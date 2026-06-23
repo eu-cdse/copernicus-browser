@@ -217,6 +217,8 @@ import {
   COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
@@ -509,6 +511,10 @@ const PRODUCT_TYPE_TO_DATASETID = {
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1':
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1':
+    COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1':
+    COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   'clms_clcplus_lulucf-instance_europe_100m_yearly_v1':
     COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 };
@@ -808,6 +814,7 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       'lake_water_quality',
       'river_and_lake_ice_extent',
       'auxiliary_data',
+      'water_extent',
       'clcplus_instance',
     ].includes(productType)
   ) {
@@ -1630,6 +1637,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     ];
   }
 
+  if ([COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'WATER_AND_ICE_COVER',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
   if ([COPERNICUS_CLMS_SWE_5KM_DAILY_V1, COPERNICUS_CLMS_SWE_5KM_DAILY_V2].includes(datasetId)) {
     return [
       {
@@ -1691,6 +1709,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       {
         id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
         instrument: 'SNOW_STATE',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if ([COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_BIOGEOPHYSICAL_PARAMETERS.id,
+        instrument: 'WATER_EXTENT',
         productType: getProductTypeFromDatasetId(datasetId),
         selectedFilters: {},
       },

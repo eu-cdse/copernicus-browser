@@ -136,7 +136,7 @@ const radarProvidersCollection = [
         name: 'ICEYE',
         label: 'ICEYE Constellation',
         stacConstellation: ['ICEYE'],
-        stacPlatform: ['ICEYE-X'],
+        stacPlatform: ['ICEYE'],
         taskingSupported: true,
         archiveSupported: true,
         description: {

@@ -276,7 +276,6 @@ const mapStoreToProps = (store) => ({
   access_token: store.auth.user.access_token,
   selectedTabIndex: store.tabs.selectedTabIndex,
   selectedLanguage: store.language.selectedLanguage,
-  mode: store.modes.selectedMode,
   ...getVisualizationEffectsFromStore(store),
   demSource3D: store.visualization.demSource3D,
   orbitDirection: store.visualization.orbitDirection,

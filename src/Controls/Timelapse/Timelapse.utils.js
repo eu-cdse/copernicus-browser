@@ -18,6 +18,7 @@ import {
 import copernicus from '../../junk/EOBCommon/assets/cdse-logo.png';
 import { convertToWgs84, wgs84ToMercator } from '../../junk/EOBCommon/utils/coords';
 import { TRANSITION } from '../../const';
+import { sanitizeFilenameSegment } from '../../utils/filename';
 import { CRS_EPSG3857, drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
 import store, { timelapseSlice } from '../../store';
 import { getDefaultBaseLayer } from '../../Map/Layers';
@@ -676,7 +677,7 @@ export const generateTimelapseWithFFMPEG = ({
 export const generateTimelapseFilename = (datasetId) => {
   const random = Math.round(Date.now() * Math.random() * 1000);
   const datasetLabel = getDatasetLabel(datasetId) || datasetId;
-  return `${datasetLabel.replace(' ', '_')}-${random}-timelapse`;
+  return `${sanitizeFilenameSegment(datasetLabel)}-${random}-timelapse`; // datasetLabel can contain multiple spaces and special characters, so we sanitize it
 };
 
 const floorToEven = (value) => {

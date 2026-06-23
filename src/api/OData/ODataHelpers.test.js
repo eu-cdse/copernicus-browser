@@ -39,6 +39,7 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
@@ -2484,6 +2485,20 @@ describe('getODataCollectionInfoFromDatasetId — CPSCE (single collection)', ()
     expect(result).toHaveLength(1);
     expect(result[0].instrument).toBe('CROPPING_PATTERNS');
     expect(result[0].productType).toBe('clms_vlcc_secondary-crop-emergence_europe_10m_yearly_v1');
+  });
+});
+
+describe('getODataCollectionInfoFromDatasetId — ICD (single collection)', () => {
+  test('always returns a single WATER_AND_ICE_COVER entry', () => {
+    const result = getODataCollectionInfoFromDatasetId(
+      COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+      {},
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('CLMS_BIOGEOPHYSICAL_PARAMETERS');
+    expect(result[0].instrument).toBe('WATER_AND_ICE_COVER');
+    expect(result[0].productType).toBe('clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1');
+    expect(result[0].selectedFilters).toEqual({});
   });
 });
 

@@ -3,6 +3,7 @@ import gifshot from 'gifshot';
 import FileSaver from 'file-saver';
 import { t } from 'ttag';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
+import { sanitizeFilenameSegment } from '../../utils/filename';
 
 class SlidesDownload extends React.Component {
   state = {
@@ -41,7 +42,7 @@ class SlidesDownload extends React.Component {
           preparingGif: false,
           gifCreationProgress: null,
         });
-        FileSaver.saveAs(obj.image, `${fileName.replace(' ', '_')}.gif`);
+        FileSaver.saveAs(obj.image, `${sanitizeFilenameSegment(fileName)}.gif`);
       },
     );
   };

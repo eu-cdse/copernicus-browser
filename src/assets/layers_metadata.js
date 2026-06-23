@@ -222,6 +222,8 @@ import {
   COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
@@ -5368,6 +5370,62 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () => t`Confidence layer - a quality indicator for main crop harvest.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+        layerId: 'wcd',
+      },
+    ],
+    description: () => t`Water presence frequency in a hydrological year (in days).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: 'icd',
+      },
+    ],
+    description: () => t`Number of days of ice cover on water during the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+        layerId: 'wcd_qa',
+      },
+    ],
+    description: () => t`Quality layer providing a basic assessment of the water cover duration layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: 'icd_qa',
+      },
+    ],
+    description: () => t`Quality layer providing a basic assessment of the ice cover duration layer.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: 'nobs1',
+      },
+    ],
+    description: () =>
+      t`Number of days with Sentinel-1 based observations used in the interpolation of the ice cover time series within the hydrological year.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+        layerId: 'nobs2',
+      },
+    ],
+    description: () =>
+      t`Number of days with Sentinel-2 based observations used in the interpolation of the ice cover time series within the hydrological year.`,
   },
   {
     match: [

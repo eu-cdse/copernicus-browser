@@ -6,6 +6,7 @@ module.exports = {
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+    '<rootDir>/scripts/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
   moduleNameMapper: {
     '\\.(css|scss)$': '<rootDir>/config/jest/cssTransform.cjs',

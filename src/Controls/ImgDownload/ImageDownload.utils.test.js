@@ -6,16 +6,9 @@ import {
   getNicename,
   getPixelCoordinates,
   getRawBandsScalingFactor,
-  hasIntegerNativeBands,
   isSimpleImageFormat,
   overrideEvalscriptIfNeeded,
 } from './ImageDownload.utils';
-import {
-  dataSourceHandlers,
-  getCollectionBandTypes,
-} from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { DATASOURCES } from '../../const';
-
 import { BBox, CRS_EPSG3857, ApiType } from '@sentinel-hub/sentinelhub-js';
 import { latLngBounds } from 'leaflet';
 
@@ -29,11 +22,6 @@ import { reprojectGeometry } from '../../utils/reproject';
 import { IMAGE_FORMATS } from './consts';
 import { getEvalscriptSetup, setEvalscriptOutputScale } from '../../utils/parseEvalscript';
 
-jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
-  ...jest.requireActual('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers'),
-  getCollectionBandTypes: jest.fn(),
-}));
-
 jest.mock('../../utils/parseEvalscript', () => ({
   ...jest.requireActual('../../utils/parseEvalscript'),
   getEvalscriptSetup: jest.fn(),
@@ -41,32 +29,23 @@ jest.mock('../../utils/parseEvalscript', () => ({
   setEvalscriptOutputScale: jest.fn((evalscript) => evalscript),
 }));
 
-const TESTING_BYOC_ID = 'test-byoc_id';
-
-function setupTestBYOC() {
-  const byocDsh = dataSourceHandlers.find((d) => d.datasource === DATASOURCES.CUSTOM);
-  byocDsh.datasets.push(TESTING_BYOC_ID);
-  dataSourceHandlers.push(byocDsh);
-}
-
-setupTestBYOC();
-
 describe('Test getRawBandsScalingFactor function', () => {
   test.each([
-    [TESTING_BYOC_ID, 'FLOAT32', [{ name: 'B01', sampleType: 'UINT16' }], undefined],
-    [TESTING_BYOC_ID, 'UINT16', [{ name: 'B01', sampleType: 'UINT16' }], 1],
-    [TESTING_BYOC_ID, 'UINT8', [{ name: 'B01', sampleType: 'UINT16' }], 1 / 257], // (2**16 - 1) / 257 = 255
-    [TESTING_BYOC_ID, 'FLOAT32', [{ name: 'B01', sampleType: 'UINT8' }], undefined],
-    [TESTING_BYOC_ID, 'UINT16', [{ name: 'B01', sampleType: 'UINT8' }], 257],
-    [TESTING_BYOC_ID, 'UINT8', [{ name: 'B01', sampleType: 'UINT8' }], 1],
-    [S2_L1C_CDAS, 'FLOAT32', [], undefined],
-    [S2_L1C_CDAS, 'UINT16', [], 65535],
-    [S2_L1C_CDAS, 'UINT8', [], 255],
-  ])('raw bands scaling factor', (datasetId, imageSampleType, bandsInfo, expectedFactor) => {
+    // No bandName — float-reflectance fallback returns a factor
+    ['FLOAT32', [], undefined, undefined],
+    ['UINT16', [], undefined, 65535],
+    ['UINT8', [], undefined, 255],
+    // Native UINT8 DN band
+    ['UINT8', [{ name: 'B01', sampleType: 'UINT8' }], 'B01', undefined],
+    ['UINT16', [{ name: 'B01', sampleType: 'UINT8' }], 'B01', 255], // stretch into UINT16 range
+    // Native UINT16 DN band — no scaling regardless of output format
+    ['UINT16', [{ name: 'B01', sampleType: 'UINT16' }], 'B01', undefined],
+    ['UINT8', [{ name: 'B01', sampleType: 'UINT16' }], 'B01', undefined],
+  ])('raw bands scaling factor', (imageSampleType, bandsInfo, bandName, expectedFactor) => {
     const factor = getRawBandsScalingFactor({
-      datasetId: datasetId,
       imageSampleType: imageSampleType,
       bandsInfo: bandsInfo,
+      bandName: bandName,
     });
     expect(factor).toEqual(expectedFactor);
   });
@@ -199,6 +178,22 @@ describe('constructRawBandEvalscript', () => {
     expect(result).toContain('sample.dataMask');
     expect(result).toContain('bands: 2');
     expect(result).toContain(`255 * visualizer.process(sample.${kelvinBand})`);
+  });
+
+  test('native integer DN band (UINT8) with UINT16 output stretches into the UINT16 range', () => {
+    const dnBand = 'B01';
+    const dnBands = [{ name: dnBand, sampleType: 'UINT8' }];
+    const result = constructRawBandEvalscript(dnBand, S2_L1C_CDAS, IMAGE_FORMATS.TIFF_UINT16, dnBands);
+    expect(result).toContain(`return [255 * sample.${dnBand}]`);
+    expect(result).not.toContain('65535 *');
+  });
+
+  test('native integer DN band (UINT16) with UINT16 output has no scale factor prefix', () => {
+    const dnBand = 'B01';
+    const dnBands = [{ name: dnBand, sampleType: 'UINT16' }];
+    const result = constructRawBandEvalscript(dnBand, S2_L1C_CDAS, IMAGE_FORMATS.TIFF_UINT16, dnBands);
+    expect(result).toContain(`return [sample.${dnBand}]`);
+    expect(result).not.toContain('65535 *');
   });
 });
 
@@ -532,89 +527,6 @@ describe('addImageOverlays — drawLogo variant smoke tests (showLogo: true)', (
   });
 });
 
-describe('hasIntegerNativeBands', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  test('returns false when layer has no collectionId', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
-    const layer = {};
-    const setupInfo = { bands: ['B01'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('returns false when getCollectionBandTypes returns null (unknown collection)', () => {
-    getCollectionBandTypes.mockReturnValue(null);
-    const layer = { collectionId: 'unknown-collection' };
-    const setupInfo = { bands: ['B01'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('returns false when setupInfo.bands is an empty array', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: [] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('returns false when setupInfo.bands is not an array', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: null };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('returns true when all input bands are uint8', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'uint8', B03: 'uint8' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'B02', 'B03'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
-  });
-
-  test('returns true when all input bands are uint16', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint16', B02: 'uint16' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'B02'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
-  });
-
-  test('returns true when input bands are a mix of uint8 and uint16', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'uint16' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'B02'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
-  });
-
-  test('returns false when any input band is float32', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8', B02: 'float32' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'B02'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('returns false when any input band has an unknown type (not in bandTypes)', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint16' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'B99'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-
-  test('ignores dataMask when checking band types', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['B01', 'dataMask'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(true);
-  });
-
-  test('returns false when bands consist only of dataMask (no real bands to check)', () => {
-    getCollectionBandTypes.mockReturnValue({ B01: 'uint8' });
-    const layer = { collectionId: 'my-collection' };
-    const setupInfo = { bands: ['dataMask'] };
-    expect(hasIntegerNativeBands(layer, setupInfo)).toBe(false);
-  });
-});
-
 describe('overrideEvalscriptIfNeeded', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -622,9 +534,30 @@ describe('overrideEvalscriptIfNeeded', () => {
     // unchanged by default (implementations set in jest.mock factory are preserved).
   });
 
-  test('does not apply scale factor when downloading integer DN bands as UINT8', async () => {
-    getCollectionBandTypes.mockReturnValue({ FSCOG: 'uint8', FSCTOC: 'uint8' });
-    getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['FSCOG', 'FSCTOC'], nBands: 2 });
+  test('applies scale factor for visualization layer with normalized evalscript downloading as UINT8 (regression: #1106)', async () => {
+    // Visualization evalscripts (AUTO/FLOAT32 output) need ×256 applied to avoid an all-black TIFF.
+    // This was broken when hasIntegerNativeBands incorrectly blocked the scale factor for collections
+    // with integer native bands (e.g. S2 Quarterly Cloudless Mosaic).
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'AUTO', bands: ['B02', 'B03', 'B04'], nBands: 3 });
+    const layer = { collectionId: 'mosaic-collection', evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT8,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).toHaveBeenCalledTimes(1);
+    expect(setEvalscriptOutputScale).toHaveBeenCalledWith(expect.anything(), 256);
+  });
+
+  test('does not apply scale factor when evalscript declares UINT8 output and target is UINT8', async () => {
+    // sampleType already matches — the block is skipped entirely.
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'UINT8', bands: ['FSCOG'], nBands: 1 });
     const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
 
     await overrideEvalscriptIfNeeded(
@@ -640,27 +573,10 @@ describe('overrideEvalscriptIfNeeded', () => {
     expect(setEvalscriptOutputScale).not.toHaveBeenCalled();
   });
 
-  test('does not apply scale factor when downloading UINT16-native integer DN bands as UINT16', async () => {
-    getCollectionBandTypes.mockReturnValue({ SCD: 'uint16', SCO: 'uint16' });
-    getEvalscriptSetup.mockReturnValue({ sampleType: 'UINT16', bands: ['SCD', 'SCO'], nBands: 2 });
-    const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
-
-    await overrideEvalscriptIfNeeded(
-      ApiType.PROCESSING,
-      IMAGE_FORMATS.TIFF_UINT16,
-      layer,
-      false,
-      null,
-      jest.fn(),
-      false,
-    );
-
-    expect(setEvalscriptOutputScale).not.toHaveBeenCalled();
-  });
-
-  test('applies 255x stretch when downloading UINT8-range integer DN bands as UINT16', async () => {
-    getCollectionBandTypes.mockReturnValue({ FSCOG: 'uint8', FSCTOC: 'uint8' });
-    getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['FSCOG', 'FSCTOC'], nBands: 2 });
+  test('applies 255x stretch when evalscript declares UINT8 output and target is UINT16', async () => {
+    // UINT8 DN output (e.g. FSC OG, 0–100 range) converting to UINT16: stretch into the UINT16
+    // range without saturating. Applying the full ×65536 factor would overflow.
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'UINT8', bands: ['FSCOG'], nBands: 1 });
     const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
 
     await overrideEvalscriptIfNeeded(
@@ -677,8 +593,24 @@ describe('overrideEvalscriptIfNeeded', () => {
     expect(setEvalscriptOutputScale).toHaveBeenCalledWith(expect.anything(), 255);
   });
 
-  test('applies full scale factor for reflectance bands downloading as UINT16', async () => {
-    getCollectionBandTypes.mockReturnValue(null);
+  test('does not apply scale factor when evalscript sampleType already matches target (UINT16)', async () => {
+    getEvalscriptSetup.mockReturnValue({ sampleType: 'UINT16', bands: ['SCD', 'SCO'], nBands: 2 });
+    const layer = { collectionId: 'my-collection', evalscript: 'mock-evalscript' };
+
+    await overrideEvalscriptIfNeeded(
+      ApiType.PROCESSING,
+      IMAGE_FORMATS.TIFF_UINT16,
+      layer,
+      false,
+      null,
+      jest.fn(),
+      false,
+    );
+
+    expect(setEvalscriptOutputScale).not.toHaveBeenCalled();
+  });
+
+  test('applies full scale factor for normalized evalscript downloading as UINT16', async () => {
     getEvalscriptSetup.mockReturnValue({ sampleType: 'FLOAT32', bands: ['B01', 'B02'], nBands: 2 });
     const layer = { collectionId: null, evalscript: 'mock-evalscript' };
 

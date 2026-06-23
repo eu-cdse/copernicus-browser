@@ -14,7 +14,6 @@ function MessagePanel({
   error,
   panelError,
   failedThemeParts,
-  selectedMode,
   selectedTabIndex,
   selectedThemeId,
   datasetId,
@@ -32,7 +31,7 @@ function MessagePanel({
 
   useEffect(() => {
     store.dispatch(visualizationSlice.actions.setError(null));
-  }, [selectedMode, selectedTabIndex, selectedThemeId]);
+  }, [selectedTabIndex, selectedThemeId]);
 
   useEffect(() => {
     if (datasetId && (layerId || customSelected) && toTime) {
@@ -104,7 +103,6 @@ const mapStoreToProps = (store) => ({
   error: store.visualization.error,
   panelError: store.notification.panelError,
   failedThemeParts: store.themes.failedThemeParts,
-  selectedMode: store.modes.selectedMode,
   selectedTabIndex: store.tabs.selectedTabIndex,
   selectedThemeId: store.themes.selectedThemeId,
   datasetId: store.visualization.datasetId,

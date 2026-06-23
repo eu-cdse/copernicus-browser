@@ -60,6 +60,11 @@ class HistogramWrapper extends Component {
   };
 
   checkIfEnabled = async () => {
+    if (!this.props.dataSourcesInitialized) {
+      this.setState({ histogramEnabled: false, errorMessage: null });
+      return;
+    }
+
     const {
       layerId,
       datasetId,
@@ -156,6 +161,7 @@ const mapStoreToProps = (store) => ({
   isProcessGraphModified: store.visualization.isProcessGraphModified,
   evalscript: store.visualization.evalscript,
   visualizationUrl: store.visualization.visualizationUrl,
+  dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });
 
 export default connect(mapStoreToProps, null)(HistogramWrapper);

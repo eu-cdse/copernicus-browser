@@ -29,6 +29,7 @@ import styleVariables from '../../variables.module.scss';
 
 import './FIS.scss';
 import { getErrorFetchingDataMsg } from '../../junk/ConstMessages';
+import { sanitizeFilenameSegment } from '../../utils/filename';
 
 class FIS extends Component {
   state = { fetchingInProgress: true, maxCCAllowed: 1.0 };
@@ -248,9 +249,8 @@ class FIS extends Component {
     const { datasetId, layerId, customSelected } = this.props;
     const { fromTime, toTime } = this.state;
 
-    return `${getDatasetLabel(datasetId)}-${
-      customSelected ? 'Custom' : layerId
-    }-${fromTime.toISOString()}-${toTime.toISOString()}.${extension}`;
+    const name = `${getDatasetLabel(datasetId)}-${customSelected ? 'Custom' : layerId}-${fromTime.toISOString()}-${toTime.toISOString()}`;
+    return `${sanitizeFilenameSegment(name)}.${extension}`;
   };
 
   filterDataAfterTime = (data, fromTime) => {

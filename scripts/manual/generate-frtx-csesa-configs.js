@@ -24,7 +24,7 @@ const parentConfigMapping = {
   CSESA_WV1_PSH_OR: 'PRISM_GENERAL_WV1_PSH_OR',
 };
 
-const ignoreMapping = ['CSESA', 'FRTX', 'CSESA_GHGSAT_CH4'];
+const ignoreMapping = ['CSESA', 'FRTX', 'CSESA_GHGSAT_CH4', 'FRTX_GHGSAT_CH4', 'GENERAL_GHGSAT_CH4'];
 
 // Helper to remove FRTX or CSESA from name
 function updateName(name) {

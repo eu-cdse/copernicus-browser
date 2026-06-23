@@ -568,21 +568,6 @@ export const visualizationSlice = createSlice({
   },
 });
 
-export const modeSlice = createSlice({
-  name: 'modes',
-  initialState: {
-    selectedMode: undefined,
-  },
-  reducers: {
-    setMode: (state, action) => {
-      state.selectedMode = action.payload;
-    },
-    reset: (state) => {
-      state.selectedMode = undefined;
-    },
-  },
-});
-
 export const pinsSlice = createSlice({
   name: 'pins',
   initialState: {
@@ -993,7 +978,6 @@ const reducers = combineReducers({
   tabs: tabsSlice.reducer,
   compare: compareLayersSlice.reducer,
   language: languageSlice.reducer,
-  modes: modeSlice.reducer,
   pins: pinsSlice.reducer,
   timelapse: timelapseSlice.reducer,
   index: indexSlice.reducer,

@@ -347,7 +347,6 @@ function ToolsConnector(ownProps) {
       cloudCoverage: state.visualization.cloudCoverage,
       selectedTabIndex: state.tabs.selectedTabIndex,
       selectedLanguage: state.language.selectedLanguage,
-      mode: state.modes.selectedMode,
       ...getVisualizationEffectsFromStore(state),
       orbitDirection: getOrbitDirectionFromList(state.visualization.orbitDirection),
       demSource3D: state.visualization.demSource3D,

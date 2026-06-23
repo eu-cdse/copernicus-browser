@@ -173,6 +173,8 @@ import {
   COPERNICUS_CLMS_WSI_GAP_FILLED_FRACTIONAL_SNOW_COVER_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
@@ -940,6 +942,16 @@ export const CLMS_OPTIONS = [
               { label: 'clms_global_lie_500m_v2_daily_geotiff', id: COPERNICUS_CLMS_LIE_500M_DAILY_V2 },
             ],
           },
+          {
+            label: 'Water and Ice Cover',
+            id: 'Water and Ice Cover',
+            options: [
+              {
+                label: 'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1',
+                id: COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+              },
+            ],
+          },
           // {
           //   label: 'River and Lake Water Level',
           //   id: 'River and Lake Water Level',
@@ -956,6 +968,16 @@ export const CLMS_OPTIONS = [
               { label: 'clms_global_wb_300m_v2_monthly_geotiff', id: COPERNICUS_CLMS_WB_300M_MONTHLY_V2 },
               { label: 'clms_global_wb_300m_v1_10daily_geotiff', id: COPERNICUS_CLMS_WB_300M_10DAILY_V1 },
               { label: 'clms_global_wb_1km_v2_10daily_geotiff', id: COPERNICUS_CLMS_WB_1KM_10DAILY_V2 },
+            ],
+          },
+          {
+            label: 'Water Extent',
+            id: 'Water Extent',
+            options: [
+              {
+                label: 'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1',
+                id: COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+              },
             ],
           },
         ],

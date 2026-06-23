@@ -21,6 +21,10 @@ const FisChartLink = (props) => {
   const [layerName, setLayerName] = useState();
   useEffect(() => {
     const fetchEvalscript = async () => {
+      if (!props.dataSourcesInitialized) {
+        return;
+      }
+
       let evalscript;
       let layerName;
 
@@ -48,10 +52,17 @@ const FisChartLink = (props) => {
       setLayerName(layerName);
     };
     fetchEvalscript();
-  }, [props.visualizationUrl, props.layerId, props.evalscript, props.customSelected]);
+  }, [
+    props.visualizationUrl,
+    props.layerId,
+    props.evalscript,
+    props.customSelected,
+    props.dataSourcesInitialized,
+  ]);
 
   const isSelectedResult = !!props.selectedResult;
-  const isStatAvailableOnDatasource = isSelectedResult && statisticalApiSupported;
+  const isStatAvailableOnDatasource =
+    props.dataSourcesInitialized && isSelectedResult && statisticalApiSupported;
   const isLoggedIn = !!props.user.userdata;
   const isEditedOpenEOProcessingSelected =
     props.selectedProcessing === PROCESSING_OPTIONS.OPENEO && props.isProcessGraphModified;
@@ -130,6 +141,7 @@ const mapStoreToProps = (store) => ({
   selectedProcessing: store.visualization.selectedProcessing,
   isProcessGraphModified: store.visualization.isProcessGraphModified,
   user: store.auth.user,
+  dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });
 
 export default connect(mapStoreToProps, null)(FisChartLink);

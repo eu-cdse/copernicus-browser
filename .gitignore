@@ -25,6 +25,10 @@ yarn-error.log*
 
 /scripts/clms*.json
 
+# RRD config-generation run artifacts (live API data)
+/scripts/rrd/rrd-state.json
+/scripts/rrd/rrd-config-mapping.json
+
 # playwright
 /playwright-report/
 /test-results/

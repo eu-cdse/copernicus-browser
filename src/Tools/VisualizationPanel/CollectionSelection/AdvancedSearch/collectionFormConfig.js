@@ -2574,6 +2574,29 @@ export const recursiveCollectionCLMS = [
             ],
           },
           {
+            id: 'WATER_AND_ICE_COVER',
+            label: 'Water and Ice Cover',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'river_and_lake_ice_extent',
+            )})`,
+            items: [
+              {
+                id: 'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1',
+                label: 'Ice Cover Duration, Europe, Yearly, 20m/100m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1',
+                )})`,
+              },
+            ],
+          },
+          {
             id: 'WATER_BODIES_1',
             label: 'Water Bodies',
             type: 'instrument',
@@ -2622,6 +2645,29 @@ export const recursiveCollectionCLMS = [
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'wb_global_1km_10daily_v2',
+                )})`,
+              },
+            ],
+          },
+          {
+            id: 'WATER_EXTENT',
+            label: 'Water Extent',
+            type: 'instrument',
+            supportsCloudCover: false,
+            customFilterExpression: `(${FilterElement.Attribute(
+              ODataAttributes.productType,
+              ODataFilterOperator.eq,
+              'water_extent',
+            )})`,
+            items: [
+              {
+                id: 'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1',
+                label: 'Water Cover Duration, Europe, Yearly, 10m/100m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetAlias,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_water-cover-duration',
                 )})`,
               },
             ],

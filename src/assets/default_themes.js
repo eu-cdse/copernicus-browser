@@ -1293,6 +1293,18 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/943cee-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/283569-YOUR-INSTANCEID-HERE`,
+      },
+      {
+        name: 'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/e20955-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'clms_vlcc_broadleaved-cover-density_europe_100m_yearly_v1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

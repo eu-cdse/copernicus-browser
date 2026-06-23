@@ -18,7 +18,6 @@ import {
   getDataSourceHandler,
   datasetLabels,
   checkIfCustom,
-  getCollectionBandTypes,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { CUSTOM, BAND_UNIT } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { isDataFusionEnabled } from '../../utils';
@@ -73,6 +72,7 @@ import openEOApi from '../../api/openEO/openEO.api';
 import { ensureMercatorBBox, metersPerPixel } from '../../utils/coords';
 import { warningColor } from '../../variables.module.scss';
 import { runEffectFunctions } from '../../utils/effects/runEffectFuntions';
+import { sanitizeFilenameSegment } from '../../utils/filename';
 
 const PARTITION_PADDING = 5;
 const SCALEBAR_LEFT_PADDING = 10;
@@ -816,23 +816,6 @@ export async function fetchImageFromParams(params, raiseWarning) {
   }
 }
 
-export function hasIntegerNativeBands(layer, setupInfo) {
-  if (!layer.collectionId) {
-    return false;
-  }
-  const bandTypes = getCollectionBandTypes(layer.collectionId);
-  if (!bandTypes) {
-    return false;
-  }
-  const inputBands = (Array.isArray(setupInfo.bands) ? setupInfo.bands : []).filter(
-    (name) => name !== 'dataMask',
-  );
-  if (inputBands.length === 0) {
-    return false;
-  }
-  return inputBands.every((name) => bandTypes[name] === 'uint8' || bandTypes[name] === 'uint16');
-}
-
 export async function overrideEvalscriptIfNeeded(
   apiType,
   imageFormat,
@@ -865,14 +848,14 @@ export async function overrideEvalscriptIfNeeded(
   }
   if (setupInfo.sampleType !== sampleType) {
     layer.evalscript = setEvalscriptSampleType(layer.evalscript, sampleType);
-    if (scaleFactor && !(layer instanceof DEMLayer) && !hasIntegerNativeBands(layer, setupInfo)) {
+    const outputIsIntegerDN = setupInfo.sampleType === 'UINT8' || setupInfo.sampleType === 'UINT16';
+    if (scaleFactor && !(layer instanceof DEMLayer) && !outputIsIntegerDN) {
+      // Normalized output (e.g. AUTO/FLOAT32 reflectance evalscripts): scale up to fill the
+      // target integer type's range.
       layer.evalscript = setEvalscriptOutputScale(layer.evalscript, scaleFactor);
-    } else if (!(layer instanceof DEMLayer) && sampleType === 'UINT16') {
-      // Integer DN bands downloading as UINT16: the evalscript sampleType has been changed to
-      // UINT16 above, but the output values are still in the native UINT8 range (0–255).
-      // Multiply by 255 to stretch them into the full UINT16 range (0–65280), preserving
-      // relative magnitude without saturating. No stretch is needed for UINT8 targets because
-      // the native values already fit in the 0–255 output range.
+    } else if (!(layer instanceof DEMLayer) && sampleType === 'UINT16' && setupInfo.sampleType === 'UINT8') {
+      // UINT8 DN evalscript converting to UINT16: stretch ×255 to preserve relative magnitude
+      // within the UINT16 range without saturating.
       layer.evalscript = setEvalscriptOutputScale(layer.evalscript, 255);
     }
   }
@@ -913,13 +896,6 @@ export function getTitle(fromTime, toTime, datasetId, layerTitle, customSelected
     .clone()
     .utc()
     .format(format)}, ${datasetLabel}, ${customSelected ? 'custom' : layerTitle}`;
-}
-
-function sanitizeFilenameSegment(str) {
-  if (!str) {
-    return '';
-  }
-  return str.replace(/[ \\/:*?"<>|]/g, '_');
 }
 
 export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelected, isRawBand, bandName) {
@@ -1206,36 +1182,34 @@ export function getSupportedImageFormats(datasetId) {
   return getDataSourceHandler(datasetId).getSupportedImageFormats(datasetId);
 }
 
-export function getRawBandsScalingFactor({ datasetId, imageSampleType, bandsInfo }) {
+export function getRawBandsScalingFactor({ imageSampleType, bandsInfo, bandName }) {
   if (imageSampleType === 'FLOAT32') {
     // Scaling is not needed as FLOAT32 can handle any number
     return;
   }
 
   let factor;
-  if (imageSampleType) {
-    if (imageSampleType === 'UINT8') {
-      factor = 255;
-    }
-    if (imageSampleType === 'UINT16') {
-      factor = 65535;
-    }
+  if (imageSampleType === 'UINT8') {
+    factor = 255;
+  } else if (imageSampleType === 'UINT16') {
+    factor = 65535;
   }
-  const isBYOC = checkIfCustom(datasetId);
-  if (isBYOC) {
-    // This is a hack to make raw bands for BYOC layers display anything
-    // Service stretches values from 0-1 to 0-255, but if our BYOC bands can be UINT8 or UINT16
-    //     // https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript.html#transparent-nodata-pixels-and-sampletype-uint16
 
-    const sampleType = bandsInfo[0].sampleType;
-    const orig = factor ? factor : 1.0;
-    if (sampleType === 'UINT8') {
-      factor = orig / 255;
+  const specificBand = bandName ? bandsInfo.find((b) => b.name === bandName) : null;
+  if (
+    specificBand?.sampleType === 'UINT8' ||
+    specificBand?.sampleType === 'UINT16' ||
+    specificBand?.sampleType === 'INT16'
+  ) {
+    if (specificBand.sampleType === 'UINT8' && imageSampleType === 'UINT16') {
+      // Stretch UINT8 DN values (0–255) into the UINT16 range (0–65280) so downstream tools
+      // (QGIS, GDAL) that assume the full 16-bit range don't render the image as near-black.
+      // Mirrors the same 255× stretch applied by the visualised-layer path (overrideEvalscriptIfNeeded).
+      return 255;
     }
-    if (sampleType === 'UINT16') {
-      factor = orig / 65535;
-    }
+    return; // Native integer DN band — sampleType matches output; no scaling needed
   }
+
   return factor;
 }
 
@@ -1282,9 +1256,9 @@ function evaluatePixel(sample) {
   }
 
   let factor = getRawBandsScalingFactor({
-    datasetId: datasetId,
     imageSampleType: sampleType,
     bandsInfo: bands,
+    bandName: layer,
   });
   const factorPrefix = factor ? `${factor} * ` : '';
 

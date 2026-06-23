@@ -626,6 +626,12 @@ const getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown = () => t`
 const getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown = () => t`
   The Sentinel-1 & Sentinel-2 Snow Phenology (SP S1+S2) product characterizes the timing and duration of the snow season. For each pixel and for a given hydrological year, it provides the number of days with snow cover, as well as the first and last day of the longest continuous snow period. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 60 m × 60 m, consistent with the input snow cover maps derived from optical satellite data acquired by the Sentinel-2 constellation and from C-band Synthetic Aperture Radar satellite data acquired by the Sentinel-1 constellation (Gap-filled Fractional Snow Cover - GFSC). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/snow/high-resolution-snow-phenology).`;
 
+const getCopernicusClmsWsiWaterCoverDurationEuropeUtm10mYearlyV1Markdown = () => t`
+  The Water Cover Duration (WCD) product estimates the number of days land is covered by water. For each pixel and for a given hydrological year, it indicates how frequently water is present. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 10 m × 10 m. It is based on water masks derived from Sentinel-1 radar and Sentinel-2 optical data, combined with Water/Ice Cover data from Sentinel-2 (WIC S2). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/water-bodies/high-resolution-water-cover-duration).`;
+
+const getCopernicusClmsWsiIceCoverDurationEuropeUtm20mYearlyV1Markdown = () => t`
+  The Ice Cover Duration (ICD) product describes how long inland waters are covered by ice. For each pixel and for a given hydrological year, it provides the number of days with ice cover. The hydrological year starts on 1 September. The product is generated at the European scale with a spatial resolution of 20 m × 20 m. It is based on ice cover maps derived from Sentinel-2 optical data (Water/Ice Cover WIC S2) and Sentinel-1 C-band Synthetic Aperture Radar data (Water/Ice Cover WIC S1). It is available for the period from 2016 to the present and can be downloaded in multiple projections and pixel spacings. More information [here](https://land.copernicus.eu/en/products/water-bodies/high-resolution-ice-cover-duration).`;
+
 const getCopernicusClmsVlccBroadleavedCoverDensityEurope100mYearlyV1Markdown = () => t`
   The High Resolution Layer Broadleaved Density (BCD) dataset provides information on the percentage of broadleaved pixels at 100m spatial resolution, and is derived through aggregation of the 10m DLT for the respective reference year. Within each cell the number of broadleaved pixels are counted and the percentages stored into in the 100m pixel of the BCD. The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged.
 
@@ -854,6 +860,7 @@ export {
   getCopernicusClmsWsiGapFilledFractionalSnowCoverEuropeUtm60mDailyV1Markdown,
   getCopernicusClmsWsiSnowPhenologyS2EuropeUtm20mYearlyV1Markdown,
   getCopernicusClmsWsiSnowPhenologyS1S2EuropeUtm60mYearlyV1Markdown,
+  getCopernicusClmsWsiIceCoverDurationEuropeUtm20mYearlyV1Markdown,
   getCopernicusClmsVlccBroadleavedCoverDensityEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccConiferousCoverDensityEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccForestTypeEurope100m3yearlyV1Markdown,
@@ -861,5 +868,6 @@ export {
   getCopernicusClmsVlccTreeCoverDensityEurope100mYearlyV1Markdown,
   getCopernicusClmsVlccMainCropEmergenceEurope10mYearlyV1Markdown,
   getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown,
+  getCopernicusClmsWsiWaterCoverDurationEuropeUtm10mYearlyV1Markdown,
   getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown,
 };

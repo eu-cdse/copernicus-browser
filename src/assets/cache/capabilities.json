@@ -1280,6 +1280,26 @@
             }
         ]
     },
+    "283569-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1",
+        "layers": [
+            {
+                "id": "wcd",
+                "name": "WCD",
+                "description": "Water presence frequency in a hydrological year (in days)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/283569-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=wcd&style=default"
+            },
+            {
+                "id": "wcd_qa",
+                "name": "WCD-QA",
+                "description": "Quality layer for the water cover duration (WCD) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/283569-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=wcd_qa&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "2bdb51-YOUR-INSTANCEID-HERE": {
         "title": "CDSE Sentinel-1-IW_HH+HV",
         "layers": [
@@ -7730,6 +7750,40 @@
                 "description": "Gross Primary Production value",
                 "dataset": "CUSTOM",
                 "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e1f382-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=GPP&style=default"
+            }
+        ],
+        "datasets": []
+    },
+    "e20955-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1",
+        "layers": [
+            {
+                "id": "icd",
+                "name": "ICD",
+                "description": "Ice cover duration (in days)",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20955-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=icd&style=default"
+            },
+            {
+                "id": "icd_qa",
+                "name": "ICD-QA",
+                "description": "Quality layer for the ice cover duration (ICD) layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20955-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=icd_qa&style=default"
+            },
+            {
+                "id": "nobs1",
+                "name": "NOBS1",
+                "description": "Number of days with Sentinel-1 based observations during the hydrological year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20955-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=nobs1&style=default"
+            },
+            {
+                "id": "nobs2",
+                "name": "NOBS2",
+                "description": "Number of days with Sentinel-2 based observations during the hydrological year",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/e20955-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=nobs2&style=default"
             }
         ],
         "datasets": []

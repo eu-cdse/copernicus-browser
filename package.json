@@ -127,9 +127,12 @@
     "staging-data-retriever": "node scripts/staging-data-retriever.js",
     "delete-configurations": "node scripts/delete-configurations.js",
     "generate-frtx-csesa-configs": "node scripts/manual/generate-frtx-csesa-configs.js",
+    "rrd-dump-state": "tsx scripts/manual/rrd-dump-state.ts",
+    "rrd-create-configs-from-mapping": "tsx scripts/manual/rrd-create-configs-from-mapping.ts",
     "validate-config-collections": "node scripts/manual/validate-config-collections.js",
     "check-collections-band-names": "node scripts/manual/check-collections-band-names.js",
-    "list-configurations-without-layers": "node scripts/manual/list-configurations-without-layers.js"
+    "list-configurations-without-layers": "node scripts/manual/list-configurations-without-layers.js",
+    "check-rrd-missing-configurations": "tsx scripts/check-rrd-missing-configurations.ts"
   },
   "browserslist": [
     ">0.2%",
@@ -143,6 +146,7 @@
     "@babel/preset-env": "^7.29.5",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.28.5",
+    "@eslint/js": "^9.39.4",
     "@playwright/test": "^1.58.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
@@ -152,7 +156,6 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/uuid": "^10.0.0",
-    "@eslint/js": "^9.39.4",
     "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.61.0",
     "@vitejs/plugin-react-swc": "^3.11.0",
@@ -178,6 +181,7 @@
     "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-scss": "^7.0.0",
+    "tsx": "^4.22.4",
     "ttag-cli": "^1.10.18",
     "typescript": "^5.9.3",
     "vite": "^6.4.3",
