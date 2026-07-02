@@ -74,6 +74,25 @@ $breakpoint-1200: 1200px;
 $breakpoint-1280: 1280px;
 $breakpoint-1300: 1300px;
 
+// Always-visible, themed scrollbar. Forces a non-overlay scrollbar (via an explicit
+// ::-webkit-scrollbar width) regardless of the OS "show scrollbars automatically" setting,
+// and matches the Firefox and WebKit thumb colours so the bar looks the same across browsers.
+@mixin custom-scrollbar($thumb: $iconGrayColor, $track: $mainLight, $width: 8px) {
+  scrollbar-color: $thumb $track;
+
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $track;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb;
+  }
+}
+
 /* stylelint-disable */
 :export {
   primaryColor: $primaryColor;

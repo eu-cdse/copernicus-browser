@@ -54,8 +54,8 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_DATASET_IDENTIFIER,
-  COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
-  COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
 } from '../../../SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 export const collections = [
@@ -3082,23 +3082,23 @@ export const recursiveCollectionCLMS = [
                 type: 'group',
                 items: [
                   {
-                    id: COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE_2017,
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE,
                     label: 'CPMCE, Europe, 10m, Yearly, (2017–present), V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
                       ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE_2017,
+                      COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE,
                     )})`,
                   },
                   {
-                    id: COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
                     label: 'CPMCE Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
                       ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+                      COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
                     )})`,
                   },
                 ],
@@ -3109,23 +3109,23 @@ export const recursiveCollectionCLMS = [
                 type: 'group',
                 items: [
                   {
-                    id: COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH_2017,
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH,
                     label: 'CPMCH, Europe, 10m, Yearly, (2017–present), V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
                       ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH_2017,
+                      COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH,
                     )})`,
                   },
                   {
-                    id: COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
                     label: 'CPMCH Confidence Layer, Europe, 10m, Yearly, (2017–present), V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
                       ODataFilterOperator.eq,
-                      COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+                      COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
                     )})`,
                   },
                 ],

@@ -42,16 +42,27 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    padding-bottom: 10px;
+  }
 
-    .result-section-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 10px 0;
+  .result-section-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
-      .result-section-footer-text {
-        font-size: 14px;
-      }
+    /* cancel the asymmetric 5px left / 1px right margin from .rapid-response-desk-body > *
+       so the footer background spans the full results column, then inset the content to
+       line up with the result cards (17px left / 8px right within the scroll area) */
+    margin: 0 -1px 0 -5px;
+    padding: 10px 8px 10px 17px;
+    background-color: vars.$mainLight;
+    box-shadow: vars.$boxShadow;
+
+    .result-section-footer-text {
+      font-size: 14px;
     }
   }
 

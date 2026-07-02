@@ -41,6 +41,7 @@ const renderCollectionSelectionForm = ({ selectedCollectionGroup, selectedCollec
           datasource={selectedCollectionGroup.datasource}
           selectedCollection={selectedCollection}
           onSelect={onSelect}
+          availableDatasets={selectedCollectionGroup.collections?.map((collection) => collection.dataset)}
         />
       );
     case DATASOURCES.CLMS:

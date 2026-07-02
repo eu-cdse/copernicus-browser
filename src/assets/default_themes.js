@@ -1335,88 +1335,16 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/0f72be-YOUR-INSTANCEID-HERE`,
       },
       {
-        name: 'clms_vlcc_main-crop-emergence-2017_europe_10m_yearly_v1',
+        name: 'clms_vlcc_main-crop-harvest_europe_10m_yearly_v1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/3c17cc-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/928358-YOUR-INSTANCEID-HERE`,
       },
       {
-        name: 'clms_vlcc_main-crop-emergence-2018_europe_10m_yearly_v1',
+        name: 'clms_vlcc_main-crop-emergence_europe_10m_yearly_v1',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/faea48-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-emergence-2019_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/ae22b8-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-emergence-2020_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/539690-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-emergence-2021_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/2f12aa-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-emergence-2022_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/fbcb8e-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-emergence-2023_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/d63bf3-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2017_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/d11800-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2018_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/218710-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2019_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/fb90a6-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2020_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/097656-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2021_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/c611ba-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2022_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/4bbac8-YOUR-INSTANCEID-HERE`,
-      },
-      {
-        name: 'clms_vlcc_main-crop-harvest-2023_europe_10m_yearly_v1',
-        url: `${
-          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
-        }/ogc/wms/45367d-YOUR-INSTANCEID-HERE`,
+        }/ogc/wms/42568f-YOUR-INSTANCEID-HERE`,
       },
       {
         name: 'clms_clcplus_lulucf-instance_europe_100m_yearly_v1',

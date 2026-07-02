@@ -14,6 +14,7 @@ import { compareLayersSlice } from './store/slices/compareLayersSlice';
 import { spectralExplorerSlice } from './store/slices/spectralExplorerSlice';
 import { indexSlice } from './store/slices/indexSlice';
 import { timelapseSlice } from './store/slices/timelapseSlice';
+import { terrainViewerSlice } from './store/slices/terrainViewerSlice';
 
 import {
   MODES,
@@ -67,6 +68,8 @@ export { modalSlice };
 export { authSlice };
 
 export { timelapseSlice };
+
+export { terrainViewerSlice };
 
 export const themesSlice = createSlice({
   name: 'themes',
@@ -608,29 +611,6 @@ export const pinsSlice = createSlice({
     reset: (state) => {
       state.items = [];
       state.newPinsCount = 0;
-    },
-  },
-});
-
-export const terrainViewerSlice = createSlice({
-  name: 'terrainViewer',
-  initialState: {
-    settings: null,
-    id: null,
-  },
-  reducers: {
-    setTerrainViewerSettings: (state, action) => {
-      state.settings = action.payload;
-    },
-    resetTerrainViewerSettings: (state) => {
-      state.settings = null;
-    },
-    setTerrainViewerId: (state, action) => {
-      state.id = action.payload;
-    },
-    reset: (state) => {
-      state.settings = null;
-      state.id = null;
     },
   },
 });

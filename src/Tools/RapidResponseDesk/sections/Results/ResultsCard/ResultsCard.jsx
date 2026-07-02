@@ -21,7 +21,7 @@ import ProductPreview from '../../../../Results/ProductPreview/ProductPreview';
 import { rrdApi } from '../../../../../api/RRD/RRDApi';
 import { RRDQueryBuilder } from '../../../../../api/RRD/RRDQueryBuilder';
 import { getBoundsAndLatLng } from '../../../../CommercialDataPanel/commercialData.utils';
-import { fetchPreviewImage, fetchThumbnailImage, isImageLoading } from './results.utils';
+import { fetchPreviewImage, fetchThumbnailImage } from './results.utils';
 
 import { MetadataSourceType } from '../../../rapidResponseProperties';
 import { ModalId, RRD_INSTANCES_THEMES_LIST, TABS } from '../../../../../const';
@@ -53,6 +53,7 @@ const ResultsCard = ({
   const [inCart, setInCart] = useState(false);
   const [requestInProgress, setHttpRequest] = useRRDHttpRequest();
   const [previewImageUrl, setPreviewImageUrl] = useState(null);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
   const isFetchingRef = useRef(false);
 
   const openProductDetailsModal = ({ downloadInProgress, onDownload }) => {
@@ -91,6 +92,9 @@ const ResultsCard = ({
 
     const loadImage = async () => {
       // 1. Check if already cached in Redux
+      // NOTE: keep setIsLoadingImage(true) below this cached early-return — the cached
+      // path returns before the finally block that clears the flag, so setting the flag
+      // earlier would leave the spinner stuck on for cached items.
       const cached = quicklookImages[item._internalId] || quicklookImages[item._internalId + '_thumbnail'];
       if (cached) {
         setPreviewImageUrl(cached);
@@ -102,6 +106,7 @@ const ResultsCard = ({
         return;
       }
       isFetchingRef.current = true;
+      setIsLoadingImage(true);
 
       try {
         // 2. Try thumbnail first (if available)
@@ -134,6 +139,7 @@ const ResultsCard = ({
       } finally {
         if (!cancelled) {
           isFetchingRef.current = false;
+          setIsLoadingImage(false);
         }
       }
     };
@@ -143,6 +149,7 @@ const ResultsCard = ({
     return () => {
       cancelled = true;
       isFetchingRef.current = false;
+      setIsLoadingImage(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item._internalId, user.access_token, providerSection.imageType, isTaskingEnabled]);
@@ -371,7 +378,7 @@ const ResultsCard = ({
               previewUrl: previewImageUrl,
             }}
             validate={true}
-            isLoading={isImageLoading(item._internalId) || isImageLoading(item._internalId + '_thumbnail')}
+            isLoading={isLoadingImage}
           />
         </div>
         <div className="description-container">

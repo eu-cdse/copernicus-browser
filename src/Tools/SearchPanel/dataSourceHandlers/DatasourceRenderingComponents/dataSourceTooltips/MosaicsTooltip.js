@@ -10,7 +10,7 @@ const getWorldCoverAnnualCloudlessMosaic = () => {
   return t`
 The **WorldCover Annual Cloudless Mosaics** product offers an almost cloud-free image over the entire globe, created by stitching together the cloudless Sentinel-2 images acquired over a one-year period at a spatial resolution of 10 meters.
 
-More information can be found [here](https://documentation.dataspace.copernicus.eu/Data/Additional.html#sentinel-2-level-2a-worldcover-annual-cloudless-mosaics-rgbnir).
+More information can be found [here](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel2.html#sentinel-2-level-2a-worldcover-annual-cloudless-mosaic-rgbnir).
 
 **Coverage:** Global Coverage.
 

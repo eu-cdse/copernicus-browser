@@ -9,6 +9,8 @@ import {
   S1,
   ASCENDING,
   DESCENDING,
+  S1_CDAS_IW_VVVH,
+  S1_CDAS_EW_HHHV,
   S1_CDAS_SM_VVVH,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
@@ -20,36 +22,63 @@ import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 import { AttributeTooltips } from '../../../api/OData/assets/tooltips';
 import { AttributeNames } from '../../../api/OData/assets/attributes';
 
-const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDirection }) => {
-  const S1DatasetIdOrder = {
-    0: 'dataset',
-    1: 'host',
-    2: 'acquisitionMode',
-    3: 'polarizationMode',
-  };
+const S1DatasetIdOrder = {
+  0: 'dataset',
+  1: 'host',
+  2: 'acquisitionMode',
+  3: 'polarizationMode',
+};
 
-  const getSelectedFiltersFromDataset = (dataset) => {
-    let obj = {};
+const getSelectedFiltersFromDataset = (dataset) => {
+  let obj = {};
+  dataset.split('_').forEach((key, index) => {
+    obj[S1DatasetIdOrder[index]] = key;
+  });
+  return obj;
+};
 
-    dataset.split('_').forEach((key, index) => {
-      obj[S1DatasetIdOrder[index]] = key;
-    });
-    return obj;
-  };
+const S1_MODE_POLARIZATION_DEFAULTS = Object.fromEntries(
+  [S1_CDAS_IW_VVVH, S1_CDAS_EW_HHHV, S1_CDAS_SM_VVVH].map((id) => {
+    const { acquisitionMode, polarizationMode } = getSelectedFiltersFromDataset(id);
+    return [acquisitionMode, polarizationMode];
+  }),
+);
 
+const Sentinel1Collection = ({
+  datasource,
+  onSelect,
+  selectedCollection,
+  orbitDirection,
+  availableDatasets,
+}) => {
   const { dataset, host, acquisitionMode, polarizationMode } = getSelectedFiltersFromDataset(
     selectedCollection.dataset,
   );
 
   const { ACQUISITION_MODES, POLARIZATIONS, ORBIT_DIRECTIONS } = S1_OBSERVATION_SCENARIOS;
 
+  let supportedModes = null;
+  let supportedPolarizations = null;
+  if (availableDatasets) {
+    const combos = availableDatasets.map((datasetId) => getSelectedFiltersFromDataset(datasetId));
+    supportedModes = new Set(combos.map((c) => c.acquisitionMode));
+    supportedPolarizations = combos.reduce((acc, c) => {
+      if (!acc[c.acquisitionMode]) {
+        acc[c.acquisitionMode] = new Set();
+      }
+      acc[c.acquisitionMode].add(c.polarizationMode);
+      return acc;
+    }, {});
+  }
+
   const handlePreSelectedPolarization = (acq) => {
-    switch (acq) {
-      case getSelectedFiltersFromDataset(S1_CDAS_SM_VVVH).acquisitionMode:
-        return getSelectedFiltersFromDataset(S1_CDAS_SM_VVVH).polarizationMode;
-      default:
-        return;
+    const hardcodedDefault = S1_MODE_POLARIZATION_DEFAULTS[acq];
+    if (hardcodedDefault && (!supportedPolarizations?.[acq] || supportedPolarizations[acq].has(hardcodedDefault))) {
+      return hardcodedDefault;
     }
+    return Object.keys(POLARIZATIONS[acq]).find(
+      (pol) => !supportedPolarizations?.[acq] || supportedPolarizations[acq].has(pol),
+    );
   };
 
   const setAcquisitionMode = (acq) => {
@@ -71,6 +100,7 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
       orbitDirection,
     );
   };
+
   return (
     <div className="observation-scenarios-wrapper">
       <div className="observation-scenarios-label">
@@ -81,30 +111,32 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
       <div className="observation-scenarios-container">
         {/* Acquisition mode */}
         <div className="acquisition-mode-container">
-          {Object.keys(ACQUISITION_MODES).map((acquisition_mode, index) => {
-            const isAcquisitionModeSelected = acquisitionMode === acquisition_mode;
+          {Object.keys(ACQUISITION_MODES)
+            .filter((m) => !supportedModes || supportedModes.has(m))
+            .map((acquisition_mode) => {
+              const isAcquisitionModeSelected = acquisitionMode === acquisition_mode;
 
-            return (
-              <div key={index}>
-                <div className="s1-single-collection-wrapper">
-                  <EOBButton
-                    text={
-                      <>
-                        {ACQUISITION_MODES[acquisition_mode]}
-                        {isAcquisitionModeSelected && <CheckmarkSvg />}
-                      </>
-                    }
-                    title={ACQUISITION_MODES[acquisition_mode]}
-                    className={`s1-collection-button secondary ${
-                      isAcquisitionModeSelected ? 'selected' : ''
-                    }`}
-                    onClick={() => setAcquisitionMode(acquisition_mode)}
-                  />
-                  <CollectionTooltip className="hidden-tooltip" />
+              return (
+                <div key={acquisition_mode}>
+                  <div className="s1-single-collection-wrapper">
+                    <EOBButton
+                      text={
+                        <>
+                          {ACQUISITION_MODES[acquisition_mode]}
+                          {isAcquisitionModeSelected && <CheckmarkSvg />}
+                        </>
+                      }
+                      title={ACQUISITION_MODES[acquisition_mode]}
+                      className={`s1-collection-button secondary ${
+                        isAcquisitionModeSelected ? 'selected' : ''
+                      }`}
+                      onClick={() => setAcquisitionMode(acquisition_mode)}
+                    />
+                    <CollectionTooltip className="hidden-tooltip" />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
           {/* Polarization */}
           <div className="polarization-container">
@@ -113,27 +145,34 @@ const Sentinel1Collection = ({ datasource, onSelect, selectedCollection, orbitDi
               <CollectionTooltip source={AttributeTooltips[S1][AttributeNames.polarisationChannels]()} />
             </div>
             {acquisitionMode &&
-              Object.keys(POLARIZATIONS[acquisitionMode]).map((polarization_mode, index) => {
-                const isPolarizationSelected = polarizationMode === polarization_mode;
+              Object.keys(POLARIZATIONS[acquisitionMode])
+                .filter(
+                  (pol) =>
+                    !supportedPolarizations ||
+                    !supportedPolarizations[acquisitionMode] ||
+                    supportedPolarizations[acquisitionMode].has(pol),
+                )
+                .map((polarization_mode) => {
+                  const isPolarizationSelected = polarizationMode === polarization_mode;
 
-                return (
-                  <div className="s1-single-collection-wrapper" key={index}>
-                    <EOBButton
-                      text={
-                        <>
-                          {POLARIZATIONS[acquisitionMode][polarization_mode]}
-                          {isPolarizationSelected && <CheckmarkSvg />}
-                        </>
-                      }
-                      title={POLARIZATIONS[acquisitionMode][polarization_mode]}
-                      className={`s1-collection-button secondary ${isPolarizationSelected ? 'selected' : ''}`}
-                      onClick={() => setPolarizationMode(polarization_mode)}
-                    />
+                  return (
+                    <div className="s1-single-collection-wrapper" key={polarization_mode}>
+                      <EOBButton
+                        text={
+                          <>
+                            {POLARIZATIONS[acquisitionMode][polarization_mode]}
+                            {isPolarizationSelected && <CheckmarkSvg />}
+                          </>
+                        }
+                        title={POLARIZATIONS[acquisitionMode][polarization_mode]}
+                        className={`s1-collection-button secondary ${isPolarizationSelected ? 'selected' : ''}`}
+                        onClick={() => setPolarizationMode(polarization_mode)}
+                      />
 
-                    <CollectionTooltip className="hidden-tooltip" />
-                  </div>
-                );
-              })}
+                      <CollectionTooltip className="hidden-tooltip" />
+                    </div>
+                  );
+                })}
           </div>
         </div>
 

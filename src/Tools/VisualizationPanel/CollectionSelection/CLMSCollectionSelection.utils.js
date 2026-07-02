@@ -180,20 +180,8 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
@@ -1106,32 +1094,8 @@ export const CLMS_OPTIONS = [
                 id: 'Main Crop Emergence',
                 options: [
                   {
-                    label: 'clms_vlcc_main-crop-emergence-2017_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2018_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2019_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2020_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2021_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2022_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-emergence-2023_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
+                    label: 'clms_vlcc_main-crop-emergence_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
                   },
                 ],
               },
@@ -1140,32 +1104,8 @@ export const CLMS_OPTIONS = [
                 id: 'Main Crop Harvest',
                 options: [
                   {
-                    label: 'clms_vlcc_main-crop-harvest-2017_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2018_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2019_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2020_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2021_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2022_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
-                  },
-                  {
-                    label: 'clms_vlcc_main-crop-harvest-2023_europe_10m_yearly_v1',
-                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+                    label: 'clms_vlcc_main-crop-harvest_europe_10m_yearly_v1',
+                    id: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
                   },
                 ],
               },

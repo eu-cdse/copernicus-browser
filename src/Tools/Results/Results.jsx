@@ -51,6 +51,15 @@ class Results extends Component {
       }));
     }
 
+    // Reset the modal when selectedTiles is cleared (e.g. closing the RRD modal
+    // dispatches setSelectedTiles(undefined)), otherwise render() would read
+    // selectedTiles.length while displayModal is still true and crash.
+    if (!this.props.selectedTiles && prevProps.selectedTiles) {
+      this.setState(() => ({
+        displayModal: false,
+      }));
+    }
+
     if (
       !isEqual(prevProps.savedWorkspaceProducts, this.props.savedWorkspaceProducts) ||
       prevProps.results !== this.props.results
@@ -284,7 +293,7 @@ class Results extends Component {
               </div>
             ) : null}
 
-            {displayModal ? (
+            {displayModal && selectedTiles ? (
               <Modal
                 animation="slideUp"
                 visible={true}

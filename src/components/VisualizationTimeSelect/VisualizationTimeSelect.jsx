@@ -129,7 +129,7 @@ export function VisualizationTimeSelect({
   }
 
   function openLayerPanel() {
-    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showHighlightPanel && !showComparePanel) {
+    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showComparePanel) {
       setShowLayerPanel(true);
     }
   }

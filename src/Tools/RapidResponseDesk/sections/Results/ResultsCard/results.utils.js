@@ -5,6 +5,10 @@ import { ProviderImageTypes } from '../../../rapidResponseProperties';
 import { getRrdCollectionId } from '../../../../../api/RRD/api.utils';
 
 const imageCache = new Map();
+// TODO(cleanup): loadingStates is now only an in-flight fetch guard inside fetchPreviewImage
+// (isImageLoading was removed). It is redundant with ResultsCard's own isFetchingRef, but is
+// still the only in-flight dedup for the QuicklookOverlay.jsx caller. Replace with a
+// Map<itemId, Promise<url>> so concurrent callers await the same fetch. See MR !1080.
 const loadingStates = new Map();
 
 const isValidQuicklook = (href, type) =>
@@ -53,10 +57,6 @@ const fetchImageBlob = async (url, accessToken) => {
     console.error('Error fetching image:', error);
     return null;
   }
-};
-
-export const isImageLoading = (itemId) => {
-  return loadingStates.get(itemId) || false;
 };
 
 export const fetchThumbnailImage = async (item, accessToken) => {

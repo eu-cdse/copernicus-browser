@@ -1,12 +1,16 @@
 import {
   uploadGeoFileErrorMessages,
   parseContent,
+  parseZip,
   UPLOAD_GEOMETRY_TYPE,
   SUPPORTED_GEOMETRY_TYPES,
   extractGeometriesFromGeoJson,
   createUnion,
   removeExtraCoordDimensionsIfNeeded,
 } from './EOBUploadGeoFile.utils';
+import shp from 'shpjs';
+
+jest.mock('shpjs', () => ({ __esModule: true, default: jest.fn() }));
 
 describe('parse wkt string', () => {
   test.each([
@@ -401,6 +405,176 @@ describe('parse pasted geometry (auto-detect format)', () => {
           [10.257111, 43.51395],
         ],
       ],
+    });
+  });
+});
+
+describe('reject geometrically invalid polygons on upload (issue #1103)', () => {
+  // The exact failing ring from issue #1103: a valid 12-point polygon whose closing vertex
+  // is duplicated (positions [11] and [12] are identical), producing a degenerate ring.
+  const doubleClosedRing = [
+    [26.2765694251, 55.1274218391],
+    [26.2977102716, 55.1341147918],
+    [26.3057794057, 55.1370870286],
+    [26.3200126723, 55.1375103731],
+    [26.3206096411, 55.1465688942],
+    [26.3444764444, 55.1497728036],
+    [26.3579356983, 55.1539638666],
+    [26.3795192673, 55.1504602971],
+    [26.3856471683, 55.1489724417],
+    [26.3856471683, 55.1112277031],
+    [26.2853665822, 55.1100699825],
+    [26.2765694251, 55.1274218391],
+    [26.2765694251, 55.1274218391],
+  ];
+  // Same polygon without the duplicated closing vertex.
+  const cleanRing = doubleClosedRing.slice(0, 12);
+
+  test('double-closed Polygon is rejected with the duplicate-vertices message', () => {
+    const geojson = JSON.stringify({ type: 'Polygon', coordinates: [doubleClosedRing] });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY_DUPLICATE_VERTICES(),
+    );
+  });
+
+  test('clean Polygon is accepted', () => {
+    const geojson = JSON.stringify({ type: 'Polygon', coordinates: [cleanRing] });
+    expect(parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toStrictEqual({
+      type: 'Polygon',
+      coordinates: [cleanRing],
+    });
+  });
+
+  test('MultiPolygon with one invalid member is rejected', () => {
+    const geojson = JSON.stringify({
+      type: 'MultiPolygon',
+      coordinates: [[cleanRing], [doubleClosedRing]],
+    });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY_DUPLICATE_VERTICES(),
+    );
+  });
+
+  test('unclosed Polygon ring is rejected with the unclosed message', () => {
+    const geojson = JSON.stringify({
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [0, 1],
+          [1, 1],
+          [1, 0],
+        ],
+      ],
+    });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY_UNCLOSED(),
+    );
+  });
+
+  test('Polygon ring with too few points is rejected with the too-few-points message', () => {
+    const geojson = JSON.stringify({
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [1, 1],
+          [0, 0],
+        ],
+      ],
+    });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY_TOO_FEW_POINTS(),
+    );
+  });
+
+  test('invalid Polygon with no deterministic defect falls back to the generic message', () => {
+    // Self-touching ring (a vertex repeated non-consecutively): closed, enough points, no
+    // consecutive duplicates, but still fails @turf/boolean-valid.
+    const geojson = JSON.stringify({
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [4, 0],
+          [4, 4],
+          [2, 2],
+          [0, 4],
+          [2, 2],
+          [0, 0],
+        ],
+      ],
+    });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY(),
+    );
+  });
+
+  test('LineString upload is not subjected to the polygon validity gate', () => {
+    const geojson = JSON.stringify({
+      type: 'LineString',
+      coordinates: [
+        [30, 10],
+        [10, 30],
+        [40, 40],
+      ],
+    });
+    expect(parseContent(geojson, UPLOAD_GEOMETRY_TYPE.LINE, 'geojson')).toStrictEqual({
+      type: 'LineString',
+      coordinates: [
+        [30, 10],
+        [10, 30],
+        [40, 40],
+      ],
+    });
+  });
+});
+
+describe('parseZip surfaces geometry-defect messages (issue #1103)', () => {
+  const doubleClosedRing = [
+    [26.2765694251, 55.1274218391],
+    [26.2977102716, 55.1341147918],
+    [26.3057794057, 55.1370870286],
+    [26.3200126723, 55.1375103731],
+    [26.3206096411, 55.1465688942],
+    [26.3444764444, 55.1497728036],
+    [26.3579356983, 55.1539638666],
+    [26.3795192673, 55.1504602971],
+    [26.3856471683, 55.1489724417],
+    [26.3856471683, 55.1112277031],
+    [26.2853665822, 55.1100699825],
+    [26.2765694251, 55.1274218391],
+    [26.2765694251, 55.1274218391],
+  ];
+  const cleanRing = doubleClosedRing.slice(0, 12);
+
+  afterEach(() => {
+    shp.mockReset();
+  });
+
+  // A shapefile ZIP carrying an invalid polygon must surface the specific geometry-defect
+  // message, not the generic "problem parsing the shp file" error.
+  test('invalid polygon from a shapefile ZIP throws the duplicate-vertices message', async () => {
+    shp.mockResolvedValue({ type: 'Polygon', coordinates: [doubleClosedRing] });
+    await expect(parseZip(new Blob(['fake']), UPLOAD_GEOMETRY_TYPE.POLYGON)).rejects.toThrow(
+      uploadGeoFileErrorMessages.INVALID_GEOMETRY_DUPLICATE_VERTICES(),
+    );
+  });
+
+  // A failure in shp() itself still produces the generic shp parse error.
+  test('shp parse failure throws the generic shp parse error', async () => {
+    shp.mockRejectedValue(new Error('boom'));
+    await expect(parseZip(new Blob(['fake']), UPLOAD_GEOMETRY_TYPE.POLYGON)).rejects.toThrow(
+      uploadGeoFileErrorMessages.ERROR_PARSING_SHP(),
+    );
+  });
+
+  // A valid polygon from a shapefile ZIP is returned unchanged.
+  test('valid polygon from a shapefile ZIP is accepted', async () => {
+    shp.mockResolvedValue({ type: 'Polygon', coordinates: [cleanRing] });
+    await expect(parseZip(new Blob(['fake']), UPLOAD_GEOMETRY_TYPE.POLYGON)).resolves.toStrictEqual({
+      type: 'Polygon',
+      coordinates: [cleanRing],
     });
   });
 });

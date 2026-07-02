@@ -145,6 +145,8 @@
   max-height: 100%;
   overflow-y: scroll;
 
+  @include vars.custom-scrollbar;
+
   > div {
     display: none;
   }

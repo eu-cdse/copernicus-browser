@@ -26,6 +26,33 @@
             }
         }
     ],
+    "02495f-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 12000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "02495f-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T07:30:57.160437Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-2f0a9f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "2f0a9f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "04bcaf-YOUR-INSTANCEID-HERE": [
         {
             "id": "PANCHROMATIC",
@@ -80,6 +107,137 @@
             }
         }
     ],
+    "08b23a-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "FALSE-COLOR",
+            "title": "FALSE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"nir\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nconst visualizer = new HighlightCompressVisualizer(0.1, 0.7)\nconst factor = 2.5 / 10000;\nfunction evaluatePixel(sample) {\n return [visualizer.process(sample.nir * factor),\n          visualizer.process(sample.red * factor),\n          visualizer.process(sample.green * factor), sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "08b23a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T09:14:19.425117Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-47e27f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "47e27f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"red\",\n        \"nir\",\n        \"dataMask\"\n      ]\n    }],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ]\n  }\n}\n  \nfunction evaluatePixel(samples) {\n  \nlet ndvi = (samples.nir-samples.red)/(samples.nir+samples.red);\nconst indexVal = samples.dataMask === 1 ? ndvi : NaN;\nlet imageVals = valueInterpolate(ndvi,\n  [0.0, 0.5, 1.0],\n  [\n    [1,0,0, samples.dataMask], \n    [1,1,0,samples.dataMask], \n    [0.1,0.31,0,samples.dataMask], \n  ]);\n  \nreturn {\n  default: imageVals,\n  index: [indexVal],\n  eobrowserStats:[ndvi],\n  dataMask: [samples.dataMask],\n};\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "08b23a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T09:06:36.232561Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-47e27f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "47e27f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nconst visualizer = new HighlightCompressVisualizer(0.1, 0.7)\nconst factor = 2.5 / 10000;\nfunction evaluatePixel(sample) {\n return [visualizer.process(sample.red * factor),\n          visualizer.process(sample.green * factor),\n          visualizer.process(sample.blue * factor), sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "08b23a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T09:13:25.663361Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-47e27f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "47e27f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "0adc96-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "0adc96-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:26.080633Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-5ec531-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "5ec531-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "0b54e6-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "0b54e6-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:23.843766Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-e45846-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "e45846-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "0f41e6-YOUR-INSTANCEID-HERE": [
         {
             "id": "HH",
@@ -103,6 +261,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "9cd1f5-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "104364-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "104364-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:24.936877Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a56292-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a56292-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -193,12 +378,12 @@
                 {
                     "name": "default",
                     "description": "Default layer style",
-                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"greeb\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
                 }
             ],
             "orderHint": 0,
             "instanceId": "1297fc-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2025-06-09T13:35:58.247613Z",
+            "lastUpdated": "2026-06-16T07:29:32.379600Z",
             "collectionType": "CUSTOM",
             "collectionId": "byoc-c2a734-YOUR-INSTANCEID-HERE",
             "datasetSourceId": 10,
@@ -423,6 +608,33 @@
             }
         }
     ],
+    "21bdb3-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "21bdb3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:26.444906Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-901aa8-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "901aa8-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "270301-YOUR-INSTANCEID-HERE": [
         {
             "id": "PANCHROMATIC",
@@ -450,6 +662,33 @@
             }
         }
     ],
+    "27051f-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "27051f-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T07:40:58.728860Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-d1e30e-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "d1e30e-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "274b4d-YOUR-INSTANCEID-HERE": [
         {
             "id": "PANCHROMATIC",
@@ -473,6 +712,110 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "647498-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "2d8f6a-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "FALSE-COLOR",
+            "title": "FALSE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//False Color\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"nir\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(sample) {\n return [ sample.nir / 10000,\n          sample.red / 10000,\n          sample.green / 10000, sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "2d8f6a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.230938Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4dcc9a-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4dcc9a-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"red\",\n        \"nir\",\n        \"dataMask\"\n      ]\n    }],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ]\n  }\n}\n  \nfunction evaluatePixel(samples) {\n  \nlet ndvi = (samples.nir-samples.red)/(samples.nir+samples.red);\nconst indexVal = samples.dataMask === 1 ? ndvi : NaN;\nlet imageVals = valueInterpolate(ndvi,\n  [0.0, 0.5, 1.0],\n  [\n    [1,0,0, samples.dataMask], \n    [1,1,0,samples.dataMask], \n    [0.1,0.31,0,samples.dataMask], \n  ]);\n  \nreturn {\n  default: imageVals,\n  index: [indexVal],\n  eobrowserStats:[ndvi],\n  dataMask: [samples.dataMask],\n};\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "2d8f6a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.266453Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4dcc9a-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4dcc9a-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//False Color\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nconst visualizer = new HighlightCompressVisualizer(0.1, 0.7)\n\nfunction evaluatePixel(sample) {\n return [visualizer.process(sample.red / 10000),\n          visualizer.process(sample.green / 10000),\n          visualizer.process(sample.blue / 10000), sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "2d8f6a-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.297869Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4dcc9a-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4dcc9a-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "2df49b-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "2df49b-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:23.479705Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4bcb6c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4bcb6c-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -554,6 +897,60 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "18337b-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "384871-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "384871-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:27.964781Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-a0aa9c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "a0aa9c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "38951e-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1200\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "38951e-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:28.869814Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-4ff19b-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "4ff19b-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -662,6 +1059,33 @@
             }
         }
     ],
+    "3b19f1-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "3b19f1-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:21:53.011568Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c16fc4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c16fc4-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "3e9d00-YOUR-INSTANCEID-HERE": [
         {
             "id": "HH",
@@ -712,6 +1136,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "dfef8f-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "41f95d-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "VV",
+            "title": "VV",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": " //VERSION=3\nfunction setup(){\n  return{\n    input: [\"VV\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.VV * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "41f95d-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:31.198464Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-921c1f-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "921c1f-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -955,6 +1406,33 @@
             }
         }
     ],
+    "4d9802-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "4d9802-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:24.214618Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-6c9043-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "6c9043-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "4eb7c3-YOUR-INSTANCEID-HERE": [
         {
             "id": "HH",
@@ -1005,6 +1483,60 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "05cee9-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "557400-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "VV",
+            "title": "VV",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": " //VERSION=3\nfunction setup(){\n  return{\n    input: [\"VV\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.VV * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "557400-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:30.831582Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-7e47f8-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "7e47f8-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "55ddff-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n      function setup() {\n        return {\n          input: [\"green\",\"red\",\"blue\", \"dataMask\"],\n          output: { bands: 4 }\n        };\n      }\n      let factor = 1/2000;\n      function evaluatePixel(sample) {\n        return [factor * sample.red,factor * sample.green,factor * sample.blue, sample.dataMask ];\n      }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "55ddff-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:30.463097Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c82f5a-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c82f5a-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -1194,6 +1726,33 @@
             }
         }
     ],
+    "5f7031-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n      function setup() {\n        return {\n          input: [\"green\",\"red\",\"blue\", \"dataMask\"],\n          output: { bands: 4 }\n        };\n      }\n      let factor = 1/7000;\n      function evaluatePixel(sample) {\n        return [factor * sample.red,factor * sample.green,factor * sample.blue, sample.dataMask ];\n      }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "5f7031-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T09:05:20.024283Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-461402-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "461402-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "61c1ba-YOUR-INSTANCEID-HERE": [
         {
             "id": "PANCHROMATIC",
@@ -1248,6 +1807,33 @@
             }
         }
     ],
+    "673921-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "VV",
+            "title": "VV",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": " //VERSION=3\nfunction setup(){\n  return{\n    input: [\"VV\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.VV * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "673921-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T07:58:16.314817Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-160f0b-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "160f0b-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "676d64-YOUR-INSTANCEID-HERE": [
         {
             "id": "VV",
@@ -1271,6 +1857,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "e9f00a-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "687990-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "687990-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:21.866009Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-165cfe-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "165cfe-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -1348,6 +1961,110 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "908229-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "6da86c-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "FALSE-COLOR",
+            "title": "FALSE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [\"red\",\"green\",\"nir\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n    }\n    const visualizer = new HighlightCompressVisualizer(0.1, 0.7)\n    \n    function evaluatePixel(sample) {\n     return [visualizer.process(sample.nir / 2000),\n              visualizer.process(sample.red / 2000),\n              visualizer.process(sample.green / 2000), sample.dataMask ];\n    }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "6da86c-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:33:37.789937Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-d9dc35-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "d9dc35-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [{\n          bands: [\n            \"red\",\n            \"nir\",\n            \"dataMask\"\n          ]\n        }],\n        output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 1 },\n          { id: \"dataMask\", bands: 1 },\n        ]\n      }\n    }\n      \n    function evaluatePixel(samples) {\n      \n    let ndvi = (samples.nir - samples.red)/(samples.nir + samples.red);\n    const indexVal = samples.dataMask === 1 ? ndvi : NaN;\n    let imageVals = valueInterpolate(ndvi,\n      [0.0, 0.5, 1.0],\n      [\n        [1,0,0, samples.dataMask], \n        [1,1,0,samples.dataMask], \n        [0.1,0.31,0,samples.dataMask], \n      ]);\n      \n    return {\n      default: imageVals,\n      index: [indexVal],\n      eobrowserStats:[ndvi],\n      dataMask: [samples.dataMask],\n    };\n    }\n    "
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "6da86c-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:33:44.225648Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-d9dc35-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "d9dc35-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [\"red\",\"green\",\"blue\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n    }\n    const visualizer = new HighlightCompressVisualizer(0.1, 0.7)\n    \n    function evaluatePixel(sample) {\n     return [visualizer.process(sample.red / 2000),\n              visualizer.process(sample.green / 2000),\n              visualizer.process(sample.blue / 2000), sample.dataMask ];\n    }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "6da86c-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:33:53.114652Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-d9dc35-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "d9dc35-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "6fc1cd-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "6fc1cd-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:31:35.960394Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-0d1467-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "0d1467-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -1537,6 +2254,33 @@
             }
         }
     ],
+    "7727c3-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "7727c3-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:32:45.631019Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-3ea488-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "3ea488-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "789b95-YOUR-INSTANCEID-HERE": [
         {
             "id": "PANCHROMATIC",
@@ -1614,6 +2358,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "365a25-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "7a98cf-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n      function setup() {\n        return {\n          input: [\"green\",\"red\",\"blue\", \"dataMask\"],\n          output: { bands: 4 }\n        };\n      }\n      let factor = 1/2000;\n      function evaluatePixel(sample) {\n        return [factor * sample.red,factor * sample.green,factor * sample.blue, sample.dataMask ];\n      }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "7a98cf-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:30.110908Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-f3eff4-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "f3eff4-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -1911,6 +2682,33 @@
             }
         }
     ],
+    "88b936-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "HH",
+            "title": "HH",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup(){\n  return{\n    input: [\"HH\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.HH * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "88b936-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:32.302005Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-0ff4a8-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "0ff4a8-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "89a45e-YOUR-INSTANCEID-HERE": [
         {
             "id": "TRUE-COLOR",
@@ -2042,6 +2840,33 @@
             }
         }
     ],
+    "91dad2-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "91dad2-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:26.809295Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-b57dba-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "b57dba-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "92054a-YOUR-INSTANCEID-HERE": [
         {
             "id": "TRUE-COLOR",
@@ -2065,6 +2890,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "0843ef-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "934fc6-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "934fc6-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:27.173001Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c55ef0-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c55ef0-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -2123,6 +2975,33 @@
             }
         }
     ],
+    "9a7752-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "9a7752-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:23.112813Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-add999-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "add999-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "9a9fb3-YOUR-INSTANCEID-HERE": [
         {
             "id": "TRUE-COLOR",
@@ -2173,6 +3052,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "020979-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "a0622e-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1200\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "a0622e-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:28.333742Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-2fd85a-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "2fd85a-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -2335,6 +3241,137 @@
             }
         }
     ],
+    "abf5af-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "VV",
+            "title": "VV",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": " //VERSION=3\nfunction setup(){\n  return{\n    input: [\"VV\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.VV * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "abf5af-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:31.577792Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c8eef1-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c8eef1-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "ac47c5-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "FALSE-COLOR",
+            "title": "FALSE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [\"red\",\"green\",\"nir\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n    }\n    const visualizer = new HighlightCompressVisualizer(0.1, 0.8)\n    const factor = 2000;\n    function evaluatePixel(sample) {\n     return [visualizer.process(sample.nir / factor),\n              visualizer.process(sample.red / factor),\n              visualizer.process(sample.green / factor), sample.dataMask ];\n    }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ac47c5-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:57:53.908521Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-9f851c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "9f851c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [{\n          bands: [\n            \"red\",\n            \"nir\",\n            \"dataMask\"\n          ]\n        }],\n        output: [\n          { id: \"default\", bands: 4 },\n          { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n          { id: \"eobrowserStats\", bands: 1 },\n          { id: \"dataMask\", bands: 1 },\n        ]\n      }\n    }\n      \n    function evaluatePixel(samples) {\n      \n    let ndvi = (samples.nir - samples.red)/(samples.nir + samples.red);\n    const indexVal = samples.dataMask === 1 ? ndvi : NaN;\n    let imageVals = valueInterpolate(ndvi,\n      [0.0, 0.5, 1.0],\n      [\n        [1,0,0, samples.dataMask], \n        [1,1,0,samples.dataMask], \n        [0.1,0.31,0,samples.dataMask], \n      ]);\n      \n    return {\n      default: imageVals,\n      index: [indexVal],\n      eobrowserStats:[ndvi],\n      dataMask: [samples.dataMask],\n    };\n    }\n    "
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ac47c5-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:48:35.009178Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-9f851c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "9f851c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n    function setup() {\n      return {\n        input: [\"red\",\"green\",\"blue\", \"dataMask\"],\n        output: { bands: 4 }\n      };\n    }\n    const visualizer = new HighlightCompressVisualizer(0.1, 0.8)\n    const factor = 2000;\n    function evaluatePixel(sample) {\n     return [visualizer.process(sample.red / factor),\n              visualizer.process(sample.green / factor),\n              visualizer.process(sample.blue / factor), sample.dataMask ];\n    }"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ac47c5-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:57:03.500581Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-9f851c-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "9f851c-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "ad60a5-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ad60a5-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:33:09.432982Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-85e5bd-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "85e5bd-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "ae2b9f-YOUR-INSTANCEID-HERE": [
         {
             "id": "HH",
@@ -2385,6 +3422,83 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "d2e9f2-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "aefa51-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "FALSE-COLOR",
+            "title": "FALSE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//False Color\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"nir\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nfunction evaluatePixel(sample) {\n return [ sample.nir / 10000,\n          sample.red / 10000,\n          sample.green / 10000, sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "aefa51-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.678870Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-f3a2a1-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "f3a2a1-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "NDVI",
+            "title": "NDVI",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [{\n      bands: [\n        \"red\",\n        \"nir\",\n        \"dataMask\"\n      ]\n    }],\n    output: [\n      { id: \"default\", bands: 4 },\n      { id: \"index\", bands: 1, sampleType: \"FLOAT32\" },\n      { id: \"eobrowserStats\", bands: 1 },\n      { id: \"dataMask\", bands: 1 },\n    ]\n  }\n}\n  \nfunction evaluatePixel(samples) {\n  \nlet ndvi = (samples.nir-samples.red)/(samples.nir+samples.red);\nconst indexVal = samples.dataMask === 1 ? ndvi : NaN;\nlet imageVals = valueInterpolate(ndvi,\n  [0.0, 0.5, 1.0],\n  [\n    [1,0,0, samples.dataMask], \n    [1,1,0,samples.dataMask], \n    [0.1,0.31,0,samples.dataMask], \n  ]);\n  \nreturn {\n  default: imageVals,\n  index: [indexVal],\n  eobrowserStats:[ndvi],\n  dataMask: [samples.dataMask],\n};\n}\n"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "aefa51-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.711570Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-f3a2a1-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "f3a2a1-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        },
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//False Color\n\nfunction setup() {\n  return {\n    input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n\nconst visualizer = new HighlightCompressVisualizer(0.1, 0.7)\n\nfunction evaluatePixel(sample) {\n return [visualizer.process(sample.red / 10000),\n          visualizer.process(sample.green / 10000),\n          visualizer.process(sample.blue / 10000), sample.dataMask ];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "aefa51-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:29.745432Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-f3a2a1-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "f3a2a1-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -2466,6 +3580,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "73a3fd-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "b4b4e8-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "HH",
+            "title": "HH",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup(){\n  return{\n    input: [\"HH\", \"dataMask\"],\n    output: {bands: 2}\n  }\n}\n\nconst gain = 1/1000;\n\nfunction evaluatePixel(sample){\n  return [sample.HH * gain,\n          sample.dataMask];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "b4b4e8-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:31.944655Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-0ac427-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "0ac427-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -2736,6 +3877,60 @@
             }
         }
     ],
+    "c8e7ba-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "c8e7ba-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:22.278259Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c5a49e-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c5a49e-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "cb6f3c-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "PANCHROMATIC",
+            "title": "Panchromatic",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n//Panchromatic\n\nfunction setup() {\n  return {\n    input: [\"pan\", \"dataMask\"],\n    output: { bands: 4 }\n  }\n}\nvar f = 1000\nfunction evaluatePixel(sample) {\n  return [sample.pan / f, sample.pan / f, sample.pan / f, sample.dataMask]\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "cb6f3c-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T08:09:55.838753Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-c222b6-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "c222b6-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "cc1585-YOUR-INSTANCEID-HERE": [
         {
             "id": "HH",
@@ -2759,6 +3954,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "ba7458-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "cc5fc2-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 12000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "cc5fc2-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:24.583698Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-3532fb-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "3532fb-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -2813,6 +4035,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "d17df2-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "cdcbfb-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "cdcbfb-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:25.305695Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-83472d-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "83472d-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -3056,6 +4305,60 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "d7b90b-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "d762e6-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 12000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "d762e6-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:25.718612Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-ae0fcf-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "ae0fcf-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "d8112b-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "d8112b-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:22.736938Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-f86364-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "f86364-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }
@@ -3345,6 +4648,33 @@
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "collectionId": "0a172d-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
+    "f57f35-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "TRUE-COLOR",
+            "title": "TRUE COLOR",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal, 1.2, 0, 1.2);\n\nfunction setup() {\n    return {\n        input: [\"red\", \"green\", \"blue\", \"dataMask\"],\n        output: {\n            bands: 4\n        }\n    };\n}\nconst factor = 1 / 2000;\n\nfunction evaluatePixel(sample) {\n    const val = [factor * sample.red, factor * sample.green, factor * sample.blue, sample.dataMask];\n    return viz.processList(val);\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "f57f35-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-06-16T11:37:27.538542Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-bfc013-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "bfc013-YOUR-INSTANCEID-HERE",
                 "type": "CUSTOM"
             }
         }

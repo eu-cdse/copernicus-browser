@@ -685,13 +685,13 @@ High Resolution Layer Croplands product is part of the European Union's Copernic
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown = () => t`
-  The High Resolution Layer Cropping Patterns - Main Crop Harvest (CPMCH) raster product provides the harvest date of the main (annual) crop expressed in DOY (day of year). YYDOY where YY = last 2 digits of the year (e.g. 19 for 2019) and DOY is the day of the year (1-365).
-
-This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
-
-High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
-
-This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
+  The High Resolution Layer Cropping Patterns - Main Crop Harvest (CPMCH) raster product provides the harvest date of the main (annual) crop expressed in days of the year (DOY). The harvest is considered as the time of removal of most of the biomass. YYDOY where YY = last 2 digits of the year (e.g. 19 for 2019) and DOY is the day of the year (1-365).
+  
+  This dataset is provided annually starting in 2017 with 10 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
+  
+  High Resolution Layer Croplands product is part of the European Union's Copernicus Land Monitoring Service. Confidence layer available for the dataset.
+  
+  This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown = () => t`
   This metadata refers to the CORINE Land Cover Plus Land Use, Land-Use Change and Forestry Instance (CLCplus LULUCF Instance), an annually updated, pan-European, spatially consistent and seamless geospatial proxy for land use reporting under the LULUCF regulation. The product is delivered as a single raster layer with a spatial resolution of 100 m, derived from multiple pan-European Copernicus Land Monitoring Service (CLMS) high resolution input datasets. The LULUCF Instance is available for the reference years 2018, 2021, 2022 and 2023, with production moving to an annual update cycle starting from the 2021 product. Each raster cell represents a dominant LULUCF land-use class, assigned according to thematic and spatial rulesets implemented during the extraction process. While each pixel corresponds primarily to one of the six main LULUCF land use categories - forest land, grassland, cropland, settlements, wetlands, and other lands - the dataset further differentiates these categories into sub classes, resulting in a total of 27 classes. This classification structure supports greenhouse gas reporting and other applications within the LULUCF sector by providing a harmonised and policy relevant representation of land use across Europe. More information [here](https://land.copernicus.eu/en/products/clcplus-lulucf-instance).`;

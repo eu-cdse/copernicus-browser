@@ -9,6 +9,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/01186b-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_LEGION_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/02495f-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_WV3_PM4_SO_PAN',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/04bcaf-YOUR-INSTANCEID-HERE',
@@ -19,9 +24,29 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/067306-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_SKYSAT_MS_4',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/08b23a-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_WORLDVIEW_8MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0adc96-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_LEGION_PAN',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0b54e6-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_CSG_SC1_AB_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/0f41e6-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'CSESA_LEGION_PAN',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/104364-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_FRTX_PHR_BUN_1A_MS',
@@ -64,14 +89,34 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/1e73aa-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'FRTX_WORLDVIEW_PAN',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/21bdb3-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_WV3_PM4_OR_PAN',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/270301-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_WORLDVIEW_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/27051f-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'GENERAL_SKYSAT_PANS',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/274b4d-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_PLANETSCOPE_MS_4',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/2d8f6a-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_LEGION_RGB',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/2df49b-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_FRTX_GIS_PSH_OR',
@@ -89,6 +134,16 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/347c38-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'CSESA_WORLDVIEW_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/384871-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_SKYSAT_PANS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/38951e-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_GIS_PM4_OR_MS',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/3a9ca2-YOUR-INSTANCEID-HERE',
@@ -99,6 +154,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/3ab0bd-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_SPOT_MULTISPECTRAL_4BANDS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/3b19f1-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_SAR_HIM_1B_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/3e9d00-YOUR-INSTANCEID-HERE',
@@ -107,6 +167,11 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_SAR_SLH_SL_VV',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/4128cf-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_ICEYE_GRD-COG_VV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/41f95d-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'GENERAL_WORLDVIEW_PAN',
@@ -144,6 +209,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/4b6ced-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'FRTX_LEGION_4MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/4d9802-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_SAR_ST_SSC_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/4eb7c3-YOUR-INSTANCEID-HERE',
@@ -152,6 +222,16 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_SAR_UW_SGF_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/50c7fa-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_ICEYE_SLC-COG_VV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/557400-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'CSESA_GEOSAT_PSH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/55ddff-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_NAO_PMS__3',
@@ -179,6 +259,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/5c9ebf-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'PRISM_GENERAL_HRS_PSH_1C',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/5f7031-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_WV6_PAN_OR',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/61c1ba-YOUR-INSTANCEID-HERE',
@@ -189,14 +274,34 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/66aa5f-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_ICEYE_GRD-COG_VV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/673921-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'GENERAL_TERRASAR-X/TANDEM-X_EEC_RE_VV',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/676d64-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_LEGION_RGB',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/687990-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_PNE_PMS__3',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6c47f3-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_PNEO_PANSHARPENED_4BANDS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6da86c-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_PNEO_PANCHROMATIC',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/6fc1cd-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_WV1_PM4_OR_PAN',
@@ -224,6 +329,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/76efe4-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_PNEO_MULTISPECTRAL_4BANDS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/7727c3-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'GENERAL_SKYSAT_PAN',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/789b95-YOUR-INSTANCEID-HERE',
@@ -237,6 +347,11 @@ export const RRD_THEMES = [
         name: 'PRISM_FRTX_GIS_PM4_SO_PAN',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/79e085-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_GEOSAT_PS3',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/7a98cf-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_FRTX_WV3_PM4_SO_MS',
@@ -284,6 +399,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/8602d3-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'CSESA_TERRASAR-X/TANDEM-X_GEC_RE_HH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/88b936-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_GIS_MS4_OR',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/89a45e-YOUR-INSTANCEID-HERE',
@@ -299,9 +419,19 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/8df668-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'FRTX_WORLDVIEW_RGB',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/91dad2-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_WV3_PSH_OR',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/92054a-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_WORLDVIEW_4MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/934fc6-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'CSESA_Worldview_PAN',
@@ -314,6 +444,11 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/94f39f-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_LEGION_8MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/9a7752-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_WV3_PSH_OR',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/9a9fb3-YOUR-INSTANCEID-HERE',
@@ -322,6 +457,11 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_CSG_SC1_1B_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/9b80ca-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'CSESA_SKYSAT_PANS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/a0622e-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_WV1_PSH_OR',
@@ -344,6 +484,21 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/a63205-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'FRTX_ICEYE_SLC-COG_VV',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/abf5af-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_PHR_PANSHARPENED_4BANDS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ac47c5-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_PNEO_MULTISPECTRAL_6BANDS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ad60a5-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_CSG_HIM_AB_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ae2b9f-YOUR-INSTANCEID-HERE',
@@ -352,6 +507,11 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_PHR_BUN_1A_PAN',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/ae5902-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'CSESA_PLANETSCOPE_MS_4',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/aefa51-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_SAR_HS_SSC_VV',
@@ -367,6 +527,11 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_SAR_SM__GR_VV',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b29b4e-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_TERRASAR-X/TANDEM-X_GEC_RE_HH',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/b4b4e8-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_FRTX_WV1_PM4_SO_PAN',
@@ -409,9 +574,24 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/c4ec2e-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'GENERAL_LEGION_PAN',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/c8e7ba-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_SPOT_PANCHROMATIC',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/cb6f3c-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_GENERAL_CSG_S2C_AB_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/cc1585-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_LEGION_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/cc5fc2-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_SAR_UW_SLC_HH',
@@ -422,6 +602,11 @@ export const RRD_THEMES = [
         name: 'PRISM_FRTX_CSG_S2C_AB_HH',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/cd4b0a-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'CSESA_LEGION_4MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/cdcbfb-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'PRISM_GENERAL_GIS_PM4_SO_MS',
@@ -469,6 +654,16 @@ export const RRD_THEMES = [
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/d65d68-YOUR-INSTANCEID-HERE',
       },
       {
+        name: 'CSESA_LEGION_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/d762e6-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'GENERAL_LEGION_4MS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/d8112b-YOUR-INSTANCEID-HERE',
+      },
+      {
         name: 'PRISM_FRTX_WV1_PM4_OR_MS',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/dc5bf6-YOUR-INSTANCEID-HERE',
@@ -502,6 +697,11 @@ export const RRD_THEMES = [
         name: 'PRISM_GENERAL_PHR_FUS__3',
         service: 'WMS',
         url: 'https://sh.dataspace.copernicus.eu/ogc/wms/f50846-YOUR-INSTANCEID-HERE',
+      },
+      {
+        name: 'FRTX_WORLDVIEW_4PS',
+        service: 'WMS',
+        url: 'https://sh.dataspace.copernicus.eu/ogc/wms/f57f35-YOUR-INSTANCEID-HERE',
       },
       {
         name: 'GENERAL_SPOT_PANSHARPENED_4BANDS',

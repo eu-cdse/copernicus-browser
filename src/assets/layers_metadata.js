@@ -229,21 +229,14 @@ import {
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
-  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
+  COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_VG1,
+  S3SYNERGY_L2_V10,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 import {
@@ -269,15 +262,92 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS,
 } from '../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
+const NDVI_LEGEND = {
+  type: 'continuous',
+  minPosition: -0.2,
+  maxPosition: 1.1,
+  gradients: [
+    { position: -0.2, color: 'rgb(5%,5%,5%)', label: '- 1' },
+    { position: -0.1, color: 'rgb(5%,5%,5%)', label: '- 0.5' },
+    { position: -0.1, color: 'rgb(75%,75%,75%)' },
+    { position: 0, color: 'rgb(75%,75%,75%)', label: '- 0.2' },
+    { position: 0, color: 'rgb(86%,86%,86%)' },
+    { position: 0.1, color: 'rgb(86%,86%,86%)', label: '- 0.1' },
+    { position: 0.1, color: 'rgb(92%,92%,92%)' },
+    { position: 0.2, color: 'rgb(92%,92%,92%)', label: ' 0' },
+    { position: 0.2, color: 'rgb(100%,98%,80%)' },
+    { position: 0.25, color: 'rgb(100%,98%,80%)' },
+    { position: 0.25, color: 'rgb(93%,91%,71%)' },
+    { position: 0.3, color: 'rgb(93%,91%,71%)' },
+    { position: 0.3, color: 'rgb(87%,85%,61%)' },
+    { position: 0.35, color: 'rgb(87%,85%,61%)' },
+    { position: 0.35, color: 'rgb(80%,78%,51%)' },
+    { position: 0.4, color: 'rgb(80%,78%,51%)' },
+    { position: 0.4, color: 'rgb(74%,72%,42%)' },
+    { position: 0.45, color: 'rgb(74%,72%,42%)' },
+    { position: 0.45, color: 'rgb(69%,76%,38%)' },
+    { position: 0.5, color: 'rgb(69%,76%,38%)' },
+    { position: 0.5, color: 'rgb(64%,80%,35%)' },
+    { position: 0.55, color: 'rgb(64%,80%,35%)' },
+    { position: 0.55, color: 'rgb(57%,75%,32%)' },
+    { position: 0.6, color: 'rgb(57%,75%,32%)', label: ' 0.2' },
+    { position: 0.6, color: 'rgb(50%,70%,28%)' },
+    { position: 0.65, color: 'rgb(50%,70%,28%)' },
+    { position: 0.65, color: 'rgb(44%,64%,25%)' },
+    { position: 0.7, color: 'rgb(44%,64%,25%)' },
+    { position: 0.7, color: 'rgb(38%,59%,21%)' },
+    { position: 0.75, color: 'rgb(38%,59%,21%)' },
+    { position: 0.75, color: 'rgb(31%,54%,18%)' },
+    { position: 0.8, color: 'rgb(31%,54%,18%)' },
+    { position: 0.8, color: 'rgb(25%,49%,14%)' },
+    { position: 0.85, color: 'rgb(25%,49%,14%)' },
+    { position: 0.85, color: 'rgb(19%,43%,11%)' },
+    { position: 0.9, color: 'rgb(19%,43%,11%)' },
+    { position: 0.9, color: 'rgb(13%,38%,7%)' },
+    { position: 0.95, color: 'rgb(13%,38%,7%)' },
+    { position: 0.95, color: 'rgb(6%,33%,4%)' },
+    { position: 1.0, color: 'rgb(6%,33%,4%)' },
+    { position: 1.0, color: 'rgb(0%,27%,0%)', label: ' 0.6' },
+    { position: 1.1, color: 'rgb(0%,27%,0%)', label: ' 1' },
+  ],
+};
+
+const GRAYSCALE_0_1_LEGEND = {
+  type: 'continuous',
+  minPosition: 0,
+  maxPosition: 1,
+  gradients: [
+    { position: 0, color: 'rgb(0,0,0)', label: '0' },
+    { position: 1, color: 'rgb(255,255,255)', label: ' 1' },
+  ],
+};
+
 export const PREDEFINED_LAYERS_METADATA = [
+  {
+    match: [
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S1_VISUALIZED' },
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S2_VISUALIZED' },
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S3_VISUALIZED' },
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S4_VISUALIZED' },
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S5_VISUALIZED' },
+      { datasourceId: S3SLSTR_CDAS, layerId: 'S6_VISUALIZED' },
+    ],
+    legend: GRAYSCALE_0_1_LEGEND,
+    description: () =>
+      t`# SLSTR VIS/SWIR Bands (S1–S6)\n\nSentinel-3 SLSTR (Sea and Land Surface Temperature Radiometer) captures Top-of-Atmosphere radiances in six solar reflective channels at 500 m resolution: S1 (0.555 µm, vegetation/aerosol), S2 (0.659 µm, NDVI/aerosol), S3 (0.865 µm, NDVI/cloud flagging), S4 (1.375 µm, cirrus detection), S5 (1.61 µm, ice/snow/vegetation), and S6 (2.25 µm, vegetation state). Each band is available in nadir and oblique views, enabling dual-angle observation of land and ocean surfaces. The L1B product contains geolocated, calibrated radiances produced by signal calibration, re-gridding, and cloud flagging.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/slstr-products#SLSTRProducts-L1BProductsS3-SLSTR-Products-L1B).`,
+  },
   {
     match: [
       { datasourceId: S3SLSTR_CDAS, layerId: 'S7_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'S8_VISUALIZED' },
       { datasourceId: S3SLSTR_CDAS, layerId: 'S9_VISUALIZED' },
     ],
+    description: () =>
+      t`# SLSTR Thermal Infrared Bands (S7–S9)\n\nSentinel-3 SLSTR (Sea and Land Surface Temperature Radiometer) captures Top-of-Atmosphere brightness temperatures in three thermal infrared channels at 1 km resolution: S7 (3.74 µm, sea/land surface temperature and fire detection), S8 (10.85 µm, sea/land surface temperature and fire detection), and S9 (12.0 µm, sea/land surface temperature). Each band is available in nadir and oblique views, enabling dual-angle observation for improved atmospheric correction and surface temperature retrieval. The L1B product contains geolocated, calibrated brightness temperatures produced by signal calibration, re-gridding, and cloud flagging.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/slstr-products#SLSTRProducts-L1BProductsS3-SLSTR-Products-L1B).`,
     legend: {
       type: 'continuous',
       minPosition: 223,
@@ -600,56 +670,10 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L1C_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
       { datasourceId: S2_L2A_CDAS, layerId: 'NORMALIZED-DIFFERENCE-VEGETATION-INDEX-NDVI' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '5_NDVI' },
+      { datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC, layerId: 'NDVI' },
+      { datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC, layerId: 'NDVI' },
     ],
-    legend: {
-      type: 'continuous',
-      minPosition: -0.2,
-      maxPosition: 1.1,
-      gradients: [
-        { position: -0.2, color: 'rgb(5%,5%,5%)', label: '- 1' },
-        { position: -0.1, color: 'rgb(5%,5%,5%)', label: '- 0.5' },
-        { position: -0.1, color: 'rgb(75%,75%,75%)' },
-        { position: 0, color: 'rgb(75%,75%,75%)', label: '- 0.2' },
-        { position: 0, color: 'rgb(86%,86%,86%)' },
-        { position: 0.1, color: 'rgb(86%,86%,86%)', label: '- 0.1' },
-        { position: 0.1, color: 'rgb(92%,92%,92%)' },
-        { position: 0.2, color: 'rgb(92%,92%,92%)', label: ' 0' },
-        { position: 0.2, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(57%,75%,32%)' },
-        { position: 0.6, color: 'rgb(57%,75%,32%)', label: ' 0.2' },
-        { position: 0.6, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(0%,27%,0%)', label: ' 0.6' },
-        { position: 1.1, color: 'rgb(0%,27%,0%)', label: ' 1' },
-      ],
-    },
+    legend: NDVI_LEGEND,
     description: () =>
       t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/).`,
   },
@@ -770,6 +794,8 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S2_L1C_CDAS, layerId: '3_NDWI' },
       { datasourceId: S2_L2A_CDAS, layerId: '3_NDWI' },
       { datasourceId: CDAS_L8_L9_LOTL1, layerId: '7_NDWI' },
+      { datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC, layerId: 'NDWI' },
+      { datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC, layerId: 'NDWI' },
     ],
     legend: {
       type: 'continuous',
@@ -830,6 +856,21 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: S3OLCI_CDAS, layerId: '1_TRUE_COLOR' }],
     description: () =>
       t`# True color composite\n\nSensors carried by satellites can image Earth in different regions of the electromagnetic spectrum . Each region in the spectrum is referred to as a band. True color composite uses visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here.](https://sentinel.esa.int/web/sentinel/user-guides/sentinel-3-olci/overview/heritage)`,
+  },
+  {
+    match: [{ datasourceId: S3OLCI_CDAS, layerId: '3_TRISTIMULUS' }],
+    description: () =>
+      t`# Tristimulus\n\nThe colours of natural waters differ markedly across the globe, depending on water composition and illumination conditions. Ocean colour instruments measure water-leaving radiance in narrow spectral bands to retrieve water-quality indicators. The true colour of natural waters is derived by calculating tristimulus values — the three primaries (X, Y, Z) that specify a colour stimulus as perceived by the human eye.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-3/tristimulus/).`,
+  },
+  {
+    match: [{ datasourceId: S3OLCI_CDAS, layerId: '4_RGB__17_5_2_' }],
+    description: () =>
+      t`# RGB (B17, B05, B02)\n\nThis false color composite maps Sentinel-3 OLCI bands B17 (865 nm, near-infrared), B05 (510 nm, cyan-green), and B02 (412.5 nm, violet) into the red, green, and blue display channels respectively. B17 is a near-infrared band used for aerosol and atmospheric correction; placing it in the red channel makes vegetation and land surfaces appear bright red while water remains dark. B05 is sensitive to chlorophyll, sediment, turbidity, and red tide, and B02 captures yellow dissolved organic matter (CDOM) and detrital pigments. The composite is useful for ocean colour analysis, coastal water quality monitoring, and distinguishing turbid or sediment-laden waters from clear ocean.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-3/bands/).`,
+  },
+  {
+    match: [{ datasourceId: S3OLCI_CDAS, layerId: '5_RGB__17_6_3_' }],
+    description: () =>
+      t`# RGB (B17, B06, B03)\n\nThis false color composite maps Sentinel-3 OLCI bands B17 (865 nm, near-infrared), B06 (560 nm, green), and B03 (442.5 nm, blue) into the red, green, and blue display channels respectively. B17 is a near-infrared band used for aerosol and atmospheric correction; placing it in the red channel makes vegetation and land surfaces appear bright red while water remains dark. B06 is the chlorophyll absorption minimum reference band, and B03 captures chlorophyll absorption and biogeochemical properties. Compared to the B17/B05/B02 composite, the shifted green and blue channels offer a different sensitivity to phytoplankton and dissolved organic matter in coastal and open ocean waters.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-3/bands/).`,
   },
   {
     match: [{ datasourceId: S3OLCI_CDAS, layerId: '6_TRUE-COLOR-HIGLIGHT-OPTIMIZED' }],
@@ -1404,7 +1445,6 @@ export const PREDEFINED_LAYERS_METADATA = [
     description: () =>
       t`# Sepia Visualization\n\n\n\nThis script returns a sepia visualization of a digital elevation model, assigning continuous colors to the elevation borders.\n\nIt is possible to set custom min and max values in the evalscript by setting defaultVis to false and setting the min and max variables to the desired values.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/dem/dem-sepia/)`,
   },
-
   {
     match: [
       { datasourceId: S1_CDAS_EW_HHHV, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
@@ -1413,13 +1453,33 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: S1_CDAS_SM_VVVH, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_IW_HHHV, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
       { datasourceId: S1_CDAS_EW_VVVH, layerId: 'ENHANCED-VISUALIZATION-ORTHORECTIFIED' },
+      { datasourceId: S1_CDAS_IW_VVVH, layerId: '1_ENHANCED-VISUALIZATION' },
       { datasourceId: S1_MONTHLY_MOSAIC_DH, layerId: 'ENHANCED-VISUALIZATION' },
       { datasourceId: S1_MONTHLY_MOSAIC_IW, layerId: 'ENHANCED' },
     ],
     description: () =>
       t`# Enhanced visualization\n\nThis script combines the gamma0 of the VV and VH polarizations into a false color visualization. It displays water areas in blue (partially black) and land in different shades of yellow/green. Urban areas are displayed in a light green-yellow (towards white), vegetated areas in mustard green and bare ground in a darker green.\n\nFor snowy and icy areas, the visualization can vary from light green-yellow over brighter green to dark brown or even black. In order not to confuse cryogenic features with non-cryogenic ones, some general information about the location is helpful in interpreting the image.`,
   },
-
+  {
+    match: [{ datasourceId: S1_CDAS_IW_VVVH, layerId: '2_ENHANCED-VISUALIZATION-2' }],
+    description: () =>
+      t`# SAR False Color Visualization\n\nThis script combines the gamma0 of the VV and VH polarizations of Sentinel-1 SAR data into a false color visualization. Water areas appear in blue (partially black) and land in different shades of yellow/green. Urban areas are displayed in light green-yellow (towards white), vegetated areas in mustard green, and bare ground in darker green. The visualization supports a wide range of monitoring applications, including ice and ship tracking, agriculture and deforestation monitoring, and emergency response scenarios such as flood and volcano observation.\n\nFor snowy and icy areas, the visualization can vary from light green-yellow over brighter green to dark brown or even black. Some general knowledge of the location is helpful to avoid confusing cryogenic features with other land cover types.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/sar_false_color_visualization/).`,
+  },
+  {
+    match: [{ datasourceId: S1_CDAS_IW_VVVH, layerId: '3_URBAN-AREAS' }],
+    description: () =>
+      t`# Urban Areas\n\nThis script uses Sentinel-1 SAR VH and VV polarisations to highlight urban areas and buildings. Structures appear in different colours depending on their backscatter characteristics: purple indicates high VH reflectance, green indicates high VV reflectance, and white indicates high reflectance in both. The red channel is restricted to pixels where VH exceeds 0.5, helping separate buildings from bare soil. The script is useful for monitoring urban expansion, assessing building density, and identifying structures in flood-prone areas. Note that in mountainous terrain, steep slopes and snow can produce similar signals, making it difficult to separate urban areas from other features.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/urban_areas/).`,
+  },
+  {
+    match: [{ datasourceId: S1_CDAS_IW_VVVH, layerId: '4_DEFORESTATION' }],
+    description: () =>
+      t`# SAR Deforestation Detection\n\nThis script processes Sentinel-1 VV and VH polarisation bands to detect deforestation and forest degradation. It converts the backscatter values into polar form to derive vector length and angle, which discriminate between water, forest, and bare soil. Water and bare soil appear black, forested areas are rendered in green gradients, and degraded or cleared areas appear in red — with stronger colours indicating higher classification confidence. The script is useful for monitoring forest loss and land-use change over time.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/sar_deforestation_detection/).`,
+  },
+  {
+    match: [{ datasourceId: S1_CDAS_IW_VVVH, layerId: '5_WATER-SURFACE-ROUGHNESS-VISUALIZATION' }],
+    description: () =>
+      t`# Water Surface Roughness\n\nThis script visualizes water surface roughness using Sentinel-1 SAR data. SAR backscatter is highly sensitive to the roughness of the water surface: calm water reflects radar energy away from the sensor and appears dark, while rough or wind-driven water scatters energy back and appears brighter. Variations in surface roughness reveal oceanographic and maritime features such as wind patterns, sea currents, internal waves, and ship wakes. Oil spills dampen surface waves and appear as dark patches against the surrounding rougher water. The visualization supports maritime monitoring applications including ship tracking, oil pollution detection, and observation of ocean circulation.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-1/water_surface_roughness_visualization/).`,
+  },
   {
     match: [
       { datasourceId: S1_CDAS_EW_HHHV, layerId: '8_RGB-RATIO' },
@@ -1848,26 +1908,44 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '5_LAND_RC865' }],
+    legend: GRAYSCALE_0_1_LEGEND,
     description: () =>
       t`# Rectified reflectance 779\n\nThe rectified reflectance product is a by-product of the GIFAPAR product. It shows a virtual reflectance that is largely free of atmospheric and angular effects and is a good approcimation of the top of the canopy reflectances. The rectified reflectance 779 is based on the NIR band (band 17) with a wavelength of 779 nm.\n\nMore info [here](https://sentiwiki.copernicus.eu/web/olci-products#OLCIProducts-RectifiedReflectanceS3-OLCI-Products-L2-Land-RC).`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '4_LAND_RC681' }],
+    legend: GRAYSCALE_0_1_LEGEND,
     description: () =>
       t`# Rectified reflectance 681\n\nThe rectified reflectance product is a by-product of the GIFAPAR product. It shows a virtual reflectance that is largely free of atmospheric and angular effects and is a good approcimation of the top of the canopy reflectances. The rectified reflectance 681 is based on the red band (band 10) with a wavelength of 681 nm.\n\nMore info [here](https://sentiwiki.copernicus.eu/web/olci-products#OLCIProducts-RectifiedReflectanceS3-OLCI-Products-L2-Land-RC).`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '1_LAND_GIFAPAR' }],
+    legend: GRAYSCALE_0_1_LEGEND,
     description: () =>
-      t`# Green Instantaneous Fraction of Absorbed Photosynthetically Available Radiation (GIFAPAR)\n\nThe Green Instantaneous Fraction of Absorbed Photosynthetically Available Radiation (GIFAPAR) is a bio-geophysical product used to study the photosynthetic process of plants and is often used in diagnostic and predictive models computing primary productivity of the vegetation canopies. In addition, this parameter is also an input for the estimation of assimilation of CO2 in vegetation. GIFAPAR ranges from 0–1.\n\nMore info [here](https://sentinel.esa.int/documents/247904/2702575/Sentinel-3-OLCI-Product-Notice-Level-2-Land).`,
+      t`# Green Instantaneous Fraction of Absorbed Photosynthetically Available Radiation (GIFAPAR)\n\nThe Green Instantaneous Fraction of Absorbed Photosynthetically Available Radiation (GIFAPAR) is a bio-geophysical product used to study the photosynthetic process of plants and is often used in diagnostic and predictive models computing primary productivity of the vegetation canopies. In addition, this parameter is also an input for the estimation of assimilation of CO2 in vegetation. GIFAPAR ranges from 0–1.\n\nMore info [here](https://sentiwiki.copernicus.eu/web/olci-products#OLCIProducts-GreenInstantaneousFractionofAbsorbedPhotosyntheticallyActiveRadiation(GI-FAPAR)S3-OLCI-Products-L2-Land-GI-FAPAR).`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '2_LAND_IWV_L' }],
+    legend: GRAYSCALE_0_1_LEGEND,
     description: () =>
       t`# Integrated water vapour column\n\nThe integrated water vapour column displays the water vapour integrated over an atmosphere column. It is displayed in kg/m2 and calculated on the basis of band 18 (885 nm) and band 19 (900 nm). The product provides stable and high quality results, but shows a systematic overestimation of about 9%–13% copared to ground base reference.\n\nMore info [here](https://sentiwiki.copernicus.eu/web/olci-products#OLCIProducts-IntegratedWaterVapourColumnoverLandS3-OLCI-Products-L2-Land-IWV).`,
   },
   {
     match: [{ datasourceId: S3OLCIL2_LAND, layerId: '3_LAND_OTCI' }],
+    legend: {
+      type: 'continuous',
+      minPosition: 0,
+      maxPosition: 4,
+      gradients: [
+        { position: 0, color: '#00007d', label: '0' },
+        { position: 0.8, color: '#004ccc', label: '0.8' },
+        { position: 1.44, color: '#ff3333', label: '1.44' },
+        { position: 2, color: '#ffe500', label: '2' },
+        { position: 3.2, color: '#00cc19', label: '3.2' },
+        { position: 3.6, color: '#00cc19', label: '3.6' },
+        { position: 4, color: '#ffffff', label: ' 4' },
+      ],
+    },
     description: () =>
       t`# Terrestrial Chlorophyll Index (OTCI)\n\n\n\nThe Terrestrial Chlorophyll Index (OTCI) is estimated based on the chlorophyll content in terrestrial vegetation and can be used to monitor vegetation condition and health. Low OTCI values usually signify water, sand or snow. Extremely high values, displayed with white, usually suggest the absence of chlorophyll as well. They generally represent either bare ground, rock or clouds. The chlorophyll values in between range from red (low chlorophyll values) to dark green (high chlorophyll values) can be used to determine vegetation health.\n\n\n\nMore info [here.](https://custom-scripts.sentinel-hub.com/sentinel-3/otci/)`,
   },
@@ -2202,55 +2280,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       { datasourceId: CDSE_CCM_VHR_IMAGE_2021_COLLECTION, layerId: '3_NDVI' },
       { datasourceId: CDSE_CCM_VHR_IMAGE_2024_COLLECTION, layerId: '3_NDVI' },
     ],
-    legend: {
-      type: 'continuous',
-      minPosition: -0.2,
-      maxPosition: 1.1,
-      gradients: [
-        { position: -0.2, color: 'rgb(5%,5%,5%)', label: '- 1' },
-        { position: -0.1, color: 'rgb(5%,5%,5%)', label: '- 0.5' },
-        { position: -0.1, color: 'rgb(75%,75%,75%)' },
-        { position: 0, color: 'rgb(75%,75%,75%)', label: '- 0.2' },
-        { position: 0, color: 'rgb(86%,86%,86%)' },
-        { position: 0.1, color: 'rgb(86%,86%,86%)', label: '- 0.1' },
-        { position: 0.1, color: 'rgb(92%,92%,92%)' },
-        { position: 0.2, color: 'rgb(92%,92%,92%)', label: ' 0' },
-        { position: 0.2, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(100%,98%,80%)' },
-        { position: 0.25, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(93%,91%,71%)' },
-        { position: 0.3, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(87%,85%,61%)' },
-        { position: 0.35, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(80%,78%,51%)' },
-        { position: 0.4, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(74%,72%,42%)' },
-        { position: 0.45, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(69%,76%,38%)' },
-        { position: 0.5, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(64%,80%,35%)' },
-        { position: 0.55, color: 'rgb(57%,75%,32%)' },
-        { position: 0.6, color: 'rgb(57%,75%,32%)', label: ' 0.2' },
-        { position: 0.6, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(50%,70%,28%)' },
-        { position: 0.65, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(44%,64%,25%)' },
-        { position: 0.7, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(38%,59%,21%)' },
-        { position: 0.75, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(31%,54%,18%)' },
-        { position: 0.8, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(25%,49%,14%)' },
-        { position: 0.85, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(19%,43%,11%)' },
-        { position: 0.9, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(13%,38%,7%)' },
-        { position: 0.95, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(6%,33%,4%)' },
-        { position: 1.0, color: 'rgb(0%,27%,0%)', label: ' 0.6' },
-        { position: 1.1, color: 'rgb(0%,27%,0%)', label: ' 1' },
-      ],
-    },
+    legend: NDVI_LEGEND,
     description: () =>
       t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1).\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel-2/ndvi/).`,
   },
@@ -5240,99 +5270,8 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [
       {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2017',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2018',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2019',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2020',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2021',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2022',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence - 2023',
-      },
-    ],
-    description: () =>
-      t`Provides at pan-European level the emergence date of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
-  },
-  {
-    match: [
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2017_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2018_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2019_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2020_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2021_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2022_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_2023_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Emergence Confidence Layer',
-      },
-    ],
-    description: () => t`Confidence layer - a quality indicator for main crop emergence.`,
-  },
-  {
-    match: [
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2017',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2018',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2019',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2020',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2021',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2022',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest - 2023',
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCH,
       },
     ],
     description: () =>
@@ -5341,32 +5280,8 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [
       {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2017_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2018_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2019_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2020_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2021_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2022_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
-      },
-      {
-        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_2023_EUROPE_10M_YEARLY_V1,
-        layerId: 'Main Crop Harvest Confidence Layer',
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCHCL,
       },
     ],
     description: () => t`Confidence layer - a quality indicator for main crop harvest.`,
@@ -5430,11 +5345,174 @@ temperatures of atmospheric window channels within the infrared range. LST descr
   {
     match: [
       {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCE,
+      },
+    ],
+    description: () =>
+      t`Provides at pan-European level the emergence date of the main growing season at a spatial resolution of 10 m and a MMU of 0.25 ha.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCECL,
+      },
+    ],
+    description: () => t`Confidence layer - a quality indicator for main crop emergence.`,
+  },
+  {
+    match: [
+      {
         datasourceId: COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1,
         layerId: 'lulucf_instance',
       },
     ],
     description: () =>
       t`Provides an annually updated, pan-European spatially consistent and seamless geospatial proxy for the 6 main land use categories (and some sub-categories) as reported for the LULUCF regulation (Land Use, Land Use Change and Forestry) by the countries. Each pixel is corresponding to the 6 main LULUCF land use categories but including sub-categories the product has 27 classes. The dataset is available as a 100 m raster.`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+        layerId: 'TRUE-COLOR-CLOUDLESS',
+      },
+    ],
+    description: () =>
+      t`# True Color\n\nThis True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally. For Sentinel-2 L2A Quarterly Cloudless Mosaic, contrast enhancement with highlight compression and saturation enhancement were applied for better visualisation.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel2-quarterly-cloudless-mosaic/true-color/).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+        layerId: 'FALSE-COLOR-CLOUDLESS',
+      },
+    ],
+    description: () =>
+      t`# False Color\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false color composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black. For Sentinel-2 L2A Quarterly Cloudless Mosaic, the HighlightCompressVisualizer is applied for better visualisation.\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel2-quarterly-cloudless-mosaic/false-color/).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+        layerId: 'NDVI',
+      },
+    ],
+    description: () =>
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1). For Sentinel-2, the NDVI is calculated using NIR band B08 and red band B04: NDVI = (B08 - B04) / (B08 + B04).\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel2-quarterly-cloudless-mosaic/ndvi/).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+        layerId: 'NDWI',
+      },
+    ],
+    description: () =>
+      t`# Normalized Difference Water Index (NDWI)\n\nThe normalized difference water index is most appropriate for water body mapping. It uses green and near infrared bands to highlight water bodies, as water strongly absorbs light in the visible to infrared spectrum. Values of water bodies are larger than 0.5. Vegetation has smaller values. Built-up features have positive values between zero and 0.2. The index is sensitive to built-up land and can result in over-estimation of water bodies. For Sentinel-2, the NDWI is calculated using green band B03 and NIR band B08: NDWI = (B03 - B08) / (B03 + B08).\n\n\n\nMore info [here](https://custom-scripts.sentinel-hub.com/sentinel2-quarterly-cloudless-mosaic/ndwi/).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
+        layerId: 'TRUE-COLOR-CLOUDLESS',
+      },
+    ],
+    description: () =>
+      t`# True Color\n\nThis True color script uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product, that is a good representation of the Earth as humans would see it naturally.\n\n\n\nMore info [here](https://remotesensing.vito.be/news/simplify-your-processing-worldcover-annual-composites).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
+        layerId: 'FALSE-COLOR-CLOUDLESS',
+      },
+    ],
+    description: () =>
+      t`# False Color\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is very popular (a band is a region of the electromagnetic spectrum; a satellite sensor can image Earth in different bands). The false color composite is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black.\n\n\n\nMore info [here](https://remotesensing.vito.be/news/simplify-your-processing-worldcover-annual-composites).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
+        layerId: 'NDVI',
+      },
+    ],
+    description: () =>
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1). For Sentinel-2, the NDVI is calculated using NIR band B08 and red band B04: NDVI = (B08 - B04) / (B08 + B04).\n\n\n\nMore info [here](https://remotesensing.vito.be/news/simplify-your-processing-worldcover-annual-composites).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC,
+        layerId: 'NDWI',
+      },
+    ],
+    description: () =>
+      t`# Normalized Difference Water Index (NDWI)\n\nThe normalized difference water index is most appropriate for water body mapping. It uses green and near infrared bands to highlight water bodies, as water strongly absorbs light in the visible to infrared spectrum. Values of water bodies are larger than 0.5. Vegetation has smaller values. Built-up features have positive values between zero and 0.2. The index is sensitive to built-up land and can result in over-estimation of water bodies. For Sentinel-2, the NDWI is calculated using green band B03 and NIR band B08: NDWI = (B03 - B08) / (B03 + B08).\n\n\n\nMore info [here](https://remotesensing.vito.be/news/simplify-your-processing-worldcover-annual-composites).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_SYN,
+        layerId: 'TRUE-COLOR',
+      },
+    ],
+    description: () =>
+      t`# True Color\n\nThis True color composite uses the visible light bands red, green and blue in the corresponding red, green and blue color channels, resulting in a natural colored product that is a good representation of the Earth as humans would see it naturally. The visualization is based on atmospherically corrected surface reflectances from the Sentinel-3 SYNERGY SY_2_SYN product, which combines data from the OLCI and SLSTR instruments at 300 m resolution.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_SYN,
+        layerId: 'FALSE-COLOR',
+      },
+    ],
+    description: () =>
+      t`# False Color\n\nA false color composite uses at least one non-visible wavelength to image Earth. The false color composite using near infrared, red and green bands is most commonly used to assess plant density and health, since plants reflect near infrared and green light, while they absorb red. Cities and exposed ground are grey or tan, and water appears blue or black. The visualization is based on atmospherically corrected surface reflectances from the Sentinel-3 SYNERGY SY_2_SYN product, which combines data from the OLCI and SLSTR instruments at 300 m resolution.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_SYN,
+        layerId: 'S6',
+      },
+    ],
+    legend: GRAYSCALE_0_1_LEGEND,
+    description: () =>
+      t`# S6 (2.25 µm SWIR)\n\nThe Sentinel-3 SYNERGY SY_2_SYN product combines data from the OLCI and SLSTR instruments to provide atmospherically corrected surface reflectances over land at 300 m resolution. The S6 band is the SLSTR shortwave infrared channel centered at 2250 nm and is available in both nadir and oblique views. It contributes to aerosol retrieval and surface directional reflectance, and is useful for distinguishing vegetation, bare soil, snow, ice, and minerals.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-ResolutionS3-Synergy-Products-PD-Resolution).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_VG1,
+        layerId: 'NDVI_VG1',
+      },
+    ],
+    legend: NDVI_LEGEND,
+    description: () =>
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1). The Sentinel-3 SYNERGY VG1 product provides a daily synthesis of Top of Canopy (TOC) surface reflectance at 1 km resolution, with NDVI derived from the NIR channel B3 (~835 nm) and red channel B2 (~645 nm) using maximum NDVI compositing.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-L2VG1andV10ProductsS3-Synergy-Products-L2-VG1-and-V10-Products).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_VG1,
+        layerId: 'TOA_NDVI_VG1',
+      },
+    ],
+    legend: NDVI_LEGEND,
+    description: () =>
+      t`# Top of Atmosphere NDVI (TOA NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1). Unlike the TOC NDVI, the TOA NDVI is computed from Top of Atmosphere reflectances before atmospheric correction. The Sentinel-3 SYNERGY VG1 product provides a daily synthesis at 1 km resolution using maximum NDVI compositing.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-L2VG1andV10ProductsS3-Synergy-Products-L2-VG1-and-V10-Products).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: S3SYNERGY_L2_V10,
+        layerId: 'NDVI_V10',
+      },
+    ],
+    legend: NDVI_LEGEND,
+    description: () =>
+      t`# Normalized Difference Vegetation Index (NDVI)\n\nThe normalized difference vegetation index is a simple, but effective index for quantifying green vegetation. It is a measure of the state of vegetation health based on how plants reflect light at certain wavelengths. The value range of the NDVI is -1 to 1. Negative values of NDVI (values approaching -1) correspond to water. Values close to zero (-0.1 to 0.1) generally correspond to barren areas of rock, sand, or snow. Low, positive values represent shrub and grassland (approximately 0.2 to 0.4), while high values indicate temperate and tropical rainforests (values approaching 1). The Sentinel-3 SYNERGY V10 product provides a 10-day synthesis of Top of Canopy (TOC) surface reflectance at 1 km resolution, with NDVI derived from the NIR channel B3 (~835 nm) and red channel B2 (~645 nm) using maximum NDVI compositing.\n\n\n\nMore info [here](https://sentiwiki.copernicus.eu/web/synergy-products#SYNERGYProducts-L2VG1andV10ProductsS3-Synergy-Products-L2-VG1-and-V10-Products).`,
   },
 ];

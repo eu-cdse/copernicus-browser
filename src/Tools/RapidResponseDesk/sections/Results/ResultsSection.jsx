@@ -18,7 +18,6 @@ import store, {
 import ResultsCard from './ResultsCard/ResultsCard';
 import { useRRDProcessResults } from '../../../../hooks/useRRDProcessResults';
 import Button, { ButtonType } from '../../../../components/Button/Button';
-import { ITEMS_PER_PAGE } from './constants';
 import { NotificationPanel } from '../../../../junk/NotificationPanel/NotificationPanel';
 import ReactMarkdown from 'react-markdown';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
@@ -161,24 +160,25 @@ Try adjusting the date range, data providers, advanced fields, or select a bigge
                     loadedImages={quicklookImages}
                   ></ResultsCard>
                 ))}
-                {processedResults && processedResults.length < totalFilteredResults && (
-                  <div className="result-section-footer">
-                    <div className="result-section-footer-text">
-                      Showing {currentPage * ITEMS_PER_PAGE} of {totalFilteredResults} results
-                    </div>
-                    <Button
-                      onClick={handleShowMore}
-                      type={ButtonType.success}
-                      label={t`Load More`}
-                      styleClassName="uppercase-text"
-                    ></Button>
-                  </div>
-                )}
               </div>
             )
           ) : null;
         }}
       </CollapsiblePanel>
+
+      {resultsExpanded && results?.length > 0 && processedResults.length < totalFilteredResults && (
+        <div className="result-section-footer">
+          <div className="result-section-footer-text">
+            {t`Showing ${processedResults.length} of ${totalFilteredResults} results`}
+          </div>
+          <Button
+            onClick={handleShowMore}
+            type={ButtonType.success}
+            label={t`Load More`}
+            styleClassName="uppercase-text"
+          ></Button>
+        </div>
+      )}
 
       {displayModal ? (
         <Modal

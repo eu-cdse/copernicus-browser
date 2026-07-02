@@ -4,6 +4,8 @@ import {
   geometryToBBoxGeometry,
   boundsToPolygon,
   estimateWktLength,
+  isValidGeometry,
+  getPolygonDefect,
   DEFAULT_MAX_GEOMETRY_CHARS,
 } from './geojson.utils';
 
@@ -525,5 +527,125 @@ describe('boundsToPolygon', () => {
     expect(coords[2]).toEqual([20, 50]); // NE
     expect(coords[3]).toEqual([10, 50]); // NW
     expect(coords[4]).toEqual([10, 40]); // Close ring (back to SW)
+  });
+});
+
+describe('isValidGeometry', () => {
+  const cleanRing = [
+    [26.2765694251, 55.1274218391],
+    [26.2977102716, 55.1341147918],
+    [26.3057794057, 55.1370870286],
+    [26.3200126723, 55.1375103731],
+    [26.3206096411, 55.1465688942],
+    [26.3444764444, 55.1497728036],
+    [26.3579356983, 55.1539638666],
+    [26.3795192673, 55.1504602971],
+    [26.3856471683, 55.1489724417],
+    [26.3856471683, 55.1112277031],
+    [26.2853665822, 55.1100699825],
+    [26.2765694251, 55.1274218391],
+  ];
+
+  test('rejects a double-closed (degenerate) Polygon ring', () => {
+    const ring = [...cleanRing, [26.2765694251, 55.1274218391]]; // duplicate closing vertex
+    expect(isValidGeometry({ type: 'Polygon', coordinates: [ring] })).toBe(false);
+  });
+
+  test('accepts a clean Polygon ring', () => {
+    expect(isValidGeometry({ type: 'Polygon', coordinates: [cleanRing] })).toBe(true);
+  });
+
+  test('accepts a valid LineString and Point', () => {
+    expect(
+      isValidGeometry({
+        type: 'LineString',
+        coordinates: [
+          [0, 0],
+          [1, 1],
+        ],
+      }),
+    ).toBe(true);
+    expect(isValidGeometry({ type: 'Point', coordinates: [0, 0] })).toBe(true);
+  });
+
+  test.each([null, undefined, {}, { type: 'Foo' }])('rejects non-geometry input: %p', (input) => {
+    expect(isValidGeometry(input)).toBe(false);
+  });
+
+  test('handles GeometryCollection recursively', () => {
+    const validMember = { type: 'Polygon', coordinates: [cleanRing] };
+    const invalidMember = {
+      type: 'Polygon',
+      coordinates: [[...cleanRing, [26.2765694251, 55.1274218391]]],
+    };
+    expect(isValidGeometry({ type: 'GeometryCollection', geometries: [validMember] })).toBe(true);
+    expect(isValidGeometry({ type: 'GeometryCollection', geometries: [validMember, invalidMember] })).toBe(
+      false,
+    );
+    expect(isValidGeometry({ type: 'GeometryCollection', geometries: [] })).toBe(false);
+  });
+});
+
+describe('getPolygonDefect', () => {
+  const cleanRing = [
+    [0, 0],
+    [1, 0],
+    [1, 1],
+    [0, 1],
+    [0, 0],
+  ];
+
+  test('returns null for a valid Polygon', () => {
+    expect(getPolygonDefect({ type: 'Polygon', coordinates: [cleanRing] })).toBeNull();
+  });
+
+  test('detects an unclosed ring', () => {
+    const unclosed = [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ];
+    expect(getPolygonDefect({ type: 'Polygon', coordinates: [unclosed] })).toBe('UNCLOSED_RING');
+  });
+
+  test('detects too few points', () => {
+    const tooFew = [
+      [0, 0],
+      [1, 1],
+      [0, 0],
+    ];
+    expect(getPolygonDefect({ type: 'Polygon', coordinates: [tooFew] })).toBe('TOO_FEW_POINTS');
+  });
+
+  test('detects duplicate consecutive vertices (double-closed ring)', () => {
+    const doubleClosed = [...cleanRing, [0, 0]];
+    expect(getPolygonDefect({ type: 'Polygon', coordinates: [doubleClosed] })).toBe('DUPLICATE_VERTICES');
+  });
+
+  test('reports the defect of an invalid member in a MultiPolygon', () => {
+    const doubleClosed = [...cleanRing, [0, 0]];
+    expect(getPolygonDefect({ type: 'MultiPolygon', coordinates: [[cleanRing], [doubleClosed]] })).toBe(
+      'DUPLICATE_VERTICES',
+    );
+  });
+
+  test('returns null for a self-touching ring (no deterministic defect)', () => {
+    const selfTouching = [
+      [0, 0],
+      [4, 0],
+      [4, 4],
+      [2, 2],
+      [0, 4],
+      [2, 2],
+      [0, 0],
+    ];
+    expect(getPolygonDefect({ type: 'Polygon', coordinates: [selfTouching] })).toBeNull();
+  });
+
+  test('returns null for non-polygon types and nullish input', () => {
+    expect(getPolygonDefect({ type: 'LineString', coordinates: cleanRing })).toBeNull();
+    expect(getPolygonDefect(null)).toBeNull();
+    expect(getPolygonDefect(undefined)).toBeNull();
   });
 });

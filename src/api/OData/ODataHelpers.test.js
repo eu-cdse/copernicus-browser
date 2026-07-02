@@ -39,6 +39,8 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1,
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import {
@@ -65,6 +67,10 @@ import {
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_LAYER_IDS,
   COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_DATASET_IDENTIFIER,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
+  COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS,
 } from '../../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
 
 jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
@@ -2281,6 +2287,80 @@ describe('getODataCollectionInfoFromDatasetId — VLCC split-collection datasets
         instrument,
         COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCDCL,
         COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCD,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1;
+    const instrument = 'CROPPING_PATTERNS';
+
+    test('confidence layerId returns single CPMCECL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCECL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+      );
+    });
+
+    test('main layerId returns single CPMCE entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCE,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCECL,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCE,
+      );
+    });
+  });
+
+  describe('COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1', () => {
+    const datasetId = COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1;
+    const instrument = 'CROPPING_PATTERNS';
+
+    test('confidence layerId returns single CPMCHCL entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCHCL,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+      );
+    });
+
+    test('main layerId returns single CPMCH entry', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {
+        layerId: COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS.CPMCH,
+      });
+      assertSingleResult(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH,
+      );
+    });
+
+    test('no layerId returns both entries', () => {
+      const result = getODataCollectionInfoFromDatasetId(datasetId, {});
+      assertTwoResults(
+        result,
+        instrument,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCHCL,
+        COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS.CPMCH,
       );
     });
   });

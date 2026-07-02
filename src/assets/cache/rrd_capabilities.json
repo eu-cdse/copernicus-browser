@@ -12,6 +12,19 @@
         ],
         "datasets": []
     },
+    "02495f-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_LEGION_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "04bcaf-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_WV3_PM4_SO_PAN",
         "layers": [
@@ -38,12 +51,78 @@
         ],
         "datasets": []
     },
+    "08b23a-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_SKYSAT_MS_4",
+        "layers": [
+            {
+                "id": "FALSE-COLOR",
+                "name": "FALSE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "0adc96-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_WORLDVIEW_8MS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "0b54e6-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_LEGION_PAN",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "0f41e6-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_CSG_SC1_AB_HH",
         "layers": [
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "104364-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_LEGION_PAN",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -183,6 +262,19 @@
         ],
         "datasets": []
     },
+    "21bdb3-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_WORLDVIEW_PAN",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "270301-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_WV3_PM4_OR_PAN",
         "layers": [
@@ -196,12 +288,65 @@
         ],
         "datasets": []
     },
+    "27051f-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_WORLDVIEW_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "274b4d-YOUR-INSTANCEID-HERE": {
         "title": "GENERAL_SKYSAT_PANS",
         "layers": [
             {
                 "id": "PANCHROMATIC",
                 "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "2d8f6a-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_PLANETSCOPE_MS_4",
+        "layers": [
+            {
+                "id": "FALSE-COLOR",
+                "name": "FALSE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "2df49b-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_LEGION_RGB",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -241,6 +386,32 @@
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "384871-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_WORLDVIEW_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "38951e-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_SKYSAT_PANS",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -288,6 +459,19 @@
         ],
         "datasets": []
     },
+    "3b19f1-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_SPOT_MULTISPECTRAL_4BANDS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "3e9d00-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_SAR_HIM_1B_HH",
         "layers": [
@@ -303,6 +487,19 @@
     },
     "4128cf-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_SAR_SLH_SL_VV",
+        "layers": [
+            {
+                "id": "VV",
+                "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "41f95d-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_ICEYE_GRD-COG_VV",
         "layers": [
             {
                 "id": "VV",
@@ -419,6 +616,19 @@
         ],
         "datasets": []
     },
+    "4d9802-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_LEGION_4MS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "4eb7c3-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_SAR_ST_SSC_HH",
         "layers": [
@@ -438,6 +648,32 @@
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "557400-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_ICEYE_SLC-COG_VV",
+        "layers": [
+            {
+                "id": "VV",
+                "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "55ddff-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_GEOSAT_PSH",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -524,6 +760,19 @@
         ],
         "datasets": []
     },
+    "5f7031-YOUR-INSTANCEID-HERE": {
+        "title": "PRISM_GENERAL_HRS_PSH_1C",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "61c1ba-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_WV6_PAN_OR",
         "layers": [
@@ -550,12 +799,38 @@
         ],
         "datasets": []
     },
+    "673921-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_ICEYE_GRD-COG_VV",
+        "layers": [
+            {
+                "id": "VV",
+                "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "676d64-YOUR-INSTANCEID-HERE": {
         "title": "GENERAL_TERRASAR-X/TANDEM-X_EEC_RE_VV",
         "layers": [
             {
                 "id": "VV",
                 "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "687990-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_LEGION_RGB",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -583,6 +858,46 @@
             {
                 "id": "TRUE-COLOR",
                 "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "6da86c-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_PNEO_PANSHARPENED_4BANDS",
+        "layers": [
+            {
+                "id": "FALSE-COLOR",
+                "name": "FALSE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "6fc1cd-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_PNEO_PANCHROMATIC",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -669,6 +984,19 @@
         ],
         "datasets": []
     },
+    "7727c3-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_PNEO_MULTISPECTRAL_4BANDS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "789b95-YOUR-INSTANCEID-HERE": {
         "title": "GENERAL_SKYSAT_PAN",
         "layers": [
@@ -701,6 +1029,19 @@
             {
                 "id": "PANCHROMATIC",
                 "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "7a98cf-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_GEOSAT_PS3",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -839,6 +1180,19 @@
         ],
         "datasets": []
     },
+    "88b936-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_TERRASAR-X/TANDEM-X_GEC_RE_HH",
+        "layers": [
+            {
+                "id": "HH",
+                "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "89a45e-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_GIS_MS4_OR",
         "layers": [
@@ -892,8 +1246,34 @@
         ],
         "datasets": []
     },
+    "91dad2-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_WORLDVIEW_RGB",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "92054a-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_WV3_PSH_OR",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "934fc6-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_WORLDVIEW_4MS",
         "layers": [
             {
                 "id": "TRUE-COLOR",
@@ -931,6 +1311,19 @@
         ],
         "datasets": []
     },
+    "9a7752-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_LEGION_8MS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "9a9fb3-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_WV3_PSH_OR",
         "layers": [
@@ -950,6 +1343,19 @@
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "a0622e-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_SKYSAT_PANS",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -1023,6 +1429,59 @@
         ],
         "datasets": []
     },
+    "abf5af-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_ICEYE_SLC-COG_VV",
+        "layers": [
+            {
+                "id": "VV",
+                "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "ac47c5-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_PHR_PANSHARPENED_4BANDS",
+        "layers": [
+            {
+                "id": "FALSE-COLOR",
+                "name": "FALSE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "ad60a5-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_PNEO_MULTISPECTRAL_6BANDS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "ae2b9f-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_CSG_HIM_AB_HH",
         "layers": [
@@ -1042,6 +1501,33 @@
             {
                 "id": "PANCHROMATIC",
                 "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "aefa51-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_PLANETSCOPE_MS_4",
+        "layers": [
+            {
+                "id": "FALSE-COLOR",
+                "name": "FALSE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "NDVI",
+                "name": "NDVI",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -1081,6 +1567,19 @@
             {
                 "id": "VV",
                 "name": "VV",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "b4b4e8-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_TERRASAR-X/TANDEM-X_GEC_RE_HH",
+        "layers": [
+            {
+                "id": "HH",
+                "name": "HH",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -1206,12 +1705,51 @@
         ],
         "datasets": []
     },
+    "c8e7ba-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_LEGION_PAN",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "cb6f3c-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_SPOT_PANCHROMATIC",
+        "layers": [
+            {
+                "id": "PANCHROMATIC",
+                "name": "Panchromatic",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "cc1585-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_GENERAL_CSG_S2C_AB_HH",
         "layers": [
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "cc5fc2-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_LEGION_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -1238,6 +1776,19 @@
             {
                 "id": "HH",
                 "name": "HH",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "cdcbfb-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_LEGION_4MS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
                 "description": "",
                 "dataset": "CUSTOM",
                 "legendUrl": null
@@ -1362,6 +1913,32 @@
         ],
         "datasets": []
     },
+    "d762e6-YOUR-INSTANCEID-HERE": {
+        "title": "CSESA_LEGION_4PS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "d8112b-YOUR-INSTANCEID-HERE": {
+        "title": "GENERAL_LEGION_4MS",
+        "layers": [
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
     "dc5bf6-YOUR-INSTANCEID-HERE": {
         "title": "PRISM_FRTX_WV1_PM4_OR_MS",
         "layers": [
@@ -1471,6 +2048,19 @@
                 "dataset": "CUSTOM",
                 "legendUrl": null
             },
+            {
+                "id": "TRUE-COLOR",
+                "name": "TRUE COLOR",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": null
+            }
+        ],
+        "datasets": []
+    },
+    "f57f35-YOUR-INSTANCEID-HERE": {
+        "title": "FRTX_WORLDVIEW_4PS",
+        "layers": [
             {
                 "id": "TRUE-COLOR",
                 "name": "TRUE COLOR",

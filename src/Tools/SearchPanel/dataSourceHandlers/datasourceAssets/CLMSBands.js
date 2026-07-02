@@ -3289,10 +3289,8 @@ export const COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_BANDS
     sampleType: 'UINT16',
     getDescription: () => ``,
   },
-];
-export const COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS = [
   {
-    name: 'CPMCH',
+    name: 'CPMCECL',
     sampleType: 'UINT16',
     getDescription: () => ``,
   },
@@ -3304,6 +3302,19 @@ export const COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_BANDS = [
+  {
+    name: 'CPMCH',
+    sampleType: 'UINT16',
+    getDescription: () => ``,
+  },
+  {
+    name: 'CPMCHCL',
+    sampleType: 'UINT16',
+    getDescription: () => ``,
+  },
+];
+
 export const COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_BANDS = [
   {
     name: 'LULUCF_INSTANCE',

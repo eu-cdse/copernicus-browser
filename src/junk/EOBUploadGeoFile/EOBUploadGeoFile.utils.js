@@ -8,6 +8,7 @@ import JSZip from 'jszip';
 import shp from 'shpjs';
 import { getMgrsBounds } from '../../utils/mgrs';
 import { getGeoRefBounds } from '../../utils/georef';
+import { isValidGeometry, getPolygonDefect } from '../../utils/geojson.utils';
 
 const uploadGeoFileErrorMessages = {
   UNSUPORTED_FILE_TYPE: () => t`File type not supported`,
@@ -19,12 +20,33 @@ const uploadGeoFileErrorMessages = {
     t`Could not parse the geometry. Paste a GeoJSON geometry, a bounding box array [minX, minY, maxX, maxY], WKT, or a GEOREF/MGRS reference.`,
   INVALID_GEOJSON: () =>
     t`The input is not valid GeoJSON. Paste a GeoJSON geometry, or a bounding box array [minX, minY, maxX, maxY].`,
+  INVALID_GEOMETRY: () =>
+    t`The uploaded geometry is invalid (e.g. an unclosed ring, too few points, or duplicate/degenerate vertices). Please fix it and try again.`,
+  INVALID_GEOMETRY_UNCLOSED: () =>
+    t`The uploaded polygon is not closed: its first and last points differ. Close the ring and try again.`,
+  INVALID_GEOMETRY_TOO_FEW_POINTS: () =>
+    t`The uploaded polygon has too few points to form an area. A ring needs at least 3 distinct points. Please fix it and try again.`,
+  INVALID_GEOMETRY_DUPLICATE_VERTICES: () =>
+    t`The uploaded polygon contains a repeated point (duplicate consecutive vertices). Remove the duplicate point(s) and try again.`,
   UNSUPORTED_GEOJSON_TYPE: (
     supportedGeometryTypes = SUPPORTED_GEOMETRY_TYPES[UPLOAD_GEOMETRY_TYPE.POLYGON],
   ) => {
     const supported = supportedGeometryTypes.join(', ');
     return t`Unsupported GeoJSON geometry type! Only ${supported} are supported.`;
   },
+};
+
+const invalidGeometryMessage = (geometry) => {
+  switch (getPolygonDefect(geometry)) {
+    case 'UNCLOSED_RING':
+      return uploadGeoFileErrorMessages.INVALID_GEOMETRY_UNCLOSED();
+    case 'TOO_FEW_POINTS':
+      return uploadGeoFileErrorMessages.INVALID_GEOMETRY_TOO_FEW_POINTS();
+    case 'DUPLICATE_VERTICES':
+      return uploadGeoFileErrorMessages.INVALID_GEOMETRY_DUPLICATE_VERTICES();
+    default:
+      return uploadGeoFileErrorMessages.INVALID_GEOMETRY();
+  }
 };
 
 const SHAPEFILE_UPLOAD_EXPECTED_FILES = ['shp', 'prj'];
@@ -317,19 +339,34 @@ const parseContent = (data, type = UPLOAD_GEOMETRY_TYPE.POLYGON, format = null) 
 
 const parseZip = async (zipFile, type = UPLOAD_GEOMETRY_TYPE.POLYGON) => {
   // shp files only
+  let geoJson;
   try {
     const arrayBuffer = await readFileAsArrayBuffer(zipFile);
-    const geoJson = await shp(arrayBuffer);
-    return getUnion(geoJson, type);
+    geoJson = await shp(arrayBuffer);
   } catch (error) {
     throw new Error(uploadGeoFileErrorMessages.ERROR_PARSING_SHP());
   }
+  // Keep getUnion outside the catch so its specific geometry-defect messages are not
+  // masked by the generic shp parse error.
+  return getUnion(geoJson, type);
 };
 
 const getUnion = (geoJson, type) => {
   const geometries = extractGeometriesFromGeoJson(geoJson, SUPPORTED_GEOMETRY_TYPES[type]);
   const geometriesWithoutZ = geometries.map((geometry) => removeExtraCoordDimensionsIfNeeded(geometry));
-  return createUnion(geometriesWithoutZ, type);
+  const union = createUnion(geometriesWithoutZ, type);
+  // Reject geometrically invalid polygons (e.g. self-intersecting or double-closed/degenerate
+  // rings) before they reach the AOI store and get sent downstream. Empty and non-polygon
+  // geometries (e.g. POLYGON EMPTY, LineString uploads) pass through unchanged.
+  if (
+    union &&
+    (union.type === 'Polygon' || union.type === 'MultiPolygon') &&
+    union.coordinates?.length &&
+    !isValidGeometry(union)
+  ) {
+    throw new Error(invalidGeometryMessage(union));
+  }
+  return union;
 };
 
 const loadFileContent = async (file, format) => {
