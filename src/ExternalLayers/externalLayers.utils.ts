@@ -11,6 +11,7 @@ export interface ExternalLayer {
   abstract?: string;
   legendUrl?: string;
   tileUrl?: string; // WMTS only: pre-computed Leaflet {z}/{x}/{y} tile URL template
+  tileSize?: number; // WMTS only: tile pixel size declared by the TileMatrixSet (defaults to Leaflet's 256 when absent)
   bbox?: { south: number; west: number; north: number; east: number }; // advertised geographic extent (EPSG:4326), used to aim the preview thumbnail at the data
   timeDimension?: string; // human-readable time range, e.g. "1980–2026 · monthly"
   queryable?: boolean; // WMS layer advertises GetFeatureInfo support
@@ -615,6 +616,11 @@ export async function fetchWmtsCapabilities(url: string): Promise<CapabilitiesRe
     // Map each TileMatrixSet id to its CRS so we can keep only web-mercator layers
     // (Leaflet renders in EPSG:3857; other grids would be misplaced on the map).
     const tmsCrsById: Record<string, string> = {};
+    // Map each TileMatrixSet id to its tile pixel size. Non-standard sets (e.g. Planet's
+    // PopularWebMercator512) use 512px tiles instead of the WMTS/Web-Mercator convention of 256px;
+    // without this, Leaflet's default 256px assumption produces TILECOL/TILEROW values twice too
+    // large, which the server rejects with a 400 "Invalid TILECOL parameter" error.
+    const tmsTileSizeById: Record<string, number> = {};
     const tmsField = (contents as Record<string, unknown>)['TileMatrixSet'];
     if (tmsField) {
       const tmsDefs = Array.isArray(tmsField) ? tmsField : [tmsField];
@@ -623,6 +629,15 @@ export async function fetchWmtsCapabilities(url: string): Promise<CapabilitiesRe
         const crs = String(tms['ows:SupportedCRS'] ?? tms['SupportedCRS'] ?? '');
         if (id) {
           tmsCrsById[id] = crs;
+        }
+        const tileMatrixField = tms['TileMatrix'];
+        if (id && tileMatrixField) {
+          const tileMatrices = Array.isArray(tileMatrixField) ? tileMatrixField : [tileMatrixField];
+          const firstTileMatrix = tileMatrices[0] as Record<string, unknown> | undefined;
+          const tileWidth = Number(readText(firstTileMatrix?.['TileWidth']));
+          if (Number.isFinite(tileWidth) && tileWidth > 0) {
+            tmsTileSizeById[id] = tileWidth;
+          }
         }
       }
     }
@@ -710,6 +725,10 @@ export async function fetchWmtsCapabilities(url: string): Promise<CapabilitiesRe
       if (tileUrl) {
         resultFormat = format;
         const layerEntry: ExternalLayer = { id: name, name, title, tileUrl };
+        const tileSize = tmsTileSizeById[tileMatrixSet];
+        if (tileSize) {
+          layerEntry.tileSize = tileSize;
+        }
         const wgs = (layer['ows:WGS84BoundingBox'] ?? layer['WGS84BoundingBox']) as
           | Record<string, unknown>
           | undefined;
@@ -1081,7 +1100,7 @@ export type PreviewBbox = { south: number; west: number; north: number; east: nu
 // Pick a single WMTS tile (z/x/y) over the centre of the layer's advertised extent, at a zoom
 // where the extent roughly fits one tile, so the thumbnail lands on data instead of a fixed
 // ocean tile. Falls back to the whole-world tile (z0) when no bbox is advertised.
-export function buildWmtsPreviewTileUrl(tileUrl: string, bbox?: PreviewBbox): string {
+export function buildWmtsPreviewTileUrl(tileUrl: string, bbox?: PreviewBbox, tileSize?: number): string {
   let z = 0;
   let x = 0;
   let y = 0;
@@ -1089,8 +1108,14 @@ export function buildWmtsPreviewTileUrl(tileUrl: string, bbox?: PreviewBbox): st
     const centerLon = (bbox.west + bbox.east) / 2;
     const centerLat = (bbox.south + bbox.north) / 2;
     const spanLon = Math.abs(bbox.east - bbox.west) || 360;
-    z = Math.min(Math.max(Math.floor(Math.log2(360 / spanLon)), 0), 6);
-    const n = 2 ** z;
+    // Capped at 12 (not a lower value like 6): some high-resolution commercial imagery
+    // providers (e.g. Planet) reject GetTile requests below a server-side minimum resolution
+    // (e.g. "exceeds the limit 360.00 meters per pixel"), which a shallower cap would violate.
+    z = Math.min(Math.max(Math.floor(Math.log2(360 / spanLon)), 0), 12);
+    // A TileMatrixSet using tiles larger than the standard 256px (e.g. Planet's 512px
+    // PopularWebMercator512) covers the same world extent with proportionally fewer
+    // columns/rows at the same TILEMATRIX (zoom) label.
+    const n = Math.max((2 ** z * 256) / (tileSize || 256), 1);
     const latRad = (centerLat * Math.PI) / 180;
     x = Math.min(Math.max(Math.floor(((centerLon + 180) / 360) * n), 0), n - 1);
     y = Math.min(

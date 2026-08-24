@@ -34,7 +34,17 @@ const uploadGeoFileErrorMessages = {
     const supported = supportedGeometryTypes.join(', ');
     return t`Unsupported GeoJSON geometry type! Only ${supported} are supported.`;
   },
+  ERROR_PARSING_WKT: () => t`Could not parse the WKT geometry.`,
+  ERROR_PARSING_GEOJSON: () => t`Could not parse the GeoJSON geometry.`,
+  INVALID_GRID_REFERENCE: () => t`Enter a valid MGRS or GEOREF reference.`,
+  INVALID_BBOX_VALUES: () => t`Enter four numeric values for minX, minY, maxX and maxY.`,
+  INVALID_BBOX_ORDER: () => t`minX must be less than maxX, and minY must be less than maxY.`,
 };
+
+// Thrown for a resulting geometry that is structurally invalid (e.g. unclosed ring, too few
+// points, unsupported type) as opposed to a plain parse failure - the UI shows these messages
+// as-is instead of overriding them with a per-format fallback.
+class GeometryValidationError extends Error {}
 
 const invalidGeometryMessage = (geometry) => {
   switch (getPolygonDefect(geometry)) {
@@ -128,7 +138,9 @@ const isValidGeoJson = (json) => {
 
 const validateGeometryTypes = (geometries, supportedGeometryTypes) => {
   if (!(geometries && geometries.every((geometry) => supportedGeometryTypes.includes(geometry.type)))) {
-    throw new Error(uploadGeoFileErrorMessages.UNSUPORTED_GEOJSON_TYPE(supportedGeometryTypes));
+    throw new GeometryValidationError(
+      uploadGeoFileErrorMessages.UNSUPORTED_GEOJSON_TYPE(supportedGeometryTypes),
+    );
   }
 };
 
@@ -290,6 +302,20 @@ const conversionFunctions = {
   kmz: (input) => convertKmlToGeoJson(input),
   mgrs: (input) => getMgrsBounds(input),
   geoRef: (input) => getGeoRefBounds(input),
+  // Grid reference input can be either MGRS or GEOREF; try MGRS first and fall back to GEOREF.
+  // Both decoders throw raw, untranslated errors on malformed input, so failures are swallowed
+  // here (returning null) and surfaced by convertToGeoJson's generic per-format error instead.
+  gridRef: (input) => {
+    try {
+      return getMgrsBounds(input);
+    } catch {
+      try {
+        return getGeoRefBounds(input);
+      } catch {
+        return null;
+      }
+    }
+  },
 };
 
 const isFileTypeSupported = (format) => !!conversionFunctions[format];
@@ -364,7 +390,7 @@ const getUnion = (geoJson, type) => {
     union.coordinates?.length &&
     !isValidGeometry(union)
   ) {
-    throw new Error(invalidGeometryMessage(union));
+    throw new GeometryValidationError(invalidGeometryMessage(union));
   }
   return union;
 };
@@ -477,4 +503,5 @@ export {
   createUnion,
   removeExtraCoordDimensionsIfNeeded,
   checkIfValidShapeFile,
+  GeometryValidationError,
 };

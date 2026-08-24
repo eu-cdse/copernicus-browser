@@ -23,10 +23,10 @@ const EMPTY_IMAGE_DATA_URI = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEA
 
 function buildPreviewUrl(
   server: { url: string; type: string; version?: string },
-  layer: { name: string; tileUrl?: string; legendUrl?: string; bbox?: PreviewBbox },
+  layer: { name: string; tileUrl?: string; legendUrl?: string; bbox?: PreviewBbox; tileSize?: number },
 ): string {
   if (server.type === 'WMTS' && layer.tileUrl) {
-    return buildWmtsPreviewTileUrl(layer.tileUrl, layer.bbox);
+    return buildWmtsPreviewTileUrl(layer.tileUrl, layer.bbox, layer.tileSize);
   }
   // Aim the GetMap thumbnail at the layer's advertised extent (so regional layers show their
   // data); fall back to the whole world when no usable bbox is advertised.

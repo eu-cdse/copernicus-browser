@@ -28,6 +28,7 @@ import {
 import './Tools.scss';
 import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
+import { persistSearchConfig } from '../utils/searchConfigPersistence';
 import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 import { isInGroup } from '../Auth/authHelpers';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
@@ -138,13 +139,10 @@ export class Tools extends Component {
     const searchConfigFromSession = JSON.parse(
       sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
     );
-    sessionStorage.setItem(
-      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
-      JSON.stringify({
-        ...searchConfigFromSession,
-        shouldShowAdvancedSearchTab: index === TABS.SEARCH_TAB,
-      }),
-    );
+    persistSearchConfig({
+      ...searchConfigFromSession,
+      shouldShowAdvancedSearchTab: index === TABS.SEARCH_TAB,
+    });
   };
 
   savePin = async () => {
@@ -208,7 +206,7 @@ export class Tools extends Component {
     store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + 1));
   };
 
-  // Saves a pin to the backend for logged-in users (with USE_PINS_BACKEND on), or to per-user
+  // Saves a pin to the backend for logged-in users, or to per-user
   // localStorage otherwise. On a backend failure, either falls back to local storage (used for
   // WMS/WMTS pins, which were always-local before #1076) or surfaces an error notification and
   // returns null so the caller can bail out without incrementing the pins count.

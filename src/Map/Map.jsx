@@ -698,6 +698,7 @@ class Map extends React.Component {
                 <TileLayer
                   url={activeExternalLayer.tileUrl || activeExternalLayer.server.url}
                   pane={EXTERNAL_LAYER_PANE_ID}
+                  tileSize={activeExternalLayer.tileSize ?? undefined}
                 />
               ) : (
                 <WMSTileLayer
@@ -757,7 +758,7 @@ class Map extends React.Component {
                 const zIndex = getCompareLayerZIndex(i);
 
                 if (p.externalWms) {
-                  const { url, layerName, type, tileUrl, format, time } = p.externalWms;
+                  const { url, layerName, type, tileUrl, tileSize, format, time } = p.externalWms;
                   return type === 'WMTS' ? (
                     <ExternalTileLayerComponent
                       key={p.id}
@@ -766,6 +767,7 @@ class Map extends React.Component {
                       clipping={comparedClipping[index]}
                       pane={COMPARE_LAYER_PANE_ID}
                       zIndex={zIndex}
+                      tileSize={tileSize ?? undefined}
                     />
                   ) : (
                     <ExternalWmsLayerComponent

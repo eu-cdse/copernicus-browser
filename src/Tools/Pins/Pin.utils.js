@@ -19,7 +19,7 @@ import {
 } from '../../utils/effectsUtils';
 import { getLayerFromParams } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { PROCESSING_OPTIONS, TABS } from '../../const';
-import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from './const';
+import { SAVED_PINS, UNSAVED_PINS } from './const';
 
 // Single source of truth for the "is this a logged-in, backend-enabled session?" gate reused by
 // Tools.jsx (savePinToServerOrLocal), PinTools.jsx (onImportPins), Highlights.jsx (savePin) and
@@ -27,8 +27,7 @@ import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from './const';
 // re-deriving it. The parameter is deliberately just a truthy "is the user logged in?" signal, not
 // a specific shape: call sites pass whatever they have on hand for that signal (the user object,
 // its userdata sub-object, or a plain boolean), and all of those are truthy exactly when logged in.
-// This predicate only unifies that truthiness check with the USE_PINS_BACKEND flag.
-export const shouldUsePinsBackend = (isLoggedIn) => USE_PINS_BACKEND && !!isLoggedIn;
+export const shouldUsePinsBackend = (isLoggedIn) => !!isLoggedIn;
 
 // Anonymous pins live in sessionStorage under a single, non-user-suffixed key — the same store and
 // key production (main) has always used, so anonymous pins created before this ships are not orphaned.
@@ -74,6 +73,7 @@ export function buildExternalWmsPayload(activeExternalLayer) {
     layerAbstract: activeExternalLayer.layerAbstract,
     legendUrl: activeExternalLayer.legendUrl,
     tileUrl: activeExternalLayer.tileUrl,
+    tileSize: activeExternalLayer.tileSize ?? null,
     type: activeExternalLayer.server.type,
     serverName: activeExternalLayer.server.name,
     version: activeExternalLayer.server.version,

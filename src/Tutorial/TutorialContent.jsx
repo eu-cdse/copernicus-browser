@@ -3,41 +3,14 @@ import ReactMarkdown from 'react-markdown';
 import { t } from 'ttag';
 
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../rehypeConfig';
-
-// 4th slide
-import Single from '/images/tutorial-icons/single.svg';
-import Mosaic from '/images/tutorial-icons/mosaic.svg';
-import TimeRange from '/images/tutorial-icons/time-range.svg';
-import Layers from '/images/tutorial-icons/Layers.svg';
-import Highlights from '/images/tutorial-icons/Highlights.svg';
-import Compare from '/images/tutorial-icons/Compare.svg';
-import Pins from '/images/tutorial-icons/Pins.svg';
-
-// 5th slide
-import LayersActive from '/images/tutorial-icons/Layers-active.svg';
-import DoubleChevronDownWhite from '/images/tutorial-icons/double-chevron-down-white.svg';
-import CodeWhiteIcon from '/images/tutorial-icons/code-white.svg';
-import CompareWithBadge from '/images/tutorial-icons/Compare-badge.svg';
-import PinsWithBadge from '/images/tutorial-icons/Pins-badge.svg';
-
-// 6th slide
-import HighlightsActive from '/images/tutorial-icons/Highlights-active.svg';
-
-// 7th slide
-import CompareActive from '/images/tutorial-icons/Compare-active.svg';
-
-// 8th slide
-import PinsActive from '/images/tutorial-icons/Pins-active.svg';
-import Pencil from '/images/tutorial-icons/Pencil.svg';
-
-// WMS/WMTS panel step
-import WmsWmtsActive from '/images/tutorial-icons/WmsWmts-active.svg';
-
-// 9th slide
-import WorkspacePlus from '/images/tutorial-icons/Workspace.svg';
-
-// 17th slide
-import Polygon from '/images/tutorial-icons/Polygon.svg';
+import {
+  TutorialMarkdownImage,
+  LayersActiveIcon,
+  HighlightsActiveIcon,
+  CompareActiveIcon,
+  PinsActiveIcon,
+  WmsWmtsActiveIcon,
+} from './TutorialIcons';
 
 export const tutorialStyles = {
   options: {
@@ -112,14 +85,14 @@ In the **Visualise tab** you can:
 - Select a **Visualisation Layer**.
 
 You can change the **Date** (type in or select it from the calendar) and set the cloud coverage. You can choose between 
-single date, mosaic and time range: ![Single](${Single}) ![Mosaic](${Mosaic}) ![Time Range](${TimeRange}).
+single date, mosaic and time range: ![Single](icon) ![Mosaic](icon) ![Time Range](icon).
 
 The **Configurations** dropdown offers you different preconfigured themes and your own custom configured instances if 
 you are logged-in. To create an instance, go to your [personal dashboard](https://shapps.dataspace.copernicus.eu/dashboard/).
 
 You can select a desired data source in the **Data Collections**. You can read explanations of the satellites by clicking 
 on the information icon next to the name of the data collection. Here you can also switch between different panels: 
-![Layers](${Layers}) Layers, ![Highlights](${Highlights}) Highlights, ![Compare mode](${Compare}) Compare mode and ![Pins](${Pins}) Pins.
+![Layers](icon) Layers, ![Highlights](icon) Highlights, ![Compare mode](icon) Compare mode and ![Pins](icon) Pins.
 `;
 
 const layersPanelMd = () => t`
@@ -134,15 +107,15 @@ Some of the common options:
 - **NDWI** - Normalized Difference Water Index
 - **NDSI** - Normalized Difference Snow Index
 
-Most visualisations are given a description and a legend, which you can view by clicking on the expand sign ![expand](${DoubleChevronDownWhite}).
-Each of the layers offers an option to add a layer to Compare or Pins by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span>. 
-Based on your action the Compare and Pins panels will include added layers ![compare-with-badge](${CompareWithBadge}) ![pins-with-badge](${PinsWithBadge}) 
+Most visualisations are given a description and a legend, which you can view by clicking on the expand sign ![expand](icon).
+Each of the layers offers an option to add a layer to Compare or Pins by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span>.
+Based on your action the Compare and Pins panels will include added layers ![compare-with-badge](icon) ![pins-with-badge](icon)
 which you can further organize and analyse under each tab.
 
 Click on **Custom visualisation** option to select custom band combinations, index combinations or write your own classification script for the
-visualisation of data. You can also use custom scripts, which are stored elsewhere, either on Google Drive, GitHub or in our 
-[Custom script repository](https://custom-scripts.sentinel-hub.com/). Paste the URL of the script into a text box in advanced script editing panel 
-and click Refresh. The custom script of preconfigured layers can be edited by choosing the code icon ![code-icon](${CodeWhiteIcon}).
+visualisation of data. You can also use custom scripts, which are stored elsewhere, either on Google Drive, GitHub or in our
+[Custom script repository](https://custom-scripts.sentinel-hub.com/). Paste the URL of the script into a text box in advanced script editing panel
+and click Refresh. The custom script of preconfigured layers can be edited by choosing the code icon ![code-icon](icon).
 
 You can select <span class="icon"><i class="fa fa-sliders"></i></span> **Show effects and advanced options** like the sampling method, advanced RGB effects or apply 
 contrast (gain) and luminance (gamma). To return to preconfigured layers, click <span class="icon"><i class="fa fa-paint-brush"></i></span> **Show visualisations**.
@@ -152,7 +125,7 @@ contrast (gain) and luminance (gamma). To return to preconfigured layers, click 
 const highlightsPanelMd = () => t`
 If you choose one of the preconfigured themes under **Configurations**, you will be able to select from a highlights list under the Highlights panel.
 
-Each highlight has a description accessible under the dropdown icon ![expand-description](${DoubleChevronDownWhite}).
+Each highlight has a description accessible under the dropdown icon ![expand-description](icon).
 `;
 
 const comparePanelMd = () => t`
@@ -171,9 +144,9 @@ and its specific layer, zoom level and time. To reorder the pins, choose among t
 You have several ways to interact with each pin:
 - Change **order** - by clicking on the move icon <span class="icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></span> 
 in the top left corner of the pin and dragging the pin up or down the list.
-- **Rename** - by clicking on the pencil icon ![rename](${Pencil}) next to the pin's name.
-- Add to the **Compare** panel - by clicking on the compare icon ![compare](${Compare})
-- Enter a **description** - by clicking on the expand icon ![expand](${DoubleChevronDownWhite}).
+- **Rename** - by clicking on the pencil icon ![rename](icon) next to the pin's name.
+- Add to the **Compare** panel - by clicking on the compare icon ![compare](icon)
+- Enter a **description** - by clicking on the expand icon ![expand](icon).
 - **Remove** - by clicking the remove icon <span class="icon"><i class="fas fa-trash"></i></span>.
 - **Zoom** to the pin's location - by clicking on the Lat/Lon.
 
@@ -208,7 +181,7 @@ the **Filter by months** option and uncheck the non-relevant months.
 
 Once you hit Search you get a list of results. Each result is presented with a preview image, and relevant data specific to the data source.
 For **product info** and **zooming to product** click on the <span class="icon"><i class="fa fa-info-circle"></i></span> and <span class="icon"><i class="fa fa-crosshairs"></i></span> icon.
-If you are logged in, you can click on ![workspace-add](${WorkspacePlus}) to **add a product to your Copernicus Data Space Ecosystem Workspace**
+If you are logged in, you can click on ![workspace-add](icon) to **add a product to your Copernicus Data Space Ecosystem Workspace**
 to easily collect and process your satellite data. You can also **download the product** by clicking on the download icon <span class="icon"><i class="fa fa-download"></i></span>.
 
 Clicking on the Visualise button will open the **Visualise** tab for the selected result.
@@ -275,7 +248,7 @@ image resolutions and coordinate systems. You can also select multiple layers an
 Click the download button <span class="icon"><i className="fa fa-download"></i> Download</span> and your image(s) will 
 begin to download. The process can take a few seconds, depending on the selected resolution and the number of selected layers.
 
-Before downloading, you can define an area of interest (AOI) by clicking on the Area selection tool icon ![selection](${Polygon}).
+Before downloading, you can define an area of interest (AOI) by clicking on the Area selection tool icon ![selection](icon).
 Your data will be clipped to match this area.
 `;
 
@@ -343,7 +316,12 @@ export const TUTORIAL_STEPS = () => [
   {
     content: (
       <div className="content-div-style" style={{ textAlign: 'center', paddingBottom: '40px' }}>
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{welcomeMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {welcomeMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -356,7 +334,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`About Copernicus Browser`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{overviewMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {overviewMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -369,7 +352,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`User Account`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{userAccountMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {userAccountMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.user-panel',
@@ -382,7 +370,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Visualise Tab`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{visualizationTabMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {visualizationTabMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#visualization-tabButton',
@@ -392,10 +385,20 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: `![active-layers](${LayersActive}) ${t`Layers Panel`}`,
+    title: (
+      <span className="tutorial-title-icon-wrap">
+        <LayersActiveIcon className="tutorial-title-icon" aria-hidden="true" />
+        {t`Layers Panel`}
+      </span>
+    ),
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{layersPanelMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {layersPanelMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#layers-panel-button',
@@ -405,10 +408,20 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: `![active-highlights](${HighlightsActive}) ${t`Highlights Panel`}`,
+    title: (
+      <span className="tutorial-title-icon-wrap">
+        <HighlightsActiveIcon className="tutorial-title-icon" aria-hidden="true" />
+        {t`Highlights Panel`}
+      </span>
+    ),
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{highlightsPanelMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {highlightsPanelMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#highlights-panel-button',
@@ -418,10 +431,20 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: `![active-compare](${CompareActive}) ${t`Compare Panel`}`,
+    title: (
+      <span className="tutorial-title-icon-wrap">
+        <CompareActiveIcon className="tutorial-title-icon" aria-hidden="true" />
+        {t`Compare Panel`}
+      </span>
+    ),
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{comparePanelMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {comparePanelMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#compare-panel-button',
@@ -431,10 +454,20 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: `![active-pins](${PinsActive}) ${t`Pins Panel`}`,
+    title: (
+      <span className="tutorial-title-icon-wrap">
+        <PinsActiveIcon className="tutorial-title-icon" aria-hidden="true" />
+        {t`Pins Panel`}
+      </span>
+    ),
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{pinsPanelMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {pinsPanelMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#pins-panel-button',
@@ -444,10 +477,20 @@ export const TUTORIAL_STEPS = () => [
     locale: localeNames,
   },
   {
-    title: `![active-wms-wmts](${WmsWmtsActive}) ${t`WMS/WMTS Panel`}`,
+    title: (
+      <span className="tutorial-title-icon-wrap">
+        <WmsWmtsActiveIcon className="tutorial-title-icon" aria-hidden="true" />
+        {t`WMS/WMTS Panel`}
+      </span>
+    ),
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{externalWmsMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {externalWmsMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#external-layers-panel-button',
@@ -460,7 +503,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Search Tab`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{searchTabMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {searchTabMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#search-tabButton',
@@ -473,7 +521,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Search Places`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{searchPlacesMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {searchPlacesMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#location-search-box',
@@ -486,7 +539,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Basemaps and Overlays`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{overlaysMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {overlaysMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.leaflet-control-layers-toggle',
@@ -499,7 +557,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Information and Tutorial`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{tutorialMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {tutorialMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '#infoButton',
@@ -512,7 +575,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Draw Area of Interest`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{aoiMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {aoiMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.aoiPanel',
@@ -525,7 +593,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Draw a Line`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{drawLineMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {drawLineMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.loiPanel',
@@ -538,7 +611,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Mark Point of Interest`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{poiMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {poiMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.poiPanel',
@@ -551,7 +629,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Measure Distances`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{measurementMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {measurementMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.measurePanel',
@@ -564,7 +647,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Download Image`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{downloadImageMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {downloadImageMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.img-download-btn-wrapper',
@@ -577,7 +665,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Create Timelapse Animation`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{timelapseMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {timelapseMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.timelapsePanelButton',
@@ -590,7 +683,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Visualise Terrain in 3D`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{visualize3dMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {visualize3dMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.terrain-viewer-button',
@@ -603,7 +701,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Histogram`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{histogramMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {histogramMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: '.histogram-button-wrapper',
@@ -616,7 +719,12 @@ export const TUTORIAL_STEPS = () => [
     title: t`Happy Browsing!`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{happyBrowsingMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {happyBrowsingMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: 'body',
@@ -632,7 +740,12 @@ export const TUTORIAL_STEPS_MOBILE = () => [
     title: t`Welcome To Copernicus Browser!`,
     content: (
       <div className="content-div-style">
-        <ReactMarkdown rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}>{mobileMd()}</ReactMarkdown>
+        <ReactMarkdown
+          rehypePlugins={REACT_MARKDOWN_REHYPE_PLUGINS}
+          components={{ img: TutorialMarkdownImage }}
+        >
+          {mobileMd()}
+        </ReactMarkdown>
       </div>
     ),
     target: 'body',

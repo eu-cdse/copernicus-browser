@@ -15,7 +15,7 @@ import {
   establishCorrectDataFusionFormatInPins,
   shouldUsePinsBackend,
 } from './Pin.utils';
-import { OPERATION_SHARE, USE_PINS_BACKEND } from './const';
+import { OPERATION_SHARE } from './const';
 
 class PinTools extends Component {
   state = {
@@ -228,7 +228,7 @@ class PinTools extends Component {
 
     return (
       <div className="pin-tools">
-        {pinsStoryBuilderEnabled && USE_PINS_BACKEND && (
+        {pinsStoryBuilderEnabled && (
           <div
             className={`animate-pins ${isUserLoggedIn && pins.length > 0 ? '' : 'disabled'}`}
             title={animatePinsTitle}
@@ -238,17 +238,15 @@ class PinTools extends Component {
           </div>
         )}
 
-        {USE_PINS_BACKEND && (
-          <div
-            className={`share-pins ${isUserLoggedIn && pins.length > 0 ? '' : 'disabled'} ${
-              operation === OPERATION_SHARE ? 'active' : ''
-            }`}
-            title={sharePinsTitle}
-            onClick={this.props.onShareClick}
-          >
-            {t`Share`}
-          </div>
-        )}
+        <div
+          className={`share-pins ${isUserLoggedIn && pins.length > 0 ? '' : 'disabled'} ${
+            operation === OPERATION_SHARE ? 'active' : ''
+          }`}
+          title={sharePinsTitle}
+          onClick={this.props.onShareClick}
+        >
+          {t`Share`}
+        </div>
 
         {pins.length === 0 ? (
           <div className="pins-export disabled" title={exportPinsTitle}>

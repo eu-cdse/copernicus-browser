@@ -437,8 +437,15 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
         }
 
         if (showLegend) {
+          // Legend-only lookup for a named layer: `params` may carry the active visualization's
+          // data fusion settings, which would otherwise return a fusion layer that has no legend.
           const l = await getLayerFromParams(
-            { ...params, layerId: cLayer.layerId, visualizationUrl: cLayer.visualizationUrl },
+            {
+              ...params,
+              layerId: cLayer.layerId,
+              visualizationUrl: cLayer.visualizationUrl,
+              dataFusion: null,
+            },
             cancelToken,
           );
           legendUrl = l.legendUrl;
@@ -1058,6 +1065,7 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
     layerId,
     datasetId,
     dataFusion,
+    customSelected,
     evalscript,
     evalscriptUrl,
     fromTime,
@@ -1084,7 +1092,18 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
   };
   const dsh = getDataSourceHandler(datasetId);
 
-  if (layerId) {
+  // A custom visualization keeps `layerId` populated (the layer it was derived from), so the data
+  // fusion check has to come first - otherwise the fusion evalscript would be injected into a
+  // single-dataset layer and the Process API request would carry none of the datasource aliases the
+  // evalscript declares. This mirrors the precedence used on the map, where sentinelhubLeafletLayer's
+  // createLayer picks the fusion layer over the custom one once the visualization is custom.
+  // Compare layers built from pins carry `evalscript` but no `customSelected` flag, so they are
+  // recognised the same way Map.jsx recognises them.
+  const isCustomVisualization = !!(customSelected || evalscript || evalscriptUrl);
+
+  if (isDataFusionEnabled(dataFusion) && (isCustomVisualization || !layerId)) {
+    layer = await constructDataFusionLayer(dataFusion, evalscript, evalscriptUrl, fromTime, toTime);
+  } else if (layerId) {
     layer = await LayersFactory.makeLayer(visualizationUrl, layerId, null, reqConfig);
     if (evalscript) {
       layer.evalscript = evalscript;
@@ -1093,8 +1112,6 @@ export async function getLayerFromParams(params, cancelToken, authToken) {
       layer.evalscriptUrl = evalscriptUrl;
     }
     await layer.updateLayerFromServiceIfNeeded(reqConfig);
-  } else if (isDataFusionEnabled(dataFusion)) {
-    layer = await constructDataFusionLayer(dataFusion, evalscript, evalscriptUrl, fromTime, toTime);
   } else {
     const shJsDataset = dsh ? dsh.getSentinelHubDataset(datasetId) : null;
     let layers = await LayersFactory.makeLayers(

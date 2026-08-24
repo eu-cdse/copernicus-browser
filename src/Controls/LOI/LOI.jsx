@@ -5,8 +5,8 @@ import store, { loiSlice, modalSlice } from '../../store';
 import { connect } from 'react-redux';
 import length from '@turf/length';
 import { PrettyDistance } from '../../junk/EOBMeasurePanelButton/EOBMeasurePanelButton';
-import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
-import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
+import { UploadGeoFile } from '../../components/UploadGeoFile/UploadGeoFile';
+import { UPLOAD_GEOMETRY_TYPE } from '../../components/UploadGeoFile/UploadGeoFile.utils';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { useLoi } from './useLoi';
 import LoiIcon from './loi-icon.svg?react';
@@ -138,7 +138,7 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
         <LoiIcon />
       </a>
       {uploadDialog && (
-        <EOBUploadGeoFile
+        <UploadGeoFile
           onUpload={(geometry) => {
             const layer = L.geoJSON(geometry);
             store.dispatch(loiSlice.actions.set({ geometry, bounds: layer.getBounds() }));

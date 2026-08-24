@@ -12,6 +12,7 @@ export const getOnlyBasicImgDownloadAvailableMsg = () =>
 export const getOnlyBasicImgDownloadForExternalWmsMsg = () =>
   t`Analytical and high-res print downloads are not available for external WMS/WMTS layers.`;
 export const getStatInfoNotAvailableInPanelMsg = () => t`Statistical info is not available in this panel.`;
+export const getHistogramNotAvailableInPanelMsg = () => t`Histogram is not available in this panel.`;
 export const getMobileNotSupportedMsg = () => t`Creating and editing a timelapse is not supported on mobile.`;
 export const getAnalyticalExportNotSupportedMsg = () =>
   t`The current datasource doesn't support analytical exports`;

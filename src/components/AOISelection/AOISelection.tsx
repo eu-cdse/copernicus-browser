@@ -9,9 +9,9 @@ import { t } from 'ttag';
 import ReactMarkdown from 'react-markdown';
 import './AOISelection.scss';
 import store, { aoiSlice, mainMapSlice } from '../../store';
-import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
+import { UploadGeoFile } from '../UploadGeoFile/UploadGeoFile';
 import { AOI_SHAPE } from '../../const';
-import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
+import { UPLOAD_GEOMETRY_TYPE } from '../UploadGeoFile/UploadGeoFile.utils';
 import { getBoundsAndLatLng } from '../../utils/coords';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../rehypeConfig';
@@ -105,7 +105,7 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }: Props) =>
               <i
                 className="fa fa-upload"
                 // jsx-a11y/anchor-is-valid
-                title={t`Upload a file to create an area of interest`}
+                title={t`Define Area of Interest (AOI)`}
                 onClick={() => setUploadDialog(true)}
               />
 
@@ -140,7 +140,7 @@ export const AOISelection = ({ aoiGeometry, aoiIsDrawing, mapBounds }: Props) =>
           )}
 
           {uploadDialog && (
-            <EOBUploadGeoFile
+            <UploadGeoFile
               onUpload={onFileUpload}
               onClose={() => setUploadDialog(false)}
               type={UPLOAD_GEOMETRY_TYPE.POLYGON}

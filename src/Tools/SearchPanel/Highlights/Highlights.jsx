@@ -16,14 +16,7 @@ import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils'
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
-import { SAVED_PINS, UNSAVED_PINS, USE_PINS_BACKEND } from '../../Pins/const';
-import {
-  getLocalPins,
-  savePinsToServer,
-  saveLocalPins,
-  normalizePin,
-  shouldUsePinsBackend,
-} from '../../Pins/Pin.utils';
+import { savePinsToServer, saveLocalPins, normalizePin, shouldUsePinsBackend } from '../../Pins/Pin.utils';
 import { connect } from 'react-redux';
 import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';
 import { isOpenEoSupported } from '../../../api/openEO/openEOHelpers';
@@ -71,28 +64,6 @@ function buildCompareLayerBase(pin, themeId) {
 class Highlights extends Component {
   state = {
     selectedPinIndex: null,
-  };
-
-  componentDidMount() {
-    if (USE_PINS_BACKEND && this.props.user) {
-      this.fetchUserPins()
-        .then((pins) => {
-          this.setPinsInArray(pins, SAVED_PINS);
-        })
-        .catch(() => {});
-    } else {
-      let pins = getLocalPins();
-      this.setPinsInArray(pins, UNSAVED_PINS);
-    }
-  }
-
-  setPinsInArray = (pins, pinType) => {
-    store.dispatch(
-      pinsSlice.actions.updatePinsByType({
-        pins: pins,
-        pinType: pinType,
-      }),
-    );
   };
 
   onPinSelect = async (rawPin, comparingPins, sharePins) => {

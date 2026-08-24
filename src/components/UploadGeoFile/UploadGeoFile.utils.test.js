@@ -7,7 +7,10 @@ import {
   extractGeometriesFromGeoJson,
   createUnion,
   removeExtraCoordDimensionsIfNeeded,
-} from './EOBUploadGeoFile.utils';
+  GeometryValidationError,
+} from './UploadGeoFile.utils';
+import { getMgrsBounds } from '../../utils/mgrs';
+import { getGeoRefBounds } from '../../utils/georef';
 import shp from 'shpjs';
 
 jest.mock('shpjs', () => ({ __esModule: true, default: jest.fn() }));
@@ -363,6 +366,24 @@ describe('parse bbox string', () => {
   });
 });
 
+describe('parse grid reference string (MGRS/GEOREF)', () => {
+  test('valid MGRS reference is converted via getMgrsBounds', () => {
+    const expected = getMgrsBounds('18UUB').geometry;
+    expect(parseContent('18UUB', UPLOAD_GEOMETRY_TYPE.POLYGON, 'gridRef')).toEqual(expected);
+  });
+
+  test('valid GEOREF reference is converted via getGeoRefBounds when MGRS parsing fails', () => {
+    const expected = getGeoRefBounds('AA').geometry;
+    expect(parseContent('AA', UPLOAD_GEOMETRY_TYPE.POLYGON, 'gridRef')).toEqual(expected);
+  });
+
+  test('input that is neither valid MGRS nor GEOREF throws the generic parsing error', () => {
+    expect(() => parseContent('', UPLOAD_GEOMETRY_TYPE.POLYGON, 'gridRef')).toThrow(
+      uploadGeoFileErrorMessages.ERROR_PARSING_FILE(),
+    );
+  });
+});
+
 describe('parse pasted geometry (auto-detect format)', () => {
   // A bare Polygon coordinate ring is valid JSON but not valid GeoJSON (no `type`) and
   // not a 4-element bbox, so it should produce the specific INVALID_GEOJSON warning.
@@ -527,6 +548,42 @@ describe('reject geometrically invalid polygons on upload (issue #1103)', () => 
         [40, 40],
       ],
     });
+  });
+});
+
+describe('GeometryValidationError', () => {
+  test('geometry-defect errors are instances of GeometryValidationError', () => {
+    const geojson = JSON.stringify({
+      type: 'Polygon',
+      coordinates: [
+        [
+          [0, 0],
+          [0, 1],
+          [1, 1],
+          [1, 0],
+        ],
+      ],
+    });
+    expect(() => parseContent(geojson, UPLOAD_GEOMETRY_TYPE.POLYGON, 'geojson')).toThrow(
+      GeometryValidationError,
+    );
+  });
+
+  test('unsupported geometry type errors are instances of GeometryValidationError', () => {
+    expect(() => parseContent('POINT (30 10)', UPLOAD_GEOMETRY_TYPE.POLYGON, 'wkt')).toThrow(
+      GeometryValidationError,
+    );
+  });
+
+  test('generic parse failures are plain Error, not GeometryValidationError', () => {
+    let caught;
+    try {
+      parseContent(null, UPLOAD_GEOMETRY_TYPE.POLYGON, undefined);
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(Error);
+    expect(caught).not.toBeInstanceOf(GeometryValidationError);
   });
 });
 

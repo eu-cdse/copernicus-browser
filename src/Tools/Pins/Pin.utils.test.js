@@ -13,6 +13,7 @@ import {
   saveSharedPinsToServer,
   importSharedPins,
   layerFromPin,
+  shouldUsePinsBackend,
 } from './Pin.utils';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -227,6 +228,23 @@ describe('normalizePin', () => {
     expect(result.evalscriptUrl).toBe('https://example.com/eval');
     expect('evalscripturl' in result).toBe(false);
     expect('processgraphurl' in result).toBe(false);
+  });
+});
+
+describe('shouldUsePinsBackend', () => {
+  it.each([
+    ['a non-empty object', { id: '1' }],
+    ['true', true],
+  ])('returns true when isLoggedIn is %s', (_description, isLoggedIn) => {
+    expect(shouldUsePinsBackend(isLoggedIn)).toBe(true);
+  });
+
+  it.each([
+    ['null', null],
+    ['undefined', undefined],
+    ['false', false],
+  ])('returns false when isLoggedIn is %s', (_description, isLoggedIn) => {
+    expect(shouldUsePinsBackend(isLoggedIn)).toBe(false);
   });
 });
 

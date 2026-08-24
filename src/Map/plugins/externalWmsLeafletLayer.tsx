@@ -80,6 +80,7 @@ interface ExternalTileProps extends LayerProps {
   zIndex?: number;
   opacity?: number | null;
   clipping?: number[] | null;
+  tileSize?: number;
 }
 
 export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLayer, ExternalWmsProps>(
@@ -131,11 +132,15 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
 
 export const ExternalTileLayerComponent = createTileLayerComponent<ExternalTileLayer, ExternalTileProps>(
   (props, context) => {
-    const { url, pane, zIndex, opacity, clipping } = props;
+    const { url, pane, zIndex, opacity, clipping, tileSize } = props;
     const options: L.TileLayerOptions = { pane };
     // Only set zIndex when provided; passing undefined would override Leaflet's GridLayer default.
     if (zIndex != null) {
       options.zIndex = zIndex;
+    }
+    // Only set tileSize when provided; passing undefined would override Leaflet's 256px default.
+    if (tileSize != null) {
+      options.tileSize = tileSize;
     }
     const instance = new ExternalTileLayer(url, options);
     (instance as AnyLeafletLayer).setClipping(clipping ?? null);

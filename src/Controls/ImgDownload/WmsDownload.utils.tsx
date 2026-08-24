@@ -77,20 +77,21 @@ export function buildExternalWmsGetMapUrl(
   return /[?&]styles=/i.test(url) ? url : `${url}&styles=`;
 }
 
-const WMTS_TILE_SIZE = 256;
+// Fallback when the layer's TileMatrixSet didn't declare a tile size (see ExternalWmsLayerInfo.tileSize).
+const DEFAULT_WMTS_TILE_SIZE = 256;
 // Cap the stitched tile grid so a huge view can't explode into thousands of requests.
 const WMTS_MAX_TILES = 256;
 // Web-mercator latitude limit (where the projection is clipped to a square).
 const WMTS_MAX_LAT = 85.05112878;
 
-function lngToWorldX(lng: number, worldSize: number): number {
-  return ((lng + 180) / 360) * worldSize;
+function lngToWorldTileX(lng: number, n: number): number {
+  return ((lng + 180) / 360) * n;
 }
 
-function latToWorldY(lat: number, worldSize: number): number {
+function latToWorldTileY(lat: number, n: number): number {
   const clamped = Math.max(Math.min(lat, WMTS_MAX_LAT), -WMTS_MAX_LAT);
   const sin = Math.sin((clamped * Math.PI) / 180);
-  return (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * worldSize;
+  return (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * n;
 }
 
 function loadCrossOriginImage(url: string): Promise<HTMLImageElement | null> {
@@ -113,6 +114,7 @@ export async function compositeWmtsImage(
   bounds: L.LatLngBounds,
   width: number,
   height: number,
+  tileSize: number = DEFAULT_WMTS_TILE_SIZE,
 ): Promise<Blob> {
   const west = bounds.getWest();
   let east = bounds.getEast();
@@ -124,10 +126,14 @@ export async function compositeWmtsImage(
   }
   const lngSpan = Math.max(east - west, 1e-6);
 
-  // Pick the zoom whose native resolution matches the requested width, so a higher
-  // resolutionScale (= larger width) naturally selects a deeper zoom. Then drop a zoom level
-  // at a time until the tile count is under the cap.
-  let z = Math.min(Math.max(Math.round(Math.log2((width * 360) / (WMTS_TILE_SIZE * lngSpan))), 0), 22);
+  // Pick the TILEMATRIX (zoom) purely from the desired output resolution, using the same
+  // 256px-equivalent scale convention every TileMatrixSet shares regardless of its actual tile
+  // pixel size (mirrors buildWmtsPreviewTileUrl's z selection, which is also tileSize-independent).
+  // Then drop a zoom level at a time until the tile count is under the cap.
+  let z = Math.min(
+    Math.max(Math.round(Math.log2((width * 360) / (DEFAULT_WMTS_TILE_SIZE * lngSpan))), 0),
+    22,
+  );
   let xMin = 0;
   let xMax = 0;
   let yMin = 0;
@@ -136,16 +142,20 @@ export async function compositeWmtsImage(
   let tileMaxX = 0;
   let tileMinY = 0;
   let tileMaxY = 0;
+  let n = 1;
   for (let guard = 0; guard <= 22; guard++) {
-    const worldSize = WMTS_TILE_SIZE * 2 ** z;
-    xMin = lngToWorldX(west, worldSize);
-    xMax = lngToWorldX(east, worldSize);
-    yMin = latToWorldY(bounds.getNorth(), worldSize);
-    yMax = latToWorldY(bounds.getSouth(), worldSize);
-    tileMinX = Math.floor(xMin / WMTS_TILE_SIZE);
-    tileMaxX = Math.floor((xMax - 1e-6) / WMTS_TILE_SIZE);
-    tileMinY = Math.floor(yMin / WMTS_TILE_SIZE);
-    tileMaxY = Math.floor((yMax - 1e-6) / WMTS_TILE_SIZE);
+    // Tiles per axis at this zoom: a TileMatrixSet with larger tiles (e.g. Planet's 512px
+    // PopularWebMercator512) covers the same 256px-equivalent world resolution with
+    // proportionally fewer, larger tiles — so n shrinks as tileSize grows past 256.
+    n = Math.max(Math.round((2 ** z * DEFAULT_WMTS_TILE_SIZE) / tileSize), 1);
+    xMin = lngToWorldTileX(west, n);
+    xMax = lngToWorldTileX(east, n);
+    yMin = latToWorldTileY(bounds.getNorth(), n);
+    yMax = latToWorldTileY(bounds.getSouth(), n);
+    tileMinX = Math.floor(xMin);
+    tileMaxX = Math.floor(xMax - 1e-9);
+    tileMinY = Math.floor(yMin);
+    tileMaxY = Math.floor(yMax - 1e-9);
     const count = (tileMaxX - tileMinX + 1) * (tileMaxY - tileMinY + 1);
     if (count <= WMTS_MAX_TILES || z === 0) {
       break;
@@ -153,10 +163,10 @@ export async function compositeWmtsImage(
     z -= 1;
   }
 
-  const nTiles = 2 ** z;
+  const nTiles = n;
   const stitch = document.createElement('canvas');
-  stitch.width = (tileMaxX - tileMinX + 1) * WMTS_TILE_SIZE;
-  stitch.height = (tileMaxY - tileMinY + 1) * WMTS_TILE_SIZE;
+  stitch.width = (tileMaxX - tileMinX + 1) * tileSize;
+  stitch.height = (tileMaxY - tileMinY + 1) * tileSize;
   const sctx = stitch.getContext('2d');
   if (!sctx) {
     throw new Error('No canvas context');
@@ -173,8 +183,8 @@ export async function compositeWmtsImage(
         .replaceAll('{z}', String(z))
         .replaceAll('{x}', String(wrappedX))
         .replaceAll('{y}', String(ty));
-      const dx = (tx - tileMinX) * WMTS_TILE_SIZE;
-      const dy = (ty - tileMinY) * WMTS_TILE_SIZE;
+      const dx = (tx - tileMinX) * tileSize;
+      const dy = (ty - tileMinY) * tileSize;
       tasks.push(
         loadCrossOriginImage(url).then((img) => {
           if (img) {
@@ -187,6 +197,8 @@ export async function compositeWmtsImage(
   await Promise.all(tasks);
 
   // Crop the exact view rectangle out of the stitched tiles, scaled into the requested size.
+  // xMin/xMax/yMin/yMax are in fractional-tile units, so subtracting the integer tile origin and
+  // multiplying by tileSize converts them to pixel offsets within the stitched canvas.
   const out = document.createElement('canvas');
   out.width = width;
   out.height = height;
@@ -196,10 +208,10 @@ export async function compositeWmtsImage(
   }
   octx.drawImage(
     stitch,
-    xMin - tileMinX * WMTS_TILE_SIZE,
-    yMin - tileMinY * WMTS_TILE_SIZE,
-    xMax - xMin,
-    yMax - yMin,
+    (xMin - tileMinX) * tileSize,
+    (yMin - tileMinY) * tileSize,
+    (xMax - xMin) * tileSize,
+    (yMax - yMin) * tileSize,
     0,
     0,
     width,
@@ -404,6 +416,7 @@ export interface ExternalWmsLayerInfo {
   layerTitle?: string; // human-readable title, used for the download filename / image caption
   type: 'WMS' | 'WMTS';
   tileUrl?: string;
+  tileSize?: number; // WMTS only: tile pixel size declared by the TileMatrixSet (defaults to 256 when absent)
   version?: string;
   time?: string;
 }
@@ -444,7 +457,7 @@ export async function fetchExternalLayerBlob(
   mimeType: string = MimeTypes.PNG,
 ): Promise<Blob> {
   if (ext.type === 'WMTS' && ext.tileUrl) {
-    return compositeWmtsImage(ext.tileUrl, bounds, width, height);
+    return compositeWmtsImage(ext.tileUrl, bounds, width, height, ext.tileSize ?? DEFAULT_WMTS_TILE_SIZE);
   }
   const url = buildExternalWmsGetMapUrl(
     ext.url,

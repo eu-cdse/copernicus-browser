@@ -15,10 +15,6 @@
 .rodal {
   position: fixed;
   z-index: 1000;
-  // Intentionally diverges from vars.$fontFamily (the app's body font) — inherited from
-  // rodal/lib/rodal.css's default and preserved so modal text doesn't render bold/heavy.
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
   font-weight: vars.$fontWeightNormal;
 }
 

@@ -14,6 +14,7 @@ import {
   getMissingIndexOutputError,
   getNoIndexLayerOutputError,
 } from './Histogram.utils';
+import { getHistogramNotAvailableInPanelMsg } from '../../junk/ConstMessages';
 
 import {
   getDataSourceHandler,
@@ -60,9 +61,12 @@ class HistogramWrapper extends Component {
     this.setState((prevState) => ({ histogramOpened: !prevState.histogramOpened }));
   };
 
+  disableHistogram = (errorMessage) =>
+    this.setState({ histogramEnabled: false, errorMessage, histogramOpened: false });
+
   checkIfEnabled = async () => {
     if (!this.props.dataSourcesInitialized) {
-      this.setState({ histogramEnabled: false, errorMessage: null });
+      this.disableHistogram(null);
       return;
     }
 
@@ -75,10 +79,18 @@ class HistogramWrapper extends Component {
       isProcessGraphModified,
       activeExternalLayer,
       wmsLayerPanelOpen,
+      isVisualizingLayer,
     } = this.props;
 
     if (activeExternalLayer || wmsLayerPanelOpen) {
-      this.setState({ histogramEnabled: false, errorMessage: t`Not available for WMS layers` });
+      this.disableHistogram(t`Not available for WMS layers`);
+      return;
+    }
+
+    // The histogram is computed from the single visualized Sentinel Hub layer, so it is
+    // meaningless in Compare/Pin mode where several layers are rendered at once (#1211).
+    if (!isVisualizingLayer) {
+      this.disableHistogram(getHistogramNotAvailableInPanelMsg());
       return;
     }
 
@@ -90,39 +102,27 @@ class HistogramWrapper extends Component {
       selectedProcessing === PROCESSING_OPTIONS.OPENEO && isProcessGraphModified;
 
     if (!hasVisualization) {
-      this.setState({ histogramEnabled: false, errorMessage: t`Please select a layer` });
+      this.disableHistogram(t`Please select a layer`);
       return;
     }
     if (!isOnVisualizationPanel) {
-      this.setState({
-        histogramEnabled: false,
-        errorMessage: t`Histogram can be displayed only while visualising`,
-      });
+      this.disableHistogram(t`Histogram can be displayed only while visualising`);
       return;
     }
     if (!supportsV3Evalscript) {
       const datasetLabel = checkIfCustom(datasetId) ? datasetLabels[CUSTOM] : datasetLabels[datasetId];
-      this.setState({
-        histogramEnabled: false,
-        errorMessage: t`Histogram not available for ` + datasetLabel,
-      });
+      this.disableHistogram(t`Histogram not available for ` + datasetLabel);
       return;
     }
     if (isEditedOpenEOProcessingSelected) {
-      this.setState({
-        histogramEnabled: false,
-        errorMessage: t`Histogram not available for edited OpenEO process graph`,
-      });
+      this.disableHistogram(t`Histogram not available for edited OpenEO process graph`);
       return;
     }
 
     const isIndexOutputPresent = await checkIfIndexOutputPresent(this.props, this.cancelToken);
 
     if (!isIndexOutputPresent) {
-      this.setState({
-        histogramEnabled: false,
-        errorMessage: customSelected ? getMissingIndexOutputError() : getNoIndexLayerOutputError(),
-      });
+      this.disableHistogram(customSelected ? getMissingIndexOutputError() : getNoIndexLayerOutputError());
       return;
     }
 
@@ -172,6 +172,7 @@ const mapStoreToProps = (store) => ({
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   activeExternalLayer: selectActiveExternalLayer(store),
   wmsLayerPanelOpen: store.externalLayers.panelOpen,
+  isVisualizingLayer: store.tabs.isVisualizingLayer,
 });
 
 export default connect(mapStoreToProps, null)(HistogramWrapper);

@@ -47,6 +47,8 @@
       cursor: pointer;
       color: vars.$whiteColor;
       background-color: vars.$primaryColor;
+      // Matches the shared Button component's `.label` size (Button.scss) so both buttons align.
+      font-size: 13.8px;
 
       &:hover {
         background-color: vars.$hoverPrimaryColor;

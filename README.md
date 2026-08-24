@@ -37,11 +37,17 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualisation ([li
 - Run `npm start` to run the application locally (opens a web browser tab on `http://localhost:3000` and resfreshes the app when any of the .js files are changed)
 - Run `npm run prettier` to prettify `js`, `json`, `css` and `scss` files
 - Run `npm run lint` to lint `js`, `json`, `css` and `scss` files
+- Run `npm run prettier-check` to verify formatting without modifying files (this is what the pre-commit hook runs)
 - Run `npm run build` to build the application sources
 - Run `npm run translate` to add strings to the translation files
 - Run `npm run debug-translations` to replace all translation strings with "XXXXXX"
 - Run `npm run update-metadata-cache` to create getCapabilities and configuration cache
 - Run `npm run update-rrd-configurations` to create getCapabilities and configuration cache for the RRD collections
+
+`npm install` installs a [husky](https://typicode.github.io/husky/) pre-commit hook (`.husky/pre-commit`) that runs
+`npm run lint` and `npm run prettier-check` in parallel and rejects the commit if either fails. Run `npm run prettier`
+to auto-fix formatting errors. To bypass the hook for a single commit use `git commit --no-verify`; to disable husky
+for a shell session use `HUSKY=0`.
 
 ### Building the application
 

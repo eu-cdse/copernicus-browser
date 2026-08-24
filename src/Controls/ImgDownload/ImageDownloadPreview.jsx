@@ -46,6 +46,7 @@ async function fetchPreviewImage(props) {
         layerName: props.activeExternalLayer.layerName,
         type: props.activeExternalLayer.server.type,
         tileUrl: props.activeExternalLayer.tileUrl,
+        tileSize: props.activeExternalLayer.tileSize ?? undefined,
         time: props.activeExternalLayer.time,
       },
       bounds,

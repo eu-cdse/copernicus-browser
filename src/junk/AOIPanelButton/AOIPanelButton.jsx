@@ -14,7 +14,7 @@ function OpenUploadDataDialogButton({ handleClick }) {
   return (
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
-    <a title={t`Upload a file to create an area of interest`} onClick={handleClick}>
+    <a title={t`Define Area of Interest (AOI)`} onClick={handleClick}>
       <i className="fa fa-upload" />
     </a>
   );
@@ -28,7 +28,7 @@ function PolygonSvgIcon({ fillColor }) {
   );
 }
 
-export function EOBAOIPanelButton(props) {
+export function AOIPanelButton(props) {
   const [showOptions, setShowOptions] = useState(false);
 
   const { aoiBounds, isAoiClip, disabled, active, aoiGeometry } = props;

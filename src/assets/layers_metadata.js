@@ -1015,6 +1015,13 @@ export const PREDEFINED_LAYERS_METADATA = [
   },
 
   {
+    match: [{ datasourceId: CDAS_L8_L9_LOTL1, layerId: '3_WILDFIRES' }],
+
+    description: () =>
+      t`# Wildfires\n\nThis script, based on the Pierre Markuse wildfire script, detects and visualizes wildfires using Landsat 8/9 thermal and visible bands. It combines natural color (B2, B3, B4) with thermal band (B10) analysis to detect temperature anomalies and create a red-orange-white glow effect highlighting fire locations.\n\n\n\nMore info [here.](https://github.com/azlinszkysinergise/customscripts_test_az/blob/main/landsat_markuse_fire_v2)`,
+  },
+
+  {
     match: [
       { datasourceId: S3OLCI_CDAS, layerId: '1_TRUE_COLOR_ENHANCED' },
       { datasourceId: S3OLCI_CDAS, layerId: '2_ENHANCED-TRUE-COLOR' },

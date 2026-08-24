@@ -4,14 +4,16 @@ import {
   constructRawBandEvalscript,
   fetchImage,
   getImageDimensionFromBoundsWithCap,
+  getLayerFromParams,
   getNicename,
   getPixelCoordinates,
   getRawBandsScalingFactor,
   isSimpleImageFormat,
   overrideEvalscriptIfNeeded,
 } from './ImageDownload.utils';
-import { BBox, CRS_EPSG3857, ApiType } from '@sentinel-hub/sentinelhub-js';
+import { BBox, CRS_EPSG3857, ApiType, LayersFactory } from '@sentinel-hub/sentinelhub-js';
 import { latLngBounds } from 'leaflet';
+import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 
 import {
   BAND_UNIT,
@@ -61,6 +63,18 @@ jest.mock('../../api/openEO/openEO.api', () => ({
 jest.mock('../../utils/coords', () => ({
   ...jest.requireActual('../../utils/coords'),
   metersPerPixel: jest.fn(),
+}));
+
+// Partial mock: keep BBox, CRS_EPSG3857, ApiType, Interpolator, canvasToBlob, drawBlobOnCanvas etc.
+// as the real implementations (relied upon by other describes above/below), only stub LayersFactory.
+jest.mock('@sentinel-hub/sentinelhub-js', () => ({
+  ...jest.requireActual('@sentinel-hub/sentinelhub-js'),
+  LayersFactory: { makeLayer: jest.fn(), makeLayers: jest.fn() },
+}));
+
+jest.mock('../../junk/EOBCommon/utils/dataFusion', () => ({
+  ...jest.requireActual('../../junk/EOBCommon/utils/dataFusion'),
+  constructDataFusionLayer: jest.fn(),
 }));
 
 describe('Test getRawBandsScalingFactor function', () => {
@@ -749,5 +763,119 @@ describe('fetchImage — low-resolution BYOC collection swap (regression #1154)'
     expect(openEOApi.getResult).toHaveBeenCalledTimes(1);
     const [sentProcessGraph] = openEOApi.getResult.mock.calls[0];
     expect(sentProcessGraph.load_collection.arguments.id).toBeUndefined();
+  });
+});
+
+describe('getLayerFromParams — data fusion takes precedence over layerId (regression #1198)', () => {
+  const datasetId = 'FAKE_DATA_FUSION_DATASET_ID';
+  const dataFusionSettings = [{ id: 'S2L2A', evalscriptName: 'S2L2A' }];
+  const fromTime = moment.utc('2024-03-15T10:30:00Z');
+  const toTime = moment.utc('2024-03-15T10:45:00Z');
+
+  let dsh;
+  let fusionLayer;
+  let madeLayer;
+
+  const buildParams = (overrides = {}) => ({
+    visualizationUrl: 'https://example.com',
+    layerId: 'LAYER_1',
+    datasetId,
+    fromTime,
+    toTime,
+    ...overrides,
+  });
+
+  beforeEach(() => {
+    dsh = { supportsLowResolutionAlternativeCollection: jest.fn(() => false) };
+    getDataSourceHandler.mockImplementation((id) =>
+      id === datasetId ? dsh : actualDataSourceHandlers.getDataSourceHandler(id),
+    );
+
+    fusionLayer = { collectionId: undefined };
+    constructDataFusionLayer.mockResolvedValue(fusionLayer);
+
+    madeLayer = { collectionId: undefined, updateLayerFromServiceIfNeeded: jest.fn() };
+    LayersFactory.makeLayer.mockResolvedValue(madeLayer);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('customSelected + dataFusion + truthy layerId -> builds the data fusion layer, does not call makeLayer', async () => {
+    const params = buildParams({ dataFusion: dataFusionSettings, customSelected: true });
+
+    const layer = await getLayerFromParams(params, null);
+
+    expect(constructDataFusionLayer).toHaveBeenCalledWith(
+      dataFusionSettings,
+      params.evalscript,
+      params.evalscriptUrl,
+      fromTime,
+      toTime,
+    );
+    expect(LayersFactory.makeLayer).not.toHaveBeenCalled();
+    expect(layer).toBe(fusionLayer);
+  });
+
+  test('evalscript-only (pin/compare-layer shape, no customSelected) + dataFusion + truthy layerId -> builds the data fusion layer, does not call makeLayer', async () => {
+    const params = buildParams({ dataFusion: dataFusionSettings, evalscript: 'mock-evalscript' });
+
+    const layer = await getLayerFromParams(params, null);
+
+    expect(constructDataFusionLayer).toHaveBeenCalledWith(
+      dataFusionSettings,
+      'mock-evalscript',
+      params.evalscriptUrl,
+      fromTime,
+      toTime,
+    );
+    expect(LayersFactory.makeLayer).not.toHaveBeenCalled();
+    expect(layer).toBe(fusionLayer);
+  });
+
+  test('truthy layerId and no dataFusion -> calls makeLayer, does not build a data fusion layer', async () => {
+    const params = buildParams();
+
+    const layer = await getLayerFromParams(params, null);
+
+    expect(LayersFactory.makeLayer).toHaveBeenCalledWith(
+      params.visualizationUrl,
+      params.layerId,
+      null,
+      expect.anything(),
+    );
+    expect(constructDataFusionLayer).not.toHaveBeenCalled();
+    expect(layer).toBe(madeLayer);
+  });
+
+  test('raw-band shape: truthy layerId + customSelected + generated evalscript + no dataFusion -> calls makeLayer, does not build a data fusion layer', async () => {
+    const params = buildParams({ customSelected: true, evalscript: 'raw-band-evalscript' });
+
+    const layer = await getLayerFromParams(params, null);
+
+    expect(LayersFactory.makeLayer).toHaveBeenCalledWith(
+      params.visualizationUrl,
+      params.layerId,
+      null,
+      expect.anything(),
+    );
+    expect(constructDataFusionLayer).not.toHaveBeenCalled();
+    expect(layer).toBe(madeLayer);
+  });
+
+  test('dataFusion present but not a custom visualization + truthy layerId -> calls makeLayer (pre-existing behaviour, e.g. legend-only lookup)', async () => {
+    const params = buildParams({ dataFusion: dataFusionSettings });
+
+    const layer = await getLayerFromParams(params, null);
+
+    expect(LayersFactory.makeLayer).toHaveBeenCalledWith(
+      params.visualizationUrl,
+      params.layerId,
+      null,
+      expect.anything(),
+    );
+    expect(constructDataFusionLayer).not.toHaveBeenCalled();
+    expect(layer).toBe(madeLayer);
   });
 });

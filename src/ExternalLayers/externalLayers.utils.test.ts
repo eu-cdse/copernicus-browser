@@ -401,12 +401,30 @@ describe('buildWmtsPreviewTileUrl', () => {
     expect(z).toBeGreaterThan(0);
   });
 
-  it('caps zoom at 6', () => {
-    // A 0.01-degree span would give log2(360/0.01) ≈ 15 → capped at 6
+  it('caps zoom at 12', () => {
+    // A 0.01-degree span would give log2(360/0.01) ≈ 15 → capped at 12
     const tinyBbox = { south: 50, west: 10, north: 50.01, east: 10.01 };
     const result = buildWmtsPreviewTileUrl(template, tinyBbox);
     const z = parseInt(result.split('/')[4], 10);
-    expect(z).toBeLessThanOrEqual(6);
+    expect(z).toBeLessThanOrEqual(12);
+  });
+
+  it('keeps x/y within the halved grid range for a 512px TileMatrixSet (regression for tile overshoot)', () => {
+    // Same tiny bbox as the "caps zoom at 12" case, so z=12. A 512px TileMatrixSet has half as
+    // many columns/rows as the standard 256px grid at the same TILEMATRIX (zoom) label.
+    const tinyBbox = { south: 50, west: 10, north: 50.01, east: 10.01 };
+    const result = buildWmtsPreviewTileUrl(template, tinyBbox, 512);
+    const match = result.match(/\/(\d+)\/(\d+)\/(\d+)\.png$/);
+    const [, z, x, y] = match!.map(Number);
+    expect(z).toBe(12);
+    const maxIndex = (2 ** z * 256) / 512 - 1; // 2047
+    expect(x).toBeLessThanOrEqual(maxIndex);
+    expect(y).toBeLessThanOrEqual(maxIndex);
+  });
+
+  it('defaults to the standard 256px grid when tileSize is omitted', () => {
+    const bbox = { south: 50, west: 10, north: 50.01, east: 10.01 };
+    expect(buildWmtsPreviewTileUrl(template, bbox)).toBe(buildWmtsPreviewTileUrl(template, bbox, 256));
   });
 });
 
@@ -906,6 +924,41 @@ const WMTS_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </Contents>
 </Capabilities>`;
 
+// Same as WMTS_XML, but the TileMatrixSet declares a <TileMatrix> with a non-standard 512px tile
+// size (e.g. Planet's PopularWebMercator512) — regression fixture for the "TILECOL/TILEROW
+// overshoot the server's valid range" bug: tileSize must be parsed from TileWidth/TileHeight.
+const WMTS_512PX_TILEMATRIXSET_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<Capabilities version="1.0.0">
+  <ows:ServiceIdentification>
+    <ows:Title>My WMTS</ows:Title>
+  </ows:ServiceIdentification>
+  <Contents>
+    <Layer>
+      <ows:Identifier>dem_layer</ows:Identifier>
+      <ows:Title>DEM Layer</ows:Title>
+      <ows:Abstract>Digital Elevation Model</ows:Abstract>
+      <Format>image/png</Format>
+      <TileMatrixSetLink>
+        <TileMatrixSet>GoogleMapsCompatible</TileMatrixSet>
+      </TileMatrixSetLink>
+      <ResourceURL resourceType="tile" template="https://tiles.example.com/wmts/dem/{TileMatrix}/{TileRow}/{TileCol}.png" format="image/png"/>
+      <ows:WGS84BoundingBox>
+        <ows:LowerCorner>-20 30</ows:LowerCorner>
+        <ows:UpperCorner>40 70</ows:UpperCorner>
+      </ows:WGS84BoundingBox>
+    </Layer>
+    <TileMatrixSet>
+      <ows:Identifier>GoogleMapsCompatible</ows:Identifier>
+      <ows:SupportedCRS>urn:ogc:def:crs:EPSG:6.18.3:3857</ows:SupportedCRS>
+      <TileMatrix>
+        <ows:Identifier>0</ows:Identifier>
+        <TileWidth>512</TileWidth>
+        <TileHeight>512</TileHeight>
+      </TileMatrix>
+    </TileMatrixSet>
+  </Contents>
+</Capabilities>`;
+
 const WMTS_NON_WEBMERCATOR_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <Capabilities version="1.0.0">
   <ows:ServiceIdentification>
@@ -1149,6 +1202,16 @@ describe('fetchWmtsCapabilities', () => {
     expect(result!.accessConstraints).toBeUndefined();
     expect(result!.fees).toBeUndefined();
     expect(layer.metadataUrls).toBeUndefined();
+    // No <TileMatrix> under the TileMatrixSet in this fixture: tileSize is left undefined so
+    // Leaflet's default 256px assumption applies.
+    expect(layer.tileSize).toBeUndefined();
+  });
+
+  it('parses tileSize from TileWidth/TileHeight when the TileMatrixSet declares a non-standard 512px TileMatrix', async () => {
+    mockFetch(WMTS_512PX_TILEMATRIXSET_XML);
+    const result = await fetchWmtsCapabilities('https://example.com/wmts');
+    expect(result).not.toBeNull();
+    expect(result!.layers[0].tileSize).toBe(512);
   });
 
   it('parses service-level Abstract, AccessConstraints and Fees from ows:ServiceIdentification', async () => {

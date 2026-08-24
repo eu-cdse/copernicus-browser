@@ -73,6 +73,39 @@ describe('externalLayersSlice reducers (external services)', () => {
     expect(state.activeLayerName).toBe('borders');
     expect(state.activeLayerId).toBe('s1-borders');
   });
+
+  it('updateServerLayers applies service metadata when provided (background capabilities refresh)', () => {
+    let state = externalLayersSlice.reducer(
+      externalLayersSlice.getInitialState(),
+      addExternalServer(server('s1', ['cities'])),
+    );
+    state = externalLayersSlice.reducer(
+      state,
+      updateServerLayers({
+        serverId: 's1',
+        layers: [{ id: 's1-cities', name: 'cities', title: 'cities' }],
+        serviceAbstract: 'A refreshed description',
+        accessConstraints: 'none',
+        fees: 'none',
+      }),
+    );
+    const updatedServer = state.servers.find((s) => s.id === 's1');
+    expect(updatedServer?.serviceAbstract).toBe('A refreshed description');
+    expect(updatedServer?.accessConstraints).toBe('none');
+    expect(updatedServer?.fees).toBe('none');
+  });
+
+  it('updateServerLayers leaves existing service metadata untouched when not provided (plain layer merge)', () => {
+    let state = externalLayersSlice.reducer(
+      externalLayersSlice.getInitialState(),
+      addExternalServer({ ...server('s1', ['cities']), serviceAbstract: 'Original description' }),
+    );
+    state = externalLayersSlice.reducer(
+      state,
+      updateServerLayers({ serverId: 's1', layers: [{ id: 's1-cities', name: 'cities', title: 'cities' }] }),
+    );
+    expect(state.servers.find((s) => s.id === 's1')?.serviceAbstract).toBe('Original description');
+  });
 });
 
 describe('externalLayersSlice — selected time persistence', () => {

@@ -3,9 +3,10 @@ import { Provider } from 'react-redux';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 
 import PinPanel from './PinPanel';
-import store, { authSlice, pinsSlice } from '../../store';
+import store, { authSlice, pinsSlice, externalLayersSlice } from '../../store';
 import { SAVED_PINS, UNSAVED_PINS } from './const';
 import * as PinUtils from './Pin.utils';
+import { fetchWmtsCapabilities } from '../../ExternalLayers/externalLayers.utils';
 
 // The order-by dropdown (react-select) is not under test and its icons don't render in jsdom.
 // Capture the props it receives so tests can trigger onChange with a real ordering option.
@@ -22,6 +23,7 @@ jest.mock('./Pin', () => (props) => (
   <div>
     <span>{props.item.title}</span>
     <button title="Remove pin" onClick={() => props.onRemovePin(props.index)} />
+    <button title="Select pin" onClick={() => props.onPinSelect()} />
   </div>
 ));
 
@@ -38,6 +40,11 @@ jest.mock('./Pin.utils', () => {
     saveLocalPins: jest.fn(),
   };
 });
+
+jest.mock('../../ExternalLayers/externalLayers.utils', () => ({
+  fetchWmtsCapabilities: jest.fn(),
+  fetchWmsCapabilities: jest.fn(),
+}));
 
 const renderPinPanel = (ownProps = {}) =>
   render(
@@ -80,6 +87,13 @@ describe('PinPanel', () => {
     PinUtils.getLocalPins.mockReturnValue([]);
     store.dispatch(pinsSlice.actions.reset());
     store.dispatch(authSlice.actions.resetUser());
+    // No bulk reset action exists for externalLayers — remove any servers added by a previous test
+    // so `existingServer` lookups by url don't leak across tests.
+    store
+      .getState()
+      .externalLayers.servers.forEach((s) =>
+        store.dispatch(externalLayersSlice.actions.removeExternalServer(s.id)),
+      );
     window.confirm = jest.fn(() => true);
   });
 
@@ -397,6 +411,55 @@ describe('PinPanel', () => {
           'Native B',
         ]),
       );
+    });
+  });
+
+  describe('onPinSelect — external WMTS pin restore', () => {
+    const wmtsPin = {
+      _id: 'pin-wmts-1',
+      title: 'WMTS pin',
+      externalWms: {
+        url: 'https://example.com/wmts',
+        layerName: 'layer1',
+        layerTitle: 'Layer 1',
+        tileUrl: 'https://example.com/wmts/{z}/{x}/{y}.png',
+        tileSize: 512,
+        type: 'WMTS',
+        serverName: 'Example WMTS',
+        version: '1.0.0',
+        format: 'image/png',
+        queryable: false,
+      },
+    };
+
+    it('restores the service description/access constraints/fees dropped when a removed service is re-added (#1205)', async () => {
+      fetchWmtsCapabilities.mockResolvedValue({
+        layers: [{ id: 'l1', name: 'layer1', title: 'Layer 1' }],
+        serviceAbstract: 'Refreshed description',
+        accessConstraints: 'none',
+        fees: 'none',
+      });
+
+      renderPinPanel();
+      await waitFor(() => expect(PinUtils.getLocalPins).toHaveBeenCalled());
+
+      setPins([wmtsPin], UNSAVED_PINS);
+
+      await screen.findByTitle('Select pin');
+      act(() => {
+        fireEvent.click(screen.getByTitle('Select pin'));
+      });
+
+      await waitFor(() => expect(fetchWmtsCapabilities).toHaveBeenCalledWith('https://example.com/wmts'));
+
+      await waitFor(() => {
+        const server = store
+          .getState()
+          .externalLayers.servers.find((s) => s.url === 'https://example.com/wmts');
+        expect(server?.serviceAbstract).toBe('Refreshed description');
+        expect(server?.accessConstraints).toBe('none');
+        expect(server?.fees).toBe('none');
+      });
     });
   });
 });

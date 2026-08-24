@@ -13,6 +13,18 @@ import rehypeExternalLinks from 'rehype-external-links';
 
 export const REACT_MARKDOWN_REHYPE_PLUGINS = [
   rehypeRaw,
-  [rehypeSanitize, { ...defaultSchema, attributes: { ...defaultSchema?.attributes, '*': ['className'] } }],
+  [
+    rehypeSanitize,
+    {
+      ...defaultSchema,
+      attributes: {
+        ...defaultSchema?.attributes,
+        '*': ['className'],
+        // rehype-sanitize's default schema drops `alt` on `img` — TutorialMarkdownImage
+        // relies on it to look up the icon to render, so it must be explicitly allowed.
+        img: [...(defaultSchema?.attributes?.img ?? []), 'alt'],
+      },
+    },
+  ],
   [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }],
 ];

@@ -201,6 +201,7 @@ const ExtraCollectionsPanel = () => {
           }}
           placeholder={t`Enter a WMS or WMTS URL`}
           className="extra-collections-url-input"
+          disabled={loading}
         />
         <button
           onClick={handleLoad}
@@ -209,7 +210,7 @@ const ExtraCollectionsPanel = () => {
           title={t`Load`}
           aria-label={t`Load`}
         >
-          {loading ? '…' : '+'}
+          {loading ? <i className="fas fa-spinner fa-spin fa-fw" /> : '+'}
         </button>
       </div>
 

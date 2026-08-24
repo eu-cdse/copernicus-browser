@@ -1,1 +1,28 @@
-npm run lint
+# Run lint and the prettier check concurrently — they are independent and
+# together dominate the hook's wall-clock time. Husky runs hooks with `sh -e`,
+# so each job's status is collected by PID (a bare `wait` would only report the
+# last job) and output is buffered so the two logs do not interleave.
+lint_log=$(mktemp)
+prettier_log=$(mktemp)
+trap 'rm -f "$lint_log" "$prettier_log"' EXIT
+
+npm run lint >"$lint_log" 2>&1 &
+lint_pid=$!
+npm run prettier-check >"$prettier_log" 2>&1 &
+prettier_pid=$!
+
+lint_status=0
+wait "$lint_pid" || lint_status=$?
+prettier_status=0
+wait "$prettier_pid" || prettier_status=$?
+
+cat "$lint_log"
+cat "$prettier_log"
+
+if [ "$lint_status" -ne 0 ] || [ "$prettier_status" -ne 0 ]; then
+  if [ "$prettier_status" -ne 0 ]; then
+    echo ""
+    echo "Formatting errors found. Run 'npm run prettier' to fix them, then stage the changes."
+  fi
+  exit 1
+fi

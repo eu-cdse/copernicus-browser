@@ -6,8 +6,8 @@ interface TabsState {
   scrollTop: number | null;
   // True while a Sentinel Hub layer is being visualized (the Layers or Highlights panel is active).
   // Mirrors App.jsx's mutually-exclusive panel state into Redux so map controls (the AOI/POI
-  // Spectral Explorer & Statistical Info buttons) can disable themselves outside those panels
-  // (Compare, Pin, external WMS/WMTS).
+  // Spectral Explorer, Statistical Info and Histogram buttons) can disable themselves outside those
+  // panels (Compare, Pin, external WMS/WMTS).
   isVisualizingLayer: boolean;
 }
 

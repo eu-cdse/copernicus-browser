@@ -135,12 +135,16 @@ class PinPreviewImage extends React.Component {
     }
     if (externalWms.type === 'WMTS' && externalWms.tileUrl) {
       const previewBbox = this.computeBBox(lat ?? 0, lng ?? 0, zoom ?? 5);
-      return buildWmtsPreviewTileUrl(externalWms.tileUrl, {
-        south: previewBbox.minY,
-        west: previewBbox.minX,
-        north: previewBbox.maxY,
-        east: previewBbox.maxX,
-      });
+      return buildWmtsPreviewTileUrl(
+        externalWms.tileUrl,
+        {
+          south: previewBbox.minY,
+          west: previewBbox.minX,
+          north: previewBbox.maxY,
+          east: previewBbox.maxX,
+        },
+        externalWms.tileSize,
+      );
     }
     const bbox = this.computeBBox(lat ?? 0, lng ?? 0, zoom ?? 5);
     const bounds = L.latLngBounds([bbox.minY, bbox.minX], [bbox.maxY, bbox.maxX]);

@@ -114,6 +114,7 @@
     "prettier-js": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\" \"scripts/**/*.{js,jsx,ts,tsx,json}\"",
     "prettier-css": "stylelint --fix \"src/**/*.css\" \"src/**/*.scss\"",
     "prettier-html": "prettier --write \"./**/*.html\"",
+    "prettier-check": "prettier --check --no-error-on-unmatched-pattern \"src/**/*.json\" \"scripts/**/*.json\" \"./**/*.html\"",
     "translate": "node scripts/translate",
     "update-metadata-cache-bundle": "node scripts/update-metadata-cache-bundle",
     "update-urban-atlas-capabilities-cache": "node scripts/update-urban-atlas-capabilities-cache",

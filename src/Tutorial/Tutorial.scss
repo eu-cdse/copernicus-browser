@@ -101,8 +101,10 @@
 
   p,
   li {
-    img {
+    img,
+    .tutorial-markdown-icon {
       width: 25px;
+      height: 25px;
       box-shadow: vars.$boxShadow;
       vertical-align: middle;
     }
@@ -174,13 +176,15 @@
       font-size: 20px;
       margin: 0 0 10px;
 
-      p {
+      p,
+      .tutorial-title-icon-wrap {
         display: flex;
         gap: 8px;
         align-items: center;
         justify-content: center;
 
-        img {
+        img,
+        .tutorial-title-icon {
           box-shadow: vars.$boxShadow;
         }
       }

@@ -7,7 +7,7 @@ import { buildMissingConfigIssueBody } from './rrd-missing-configurations';
 // collections are missing a configuration, and closed once none are.
 const ISSUE_LABEL = 'rrd-missing-config';
 const ISSUE_TITLE = 'RRD: collections without a configuration';
-const CC_LINE = '/cc @daniel.thiex /cc @gustav.rensburg /cc @zan.pecovnik /cc @jordi.sabat';
+const CC_LINE = '/cc @gustav.rensburg /cc @zan.pecovnik';
 
 interface GitLabIssue {
   iid: number;

@@ -188,3 +188,37 @@ describe('ExtraCollectionsPanel backend save error handling', () => {
     expect(screen.getByText(EXISTING_SERVER.name)).toBeInTheDocument();
   });
 });
+
+describe('ExtraCollectionsPanel loading state', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('disables the URL input and swaps the Load button for a spinner while a fetch is in flight', async () => {
+    // A never-resolving-until-we-say-so promise lets us assert on the in-between "loading" render,
+    // rather than only the before/after states.
+    let resolveFetch: (value: typeof CAPABILITIES) => void = () => {};
+    const pending = new Promise<typeof CAPABILITIES>((resolve) => {
+      resolveFetch = resolve;
+    });
+    mockedFetchWmsCapabilities.mockReset().mockReturnValueOnce(pending);
+
+    renderPanel();
+    await loadService(WMS_URL);
+
+    const input = screen.getByPlaceholderText('Enter a WMS or WMTS URL');
+    const loadButton = screen.getByRole('button', { name: 'Load' });
+    await waitFor(() => expect(input).toBeDisabled());
+    expect(loadButton).not.toHaveTextContent('+');
+    expect(loadButton.querySelector('i.fa-spinner.fa-spin')).toBeTruthy();
+
+    await act(async () => {
+      resolveFetch(CAPABILITIES);
+      await pending;
+    });
+
+    await waitFor(() => expect(input).not.toBeDisabled());
+    expect(loadButton.querySelector('i.fa-spinner.fa-spin')).toBeFalsy();
+    expect(loadButton).toHaveTextContent('+');
+  });
+});

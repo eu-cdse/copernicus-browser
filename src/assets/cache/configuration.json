@@ -12152,7 +12152,7 @@
         {
             "id": "3-WILDFIRES",
             "title": "Wildfires",
-            "description": "",
+            "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
             "styles": [
                 {
                     "name": "default",
@@ -12162,7 +12162,7 @@
             ],
             "orderHint": 0,
             "instanceId": "274a99-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2026-08-03T10:53:34.205379Z",
+            "lastUpdated": "2026-08-10T12:21:41.865231Z",
             "collectionType": "S2L1C",
             "collectionId": "sentinel-2-l1c",
             "datasetSourceId": 1,
@@ -65039,7 +65039,7 @@
         {
             "id": "WILDFIRES-PIERRE-MARKUSE",
             "title": "Wildfires",
-            "description": "",
+            "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
             "styles": [
                 {
                     "name": "default",
@@ -65049,7 +65049,7 @@
             ],
             "orderHint": 0,
             "instanceId": "81ed0b-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2024-10-08T07:58:52.647004Z",
+            "lastUpdated": "2026-08-10T12:36:47.664402Z",
             "collectionType": "S2L2A",
             "collectionId": "sentinel-2-l2a",
             "datasetSourceId": 2,
@@ -82217,7 +82217,7 @@
         {
             "id": "3-WILDFIRES",
             "title": "Wildfires",
-            "description": "",
+            "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
             "styles": [
                 {
                     "name": "default",
@@ -82227,7 +82227,7 @@
             ],
             "orderHint": 0,
             "instanceId": "a91f72-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2026-08-03T11:27:27.925571Z",
+            "lastUpdated": "2026-08-10T12:20:36.927531Z",
             "collectionType": "S2L2A",
             "collectionId": "sentinel-2-l2a",
             "datasetSourceId": 2,
@@ -94635,7 +94635,7 @@
         {
             "id": "WILDFIRES",
             "title": "Wildfires",
-            "description": "",
+            "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
             "styles": [
                 {
                     "name": "default",
@@ -94645,7 +94645,7 @@
             ],
             "orderHint": 0,
             "instanceId": "ce3273-YOUR-INSTANCEID-HERE",
-            "lastUpdated": "2024-10-08T08:02:08.952159Z",
+            "lastUpdated": "2026-08-10T12:36:15.884310Z",
             "collectionType": "S2L1C",
             "collectionId": "sentinel-2-l1c",
             "datasetSourceId": 1,
@@ -111652,6 +111652,32 @@
             "datasourceDefaults": {
                 "upsampling": "BICUBIC",
                 "downsampling": "NEAREST",
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "maxCloudCoverage": 50,
+                "tiers": "ALL_TIERS",
+                "type": "LOTL1"
+            }
+        },
+        {
+            "id": "3_WILDFIRES",
+            "title": "Wildfires",
+            "description": "Visualizes wildfires based on bands B2, B3, B4 and B10",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\n// Landsat 8/9 Intensified Fire Glow Script\n// Based on the Pierre Markuse wildfire script, edited using AI by András Zlinszky, Sinergise\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B03\", \"B04\", \"B10\", \"dataMask\"],\n    output: { bands: 3 }\n  };\n}\n\nfunction evaluatePixel(sample) {\n  if (sample.dataMask === 0) return [0, 0, 0];\n\n  // 1. DATA NORMALIZATION (B10 -> Celsius)\n  var b10 = sample.B10;\n  var LST_C = 0;\n  if (b10 > 200) {\n    LST_C = (b10 > 1000) ? (b10 * 0.1) - 273.15 : b10 - 273.15;\n  } else {\n    var K1 = 774.8853;\n    var K2 = 1321.0789;\n    LST_C = (K2 / Math.log(K1 / (b10 + 0.0001) + 1)) - 273.15;\n  }\n\n  // 2. TRUE COLOR BASE (Slightly darkened for better contrast with fire)\n  var brightness = 1.8;\n  var R = sample.B04 * brightness;\n  var G = sample.B03 * brightness;\n  var B = sample.B02 * brightness;\n\n  // 3. INTENSE FIRE PARAMETERS\n  var minFireC = 45;  // Threshold to start the red glow\n  var maxFireC = 115; // Threshold for white-hot center\n\n  if (LST_C > minFireC) {\n    // Normalize heat value\n    var val = (LST_C - minFireC) / (maxFireC - minFireC);\n    val = Math.min(Math.max(val, 0), 1);\n\n    // --- INTENSIFIED RED GLOW LOGIC ---\n    // We use Math.pow to create a steep curve.\n    // Deep Red starts early; Yellow/White only appears at very high temps.\n    \n    var redIntensifier = val * 2.5;            // Strong red base\n    var yellowIntensifier = Math.pow(val, 3);  // Yellow kicks in late (intense heat)\n    var whiteIntensifier = Math.pow(val, 5);   // White only for the core\n\n    // Apply colors using an additive blend (Screen-like effect)\n    R = R + redIntensifier; \n    G = G + (yellowIntensifier * 0.8) + (whiteIntensifier * 0.5);\n    B = B + (whiteIntensifier * 0.8);\n\n    // Optional: Add a slight \"bloom\" to the red channel\n    R *= 1.2;\n  }\n\n  return [R, G, B];\n}"
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "ed94c7-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-08-10T12:16:59.911453Z",
+            "collectionType": "LOTL1",
+            "collectionId": "landsat-ot-l1",
+            "datasetSourceId": 12,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
                 "mosaickingOrder": "mostRecent",
                 "temporal": false,
                 "maxCloudCoverage": 50,

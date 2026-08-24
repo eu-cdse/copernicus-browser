@@ -149,11 +149,32 @@ export const externalLayersSlice = createSlice({
       state.activeLayerId = null;
       state.activeLayerTime = null;
     },
-    updateServerLayers: (state, action: PayloadAction<{ serverId: string; layers: ExternalLayer[] }>) => {
-      const { serverId, layers } = action.payload;
+    updateServerLayers: (
+      state,
+      action: PayloadAction<{
+        serverId: string;
+        layers: ExternalLayer[];
+        serviceAbstract?: string;
+        accessConstraints?: string;
+        fees?: string;
+      }>,
+    ) => {
+      const { serverId, layers, serviceAbstract, accessConstraints, fees } = action.payload;
       const server = state.servers.find((s) => s.id === serverId);
       if (server) {
         server.layers = layers;
+        // Only present when this update comes from a background capabilities refresh (see
+        // PinPanel's pin-restore flow) — a plain layer-list merge doesn't carry service metadata
+        // and must not blank out what the server already has.
+        if (serviceAbstract !== undefined) {
+          server.serviceAbstract = serviceAbstract;
+        }
+        if (accessConstraints !== undefined) {
+          server.accessConstraints = accessConstraints;
+        }
+        if (fees !== undefined) {
+          server.fees = fees;
+        }
       }
     },
     setWmsPanelOpen: (state, action: PayloadAction<boolean>) => {
@@ -188,6 +209,7 @@ export interface ActiveExternalLayer {
   layerAbstract: string | null;
   legendUrl: string | null;
   tileUrl: string | null;
+  tileSize: number | null;
   queryable: boolean;
   time: string | null;
   timeStart: string | null;
@@ -237,6 +259,7 @@ export const selectActiveExternalLayer = createSelector(
       layerAbstract: layer.abstract ?? null,
       legendUrl: layer.legendUrl ?? null,
       tileUrl: layer.tileUrl ?? null,
+      tileSize: layer.tileSize ?? null,
       queryable: layer.queryable ?? false,
       time: activeLayerTime ?? layer.timeDefault ?? null,
       timeStart: layer.timeStart ?? null,

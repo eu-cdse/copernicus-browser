@@ -7,7 +7,7 @@ const mockNetwork = new MockAdapter(axios);
 
 const ISSUE_TITLE = 'RRD: collections without a configuration';
 const ISSUE_LABEL = 'rrd-missing-config';
-const CC_LINE = '/cc @daniel.thiex /cc @gustav.rensburg /cc @zan.pecovnik /cc @jordi.sabat';
+const CC_LINE = '/cc @gustav.rensburg /cc @zan.pecovnik';
 
 const missingCollections: Collection[] = [{ id: 'col-a', name: 'Collection A' }];
 

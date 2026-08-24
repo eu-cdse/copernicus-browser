@@ -1,0 +1,42 @@
+@use '../../variables.module.scss' as vars;
+
+.segmented-control {
+  display: flex;
+  background-color: vars.$whiteColor;
+  border: 1px solid vars.$mainDark;
+  border-radius: 6px;
+  padding: 2px;
+  gap: 2px;
+
+  .segmented-control-option {
+    flex: 1 1 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    font-family: inherit;
+    font-size: 0.85em;
+    font-weight: vars.$fontWeightBold;
+    border-radius: 5px;
+    color: vars.$textColorGray;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover:not(.selected, :disabled) {
+      background-color: vars.$mainMedium;
+      color: vars.$textColor;
+    }
+
+    &.selected {
+      background-color: vars.$primaryColor;
+      color: vars.$whiteColor;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: vars.$disabled;
+    }
+  }
+}

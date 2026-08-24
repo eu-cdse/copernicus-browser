@@ -433,6 +433,7 @@ class PinPanel extends Component {
         layerAbstract,
         legendUrl,
         tileUrl,
+        tileSize,
         type,
         serverName,
         version,
@@ -472,6 +473,7 @@ class PinPanel extends Component {
               abstract: layerAbstract,
               legendUrl,
               tileUrl,
+              tileSize,
               queryable,
             },
           ];
@@ -497,6 +499,7 @@ class PinPanel extends Component {
                     abstract: layerAbstract,
                     legendUrl,
                     tileUrl,
+                    tileSize,
                     queryable,
                   },
                 ]
@@ -528,7 +531,13 @@ class PinPanel extends Component {
           .then((result) => {
             if (result?.layers) {
               store.dispatch(
-                externalLayersSlice.actions.updateServerLayers({ serverId, layers: result.layers }),
+                externalLayersSlice.actions.updateServerLayers({
+                  serverId,
+                  layers: result.layers,
+                  serviceAbstract: result.serviceAbstract,
+                  accessConstraints: result.accessConstraints,
+                  fees: result.fees,
+                }),
               );
             }
           })

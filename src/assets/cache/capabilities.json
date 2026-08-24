@@ -1213,7 +1213,7 @@
             {
                 "id": "3-WILDFIRES",
                 "name": "Wildfires",
-                "description": "",
+                "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
                 "dataset": "S2L1C",
                 "legendUrl": null
             },
@@ -4793,7 +4793,7 @@
             {
                 "id": "WILDFIRES-PIERRE-MARKUSE",
                 "name": "Wildfires",
-                "description": "",
+                "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
                 "dataset": "S2L2A",
                 "legendUrl": null
             }
@@ -6150,7 +6150,7 @@
             {
                 "id": "3-WILDFIRES",
                 "name": "Wildfires",
-                "description": "",
+                "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
                 "dataset": "S2L2A",
                 "legendUrl": null
             },
@@ -7283,7 +7283,7 @@
             {
                 "id": "WILDFIRES",
                 "name": "Wildfires",
-                "description": "",
+                "description": "Visualizes wildfires based on bands B02, B03, B04, B08, B8A, B11 and B12",
                 "dataset": "S2L1C",
                 "legendUrl": null
             }
@@ -8226,6 +8226,13 @@
                 "id": "3_TONEMAPPED_NATURAL_COLOR",
                 "name": "Highlight Optimized Natural Color",
                 "description": "",
+                "dataset": "LOTL1",
+                "legendUrl": null
+            },
+            {
+                "id": "3_WILDFIRES",
+                "name": "Wildfires",
+                "description": "Visualizes wildfires based on bands B2, B3, B4 and B10",
                 "dataset": "LOTL1",
                 "legendUrl": null
             },

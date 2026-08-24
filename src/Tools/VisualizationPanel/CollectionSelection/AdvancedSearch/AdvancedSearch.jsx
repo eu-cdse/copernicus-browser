@@ -28,6 +28,7 @@ import {
   ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
 } from '../../../../const';
 import { getBoundsAndLatLng } from '../../../../utils/coords';
+import { persistSearchConfig } from '../../../../utils/searchConfigPersistence';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
 import { buildSearchGeometry } from '../../../../utils/geojson.utils';
@@ -361,21 +362,18 @@ class AdvancedSearch extends Component {
       : true;
     this.hydratingFromCache = false;
 
-    sessionStorage.setItem(
-      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
-      JSON.stringify({
-        searchFormData: newSearchFormData,
-        resultsAvailable: true,
-        resultsPanelSelected: true,
-        shouldShowAdvancedSearchTab,
-        cachedResults: cachedResults,
-        cachedTotalCount: cachedTotalCount,
-        cachedHasMore: cachedHasMore,
-        cachedPage: searchResult?.page ?? 0,
-        cachedStacNextToken,
-        cachedIsParallelSearch,
-      }),
-    );
+    persistSearchConfig({
+      searchFormData: newSearchFormData,
+      resultsAvailable: true,
+      resultsPanelSelected: true,
+      shouldShowAdvancedSearchTab,
+      cachedResults: cachedResults,
+      cachedTotalCount: cachedTotalCount,
+      cachedHasMore: cachedHasMore,
+      cachedPage: searchResult?.page ?? 0,
+      cachedStacNextToken,
+      cachedIsParallelSearch,
+    });
   };
 
   /**
@@ -1067,14 +1065,11 @@ class AdvancedSearch extends Component {
     );
 
     if (searchConfigFromSession) {
-      sessionStorage.setItem(
-        ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
-        JSON.stringify({
-          ...searchConfigFromSession,
-          resultsAvailable: false,
-          resultsPanelSelected: false,
-        }),
-      );
+      persistSearchConfig({
+        ...searchConfigFromSession,
+        resultsAvailable: false,
+        resultsPanelSelected: false,
+      });
     }
   };
 

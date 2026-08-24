@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { EOBUploadGeoFile } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile';
+import { UploadGeoFile } from '../../components/UploadGeoFile/UploadGeoFile';
 
-import { EOBAOIPanelButton } from '../../junk/EOBAOIPanelButton/EOBAOIPanelButton';
+import { AOIPanelButton } from '../../junk/AOIPanelButton/AOIPanelButton';
 import { connect } from 'react-redux';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
@@ -16,7 +16,7 @@ import {
   getDatasetLabel,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { appendPolygon, boundsToPolygon, getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
-import { UPLOAD_GEOMETRY_TYPE } from '../../junk/EOBUploadGeoFile/EOBUploadGeoFile.utils';
+import { UPLOAD_GEOMETRY_TYPE } from '../../components/UploadGeoFile/UploadGeoFile.utils';
 import { aoiStyle } from '../../Map/const';
 
 class AOI extends Component {
@@ -270,7 +270,7 @@ class AOI extends Component {
         }}
         className={`aoi-wrapper ${this.props.className}`}
       >
-        <EOBAOIPanelButton
+        <AOIPanelButton
           disabled={false}
           active={this.state.drawingInProgress}
           aoiBounds={selectedBounds}
@@ -296,7 +296,7 @@ class AOI extends Component {
           datasetId={this.props.datasetId}
         />
         {this.state.uploadDialog && (
-          <EOBUploadGeoFile
+          <UploadGeoFile
             onUpload={this.onFileUpload}
             onClose={() => this.setState({ uploadDialog: false })}
             type={UPLOAD_GEOMETRY_TYPE.POLYGON}
