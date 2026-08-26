@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { t } from 'ttag';
-import { handleError } from '../utils';
+import { getErrorStatus, handleError } from '../utils';
 
 const AOI_CONSTRAINT_ERROR_MESSAGES = {
   ERR_MAX_AOI_AREA: (v) => t`AOI area exceeds the maximum allowed area of ${v} km²`,
@@ -8,8 +8,33 @@ const AOI_CONSTRAINT_ERROR_MESSAGES = {
   ERR_AOI_MAX_WIDTH: (v) => t`AOI width exceeds the maximum allowed width of ${v} km`,
 };
 
+const PROVIDER_TIMED_OUT_MESSAGE = () =>
+  t`The request to the imagery provider timed out. Please try again in a few minutes.`;
+
+const RRD_STATUS_ERROR_MESSAGES = {
+  429: () =>
+    t`The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.`,
+};
+
+const getStatusErrorMessage = (error) => {
+  const status = getErrorStatus(error);
+  if (Number.isFinite(status) && RRD_STATUS_ERROR_MESSAGES[status]) {
+    return RRD_STATUS_ERROR_MESSAGES[status]();
+  }
+  if (error?.code === 'ECONNABORTED' || error?.code === 'ETIMEDOUT') {
+    return PROVIDER_TIMED_OUT_MESSAGE();
+  }
+  return null;
+};
+
 export const handleRRDError = async (error) => {
   try {
+    const statusErrorMessage = getStatusErrorMessage(error);
+    if (statusErrorMessage) {
+      await handleError({ message: statusErrorMessage });
+      return;
+    }
+
     let errorData = error?.response?.data;
 
     if (errorData?.errors && Array.isArray(errorData.errors)) {
@@ -97,13 +122,13 @@ export const handleRRDError = async (error) => {
     }
 
     await handleError({
-      message: 'An unknown error occurred',
+      message: t`An unknown error occurred`,
     });
   } catch (e) {
     console.error('Error handling error:', e);
 
     await handleError({
-      message: e.message || 'An unknown error occurred',
+      message: e.message || t`An unknown error occurred`,
     });
   }
 };
@@ -137,12 +162,12 @@ export const useRRDHttpRequest = (onErrorCallback) => {
         } else {
           console.error('Http request is undefined');
           await handleRRDError('Http request is undefined');
-          onErrorCallback();
+          onErrorCallback?.();
         }
       } catch (e) {
         console.error('useRRDHttpRequest caught:', e.response?.data?.error || e);
         await handleRRDError(e);
-        onErrorCallback();
+        onErrorCallback?.();
       } finally {
         setHttpRequest(null);
         setRequestInProgress(false);

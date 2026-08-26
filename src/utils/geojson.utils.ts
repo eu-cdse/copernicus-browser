@@ -360,7 +360,8 @@ export const DEFAULT_MAX_GEOMETRY_CHARS = 500;
  * to fit within URL length limits for GET requests.
  *
  * The estimation assumes coordinates are rounded to 3 decimal places
- * (as done by roundGeometryValues in ODataHelpers) and is based on:
+ * (as done by roundGeometryValues in ODataHelpers for AOI/LOI-sized geometries;
+ * see the precision/#647 tradeoff note on roundGeometryValues) and is based on:
  * - Each coordinate pair takes approximately: "-12.345 -12.345, " ≈ 18 chars
  * - Polygon wrapper: "POLYGON (())" = ~12 chars
  * - MultiPolygon wrapper: "MULTIPOLYGON ()" = ~15 chars per polygon

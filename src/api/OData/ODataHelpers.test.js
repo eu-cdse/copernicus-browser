@@ -1,5 +1,8 @@
 import moment from 'moment';
 import * as wellknown from 'wellknown';
+import bboxPolygon from '@turf/bbox-polygon';
+
+import { getFixedSizeBBoxBounds, getPolygonDefect } from '../../utils/geojson.utils';
 
 import oDataHelpers, {
   SUPPORTED_PROPERTIES,
@@ -45,7 +48,12 @@ import {
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S2_EUROPE_UTM_20M_DAILY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_S2_EUROPE_UTM_20M_DAILY_V1,
+  S1_MONTHLY_MOSAIC_IW,
+  S1_MONTHLY_MOSAIC_DH,
+  COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { getSTACConfigForDatasetId } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig.utils';
+import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
 import {
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_LAYER_IDS,
@@ -643,6 +651,13 @@ describe('roundGeometryValues', () => {
   test('roundGeometryValues', () => {
     const roundedGeometry = roundGeometryValues(geometry);
     expect(roundedGeometry).toEqual(geometry2);
+  });
+
+  test('does not collapse the fixed-size POI bbox into duplicate points (#1240)', () => {
+    const poiGeometry = bboxPolygon(getFixedSizeBBoxBounds(45.9, 9.5)).geometry;
+    const roundedGeometry = roundGeometryValues(poiGeometry);
+
+    expect(getPolygonDefect(roundedGeometry)).toBeNull();
   });
 });
 
@@ -1670,102 +1685,19 @@ describe('createAdvancedSearchQuery for DEM data', () => {
   });
 });
 
-describe('createAdvancedSearchQuery for mosaics', () => {
-  const collectionS1Mosaics = {
-    id: 'GLOBAL-MOSAICS',
-    collection: 'GLOBAL-MOSAICS',
-    instruments: [
-      {
-        id: 'S1Mosaics',
-        label: 'Sentinel-1',
-        productTypes: [
-          {
-            id: '_IW_mosaic_',
-            name: '_IW_mosaic_',
-            label: 'IW Monthly Mosaics',
-          },
-          {
-            id: '_DH_mosaic_',
-            name: '_DH_mosaic_',
-            label: 'DH Monthly Mosaics',
-          },
-        ],
-      },
-    ],
-  };
-  const collectionS2Mosaics = {
-    id: 'GLOBAL-MOSAICS',
-    collection: 'GLOBAL-MOSAICS',
-    instruments: [
-      {
-        id: 'S2Mosaics',
-        label: 'Sentinel-2',
-        productTypes: [
-          {
-            id: 'S2MSI_L3__MCQ',
-            name: 'Quarterly Mosaics',
-          },
-        ],
-      },
-    ],
-  };
-  const fromTime = '2023-01-01T00:00:00.000Z';
-  const toTime = '2023-10-01T23:59:59.999Z';
-  const geometry = {
-    type: 'Polygon',
-    coordinates: [
-      [
-        [1, 1],
-        [1, 2],
-        [2, 2],
-        [2, 1],
-        [1, 1],
-      ],
-    ],
-  };
-
-  test('S1 mosaics', () => {
-    const params = {
-      collections: [collectionS1Mosaics],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toEqual(
-      `((Collection/Name eq '${
-        collectionS1Mosaics.collection
-      }' and ((contains(Name,'_IW_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
-        geometry,
-      )}')) or (contains(Name,'_DH_mosaic_') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
-        geometry,
-      )}'))) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
-    );
-  });
-
-  test('S2 mosaics', () => {
-    const params = {
-      collections: [collectionS2Mosaics],
-      fromTime: moment.utc(fromTime).toDate().toISOString(),
-      toTime: moment.utc(toTime).toDate().toISOString(),
-      geometry: geometry,
-    };
-
-    const oqb = oDataHelpers.createAdvancedSearchQuery(params);
-    expect(oqb?.options).not.toBeNull();
-    const filter = oqb._findOption('filter');
-    expect(filter).not.toBeNull();
-    expect(filter.value).toEqual(
-      `((Collection/Name eq '${
-        collectionS2Mosaics.collection
-      }' and (Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'productType' and att/OData.CSC.StringAttribute/Value eq 'S2MSI_L3__MCQ') and OData.CSC.Intersects(area=geography'SRID=4326;${wellknown.stringify(
-        geometry,
-      )}')) and Online eq true) and ContentDate/Start ge ${fromTime} and ContentDate/Start lt ${toTime})`,
-    );
+// The Sentinel Mosaics collection used to be searched through OData, with an S1 filter built
+// from contains(Name,'_IW_mosaic_') / '_DH_mosaic_' and an S2 productType attribute filter.
+// It is now searched through STAC (issue #1214), so those OData query-shape assertions were
+// removed rather than updated - the code path they covered is unreachable for mosaics. What
+// replaces them is the guard below plus the payload tests in
+// src/api/STAC/STACSearchPayloadBuilder.test.ts.
+describe('Sentinel Mosaics are searched through STAC, not OData', () => {
+  test.each([
+    ['Sentinel-1 IW monthly mosaics', S1_MONTHLY_MOSAIC_IW],
+    ['Sentinel-1 DH monthly mosaics', S1_MONTHLY_MOSAIC_DH],
+    ['Sentinel-2 quarterly mosaics', COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC],
+  ])('%s resolve a STAC config, so FindProductsButton never builds an OData query', (_label, datasetId) => {
+    expect(getSTACConfigForDatasetId(datasetId, recursiveCollections)).not.toBeNull();
   });
 });
 

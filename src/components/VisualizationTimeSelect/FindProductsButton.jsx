@@ -16,12 +16,14 @@ import {
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
 import {
+  buildSelectedCollectionEntry,
   CollectionFormInitialState,
   getSTACConfigForDatasetId,
 } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig.utils';
 import {
   createDatetimeInterval,
   createGeometryFilters,
+  createProductTypeFilters,
   combineFilters,
 } from '../../api/STAC/STACSearchPayloadBuilder';
 
@@ -110,8 +112,19 @@ const FindProductsButton = ({
       const stacConfig = getSTACConfigForDatasetId(datasetId, recursiveCollections);
       dispatchSearchResult(
         stacSearchResult,
+        // Rebuild the Advanced Search form so the panel shows the same selection the results came
+        // from, using the shared builder the OData path (createCollectionFormFromDatasetId) also
+        // uses - both must encode the selection the same way.
         stacConfig
-          ? { ...CollectionFormInitialState, selectedCollections: { [stacConfig.collectionId]: {} } }
+          ? {
+              ...CollectionFormInitialState,
+              selectedCollections: {
+                [stacConfig.collectionId]: buildSelectedCollectionEntry({
+                  instrumentId: stacConfig.instrumentId,
+                  productTypeId: stacConfig.productTypeId,
+                }),
+              },
+            }
           : null,
       );
     }
@@ -201,7 +214,12 @@ const FindProductsButton = ({
 
     const geometry = boundsToPolygon(aoiBounds ?? mapBounds);
     const geometryFilters = createGeometryFilters(geometry);
-    const filter = combineFilters(geometryFilters);
+    // A single STAC collection can hold several product types (e.g. sentinel-1-global-mosaics
+    // holds both the IW and the DH mosaics), so scope the search to the one this dataset maps to.
+    const productTypeFilters = stacConfig.productTypeId
+      ? createProductTypeFilters([stacConfig.productTypeId])
+      : [];
+    const filter = combineFilters([...geometryFilters, ...productTypeFilters]);
     if (filter) {
       payload.filter = filter;
     }

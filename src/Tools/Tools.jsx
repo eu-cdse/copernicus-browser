@@ -23,6 +23,7 @@ import { checkIfCustom } from './SearchPanel/dataSourceHandlers/dataSourceHandle
 import {
   ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
   FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG,
+  FATHOM_TRACK_EVENT_LIST,
 } from '../const';
 
 import './Tools.scss';
@@ -32,6 +33,7 @@ import { persistSearchConfig } from '../utils/searchConfigPersistence';
 import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 import { isInGroup } from '../Auth/authHelpers';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
+import { handleFathomTrackEvent } from '../utils/fathom';
 
 export class Tools extends Component {
   state = {
@@ -172,6 +174,10 @@ export class Tools extends Component {
       if (!uniqueId) {
         return;
       }
+      handleFathomTrackEvent(
+        FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYER_ADD_TO_PINS,
+        activeExternalLayer.server.type,
+      );
       this.setLastAddedPin(uniqueId);
       store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + 1));
       return;

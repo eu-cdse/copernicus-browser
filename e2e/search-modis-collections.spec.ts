@@ -1,5 +1,6 @@
 import { test, expect, Page } from '@playwright/test';
 import { LIVE_REQUEST_TIMEOUT, HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
+import { ODATA_PRODUCTS_URL } from './fixtures/urls';
 
 async function setupSearchTab(page: Page) {
   await page.goto('/');
@@ -154,7 +155,7 @@ test('searching TERRA MODIS products sends correct OData request', async ({ page
 
   // Register listener before triggering search
   const searchResponse = page.waitForResponse(
-    (r) => r.url().includes('catalogue.dataspace.copernicus.eu/odata/v1/Products') && r.status() === 200,
+    (r) => r.url().includes(ODATA_PRODUCTS_URL) && r.status() === 200,
     { timeout: LIVE_REQUEST_TIMEOUT },
   );
   await page.getByTitle('Search').click();

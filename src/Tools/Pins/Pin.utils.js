@@ -80,6 +80,7 @@ export function buildExternalWmsPayload(activeExternalLayer) {
     format: activeExternalLayer.server.format,
     infoFormat: activeExternalLayer.server.infoFormat,
     time: activeExternalLayer.time ?? null,
+    style: activeExternalLayer.style ?? null,
     queryable: activeExternalLayer.queryable,
   };
 }

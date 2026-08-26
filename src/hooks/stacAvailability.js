@@ -41,11 +41,6 @@ const PRODUCT_TYPES = {
     L2A: 'L2A',
     GRI: 'GRI',
   },
-  GLOBAL_MOSAICS: {
-    S1_IW_MOSAIC: '_IW_mosaic_',
-    S2_L3_MCQ: 'S2MSI_L3__MCQ',
-    S2_MSI: 'S2MSI',
-  },
   LANDSAT: {
     OLI: 'OLI',
     TIRS: 'TIRS',
@@ -341,30 +336,6 @@ const getStacCollectionsFromFilter = (filterString) => {
         addWithSuffixes(STAC_BASE_IDS.S6_P4_1B, timelinessSuffixes);
         addWithSuffixes(STAC_BASE_IDS.S6_P4_2, timelinessSuffixes);
         addWithSuffixes(STAC_BASE_IDS.S6_AMR_C, timelinessSuffixes);
-        break;
-      }
-
-      case ODataCollections.GLOBAL_MOSAICS.collection:
-      case ODataCollections.GLOBAL_MOSAICS.label: {
-        if (filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S1_IW_MOSAIC)) {
-          collections.push(STAC_COLLECTIONS.SENTINEL_1_GLOBAL_MOSAICS);
-        }
-        if (
-          filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S2_L3_MCQ) ||
-          filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S2_MSI)
-        ) {
-          collections.push(STAC_COLLECTIONS.SENTINEL_2_GLOBAL_MOSAICS);
-        }
-        if (
-          !filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S1_IW_MOSAIC) &&
-          !filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S2_L3_MCQ) &&
-          !filterContains(PRODUCT_TYPES.GLOBAL_MOSAICS.S2_MSI)
-        ) {
-          collections.push(
-            STAC_COLLECTIONS.SENTINEL_1_GLOBAL_MOSAICS,
-            STAC_COLLECTIONS.SENTINEL_2_GLOBAL_MOSAICS,
-          );
-        }
         break;
       }
 

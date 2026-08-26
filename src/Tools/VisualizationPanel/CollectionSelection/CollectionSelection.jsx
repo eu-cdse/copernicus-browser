@@ -20,7 +20,8 @@ import store, {
   externalLayersSlice,
 } from '../../../store';
 import { selectExternalLayers } from '../../../store/slices/externalLayersSlice';
-import { DATASOURCES } from '../../../const';
+import { DATASOURCES, FATHOM_TRACK_EVENT_LIST } from '../../../const';
+import { handleFathomTrackEvent } from '../../../utils/fathom';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
@@ -322,6 +323,7 @@ const CollectionSelection = ({
     lastActiveServerId,
     lastActiveLayerName,
     lastActiveLayerTime,
+    lastActiveLayerStyle,
   } = useSelector(selectExternalLayers);
 
   // When the WMS/WMTS panel is open with collections loaded but nothing active (e.g. after
@@ -345,6 +347,11 @@ const CollectionSelection = ({
       if (remembered && lastActiveLayerTime) {
         store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(lastActiveLayerTime));
       }
+      // Same for the SLD style, which setActiveExternalLayer also reset — without this the layer
+      // comes back rendered in the server's default style instead of the one the user picked.
+      if (remembered && lastActiveLayerStyle) {
+        store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(lastActiveLayerStyle));
+      }
     }
   }, [
     showExternalLayersPanel,
@@ -353,6 +360,7 @@ const CollectionSelection = ({
     lastActiveServerId,
     lastActiveLayerName,
     lastActiveLayerTime,
+    lastActiveLayerStyle,
   ]);
 
   const handleOpenExternalLayers = () => {
@@ -361,6 +369,7 @@ const CollectionSelection = ({
     if (showExternalLayersPanel) {
       return;
     }
+    handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYERS_PANEL_BUTTON);
     store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(true));
     if (!collectionPanelExpanded) {
       store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(true));

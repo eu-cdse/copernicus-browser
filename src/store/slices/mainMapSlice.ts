@@ -4,12 +4,12 @@ import type { LatLngBounds, Bounds } from 'leaflet';
 import { DEFAULT_LAT_LNG, DEFAULT_ZOOM } from '../../const';
 import { getInitialBaseLayerId } from '../../Map/Layers';
 
-interface QuicklookAsset {
+export interface QuicklookAsset {
   href?: string;
   type?: string;
 }
 
-interface QuicklookOverlay {
+export interface QuicklookOverlay {
   _internalId: string;
   bbox?: [number, number, number, number];
   geometry?: Geometry;

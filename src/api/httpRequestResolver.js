@@ -2,12 +2,12 @@ import axios from 'axios';
 import { delay } from '../utils';
 import { extractResponseErrorMessage } from './responseErrorMessageExtractor';
 
-const defaultRequestOptions = {
+const DEFAULT_RETRY_OPTIONS = {
   retriesLeft: 3,
   delayBetweenRetries: 1000,
 };
 
-const executeRequest = async (client, method, query, requestConfig, options = defaultRequestOptions) => {
+const executeRequest = async (client, method, query, requestConfig, options = DEFAULT_RETRY_OPTIONS) => {
   try {
     if (query.queryBody) {
       const { data } = await client[method](query.queryPathString, query.queryBody, requestConfig);
@@ -55,8 +55,12 @@ const executeRequest = async (client, method, query, requestConfig, options = de
       console.error('executeRequest %s failed with %s', query.queryPathString, errorMessage);
     }
 
-    throw new Error(errorMessage);
+    const requestError = new Error(errorMessage, { cause: e });
+    requestError.status = e.response?.status;
+    requestError.response = e.response;
+    requestError.code = e.code;
+    throw requestError;
   }
 };
 
-export { executeRequest };
+export { executeRequest, DEFAULT_RETRY_OPTIONS };

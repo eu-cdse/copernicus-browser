@@ -441,6 +441,7 @@ class PinPanel extends Component {
         infoFormat,
         queryable,
         time,
+        style,
       } = rawPin.externalWms;
 
       // A corrupted or partial cache entry (e.g. `externalWms: {}`) is truthy but has no url/layer,
@@ -515,6 +516,7 @@ class PinPanel extends Component {
         }),
       );
       store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(time ?? null));
+      store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(style ?? null));
       store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(true));
       const { lat, lng, zoom } = rawPin;
       const { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);

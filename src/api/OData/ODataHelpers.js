@@ -1,4 +1,7 @@
 import * as wellknown from 'wellknown';
+import bbox from '@turf/bbox';
+import { coordEach } from '@turf/meta';
+import { METERS_PER_DEGREE } from '../../utils/coords';
 import { ODataFilterBuilder } from './ODataFilterBuilder';
 import { ODataQueryBuilder } from './ODataQueryBuilder';
 import { ODataCollections, ODataEntity, ODataFilterOperator, OrderingDirection } from './ODataTypes';
@@ -248,6 +251,7 @@ import { FilterElement } from './FilterElement';
 import { formatSearchResults, formatAttributesNames } from './searchResults.utils';
 import moment from 'moment';
 import { isFunction } from '../../utils';
+import { findConfigNodesByType, findConfigNodesByTypeInScope } from '../../utils/collectionConfigTree';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_LAYER_IDS,
@@ -1226,26 +1230,6 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
     ];
   }
 
-  if (datasetId === S1_MONTHLY_MOSAIC_DH || datasetId === S1_MONTHLY_MOSAIC_IW) {
-    return [
-      {
-        id: ODataCollections.GLOBAL_MOSAICS.id,
-        instrument: 'S1Mosaics',
-        productType: datasetId === S1_MONTHLY_MOSAIC_DH ? '_DH_mosaic_' : '_IW_mosaic_',
-      },
-    ];
-  }
-
-  if (datasetId === COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC) {
-    return [
-      {
-        id: ODataCollections.GLOBAL_MOSAICS.id,
-        instrument: 'S2Mosaics',
-        productType: 'S2MSI_L3__MCQ',
-      },
-    ];
-  }
-
   if (/^S2/.test(datasetId)) {
     return [
       {
@@ -2164,48 +2148,14 @@ const getConsolidationPeriodProps = (datasetId) => {
 };
 
 export const getCollectionInstruments = (collection) => {
+  if (!collection) {
+    return [];
+  }
+  // Untransformed config still carries its instruments under `instruments` rather than `items`.
   if (collection.instruments) {
     return collection.instruments;
   }
-  if (!collection || !collection.items) {
-    return [];
-  }
-
-  let instruments = [];
-
-  // Process all items in the collection
-  collection.items.forEach((item) => {
-    if (item.type === 'instrument') {
-      instruments.push(item);
-    } else if (item.type === 'group' && item.items) {
-      // Get instruments from it
-      const groupInstruments = getGroupInstruments(item);
-      instruments = [...instruments, ...groupInstruments];
-    }
-  });
-
-  return instruments;
-};
-
-export const getGroupInstruments = (group) => {
-  if (!group || !group.items) {
-    return [];
-  }
-
-  let instruments = [];
-
-  // Process all items in the group
-  group.items.forEach((item) => {
-    if (item.type === 'instrument') {
-      instruments.push(item);
-    } else if (item.type === 'group' && item.items) {
-      // Get instruments from it
-      const subGroupInstruments = getGroupInstruments(item);
-      instruments = [...instruments, ...subGroupInstruments];
-    }
-  });
-
-  return instruments;
+  return findConfigNodesByTypeInScope(collection.items, 'instrument');
 };
 
 export const getInstrumentProductTypes = (instrument) => {
@@ -2244,70 +2194,28 @@ export const getCollectionInstrumentProductTypes = (collection, instrumentId) =>
 };
 
 export const findGroupConfigById = (id) => {
-  const findGroup = (items = []) => {
-    return items.flatMap((item) => {
-      if (item.type === 'group') {
-        return [item];
-      } else if (Array.isArray(item.items)) {
-        return findGroup(item.items);
-      }
-      return [];
-    });
-  };
-
-  return findGroup(recursiveCollections).find((group) => group.id === id);
+  return findConfigNodesByType(recursiveCollections, 'group').find((group) => group.id === id);
 };
 
 export const findCollectionConfigById = (id) => {
-  const findCollections = (items = []) => {
-    return items.flatMap((item) => {
-      if (item.type === 'collection') {
-        return [item];
-      } else if (Array.isArray(item.items)) {
-        return findCollections(item.items);
-      }
-      return [];
-    });
-  };
-
   // Find  all collections
-  return findCollections(recursiveCollections).find((collection) => collection.id === id);
+  return findConfigNodesByType(recursiveCollections, 'collection').find((collection) => collection.id === id);
 };
 
 export const findInstrumentConfigById = (id) => {
-  const findInstruments = (items = []) => {
-    return items.flatMap((item) => {
-      if (item.type === 'instrument') {
-        return [item];
-      } else if (Array.isArray(item.items)) {
-        return findInstruments(item.items);
-      }
-      return [];
-    });
-  };
-
   // Find all instruments from all collections
-  return findInstruments(recursiveCollections.flatMap((c) => c.items)).find(
-    (instrument) => instrument.id === id,
-  );
+  return findConfigNodesByType(
+    recursiveCollections.flatMap((c) => c.items),
+    'instrument',
+  ).find((instrument) => instrument.id === id);
 };
 
 export const findProductTypeConfigById = (id) => {
-  const findProductTypes = (items = []) => {
-    return items.flatMap((item) => {
-      if (item.type === 'productType') {
-        return [item];
-      } else if (Array.isArray(item.items)) {
-        return findProductTypes(item.items);
-      }
-      return [];
-    });
-  };
-
   // Find all product types from all collections
-  return findProductTypes(recursiveCollections.flatMap((c) => c.items)).find(
-    (productType) => productType.id === id,
-  );
+  return findConfigNodesByType(
+    recursiveCollections.flatMap((c) => c.items),
+    'productType',
+  ).find((productType) => productType.id === id);
 };
 
 export const findAdditionalFiltersConfigById = (collectionId, id) => {
@@ -2928,20 +2836,42 @@ const createProductFilter = ({ fromTime, toTime, geometry, name, collections, ti
   return oDataFilterBuilder.getQueryString();
 };
 
-// this is done exclusively to keep the length of GET request below browser limit
-export const roundGeometryValues = (sourceGeometry) => {
+// this is done exclusively to keep the length of GET request below browser limit.
+// Precision is 3 decimal places (~111 m) by default, to keep AOI/LOI geometry strings
+// short enough to avoid premature bbox simplification (see #647). Small geometries
+// (e.g. the fixed-size POI bbox) instead use 6 decimal places (~0.1 m), because 3
+// decimals can collapse them into duplicate points, which the search API rejects as
+// an invalid geometry (see #1240). estimateWktLength in geojson.utils assumes the
+// 3-decimal precision below, since AOI/LOI geometries are never small enough to hit
+// the finer branch.
+const SMALL_GEOMETRY_EXTENT_DEGREES = 1000 / METERS_PER_DEGREE; // ~1 km at the equator
+const SMALL_GEOMETRY_PRECISION = 1e6; // 6 decimal places
+const DEFAULT_GEOMETRY_PRECISION = 1e3; // 3 decimal places
+
+const roundValues = (sourceGeometry, precision) => {
   const geometry = JSON.parse(JSON.stringify(sourceGeometry));
 
-  Object.keys(geometry).forEach((key) => {
-    if (typeof geometry[key] === 'object') {
-      geometry[key] = roundGeometryValues(geometry[key]);
-    }
-    if (typeof geometry[key] === 'number') {
-      geometry[key] = Math.round(geometry[key] * 1000) / 1000;
-    }
+  coordEach(geometry, (coord) => {
+    coord[0] = Math.round(coord[0] * precision) / precision;
+    coord[1] = Math.round(coord[1] * precision) / precision;
   });
 
   return geometry;
+};
+
+export const roundGeometryValues = (sourceGeometry) => {
+  let precision = DEFAULT_GEOMETRY_PRECISION;
+  try {
+    const [minX, minY, maxX, maxY] = bbox(sourceGeometry);
+    const extent = Math.max(maxX - minX, maxY - minY);
+    if (extent < SMALL_GEOMETRY_EXTENT_DEGREES) {
+      precision = SMALL_GEOMETRY_PRECISION;
+    }
+  } catch (e) {
+    // keep default precision if the extent can't be determined
+  }
+
+  return roundValues(sourceGeometry, precision);
 };
 
 /*

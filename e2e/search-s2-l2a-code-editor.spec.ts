@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LIVE_REQUEST_TIMEOUT } from './fixtures/timeouts';
+import { ODATA_PRODUCTS_URL } from './fixtures/urls';
 
 const OPENEO_RESULT_URL = 'openeosh.dataspace.copernicus.eu/1.2/result';
 
@@ -18,7 +19,7 @@ test('search latest S2 L2A image and verify process graph is selected in code ed
 
   // Register listener before triggering search
   const searchResponse = page.waitForResponse(
-    (r) => r.url().includes('catalogue.dataspace.copernicus.eu/odata/v1/Products') && r.status() === 200,
+    (r) => r.url().includes(ODATA_PRODUCTS_URL) && r.status() === 200,
     { timeout: LIVE_REQUEST_TIMEOUT },
   );
   await page.getByTitle('Search').click();

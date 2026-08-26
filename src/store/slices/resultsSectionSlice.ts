@@ -9,6 +9,11 @@ import {
 
 type ResultsSectionSortState = (results: RRDFeature[]) => RRDFeature[];
 
+export interface QuicklookImage {
+  url: string;
+  isFallback: boolean;
+}
+
 // Shape produced by RRDQueryBuilder.createSearchRequestBody() (one entry per search timespan).
 export interface RRDSearchRequestBody {
   collections: number[];
@@ -27,7 +32,7 @@ export interface ResultsSectionState {
   highlightedResult: string | undefined;
   cartResults: Record<string, unknown> | undefined;
   currentPage: number;
-  quicklookImages: Record<string, string>;
+  quicklookImages: Record<string, QuicklookImage>;
 }
 
 const initialState: ResultsSectionState = {
@@ -66,9 +71,9 @@ export const resultsSectionSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    addQuicklookImage: (state, action: PayloadAction<{ id: string; url: string }>) => {
-      const { id, url } = action.payload;
-      state.quicklookImages[id] = url;
+    addQuicklookImage: (state, action: PayloadAction<{ id: string; url: string; isFallback: boolean }>) => {
+      const { id, url, isFallback } = action.payload;
+      state.quicklookImages[id] = { url, isFallback };
     },
   },
 });

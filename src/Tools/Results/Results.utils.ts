@@ -341,6 +341,29 @@ const MIME_TO_FORMAT: Record<string, string> = {
 };
 
 /**
+ * Looks up a STAC asset by key, case-insensitively.
+ *
+ * The STAC spec does not fix the casing of asset keys and CDSE collections disagree: the
+ * Landsat mosaics expose the product archive as `product`, while the Sentinel Global Mosaics
+ * expose it as `Product`. An exact-match lookup silently returns undefined for the latter,
+ * which would drop the OData product id, the file format and the product size from results.
+ */
+const findAssetByKey = (
+  assets: Record<string, StacAsset> | null | undefined,
+  key: string,
+): StacAsset | undefined => {
+  if (!assets || typeof assets !== 'object') {
+    return undefined;
+  }
+  if (assets[key]) {
+    return assets[key];
+  }
+  const lowerCaseKey = key.toLowerCase();
+  const matchingKey = Object.keys(assets).find((assetKey) => assetKey.toLowerCase() === lowerCaseKey);
+  return matchingKey ? assets[matchingKey] : undefined;
+};
+
+/**
  * Extracts file format from STAC assets
  */
 const extractFormatFromAssets = (assets: Record<string, StacAsset> | undefined): string | null => {
@@ -351,8 +374,9 @@ const extractFormatFromAssets = (assets: Record<string, StacAsset> | undefined):
   // Prefer the 'product' asset first, consistent with calculateTotalSizeFromAssets and
   // getDownloadUrlFromAssets - otherwise asset key order (e.g. per-band assets listed
   // before the product archive) can produce the wrong format.
-  const otherAssets = Object.entries(assets).filter(([key]) => key !== 'product');
-  const orderedAssets = assets.product ? [['product', assets.product] as const, ...otherAssets] : otherAssets;
+  const productAsset = findAssetByKey(assets, 'product');
+  const otherAssets = Object.entries(assets).filter(([, asset]) => asset !== productAsset);
+  const orderedAssets = productAsset ? [['product', productAsset] as const, ...otherAssets] : otherAssets;
 
   for (const [, asset] of orderedAssets) {
     if (asset.type) {
@@ -392,8 +416,9 @@ const calculateTotalSizeFromAssets = (assets: Record<string, StacAsset> | undefi
     return 0;
   }
 
-  if (assets.product?.['file:size']) {
-    return assets.product['file:size'] as number;
+  const productAsset = findAssetByKey(assets, 'product');
+  if (productAsset?.['file:size']) {
+    return productAsset['file:size'] as number;
   }
 
   let totalSize = 0;
@@ -413,7 +438,7 @@ const calculateTotalSizeFromAssets = (assets: Record<string, StacAsset> | undefi
 export const extractODataIdFromAssets = (
   assets: Record<string, StacAsset> | null | undefined,
 ): string | null => {
-  const href = assets?.product?.href;
+  const href = findAssetByKey(assets, 'product')?.href;
   if (!href) {
     return null;
   }
@@ -439,8 +464,9 @@ export const getDownloadUrlFromAssets = (
   }
 
   // Prefer the 'product' asset key (common STAC convention)
-  if (assets.product?.href) {
-    return assets.product.href;
+  const productAsset = findAssetByKey(assets, 'product');
+  if (productAsset?.href) {
+    return productAsset.href;
   }
 
   // Look for an asset with a downloadable MIME type

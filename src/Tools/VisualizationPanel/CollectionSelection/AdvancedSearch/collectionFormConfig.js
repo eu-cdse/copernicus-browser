@@ -33,7 +33,13 @@ import { MultiSelectInput } from './filters/MultiSelectInput';
 import { SearchableMultiSelectInput } from './filters/SearchableMultiSelectInput';
 import { NumericInput } from './filters/NumericInput';
 import { AcrossTrackIncidenceAngleTag } from './filters/CustomTags';
-import { CDAS_LANDSAT_MOSAIC } from '../../../SearchPanel/dataSourceHandlers/dataSourceConstants';
+import {
+  CDAS_LANDSAT_MOSAIC,
+  S1_MONTHLY_MOSAIC_IW,
+  S1_MONTHLY_MOSAIC_DH,
+  COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+} from '../../../SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { STAC_COLLECTIONS } from '../../../../hooks/stacCollections';
 import {
   COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_DATASET_IDENTIFIERS,
@@ -1000,23 +1006,26 @@ export const collections = [
     id: ODataCollections.GLOBAL_MOSAICS.id,
     label: ODataCollections.GLOBAL_MOSAICS.label,
     type: 'collection',
-    collectionName: ODataCollections.GLOBAL_MOSAICS.collection,
     supportsCloudCover: false,
     instruments: [
       {
         id: 'S1Mosaics',
         label: 'Sentinel-1',
         supportsInstrumentName: false,
+        supportsStacSearch: true,
+        collectionName: STAC_COLLECTIONS.SENTINEL_1_GLOBAL_MOSAICS,
         productTypes: [
           {
-            id: '_IW_mosaic_',
-            name: '_IW_mosaic_',
+            id: 'S1SAR_L3_IW_MCM',
+            name: 'S1SAR_L3_IW_MCM',
             label: 'IW Monthly Mosaics',
+            datasetId: S1_MONTHLY_MOSAIC_IW,
           },
           {
-            id: '_DH_mosaic_',
-            name: '_DH_mosaic_',
+            id: 'S1SAR_L3_DH_MCM',
+            name: 'S1SAR_L3_DH_MCM',
             label: 'DH Monthly Mosaics',
+            datasetId: S1_MONTHLY_MOSAIC_DH,
           },
         ],
       },
@@ -1024,16 +1033,14 @@ export const collections = [
         id: 'S2Mosaics',
         label: 'Sentinel-2',
         supportsInstrumentName: false,
+        supportsStacSearch: true,
+        collectionName: STAC_COLLECTIONS.SENTINEL_2_GLOBAL_MOSAICS,
         productTypes: [
           {
             id: 'S2MSI_L3__MCQ',
             name: 'Quarterly Mosaics',
             label: 'Quarterly Mosaics',
-            customFilterExpression: FilterElement.Attribute(
-              ODataAttributes.productType,
-              ODataFilterOperator.eq,
-              'S2MSI_L3__MCQ',
-            ),
+            datasetId: COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
           },
         ],
       },

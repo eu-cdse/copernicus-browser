@@ -16,6 +16,8 @@ import {
   isMeaningful,
   validateWmsUrl,
 } from './externalLayers.utils';
+import { FATHOM_TRACK_EVENT_LIST } from '../const';
+import { handleFathomTrackEvent } from '../utils/fathom';
 import CheckmarkSvg from '../Tools/VisualizationPanel/CollectionSelection/checkmark.svg?react';
 import CollectionTooltip from '../Tools/VisualizationPanel/CollectionSelection/CollectionTooltip/CollectionTooltip';
 
@@ -49,6 +51,7 @@ const ExtraCollectionsPanel = () => {
   const handleLoad = async () => {
     if (!validateWmsUrl(url)) {
       setError(t`Invalid URL`);
+      handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'invalid-url');
       return;
     }
     setError(null);
@@ -57,6 +60,7 @@ const ExtraCollectionsPanel = () => {
     // Browsers block http:// requests from an https:// page (mixed content).
     if (window.location.protocol === 'https:' && /^http:\/\//i.test(url.trim())) {
       setError(t`This server must support HTTPS to be loaded here.`);
+      handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'mixed-content');
       return;
     }
 
@@ -66,6 +70,7 @@ const ExtraCollectionsPanel = () => {
     );
     if (duplicate) {
       setWarning(t`This server is already loaded as "${duplicate.name}".`);
+      handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'duplicate');
       return;
     }
 
@@ -85,18 +90,22 @@ const ExtraCollectionsPanel = () => {
         const err = e as Error & { status?: number };
         if (err?.name === 'AbortError' || err?.name === 'TimeoutError') {
           setError(t`The server took too long to respond. Please try again.`);
+          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'timeout');
         } else if (err?.name === 'HttpError') {
           setError(t`The server returned an error (HTTP ${err.status}). Check the URL and try again.`);
+          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'http-error');
         } else {
           setError(
             t`Could not reach the server. It may be offline or may not allow cross-origin (CORS) access.`,
           );
+          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'network');
         }
         return;
       }
 
       if (!result) {
         setError(t`Could not load capabilities. Check the URL and try again.`);
+        handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'no-capabilities');
         return;
       }
 
@@ -104,6 +113,7 @@ const ExtraCollectionsPanel = () => {
       // different version it doesn't support 1.1.1 (e.g. a 1.3.0-only server), so reject it.
       if (resolvedType === 'WMS' && result.version !== '1.1.1') {
         setError(t`This server requires WMS ${result.version}, which isn't supported here (only WMS 1.1.1).`);
+        handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'unsupported-version');
         return;
       }
 
@@ -133,6 +143,7 @@ const ExtraCollectionsPanel = () => {
           // Surface the backend failure in the same error modal that pin saves use, and don't add
           // the collection to the UI (it was never saved).
           handleBackendSaveError(e, t`Unable to load the external service.`);
+          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'backend-save-failed');
           return;
         }
       }
@@ -146,6 +157,7 @@ const ExtraCollectionsPanel = () => {
       );
       // Collapse the panel only on a successful load (this is the one moment we collapse).
       dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(false));
+      handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADDED, resolvedType);
 
       setUrl('');
     } finally {

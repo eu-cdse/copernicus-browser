@@ -21,7 +21,12 @@ import ProductPreview from '../../../../Results/ProductPreview/ProductPreview';
 import { rrdApi } from '../../../../../api/RRD/RRDApi';
 import { RRDQueryBuilder } from '../../../../../api/RRD/RRDQueryBuilder';
 import { getBoundsAndLatLng } from '../../../../../utils/coords';
-import { fetchPreviewImage, fetchThumbnailImage } from './results.utils';
+import {
+  fetchPreviewImage,
+  fetchThumbnailImage,
+  getQuicklookAsset,
+  hasQuicklookAsset,
+} from './results.utils';
 
 import { MetadataSourceType } from '../../../rapidResponseProperties';
 import { ModalId, RRD_INSTANCES_THEMES_LIST, TABS } from '../../../../../const';
@@ -53,7 +58,14 @@ const ResultsCard = ({
   const [inCart, setInCart] = useState(false);
   const [requestInProgress, setHttpRequest] = useRRDHttpRequest();
   const [previewImageUrl, setPreviewImageUrl] = useState(null);
-  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  // Whether the item's own quicklook/quicklook-png asset resolved to a fallback logo (network
+  // failure, no match, etc). Only set by an attempted quicklook fetch, never by the thumbnail
+  // branch below — displaying a thumbnail says nothing about whether the item's real quicklook
+  // asset would render on the map.
+  const [quicklookIsFallback, setQuicklookIsFallback] = useState(false);
+  // Starts `true` so the eye icon stays disabled until the initial load settles, instead of
+  // flickering to enabled for a frame before the real verdict is known.
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
   const isFetchingRef = useRef(false);
 
   const openProductDetailsModal = ({ downloadInProgress, onDownload }) => {
@@ -70,14 +82,6 @@ const ResultsCard = ({
     );
   };
 
-  const hasValidQuicklook = (item) =>
-    !!(
-      (item?.assets?.quicklook?.href ||
-        item?.assets?.['quicklook-png']?.href ||
-        item?.assets?.thumbnail?.href) &&
-      (Array.isArray(item.bbox) || (item.geometry && typeof item.geometry === 'object'))
-    );
-
   useEffect(() => {
     const isItemInCart = () => {
       return resultsSection.cartResults?.quote?.products.some((product) =>
@@ -90,14 +94,27 @@ const ResultsCard = ({
   useEffect(() => {
     let cancelled = false;
 
+    // The item's real quicklook/quicklook-png asset determines quicklookIsFallback (and so
+    // canShowQuicklookOnMap) independently of the thumbnail: a thumbnail is only ever used for
+    // the card preview image, it never proves the map overlay's own quicklook asset resolves.
+    const needsQuicklookCheck = hasQuicklookAsset(item);
+
     const loadImage = async () => {
+      setQuicklookIsFallback(false);
+
       // 1. Check if already cached in Redux
-      // NOTE: keep setIsLoadingImage(true) below this cached early-return — the cached
-      // path returns before the finally block that clears the flag, so setting the flag
-      // earlier would leave the spinner stuck on for cached items.
-      const cached = quicklookImages[item._internalId] || quicklookImages[item._internalId + '_thumbnail'];
-      if (cached) {
-        setPreviewImageUrl(cached);
+      const cachedThumbnail = quicklookImages[item._internalId + '_thumbnail'];
+      const cachedPreview = quicklookImages[item._internalId];
+      const thumbnailCacheSatisfied = !item.assets?.thumbnail?.href || cachedThumbnail;
+      // fetchPreviewImage is always attempted below (it falls back to the provider/mission logo
+      // when there's no valid quicklook asset), so the cache check can't be skipped just because
+      // needsQuicklookCheck is false — doing so used to skip the logo fetch entirely and left the
+      // card showing "No preview available" for items with no valid quicklook asset.
+      const previewCacheSatisfied = !!cachedPreview;
+      if (thumbnailCacheSatisfied && previewCacheSatisfied) {
+        setPreviewImageUrl((cachedThumbnail || cachedPreview)?.url ?? null);
+        setQuicklookIsFallback(needsQuicklookCheck ? cachedPreview.isFallback : false);
+        setIsLoadingImage(false);
         return;
       }
 
@@ -109,33 +126,31 @@ const ResultsCard = ({
       setIsLoadingImage(true);
 
       try {
-        // 2. Try thumbnail first (if available)
         const thumbnailHref = item.assets?.thumbnail?.href;
-        if (thumbnailHref) {
-          const thumbnailUrl = await fetchThumbnailImage(
-            item,
-            user.access_token,
-            providerSection.imageType,
-            isTaskingEnabled,
-          );
-          if (thumbnailUrl && !cancelled) {
-            onImageLoad(item._internalId + '_thumbnail', thumbnailUrl);
-            setPreviewImageUrl(thumbnailUrl);
-            return;
-          }
+        const [thumbnail, preview] = await Promise.all([
+          cachedThumbnail ||
+            (thumbnailHref
+              ? fetchThumbnailImage(item, user.access_token, providerSection.imageType, isTaskingEnabled)
+              : null),
+          cachedPreview ||
+            fetchPreviewImage(item, user.access_token, providerSection.imageType, isTaskingEnabled),
+        ]);
+
+        if (cancelled) {
+          return;
         }
 
-        // 3. Fallback to quicklook or provider logo
-        const previewUrl = await fetchPreviewImage(
-          item,
-          user.access_token,
-          providerSection.imageType,
-          isTaskingEnabled,
-        );
-        if (previewUrl && !cancelled) {
-          onImageLoad(item._internalId, previewUrl);
-          setPreviewImageUrl(previewUrl);
+        if (thumbnail && !cachedThumbnail) {
+          onImageLoad(item._internalId + '_thumbnail', thumbnail.url, false);
         }
+        if (preview && !cachedPreview) {
+          onImageLoad(item._internalId, preview.url, preview.isFallback);
+        }
+
+        // No preview at all means the quicklook asset's href exists but never resolved to a
+        // usable image (network failure, 404, ...): treat that the same as a fallback logo.
+        setQuicklookIsFallback(needsQuicklookCheck ? !preview || preview.isFallback : false);
+        setPreviewImageUrl(thumbnail?.url ?? preview?.url ?? null);
       } finally {
         if (!cancelled) {
           isFetchingRef.current = false;
@@ -253,17 +268,23 @@ const ResultsCard = ({
 
   const isQuicklookActive = quicklookOverlays.some((overlay) => overlay._internalId === item._internalId);
 
+  // Bounds validity isn't checked here: RapidResponseDesk.jsx only ever dispatches results that
+  // already passed validateAndPrepareRRDResults' geometry/bbox check, so every item reaching this
+  // card already has usable map bounds.
+  const canShowQuicklookOnMap = hasQuicklookAsset(item) && !isLoadingImage && !quicklookIsFallback;
+
   const handleQuicklookOnMap = async () => {
     if (isQuicklookActive) {
       store.dispatch(mainMapSlice.actions.removeQuicklookOverlay(item._internalId));
     } else {
+      const quicklookAsset = getQuicklookAsset(item);
       store.dispatch(
         mainMapSlice.actions.addQuicklookOverlay({
           _internalId: item._internalId,
           assets: {
             quicklook: {
-              href: item?.assets?.['quicklook-png']?.href || item?.assets?.quicklook?.href || '',
-              type: item?.assets?.['quicklook-png']?.type || item?.assets?.quicklook?.type || '',
+              href: quicklookAsset?.href || '',
+              type: quicklookAsset?.type || '',
             },
           },
           bbox: item.bbox,
@@ -470,11 +491,21 @@ const ResultsCard = ({
               title={ResultItemLabels.zoomToProduct()}
             ></i>
           )}
-          {isInGroup(RRD_GROUP) && hasValidQuicklook(item, quicklookImages) && !isTaskingEnabled && (
+          {isInGroup(RRD_GROUP) && !isTaskingEnabled && (
             <i
-              className={`fa ${isQuicklookActive ? 'fa-eye-slash' : 'fa-eye'}`}
-              onClick={handleQuicklookOnMap}
-              title={`${isQuicklookActive ? t`Hide quicklook from map` : t`Show quicklook on map`}`}
+              className={`fa ${isQuicklookActive ? 'fa-eye-slash' : 'fa-eye'} ${
+                canShowQuicklookOnMap ? '' : 'disabled'
+              }`}
+              onClick={canShowQuicklookOnMap ? handleQuicklookOnMap : undefined}
+              title={
+                canShowQuicklookOnMap
+                  ? isQuicklookActive
+                    ? t`Hide quicklook from map`
+                    : t`Show quicklook on map`
+                  : isLoadingImage
+                    ? t`Checking quicklook availability`
+                    : t`No quicklook available for this item`
+              }
             ></i>
           )}
         </div>

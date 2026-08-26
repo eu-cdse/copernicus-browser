@@ -46,7 +46,7 @@ describe('buildExternalWmsGetMapUrl', () => {
   });
 
   test('web-mercator mode requests EPSG:3857 with a projected metre bbox', () => {
-    const url = buildExternalWmsGetMapUrl(baseUrl, layer, bounds, 800, 600, undefined, true);
+    const url = buildExternalWmsGetMapUrl(baseUrl, layer, bounds, 800, 600, undefined, undefined, true);
     const p = parseParams(url);
     expect(p.get('srs')).toBe('EPSG:3857');
     const [minX, minY, maxX, maxY] = (p.get('bbox') as string).split(',').map(Number);

@@ -510,3 +510,62 @@ describe('normalizeResults', () => {
     expect((result[1] as NormalizedSTACResult).attributes).toBeDefined();
   });
 });
+
+describe('STAC asset key casing', () => {
+  // CDSE collections disagree on the casing of the product archive's asset key: the Landsat
+  // mosaics use `product`, the Sentinel Global Mosaics use `Product`. An exact-match lookup
+  // silently drops the OData product ID, the format and the size for the latter.
+  const globalMosaicAssets = {
+    userdata: {
+      href: 's3://eodata/Global-Mosaics/Sentinel-1/S1SAR_L3_IW_MCM/userdata.json',
+      type: 'application/xml',
+      'file:size': 1276,
+    },
+    VV: {
+      href: 's3://eodata/Global-Mosaics/Sentinel-1/S1SAR_L3_IW_MCM/VV.tif',
+      type: 'image/tiff; application=geotiff; profile=cloud-optimized',
+      'file:size': 106128657,
+    },
+    Product: {
+      href: 'https://zipper.dataspace.copernicus.eu/odata/v1/Products(822299a0-afd0-4cf3-a8ea-10cbe6f37766)/$value',
+      type: 'application/zip',
+      'file:size': 219323585,
+    },
+  };
+
+  test('extractODataIdFromAssets finds the UUID under a capitalised `Product` key', () => {
+    expect(extractODataIdFromAssets(globalMosaicAssets)).toBe('822299a0-afd0-4cf3-a8ea-10cbe6f37766');
+  });
+
+  test('getDownloadUrlFromAssets prefers the capitalised `Product` archive over the band assets', () => {
+    expect(getDownloadUrlFromAssets(globalMosaicAssets)).toBe(globalMosaicAssets.Product.href);
+  });
+
+  test('a lowercase `product` key still wins over a same-named asset later in the object', () => {
+    const assets = {
+      thumbnail: { href: 'https://example.test/thumb.jpg', type: 'image/jpeg' },
+      product: { href: 'https://example.test/Products(abc-123)/$value', type: 'application/zip' },
+    };
+    expect(extractODataIdFromAssets(assets)).toBe('abc-123');
+    expect(getDownloadUrlFromAssets(assets)).toBe(assets.product.href);
+  });
+
+  test('normalizeSTACResult reports the archive size and format, not the summed band assets', () => {
+    const result = normalizeSTACResult({
+      type: 'Feature',
+      id: 'Sentinel-1_IW_mosaic_2026_M06_04UFG_0_0',
+      collection: 'sentinel-1-global-mosaics',
+      properties: {
+        datetime: '2026-06-01T00:00:00Z',
+        'product:type': 'S1SAR_L3_IW_MCM',
+        constellation: 'sentinel-1',
+        instruments: ['sar'],
+      },
+      assets: globalMosaicAssets,
+    }) as NormalizedSTACResult;
+
+    expect(result.oDataProductId).toBe('822299a0-afd0-4cf3-a8ea-10cbe6f37766');
+    expect(result.contentLength).toBe(219323585);
+    expect(result.productType).toBe('S1SAR_L3_IW_MCM');
+  });
+});

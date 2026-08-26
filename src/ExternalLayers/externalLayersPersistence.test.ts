@@ -12,6 +12,7 @@ import { externalLayersSlice, ExternalLayersState } from '../store/slices/extern
 // live in the backend). No per-user isolation to test any more.
 const KEY = 'browser_external_services';
 const DATE_KEY = 'browser_external_wms_date';
+const STYLE_KEY = 'browser_external_wms_style';
 
 const sampleState = (): ExternalLayersState => ({
   ...externalLayersSlice.getInitialState(),
@@ -20,12 +21,14 @@ const sampleState = (): ExternalLayersState => ({
   lastActiveLayerName: 'layerA',
   lastActiveLayerId: 'l1',
   lastActiveLayerTime: '2024-03-15',
+  lastActiveLayerStyle: 'ndvi',
   // transient / live fields that must NOT be persisted
   panelOpen: true,
   activeServerId: 's1',
   activeLayerName: 'layerA',
   activeLayerId: 'l1',
   activeLayerTime: '2024-01-01',
+  activeLayerStyle: 'ndvi',
 });
 
 describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', () => {
@@ -67,6 +70,28 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       expect(loaded?.panelOpen).toBe(false);
       expect(loaded?.activeServerId).toBeNull();
       expect(loaded?.activeLayerTime).toBeNull();
+      expect(loaded?.activeLayerStyle).toBeNull();
+    });
+
+    test('restores the selected style from its own key', () => {
+      sessionStorage.setItem(
+        KEY,
+        JSON.stringify({
+          servers: [{ id: 's1', name: 'Test', url: 'https://wms.example/wms', type: 'WMS', layers: [] }],
+        }),
+      );
+      sessionStorage.setItem(STYLE_KEY, 'ndvi');
+      expect(loadPersistedExternalLayers()?.lastActiveLayerStyle).toBe('ndvi');
+    });
+
+    test('leaves the style null when nothing is stored under the style key', () => {
+      sessionStorage.setItem(
+        KEY,
+        JSON.stringify({
+          servers: [{ id: 's1', name: 'Test', url: 'https://wms.example/wms', type: 'WMS', layers: [] }],
+        }),
+      );
+      expect(loadPersistedExternalLayers()?.lastActiveLayerStyle).toBeNull();
     });
   });
 
@@ -88,6 +113,8 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       expect(stored).not.toHaveProperty('activeLayerTime');
       // the date is NOT kept in the bucket — it lives in its own key
       expect(stored).not.toHaveProperty('lastActiveLayerTime');
+      // same for the style
+      expect(stored).not.toHaveProperty('lastActiveLayerStyle');
     });
 
     test('removes the key when the last server is removed', () => {
@@ -112,12 +139,28 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       expect(sessionStorage.getItem(DATE_KEY)).toBeNull();
     });
 
+    test('stores the selected style under a separate key', () => {
+      markExternalLayersHydrated();
+      persistExternalLayers(sampleState());
+      expect(sessionStorage.getItem(STYLE_KEY)).toBe('ndvi');
+    });
+
+    test('clears the stored style when there is no selected style', () => {
+      markExternalLayersHydrated();
+      sessionStorage.setItem(STYLE_KEY, 'ndvi');
+      persistExternalLayers({ ...sampleState(), lastActiveLayerStyle: null });
+      expect(sessionStorage.getItem(STYLE_KEY)).toBeNull();
+    });
+
     test('round-trips through load', () => {
       markExternalLayersHydrated();
       persistExternalLayers(sampleState());
       const loaded = loadPersistedExternalLayers();
       expect(loaded?.servers[0].url).toBe('https://wms.example/wms');
       expect(loaded?.lastActiveLayerTime).toBe('2024-03-15');
+      // Regression (#1162): the chosen style must survive a reload/login redirect too, instead of
+      // silently reverting to the server's default style.
+      expect(loaded?.lastActiveLayerStyle).toBe('ndvi');
     });
 
     test('degrades gracefully when storage throws', () => {

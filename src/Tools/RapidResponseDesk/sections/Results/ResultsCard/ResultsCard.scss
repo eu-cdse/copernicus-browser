@@ -33,6 +33,11 @@
         justify-content: center;
         margin: 0 3px;
         width: 16px;
+
+        &.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
       }
     }
   }

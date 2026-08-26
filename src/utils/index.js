@@ -416,6 +416,12 @@ export function isQuotaError({ status, code }) {
   return status === 403 && quotaErrorCodes.includes(code);
 }
 
+// Normalizes an error's HTTP status, whether it lives on `error.response.status` (axios errors)
+// or directly on `error.status` (plain Errors thrown by httpRequestResolver.js's terminal catch).
+export function getErrorStatus(error) {
+  return Number(error?.response?.status ?? error?.status);
+}
+
 /**
  * Checks whether an error is caused by the zoom level exceeding a dataset's resolution limit.
  * Async because the API response data may be a Blob, which requires awaiting readBlob() to extract

@@ -23,7 +23,11 @@ import Controls from '../Controls/Controls';
 import LeafletControls from './LeafletControls/LeafletControls';
 import SentinelHubLayerComponent from './plugins/sentinelhubLeafletLayer';
 import OpenEoLayerComponent from './plugins/openEOLeafletLayer';
-import { ExternalWmsLayerComponent, ExternalTileLayerComponent } from './plugins/externalWmsLeafletLayer';
+import {
+  ExternalWmsLayerComponent,
+  ExternalTileLayerComponent,
+  optionalTileSize,
+} from './plugins/externalWmsLeafletLayer';
 import GlTileLayer from './plugins/GlTileLayer';
 import { baseLayers, overlayTileLayers, getDefaultBaseLayer } from './Layers';
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
@@ -343,17 +347,21 @@ class Map extends React.Component {
     store.dispatch(themesSlice.actions.setSelectedModeIdAndDefaultTheme(modeId));
   };
 
-  // Return a referentially stable { TIME } params object for the external WMS layer. A fresh object
-  // literal each render makes react-leaflet's WMSTileLayer call setParams() and reload all tiles, so
-  // the map "refreshed" on every unrelated re-render (e.g. while scrolling the layer list, which
-  // dispatches scroll-position to the store). Only rebuild when the time value actually changes.
-  getStableExternalWmsParams(time) {
-    if (!time) {
+  // Return a referentially stable params object ({ TIME, STYLES }) for the external WMS layer. A
+  // fresh object literal each render makes react-leaflet's WMSTileLayer call setParams() and reload
+  // all tiles, so the map "refreshed" on every unrelated re-render (e.g. while scrolling the layer
+  // list, which dispatches scroll-position to the store). Only rebuild when a value actually changes.
+  getStableExternalWmsParams(time, style) {
+    if (!time && !style) {
       return undefined;
     }
-    if (this._externalWmsTimeValue !== time) {
+    if (this._externalWmsTimeValue !== time || this._externalWmsStyleValue !== style) {
       this._externalWmsTimeValue = time;
-      this._externalWmsParams = { TIME: time };
+      this._externalWmsStyleValue = style;
+      this._externalWmsParams = {
+        ...(time ? { TIME: time } : {}),
+        ...(style ? { STYLES: style } : {}),
+      };
     }
     return this._externalWmsParams;
   }
@@ -698,7 +706,7 @@ class Map extends React.Component {
                 <TileLayer
                   url={activeExternalLayer.tileUrl || activeExternalLayer.server.url}
                   pane={EXTERNAL_LAYER_PANE_ID}
-                  tileSize={activeExternalLayer.tileSize ?? undefined}
+                  {...optionalTileSize(activeExternalLayer.tileSize)}
                 />
               ) : (
                 <WMSTileLayer
@@ -707,7 +715,10 @@ class Map extends React.Component {
                   format={activeExternalLayer.server.format || 'image/png'}
                   transparent={true}
                   version="1.1.1"
-                  params={this.getStableExternalWmsParams(activeExternalLayer.time)}
+                  params={this.getStableExternalWmsParams(
+                    activeExternalLayer.time,
+                    activeExternalLayer.style,
+                  )}
                   pane={EXTERNAL_LAYER_PANE_ID}
                 />
               )}
@@ -758,7 +769,7 @@ class Map extends React.Component {
                 const zIndex = getCompareLayerZIndex(i);
 
                 if (p.externalWms) {
-                  const { url, layerName, type, tileUrl, tileSize, format, time } = p.externalWms;
+                  const { url, layerName, type, tileUrl, tileSize, format, time, style } = p.externalWms;
                   return type === 'WMTS' ? (
                     <ExternalTileLayerComponent
                       key={p.id}
@@ -778,6 +789,7 @@ class Map extends React.Component {
                       transparent={true}
                       version="1.1.1"
                       time={time}
+                      style={style}
                       opacity={comparedOpacity[index]}
                       clipping={comparedClipping[index]}
                       pane={COMPARE_LAYER_PANE_ID}

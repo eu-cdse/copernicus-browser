@@ -26,9 +26,9 @@ export function updateLayerClipping(layer: ClippableLayer): void {
     return;
   }
   const [a, b] = layer.clipping;
-  const { min, max } = layer._map.getPixelBounds();
-  let p = { x: a * (max.x - min.x), y: 0 };
-  let q = { x: b * (max.x - min.x), y: max.y - min.y };
+  const size = layer._map.getPixelBounds().getSize();
+  let p = L.point(a * size.x, 0);
+  let q = L.point(b * size.x, size.y);
   p = layer._map.containerPointToLayerPoint(p);
   q = layer._map.containerPointToLayerPoint(q);
   const e: HTMLElement | undefined = layer.getContainer();
@@ -80,7 +80,7 @@ export function bindClipOpacityOnMove(layer: ClippableLayer, map: L.Map): void {
 // Shared by the Sentinel Hub, openEO and external WMS/WMTS Leaflet layer plugins.
 export function bindDebouncedTileUpdate(layer: AnyLeafletLayer): void {
   layer._debounceTimer = null;
-  const originalUpdate = L.GridLayer.prototype._update.bind(layer);
+  const originalUpdate = (L.GridLayer.prototype as AnyLeafletLayer)._update.bind(layer);
   layer._update = function (center: L.PointExpression) {
     clearTimeout(layer._debounceTimer);
     layer._debounceTimer = setTimeout(() => originalUpdate(center), TILE_REQUEST_DEBOUNCE_MS);

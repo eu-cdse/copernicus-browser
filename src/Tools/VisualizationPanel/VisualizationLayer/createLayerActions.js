@@ -13,6 +13,8 @@ import {
   getLoggedInErrorMsg,
   getNotSupportedIn3DMsg,
 } from '../../../junk/ConstMessages';
+import { FATHOM_TRACK_EVENT_LIST } from '../../../const';
+import { handleFathomTrackEvent } from '../../../utils/fathom';
 
 const addVisualizationToComponent = (
   dispatchAction,
@@ -96,6 +98,10 @@ const addVisualizationToCompare = (props) => {
         themeId: store.getState().themes.selectedThemeId,
         externalWms: buildExternalWmsPayload(activeExternalLayer),
       }),
+    );
+    handleFathomTrackEvent(
+      FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYER_ADD_TO_COMPARE,
+      activeExternalLayer.server.type,
     );
     return;
   }

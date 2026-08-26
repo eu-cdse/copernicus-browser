@@ -330,6 +330,20 @@ export const OSM_BACKGROUND_NAME = 'osm-background';
 export const STICKER_URL_PARAM_VALUE = 'active';
 export const SELECTED_BASE_LAYER_KEY = 'selectedBaseLayerId';
 
+// --- Analytics ---
+
+// Fathom event names. Values appended by handleFathomTrackEvent as `${event}: ${value}`,
+// which lines up with Fathom's wildcard grouping (e.g. "External service added: *").
+// Naming mirrors EO Browser's FATHOM_TRACK_EVENT_LIST so both dashboards stay comparable.
+export const FATHOM_TRACK_EVENT_LIST = {
+  EXTERNAL_LAYERS_PANEL_BUTTON: 'External layers panel button clicked',
+  EXTERNAL_SERVICE_ADDED: 'External service added',
+  EXTERNAL_SERVICE_ADD_FAILED: 'External service add failed',
+  EXTERNAL_LAYER_SELECTED: 'External layer selected',
+  EXTERNAL_LAYER_ADD_TO_PINS: 'External layer added to Pins',
+  EXTERNAL_LAYER_ADD_TO_COMPARE: 'External layer added to Compare',
+};
+
 export const XmlParserOptions = Object.freeze({
   attributesGroupName: '$',
   attributeNamePrefix: '',

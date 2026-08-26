@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LIVE_REQUEST_TIMEOUT, HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
+import { HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
+import { waitForStacSearch, waitForStacSearchResponse } from './fixtures/helpers';
 
 // visualizationUrl is AES-encrypted (VITE_CDAS_ENCRYPT_SECRET) and points to the
 // Sentinel Hub BYOC process API base URL. Decrypt with the app's secret to update.
@@ -33,16 +34,8 @@ test('Landsat Mosaic find products uses STAC and returns results', async ({ page
   }
 
   // Register interceptors before the action that triggers the request.
-  const stacRequest = page.waitForRequest(
-    (req) =>
-      req.method() === 'POST' && req.url().includes('stac.opensearch.dataspace.copernicus.eu/v1/search'),
-    { timeout: LIVE_REQUEST_TIMEOUT },
-  );
-  const stacResponse = page.waitForResponse(
-    (resp) =>
-      resp.url().includes('stac.opensearch.dataspace.copernicus.eu/v1/search') && resp.status() === 200,
-    { timeout: LIVE_REQUEST_TIMEOUT },
-  );
+  const stacRequest = waitForStacSearch(page);
+  const stacResponse = waitForStacSearchResponse(page);
 
   await page.getByText('Find products for current view').click();
 

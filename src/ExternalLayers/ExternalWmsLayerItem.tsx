@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'ttag';
 import L from 'leaflet';
 
 import { externalLayersSlice } from '../store';
-import { ExternalServer } from '../store/slices/externalLayersSlice';
+import { ExternalServer, selectActiveExternalLayer } from '../store/slices/externalLayersSlice';
 import {
   ExternalLayer,
   validateWmsUrl,
@@ -18,12 +18,15 @@ import ExternalLink from '../ExternalLink/ExternalLink';
 import ExternalWmsLayerDetails from './ExternalWmsLayerDetails';
 import DoubleChevronDown from '../icons/double-chevron-down.svg?react';
 import DoubleChevronUp from '../icons/double-chevron-up.svg?react';
+import { FATHOM_TRACK_EVENT_LIST } from '../const';
+import { handleFathomTrackEvent } from '../utils/fathom';
 
 const EMPTY_IMAGE_DATA_URI = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
 function buildPreviewUrl(
   server: { url: string; type: string; version?: string },
   layer: { name: string; tileUrl?: string; legendUrl?: string; bbox?: PreviewBbox; tileSize?: number },
+  style?: string | null,
 ): string {
   if (server.type === 'WMTS' && layer.tileUrl) {
     return buildWmtsPreviewTileUrl(layer.tileUrl, layer.bbox, layer.tileSize);
@@ -35,7 +38,9 @@ function buildPreviewUrl(
     b && b.east > b.west && b.north > b.south
       ? L.latLngBounds([b.south, b.west], [b.north, b.east])
       : L.latLngBounds([-90, -180], [90, 180]);
-  return buildExternalWmsGetMapUrl(server.url, layer.name, bounds, 64, 64);
+  // Passing the selected style makes the thumbnail track the style picker — WMS servers render the
+  // GetMap thumbnail with the same SLD as the map tiles.
+  return buildExternalWmsGetMapUrl(server.url, layer.name, bounds, 64, 64, undefined, style ?? undefined);
 }
 
 interface Props {
@@ -57,13 +62,18 @@ const ExternalWmsLayerItem = ({
 }: Props) => {
   const dispatch = useDispatch();
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const activeExternalLayer = useSelector(selectActiveExternalLayer);
+  // Style selection is per active layer (that's where it lives in the slice), so an inactive row
+  // keeps showing its default-style thumbnail.
+  const selectedStyle = isActive ? (activeExternalLayer?.style ?? null) : null;
 
   // metadataUrls is already filtered to human-viewable web pages at parse time (raw XML/data
   // documents are dropped via isWebPageMetadata in externalLayers.utils).
   const metadataUrls = layer.metadataUrls ?? [];
-  // Unfolding a row reveals its legend and full abstract, mirroring the non-WMS layer details
-  // (see VisualizationLayer/LayerDetails). The chevron is disabled when there is nothing to show.
-  const hasDetails = !!layer.legendUrl || !!layer.abstract;
+  // Unfolding a row reveals its style picker, legend and full abstract, mirroring the non-WMS layer
+  // details (see VisualizationLayer/LayerDetails). The chevron is disabled when there is nothing to
+  // show — a lone style isn't selectable, so it doesn't count as details on its own.
+  const hasDetails = !!layer.legendUrl || !!layer.abstract || (layer.styles?.length ?? 0) > 1;
 
   const toggleDetails = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -83,6 +93,7 @@ const ExternalWmsLayerItem = ({
         if (isActive) {
           return;
         }
+        handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYER_SELECTED, server.type);
         dispatch(
           externalLayersSlice.actions.setActiveExternalLayer({
             serverId: server.id,
@@ -96,7 +107,7 @@ const ExternalWmsLayerItem = ({
         <div className="preview">
           <img
             className="icon"
-            src={buildPreviewUrl(server, layer)}
+            src={buildPreviewUrl(server, layer, selectedStyle)}
             alt=""
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = EMPTY_IMAGE_DATA_URI;
@@ -200,8 +211,15 @@ const ExternalWmsLayerItem = ({
       )}
       <ExternalWmsLayerDetails
         detailsOpen={detailsOpen && isActive}
-        legendUrl={layer.legendUrl}
+        // The active row's legend follows the selected style (the selector falls back to the
+        // layer-level default when that style declares none).
+        legendUrl={(isActive ? activeExternalLayer?.legendUrl : layer.legendUrl) ?? undefined}
         abstract={layer.abstract}
+        styles={layer.styles}
+        selectedStyle={selectedStyle}
+        onStyleChange={(styleName) =>
+          dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(styleName))
+        }
       />
       <ActionBar
         className="layer-actions"

@@ -1,7 +1,9 @@
 import type { Geometry } from 'geojson';
 import type { Moment } from 'moment';
+import type { LatLngBounds } from 'leaflet';
 import moment from 'moment';
 import { buildSearchGeometry } from '../../utils/geojson.utils';
+import { findConfigNodeIdsByType, isSTACCollectionNode } from '../../utils/collectionConfigTree';
 
 export interface CQL2Filter {
   op: string;
@@ -146,41 +148,99 @@ const createTimeIntervals = (
   return null;
 };
 
+/** A config node that owns a STAC `collectionName`, paired with the selection branch under it. */
+interface STACCollectionNode {
+  config: CollectionFormConfigItem;
+  selectedNode: SelectedCollectionNode;
+}
+
 /**
- * Extracts collectionName values from config for the given selected collections.
- * selectedCollections has the shape { groupId: { subCollectionId: {...} } }.
- * collectionName is on the sub-collection config item under groupConfig.items.
+ * Resolves the selected collections against the config and returns one entry per node that owns a
+ * STAC collection. selectedCollections has the shape { collectionId: { subCollectionId: {...} } }:
+ * a top-level entry that owns one is a single STAC collection and short-circuits, otherwise it is a
+ * group node and each selected sub-collection that owns one becomes its own entry.
+ *
+ * `type` and `platform` are UI bookkeeping keys on the selection node rather than sub-collection
+ * ids, so they are skipped — neither can match a config id.
+ *
+ * Which nodes count is isSTACCollectionNode's to say, shared with the partitioner in
+ * AdvancedSearch.jsx that decides one call earlier whether this payload gets built at all. Both
+ * extractCollectionNames and extractProductTypesPerSTACCollection derive from this function, so
+ * neither those two nor the partitioner can drift apart on the answer.
  */
-const extractCollectionNames = (
+const collectSTACCollectionNodes = (
   selectedCollections: SelectedCollections,
   collectionFormConfig: CollectionFormConfigItem[] | undefined,
-): string[] => {
+): STACCollectionNode[] => {
   if (!collectionFormConfig) {
     return [];
   }
-  const collectionNames: string[] = [];
+  const nodes: STACCollectionNode[] = [];
   Object.keys(selectedCollections).forEach((collectionId) => {
     const collectionConfig = collectionFormConfig.find((c) => c.id === collectionId);
     if (!collectionConfig) {
       return;
     }
-    if (collectionConfig.collectionName) {
-      collectionNames.push(collectionConfig.collectionName);
+    const selectedNode = selectedCollections[collectionId];
+    if (isSTACCollectionNode(collectionConfig)) {
+      nodes.push({ config: collectionConfig, selectedNode });
       return;
     }
-    // Group node — find collectionName on each selected sub-collection
-    if (collectionConfig.items) {
-      const subCollectionIds = Object.keys(selectedCollections[collectionId]).filter((k) => k !== 'type');
-      subCollectionIds.forEach((subId) => {
+    if (!collectionConfig.items) {
+      return;
+    }
+    Object.keys(selectedNode)
+      .filter((key) => key !== 'type' && key !== 'platform')
+      .forEach((subId) => {
         const subConfig = collectionConfig.items!.find((item) => item.id === subId);
-        if (subConfig && subConfig.collectionName) {
-          collectionNames.push(subConfig.collectionName);
+        if (isSTACCollectionNode(subConfig)) {
+          nodes.push({
+            config: subConfig!,
+            selectedNode: selectedNode[subId] as SelectedCollectionNode,
+          });
         }
       });
-    }
   });
-  return collectionNames;
+  return nodes;
 };
+
+/**
+ * Extracts collectionName values from config for the given selected collections.
+ */
+const extractCollectionNames = (
+  selectedCollections: SelectedCollections,
+  collectionFormConfig: CollectionFormConfigItem[] | undefined,
+): string[] =>
+  collectSTACCollectionNodes(selectedCollections, collectionFormConfig).map(
+    ({ config }) => config.collectionName!,
+  );
+
+interface STACCollectionProductTypes {
+  /** Product types the user actually ticked under this STAC collection. */
+  selected: string[];
+  /** Every product type the config offers under it, used when nothing was ticked. */
+  configured: string[];
+}
+
+/**
+ * Reports, for each STAC collection the selection resolves to, both what the user ticked under it
+ * and what the config offers there. The grouping is deliberately not flattened: it is the
+ * per-collection emptiness that matters, not the total count.
+ *
+ * Returns an empty array when there is no config to resolve collection boundaries with,
+ * which callers read as "no reason to change anything".
+ */
+const extractProductTypesPerSTACCollection = (
+  selectedCollections: SelectedCollections,
+  collectionFormConfig: CollectionFormConfigItem[] | undefined,
+): STACCollectionProductTypes[] =>
+  collectSTACCollectionNodes(selectedCollections, collectionFormConfig).map(({ config, selectedNode }) => ({
+    selected: extractInstrumentsAndProductTypes(selectedNode).productTypes,
+    // Scope-crossing on purpose: `configured` stands in for a collection the user left unticked,
+    // so it has to cover every product type beneath it - directly, under a group, or under one of
+    // its instruments - because ticking the collection would have matched all of them.
+    configured: findConfigNodeIdsByType(config.items, 'productType'),
+  }));
 
 /**
  * Creates platform filters for STAC search
@@ -253,7 +313,7 @@ export const combineFilters = (
 /**
  * Creates product type filters for STAC search
  */
-const createProductTypeFilters = (productTypes: string[]): CQL2Filter[] => {
+export const createProductTypeFilters = (productTypes: string[]): CQL2Filter[] => {
   const filterArgs: CQL2Filter[] = [];
 
   if (productTypes.length > 0) {
@@ -414,7 +474,11 @@ export const createSTACSearchPayload = ({
 
   // Convert geometry to STAC filter format
   if (Object.keys(collectionForm.selectedCollections).length || aoiBounds || poiBounds) {
-    const { geometry } = buildSearchGeometry({ mapBounds, aoiBounds, poiBounds });
+    const { geometry } = buildSearchGeometry({
+      mapBounds: mapBounds as LatLngBounds | undefined,
+      aoiBounds: aoiBounds as LatLngBounds | undefined,
+      poiBounds: poiBounds as LatLngBounds | undefined,
+    });
     const geometryFilters = createGeometryFilters(geometry);
     filterArgs.push(...geometryFilters);
   }
@@ -431,13 +495,47 @@ export const createSTACSearchPayload = ({
       allInstruments.push(...instruments);
     });
 
-    const productTypeFilters = createProductTypeFilters(allProductTypes);
-    filterArgs.push(...productTypeFilters);
+    // `allProductTypes` is one flat list feeding an `and`-combined filter, which only reads as
+    // a union because product types are disjoint across STAC collections. A collection that
+    // contributes none (selecting an instrument node does not auto-select its product types the
+    // way a `hideChildren` collection's are) would therefore be excluded by the other
+    // collections' values and silently drop out of the results. Expand those to everything the
+    // config offers under them - which is what an unticked parent node means - so the union
+    // stays exact instead of dropping the filter and letting unselected product types back in.
+    const productTypesPerSTACCollection = extractProductTypesPerSTACCollection(
+      collectionForm.selectedCollections,
+      collectionFormConfig,
+    );
+    const effectiveProductTypes = [...allProductTypes];
+    // A collection offering no product types at all cannot be expanded; there is nothing to
+    // stand in for it, so fall back to emitting no product:type filter rather than one that
+    // would exclude it.
+    let hasUnexpandableCollection = false;
+    productTypesPerSTACCollection.forEach(({ selected, configured }) => {
+      if (selected.length > 0) {
+        return;
+      }
+      if (configured.length === 0) {
+        hasUnexpandableCollection = true;
+        return;
+      }
+      effectiveProductTypes.push(...configured);
+    });
 
-    // Check if any of the selected collections support instrument names
+    if (!hasUnexpandableCollection) {
+      const productTypeFilters = createProductTypeFilters([...new Set(effectiveProductTypes)]);
+      filterArgs.push(...productTypeFilters);
+    }
+
+    // Instrument filters are all-or-nothing across the selected collections: `allInstruments`
+    // above is one flat list, and the CQL2 filter is `and`-combined, so emitting it when only
+    // some of the selections support instrument names applies one collection's instrument keys
+    // to every other collection and matches nothing. `supportsInstrumentName: false` is
+    // therefore authoritative - if any selected collection resolves to false, no instrument
+    // filter is emitted at all (hence `every`, not `some`).
     const shouldIncludeInstruments =
       collectionFormConfig &&
-      Object.keys(collectionForm.selectedCollections).some((collectionId) => {
+      Object.keys(collectionForm.selectedCollections).every((collectionId) => {
         // Find the main collection config (e.g., S5P)
         const collectionConfig = collectionFormConfig.find((c) => c.id === collectionId);
         if (!collectionConfig) {

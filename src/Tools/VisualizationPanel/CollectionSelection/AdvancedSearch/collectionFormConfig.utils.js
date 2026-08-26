@@ -8,6 +8,28 @@ export const CollectionFormInitialState = {
   selectedFilters: {},
 };
 
+/**
+ * Builds the value the form stores under a collection id in `selectedCollections`.
+ *
+ * The nesting is how the form encodes *how much* of a selection is specified: `{}` is the whole
+ * collection, `{ [instrumentId]: {} }` is an instrument with no particular product type, and
+ * `{ [instrumentId]: { [productTypeId]: {} } }` pins both. A product type without an instrument
+ * has no representation and is dropped - the tree the form renders only ever reaches a product
+ * type through its instrument.
+ *
+ * Lives here, next to CollectionFormInitialState, because two paths rebuild the form from a
+ * completed search - createCollectionFormFromDatasetId (OData) and the STAC branch of
+ * FindProductsButton - and they have to agree. If only one changed, the same search would render
+ * a different selection depending on which backend answered it.
+ */
+export const buildSelectedCollectionEntry = ({ instrumentId, productTypeId } = {}) => {
+  if (!instrumentId) {
+    return {};
+  }
+
+  return { [instrumentId]: productTypeId ? { [productTypeId]: {} } : {} };
+};
+
 export const checkFormElementAccess = (formElement, props) => {
   const { hasAccess } = formElement || {};
 
@@ -194,12 +216,18 @@ export const getCollectionFormInitialState = (collectionFormConfig, formState, o
  * Returns STAC search config for a visualization datasetId, or null if OData should be used.
  *
  * To add STAC support for a new dataset, set `datasetId` and `supportsStacSearch: true`
- * on the relevant entry in collectionFormConfig.js. Both top-level collections and nested
- * items are checked.
+ * on the relevant entry in collectionFormConfig.js. Top-level collections, their items
+ * (instruments) and those items' own items (product types) are all checked, so a datasetId
+ * can live at any of the three nesting levels.
+ *
+ * `supportsStacSearch` is only required on the node that owns the STAC collection (the
+ * top-level collection or the instrument) — product-type nodes inherit it from their parent,
+ * which is what Global Mosaics relies on: one datasetId per product type, two STAC
+ * collections, one `supportsStacSearch` flag per instrument.
  *
  * @param {string} datasetId - The visualization datasetId from Redux state
  * @param {Array} collections - The raw recursiveCollections array from collectionFormConfig.js
- * @returns {{ collectionName: string, collectionId: string } | null}
+ * @returns {{ collectionName: string, collectionId: string, instrumentId?: string, productTypeId?: string } | null}
  */
 export const getSTACConfigForDatasetId = (datasetId, collections) => {
   if (!datasetId || !Array.isArray(collections)) {
@@ -215,6 +243,25 @@ export const getSTACConfigForDatasetId = (datasetId, collections) => {
       for (const item of entry.items) {
         if (item.datasetId === datasetId && item.supportsStacSearch) {
           return { collectionName: item.collectionName ?? entry.collectionName, collectionId: entry.id };
+        }
+
+        if (!Array.isArray(item.items)) {
+          continue;
+        }
+
+        for (const productType of item.items) {
+          if (productType.datasetId !== datasetId) {
+            continue;
+          }
+          if (!(productType.supportsStacSearch || item.supportsStacSearch || entry.supportsStacSearch)) {
+            continue;
+          }
+          return {
+            collectionName: productType.collectionName ?? item.collectionName ?? entry.collectionName,
+            collectionId: entry.id,
+            instrumentId: item.id,
+            productTypeId: productType.id,
+          };
         }
       }
     }

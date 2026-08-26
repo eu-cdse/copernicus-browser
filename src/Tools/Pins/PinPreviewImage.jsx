@@ -148,12 +148,18 @@ class PinPreviewImage extends React.Component {
     }
     const bbox = this.computeBBox(lat ?? 0, lng ?? 0, zoom ?? 5);
     const bounds = L.latLngBounds([bbox.minY, bbox.minX], [bbox.maxY, bbox.maxX]);
+    // Pass the pinned TIME and STYLES through so the thumbnail matches what the pin renders on the
+    // map: without them the server falls back to its default style (and latest time), which is what
+    // the preview used to show regardless of the style selected when the pin was saved.
+    // (WMTS has no style picker — its selected style is already baked into the stored tileUrl.)
     return buildExternalWmsGetMapUrl(
       externalWms.url,
       externalWms.layerName,
       bounds,
       PIN_PREVIEW_DIMENSIONS.WIDTH,
       PIN_PREVIEW_DIMENSIONS.HEIGHT,
+      externalWms.time ?? undefined,
+      externalWms.style ?? undefined,
     );
   };
 

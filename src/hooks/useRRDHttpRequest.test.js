@@ -3,6 +3,7 @@ import { handleRRDError } from './useRRDHttpRequest';
 
 jest.mock('../utils', () => ({
   handleError: jest.fn(),
+  getErrorStatus: (error) => Number(error?.response?.status ?? error?.status),
 }));
 
 describe('handleRRDError', () => {
@@ -299,6 +300,162 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message: 'Error: Start time must be at least 6 hours in the future, if given.',
+    });
+  });
+
+  describe('status-based error messages (429/timeouts, 5xx falls back to generic handling)', () => {
+    it('should show the rate-limit message for a 429 with an empty body', async () => {
+      const mockError = {
+        response: {
+          status: 429,
+          data: undefined,
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+      });
+    });
+
+    it('should show the rate-limit message for a 429 with a plain-text/HTML body', async () => {
+      const mockError = {
+        response: {
+          status: 429,
+          data: '<html>429 Too Many Requests</html>',
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+      });
+    });
+
+    it('should show the rate-limit message for a 429 even when the body has a structured "error" string that would otherwise match the shape-based branch', async () => {
+      const mockError = {
+        response: {
+          status: 429,
+          data: { error: 'some string body', status: 429 },
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+      });
+    });
+
+    it.each([500, 502, 503, 504])(
+      'should NOT use a status-based message for a %i with an empty body (falls back to the generic "unknown error" message — only 429 has a dedicated message)',
+      async (status) => {
+        const mockError = {
+          response: {
+            status,
+            data: {},
+          },
+        };
+
+        await handleRRDError(mockError);
+
+        expect(handleError).toHaveBeenCalledWith({
+          message: 'An unknown error occurred',
+        });
+      },
+    );
+
+    it('should fall back to the generic "unknown error" message when the error has no "response" but a "status" set directly on it', async () => {
+      const mockError = {
+        status: 504,
+        message: 'Request failed with status code 504',
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'An unknown error occurred',
+      });
+    });
+
+    it('should show the timeout message for a connection-aborted error with no "response"', async () => {
+      const mockError = {
+        code: 'ECONNABORTED',
+        message: 'timeout of 30000ms exceeded',
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'The request to the imagery provider timed out. Please try again in a few minutes.',
+      });
+    });
+
+    it('should show the timeout message for an ETIMEDOUT error with no "response"', async () => {
+      const mockError = {
+        code: 'ETIMEDOUT',
+        message: 'connect ETIMEDOUT',
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'The request to the imagery provider timed out. Please try again in a few minutes.',
+      });
+    });
+
+    it('should NOT use a status-based message for a 500 with a plain error string body (falls back to echoing the body instead of a friendly message)', async () => {
+      const mockError = {
+        response: {
+          status: 500,
+          data: { error: 'Internal Server Error' },
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'Error: Internal Server Error',
+      });
+    });
+
+    it('should NOT use a status-based message for a 511 (token expired) — handled by the generic message-field branch instead', async () => {
+      const mockError = {
+        response: {
+          status: 511,
+          data: { error: true, message: 'ERROR: Token is expired', quote: null },
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'Error: ERROR: Token is expired',
+      });
+    });
+
+    it('should NOT use a status-based message for a 400 (regression guard)', async () => {
+      const mockError = {
+        response: {
+          data: {
+            error: 'Research Feasibility: Geometry type must be "Polygon" for AOIs',
+            status: 400,
+            title: 'Bad Request',
+          },
+          status: 400,
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'Bad Request: Research Feasibility: Geometry type must be "Polygon" for AOIs',
+      });
     });
   });
 });

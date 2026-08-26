@@ -667,6 +667,134 @@ const WMS_ROOT_ATTRIBUTION_BBOX_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </Capability>
 </WMT_MS_Capabilities>`;
 
+// A layer advertising two <Style> entries: order must be preserved (first is the WMS default),
+// each carries its own Title (underscore-cleaned) and LegendURL, and the layer-level legendUrl
+// is the first declared style's legend.
+const WMS_MULTIPLE_STYLES_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>Styled WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>layer1</Name>
+        <Title>Layer 1</Title>
+        <Style>
+          <Name>default_style</Name>
+          <Title>Default_Style</Title>
+          <LegendURL>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://example.com/legend/default.png"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>alt_style</Name>
+          <Title>Alt_Style</Title>
+          <LegendURL>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://example.com/legend/alt.png"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+
+// A layer advertising a single <Style>: populates both `styles` (one entry) and the layer-level
+// `legendUrl`.
+const WMS_SINGLE_STYLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>Styled WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>layer1</Name>
+        <Title>Layer 1</Title>
+        <Style>
+          <Name>sole_style</Name>
+          <Title>Sole_Style</Title>
+          <LegendURL>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://example.com/legend/sole.png"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+
+// A layer with a named <Style> but no <LegendURL> at all.
+const WMS_STYLE_NO_LEGEND_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>Styled WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>layer1</Name>
+        <Title>Layer 1</Title>
+        <Style>
+          <Name>plain_style</Name>
+          <Title>Plain_Style</Title>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+
+// Backward-compatibility regression: the FIRST declared style has no LegendURL, but a LATER one
+// does — layer.legendUrl must resolve to the later style's legend (the first-declared-with-a-legend
+// rule), not stay empty just because the first style lacks one.
+const WMS_STYLE_LEGEND_FALLBACK_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>Styled WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>layer1</Name>
+        <Title>Layer 1</Title>
+        <Style>
+          <Name>no_legend_style</Name>
+          <Title>No_Legend_Style</Title>
+        </Style>
+        <Style>
+          <Name>has_legend_style</Name>
+          <Title>Has_Legend_Style</Title>
+          <LegendURL>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://example.com/legend/second.png"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+
+// A nameless <Style> (invalid per spec, but seen in the wild) declares a LegendURL; a later named
+// style declares none. The nameless entry's legend is still used as the layer-level fallback, but
+// the nameless entry itself is excluded from the selectable `styles` list (GetMap's STYLES param
+// can only request a style by name).
+const WMS_STYLE_NAMELESS_LEGEND_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>Styled WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>layer1</Name>
+        <Title>Layer 1</Title>
+        <Style>
+          <LegendURL>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://example.com/legend/nameless.png"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>named_style</Name>
+          <Title>Named_Style</Title>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+
 describe('fetchWmsCapabilities', () => {
   beforeEach(() => {
     global.fetch = jest.fn();
@@ -850,6 +978,75 @@ describe('fetchWmsCapabilities', () => {
     expect(calledUrl).toContain('token=abc');
     expect(calledUrl).not.toMatch(/SERVICE=WMS&REQUEST=GetMap/);
     expect(calledUrl).toContain('SERVICE=WMS&REQUEST=GetCapabilities');
+  });
+
+  it('parses multiple WMS Style entries in document order, each with its own title and legend', async () => {
+    mockFetch(WMS_MULTIPLE_STYLES_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.styles).toEqual([
+      { name: 'default_style', title: 'Default Style', legendUrl: 'https://example.com/legend/default.png' },
+      { name: 'alt_style', title: 'Alt Style', legendUrl: 'https://example.com/legend/alt.png' },
+    ]);
+    // Layer-level legendUrl is the first declared style's legend (previous single-legend behaviour).
+    expect(layer.legendUrl).toBe('https://example.com/legend/default.png');
+  });
+
+  it('parses a single WMS Style into a one-element styles array and the layer legendUrl', async () => {
+    mockFetch(WMS_SINGLE_STYLE_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.styles).toEqual([
+      { name: 'sole_style', title: 'Sole Style', legendUrl: 'https://example.com/legend/sole.png' },
+    ]);
+    expect(layer.legendUrl).toBe('https://example.com/legend/sole.png');
+  });
+
+  it('leaves styles and legendUrl undefined when the layer declares no Style at all', async () => {
+    mockFetch(WMS_LAYER_ATTRIBUTION_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.styles).toBeUndefined();
+    expect(layer.legendUrl).toBeUndefined();
+  });
+
+  it('parses a named Style with no LegendURL into styles without a legendUrl on the entry', async () => {
+    mockFetch(WMS_STYLE_NO_LEGEND_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.styles).toEqual([{ name: 'plain_style', title: 'Plain Style' }]);
+    expect(layer.legendUrl).toBeUndefined();
+  });
+
+  it('falls back to a later style for the layer legendUrl when the first style has none (backward compat)', async () => {
+    mockFetch(WMS_STYLE_LEGEND_FALLBACK_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.styles).toEqual([
+      { name: 'no_legend_style', title: 'No Legend Style' },
+      {
+        name: 'has_legend_style',
+        title: 'Has Legend Style',
+        legendUrl: 'https://example.com/legend/second.png',
+      },
+    ]);
+    expect(layer.legendUrl).toBe('https://example.com/legend/second.png');
+  });
+
+  it("uses a nameless style's legend as the layer fallback but excludes it from the selectable styles list", async () => {
+    mockFetch(WMS_STYLE_NAMELESS_LEGEND_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    // GetMap's STYLES param can only request a named style, so the nameless entry is dropped here...
+    expect(layer.styles).toEqual([{ name: 'named_style', title: 'Named Style' }]);
+    // ...but its legend is still used as the layer-level fallback (preserves prior behaviour).
+    expect(layer.legendUrl).toBe('https://example.com/legend/nameless.png');
   });
 
   // Regression for a large public WMS (e.g. wms.geo.admin.ch, ~1070 layers) failing to parse:
@@ -1202,8 +1399,9 @@ describe('fetchWmtsCapabilities', () => {
     expect(result!.accessConstraints).toBeUndefined();
     expect(result!.fees).toBeUndefined();
     expect(layer.metadataUrls).toBeUndefined();
-    // No <TileMatrix> under the TileMatrixSet in this fixture: tileSize is left undefined so
-    // Leaflet's default 256px assumption applies.
+    // No <TileMatrix> under the TileMatrixSet in this fixture: tileSize is left undefined here,
+    // but it's optionalTileSize() (externalWmsLeafletLayer.tsx) that omits the prop from Leaflet's
+    // options so its 256px default actually applies — passing tileSize: undefined would shadow it.
     expect(layer.tileSize).toBeUndefined();
   });
 

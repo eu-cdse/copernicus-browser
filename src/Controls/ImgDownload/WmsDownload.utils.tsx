@@ -44,6 +44,7 @@ export function buildExternalWmsGetMapUrl(
   width: number,
   height: number,
   time?: string, // ISO8601 value for the WMS TIME dimension; omitted when the layer has no time
+  style?: string, // named SLD style for the STYLES parameter; omitted to request the server default
   useWebMercator = false, // request EPSG:3857 so the image aligns with the OSM base + map overlays
   mimeType: string = MimeTypes.PNG, // requested output format; falls back to PNG if not WMS-native
 ): string {
@@ -68,6 +69,9 @@ export function buildExternalWmsGetMapUrl(
       width,
       height,
       transparent: true,
+      // `unknown` is sh-js's passthrough for GetMap query params it doesn't model itself; STYLES is
+      // how a WMS layer's SLD style is requested.
+      ...(style ? { unknown: { STYLES: style } } : {}),
     },
     ApiType.WMS,
   );
@@ -419,6 +423,7 @@ export interface ExternalWmsLayerInfo {
   tileSize?: number; // WMTS only: tile pixel size declared by the TileMatrixSet (defaults to 256 when absent)
   version?: string;
   time?: string;
+  style?: string; // WMS only: selected SLD style name
 }
 
 // When cropping a download/preview to an AOI, scale the requested pixel dimensions to the AOI's
@@ -466,6 +471,7 @@ export async function fetchExternalLayerBlob(
     width,
     height,
     ext.time,
+    ext.style,
     useWebMercator,
     mimeType,
   );

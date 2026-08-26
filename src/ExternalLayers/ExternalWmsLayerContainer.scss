@@ -238,6 +238,18 @@
   background-color: vars.$mainDark;
   color: vars.$textColor;
 
+  // Style (SLD) picker, shown above the legend when the layer advertises more than one style.
+  // Switching style re-renders the map tiles, the legend and the row thumbnail.
+  .external-wms-layer-styles {
+    margin-bottom: 8px;
+
+    .external-wms-layer-styles-label {
+      font-size: 11px;
+      color: vars.$textColor;
+      margin-bottom: 4px;
+    }
+  }
+
   .layer-legend {
     padding: 0;
 

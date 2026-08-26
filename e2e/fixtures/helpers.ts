@@ -3,6 +3,8 @@ import { Page } from '@playwright/test';
 // module so the app and the e2e fixtures cannot drift apart. See
 // src/constants/storageKeys.ts.
 import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY } from '../../src/constants/storageKeys';
+import { LIVE_REQUEST_TIMEOUT } from './timeouts';
+import { STAC_SEARCH_URL } from './urls';
 
 type ProcessNode = { process_id: string; arguments: Record<string, unknown> };
 type ProcessGraph = Record<string, ProcessNode>;
@@ -82,3 +84,24 @@ export async function seedSearchConfig(page: Page, config: Record<string, unknow
     { key: ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, value: config },
   );
 }
+
+/**
+ * Wait for the POST the app issues to the STAC search endpoint.
+ *
+ * Like every request interceptor, this MUST be registered before the action that
+ * triggers the search (the Search / Find products click), not after.
+ */
+export const waitForStacSearch = (page: Page) =>
+  page.waitForRequest((req) => req.method() === 'POST' && req.url().includes(STAC_SEARCH_URL), {
+    timeout: LIVE_REQUEST_TIMEOUT,
+  });
+
+/**
+ * Wait for a successful response from the STAC search endpoint. Use when the test needs to
+ * assert on the returned features; prefer `waitForStacSearch` for routing-only checks, which
+ * don't couple the test to live backend availability.
+ */
+export const waitForStacSearchResponse = (page: Page) =>
+  page.waitForResponse((resp) => resp.url().includes(STAC_SEARCH_URL) && resp.status() === 200, {
+    timeout: LIVE_REQUEST_TIMEOUT,
+  });

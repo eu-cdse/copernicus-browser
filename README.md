@@ -54,6 +54,12 @@ for a shell session use `HUSKY=0`.
 - Run `npm run build`
 - Use the generated `build` directory - for instance, you can run a simple python server `python -m http.server 3000` or deploy it to your preferred server
 
+### Analytics (Fathom event tracking)
+
+The app loads [Fathom Analytics](https://usefathom.com/) as a deferred third-party script (see `index.html`), so `window.fathom` is undefined until it loads and permanently undefined when blocked by an ad blocker. Custom events are tracked through the guarded `handleFathomTrackEvent(event, value?)` helper in `src/utils/fathom.ts`, which optional-chains the call and swallows any error, so a blocked or failing Fathom never breaks the user action it's attached to. Event names are centralised in `FATHOM_TRACK_EVENT_LIST` in `src/const.ts`; when a value is passed it is appended as `"${event}: ${value}"`, matching Fathom's wildcard event grouping (e.g. `External service added: *`).
+
+Currently tracked events cover the external WMS/WMTS layers feature: opening the panel, adding a service (success/failure with a reason code), selecting an external layer, and adding an external layer to Pins or Compare.
+
 ### Environment variables in the .env file
 
 The app relies on some values being provided as environment variables. The details are described in the collapsible section below.

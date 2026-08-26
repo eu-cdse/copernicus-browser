@@ -1,6 +1,6 @@
 import { createSlice, createListenerMiddleware, createSelector, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import { ExternalLayer, TimeRange } from '../../ExternalLayers/externalLayers.utils';
+import { ExternalLayer, TimeRange, WmsStyle } from '../../ExternalLayers/externalLayers.utils';
 import {
   isExternalLayersHydrated,
   persistExternalLayers,
@@ -29,6 +29,7 @@ export interface ExternalLayersState {
   activeLayerName: string | null; // which layer within that server is rendered on the map (request id)
   activeLayerId: string | null; // unique id of the active layer row (disambiguates repeated names)
   activeLayerTime: string | null; // user-selected time for the active layer's time dimension
+  activeLayerStyle: string | null; // user-selected WMS style (SLD) for the active layer
   panelOpen: boolean; // whether the WMS/WMTS panel is open in the sidebar
   // Last layer the user had active. Survives clearing the active layer (e.g. when switching to a
   // Sentinel Hub collection) so the panel can restore "where you left off" on navigation back.
@@ -39,6 +40,8 @@ export interface ExternalLayersState {
   // the chosen date is restored (not reset to the layer default) when navigating back to the WMS
   // panel from a Sentinel Hub layer / compare / pins.
   lastActiveLayerTime: string | null;
+  // Same, for the chosen style: restored instead of falling back to the layer's default style.
+  lastActiveLayerStyle: string | null;
 }
 
 // `addExternalServer` accepts a server without an id (the reducer generates one),
@@ -51,11 +54,13 @@ const initialState: ExternalLayersState = {
   activeLayerName: null,
   activeLayerId: null,
   activeLayerTime: null,
+  activeLayerStyle: null,
   panelOpen: false,
   lastActiveServerId: null,
   lastActiveLayerName: null,
   lastActiveLayerId: null,
   lastActiveLayerTime: null,
+  lastActiveLayerStyle: null,
 };
 
 // Resolve the unique row id for a layer name within a server. When a caller (e.g. pin restore)
@@ -85,10 +90,12 @@ export const externalLayersSlice = createSlice({
       state.activeLayerName = server.layers?.[0]?.name ?? null;
       state.activeLayerId = server.layers?.[0]?.id ?? null;
       state.activeLayerTime = null;
+      state.activeLayerStyle = null;
       state.lastActiveServerId = server.id;
       state.lastActiveLayerName = state.activeLayerName;
       state.lastActiveLayerId = state.activeLayerId;
       state.lastActiveLayerTime = null;
+      state.lastActiveLayerStyle = null;
     },
     removeExternalServer: (state, action: PayloadAction<string>) => {
       state.servers = state.servers.filter((s) => s.id !== action.payload);
@@ -97,6 +104,7 @@ export const externalLayersSlice = createSlice({
         state.activeLayerName = null;
         state.activeLayerId = null;
         state.activeLayerTime = null;
+        state.activeLayerStyle = null;
       }
       // Forget the remembered layer if its server was removed, so we don't try to restore it.
       if (state.lastActiveServerId === action.payload) {
@@ -104,6 +112,7 @@ export const externalLayersSlice = createSlice({
         state.lastActiveLayerName = null;
         state.lastActiveLayerId = null;
         state.lastActiveLayerTime = null;
+        state.lastActiveLayerStyle = null;
       }
     },
     setActiveExternalLayer: (
@@ -113,8 +122,8 @@ export const externalLayersSlice = createSlice({
       const server = state.servers.find((s) => s.id === action.payload.serverId);
       const layerId = resolveLayerId(server, action.payload.layerName, action.payload.layerId);
       // Re-selecting the already-active layer (an action-button click bubbling up, the collection
-      // restore effect, etc.) must not discard the user's chosen time; only reset it when the active
-      // layer actually changes.
+      // restore effect, etc.) must not discard the user's chosen time/style; only reset them when
+      // the active layer actually changes.
       const isSameLayer =
         state.activeServerId === action.payload.serverId &&
         state.activeLayerId === layerId &&
@@ -125,6 +134,8 @@ export const externalLayersSlice = createSlice({
       if (!isSameLayer) {
         state.activeLayerTime = null;
         state.lastActiveLayerTime = null;
+        state.activeLayerStyle = null;
+        state.lastActiveLayerStyle = null;
       }
       state.lastActiveServerId = action.payload.serverId;
       state.lastActiveLayerName = action.payload.layerName;
@@ -136,18 +147,21 @@ export const externalLayersSlice = createSlice({
       state.activeLayerName = server?.layers?.[0]?.name ?? null;
       state.activeLayerId = server?.layers?.[0]?.id ?? null;
       state.activeLayerTime = null;
+      state.activeLayerStyle = null;
       state.lastActiveServerId = action.payload;
       state.lastActiveLayerName = state.activeLayerName;
       state.lastActiveLayerId = state.activeLayerId;
       state.lastActiveLayerTime = null;
+      state.lastActiveLayerStyle = null;
     },
     clearActiveExternalLayer: (state) => {
-      // Only clears the *active* (rendered) layer; lastActive* (incl. the chosen time) is
+      // Only clears the *active* (rendered) layer; lastActive* (incl. the chosen time and style) is
       // intentionally preserved so navigating back to the panel restores where you left off.
       state.activeServerId = null;
       state.activeLayerName = null;
       state.activeLayerId = null;
       state.activeLayerTime = null;
+      state.activeLayerStyle = null;
     },
     updateServerLayers: (
       state,
@@ -186,6 +200,11 @@ export const externalLayersSlice = createSlice({
       // restored when the user navigates back to the WMS panel.
       state.lastActiveLayerTime = action.payload;
     },
+    setActiveExternalLayerStyle: (state, action: PayloadAction<string | null>) => {
+      state.activeLayerStyle = action.payload;
+      // Remember the chosen style for the same reason as the time above.
+      state.lastActiveLayerStyle = action.payload;
+    },
     // Restore the durable parts of the slice from persisted (per-user) storage on app load. The live
     // active-render fields and the transient panelOpen flag are intentionally not restored, so we
     // don't hijack a URL-driven visualization or reopen the panel into a collapsed parent; the user
@@ -197,6 +216,7 @@ export const externalLayersSlice = createSlice({
       state.lastActiveLayerName = persisted.lastActiveLayerName ?? null;
       state.lastActiveLayerId = persisted.lastActiveLayerId ?? null;
       state.lastActiveLayerTime = persisted.lastActiveLayerTime ?? null;
+      state.lastActiveLayerStyle = persisted.lastActiveLayerStyle ?? null;
     },
   },
 });
@@ -208,6 +228,8 @@ export interface ActiveExternalLayer {
   layerTitle: string;
   layerAbstract: string | null;
   legendUrl: string | null;
+  styles: WmsStyle[] | null;
+  style: string | null;
   tileUrl: string | null;
   tileSize: number | null;
   queryable: boolean;
@@ -231,8 +253,16 @@ export const selectActiveExternalLayer = createSelector(
     (state: { externalLayers: ExternalLayersState }) => state.externalLayers.activeLayerName,
     (state: { externalLayers: ExternalLayersState }) => state.externalLayers.activeLayerId,
     (state: { externalLayers: ExternalLayersState }) => state.externalLayers.activeLayerTime,
+    (state: { externalLayers: ExternalLayersState }) => state.externalLayers.activeLayerStyle,
   ],
-  (servers, activeServerId, activeLayerName, activeLayerId, activeLayerTime): ActiveExternalLayer | null => {
+  (
+    servers,
+    activeServerId,
+    activeLayerName,
+    activeLayerId,
+    activeLayerTime,
+    activeLayerStyle,
+  ): ActiveExternalLayer | null => {
     if (!activeServerId) {
       return null;
     }
@@ -251,13 +281,21 @@ export const selectActiveExternalLayer = createSelector(
       return null;
     }
     const layerName = layer.name;
+    const styles = layer.styles?.length ? layer.styles : null;
+    // Per the WMS spec the first declared style is the layer's default, so fall back to it when the
+    // user hasn't picked one — that keeps the picker's selection and the STYLES request param in sync.
+    const style = activeLayerStyle ?? styles?.[0]?.name ?? null;
     return {
       server,
       layerName,
       layerId: layer.id,
       layerTitle: layer.title ?? layerName,
       layerAbstract: layer.abstract ?? null,
-      legendUrl: layer.legendUrl ?? null,
+      // Each style has its own legend graphic; fall back to the layer-level default when the
+      // selected style declares none (or when the layer advertises no styles at all).
+      legendUrl: styles?.find((s) => s.name === style)?.legendUrl ?? layer.legendUrl ?? null,
+      styles,
+      style,
       tileUrl: layer.tileUrl ?? null,
       tileSize: layer.tileSize ?? null,
       queryable: layer.queryable ?? false,

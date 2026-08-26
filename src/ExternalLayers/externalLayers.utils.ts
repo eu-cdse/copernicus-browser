@@ -10,6 +10,7 @@ export interface ExternalLayer {
   title: string;
   abstract?: string;
   legendUrl?: string;
+  styles?: WmsStyle[]; // WMS only: the layer's selectable SLD styles, in the order the server declared them
   tileUrl?: string; // WMTS only: pre-computed Leaflet {z}/{x}/{y} tile URL template
   tileSize?: number; // WMTS only: tile pixel size declared by the TileMatrixSet (defaults to Leaflet's 256 when absent)
   bbox?: { south: number; west: number; north: number; east: number }; // advertised geographic extent (EPSG:4326), used to aim the preview thumbnail at the data
@@ -27,6 +28,15 @@ export interface TimeRange {
   start: string;
   end: string;
   period?: string; // ISO8601 duration, e.g. "P1M", "P8D", "P1Y" (absent for discrete values)
+}
+
+// One <Style> entry of a WMS layer. A layer can advertise several SLD styles, each rendering the
+// same data differently and each with its own legend graphic; `name` is what goes into the GetMap
+// STYLES parameter.
+export interface WmsStyle {
+  name: string;
+  title?: string;
+  legendUrl?: string;
 }
 
 export interface CapabilitiesResult {
@@ -137,7 +147,7 @@ function parseTimeExtent(
   return { timeDefault: defaultAttr || timeEnd, timeStart, timeEnd, timeRanges: ranges };
 }
 
-// Shared by extractWmsLegendUrl/extractWmsMetadataUrls: both read a href off a fast-xml-parser
+// Shared by extractWmsStyles/extractWmsMetadataUrls: both read a href off a fast-xml-parser
 // `OnlineResource` node (or a parent lacking one entirely).
 function readOnlineResourceHref(node: Record<string, unknown> | undefined): string | undefined {
   const onlineResource = node?.['OnlineResource'] as Record<string, unknown> | undefined;
@@ -145,20 +155,33 @@ function readOnlineResourceHref(node: Record<string, unknown> | undefined): stri
   return href ? String(href) : undefined;
 }
 
-function extractWmsLegendUrl(node: Record<string, unknown>): string | undefined {
+// Parse a WMS layer's <Style> entries (0/1/many), preserving the order the server declared them in —
+// per the WMS spec the first one is the layer's default. Each style carries its own LegendURL, so
+// switching style switches the legend too (see selectActiveExternalLayer). Nameless entries (invalid
+// per spec, but seen in the wild) are kept here so the caller can still use their legend as the
+// layer-level fallback; the caller drops them from the selectable list, since GetMap's STYLES
+// parameter can only request a style by name.
+function extractWmsStyles(node: Record<string, unknown>): WmsStyle[] {
   const style = node['Style'];
   if (!style) {
-    return undefined;
+    return [];
   }
-  const styles = Array.isArray(style) ? style : [style];
-  for (const s of styles as Record<string, unknown>[]) {
-    const legendUrl = s['LegendURL'] as Record<string, unknown> | undefined;
-    const href = readOnlineResourceHref(legendUrl);
-    if (href) {
-      return href;
+  const nodes = (Array.isArray(style) ? style : [style]) as Record<string, unknown>[];
+  return nodes.map((s) => {
+    // Mirrors the layer Name handling: a numeric style name parses as a number, which readText's
+    // truthiness check would drop, so pass the coerced value as the fallback.
+    const rawName = s['Name'];
+    const entry: WmsStyle = { name: rawName != null ? readText(rawName, String(rawName)) : '' };
+    const title = readText(s['Title']);
+    if (title) {
+      entry.title = cleanTitle(title);
     }
-  }
-  return undefined;
+    const legendUrl = readOnlineResourceHref(s['LegendURL'] as Record<string, unknown> | undefined);
+    if (legendUrl) {
+      entry.legendUrl = legendUrl;
+    }
+    return entry;
+  });
 }
 
 // Shared by extractWmsMetadataUrls/the WMTS ows:Metadata block: both take a possibly-repeated
@@ -183,7 +206,7 @@ function extractMetadataUrls<T>(
   return hrefs.length > 0 ? hrefs : undefined;
 }
 
-// Parse a WMS layer's MetadataURL(s) (0/1/many). Mirrors extractWmsLegendUrl's
+// Parse a WMS layer's MetadataURL(s) (0/1/many). Mirrors extractWmsStyles'
 // Style→LegendURL→OnlineResource→@_xlink:href shape, but array-normalized since MetadataURL can
 // repeat. The <Format> MIME (when present) is the authoritative web-vs-machine signal.
 function extractWmsMetadataUrls(node: Record<string, unknown>): string[] | undefined {
@@ -284,9 +307,18 @@ function extractWmsLayers(
     if (abstract) {
       layer.abstract = abstract;
     }
-    const legendUrl = extractWmsLegendUrl(node);
+    const styles = extractWmsStyles(node);
+    // Layer-level default legend: the first declared style that advertises one. Kept for pin
+    // payloads and as the fallback for a selected style that declares no legend of its own.
+    const legendUrl = styles.find((s) => s.legendUrl)?.legendUrl;
     if (legendUrl) {
       layer.legendUrl = legendUrl;
+    }
+    // Only a named style can be requested via GetMap's STYLES parameter, so only those are offered
+    // in the style picker.
+    const selectableStyles = styles.filter((s) => s.name);
+    if (selectableStyles.length > 0) {
+      layer.styles = selectableStyles;
     }
     const metadataUrls = extractWmsMetadataUrls(node);
     if (metadataUrls) {

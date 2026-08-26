@@ -5,6 +5,13 @@ import {
   getCollectionFormInitialState,
 } from './collectionFormConfig.utils';
 import { recursiveCollections, complementaryDataGroup } from './collectionFormConfig';
+import { ODataCollections } from '../../../../api/OData/ODataTypes';
+import { STAC_COLLECTIONS } from '../../../../hooks/stacCollections';
+import {
+  S1_MONTHLY_MOSAIC_IW,
+  S1_MONTHLY_MOSAIC_DH,
+  COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+} from '../../../SearchPanel/dataSourceHandlers/dataSourceConstants';
 
 describe('checkFormElementAccess', () => {
   test.each([
@@ -569,5 +576,49 @@ describe('recursiveCollections nesting - complementaryDataGroup', () => {
     const landsatMosaic = complementaryDataGroup.items.find((item) => item.id === 'landsat_mosaic');
     expect(landsatMosaic).toBeDefined();
     expect(landsatMosaic.supportsStacSearch).toBe(true);
+  });
+});
+
+describe('recursiveCollections nesting - Global Mosaics STAC config', () => {
+  // Global Mosaics is three levels deep (collection -> instrument -> productType), unlike
+  // Landsat Mosaic which is two. supportsStacSearch and collectionName sit on the instrument
+  // nodes (one STAC collection each), while datasetId sits on the productType leaves.
+  const globalMosaics = () => recursiveCollections.find((c) => c.id === ODataCollections.GLOBAL_MOSAICS.id);
+
+  test('the top-level Global Mosaics node carries no collectionName', () => {
+    // 'GLOBAL-MOSAICS' is the OData collection name, not a STAC collection ID. Leaving it on
+    // the top-level node would make extractCollectionNames short-circuit to it and send an
+    // unknown collection to the STAC API instead of drilling into the per-instrument names.
+    expect(globalMosaics().collectionName).toBeUndefined();
+  });
+
+  test.each([
+    ['S1Mosaics', STAC_COLLECTIONS.SENTINEL_1_GLOBAL_MOSAICS],
+    ['S2Mosaics', STAC_COLLECTIONS.SENTINEL_2_GLOBAL_MOSAICS],
+  ])('%s is STAC-enabled and maps to %s', (instrumentId, expectedCollectionName) => {
+    const instrument = globalMosaics().items.find((item) => item.id === instrumentId);
+    expect(instrument).toBeDefined();
+    expect(instrument.supportsStacSearch).toBe(true);
+    expect(instrument.collectionName).toBe(expectedCollectionName);
+  });
+
+  test.each([
+    ['S1Mosaics', 'S1SAR_L3_IW_MCM', S1_MONTHLY_MOSAIC_IW],
+    ['S1Mosaics', 'S1SAR_L3_DH_MCM', S1_MONTHLY_MOSAIC_DH],
+    ['S2Mosaics', 'S2MSI_L3__MCQ', COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC],
+  ])('%s product type %s carries datasetId %s', (instrumentId, productTypeId, expectedDatasetId) => {
+    const instrument = globalMosaics().items.find((item) => item.id === instrumentId);
+    const productType = instrument.items.find((item) => item.id === productTypeId);
+    expect(productType).toBeDefined();
+    expect(productType.datasetId).toBe(expectedDatasetId);
+  });
+
+  test('the STAC-era product type IDs replaced the OData contains() tokens', () => {
+    // The OData query matched on substrings of the product Name ('_IW_mosaic_'); the STAC query
+    // matches on the product:type property, whose real values are the S1SAR_L3_*_MCM codes.
+    const s1ProductTypeIds = globalMosaics()
+      .items.find((item) => item.id === 'S1Mosaics')
+      .items.map((item) => item.id);
+    expect(s1ProductTypeIds).toEqual(['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']);
   });
 });

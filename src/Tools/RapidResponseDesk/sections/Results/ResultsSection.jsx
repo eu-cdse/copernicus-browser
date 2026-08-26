@@ -75,8 +75,8 @@ const ResultsSection = ({
     }
   }, [selectedTiles]);
 
-  const handleImageLoad = (id, image) => {
-    store.dispatch(resultsSectionSlice.actions.addQuicklookImage({ id, url: image }));
+  const handleImageLoad = (id, url, isFallback) => {
+    store.dispatch(resultsSectionSlice.actions.addQuicklookImage({ id, url, isFallback }));
   };
 
   useEffect(() => {
@@ -157,7 +157,6 @@ Try adjusting the date range, data providers, advanced fields, or select a bigge
                     item={item}
                     currentPage={currentPage}
                     onImageLoad={handleImageLoad}
-                    loadedImages={quicklookImages}
                   ></ResultsCard>
                 ))}
               </div>
@@ -207,7 +206,7 @@ Try adjusting the date range, data providers, advanced fields, or select a bigge
                     <ResultsCard
                       key={item._internalId}
                       item={item}
-                      loadedImages={quicklookImages}
+                      onImageLoad={handleImageLoad}
                     ></ResultsCard>
                   ))}
               </div>

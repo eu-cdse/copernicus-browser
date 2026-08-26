@@ -10,6 +10,14 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyLeafletLayer = any;
 
+// react-leaflet spreads every prop into the Leaflet options object, and Leaflet's setOptions
+// copies keys with `for…in` — so `tileSize: undefined` lands as an own property that shadows
+// GridLayer's 256px prototype default, yielding a NaN tile grid. The prop must be omitted
+// entirely, not passed as undefined.
+export function optionalTileSize(tileSize?: number | null): { tileSize?: number } {
+  return tileSize != null ? { tileSize } : {};
+}
+
 // Compare-mode clip/opacity is shared with the other tile-layer plugins via layerClipOpacity.ts;
 // only the WMS-specific onAdd setup (writing srs/crs into wmsParams) lives here.
 function addClippingAndOpacity(layer: AnyLeafletLayer) {
@@ -72,6 +80,7 @@ interface ExternalWmsProps extends LayerProps {
   opacity?: number | null;
   clipping?: number[] | null;
   time?: string | null;
+  style?: string | null;
 }
 
 interface ExternalTileProps extends LayerProps {
@@ -85,7 +94,7 @@ interface ExternalTileProps extends LayerProps {
 
 export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLayer, ExternalWmsProps>(
   (props, context) => {
-    const { url, layers, format, transparent, version, pane, zIndex, opacity, clipping, time } = props;
+    const { url, layers, format, transparent, version, pane, zIndex, opacity, clipping, time, style } = props;
     const options: L.WMSOptions = {
       layers: layers,
       format: format ?? 'image/png',
@@ -100,6 +109,10 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
     // TIME is an extra WMS GetMap param (not part of L.WMSOptions' typed keys); it ends up in wmsParams.
     if (time) {
       (options as Record<string, unknown>).TIME = time;
+    }
+    // Same for STYLES: the selected SLD style name, when the layer advertises more than one.
+    if (style) {
+      (options as Record<string, unknown>).STYLES = style;
     }
     const instance = new ExternalWmsLayer(url, options);
     (instance as AnyLeafletLayer).setClipping(clipping ?? null);
@@ -119,6 +132,10 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
     if (prevProps.time !== props.time) {
       // setParams merges into wmsParams and redraws; empty string clears the TIME filter.
       (instance as AnyLeafletLayer).setParams({ TIME: props.time ?? '' });
+    }
+    if (prevProps.style !== props.style) {
+      // Empty string falls back to the server's default style, matching the TIME clear above.
+      (instance as AnyLeafletLayer).setParams({ STYLES: props.style ?? '' });
     }
     // Guard against instance reuse: if a reused layer is handed a different source, repoint it.
     if (prevProps.url !== props.url) {

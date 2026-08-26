@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { executeRequest } from '../httpRequestResolver';
+import { executeRequest, DEFAULT_RETRY_OPTIONS } from '../httpRequestResolver';
+import { getErrorStatus } from '../../utils';
 
 const RRDApiBaseUrlEndpoints = {
   search: import.meta.env.VITE_RRD_BASE_URL + '/sor',
@@ -31,12 +32,18 @@ const HttpServiceInstances = () => {
   };
 };
 
+const RETRYABLE_STATUS_CODES = [429];
+
 const RRDApi = () => {
   const httpServiceInstances = HttpServiceInstances();
 
+  // Returns true when the request must NOT be retried.
   const retryRestrictionFunc = (e) => {
-    const statusCode = e.message.split(' ').pop();
-    return !((Number(statusCode) >= 500 && Number(statusCode) <= 599) || statusCode === 429);
+    const statusCode = getErrorStatus(e);
+    if (!Number.isFinite(statusCode)) {
+      return true;
+    }
+    return !(RETRYABLE_STATUS_CODES.includes(statusCode) || (statusCode >= 500 && statusCode <= 599));
   };
 
   const setAuthToken = (authToken) => {
@@ -63,6 +70,7 @@ const RRDApi = () => {
       },
       requestConfig,
       {
+        ...DEFAULT_RETRY_OPTIONS,
         retryRestrictionFunc: retryRestrictionFunc,
       },
     );
@@ -80,6 +88,7 @@ const RRDApi = () => {
       },
       requestConfig,
       {
+        ...DEFAULT_RETRY_OPTIONS,
         retryRestrictionFunc: retryRestrictionFunc,
       },
     );
@@ -96,11 +105,13 @@ const RRDApi = () => {
       },
       requestConfig,
       {
+        ...DEFAULT_RETRY_OPTIONS,
         retryRestrictionFunc: retryRestrictionFunc,
       },
     );
   };
 
+  // Not retried: addToCart is a non-idempotent POST, and retrying it could double-add an item.
   const addToCart = async (queryBodyObject, authToken) => {
     const requestConfig = setAuthToken(authToken);
 
@@ -118,6 +129,7 @@ const RRDApi = () => {
     );
   };
 
+  // Not retried: removeFromCart is a non-idempotent POST, and retrying it could double-apply the removal.
   const removeFromCart = async (queryBodyObject, authToken) => {
     const requestConfig = setAuthToken(authToken);
 
@@ -146,6 +158,7 @@ const RRDApi = () => {
       },
       requestConfig,
       {
+        ...DEFAULT_RETRY_OPTIONS,
         retryRestrictionFunc: retryRestrictionFunc,
       },
     );

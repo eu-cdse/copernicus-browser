@@ -6,10 +6,27 @@ import ReactDOMServer from 'react-dom/server';
 import Loader from '../../Loader/Loader';
 import { fetchPreviewImage } from '../../Tools/RapidResponseDesk/sections/Results/ResultsCard/results.utils';
 import { connect } from 'react-redux';
+import type { RootState } from '../../hooks';
+import type { QuicklookOverlay as QuicklookOverlayData } from '../../store/slices/mainMapSlice';
+import type { UserState } from '../../store/slices/authSlice';
 
-const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, user }) => {
+type Props = {
+  quicklookOverlay: QuicklookOverlayData;
+  quicklookImages: RootState['resultsSection']['quicklookImages'];
+  user: UserState;
+};
+
+// react-leaflet's MarkerProps/ImageOverlayProps derive from leaflet's own MarkerOptions/ImageOverlayOptions,
+// but this project has no @types/leaflet package, so tsc can't see leaflet-specific props like icon/opacity.
+// See src/Map/plugins/externalWmsLeafletLayer.tsx for the same workaround.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MarkerAny = Marker as any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ImageOverlayAny = ImageOverlay as any;
+
+const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, user }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const bounds = useMemo(() => {
     if (!quicklookOverlay) {
@@ -39,8 +56,11 @@ const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, user }) => {
       const { _internalId, imageUrl, imageType, isTaskingEnabled } = quicklookOverlay;
 
       // Check if the image is already loaded
-      if (quicklookImages[_internalId]) {
-        setImageUrl(quicklookImages[_internalId]);
+      const cached = quicklookImages[_internalId];
+      if (cached) {
+        if (!cached.isFallback) {
+          setImageUrl(cached.url);
+        }
         return;
       }
 
@@ -48,14 +68,14 @@ const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, user }) => {
       if (!imageUrl) {
         setLoading(true);
         try {
-          const fetchedImageUrl = await fetchPreviewImage(
+          const fetchedImage = await fetchPreviewImage(
             quicklookOverlay,
             user.access_token,
-            imageType,
-            isTaskingEnabled,
+            imageType as string,
+            !!isTaskingEnabled,
           );
-          if (fetchedImageUrl) {
-            setImageUrl(fetchedImageUrl);
+          if (fetchedImage && !fetchedImage.isFallback) {
+            setImageUrl(fetchedImage.url);
           }
         } catch (error) {
           console.error('Error fetching quicklook image:', error);
@@ -81,17 +101,18 @@ const QuicklookOverlay = ({ quicklookOverlay, quicklookImages, user }) => {
   return (
     <>
       {loading && centerLatLng && (
-        <Marker position={centerLatLng} icon={loaderIcon} interactive={false} zIndexOffset={2000} />
+        <MarkerAny position={centerLatLng} icon={loaderIcon} interactive={false} zIndexOffset={2000} />
       )}
       {!loading && imageUrl && bounds && (
-        <ImageOverlay url={imageUrl} bounds={bounds} opacity={1} zIndex={1200} />
+        <ImageOverlayAny url={imageUrl} bounds={bounds} opacity={1} zIndex={1200} />
       )}
     </>
   );
 };
 
-const mapStoreToProps = (store) => ({
+const mapStoreToProps = (store: RootState) => ({
   user: store.auth.user,
+  quicklookImages: store.resultsSection.quicklookImages,
 });
 
 export default connect(mapStoreToProps, null)(QuicklookOverlay);

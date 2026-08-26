@@ -12238,3 +12238,25 @@ msgstr ""
 
 msgid "Histogram is not available in this panel."
 msgstr ""
+
+msgid ""
+"The imagery provider is currently receiving too many requests. Please wait "
+"a moment and try your search again."
+msgstr ""
+
+msgid ""
+"The request to the imagery provider timed out. Please try again in a few "
+"minutes."
+msgstr ""
+
+msgid "An unknown error occurred"
+msgstr ""
+
+msgid "Available layer styles"
+msgstr ""
+
+msgid "Checking quicklook availability"
+msgstr ""
+
+msgid "No quicklook available for this item"
+msgstr ""

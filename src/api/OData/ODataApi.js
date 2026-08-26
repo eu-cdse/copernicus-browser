@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { ODataQueryBuilder } from './ODataQueryBuilder';
-import { executeRequest } from '../httpRequestResolver';
-
-const defaultRequestOptions = {
-  retriesLeft: 3,
-  delayBetweenRetries: 1000,
-};
+import { executeRequest, DEFAULT_RETRY_OPTIONS } from '../httpRequestResolver';
 
 const ODataEndpoints = {
   search: 'https://catalogue.dataspace.copernicus.eu/odata/v1/',
@@ -113,7 +108,7 @@ const ODataApi = () => {
       { queryPathString: downloadUrl },
       requestConfig,
       {
-        ...defaultRequestOptions,
+        ...DEFAULT_RETRY_OPTIONS,
         updateProgress: updateProgress,
       },
     );

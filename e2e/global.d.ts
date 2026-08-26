@@ -10,4 +10,9 @@ interface Window {
     VECTOR_DATA_BASEURL: string;
     STAC_BASEURL: string;
   };
+  // Fathom analytics. Loaded as a deferred third-party script (index.html), so it is
+  // absent until it loads and permanently absent when blocked by an ad blocker.
+  fathom?: {
+    trackEvent: (name: string, options?: { _value?: number }) => void;
+  };
 }

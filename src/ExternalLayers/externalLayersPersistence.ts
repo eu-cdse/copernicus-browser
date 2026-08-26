@@ -17,10 +17,16 @@ const STORAGE_KEY = 'browser_external_services';
 // The last WMS date the user picked, kept under its own key so it isn't tied to the server bucket.
 const DATE_STORAGE_KEY = 'browser_external_wms_date';
 
+// Same for the last SLD style the user picked from the layer's style dropdown: its own key, so the
+// chosen rendering survives a reload/login redirect instead of silently reverting to the server's
+// default style (see #1162).
+const STYLE_STORAGE_KEY = 'browser_external_wms_style';
+
 // The subset of the slice we persist per user. Only durable data is kept: the added servers and
 // which one was last active (so reopening the panel can restore "where you left off"). The live
 // active-render fields and the transient panelOpen flag are intentionally excluded. The selected
-// date is handled separately (see DATE_STORAGE_KEY) so it is not tied to the user.
+// date and style are handled separately (see DATE_STORAGE_KEY / STYLE_STORAGE_KEY) so they are not
+// tied to the user.
 type PersistedExternalLayers = Pick<
   ExternalLayersState,
   'servers' | 'lastActiveServerId' | 'lastActiveLayerName' | 'lastActiveLayerId'
@@ -64,6 +70,8 @@ export function loadPersistedExternalLayers(): ExternalLayersState | undefined {
       lastActiveLayerId: saved.lastActiveLayerId ?? null,
       // The date lives in its own key so it isn't tied to the server bucket.
       lastActiveLayerTime: sessionStorage.getItem(DATE_STORAGE_KEY),
+      // Same for the selected style.
+      lastActiveLayerStyle: sessionStorage.getItem(STYLE_STORAGE_KEY),
     };
   } catch {
     // Corrupt JSON or storage unavailable (e.g. iOS Safari private mode): start clean rather
@@ -111,6 +119,12 @@ export function persistExternalLayers(state: ExternalLayersState): void {
       sessionStorage.setItem(DATE_STORAGE_KEY, state.lastActiveLayerTime);
     } else {
       sessionStorage.removeItem(DATE_STORAGE_KEY);
+    }
+    // Persist the chosen style under its own key.
+    if (state.lastActiveLayerStyle) {
+      sessionStorage.setItem(STYLE_STORAGE_KEY, state.lastActiveLayerStyle);
+    } else {
+      sessionStorage.removeItem(STYLE_STORAGE_KEY);
     }
   } catch (e) {
     // Storage full (QuotaExceededError) or unavailable: degrade gracefully — the servers just

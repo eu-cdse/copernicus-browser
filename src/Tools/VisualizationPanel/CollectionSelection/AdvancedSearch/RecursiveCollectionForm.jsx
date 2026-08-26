@@ -13,6 +13,7 @@ import AdditionalFilters from './filters/AdditionalFilters';
 
 import { recursiveCollections } from './collectionFormConfig';
 import {
+  buildSelectedCollectionEntry,
   CollectionFormInitialState,
   getCollectionFormInitialState,
   getCollectionFormConfig,
@@ -43,13 +44,10 @@ export const createCollectionFormFromDatasetId = (datasetId, params) => {
   const collectionForm = cloneDeep(CollectionFormInitialState);
 
   oDataCollectionInfo.forEach((collectionInfo) => {
-    collectionForm.selectedCollections[collectionInfo.id] = collectionInfo.instrument
-      ? {
-          [collectionInfo.instrument]: {
-            ...(collectionInfo.productType ? { [collectionInfo.productType]: {} } : {}),
-          },
-        }
-      : {};
+    collectionForm.selectedCollections[collectionInfo.id] = buildSelectedCollectionEntry({
+      instrumentId: collectionInfo.instrument,
+      productTypeId: collectionInfo.productType,
+    });
 
     if (collectionInfo.maxCC) {
       collectionForm.maxCc = {

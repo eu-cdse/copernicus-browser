@@ -5,14 +5,20 @@ import { t } from 'ttag';
 
 import store, { authSlice, externalLayersSlice, notificationSlice } from '../store';
 import { ExternalServer } from '../store/slices/externalLayersSlice';
+import { FATHOM_TRACK_EVENT_LIST } from '../const';
 import ExtraCollectionsPanel from './ExtraCollectionsPanel';
 import { saveExternalServersToServer } from './externalServicesBackend';
 import { fetchWmsCapabilities } from './externalLayers.utils';
+import { handleFathomTrackEvent } from '../utils/fathom';
 
 // The per-page dropdown / other unrelated widgets aren't under test; only saveExternalServersToServer
 // (the one call whose rejection status this test exercises) needs to be mocked.
 jest.mock('./externalServicesBackend', () => ({
   saveExternalServersToServer: jest.fn(),
+}));
+
+jest.mock('../utils/fathom', () => ({
+  handleFathomTrackEvent: jest.fn(),
 }));
 
 // Keep the real URL/validation helpers (validateWmsUrl, getServiceEndpoint, isMeaningful) so the
@@ -35,6 +41,7 @@ jest.mock('../Tools/VisualizationPanel/CollectionSelection/checkmark.svg?react',
 
 const mockedSave = saveExternalServersToServer as jest.Mock;
 const mockedFetchWmsCapabilities = fetchWmsCapabilities as jest.Mock;
+const mockedTrackEvent = handleFathomTrackEvent as jest.Mock;
 
 const WMS_URL = 'https://example.com/wms';
 
@@ -220,5 +227,63 @@ describe('ExtraCollectionsPanel loading state', () => {
     await waitFor(() => expect(input).not.toBeDisabled());
     expect(loadButton.querySelector('i.fa-spinner.fa-spin')).toBeFalsy();
     expect(loadButton).toHaveTextContent('+');
+  });
+});
+
+describe('ExtraCollectionsPanel Fathom tracking', () => {
+  beforeEach(() => {
+    // The sibling "loading state" describe block above doesn't clean up the server it adds to the
+    // shared store singleton, so start from a known-clean state regardless of run order.
+    act(() => {
+      store.getState().externalLayers.servers.forEach((s) => {
+        store.dispatch(externalLayersSlice.actions.removeExternalServer(s.id));
+      });
+    });
+    mockedFetchWmsCapabilities.mockReset().mockResolvedValue(CAPABILITIES);
+    mockedTrackEvent.mockReset();
+  });
+
+  afterEach(() => {
+    // Anonymous flow (no logIn() call in this describe block) never touches the backend, but still
+    // clean up any server the success test added so later tests start from a server-less store.
+    act(() => {
+      store.getState().externalLayers.servers.forEach((s) => {
+        store.dispatch(externalLayersSlice.actions.removeExternalServer(s.id));
+      });
+    });
+    jest.restoreAllMocks();
+  });
+
+  it('fires EXTERNAL_SERVICE_ADDED with the resolved protocol on a successful add', async () => {
+    renderPanel();
+    await loadService(WMS_URL);
+
+    await waitFor(() => expect(screen.getByText('Example WMS')).toBeInTheDocument());
+
+    expect(mockedTrackEvent).toHaveBeenCalledWith(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADDED, 'WMS');
+    expect(mockedTrackEvent).not.toHaveBeenCalledWith(
+      FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED,
+      expect.anything(),
+    );
+  });
+
+  it('fires EXTERNAL_SERVICE_ADD_FAILED with reason "duplicate" (not EXTERNAL_SERVICE_ADDED) for an already-loaded URL', async () => {
+    act(() => {
+      store.dispatch(externalLayersSlice.actions.addExternalServer(EXISTING_SERVER));
+    });
+
+    renderPanel();
+    await loadService(EXISTING_SERVER.url);
+
+    await waitFor(() =>
+      expect(mockedTrackEvent).toHaveBeenCalledWith(
+        FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED,
+        'duplicate',
+      ),
+    );
+    expect(mockedTrackEvent).not.toHaveBeenCalledWith(
+      FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADDED,
+      expect.anything(),
+    );
   });
 });

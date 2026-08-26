@@ -61,6 +61,7 @@ import { ODataCollections } from '../../../../api/OData/ODataTypes';
 import { createSTACSearchPayload } from '../../../../api/STAC/STACSearchPayloadBuilder';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 import MessagePanel from '../../MessagePanel/MessagePanel';
+import { findConfigNodeIdsByTypeInScope, isSTACCollectionNode } from '../../../../utils/collectionConfigTree';
 
 const WarningMessage = {
   geometrySimplified: () => t`Your search geometry was simplified to fit the search query limits.`,
@@ -74,36 +75,6 @@ const findConfigByPath = (rootConfig, path = []) => {
     (currentNode, pathId) => currentNode?.items?.find((item) => item.id === pathId),
     rootConfig,
   );
-};
-
-const getProductTypeIdsFromConfig = (configNode) => {
-  if (!configNode?.items || !configNode.items.length) {
-    return [];
-  }
-  return configNode.items.flatMap((item) => {
-    if (item.type === 'productType') {
-      return [item.id];
-    }
-    if (item.type === 'group') {
-      return getProductTypeIdsFromConfig(item);
-    }
-    return [];
-  });
-};
-
-const getInstrumentIdsFromConfigNode = (configNode) => {
-  if (!configNode?.items || !configNode.items.length) {
-    return [];
-  }
-  return configNode.items.flatMap((item) => {
-    if (item.type === 'instrument') {
-      return [item.id];
-    }
-    if (item.type === 'group') {
-      return getInstrumentIdsFromConfigNode(item);
-    }
-    return [];
-  });
 };
 
 const addProductTypesToInstrument = (instrumentObj, productTypeIds) => {
@@ -757,7 +728,7 @@ class AdvancedSearch extends Component {
         }
 
         const subCollectionObj = collectionObj.items.find((item) => item.id === subCollectionId);
-        if (subCollectionObj && subCollectionObj.supportsStacSearch) {
+        if (isSTACCollectionNode(subCollectionObj)) {
           stacSubCollections[subCollectionId] = selectedCollections[collectionId][subCollectionId];
           hasStacItems = true;
         } else if (subCollectionObj) {
@@ -771,7 +742,7 @@ class AdvancedSearch extends Component {
       // the parent group was selected — include all children from config
       if (!hasStacItems && !hasOdataItems) {
         for (const item of collectionObj.items) {
-          if (item.supportsStacSearch) {
+          if (isSTACCollectionNode(item)) {
             stacSubCollections[item.id] = {};
             hasStacItems = true;
           } else {
@@ -1211,7 +1182,11 @@ class AdvancedSearch extends Component {
 
             // When an empty group contains instruments (e.g. Snow group → Snow Cover Extent, Snow Water Equivalent),
             // add those instruments without specific product types so all their children are searched.
-            const instrumentIds = getInstrumentIdsFromConfigNode(selectedConfigNode);
+            // ...InScope, not the subtree-wide variant: both lookups here answer for the one
+            // level of the selection tree the user actually ticked, so they must not reach past a
+            // nested collection or instrument into what that node answers for itself.
+            // See src/utils/collectionConfigTree.ts.
+            const instrumentIds = findConfigNodeIdsByTypeInScope(selectedConfigNode?.items, 'instrument');
             if (instrumentIds.length > 0 && !instrumentParent) {
               instrumentIds.forEach((instrumentId) => {
                 const instrumentObj = { id: instrumentId };
@@ -1222,7 +1197,7 @@ class AdvancedSearch extends Component {
                 instruments.push(instrumentObj);
               });
             } else {
-              const productTypeIds = getProductTypeIdsFromConfig(selectedConfigNode);
+              const productTypeIds = findConfigNodeIdsByTypeInScope(selectedConfigNode?.items, 'productType');
               addProductTypesToInstrument(instrumentParent, productTypeIds);
             }
             return;

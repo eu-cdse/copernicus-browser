@@ -4,6 +4,7 @@ import {
   createDatetimeInterval,
   createGeometryFilters,
   combineFilters,
+  createProductTypeFilters,
   mapODataKeyToSTAC,
   createSTACSearchPayload,
 } from './STACSearchPayloadBuilder';
@@ -144,7 +145,7 @@ describe('createSTACSearchPayload', () => {
           S2: { platform: 'sentinel-2a' },
         },
       },
-      collectionFormConfig: [{ id: 'S2', collectionName: 'SENTINEL-2' }],
+      collectionFormConfig: [{ id: 'S2', supportsStacSearch: true, collectionName: 'SENTINEL-2' }],
     });
 
     expect(payload.collections).toEqual(['SENTINEL-2']);
@@ -165,8 +166,8 @@ describe('createSTACSearchPayload', () => {
         {
           id: 'COMPLEMENTARY_DATA',
           items: [
-            { id: 'LANDSAT-8', collectionName: 'LANDSAT8' },
-            { id: 'LANDSAT-9', collectionName: 'LANDSAT9' },
+            { id: 'LANDSAT-8', supportsStacSearch: true, collectionName: 'LANDSAT8' },
+            { id: 'LANDSAT-9', supportsStacSearch: true, collectionName: 'LANDSAT9' },
           ],
         },
       ],
@@ -201,7 +202,12 @@ describe('createSTACSearchPayload', () => {
         },
       },
       collectionFormConfig: [
-        { id: 'S2', collectionName: 'SENTINEL-2', items: [{ id: 'MSI', supportsInstrumentName: true }] },
+        {
+          id: 'S2',
+          supportsStacSearch: true,
+          collectionName: 'SENTINEL-2',
+          items: [{ id: 'MSI', supportsInstrumentName: true }],
+        },
       ],
     });
 
@@ -235,6 +241,7 @@ describe('createSTACSearchPayload', () => {
       collectionFormConfig: [
         {
           id: 'S2',
+          supportsStacSearch: true,
           collectionName: 'SENTINEL-2',
           items: [
             { id: 'MSI', supportsInstrumentName: true },
@@ -270,6 +277,7 @@ describe('createSTACSearchPayload', () => {
       collectionFormConfig: [
         {
           id: 'S2',
+          supportsStacSearch: true,
           collectionName: 'SENTINEL-2',
           supportsInstrumentName: false,
           items: [{ id: 'MSI' }],
@@ -302,6 +310,7 @@ describe('createSTACSearchPayload', () => {
       collectionFormConfig: [
         {
           id: 'S2',
+          supportsStacSearch: true,
           collectionName: 'SENTINEL-2',
           items: [{ id: 'MSI', supportsInstrumentName: false }],
         },
@@ -333,6 +342,7 @@ describe('createSTACSearchPayload', () => {
       collectionFormConfig: [
         {
           id: 'S2',
+          supportsStacSearch: true,
           collectionName: 'SENTINEL-2',
           items: [{ id: 'MSI', supportsInstrumentName: false }],
         },
@@ -533,7 +543,12 @@ describe('createSTACSearchPayload', () => {
         },
       },
       collectionFormConfig: [
-        { id: 'S2', collectionName: 'SENTINEL-2', items: [{ id: 'MSI', supportsInstrumentName: true }] },
+        {
+          id: 'S2',
+          supportsStacSearch: true,
+          collectionName: 'SENTINEL-2',
+          items: [{ id: 'MSI', supportsInstrumentName: true }],
+        },
       ],
       aoiBounds,
       searchCriteria: 'S2A',
@@ -568,6 +583,407 @@ describe('createSTACSearchPayload', () => {
         { op: '=', args: [{ property: 'product:timeliness_category' }, 'NRT'] },
         { op: 'like', args: [{ property: 'title' }, '%S2A%'] },
       ],
+    });
+  });
+});
+
+describe('createProductTypeFilters', () => {
+  test('returns no filter for an empty list', () => {
+    expect(createProductTypeFilters([])).toEqual([]);
+  });
+
+  test('uses `=` for a single product type', () => {
+    expect(createProductTypeFilters(['S1SAR_L3_IW_MCM'])).toEqual([
+      { op: '=', args: [{ property: 'product:type' }, 'S1SAR_L3_IW_MCM'] },
+    ]);
+  });
+
+  test('uses `in` for several product types', () => {
+    expect(createProductTypeFilters(['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM'])).toEqual([
+      { op: 'in', args: [{ property: 'product:type' }, ['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']] },
+    ]);
+  });
+});
+
+describe('createSTACSearchPayload - Global Mosaics', () => {
+  // Mirrors the real recursiveCollections shape: supportsStacSearch and collectionName live on
+  // the instrument nodes, one STAC collection each, with the product types nested below them.
+  const globalMosaicsConfig = [
+    {
+      id: 'GLOBAL-MOSAICS',
+      type: 'collection',
+      supportsInstrumentName: false,
+      items: [
+        {
+          id: 'S1Mosaics',
+          type: 'instrument',
+          supportsStacSearch: true,
+          collectionName: 'sentinel-1-global-mosaics',
+          supportsInstrumentName: false,
+          items: [
+            { id: 'S1SAR_L3_IW_MCM', type: 'productType' },
+            { id: 'S1SAR_L3_DH_MCM', type: 'productType' },
+          ],
+        },
+        {
+          id: 'S2Mosaics',
+          type: 'instrument',
+          supportsStacSearch: true,
+          collectionName: 'sentinel-2-global-mosaics',
+          supportsInstrumentName: false,
+          items: [{ id: 'S2MSI_L3__MCQ', type: 'productType' }],
+        },
+      ],
+    },
+  ];
+
+  // Complementary Data is a group node; Landsat Mosaic sits one level below it and owns its
+  // own STAC collection. `hideChildren` on that entry means its product type is auto-selected.
+  const combinedConfig = [
+    ...globalMosaicsConfig,
+    {
+      id: 'COMPLEMENTARY_DATA',
+      type: 'group',
+      items: [
+        {
+          id: 'landsat_mosaic',
+          type: 'collection',
+          supportsStacSearch: true,
+          collectionName: 'opengeohub-landsat-bimonthly-mosaic-v1.0.1',
+          items: [{ id: 'landsat_mosaic', type: 'productType' }],
+        },
+      ],
+    },
+  ];
+
+  test('scopes the search to the Sentinel-1 STAC collection and the selected product type', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: {
+              type: 'instrument',
+              S1SAR_L3_IW_MCM: { type: 'productType' },
+            },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics']);
+    expect(payload.filter).toEqual({
+      op: '=',
+      args: [{ property: 'product:type' }, 'S1SAR_L3_IW_MCM'],
+    });
+  });
+
+  test('selecting both Sentinel-1 product types filters on both with `in`', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: {
+              type: 'instrument',
+              S1SAR_L3_IW_MCM: { type: 'productType' },
+              S1SAR_L3_DH_MCM: { type: 'productType' },
+            },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics']);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']],
+    });
+  });
+
+  test('selecting both instruments searches both STAC collections', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument', S1SAR_L3_IW_MCM: { type: 'productType' } },
+            S2Mosaics: { type: 'instrument', S2MSI_L3__MCQ: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics', 'sentinel-2-global-mosaics']);
+  });
+
+  test('omits the instruments filter, since the mosaic instrument IDs are not STAC instrument names', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument', S1SAR_L3_IW_MCM: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    const filters = JSON.stringify(payload.filter);
+    expect(filters).not.toContain('instruments');
+  });
+
+  // Regression: a collection with no instrument-level selection (Complementary Data wrapping
+  // Landsat Mosaic) resolves the instrument gate to its `true` default. While the gate was a
+  // `.some()` across collections, that single `true` re-enabled instrument filtering for the
+  // whole payload, and the mosaics' instrument node IDs were emitted as STAC instrument names -
+  // a filter the live API matches zero items against.
+  test('omits the instruments filter when mosaics are combined with a collection that allows instrument names', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument', S1SAR_L3_IW_MCM: { type: 'productType' } },
+            S2Mosaics: { type: 'instrument', S2MSI_L3__MCQ: { type: 'productType' } },
+          },
+          COMPLEMENTARY_DATA: {
+            type: 'group',
+            landsat_mosaic: { type: 'collection', landsat_mosaic: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: combinedConfig,
+    });
+
+    expect(payload.collections).toEqual([
+      'sentinel-1-global-mosaics',
+      'sentinel-2-global-mosaics',
+      'opengeohub-landsat-bimonthly-mosaic-v1.0.1',
+    ]);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['S1SAR_L3_IW_MCM', 'S2MSI_L3__MCQ', 'landsat_mosaic']],
+    });
+  });
+
+  // Regression: selecting an instrument node does not auto-select its product types, so
+  // Sentinel-1 Mosaics contributes none while Landsat Mosaic (hideChildren) contributes one.
+  // The flat product:type filter was then `product:type = 'landsat_mosaic'`, `and`-combined
+  // across both collections, so the Sentinel-1 results silently disappeared. Sentinel-1 is now
+  // expanded to both of its configured product types instead.
+  test('expands a STAC collection with no selected product types to its configured ones', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument' },
+          },
+          COMPLEMENTARY_DATA: {
+            type: 'group',
+            landsat_mosaic: { type: 'collection', landsat_mosaic: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: combinedConfig,
+    });
+
+    expect(payload.collections).toEqual([
+      'sentinel-1-global-mosaics',
+      'opengeohub-landsat-bimonthly-mosaic-v1.0.1',
+    ]);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['landsat_mosaic', 'S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']],
+    });
+  });
+
+  // Same defect one level down: both STAC collections live under a single top-level entry, so
+  // the expansion has to run per STAC collection rather than per selected top-level node.
+  test('expands per STAC collection when both live under the same top-level collection', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument' },
+            S2Mosaics: { type: 'instrument', S2MSI_L3__MCQ: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics', 'sentinel-2-global-mosaics']);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['S2MSI_L3__MCQ', 'S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']],
+    });
+  });
+
+  // Regression: a narrowed selection next to an unticked sibling node. Dropping the filter
+  // outright (the previous behaviour) let the unselected IW mosaics back into the results;
+  // expanding only the unticked Sentinel-2 node keeps the DH constraint intact.
+  test('keeps a narrowed product type selection when a sibling STAC collection is unticked', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument', S1SAR_L3_DH_MCM: { type: 'productType' } },
+            S2Mosaics: { type: 'instrument' },
+          },
+        },
+      },
+      collectionFormConfig: globalMosaicsConfig,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics', 'sentinel-2-global-mosaics']);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['S1SAR_L3_DH_MCM', 'S2MSI_L3__MCQ']],
+    });
+  });
+
+  // Fallback: nothing to expand to, so no product:type filter at all rather than one that
+  // would exclude the collection entirely.
+  test('omits the product type filter when a STAC collection configures no product types', () => {
+    const configWithoutProductTypes = [
+      {
+        id: 'GLOBAL-MOSAICS',
+        supportsInstrumentName: false,
+        items: [
+          {
+            id: 'S1Mosaics',
+            type: 'instrument',
+            supportsStacSearch: true,
+            collectionName: 'sentinel-1-global-mosaics',
+            items: [],
+          },
+          {
+            id: 'S2Mosaics',
+            type: 'instrument',
+            supportsStacSearch: true,
+            collectionName: 'sentinel-2-global-mosaics',
+            supportsInstrumentName: false,
+            items: [{ id: 'S2MSI_L3__MCQ', type: 'productType' }],
+          },
+        ],
+      },
+    ];
+
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument' },
+            S2Mosaics: { type: 'instrument', S2MSI_L3__MCQ: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: configWithoutProductTypes,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics', 'sentinel-2-global-mosaics']);
+    expect(payload.filter).toBeUndefined();
+  });
+
+  // A group is a heading the UI draws inside its parent, not something the API knows about, so the
+  // expansion has to descend past it to the product types underneath rather than emit the group's
+  // own id - which would send a UI label to the API as if it were a product:type value.
+  test('expands past a group node to the product types beneath it', () => {
+    const configWithGroupingNode = [
+      {
+        id: 'GLOBAL-MOSAICS',
+        type: 'collection',
+        supportsInstrumentName: false,
+        items: [
+          {
+            id: 'S1Mosaics',
+            type: 'instrument',
+            supportsStacSearch: true,
+            collectionName: 'sentinel-1-global-mosaics',
+            items: [
+              {
+                id: 'MonthlyMosaics',
+                type: 'group',
+                items: [
+                  { id: 'S1SAR_L3_IW_MCM', type: 'productType' },
+                  { id: 'S1SAR_L3_DH_MCM', type: 'productType' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': { type: 'collection', S1Mosaics: { type: 'instrument' } },
+        },
+      },
+      collectionFormConfig: configWithGroupingNode,
+    });
+
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']],
+    });
+  });
+
+  // collectionName alone does not make a node a STAC collection - every OData-only collection
+  // carries one too. Only the pairing with supportsStacSearch does, which is what the partitioner
+  // in AdvancedSearch.jsx checks one call earlier; if the two disagreed, an OData collection could
+  // reach this builder and be searched against a STAC collection that does not exist.
+  test('ignores a sibling that carries a collectionName without supportsStacSearch', () => {
+    const configWithODataSibling = [
+      {
+        id: 'GLOBAL-MOSAICS',
+        type: 'collection',
+        supportsInstrumentName: false,
+        items: [
+          {
+            id: 'S1Mosaics',
+            type: 'instrument',
+            supportsStacSearch: true,
+            collectionName: 'sentinel-1-global-mosaics',
+            items: [{ id: 'S1SAR_L3_IW_MCM', type: 'productType' }],
+          },
+          {
+            id: 'S3Olci',
+            type: 'instrument',
+            collectionName: 'SENTINEL-3',
+            items: [{ id: 'OL_1_EFR___', type: 'productType' }],
+          },
+        ],
+      },
+    ];
+
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S1Mosaics: { type: 'instrument' },
+            S3Olci: { type: 'instrument' },
+          },
+        },
+      },
+      collectionFormConfig: configWithODataSibling,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-1-global-mosaics']);
+    expect(payload.filter).toEqual({
+      op: '=',
+      args: [{ property: 'product:type' }, 'S1SAR_L3_IW_MCM'],
     });
   });
 });

@@ -298,6 +298,7 @@ function ImageDownload(props) {
             tileUrl: props.activeExternalLayer.tileUrl,
             tileSize: props.activeExternalLayer.tileSize ?? undefined,
             time: props.activeExternalLayer.time,
+            style: props.activeExternalLayer.style,
           },
           bounds,
           width,
