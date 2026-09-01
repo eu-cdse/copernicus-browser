@@ -3,6 +3,7 @@ import {
   doesUserHaveAccessToCCMVisualization,
   CCM_ROLES,
 } from './ccmProductTypeAccessRightsConfig';
+import { ACCESS_ROLES } from '../../../../api/OData/assets/accessRoles';
 
 // Real tokens copied from ProductInfoUtils.test.js — decoded client-side by jwtDecode.
 // userTokenWithProperAccessRole's realm_access.roles include copernicus-services-ccm and
@@ -57,4 +58,19 @@ describe('doesUserHaveAnyCCMRole', () => {
       expect(doesUserHaveAccessToCCMVisualization(token)).toBe(false);
     },
   );
+});
+
+describe('doesUserHaveAccessToCCMVisualization', () => {
+  // Regression test for the ACCESS_ROLES.COPERNICUS_SERVICES value fix: it used to hold
+  // 'copernicus-services' (plural), which never matched the real Keycloak role, so this
+  // branch of the allow-list was silently dead. Pin both the fixed value and the typo it
+  // replaced so a future accidental revert is caught by the test suite.
+  test('grants access for the copernicus-service role', () => {
+    expect(ACCESS_ROLES.COPERNICUS_SERVICES).toBe('copernicus-service');
+    expect(doesUserHaveAccessToCCMVisualization(makeToken([ACCESS_ROLES.COPERNICUS_SERVICES]))).toBe(true);
+  });
+
+  test('does not grant access for the old, incorrect copernicus-services (plural) role', () => {
+    expect(doesUserHaveAccessToCCMVisualization(makeToken(['copernicus-services']))).toBe(false);
+  });
 });

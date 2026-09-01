@@ -3,6 +3,7 @@ import { t } from 'ttag';
 import { S2QuarterlyCloudlessMosaicsBaseLayerTheme } from '../assets/default_themes';
 import { getFromLocalStorage } from '../utils/localStorage.utils';
 import { OSM_BACKGROUND_NAME as OSM_BACKGROUND_ID, SELECTED_BASE_LAYER_KEY } from '../const';
+import { OSM_LAYER_MAX_ZOOM, OSM_MAX_NATIVE_ZOOM } from './const';
 
 const MAPS_LABELS_DISCLAIMER = t`The designations employed and the presentation of material on this map do not imply the expression of any opinion whatsoever on the part of the European Union concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Kosovo*: This designation is without prejudice to positions on status, and is in line with UNSCR 1244/1999 and the ICJ Opinion on the Kosovo declaration of independence. Palestine*: This designation shall not be construed as recognition of a State of Palestine and is without prejudice to the individual positions of the Member States on this issue.`;
 
@@ -13,6 +14,8 @@ export const baseLayers = [
     url: `https://gisco-services.ec.europa.eu/maps/tiles/OSMCartoBackground/EPSG3857/{z}/{x}/{y}.png`,
     attribution: `\u003ca href="https://www.openstreetmap.org/copyright" target="_blank" \u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e - \u003ca href="#" title="${MAPS_LABELS_DISCLAIMER}"\u003eDisclaimer\u003c/a\u003e`,
     urlType: 'WMTS',
+    maxNativeZoom: OSM_MAX_NATIVE_ZOOM,
+    maxZoom: OSM_LAYER_MAX_ZOOM,
   },
   ...(S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0]
     ? [
@@ -56,6 +59,8 @@ export const overlayTileLayers = () => [
     zIndex: 22,
     pane: 'labels',
     preserveDrawingBuffer: true,
+    maxNativeZoom: OSM_MAX_NATIVE_ZOOM,
+    maxZoom: OSM_LAYER_MAX_ZOOM,
   },
   {
     id: 'countryBorders',

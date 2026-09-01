@@ -105,16 +105,25 @@ export async function getGlOverlay(layerPane) {
 // `src/Controls/ImgDownload/WmsDownload.utils.tsx`. They are intentionally kept separate for now
 // (this path uses SphericalMercator + a 7-day Cache-API tile cache; that one is cache-less and
 // returns a Blob). Keep the two tile-math implementations in sync until a shared helper is extracted.
+//
+// maxNativeZoom is required: it is the highest level the tile service actually serves, and there is
+// no safe generic guess — too high and the deepest tiles 404 (GISCO's OSM services stop at 18), too
+// low and every other provider is needlessly blurry. Layers carry it on their descriptor (see
+// `maxNativeZoom` in src/Map/Layers.js), so pass that through rather than a literal.
+// `compositeWmtsImage` defaults it instead of throwing, deliberately: its callers are all external
+// WMTS services, which the map already assumes reach DEFAULT_EXTERNAL_LAYER_MAX_ZOOM.
 export async function getMapOverlayXYZ(
   overlayUrl,
   bounds,
   zoom = null,
   width,
   height,
-  tileSize = 256,
-  makeReadable = false,
-  zoomOffset = 0,
+  { tileSize = 256, makeReadable = false, zoomOffset = 0, maxNativeZoom } = {},
 ) {
+  if (!Number.isFinite(maxNativeZoom)) {
+    throw new Error(`getMapOverlayXYZ requires a numeric maxNativeZoom, got ${maxNativeZoom}`);
+  }
+
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
@@ -134,14 +143,19 @@ export async function getMapOverlayXYZ(
     const lngZoom = Math.log2((360 * width) / (lngSpan * tileSize));
     const initialZoom = Math.min(latZoom, lngZoom);
 
-    const maxZoom = 19; // Maximum zoom for most tile providers
-    effectiveZoom = Math.min(maxZoom, Math.max(0, Math.floor(initialZoom)));
+    effectiveZoom = Math.floor(initialZoom);
   }
 
   // Apply zoom offset if provided (for providers like Maptiler)
   if (zoomOffset) {
     effectiveZoom += zoomOffset;
   }
+
+  // Clamp the value that actually lands in the {z} of the tile URL. This has to happen here and
+  // not only in the auto-zoom branch above: every caller passes an explicit map zoom, which skips
+  // that branch entirely, and the map's ceiling now reaches 25 for VHR collections (see
+  // getMapMaxZoom in src/Map/Map.utils.ts) while GISCO's OSM services 404 above z18.
+  effectiveZoom = Math.min(maxNativeZoom, Math.max(0, effectiveZoom));
 
   // Convert bounds to pixel coordinates
   const swPx = merc.px(sw, effectiveZoom);

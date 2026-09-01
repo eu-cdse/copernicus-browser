@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { GeoJSON, MapContainer, TileLayer, useMap } from 'react-leaflet';
 
 import { getBoundsAndLatLng } from '../../../utils/coords';
+import { OSM_LAYER_MAX_ZOOM, OSM_MAX_NATIVE_ZOOM } from '../../../Map/const';
 
 import './Footprint.scss';
 
@@ -41,6 +42,8 @@ const Footprint = ({ product, lat, lng }) => {
       >
         <TileLayer
           url={`https://gisco-services.ec.europa.eu/maps/tiles/OSMCartoCompositeEN/EPSG3857/{z}/{x}/{y}.png`}
+          maxNativeZoom={OSM_MAX_NATIVE_ZOOM}
+          maxZoom={OSM_LAYER_MAX_ZOOM}
         />
         <GeoJSON data={product.geometry} key={product.id} />
         <FootprintMapInner product={product} />

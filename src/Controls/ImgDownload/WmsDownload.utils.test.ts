@@ -6,6 +6,7 @@ import {
   isAllExternalCompare,
   isMixedSourceCompare,
 } from './WmsDownload.utils';
+import { DEFAULT_EXTERNAL_LAYER_MAX_ZOOM, OSM_MAX_NATIVE_ZOOM } from '../../Map/const';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -115,10 +116,10 @@ describe('compositeWmtsImage', () => {
     // regardless of tileSize — the TILEMATRIX (zoom) is resolution-driven, not tileSize-driven.
     const width = 2048;
 
-    await compositeWmtsImage(tileUrl, bounds, width, width, 256);
+    await compositeWmtsImage(tileUrl, bounds, width, width, { tileSize: 256 });
     const urlsFor256 = [...requestedUrls];
     requestedUrls = [];
-    await compositeWmtsImage(tileUrl, bounds, width, width, 512);
+    await compositeWmtsImage(tileUrl, bounds, width, width, { tileSize: 512 });
     const urlsFor512 = [...requestedUrls];
 
     const maxIndices = (urls: string[]) => {
@@ -161,10 +162,40 @@ describe('compositeWmtsImage', () => {
     const defaultUrls = [...requestedUrls];
 
     requestedUrls = [];
-    await compositeWmtsImage(tileUrl, bounds, 800, 800, 256);
+    await compositeWmtsImage(tileUrl, bounds, 800, 800, { tileSize: 256 });
     const explicit256Urls = [...requestedUrls];
 
     expect(defaultUrls).toEqual(explicit256Urls);
+  });
+
+  // The OSM base drawn under an external-WMS download comes from GISCO, which serves nothing above
+  // z18 and 404s beyond it — but z here is resolution-driven, so a small extent at a large output
+  // size selects a much deeper level. The caller passes the service's own cap to hold it down.
+  test('never requests a TILEMATRIX above the declared maxNativeZoom', async () => {
+    // ~0.00027° wide at width 800 selects z = round(log2(800 * 360 / (256 * 0.00027))) = 22,
+    // above both the default cap and GISCO's.
+    const bounds = makeBounds(0, 0, 0.00027, 0.00027);
+    const tileUrl = 'https://example.com/tiles/{z}/{x}/{y}.png';
+    const maxRequestedZoom = (urls: string[]) =>
+      Math.max(
+        ...urls.map((url) => {
+          const m = url.match(/tiles\/(\d+)\//);
+          if (!m) {
+            throw new Error(`unparseable tile url: ${url}`);
+          }
+          return Number(m[1]);
+        }),
+      );
+
+    // Default: the depth the map already assumes for an external layer, so display and download
+    // agree. It used to be 22, two levels past anything the app will render.
+    await compositeWmtsImage(tileUrl, bounds, 800, 800);
+    expect(maxRequestedZoom(requestedUrls)).toBe(DEFAULT_EXTERNAL_LAYER_MAX_ZOOM);
+    expect(DEFAULT_EXTERNAL_LAYER_MAX_ZOOM).toBe(20);
+
+    requestedUrls = [];
+    await compositeWmtsImage(tileUrl, bounds, 800, 800, { maxNativeZoom: OSM_MAX_NATIVE_ZOOM });
+    expect(maxRequestedZoom(requestedUrls)).toBe(18);
   });
 });
 

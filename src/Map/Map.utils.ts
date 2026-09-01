@@ -7,6 +7,7 @@ import { Position } from 'geojson';
 
 import { calculateShapeIndex } from '../utils/geojson.utils';
 import { TABS } from '../const';
+import { DEFAULT_EXTERNAL_LAYER_MAX_ZOOM, OSM_MAX_NATIVE_ZOOM } from './const';
 import { reprojectGeometry } from '../utils/reproject';
 
 const COMPACTNESS_THRESHOLD = 0.005;
@@ -173,6 +174,65 @@ export const shouldShowCompareShLayers = ({
   selectedTabIndex: number;
   showComparePanel: boolean;
 }): boolean => !!(comparedLayers.length && selectedTabIndex === TABS.VISUALIZE_TAB && showComparePanel);
+
+// Leaflet resolves the map's max zoom as the MAXIMUM over every zoom-bound layer
+// (Map#getMaxZoom -> _layersMaxZoom), so a per-layer maxZoom can only raise the ceiling — it can
+// never cap it. An external WMS/WMTS layer capped at DEFAULT_EXTERNAL_LAYER_MAX_ZOOM therefore
+// still lets the user zoom further whenever any other layer on the map declares a higher max
+// (e.g. a compared dataset falling back to DEFAULT_COMPARED_LAYERS_MAX_ZOOM = 25). Whenever an
+// external layer is actually rendered we pin the map's own options.maxZoom instead, which does
+// take precedence over the per-layer values.
+export const isExternalLayerRendered = ({
+  activeExternalLayer,
+  showCompareShLayers,
+  comparedLayers,
+  selectedTabIndex,
+}: {
+  activeExternalLayer?: unknown;
+  showCompareShLayers: boolean;
+  comparedLayers: { externalWms?: unknown }[];
+  selectedTabIndex: number;
+}): boolean => {
+  if (selectedTabIndex !== TABS.VISUALIZE_TAB) {
+    return false;
+  }
+  if (showCompareShLayers) {
+    return comparedLayers.some((layer) => !!layer?.externalWms);
+  }
+  return !!activeExternalLayer;
+};
+
+// The OSM basemap is deliberately given a maxZoom far above GISCO's z18 native cap (see
+// OSM_LAYER_MAX_ZOOM in const.ts) so it keeps rendering upscaled tiles instead of blanking out
+// above z18. But per the note above, Leaflet derives the map ceiling from the MAXIMUM maxZoom
+// across all zoom-bound layers — so that inflated value would otherwise let the user zoom to z25
+// over any dataset, including ones that only support z18. The basemap must therefore never decide
+// the ceiling: it is computed here from the DATA layers alone and pinned on the map, which wins
+// over the per-layer maximum.
+export const getMapMaxZoom = ({
+  externalLayerRendered,
+  s2MosaicMaxZoom,
+  singleLayerMaxZoom,
+  comparedLayerMaxZooms = [],
+}: {
+  externalLayerRendered: boolean;
+  s2MosaicMaxZoom?: number | null;
+  singleLayerMaxZoom?: number | null;
+  comparedLayerMaxZooms?: (number | null | undefined)[];
+}): number => {
+  // External WMS/WMTS layers cap the map rather than raise it — see isExternalLayerRendered above.
+  if (externalLayerRendered) {
+    return DEFAULT_EXTERNAL_LAYER_MAX_ZOOM;
+  }
+
+  const dataLayerMaxZooms = [s2MosaicMaxZoom, singleLayerMaxZoom, ...comparedLayerMaxZooms].filter(
+    (zoom): zoom is number => typeof zoom === 'number' && Number.isFinite(zoom),
+  );
+
+  // Floored at the OSM native cap: with no data layer on the map, the basemap alone decides how far
+  // it is useful to zoom, and z18 is exactly what GISCO serves.
+  return Math.max(OSM_MAX_NATIVE_ZOOM, ...dataLayerMaxZooms);
+};
 
 export const shouldShowS2MosaicTransparency = (
   showSingleShLayer: boolean,

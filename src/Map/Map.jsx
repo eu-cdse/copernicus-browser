@@ -45,8 +45,7 @@ import {
   SENTINELHUB_LAYER_PANE_ZINDEX,
   EXTERNAL_LAYER_PANE_ID,
   COMPARE_LAYER_PANE_ID,
-  DEFAULT_COMPARED_LAYERS_MAX_ZOOM,
-  DEFAULT_COMPARED_LAYERS_OVERZOOM,
+  DEFAULT_EXTERNAL_LAYER_MAX_ZOOM,
   S2_QUARTERLY_MOSAIC_DATASET_ID,
   S2_QUARTERLY_MOSAIC_LAYER_ID,
   MAX_MAP_LOADING_TIME,
@@ -59,6 +58,7 @@ import SearchBox from '../SearchBox/SearchBox';
 import {
   getTileSizeConfiguration,
   getZoomConfiguration,
+  getComparedLayerZoomConfiguration,
 } from '../Tools/SearchPanel/dataSourceHandlers/helper';
 import { SpeckleFilterType } from '@sentinel-hub/sentinelhub-js';
 import { isTimespanModeSelected } from '../Tools/VisualizationPanel/VisualizationPanel.utils';
@@ -68,6 +68,8 @@ import {
   shouldShowSingleShLayer,
   shouldShowCompareShLayers,
   shouldShowS2MosaicTransparency,
+  isExternalLayerRendered,
+  getMapMaxZoom,
   getPinTimes,
   getCompareLayerZIndex,
 } from './Map.utils';
@@ -127,6 +129,23 @@ const MapPositionSync = ({ lat, lng, zoom }) => {
       map.setView([lat, lng], zoom, { animate: false });
     }
   }, [lat, lng, zoom, map]);
+  return null;
+};
+
+// Pins the map's own max zoom (Map#options.maxZoom), which takes precedence over the per-layer
+// limits. Needed because Leaflet derives the map ceiling from the MAXIMUM maxZoom across all
+// zoom-bound layers, so a layer's own maxZoom can only raise it, never cap it — see
+// isExternalLayerRendered and getMapMaxZoom in Map.utils.ts. The value is always pinned (never
+// undefined), because the OSM basemap declares a deliberately inflated maxZoom to avoid blanking
+// above GISCO's z18 and must not be allowed to decide the ceiling.
+const MapMaxZoomSync = ({ maxZoom }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.setMaxZoom(maxZoom);
+    return () => {
+      map.setMaxZoom(undefined);
+    };
+  }, [maxZoom, map]);
   return null;
 };
 class Map extends React.Component {
@@ -490,6 +509,13 @@ class Map extends React.Component {
       showComparePanel,
     });
 
+    const externalLayerRendered = isExternalLayerRendered({
+      activeExternalLayer,
+      showCompareShLayers,
+      comparedLayers,
+      selectedTabIndex,
+    });
+
     const { latestS2QMosaicDate, S2QMosaicZoom } = this.state;
     const S2QMosaicTransparent = shouldShowS2MosaicTransparency(
       showSingleShLayer,
@@ -514,6 +540,21 @@ class Map extends React.Component {
     const osmLayer = getDefaultBaseLayer();
     this._shownBaseLayers = shownBaseLayers;
 
+    // The basemap must not decide how far the map can zoom — only the data layers actually on it
+    // do. See getMapMaxZoom / MapMaxZoomSync.
+    const s2MosaicBaseLayerSelected = baseLayerId === S2QuarterlyCloudlessMosaicsBaseLayerTheme.content[0].id;
+    const mapMaxZoom = getMapMaxZoom({
+      externalLayerRendered,
+      s2MosaicMaxZoom: s2MosaicBaseLayerSelected && S2QMosaicReady ? S2QMosaicZoom.max : null,
+      singleLayerMaxZoom: showSingleShLayer && visibleOnMap ? zoomConfig.max : null,
+      comparedLayerMaxZooms: showCompareShLayers
+        ? comparedLayers.map(
+            ({ datasetId: comparedDatasetId, layerId: comparedLayerId }) =>
+              getComparedLayerZoomConfiguration(comparedDatasetId, comparedLayerId).max,
+          )
+        : [],
+    });
+
     return (
       <MapContainer
         minZoom={2}
@@ -533,6 +574,7 @@ class Map extends React.Component {
         className={`${toolsOpen ? '' : 'left-align-attribution'}`}
       >
         <MapPositionSync lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} />
+        <MapMaxZoomSync maxZoom={mapMaxZoom} />
         <MapEventHandler
           onViewportChanged={this.updateViewport}
           onMoveEnd={this.setBounds}
@@ -552,7 +594,13 @@ class Map extends React.Component {
             <BaseLayer checked={baseLayer.checked} name={baseLayer.name} key={baseLayer.id}>
               {baseLayer.urlType === 'BYOC' ? (
                 <LayerGroup>
-                  <TileLayer url={osmLayer.url} attribution={osmLayer.attribution} pane={BASE_PANE_ID} />
+                  <TileLayer
+                    url={osmLayer.url}
+                    attribution={osmLayer.attribution}
+                    pane={BASE_PANE_ID}
+                    maxNativeZoom={osmLayer.maxNativeZoom}
+                    maxZoom={osmLayer.maxZoom}
+                  />
                   {S2QMosaicReady && isOpenEoSupported(baseLayer.url, S2_QUARTERLY_MOSAIC_LAYER_ID) ? (
                     <OpenEoLayerComponent
                       processGraph={getProcessGraph(baseLayer.url, S2_QUARTERLY_MOSAIC_LAYER_ID)}
@@ -594,7 +642,13 @@ class Map extends React.Component {
                   preserveDrawingBuffer={baseLayer.preserveDrawingBuffer}
                 />
               ) : baseLayer.urlType === 'WMTS' ? (
-                <TileLayer url={baseLayer.url} attribution={baseLayer.attribution} pane={BASE_PANE_ID} />
+                <TileLayer
+                  url={baseLayer.url}
+                  attribution={baseLayer.attribution}
+                  pane={BASE_PANE_ID}
+                  maxNativeZoom={baseLayer.maxNativeZoom}
+                  maxZoom={baseLayer.maxZoom}
+                />
               ) : null}
             </BaseLayer>
           ))}
@@ -706,6 +760,7 @@ class Map extends React.Component {
                 <TileLayer
                   url={activeExternalLayer.tileUrl || activeExternalLayer.server.url}
                   pane={EXTERNAL_LAYER_PANE_ID}
+                  maxZoom={DEFAULT_EXTERNAL_LAYER_MAX_ZOOM}
                   {...optionalTileSize(activeExternalLayer.tileSize)}
                 />
               ) : (
@@ -720,6 +775,7 @@ class Map extends React.Component {
                     activeExternalLayer.style,
                   )}
                   pane={EXTERNAL_LAYER_PANE_ID}
+                  maxZoom={DEFAULT_EXTERNAL_LAYER_MAX_ZOOM}
                 />
               )}
             </Overlay>
@@ -758,11 +814,11 @@ class Map extends React.Component {
                 const dsh = getDataSourceHandler(datasetId);
                 const supportsTimeRange = dsh ? dsh.supportsTimeRange() : true; //We can only check if a datasetId is BYOC when the datasource handler for it is instantiated (thus, we are on the user instance which includes that BYOC collection), so we set default to `true` to cover other cases.
                 const compareTileFormat = getTileFormat(dsh);
-                let {
+                const {
                   min: minZoom,
-                  max: maxZoom = DEFAULT_COMPARED_LAYERS_MAX_ZOOM,
-                  allowOverZoomBy = DEFAULT_COMPARED_LAYERS_OVERZOOM,
-                } = getZoomConfiguration(datasetId, layerId);
+                  max: maxZoom,
+                  allowOverZoomBy,
+                } = getComparedLayerZoomConfiguration(datasetId, layerId);
 
                 const { pinTimeFrom, pinTimeTo } = getPinTimes(fromTime, toTime, supportsTimeRange);
                 const index = comparedLayers.length - 1 - i;
@@ -770,6 +826,8 @@ class Map extends React.Component {
 
                 if (p.externalWms) {
                   const { url, layerName, type, tileUrl, tileSize, format, time, style } = p.externalWms;
+                  // External layers have no datasetId, so the zoom config resolved above is empty for
+                  // them — use the external-layer limit rather than the compared-dataset fallback.
                   return type === 'WMTS' ? (
                     <ExternalTileLayerComponent
                       key={p.id}
@@ -779,6 +837,7 @@ class Map extends React.Component {
                       pane={COMPARE_LAYER_PANE_ID}
                       zIndex={zIndex}
                       tileSize={tileSize ?? undefined}
+                      maxZoom={DEFAULT_EXTERNAL_LAYER_MAX_ZOOM}
                     />
                   ) : (
                     <ExternalWmsLayerComponent
@@ -794,6 +853,7 @@ class Map extends React.Component {
                       clipping={comparedClipping[index]}
                       pane={COMPARE_LAYER_PANE_ID}
                       zIndex={zIndex}
+                      maxZoom={DEFAULT_EXTERNAL_LAYER_MAX_ZOOM}
                     />
                   );
                 }
@@ -830,8 +890,9 @@ class Map extends React.Component {
                       opacity={comparedOpacity[index]}
                       clipping={comparedClipping[index]}
                       zIndex={zIndex}
-                      minZoom={zoomConfig.min}
-                      maxZoom={zoomConfig.max}
+                      minZoom={minZoom}
+                      maxZoom={maxZoom}
+                      allowOverZoomBy={allowOverZoomBy}
                       gainEffect={gainEffect}
                       gammaEffect={gammaEffect}
                       redRangeEffect={redRangeEffect}
@@ -917,6 +978,8 @@ class Map extends React.Component {
                     attribution={overlayTileLayer.attribution}
                     overlayTileLayerId={overlayTileLayer.id}
                     pane={overlayTileLayer.pane}
+                    maxNativeZoom={overlayTileLayer.maxNativeZoom}
+                    maxZoom={overlayTileLayer.maxZoom}
                   />
                 ) : null}
               </Pane>

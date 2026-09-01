@@ -18,6 +18,15 @@ export function optionalTileSize(tileSize?: number | null): { tileSize?: number 
   return tileSize != null ? { tileSize } : {};
 }
 
+// Same hazard as optionalTileSize: `maxZoom: undefined` would land as an own property shadowing
+// GridLayer's prototype default, so only emit the key when it has a value.
+// Setting an explicit maxZoom is what makes the layer participate in Leaflet's zoom-bound-layer
+// bookkeeping (_addZoomLimit/_updateZoomLevels) — that's both what lets external layers zoom past
+// GridLayer's default of 18, and what clamps the map back down when switching to a lower-max layer.
+export function optionalZoomLimits(maxZoom?: number | null): { maxZoom?: number } {
+  return maxZoom != null ? { maxZoom } : {};
+}
+
 // Compare-mode clip/opacity is shared with the other tile-layer plugins via layerClipOpacity.ts;
 // only the WMS-specific onAdd setup (writing srs/crs into wmsParams) lives here.
 function addClippingAndOpacity(layer: AnyLeafletLayer) {
@@ -81,6 +90,7 @@ interface ExternalWmsProps extends LayerProps {
   clipping?: number[] | null;
   time?: string | null;
   style?: string | null;
+  maxZoom?: number;
 }
 
 interface ExternalTileProps extends LayerProps {
@@ -90,17 +100,32 @@ interface ExternalTileProps extends LayerProps {
   opacity?: number | null;
   clipping?: number[] | null;
   tileSize?: number;
+  maxZoom?: number;
 }
 
 export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLayer, ExternalWmsProps>(
   (props, context) => {
-    const { url, layers, format, transparent, version, pane, zIndex, opacity, clipping, time, style } = props;
+    const {
+      url,
+      layers,
+      format,
+      transparent,
+      version,
+      pane,
+      zIndex,
+      opacity,
+      clipping,
+      time,
+      style,
+      maxZoom,
+    } = props;
     const options: L.WMSOptions = {
       layers: layers,
       format: format ?? 'image/png',
       transparent: transparent !== undefined ? transparent : true,
       version: version ?? '1.1.1',
       pane: pane,
+      ...optionalZoomLimits(maxZoom),
     };
     // Only set zIndex when provided; passing undefined would override Leaflet's GridLayer default.
     if (zIndex != null) {
@@ -149,8 +174,8 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
 
 export const ExternalTileLayerComponent = createTileLayerComponent<ExternalTileLayer, ExternalTileProps>(
   (props, context) => {
-    const { url, pane, zIndex, opacity, clipping, tileSize } = props;
-    const options: L.TileLayerOptions = { pane };
+    const { url, pane, zIndex, opacity, clipping, tileSize, maxZoom } = props;
+    const options: L.TileLayerOptions = { pane, ...optionalZoomLimits(maxZoom) };
     // Only set zIndex when provided; passing undefined would override Leaflet's GridLayer default.
     if (zIndex != null) {
       options.zIndex = zIndex;

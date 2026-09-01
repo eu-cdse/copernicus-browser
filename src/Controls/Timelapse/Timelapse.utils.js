@@ -202,6 +202,7 @@ export async function fetchTimelapseImage(params) {
     bounds,
     apiType,
     baseLayerUrl: defaultBaseLayer?.url,
+    baseLayerMaxNativeZoom: defaultBaseLayer?.maxNativeZoom,
   };
 
   let { blob } = await fetchImageFromParams(options).catch((err) => {

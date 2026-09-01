@@ -18,9 +18,29 @@ export const EXTERNAL_LAYER_PANE_ZINDEX = 6; // same z-index as SH pane; mutuall
 export const COMPARE_LAYER_PANE_ID = 'compareLayerPane';
 export const COMPARE_LAYER_PANE_ZINDEX = 6;
 
-// Compare layers defaults
+// External (WMS/WMTS) layer max zoom. Without an explicit value Leaflet's GridLayer default
+// of 18 would silently cap how far external layers can be zoomed in.
+export const DEFAULT_EXTERNAL_LAYER_MAX_ZOOM = 20;
+
+// Compare layers defaults. Applies to any compared dataset whose data source handler does not
+// declare its own max (e.g. DEM) — keep separate from the external-layer limit above so changing
+// one does not silently move the other.
 export const DEFAULT_COMPARED_LAYERS_MAX_ZOOM = 25;
 export const DEFAULT_COMPARED_LAYERS_OVERZOOM = 0;
+
+// GISCO's OSM tile services (OSMCartoBackground / OSMCartoLabelsEN / OSMCartoCompositeEN) only
+// serve tiles up to z18 — z19+ returns 404. Both options below are required together:
+//   - maxNativeZoom stops the layer requesting tiles that don't exist and upscales the z18 tile.
+//   - maxZoom keeps the layer alive above z18. Without it L.TileLayer's own default of 18 applies,
+//     and GridLayer._setView sets tileZoom = undefined whenever tileZoom > maxZoom, which drops
+//     every tile — the white background this fixes. maxNativeZoom is only consulted after that
+//     check passes, so setting it alone changes nothing.
+export const OSM_MAX_NATIVE_ZOOM = 18;
+// Matched to the highest ceiling the map can reach (compared layers), so the OSM background never
+// blanks out under any layer combination. See the Leaflet max-zoom note in Map.utils.ts: the map's
+// ceiling is the MAXIMUM over all zoom-bound layers, so this also lets an OSM-only map zoom past
+// z18 on upscaled tiles instead of stopping at 18.
+export const OSM_LAYER_MAX_ZOOM = DEFAULT_COMPARED_LAYERS_MAX_ZOOM;
 
 // S2 Quarterly Mosaic
 export const S2_QUARTERLY_MOSAIC_DATASET_ID = COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC;

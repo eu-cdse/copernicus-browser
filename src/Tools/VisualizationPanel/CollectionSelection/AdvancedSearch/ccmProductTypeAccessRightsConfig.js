@@ -15,6 +15,19 @@ export const CCM_ROLES = {
   COPERNICUS_OPERATORS_CCM: 'copernicus-operators-ccm',
 };
 
+// Also consumed by scripts/fetch-cf-ccm-role-users.ts (the CCM collection ACL sync, issue #630) so
+// the roles allowed to see CCM visualizations in the browser and the roles synced to the CCM VHR
+// collection ACLs can never drift apart.
+export const ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION = [
+  CCM_ROLES.COPERNICUS_SERVICES_CCM,
+  ACCESS_ROLES.COPERNICUS_SERVICES,
+  CCM_ROLES.INT_ORG_NGO_CCM,
+  CCM_ROLES.PUBLIC_AUTH_CCM,
+  CCM_ROLES.UNION_INST_CCM,
+  CCM_ROLES.UNION_RESEARCH_PROJECTS_NON_SPACE_CCM,
+  CCM_ROLES.UNION_RESEARCH_PROJECTS_SPACE_CCM,
+];
+
 export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
   if (accessToken === null || accessToken === undefined) {
     return false;
@@ -25,16 +38,6 @@ export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
   if (userRoles === undefined) {
     return false;
   }
-
-  const ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION = [
-    CCM_ROLES.COPERNICUS_SERVICES_CCM,
-    ACCESS_ROLES.COPERNICUS_SERVICES,
-    CCM_ROLES.INT_ORG_NGO_CCM,
-    CCM_ROLES.PUBLIC_AUTH_CCM,
-    CCM_ROLES.UNION_INST_CCM,
-    CCM_ROLES.UNION_RESEARCH_PROJECTS_NON_SPACE_CCM,
-    CCM_ROLES.UNION_RESEARCH_PROJECTS_SPACE_CCM,
-  ];
 
   return userRoles.some((role) => ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION.includes(role));
 };

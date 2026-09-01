@@ -12,6 +12,7 @@ import {
 } from '@sentinel-hub/sentinelhub-js';
 
 import { getServiceEndpoint } from '../../ExternalLayers/externalLayers.utils';
+import { DEFAULT_EXTERNAL_LAYER_MAX_ZOOM } from '../../Map/const';
 
 // NOTE: the canvas compositing and AOI geometry-tracing helpers below overlap with
 // `ImageDownload.utils.js` (they differ mainly in CRS handling). Additionally,
@@ -118,7 +119,13 @@ export async function compositeWmtsImage(
   bounds: L.LatLngBounds,
   width: number,
   height: number,
-  tileSize: number = DEFAULT_WMTS_TILE_SIZE,
+  {
+    tileSize = DEFAULT_WMTS_TILE_SIZE,
+    // Deepest TILEMATRIX this service serves. The stitching zoom is resolution-driven, so a large
+    // export can outrun it and 404. Defaults rather than throwing as getMapOverlayXYZ does — see
+    // that file's NOTE for why.
+    maxNativeZoom = DEFAULT_EXTERNAL_LAYER_MAX_ZOOM,
+  }: { tileSize?: number; maxNativeZoom?: number } = {},
 ): Promise<Blob> {
   const west = bounds.getWest();
   let east = bounds.getEast();
@@ -136,7 +143,7 @@ export async function compositeWmtsImage(
   // Then drop a zoom level at a time until the tile count is under the cap.
   let z = Math.min(
     Math.max(Math.round(Math.log2((width * 360) / (DEFAULT_WMTS_TILE_SIZE * lngSpan))), 0),
-    22,
+    maxNativeZoom,
   );
   let xMin = 0;
   let xMax = 0;
@@ -147,7 +154,9 @@ export async function compositeWmtsImage(
   let tileMinY = 0;
   let tileMaxY = 0;
   let n = 1;
-  for (let guard = 0; guard <= 22; guard++) {
+  // z starts at or below maxNativeZoom and drops by one per iteration, so maxNativeZoom + 1 passes
+  // is always enough to reach z = 0 — the guard is a runaway backstop, not a separate depth limit.
+  for (let guard = 0; guard <= maxNativeZoom; guard++) {
     // Tiles per axis at this zoom: a TileMatrixSet with larger tiles (e.g. Planet's 512px
     // PopularWebMercator512) covers the same 256px-equivalent world resolution with
     // proportionally fewer, larger tiles — so n shrinks as tileSize grows past 256.
@@ -462,7 +471,9 @@ export async function fetchExternalLayerBlob(
   mimeType: string = MimeTypes.PNG,
 ): Promise<Blob> {
   if (ext.type === 'WMTS' && ext.tileUrl) {
-    return compositeWmtsImage(ext.tileUrl, bounds, width, height, ext.tileSize ?? DEFAULT_WMTS_TILE_SIZE);
+    return compositeWmtsImage(ext.tileUrl, bounds, width, height, {
+      tileSize: ext.tileSize ?? DEFAULT_WMTS_TILE_SIZE,
+    });
   }
   const url = buildExternalWmsGetMapUrl(
     ext.url,

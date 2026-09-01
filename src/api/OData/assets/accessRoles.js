@@ -11,6 +11,6 @@ export const EXPERT_ROLES = {
 
 export const ACCESS_ROLES = {
   LANDSAT_ACCESS: 'landsat-access',
-  COPERNICUS_SERVICES: 'copernicus-services',
+  COPERNICUS_SERVICES: 'copernicus-service',
   MODIS_ACCESS: 'modis-access',
 };

@@ -114,7 +114,7 @@
     "prettier-js": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\" \"scripts/**/*.{js,jsx,ts,tsx,json}\"",
     "prettier-css": "stylelint --fix \"src/**/*.css\" \"src/**/*.scss\"",
     "prettier-html": "prettier --write \"./**/*.html\"",
-    "prettier-check": "prettier --check --no-error-on-unmatched-pattern \"src/**/*.json\" \"scripts/**/*.json\" \"./**/*.html\"",
+    "prettier-check": "prettier --check --no-error-on-unmatched-pattern \"src/**/*.{js,jsx,ts,tsx,json}\" \"scripts/**/*.{js,jsx,ts,tsx,json}\" \"./**/*.html\"",
     "translate": "node scripts/translate",
     "update-metadata-cache-bundle": "node scripts/update-metadata-cache-bundle",
     "update-urban-atlas-capabilities-cache": "node scripts/update-urban-atlas-capabilities-cache",
@@ -135,7 +135,9 @@
     "check-collections-band-names": "node scripts/manual/check-collections-band-names.js",
     "list-configurations-without-layers": "node scripts/manual/list-configurations-without-layers.js",
     "check-rrd-missing-configurations": "tsx scripts/check-rrd-missing-configurations.ts",
-    "cdse-collection-share": "tsx scripts/cdse-collection-share.ts"
+    "private-collection-access-share": "tsx scripts/private-collection-access-share.ts",
+    "fetch-cf-ccm-role-users": "tsx scripts/fetch-cf-ccm-role-users.ts",
+    "sync-private-collection-access": "tsx scripts/sync-private-collection-access.ts"
   },
   "browserslist": [
     ">0.2%",

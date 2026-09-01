@@ -6,8 +6,10 @@ import {
   shouldShowSingleShLayer,
   shouldShowCompareShLayers,
   shouldShowS2MosaicTransparency,
+  isExternalLayerRendered,
   getPinTimes,
   getCompareLayerZIndex,
+  getMapMaxZoom,
 } from './Map.utils';
 import { TABS } from '../const';
 
@@ -539,5 +541,131 @@ describe('getBufferRadius', () => {
   ])('zoom %', (zoom, expectedRadius) => {
     const radius = getBufferRadius(zoom);
     expect(radius).toEqual(expectedRadius);
+  });
+});
+
+describe('isExternalLayerRendered', () => {
+  const activeExternalLayer = { server: { id: 's1' }, layerName: 'layer-1' };
+
+  test('true when a single-view external layer is active on the Visualize tab', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer,
+        showCompareShLayers: false,
+        comparedLayers: [],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+      }),
+    ).toBe(true);
+  });
+
+  test('false when no external layer is active', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer: null,
+        showCompareShLayers: false,
+        comparedLayers: [],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+      }),
+    ).toBe(false);
+  });
+
+  test('false outside the Visualize tab, where external layers are not rendered', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer,
+        showCompareShLayers: false,
+        comparedLayers: [],
+        selectedTabIndex: TABS.SEARCH_TAB,
+      }),
+    ).toBe(false);
+  });
+
+  test('true in compare mode when at least one compared layer is external', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer: null,
+        showCompareShLayers: true,
+        comparedLayers: [{ externalWms: { url: 'https://example.com/wms' } }, {}],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+      }),
+    ).toBe(true);
+  });
+
+  test('false in compare mode when every compared layer is a Sentinel Hub layer', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer: null,
+        showCompareShLayers: true,
+        comparedLayers: [{}, {}],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+      }),
+    ).toBe(false);
+  });
+
+  test('ignores the single-view active layer while compare mode hides it', () => {
+    expect(
+      isExternalLayerRendered({
+        activeExternalLayer,
+        showCompareShLayers: true,
+        comparedLayers: [{}],
+        selectedTabIndex: TABS.VISUALIZE_TAB,
+      }),
+    ).toBe(false);
+  });
+});
+
+describe('getMapMaxZoom', () => {
+  // Regression tests for the OSM basemap raising the map ceiling globally. The basemap declares an
+  // inflated maxZoom so it keeps rendering above GISCO's z18 instead of blanking out, and Leaflet
+  // takes the MAXIMUM maxZoom across all zoom-bound layers — so without this helper every dataset
+  // became zoomable to z25, not just the ones that support it.
+  test('falls back to the OSM native cap when no data layer is on the map', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false })).toBe(18);
+  });
+
+  test('keeps the cap at 18 for a dataset that only supports 18 (e.g. Sentinel-2 L2A)', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, singleLayerMaxZoom: 18 })).toBe(18);
+  });
+
+  test('raises the cap to 25 for a VHR collection that supports it', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, singleLayerMaxZoom: 25 })).toBe(25);
+  });
+
+  test('raises the cap to 19 for Sentinel-5P', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, singleLayerMaxZoom: 19 })).toBe(19);
+  });
+
+  test('caps at 20 whenever an external WMS/WMTS layer is rendered, overriding data layers', () => {
+    expect(
+      getMapMaxZoom({
+        externalLayerRendered: true,
+        singleLayerMaxZoom: 25,
+        s2MosaicMaxZoom: 20,
+        comparedLayerMaxZooms: [25, 25],
+      }),
+    ).toBe(20);
+  });
+
+  test('uses the S2 quarterly mosaic basemap limit when that basemap is selected', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, s2MosaicMaxZoom: 20 })).toBe(20);
+  });
+
+  test('takes the highest limit across compared layers', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, comparedLayerMaxZooms: [18, 25, 18] })).toBe(25);
+  });
+
+  test('never drops below the OSM native cap, even for a lower-limit dataset', () => {
+    expect(getMapMaxZoom({ externalLayerRendered: false, singleLayerMaxZoom: 12 })).toBe(18);
+  });
+
+  test('ignores null/undefined limits rather than treating them as zero', () => {
+    expect(
+      getMapMaxZoom({
+        externalLayerRendered: false,
+        s2MosaicMaxZoom: null,
+        singleLayerMaxZoom: undefined,
+        comparedLayerMaxZooms: [null, undefined, 25],
+      }),
+    ).toBe(25);
   });
 });

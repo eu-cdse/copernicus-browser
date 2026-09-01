@@ -365,6 +365,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
     addMapOverlays,
     showOSMBackgroundLayer,
     baseLayerUrl,
+    baseLayerMaxNativeZoom,
     userDescription,
     enabledOverlaysId,
     toTime,
@@ -394,7 +395,9 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
   // null) so it isn't drawn once per layer.
   if (baseLayerUrl) {
     try {
-      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, bounds, zoom, width, height);
+      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, bounds, zoom, width, height, {
+        maxNativeZoom: baseLayerMaxNativeZoom,
+      });
       ctx.drawImage(baseCanvas, 0, 0, width, height);
     } catch (e) {
       console.warn('[ImgDownload] Could not add OSM background to compare download:', e);
@@ -566,6 +569,7 @@ export async function finalizeExternalDownloadImage(blob, opts) {
     height,
     mimeType,
     baseTileUrl, // OSM/base {z}/{x}/{y} template to draw under the imagery (single path only)
+    baseTileMaxNativeZoom, // highest level that base service serves; above it its tiles 404
     aoiGeometry,
     cropToAoi,
     drawGeoToImg,
@@ -588,7 +592,9 @@ export async function finalizeExternalDownloadImage(blob, opts) {
 
   // Draw the transparent imagery over a stitched OSM/base layer so it shows through nodata areas.
   if (baseTileUrl) {
-    const baseBlob = await compositeWmtsImage(baseTileUrl, bounds, width, height);
+    const baseBlob = await compositeWmtsImage(baseTileUrl, bounds, width, height, {
+      maxNativeZoom: baseTileMaxNativeZoom,
+    });
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
@@ -684,6 +690,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
     mapWidthInMeters,
     selectedCrs,
     baseLayerUrl,
+    baseLayerMaxNativeZoom,
     cropToAoi,
     selectedProcessing,
     processGraph,
@@ -891,7 +898,9 @@ export async function fetchImageFromParams(params, raiseWarning) {
       mergeCanvas.height = height;
       const mergeCtx = mergeCanvas.getContext('2d');
 
-      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, bounds, zoom, width, height);
+      const baseCanvas = await getMapOverlayXYZ(baseLayerUrl, bounds, zoom, width, height, {
+        maxNativeZoom: baseLayerMaxNativeZoom,
+      });
       mergeCtx.drawImage(baseCanvas, 0, 0, width, height);
 
       const sentinelUrl = URL.createObjectURL(blob);
@@ -1536,16 +1545,12 @@ export const drawMapOverlaysOnCanvas = async (ctx, bounds, zoom, width, enabledO
     if (overlay.urlType === 'VECTOR') {
       overlayCanvas = await getGlOverlay(overlay.pane);
     } else {
-      overlayCanvas = await getMapOverlayXYZ(
-        overlay.url,
-        bounds,
-        zoom,
-        canvasWidth,
-        canvasHeight,
-        overlay.tileSize,
-        overlay.makeReadable,
-        overlay.zoomOffset,
-      );
+      overlayCanvas = await getMapOverlayXYZ(overlay.url, bounds, zoom, canvasWidth, canvasHeight, {
+        tileSize: overlay.tileSize,
+        makeReadable: overlay.makeReadable,
+        zoomOffset: overlay.zoomOffset,
+        maxNativeZoom: overlay.maxNativeZoom,
+      });
     }
     ctx.drawImage(overlayCanvas, 0, 0, canvasWidth, canvasHeight);
   }

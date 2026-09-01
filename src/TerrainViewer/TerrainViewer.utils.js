@@ -24,6 +24,7 @@ import store, { mainMapSlice, terrainViewerSlice } from '../store';
 import { wgs84ToMercator } from '../junk/EOBCommon/utils/coords';
 import { getBoundsZoomLevel } from '../utils/coords';
 import { DEFAULT_DEM_SOURCE, DEM_3D_MAX_ZOOM, EQUATOR_LENGTH, PROCESSING_OPTIONS } from '../const';
+import { OSM_MAX_NATIVE_ZOOM } from '../Map/const';
 import { addLabelsAndLogos, dateTimeDisplayFormat } from '../Controls/Timelapse/Timelapse.utils';
 import {
   getProcessGraph,
@@ -594,9 +595,13 @@ async function getImageFromTerrainViewer({
 }
 
 export function getTileCoord(minX, minY, maxX, maxY) {
+  // Clamped to GISCO's highest available zoom — the background tile URL below 404s above it.
   const zoomLevel = Math.max(
     0,
-    Math.min(19, 1 + Math.floor(Math.log(EQUATOR_LENGTH / ((maxX - minX) * 1.001)) / Math.log(2))),
+    Math.min(
+      OSM_MAX_NATIVE_ZOOM,
+      1 + Math.floor(Math.log(EQUATOR_LENGTH / ((maxX - minX) * 1.001)) / Math.log(2)),
+    ),
   );
   const numTiles = 1 << zoomLevel;
   const tileX = Math.floor(((minX + maxX + EQUATOR_LENGTH) * numTiles) / (2 * EQUATOR_LENGTH));
