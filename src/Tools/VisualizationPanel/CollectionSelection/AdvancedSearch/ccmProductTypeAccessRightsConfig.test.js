@@ -1,7 +1,8 @@
 import {
-  doesUserHaveAnyCCMRole,
+  doesUserHaveAccessToCopDem30Visualization,
   doesUserHaveAccessToCCMVisualization,
   CCM_ROLES,
+  ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION,
 } from './ccmProductTypeAccessRightsConfig';
 import { ACCESS_ROLES } from '../../../../api/OData/assets/accessRoles';
 
@@ -28,23 +29,25 @@ const makeToken = (roles) => {
   return `${header}.${payload}.signature`;
 };
 
-describe('doesUserHaveAnyCCMRole', () => {
+describe('doesUserHaveAccessToCopDem30Visualization', () => {
   test('returns false for null/undefined token', () => {
-    expect(doesUserHaveAnyCCMRole(null)).toBe(false);
-    expect(doesUserHaveAnyCCMRole(undefined)).toBe(false);
+    expect(doesUserHaveAccessToCopDem30Visualization(null)).toBe(false);
+    expect(doesUserHaveAccessToCopDem30Visualization(undefined)).toBe(false);
   });
 
   test('returns false for a token with no CCM roles', () => {
-    expect(doesUserHaveAnyCCMRole(userTokenWithOutProperAccessRole)).toBe(false);
-    expect(doesUserHaveAnyCCMRole(makeToken(['copernicus-general', 'offline_access']))).toBe(false);
+    expect(doesUserHaveAccessToCopDem30Visualization(userTokenWithOutProperAccessRole)).toBe(false);
+    expect(
+      doesUserHaveAccessToCopDem30Visualization(makeToken(['copernicus-general', 'offline_access'])),
+    ).toBe(false);
   });
 
   test('returns true for a token holding a CCM role', () => {
-    expect(doesUserHaveAnyCCMRole(userTokenWithProperAccessRole)).toBe(true);
+    expect(doesUserHaveAccessToCopDem30Visualization(userTokenWithProperAccessRole)).toBe(true);
   });
 
   test.each(Object.values(CCM_ROLES))('returns true for CCM role %s', (role) => {
-    expect(doesUserHaveAnyCCMRole(makeToken([role]))).toBe(true);
+    expect(doesUserHaveAccessToCopDem30Visualization(makeToken([role]))).toBe(true);
   });
 
   // The two roles that distinguish this predicate from doesUserHaveAccessToCCMVisualization,
@@ -54,10 +57,21 @@ describe('doesUserHaveAnyCCMRole', () => {
     'grants access for %s where doesUserHaveAccessToCCMVisualization does not',
     (role) => {
       const token = makeToken([role]);
-      expect(doesUserHaveAnyCCMRole(token)).toBe(true);
+      expect(doesUserHaveAccessToCopDem30Visualization(token)).toBe(true);
       expect(doesUserHaveAccessToCCMVisualization(token)).toBe(false);
     },
   );
+});
+
+describe('ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION', () => {
+  // Guards against the export silently drifting from CCM_ROLES (issue #1251): this list gates the
+  // COP DEM 30m private collection ACL sync as well as the browser visualization, so it must always
+  // contain exactly the roles defined in CCM_ROLES, regardless of declaration order.
+  test('contains exactly the same members as Object.values(CCM_ROLES)', () => {
+    expect([...ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION].sort()).toEqual(
+      [...Object.values(CCM_ROLES)].sort(),
+    );
+  });
 });
 
 describe('doesUserHaveAccessToCCMVisualization', () => {

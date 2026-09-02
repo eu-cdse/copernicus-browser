@@ -37,7 +37,7 @@ import CLMSCollectionSelection from './CLMSCollectionSelection';
 import ExtraCollectionsPanel from '../../../ExternalLayers/ExtraCollectionsPanel';
 import {
   doesUserHaveAccessToCCMVisualization,
-  doesUserHaveAnyCCMRole,
+  doesUserHaveAccessToCopDem30Visualization,
 } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
   DEM_COPERNICUS_30_CDAS,
@@ -124,13 +124,13 @@ const renderCollections = (
 ) => {
   if (isExpanded) {
     const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user?.access_token);
-    const hasAnyCCMRole = doesUserHaveAnyCCMRole(user?.access_token);
+    const hasAccessToCopDem30Visualization = doesUserHaveAccessToCopDem30Visualization(user?.access_token);
 
     // COP DEM 30m is restricted to CCM users (issue #1185); hide only that dataset while
     // leaving the DEM group and the 90m dataset visible to everyone. Filtering collectionGroups
     // itself (rather than just the dropdown options) keeps the expanded group's collection
     // buttons (renderCollectionsList) in sync with the dropdown.
-    const visibleCollectionGroups = hasAnyCCMRole
+    const visibleCollectionGroups = hasAccessToCopDem30Visualization
       ? collectionGroups
       : collectionGroups.map((g) =>
           g.datasource === DATASOURCES.DEM_CDAS
@@ -219,7 +219,11 @@ const renderCollections = (
         let preselected = group?.preselectedDataset;
         // Non-CCM users can't see COP DEM 30m (issue #1185), which is the DEM group's default
         // preselection — fall back to 90m so selecting the group doesn't strand them on a hidden dataset.
-        if (value === DATASOURCES.DEM_CDAS && preselected === DEM_COPERNICUS_30_CDAS && !hasAnyCCMRole) {
+        if (
+          value === DATASOURCES.DEM_CDAS &&
+          preselected === DEM_COPERNICUS_30_CDAS &&
+          !hasAccessToCopDem30Visualization
+        ) {
           preselected = DEM_COPERNICUS_90_CDAS;
         }
         onSelect({
@@ -302,8 +306,8 @@ const CollectionSelection = ({
   setComparePanel,
   setPinPanel,
   showPinPanel,
-  newCompareLayersCount,
-  newPinsCount,
+  comparedLayersCount,
+  pinsCount,
   collectionPanelExpanded,
   pixelBounds,
   maxCloudCover,
@@ -445,7 +449,10 @@ const CollectionSelection = ({
       // rendering of this component until Keycloak/anon auth has resolved, and gaining a role
       // (logging in) goes through a full-page redirect that remounts the app, not an in-place
       // token swap.
-      if (datasetId === DEM_COPERNICUS_30_CDAS && !doesUserHaveAnyCCMRole(user?.access_token)) {
+      if (
+        datasetId === DEM_COPERNICUS_30_CDAS &&
+        !doesUserHaveAccessToCopDem30Visualization(user?.access_token)
+      ) {
         const demGroup = collectionGroupsFromDsh.find((g) => g.datasource === DATASOURCES.DEM_CDAS);
         if (demGroup) {
           setSelected({ datasource: DATASOURCES.DEM_CDAS, dataset: DEM_COPERNICUS_90_CDAS });
@@ -602,10 +609,10 @@ const CollectionSelection = ({
             showHighlightPanel={showHighlightPanel}
             setShowHighlightPanel={setShowHighlightPanel}
             highlightsAvailable={highlightsAvailable}
-            newCompareLayersCount={newCompareLayersCount}
+            comparedLayersCount={comparedLayersCount}
             showComparePanel={showComparePanel}
             setComparePanel={setComparePanel}
-            newPinsCount={newPinsCount}
+            pinsCount={pinsCount}
             showPinPanel={showPinPanel}
             setPinPanel={setPinPanel}
             onOpenExternalLayers={handleOpenExternalLayers}
@@ -658,8 +665,8 @@ const CollectionSelection = ({
             setComparePanel={setComparePanel}
             setPinPanel={setPinPanel}
             showPinPanel={showPinPanel}
-            newCompareLayersCount={newCompareLayersCount}
-            newPinsCount={newPinsCount}
+            comparedLayersCount={comparedLayersCount}
+            pinsCount={pinsCount}
             onOpenExternalLayers={handleOpenExternalLayers}
             showExternalLayersPanel={showExternalLayersPanel}
             onCloseExternalLayers={closeExternalLayers}

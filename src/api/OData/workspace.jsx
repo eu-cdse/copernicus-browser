@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import { t } from 'ttag';
 
-import store, { floatingPanelNotificationSlice, workspaceSlice } from '../../store';
+import store, { workspaceSlice } from '../../store';
 import { getAccessToken } from '../../Auth/authHelpers';
+import { notifyFloatingPanel } from '../../utils/floatingPanelNotification';
 import { AttributeNames } from './assets/attributes';
 
 export const BATCH_SIZE = 50;
@@ -86,13 +86,7 @@ export async function addProductsToWorkspace(products) {
           </ul>
         </div>
       );
-      store.dispatch(
-        floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
-          notificationUniqueId: uuid(),
-          notificationAlertType: 'warning',
-          notificationMsg: errorMsg,
-        }),
-      );
+      notifyFloatingPanel('warning', errorMsg);
     } else if (totalSuccessCount > 0 && uniqueErrors.size > 0) {
       const errorMsg = (
         <div>
@@ -106,46 +100,28 @@ export async function addProductsToWorkspace(products) {
           </ul>
         </div>
       );
-      store.dispatch(
-        floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
-          notificationUniqueId: uuid(),
-          notificationAlertType: 'warning',
-          notificationMsg: errorMsg,
-        }),
-      );
+      notifyFloatingPanel('warning', errorMsg);
     } else if (totalSuccessCount > 0) {
       const isSingleProduct = totalSuccessCount === 1;
       const successMessage = isSingleProduct
         ? t`Product was successfully added to the `
         : t`Products were successfully added to the `;
 
-      store.dispatch(
-        floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
-          notificationUniqueId: uuid(),
-          notificationAlertType: 'success',
-          notificationMsg: [
-            successMessage,
-            <a
-              key="workspace-link"
-              href="https://workspace.dataspace.copernicus.eu/workspace/my-products"
-              target="_blank"
-              rel="noreferrer"
-            >{t`Workspace`}</a>,
-            '!',
-          ],
-        }),
-      );
+      notifyFloatingPanel('success', [
+        successMessage,
+        <a
+          key="workspace-link"
+          href="https://workspace.dataspace.copernicus.eu/workspace/my-products"
+          target="_blank"
+          rel="noreferrer"
+        >{t`Workspace`}</a>,
+        '!',
+      ]);
     }
   } catch (error) {
     console.log('Error adding products to workspace:', error);
     const errorMsg = extractErrorMsg(error) ?? t`Something went wrong!`;
-    store.dispatch(
-      floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
-        notificationUniqueId: uuid(),
-        notificationAlertType: 'warning',
-        notificationMsg: errorMsg,
-      }),
-    );
+    notifyFloatingPanel('warning', errorMsg);
   }
 }
 

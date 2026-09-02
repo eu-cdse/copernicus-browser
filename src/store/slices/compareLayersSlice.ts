@@ -16,7 +16,6 @@ export interface CompareLayersState {
   comparedLayers: CompareLayerItem[];
   comparedOpacity: number[];
   comparedClipping: [number, number][];
-  newCompareLayersCount: number;
 }
 
 interface UpdateOpacityPayload {
@@ -50,7 +49,6 @@ const initialState: CompareLayersState = {
   comparedLayers: [],
   comparedOpacity: [],
   comparedClipping: [],
-  newCompareLayersCount: 0,
 };
 
 export const compareLayersSlice = createSlice({
@@ -60,7 +58,6 @@ export const compareLayersSlice = createSlice({
     addToCompare: (state, action: PayloadAction<Record<string, unknown>>) => {
       const newLayer = { id: uuid(), ...action.payload };
       state.comparedLayers = [newLayer, ...state.comparedLayers];
-      state.newCompareLayersCount = state.newCompareLayersCount + 1;
       state.comparedOpacity = [1.0, ...state.comparedOpacity];
       state.comparedClipping = [[0, 1], ...state.comparedClipping];
     },
@@ -83,9 +80,6 @@ export const compareLayersSlice = createSlice({
       state.comparedLayers = [...layers, ...state.comparedLayers];
       state.comparedOpacity = [...new Array(action.payload.length).fill(1.0), ...state.comparedOpacity];
       state.comparedClipping = [...new Array(action.payload.length).fill([0, 1]), ...state.comparedClipping];
-    },
-    setNewCompareLayersCount: (state, action: PayloadAction<number>) => {
-      state.newCompareLayersCount = action.payload;
     },
     updateOpacity: (state, action: PayloadAction<UpdateOpacityPayload>) => {
       const { index, value } = action.payload;

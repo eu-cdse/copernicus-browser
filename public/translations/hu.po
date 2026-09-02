@@ -11227,3 +11227,9 @@ msgstr ""
 
 msgid "No quicklook available for this item"
 msgstr ""
+
+msgid "Successfully added to Compare"
+msgstr ""
+
+msgid "Successfully added to Pins"
+msgstr ""

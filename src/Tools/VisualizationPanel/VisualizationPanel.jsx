@@ -19,7 +19,7 @@ import ThemeSelect from './ThemeSelect/ThemeSelect';
 import Loader from '../../Loader/Loader';
 
 import { haveEffectsChangedFromDefault } from './VisualizationPanel.utils';
-import store, { visualizationSlice, compareLayersSlice, pinsSlice, collapsiblePanelSlice } from '../../store';
+import store, { visualizationSlice, collapsiblePanelSlice } from '../../store';
 import { selectActiveExternalLayer } from '../../store/slices/externalLayersSlice';
 import {
   EXPIRED_ACCOUNT,
@@ -33,7 +33,6 @@ import { getAppropriateAuthToken } from '../../App';
 import { resetMessagePanel } from '../../utils';
 import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
-import { NOTIFICATION_BADGE_RESET_TIMEOUT } from './const';
 import ExternalWmsLayerContainer from '../../ExternalLayers/ExternalWmsLayerContainer';
 
 const showEffectsText = () => t`Show effects and advanced options`;
@@ -117,8 +116,8 @@ function VisualizationPanel({
   setShowComparePanel,
   setLastAddedPin,
   saveLocalPinsOnLogin,
-  newCompareLayersCount,
-  newPinsCount,
+  comparedLayersCount,
+  pinsCount,
   visibleOnMap,
   authToken,
   dataSourcesInitialized,
@@ -180,40 +179,6 @@ function VisualizationPanel({
       setShouldShowTPDI(false);
     }
   }, [is3D, shouldShowTPDI]);
-
-  useEffect(() => {
-    let resetNewCompareLayerCountTimeout;
-
-    if (showComparePanel && newCompareLayersCount > 0) {
-      resetNewCompareLayerCountTimeout = setTimeout(
-        () => store.dispatch(compareLayersSlice.actions.setNewCompareLayersCount(0)),
-        NOTIFICATION_BADGE_RESET_TIMEOUT,
-      );
-
-      return () => {
-        if (resetNewCompareLayerCountTimeout) {
-          clearTimeout(resetNewCompareLayerCountTimeout);
-        }
-      };
-    }
-  }, [showComparePanel, newCompareLayersCount]);
-
-  useEffect(() => {
-    let resetNewPinsCountTimeout;
-
-    if (showPinPanel && newPinsCount > 0) {
-      resetNewPinsCountTimeout = setTimeout(
-        () => store.dispatch(pinsSlice.actions.setNewPinsCount(0)),
-        NOTIFICATION_BADGE_RESET_TIMEOUT,
-      );
-
-      return () => {
-        if (resetNewPinsCountTimeout) {
-          clearTimeout(resetNewPinsCountTimeout);
-        }
-      };
-    }
-  }, [showPinPanel, newPinsCount]);
 
   const handleTPDIClick = () => {
     setShouldShowTPDI(!shouldShowTPDI);
@@ -353,8 +318,8 @@ function VisualizationPanel({
                 setComparePanel={setShowComparePanel}
                 showPinPanel={showPinPanel}
                 setPinPanel={setShowPinPanel}
-                newCompareLayersCount={newCompareLayersCount}
-                newPinsCount={newPinsCount}
+                comparedLayersCount={comparedLayersCount}
+                pinsCount={pinsCount}
               />
             )}
             {showLayerPanel && !displayEffects && shouldShowLayerList && !shouldShowExternalLayerList && (
@@ -405,7 +370,6 @@ function VisualizationPanel({
                 is3D={is3D}
                 showComparePanel={showComparePanel}
                 setComparePanel={setShowComparePanel}
-                newCompareLayersCount={newCompareLayersCount}
               />
             )}
 
@@ -440,8 +404,8 @@ const mapStoreToProps = (store) => ({
   themesLists: store.themes.themesLists,
   selectedThemesListId: store.themes.selectedThemesListId,
   effects: getVisualizationEffectsFromStore(store),
-  newCompareLayersCount: store.compare.newCompareLayersCount,
-  newPinsCount: store.pins.newPinsCount,
+  comparedLayersCount: store.compare.comparedLayers.length,
+  pinsCount: store.pins.items.length,
   authToken: getAppropriateAuthToken(store.auth, store.themes.selectedThemeId),
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   dataSourcesLoading: store.themes.dataSourcesLoading,

@@ -42,11 +42,20 @@ export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
   return userRoles.some((role) => ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION.includes(role));
 };
 
-// Returns true if the user holds ANY CCM role, including public-ccm and copernicus-operators-ccm.
+// Also consumed by scripts/sync-private-collection-access.ts (the COP DEM 30 ACL-sync group,
+// issue #1251) so the roles allowed to see the COP DEM 30m visualization in the browser and the
+// roles synced to its private collection ACL can never drift apart. Includes public-ccm and
+// copernicus-operators-ccm, unlike ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION above, which deliberately
+// excludes them (see doesUserHaveAccessToCopDem30Visualization below and issue #1185). Currently
+// equal to Object.values(CCM_ROLES), but that's incidental -- read through this constant, not
+// CCM_ROLES directly, so a future narrowing of COP DEM 30 access doesn't silently change elsewhere.
+export const ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION = Object.values(CCM_ROLES);
+
+// Returns true if the user has access to the COP DEM 30m collection per its View Service license
+// terms (issue #1185), currently any CCM role including public-ccm and copernicus-operators-ccm.
 // Distinct from doesUserHaveAccessToCCMVisualization, whose allow-list deliberately excludes those
-// two roles. Used to gate display of the COP DEM 30m collection per its View Service license terms
-// (issue #1185). Object.values(CCM_ROLES) keeps this in sync if the role set ever changes.
-export const doesUserHaveAnyCCMRole = (accessToken) => {
+// two roles.
+export const doesUserHaveAccessToCopDem30Visualization = (accessToken) => {
   if (accessToken === null || accessToken === undefined) {
     return false;
   }
@@ -57,9 +66,7 @@ export const doesUserHaveAnyCCMRole = (accessToken) => {
     return false;
   }
 
-  const allCCMRoles = Object.values(CCM_ROLES);
-
-  return userRoles.some((role) => allCCMRoles.includes(role));
+  return userRoles.some((role) => ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION.includes(role));
 };
 
 const VHR_COMMON_ACCESS_RIGHTS = {
@@ -96,17 +103,11 @@ const COP_DEM_PARTIAL_ACCESS_RIGHTS = {
   ],
 };
 
+// Download rights for this product type happen to cover every CCM role today -- derived from
+// CCM_ROLES directly (like ROLES_WITH_ACCESS_TO_COP_DEM_30_VISUALIZATION above) instead of hand-
+// listed, so it can't silently drift out of sync if a role is ever added to or removed from CCM_ROLES.
 const COP_DEM_FULL_ACCESS_RIGHTS = {
-  DOWNLOAD_PRODUCT_ROLES: [
-    CCM_ROLES.COPERNICUS_SERVICES_CCM,
-    CCM_ROLES.UNION_INST_CCM,
-    CCM_ROLES.UNION_RESEARCH_PROJECTS_SPACE_CCM,
-    CCM_ROLES.UNION_RESEARCH_PROJECTS_NON_SPACE_CCM,
-    CCM_ROLES.PUBLIC_AUTH_CCM,
-    CCM_ROLES.INT_ORG_NGO_CCM,
-    CCM_ROLES.PUBLIC_CCM,
-    CCM_ROLES.COPERNICUS_OPERATORS_CCM,
-  ],
+  DOWNLOAD_PRODUCT_ROLES: Object.values(CCM_ROLES),
 };
 
 const PARTIAL_3_ACCESS_RIGHTS = {

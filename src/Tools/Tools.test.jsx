@@ -1,6 +1,13 @@
 import { Tools } from './Tools';
 import store, { externalLayersSlice, pinsSlice, notificationSlice } from '../store';
 import * as PinUtils from './Pins/Pin.utils';
+import { notifyAddedToPins } from '../utils/floatingPanelNotification';
+
+jest.mock('../utils/floatingPanelNotification', () => ({
+  notifyFloatingPanel: jest.fn(),
+  notifyAddedToCompare: jest.fn(),
+  notifyAddedToPins: jest.fn(),
+}));
 
 // Only the backend/local persistence calls are mocked; buildExternalWmsPayload runs for real so the
 // pin sent to savePinsToServer/saveLocalPins reflects the actual active external layer.
@@ -30,7 +37,6 @@ const baseProps = (overrides = {}) => ({
   lat: 10,
   lng: 20,
   selectedThemeId: 'theme-1',
-  newPinsCount: 0,
   user: { userdata: { sub: 'user-1' } },
   setLastAddedPin: jest.fn(),
   ...overrides,
@@ -62,7 +68,7 @@ describe('Tools.savePin — external WMS/WMTS pin', () => {
     ]);
     expect(PinUtils.saveLocalPins).not.toHaveBeenCalled();
     expect(props.setLastAddedPin).toHaveBeenCalledWith('server-pin-1');
-    expect(store.getState().pins.newPinsCount).toBe(1);
+    expect(notifyAddedToPins).toHaveBeenCalledTimes(1);
   });
 
   it('falls back to local storage (without an error notification) when the backend save fails', async () => {
@@ -77,7 +83,7 @@ describe('Tools.savePin — external WMS/WMTS pin', () => {
       expect.objectContaining({ externalWms: expect.objectContaining({ layerName: 'layer' }) }),
     ]);
     expect(props.setLastAddedPin).toHaveBeenCalledWith('local-pin-1');
-    expect(store.getState().pins.newPinsCount).toBe(1);
+    expect(notifyAddedToPins).toHaveBeenCalledTimes(1);
     expect(store.getState().notification.type).toBeNull();
   });
 });

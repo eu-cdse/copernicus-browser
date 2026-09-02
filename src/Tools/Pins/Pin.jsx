@@ -13,6 +13,7 @@ import {
   normalizePin,
 } from './Pin.utils';
 import { constructEffectsFromPinOrHighlight } from '../../utils/effectsUtils';
+import { notifyAddedToCompare } from '../../utils/floatingPanelNotification';
 import InvalidPin from './InvalidPin';
 
 import DoubleChevronDown from '../../icons/double-chevron-down.svg?react';
@@ -64,6 +65,7 @@ const Pin = ({
     const effects = constructEffectsFromPinOrHighlight(item);
     const pin = { ...item, ...effects };
     store.dispatch(compareLayersSlice.actions.addToCompare(pin));
+    notifyAddedToCompare();
   }
 
   const { description, title, lat, lng, zoom } = item;

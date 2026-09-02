@@ -18,10 +18,10 @@ export const CollectionSearchTools = ({
   showHighlightPanel,
   setShowHighlightPanel,
   highlightsAvailable,
-  newCompareLayersCount,
+  comparedLayersCount,
   showComparePanel,
   setComparePanel,
-  newPinsCount,
+  pinsCount,
   showPinPanel,
   setPinPanel,
   onOpenExternalLayers,
@@ -102,11 +102,7 @@ export const CollectionSearchTools = ({
         </div>
       </BadgeWrapper>
 
-      <BadgeWrapper
-        showComparePanel={showComparePanel}
-        count={newCompareLayersCount}
-        onClick={isComparePanelActive}
-      >
+      <BadgeWrapper active={showComparePanel} count={comparedLayersCount} onClick={isComparePanelActive}>
         <div
           className={`collection-search-tools-wrapper ${showComparePanel ? 'active' : ''}`}
           title={t`Compare Panel`}
@@ -116,7 +112,7 @@ export const CollectionSearchTools = ({
         </div>
       </BadgeWrapper>
 
-      <BadgeWrapper showPinPanel={showPinPanel} count={newPinsCount} onClick={isPinPanelActive}>
+      <BadgeWrapper active={showPinPanel} count={pinsCount} onClick={isPinPanelActive}>
         <div
           className={`collection-search-tools-wrapper ${showPinPanel ? 'active' : ''}`}
           title={t`Pins Panel`}
@@ -151,8 +147,8 @@ export const CollectionSearch = ({
   setComparePanel,
   showPinPanel,
   setPinPanel,
-  newCompareLayersCount,
-  newPinsCount,
+  comparedLayersCount,
+  pinsCount,
   onOpenExternalLayers,
   showExternalLayersPanel,
   onCloseExternalLayers,
@@ -170,10 +166,10 @@ export const CollectionSearch = ({
           showHighlightPanel={showHighlightPanel}
           setShowHighlightPanel={setShowHighlightPanel}
           highlightsAvailable={highlightsAvailable}
-          newCompareLayersCount={newCompareLayersCount}
+          comparedLayersCount={comparedLayersCount}
           showComparePanel={showComparePanel}
           setComparePanel={setComparePanel}
-          newPinsCount={newPinsCount}
+          pinsCount={pinsCount}
           showPinPanel={showPinPanel}
           setPinPanel={setPinPanel}
           onOpenExternalLayers={onOpenExternalLayers}

@@ -11,7 +11,6 @@ export interface PinItem {
 
 export interface PinsState {
   items: PinItem[];
-  newPinsCount: number;
 }
 
 interface UpdatePinsByTypePayload {
@@ -21,7 +20,6 @@ interface UpdatePinsByTypePayload {
 
 const initialState: PinsState = {
   items: [],
-  newPinsCount: 0,
 };
 
 export const pinsSlice = createSlice({
@@ -49,9 +47,6 @@ export const pinsSlice = createSlice({
       const pinType = action.payload;
       state.items = state.items.filter((item) => item.type !== pinType);
     },
-    setNewPinsCount: (state, action: PayloadAction<number>) => {
-      state.newPinsCount = action.payload;
-    },
     removeItem: (state, action: PayloadAction<number>) => {
       const index = action.payload;
       const pinItems = [...state.items];
@@ -60,7 +55,6 @@ export const pinsSlice = createSlice({
     },
     reset: (state) => {
       state.items = initialState.items;
-      state.newPinsCount = initialState.newPinsCount;
     },
   },
 });

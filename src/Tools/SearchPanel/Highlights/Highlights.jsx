@@ -3,16 +3,11 @@ import moment from 'moment';
 import { t } from 'ttag';
 
 import Highlight from './Highlight';
-import store, {
-  visualizationSlice,
-  mainMapSlice,
-  pinsSlice,
-  clmsSlice,
-  compareLayersSlice,
-} from '../../../store';
+import store, { visualizationSlice, mainMapSlice, clmsSlice, compareLayersSlice } from '../../../store';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { parsePosition, resolveEvalscript } from '../../../utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
+import { notifyAddedToPins } from '../../../utils/floatingPanelNotification';
 import { setTerrainViewerFromPin } from '../../../TerrainViewer/TerrainViewer.utils';
 
 import './Highlights.scss';
@@ -291,7 +286,7 @@ class Highlights extends Component {
   };
 
   savePin = async (pin) => {
-    const { newPinsCount, userdata, themeId } = this.props;
+    const { userdata, themeId } = this.props;
     const { comparedLayers } = pin;
 
     // Highlights are always from the currently selected theme. Use the active themeId
@@ -316,7 +311,9 @@ class Highlights extends Component {
       saveLocalPins(pinsToSave);
     }
 
-    store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + pinsToSave.length));
+    // One toast per "Add to Pins" click, not one per saved pin: a single compare-highlight
+    // expands into one pin per compared layer, but the user performed a single action.
+    notifyAddedToPins();
   };
 
   setHighlightsSection = () => {
@@ -369,7 +366,6 @@ class Highlights extends Component {
 }
 
 const mapStoreToProps = (store) => ({
-  newPinsCount: store.pins.newPinsCount,
   userdata: store.auth.user.userdata,
   themeId: store.themes.selectedThemeId,
 });

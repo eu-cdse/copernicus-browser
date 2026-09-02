@@ -8,6 +8,7 @@ import Description from '../../Pins/Description';
 
 import { constructTimespanString, constructCompareTimespanString, normalizePin } from '../../Pins/Pin.utils';
 import { constructEffectsFromPinOrHighlight } from '../../../utils/effectsUtils';
+import { notifyAddedToCompare } from '../../../utils/floatingPanelNotification';
 import { getDataSourceHandler } from '../dataSourceHandlers/dataSourceHandlers';
 
 import './Highlight.scss';
@@ -54,6 +55,7 @@ class Highlight extends Component {
     }
 
     store.dispatch(compareLayersSlice.actions.addToCompare(normalizePin(highlight)));
+    notifyAddedToCompare();
   };
 
   render() {

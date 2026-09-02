@@ -30,6 +30,10 @@ yarn-error.log*
 /scripts/rrd/rrd-state.json
 /scripts/rrd/rrd-config-mapping.json
 
+# private-collection-access-share.ts userId -> accountId resolve cache (CI-cache-backed, see
+# scripts/PRIVATE_COLLECTION_ACCESS.md)
+/scripts/.cache/
+
 # playwright
 /playwright-report/
 /test-results/

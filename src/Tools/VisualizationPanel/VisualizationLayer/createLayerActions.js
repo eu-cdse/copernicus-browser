@@ -15,6 +15,7 @@ import {
 } from '../../../junk/ConstMessages';
 import { FATHOM_TRACK_EVENT_LIST } from '../../../const';
 import { handleFathomTrackEvent } from '../../../utils/fathom';
+import { notifyAddedToCompare } from '../../../utils/floatingPanelNotification';
 
 const addVisualizationToComponent = (
   dispatchAction,
@@ -103,9 +104,11 @@ const addVisualizationToCompare = (props) => {
       FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYER_ADD_TO_COMPARE,
       activeExternalLayer.server.type,
     );
+    notifyAddedToCompare();
     return;
   }
   addVisualizationToComponent(compareLayersSlice.actions.addToCompare, props);
+  notifyAddedToCompare();
 };
 
 const addVisualizationToTimelapse = (props) => {

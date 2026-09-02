@@ -9,7 +9,7 @@ import VisualizationPanel from './VisualizationPanel/VisualizationPanel';
 import { Tabs, Tab } from '../junk/Tabs/Tabs';
 import ToolsFooter from './ToolsFooter/ToolsFooter';
 import AdvancedSearch from './VisualizationPanel/CollectionSelection/AdvancedSearch/AdvancedSearch';
-import store, { notificationSlice, visualizationSlice, tabsSlice, pinsSlice, mainMapSlice } from '../store';
+import store, { notificationSlice, visualizationSlice, tabsSlice, mainMapSlice } from '../store';
 import { selectActiveExternalLayer } from '../store/slices/externalLayersSlice';
 import {
   savePinsToServer,
@@ -34,6 +34,7 @@ import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 import { isInGroup } from '../Auth/authHelpers';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
 import { handleFathomTrackEvent } from '../utils/fathom';
+import { notifyAddedToPins } from '../utils/floatingPanelNotification';
 
 export class Tools extends Component {
   state = {
@@ -148,7 +149,7 @@ export class Tools extends Component {
   };
 
   savePin = async () => {
-    const { zoom, lat, lng, selectedThemeId, newPinsCount } = this.props;
+    const { zoom, lat, lng, selectedThemeId } = this.props;
     if (!import.meta.env.VITE_CDSE_BACKEND) {
       store.dispatch(notificationSlice.actions.displayError(FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG));
       return;
@@ -179,7 +180,7 @@ export class Tools extends Component {
         activeExternalLayer.server.type,
       );
       this.setLastAddedPin(uniqueId);
-      store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + 1));
+      notifyAddedToPins();
       return;
     }
 
@@ -209,7 +210,7 @@ export class Tools extends Component {
       return;
     }
     this.setLastAddedPin(uniqueId);
-    store.dispatch(pinsSlice.actions.setNewPinsCount(newPinsCount + 1));
+    notifyAddedToPins();
   };
 
   // Saves a pin to the backend for logged-in users, or to per-user
@@ -383,11 +384,9 @@ function ToolsConnector(ownProps) {
       themesLists: state.themes.themesLists,
       selectedThemeId: state.themes.selectedThemeId,
       selectedModeId: state.themes.selectedModeId,
-      newCompareLayersCount: state.compare.newCompareLayersCount,
       terrainViewerSettings: state.terrainViewer.settings,
       is3D: state.mainMap.is3D,
       searchResults: state.searchResults.searchResults,
-      newPinsCount: state.pins.newPinsCount,
       selectedProcessing: state.visualization.selectedProcessing,
       processGraph: state.visualization.processGraph,
       processGraphUrl: state.visualization.processGraphUrl,

@@ -5,14 +5,14 @@ import { t, ngettext, msgid } from 'ttag';
 import ResultItem, { ErrorMessage } from './ResultItem';
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
 import WorkspacePlus from '../../icons/workspace-plus.svg?react';
-import { v4 as uuid } from 'uuid';
 
 import './Results.scss';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { addProductsToWorkspace, BATCH_SIZE } from '../../api/OData/workspace';
 import { ResultItemLabels } from './ResultItemFooter';
-import store, { floatingPanelNotificationSlice, notificationSlice } from '../../store';
+import store, { notificationSlice } from '../../store';
 import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
+import { notifyFloatingPanel } from '../../utils/floatingPanelNotification';
 import isEqual from 'fast-deep-equal';
 import Loader from '../../Loader/Loader';
 import MessagePanel from '../VisualizationPanel/MessagePanel/MessagePanel';
@@ -187,13 +187,7 @@ class Results extends Component {
     const processingMsg = t`Processing products in batches of`;
     const notificationMsg = `${processingMsg} ${BATCH_SIZE}... (${checkedResults.length} ${t`products`})`;
 
-    store.dispatch(
-      floatingPanelNotificationSlice.actions.setFloatingPanelNotification({
-        notificationUniqueId: uuid(),
-        notificationAlertType: 'warning',
-        notificationMsg,
-      }),
-    );
+    notifyFloatingPanel('warning', notificationMsg);
 
     await addProductsToWorkspace(checkedResults);
     this.setState({ checkedResults: [] });
