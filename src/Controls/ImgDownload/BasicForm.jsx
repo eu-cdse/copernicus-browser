@@ -3,6 +3,7 @@ import Toggle from 'react-toggle';
 import { t } from 'ttag';
 
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO } from './consts';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 
 export default class BasicForm extends React.Component {
   OVERLAY_DISABLED_TITLE = t`Map overlay is disabled when AOI is specified. Remove your AOI in order to use this option.`;
@@ -74,9 +75,11 @@ export default class BasicForm extends React.Component {
             <i
               className="fa fa-info-circle"
               onClick={() => {
-                onErrorMessage(
-                  isUserLoggedIn ? this.CAPTIONS_TITLE : this.CAPTIONS_DISABLED_LOGGED_OUT_TITLE,
-                );
+                if (!isUserLoggedIn) {
+                  openLoginPrompt(this.CAPTIONS_DISABLED_LOGGED_OUT_TITLE);
+                  return;
+                }
+                onErrorMessage(this.CAPTIONS_TITLE);
               }}
             />
           </label>

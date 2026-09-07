@@ -23,6 +23,8 @@ import {
 } from '../../../const';
 
 import { CustomDropdownIndicator } from '../../../components/CustomSelectInput/CustomDropdownIndicator';
+import CollectionTooltip from '../CollectionSelection/CollectionTooltip/CollectionTooltip';
+import { getConfigurationMarkdown } from './ThemeSelectTooltip';
 
 import './ThemeSelect.scss';
 
@@ -175,6 +177,7 @@ function ThemeSelect({
       <div id="theme-select" className={`top ${selectedThemeId ? '' : 'blue-border'}`}>
         <div className="theme-select-highlights-wrapper">
           <div className="theme-label-select-wrapper">{themeSelectionDropdown()}</div>
+          <CollectionTooltip source={getConfigurationMarkdown()} className="theme-config-tooltip" />
         </div>
       </div>
     </div>

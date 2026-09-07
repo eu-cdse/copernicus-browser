@@ -11,7 +11,7 @@ import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import { addProductsToWorkspace, BATCH_SIZE } from '../../api/OData/workspace';
 import { ResultItemLabels } from './ResultItemFooter';
 import store, { notificationSlice } from '../../store';
-import { getProductErrorMessage } from './ProductInfo/ProductInfo.utils';
+import { showProductActionError } from './ProductInfo/ProductInfo.utils';
 import { notifyFloatingPanel } from '../../utils/floatingPanelNotification';
 import isEqual from 'fast-deep-equal';
 import Loader from '../../Loader/Loader';
@@ -152,11 +152,7 @@ class Results extends Component {
     const { checkedResults } = this.state;
 
     if (checkedResults.length === 0) {
-      const workspaceProductErrorMessage = getProductErrorMessage(
-        ResultItemLabels.addProductsToWorkspace(),
-        accessValidation,
-      );
-      store.dispatch(notificationSlice.actions.displayError(workspaceProductErrorMessage));
+      showProductActionError(ResultItemLabels.addProductsToWorkspace(), accessValidation);
       return null;
     }
 
@@ -173,13 +169,7 @@ class Results extends Component {
       // Check if the product is valid
       accessValidation.product = tile;
 
-      const workspaceProductErrorMessage = getProductErrorMessage(
-        ResultItemLabels.addProductsToWorkspace(),
-        accessValidation,
-      );
-
-      if (workspaceProductErrorMessage) {
-        store.dispatch(notificationSlice.actions.displayError(workspaceProductErrorMessage));
+      if (showProductActionError(ResultItemLabels.addProductsToWorkspace(), accessValidation)) {
         return null;
       }
     }

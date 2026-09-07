@@ -1,5 +1,15 @@
+import React from 'react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+
+import SocialShare from './SocialShare';
+import store, { authSlice, loginPromptSlice } from '../../store';
+
+jest.mock('../../icons/facebook.svg?react', () => ({ __esModule: true, default: () => <svg /> }));
+jest.mock('../../icons/twitter.svg?react', () => ({ __esModule: true, default: () => <svg /> }));
+jest.mock('../../icons/linkedIn.svg?react', () => ({ __esModule: true, default: () => <svg /> }));
 
 import { getShortUrl, getAppropriateHashtags, getCustomDomainFullName } from './SocialShare.utils';
 import { S2_L1C_CDAS } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -79,3 +89,23 @@ test.each([[S2_L1C_CDAS, false, 'Sentinel-2,Copernicus']])(
     expect(hashtags).toBe(expectedHashtags);
   },
 );
+
+describe('SocialShare short URL login gate', () => {
+  beforeEach(() => {
+    store.dispatch(loginPromptSlice.actions.hideLoginPrompt());
+    store.dispatch(authSlice.actions.resetUser());
+  });
+
+  test('Generate opens the login prompt when logged out', () => {
+    render(
+      <Provider store={store}>
+        <SocialShare displaySocialShareOptions={true} onHandleOutsideClick={jest.fn()} />
+      </Provider>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Generate' }));
+
+    expect(store.getState().loginPrompt.text).toBe('You need to log in to use this function.');
+    expect(store.getState().loginPrompt.title).toBe('Generate short URL');
+  });
+});

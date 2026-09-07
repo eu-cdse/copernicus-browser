@@ -6,10 +6,16 @@
 
   p {
     margin: 5px 0;
+  }
 
-    a {
-      color: vars.$primaryColor;
-    }
+  ul {
+    margin: 5px 0;
+    padding-left: 18px;
+  }
+
+  p a,
+  li a {
+    color: vars.$primaryColor;
   }
 
   .tooltip-credits {

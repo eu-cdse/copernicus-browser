@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { t } from 'ttag';
-import Modal from '../components/Modal/Modal';
+import AuthConfirmDialog from '../components/AuthConfirmDialog/AuthConfirmDialog';
 
 import store, { notificationSlice, themesSlice, visualizationSlice, modalSlice } from '../store';
 import {
@@ -515,50 +515,14 @@ class ThemesProvider extends React.Component {
       <>
         {this.props.modalId === ModalId.PRIVATE_THEMEID_LOGIN && <div className="login-overlay" />}
         {confirmDialog && (
-          <Modal
-            animation="slideUp"
-            visible={true}
-            customStyles={{
-              position: 'fixed',
-              width: '90%',
-              maxWidth: '600px',
-              height: 'auto',
-              bottom: 'auto',
-              top: '30%',
-              transform: 'translateY(-50%)',
-            }}
-            onClose={() => {}}
-            showCloseButton={false}
-            closeOnEsc={false}
-          >
-            <div
-              className="confirm-dialog"
-              role="alertdialog"
-              aria-labelledby="confirm-dialog-title"
-              aria-describedby="confirm-dialog-text"
-            >
-              <div id="confirm-dialog-title" className="confirm-dialog__title">
-                {confirmDialog.title}
-              </div>
-              <div id="confirm-dialog-text" className="confirm-dialog__text">
-                {confirmDialog.text}
-              </div>
-              <div className="confirm-dialog__buttons">
-                <button
-                  className="confirm-dialog__btn confirm-dialog__btn--ok"
-                  onClick={() => this.handleConfirm(true)}
-                >
-                  {confirmDialog.okLabel}
-                </button>
-                <button
-                  className="confirm-dialog__btn confirm-dialog__btn--cancel"
-                  onClick={() => this.handleConfirm(false)}
-                >
-                  {confirmDialog.cancelLabel}
-                </button>
-              </div>
-            </div>
-          </Modal>
+          <AuthConfirmDialog
+            title={confirmDialog.title}
+            text={confirmDialog.text}
+            okLabel={confirmDialog.okLabel}
+            cancelLabel={confirmDialog.cancelLabel}
+            onOk={() => this.handleConfirm(true)}
+            onCancel={() => this.handleConfirm(false)}
+          />
         )}
         {this.props.children}
       </>

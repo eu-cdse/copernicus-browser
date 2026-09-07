@@ -17,6 +17,7 @@ import {
   getOnlyBasicImgDownloadAvailableMsg,
   getOnlyBasicImgDownloadForExternalWmsMsg,
 } from '../../junk/ConstMessages';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 import store, { modalSlice, notificationSlice } from '../../store';
 import { selectActiveExternalLayer } from '../../store/slices/externalLayersSlice';
@@ -907,7 +908,7 @@ function ImageDownload(props) {
   }
 
   function displayLogInToAccessMessage() {
-    store.dispatch(notificationSlice.actions.displayError(getLoggedInErrorMsg()));
+    openLoginPrompt(getLoggedInErrorMsg());
   }
 
   function displayOnlyBasicDownloadPossibleMessage() {

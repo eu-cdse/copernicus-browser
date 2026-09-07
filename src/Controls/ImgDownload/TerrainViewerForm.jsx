@@ -4,6 +4,7 @@ import { t } from 'ttag';
 
 import InputWithBouncyLimit from '../../components/InputWithBouncyLimit/InputWithBouncyLimit';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO } from './consts';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 
 export default class BasicForm extends React.Component {
   CAPTIONS_TITLE = t`Exported image(s) will include datasource and date, zoom scale and branding`;
@@ -32,9 +33,11 @@ export default class BasicForm extends React.Component {
             <i
               className="fa fa-info-circle"
               onClick={() => {
-                onErrorMessage(
-                  isUserLoggedIn ? this.CAPTIONS_TITLE : this.CAPTIONS_DISABLED_LOGGED_OUT_TITLE,
-                );
+                if (!isUserLoggedIn) {
+                  openLoginPrompt(this.CAPTIONS_DISABLED_LOGGED_OUT_TITLE);
+                  return;
+                }
+                onErrorMessage(this.CAPTIONS_TITLE);
               }}
             />
           </label>

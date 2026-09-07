@@ -10,6 +10,7 @@ import {
   getFinishDrawingMsg,
 } from '../ConstMessages';
 import store, { modalSlice, timelapseSlice } from '../../store';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 
 import '../EOBPanel.scss';
 import { ModalId, TABS } from '../../const';
@@ -47,6 +48,9 @@ export function EOBTimelapsePanelButton(props) {
                 : null;
 
   const isEnabled = errMsg === null;
+  // Mirrors the precedence of the errMsg chain above: errorOverride and compare mode win over the
+  // login check, so those must stay plain error messages rather than a login prompt.
+  const isLoginError = !props.errorOverride && !props.showComparePanel && !props.isLoggedIn;
   const errorMessage = errMsg ? `\n(${errMsg})` : '';
   const title = t`Create timelapse animation` + `${errorMessage}`;
 
@@ -56,6 +60,10 @@ export function EOBTimelapsePanelButton(props) {
       title={title}
       onClick={() => {
         if (!isEnabled) {
+          if (isLoginError) {
+            openLoginPrompt(errMsg, t`Create timelapse animation`);
+            return;
+          }
           props.onErrorMessage(title);
           return;
         }

@@ -7,6 +7,7 @@ import { languageSlice } from './store/slices/languageSlice';
 import { collapsiblePanelSlice } from './store/slices/collapsiblePanelSlice';
 import { mainMapSlice } from './store/slices/mainMapSlice';
 import { modalSlice } from './store/slices/modalSlice';
+import { loginPromptSlice } from './store/slices/loginPromptSlice';
 import { authSlice } from './store/slices/authSlice';
 import { externalLayersSlice, externalLayersPersistenceMiddleware } from './store/slices/externalLayersSlice';
 import { poiSlice } from './store/slices/poiSlice';
@@ -64,6 +65,8 @@ export { collapsiblePanelSlice };
 
 export { modalSlice };
 
+export { loginPromptSlice };
+
 export { authSlice };
 
 export { externalLayersSlice };
@@ -100,6 +103,7 @@ const reducers = combineReducers({
   auth: authSlice.reducer,
   themes: themesSlice.reducer,
   modal: modalSlice.reducer,
+  loginPrompt: loginPromptSlice.reducer,
   visualization: visualizationSlice.reducer,
   tabs: tabsSlice.reducer,
   compare: compareLayersSlice.reducer,

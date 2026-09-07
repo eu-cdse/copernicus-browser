@@ -11,6 +11,7 @@ import { markExternalLayersHydrated } from './ExternalLayers/externalLayersPersi
 import { resolveHydratedExternalLayers } from './ExternalLayers/hydrateExternalServers';
 import Map from './Map/Map';
 import Notification from './Notification/Notification';
+import LoginPrompt from './Auth/LoginPrompt/LoginPrompt';
 import Tools from './Tools/Tools';
 import { Modals, propsSufficientToRender } from './Modals/Utils';
 import { updatePath } from './utils/';
@@ -245,6 +246,7 @@ class App extends Component {
             ...(modalParams ? modalParams : null),
           })}
         <Notification />
+        <LoginPrompt />
         {!is3D && !terrainViewerId && authenticated && (
           <Tutorial selectedLanguage={this.props.selectedLanguage} />
         )}

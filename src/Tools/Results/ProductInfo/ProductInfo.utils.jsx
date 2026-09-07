@@ -5,6 +5,8 @@ import { t } from 'ttag';
 import oDataHelpers from '../../../api/OData/ODataHelpers';
 import { AttributeNames } from '../../../api/OData/assets/attributes';
 import { getLoggedInErrorMsg } from '../../../junk/ConstMessages';
+import { openLoginPrompt } from '../../../Auth/LoginPrompt/loginPrompt.utils';
+import store, { notificationSlice } from '../../../store';
 import BrowseProduct from '../BrowseProduct/BrowseProduct';
 import { ErrorMessage } from '../ResultItem';
 import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
@@ -154,9 +156,32 @@ export const getProductErrorMessage = (title, { userToken, product }) => {
   return null;
 };
 
+// Single entry point for reporting why a product action (download / add to Workspace / order
+// processing) is blocked. Computes the reason once and routes it to the actionable login prompt
+// or the plain error notification depending on what that reason was — the login case is
+// recognised by comparing against getLoggedInErrorMsg() rather than re-checking accessValidation
+// itself, so there's exactly one source of truth for "why is this blocked".
+// Returns whether an error was actually reported, so callers can use it as their own guard
+// instead of computing the same message a second time just to decide that.
+export const showProductActionError = (title, accessValidation) => {
+  const errorMessage = getProductErrorMessage(null, accessValidation);
+  if (!errorMessage) {
+    return false;
+  }
+
+  if (errorMessage === getLoggedInErrorMsg()) {
+    openLoginPrompt(errorMessage, title);
+  } else {
+    store.dispatch(
+      notificationSlice.actions.displayError(title ? `${title}\n${errorMessage}` : errorMessage),
+    );
+  }
+
+  return true;
+};
+
 export const isProductInConfig = (product, config, productKey) =>
   config[product[productKey]]?.DOWNLOAD_PRODUCT_ROLES !== undefined;
-
 export const hasDownloadAccessForConfig = (userToken, product, config, productKey) => {
   if (!userToken) {
     return false;

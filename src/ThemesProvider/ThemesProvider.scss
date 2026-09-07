@@ -1,5 +1,3 @@
-@use '../variables.module.scss' as vars;
-
 .login-overlay {
   position: absolute;
   top: 0;
@@ -9,60 +7,4 @@
   overflow: hidden;
   background: rgb(0 0 0 / 30%);
   z-index: 501;
-}
-
-.confirm-dialog {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 8px;
-  text-align: center;
-  color: vars.$textColor;
-  font-family: vars.$fontFamily;
-
-  &__title {
-    font-size: 18px;
-    font-weight: vars.$fontWeightBold;
-  }
-
-  &__text {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  &__buttons {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  &__btn {
-    cursor: pointer;
-    font-family: vars.$fontFamily;
-    font-size: 16px;
-    font-weight: vars.$fontWeightBold;
-    padding: 8px 12px;
-    border-radius: 0;
-    border: none;
-    flex: 1 0 45%;
-
-    &--ok {
-      color: vars.$whiteColor;
-      background: vars.$primaryColor;
-
-      &:hover {
-        background: vars.$hoverPrimaryColor;
-      }
-    }
-
-    &--cancel {
-      color: vars.$primaryColor;
-      background: transparent;
-      border: 1px solid vars.$primaryColor;
-
-      &:hover {
-        background: rgba(vars.$primaryColor, 0.05);
-      }
-    }
-  }
 }

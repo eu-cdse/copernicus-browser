@@ -10,6 +10,7 @@ import {
 } from './SpectralExplorer.utils';
 
 import SpectralExplorerIcon from '../../icons/spectral_explorer.svg?react';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 
 // Spectral explorer is a Sentinel Hub layer tool, so it's only available while a layer is being
 // visualized (the Layers or Highlights panel). It is disabled in Compare, Pin and the external
@@ -42,7 +43,19 @@ const checkButtonDisabled = ({ datasetId, geometry, fromTime, toTime, user, isVi
   return null;
 };
 
-const handleOnClick = ({ errorMessage, onErrorMessage, geometryType, datasetId, selectedSeries }) => {
+const handleOnClick = ({
+  errorMessage,
+  isLoginError,
+  onErrorMessage,
+  geometryType,
+  datasetId,
+  selectedSeries,
+}) => {
+  if (isLoginError) {
+    openLoginPrompt(spectralExplorerLabels.errorLogIn(), spectralExplorerLabels.title());
+    return;
+  }
+
   if (errorMessage) {
     return onErrorMessage(errorMessage);
   }
@@ -88,13 +101,23 @@ const SpectralExplorerButton = ({
     isVisualizingLayer,
   });
 
+  // Matches the first branch of checkButtonDisabled, which takes precedence over every other reason.
+  const isLoginError = !user.userdata;
+
   return (
     // jsx-a11y/anchor-is-valid
     // eslint-disable-next-line
     <a
       onClick={(e) => {
         e.stopPropagation();
-        handleOnClick({ errorMessage, onErrorMessage, geometryType, datasetId, selectedSeries });
+        handleOnClick({
+          errorMessage,
+          isLoginError,
+          onErrorMessage,
+          geometryType,
+          datasetId,
+          selectedSeries,
+        });
       }}
       title={errorMessage ? errorMessage : spectralExplorerLabels.title()}
       className={errorMessage ? 'disabled' : ''}

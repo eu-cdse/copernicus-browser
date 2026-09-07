@@ -14,6 +14,7 @@ import CopyToClipboardButton from '../CopyToClipboardButton/CopyToClipboardButto
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { FacebookShare, TwitterShare, LinkedInShare } from './SocialPlatforms';
 import { getLoggedInErrorMsg } from '../../junk/ConstMessages';
+import { openLoginPrompt } from '../../Auth/LoginPrompt/loginPrompt.utils';
 import Loader from '../../Loader/Loader';
 
 import './social.scss';
@@ -40,9 +41,7 @@ const SocialShare = ({
 
   const shortenUrl = async () => {
     if (!isLoggedIn) {
-      store.dispatch(
-        notificationSlice.actions.displayError(t`Generate short URL` + `\n(${getLoggedInErrorMsg()})`),
-      );
+      openLoginPrompt(getLoggedInErrorMsg(), t`Generate short URL`);
       return;
     }
 

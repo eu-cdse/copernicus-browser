@@ -1,4 +1,10 @@
-import { isProductInConfig, hasDownloadAccessForConfig, shouldShowAccessError } from './ProductInfo.utils';
+import {
+  isProductInConfig,
+  hasDownloadAccessForConfig,
+  shouldShowAccessError,
+  showProductActionError,
+} from './ProductInfo.utils';
+import store, { loginPromptSlice, notificationSlice } from '../../../store';
 import { CCM_PRODUCT_TYPE_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import { LANDSAT_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/landsatAccessRightsConfig';
 import { MODIS_ACCESS_RIGHTS } from '../../VisualizationPanel/CollectionSelection/AdvancedSearch/modisAccessRightsConfig';
@@ -291,5 +297,46 @@ describe('test functions responsible for validating MODIS access', () => {
         'instrumentShortName',
       ),
     ).toBeFalsy();
+  });
+});
+
+describe('showProductActionError', () => {
+  const onlineProduct = { online: true, productType: 'S2MSI2A' };
+
+  beforeEach(() => {
+    store.dispatch(loginPromptSlice.actions.hideLoginPrompt());
+    store.dispatch(notificationSlice.actions.reset());
+  });
+
+  test('opens the login prompt with the original message and shows no error notification when logged out', () => {
+    const reported = showProductActionError('Download product', { userToken: null, product: null });
+
+    expect(reported).toBe(true);
+    expect(store.getState().loginPrompt.text).toBe('You need to log in to use this function.');
+    expect(store.getState().loginPrompt.title).toBe('Download product');
+    expect(store.getState().notification.msg).toBeNull();
+  });
+
+  test('shows the plain error notification for a non-login problem', () => {
+    const reported = showProductActionError('Download product', {
+      userToken: userTokenWithProperAccessRole,
+      product: null,
+    });
+
+    expect(reported).toBe(true);
+    expect(store.getState().loginPrompt.text).toBeNull();
+    expect(store.getState().notification.msg).toContain('Download product');
+    expect(store.getState().notification.type).toBe('error');
+  });
+
+  test('does nothing when the action is not blocked at all', () => {
+    const reported = showProductActionError('Download product', {
+      userToken: userTokenWithProperAccessRole,
+      product: onlineProduct,
+    });
+
+    expect(reported).toBe(false);
+    expect(store.getState().loginPrompt.text).toBeNull();
+    expect(store.getState().notification.msg).toBeNull();
   });
 });

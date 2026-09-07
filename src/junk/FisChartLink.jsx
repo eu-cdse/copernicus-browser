@@ -16,6 +16,7 @@ import {
 } from './ConstMessages';
 
 import StatisticalInfoIcon from '../icons/statistical_info.svg?react';
+import { openLoginPrompt } from '../Auth/LoginPrompt/loginPrompt.utils';
 
 const FisChartLink = (props) => {
   const [statisticalApiSupported, setStatisticalApiSupported] = useState(false);
@@ -95,13 +96,19 @@ const FisChartLink = (props) => {
     </a>
   );
 
-  const statsError = (errorMessage) => {
+  // `isLoginError` marks the not-logged-in case, where the click opens the actionable login prompt
+  // instead of the plain error notification.
+  const statsError = (errorMessage, { isLoginError } = {}) => {
     return (
       // jsx-a11y/anchor-is-valid
       // eslint-disable-next-line
       <a
         onClick={(e) => {
           e.preventDefault();
+          if (isLoginError) {
+            openLoginPrompt(errorMessage);
+            return;
+          }
           props.onErrorMessage(errorMessage);
         }}
         title={getTitleBasedOnStatus(errorMessage)}
@@ -114,7 +121,7 @@ const FisChartLink = (props) => {
   };
 
   if (!isLoggedIn) {
-    return statsError(getLoggedInErrorMsg());
+    return statsError(getLoggedInErrorMsg(), { isLoginError: true });
   }
 
   // Available only while visualizing a layer (Layers/Highlights panel); disabled elsewhere
