@@ -199,8 +199,18 @@ class App extends Component {
   };
 
   render() {
-    const { modalId, modalParams, authToken, googleAPI, is3D, terrainViewerId, datasetId, layerId } =
-      this.props;
+    const {
+      modalId,
+      modalParams,
+      authToken,
+      googleAPI,
+      loadGoogleApi,
+      isGoogleApiLoading,
+      is3D,
+      terrainViewerId,
+      datasetId,
+      layerId,
+    } = this.props;
     const authenticated = Boolean(authToken);
     const zoomConfig = getZoomConfiguration(datasetId, layerId);
     return (
@@ -230,11 +240,13 @@ class App extends Component {
               authenticated={authenticated}
               histogramContainer={this.histogramHolder}
               googleAPI={googleAPI}
+              loadGoogleApi={loadGoogleApi}
+              isGoogleApiLoading={isGoogleApiLoading}
               shouldAnimateControls={this.state.hasSwitchedFrom3D}
               toolsOpen={this.props.toolsOpen}
               showComparePanel={this.state.showComparePanel}
             />
-            <FloatingNotificationPanel googleAPI={googleAPI} />
+            <FloatingNotificationPanel />
             <FloatingWorkspaceNotificationPanel />
           </>
         )}
@@ -253,6 +265,8 @@ class App extends Component {
         {is3D && (
           <SearchBox
             googleAPI={googleAPI}
+            loadGoogleApi={loadGoogleApi}
+            isGoogleApiLoading={isGoogleApiLoading}
             giscoAPI={true}
             is3D={true}
             minZoom={zoomConfig.min}

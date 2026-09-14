@@ -56,7 +56,6 @@ export function EOBMeasurePanelButton(props) {
   // Button to start/stop measuring
   const MeasureButton = () => (
     // jsx-a11y/anchor-is-valid
-    // eslint-disable-next-line
     <a
       className={`drawGeometry ${active ? 'active' : ''} ${active ? 'open-options' : ''}`}
       onClick={toggleMeasure}

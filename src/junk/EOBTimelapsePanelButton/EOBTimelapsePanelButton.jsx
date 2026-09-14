@@ -71,7 +71,6 @@ export function EOBTimelapsePanelButton(props) {
       }}
     >
       {/* jsx-a11y/anchor-is-valid */}
-      {/* eslint-disable-next-line */}
       <a
         className={`drawGeometry ${isEnabled ? '' : 'disabled'} ${
           props.displayTimelapseAreaPreview ? 'active' : ''

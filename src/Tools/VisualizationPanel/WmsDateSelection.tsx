@@ -14,7 +14,6 @@ import { DATE_MODES } from '../../const';
 interface WmsDateSelectionProps {
   showLayerPanel?: boolean;
   setShowLayerPanel?: (show: boolean) => void;
-  showHighlightPanel?: boolean;
   showComparePanel?: boolean;
   compareShare?: boolean;
 }
@@ -25,7 +24,6 @@ interface WmsDateSelectionProps {
 function WmsDateSelection({
   showLayerPanel,
   setShowLayerPanel,
-  showHighlightPanel,
   showComparePanel,
   compareShare,
 }: WmsDateSelectionProps) {
@@ -96,7 +94,6 @@ function WmsDateSelection({
       datePanelExpanded={datePanelExpanded}
       showLayerPanel={showLayerPanel}
       setShowLayerPanel={setShowLayerPanel}
-      showHighlightPanel={showHighlightPanel}
       showComparePanel={showComparePanel}
       dateMode={DATE_MODES.SINGLE.value}
       compareShare={compareShare}

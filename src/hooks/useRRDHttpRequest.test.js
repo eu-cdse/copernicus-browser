@@ -303,7 +303,7 @@ describe('handleRRDError', () => {
     });
   });
 
-  describe('status-based error messages (429/timeouts, 5xx falls back to generic handling)', () => {
+  describe('status-based error messages (429/502/503/504/timeouts/network, 401 and other 5xx fall back to generic handling)', () => {
     it('should show the rate-limit message for a 429 with an empty body', async () => {
       const mockError = {
         response: {
@@ -352,8 +352,54 @@ describe('handleRRDError', () => {
       });
     });
 
-    it.each([500, 502, 503, 504])(
-      'should NOT use a status-based message for a %i with an empty body (falls back to the generic "unknown error" message — only 429 has a dedicated message)',
+    it('should NOT use a status-based message for a 401 (regression guard; a 401 here can be caused by an overly broad search rather than an expired session, but this hook is shared with cart actions where that framing would not make sense, so it falls back to generic handling instead of a status-based message)', async () => {
+      const mockError = {
+        response: {
+          status: 401,
+          data: {},
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'An unknown error occurred (401)',
+      });
+    });
+
+    it('should show the "narrow your search" message for a 504 with an empty body, when the failing request is a search', async () => {
+      const mockError = {
+        response: {
+          status: 504,
+          data: {},
+        },
+      };
+
+      await handleRRDError(mockError, { isSearchAction: true });
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again.",
+      });
+    });
+
+    it('should NOT use the "narrow your search" message for a 504 when the failing request is not a search (e.g. a cart action); falls back to generic handling instead, since that advice would not apply', async () => {
+      const mockError = {
+        response: {
+          status: 504,
+          data: {},
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'An unknown error occurred (504)',
+      });
+    });
+
+    it.each([502, 503])(
+      'should show the provider-unavailable message for a %i with an empty body',
       async (status) => {
         const mockError = {
           response: {
@@ -365,21 +411,37 @@ describe('handleRRDError', () => {
         await handleRRDError(mockError);
 
         expect(handleError).toHaveBeenCalledWith({
-          message: 'An unknown error occurred',
+          message: 'The imagery provider is temporarily unavailable. Please try again in a few minutes.',
         });
       },
     );
 
-    it('should fall back to the generic "unknown error" message when the error has no "response" but a "status" set directly on it', async () => {
+    it('should NOT use a status-based message for a 500 with an empty body (falls back to the generic "unknown error" message; 500 has no dedicated message)', async () => {
       const mockError = {
-        status: 504,
-        message: 'Request failed with status code 504',
+        response: {
+          status: 500,
+          data: {},
+        },
       };
 
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'An unknown error occurred',
+        message: 'An unknown error occurred (500)',
+      });
+    });
+
+    it('should show the "narrow your search" message when the error has no "response" but a "status" of 504 set directly on it, when the failing request is a search', async () => {
+      const mockError = {
+        status: 504,
+        message: 'Request failed with status code 504',
+      };
+
+      await handleRRDError(mockError, { isSearchAction: true });
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again.",
       });
     });
 
@@ -409,6 +471,19 @@ describe('handleRRDError', () => {
       });
     });
 
+    it('should show the network-error message for an ERR_NETWORK error with no "response" (e.g. offline, or a CORS-blocked gateway error page with no readable status)', async () => {
+      const mockError = {
+        code: 'ERR_NETWORK',
+        message: 'Network Error',
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'Unable to reach the imagery provider. Please check your internet connection and try again.',
+      });
+    });
+
     it('should NOT use a status-based message for a 500 with a plain error string body (falls back to echoing the body instead of a friendly message)', async () => {
       const mockError = {
         response: {
@@ -424,7 +499,7 @@ describe('handleRRDError', () => {
       });
     });
 
-    it('should NOT use a status-based message for a 511 (token expired) — handled by the generic message-field branch instead', async () => {
+    it('should NOT use a status-based message for a 511 (token expired); handled by the generic message-field branch instead', async () => {
       const mockError = {
         response: {
           status: 511,

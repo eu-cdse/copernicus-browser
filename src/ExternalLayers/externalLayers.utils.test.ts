@@ -1088,6 +1088,48 @@ describe('fetchWmsCapabilities', () => {
     expect(result!.layers[0].legendUrl).toContain('&');
     expect(result!.layers[0].legendUrl).not.toContain('&amp;');
   });
+
+  it('decodes numeric HTML entities in a WMS layer Title and Abstract', async () => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>My WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>basemap_grau</Name>
+        <Title>Basemap Oberfl&#228;chendarstellung von &#xD6;sterreich in Grau</Title>
+        <Abstract>Grunddarstellung f&#252;r &#xD6;sterreich</Abstract>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+    mockFetch(xml);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    expect(result!.layers[0].title).toBe('Basemap Oberflächendarstellung von Österreich in Grau');
+    expect(result!.layers[0].abstract).toBe('Grunddarstellung für Österreich');
+  });
+
+  it('decodes named HTML entities in a WMS layer Title', async () => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1">
+  <Service><Title>My WMS</Title></Service>
+  <Capability>
+    <Request><GetMap><Format>image/png</Format></GetMap></Request>
+    <Layer>
+      <Layer>
+        <Name>copyrighted_layer</Name>
+        <Title>Basemap &copy; City of Vienna</Title>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>`;
+    mockFetch(xml);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    expect(result!.layers[0].title).toBe('Basemap © City of Vienna');
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -1604,5 +1646,35 @@ describe('fetchWmtsCapabilities', () => {
     // Entity processing must stay enabled: &amp; still decodes to a literal &.
     expect(result!.layers[0].legendUrl).toContain('&');
     expect(result!.layers[0].legendUrl).not.toContain('&amp;');
+  });
+
+  it('decodes numeric HTML entities in a WMTS layer Title and Abstract', async () => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<Capabilities version="1.0.0">
+  <ows:ServiceIdentification>
+    <ows:Title>My WMTS</ows:Title>
+  </ows:ServiceIdentification>
+  <Contents>
+    <Layer>
+      <ows:Identifier>basemap_grau</ows:Identifier>
+      <ows:Title>Basemap Oberfl&#228;chendarstellung von &#xD6;sterreich in Grau</ows:Title>
+      <ows:Abstract>Grunddarstellung f&#252;r &#xD6;sterreich</ows:Abstract>
+      <Format>image/png</Format>
+      <TileMatrixSetLink>
+        <TileMatrixSet>GoogleMapsCompatible</TileMatrixSet>
+      </TileMatrixSetLink>
+      <ResourceURL resourceType="tile" template="https://tiles.example.com/wmts/{TileMatrix}/{TileRow}/{TileCol}.png" format="image/png"/>
+    </Layer>
+    <TileMatrixSet>
+      <ows:Identifier>GoogleMapsCompatible</ows:Identifier>
+      <ows:SupportedCRS>urn:ogc:def:crs:EPSG:6.18.3:3857</ows:SupportedCRS>
+    </TileMatrixSet>
+  </Contents>
+</Capabilities>`;
+    mockFetch(xml);
+    const result = await fetchWmtsCapabilities('https://example.com/wmts');
+    expect(result).not.toBeNull();
+    expect(result!.layers[0].title).toBe('Basemap Oberflächendarstellung von Österreich in Grau');
+    expect(result!.layers[0].abstract).toBe('Grunddarstellung für Österreich');
   });
 });

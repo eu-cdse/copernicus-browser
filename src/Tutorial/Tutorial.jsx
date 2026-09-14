@@ -21,7 +21,6 @@ const Tutorial = ({ selectedLanguage }) => {
       setShouldRun(true);
     }
     setTutorialContent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

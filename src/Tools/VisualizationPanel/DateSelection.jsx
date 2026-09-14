@@ -29,7 +29,6 @@ function DateSelection({
   maxCloudCover,
   showLayerPanel,
   setShowLayerPanel,
-  showHighlightPanel,
   showComparePanel,
   dateMode,
   compareShare,
@@ -232,7 +231,6 @@ function DateSelection({
       datePanelExpanded={datePanelExpanded}
       showLayerPanel={showLayerPanel}
       setShowLayerPanel={setShowLayerPanel}
-      showHighlightPanel={showHighlightPanel}
       showComparePanel={showComparePanel}
       dateMode={dateMode}
       compareShare={compareShare}

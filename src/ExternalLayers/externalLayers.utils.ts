@@ -394,10 +394,13 @@ const CAPABILITIES_TIMEOUT_MS = 20000;
 // limit exceeded". Keep entity processing enabled (so `&amp;` in URLs still decodes to `&`) but
 // raise the count limit, while keeping `maxExpandedLength` finite so a maliciously nested entity
 // bomb (which expands to gigabytes) is still rejected.
+// `htmlEntities: true` additionally decodes numeric character references (e.g. `&#228;`, `&#xE4;`)
+// and named HTML entities in `Title`/`Abstract` text, which are otherwise left unresolved.
 const CAPABILITIES_PARSER_OPTIONS = {
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
   processEntities: { maxTotalExpansions: Number.MAX_SAFE_INTEGER, maxExpandedLength: 10_000_000 },
+  htmlEntities: true,
 };
 
 // GetFeatureInfo query box: a few pixels centred on the click, floored to a resolution the

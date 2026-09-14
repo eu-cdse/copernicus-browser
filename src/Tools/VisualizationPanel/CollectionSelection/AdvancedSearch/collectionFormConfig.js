@@ -3403,7 +3403,7 @@ export const recursiveCollectionCLMS = [
                 items: [
                   {
                     id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRAC,
-                    label: 'GRAC, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    label: 'GRAC, Europe, 20m, 3-yearly, V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
@@ -3413,7 +3413,7 @@ export const recursiveCollectionCLMS = [
                   },
                   {
                     id: COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIERS.GRACCL,
-                    label: 'GRAC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    label: 'GRAC Confidence Layer, Europe, 20m, 3-yearly, V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
@@ -3602,7 +3602,7 @@ export const recursiveCollectionCLMS = [
                 items: [
                   {
                     id: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_DATASET_IDENTIFIER,
-                    label: 'Dominant Leaf Type Change, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    label: 'Dominant Leaf Type Change, Europe, 20m, 3-yearly, V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
@@ -3726,7 +3726,7 @@ export const recursiveCollectionCLMS = [
                 items: [
                   {
                     id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPC,
-                    label: 'TCPC, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    label: 'TCPC, Europe, 20m, 3-yearly, V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,
@@ -3736,7 +3736,7 @@ export const recursiveCollectionCLMS = [
                   },
                   {
                     id: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_DATASET_IDENTIFIERS.TCPCCL,
-                    label: 'TCPC Confidence Layer, Europe, 20m, 3-yearly, (2018–2021), V1',
+                    label: 'TCPC Confidence Layer, Europe, 20m, 3-yearly, V1',
                     type: 'productType',
                     customFilterExpression: `(${FilterElement.Attribute(
                       ODataAttributes.datasetIdentifier,

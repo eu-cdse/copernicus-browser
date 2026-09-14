@@ -235,7 +235,7 @@ function ImageDownload(props) {
     if (props.activeExternalLayer && basicFormState.imageFormat === IMAGE_FORMATS.WEBP) {
       setBasicFormState((prev) => ({ ...prev, imageFormat: IMAGE_FORMATS.PNG }));
     }
-  }, [props.activeExternalLayer]);
+  }, [props.activeExternalLayer, basicFormState.imageFormat]);
 
   async function downloadBasic(formData) {
     setError(null);

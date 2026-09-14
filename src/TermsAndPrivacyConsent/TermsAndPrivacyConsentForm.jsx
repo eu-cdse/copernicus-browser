@@ -65,7 +65,6 @@ export default function TermsAndPrivacyConsentForm() {
             <div onClick={() => setHasRejected(false)} className="eob-btn back-btn">
               {/*we add eslint-disable here as otherwise npm run translate produces different .po files on windows and linux due to t`back` being added to tranlsations at two spots in the app */}
               {
-                // eslint-disable-next-line
                 <a>
                   <i className="fa fa-arrow-left" />
                   {t`Back`}

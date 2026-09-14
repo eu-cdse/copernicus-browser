@@ -13,7 +13,6 @@ import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyTo
 function OpenUploadDataDialogButton({ handleClick }) {
   return (
     // jsx-a11y/anchor-is-valid
-    // eslint-disable-next-line
     <a title={t`Define Area of Interest (AOI)`} onClick={handleClick}>
       <i className="fa fa-upload" />
     </a>
@@ -45,7 +44,6 @@ export function AOIPanelButton(props) {
       <div className="aoiCords">
         {!props.aoiBounds && <OpenUploadDataDialogButton handleClick={props.openUploadGeoFileDialog} />}
         {/* jsx-a11y/anchor-is-valid */}
-        {/* eslint-disable-next-line */}
         <a
           onClick={() => props.onDrawShape(AOI_SHAPE.rectangle)}
           title={t`Draw rectangular area of interest for image downloads and timelapse`}
@@ -53,7 +51,6 @@ export function AOIPanelButton(props) {
           <i className="far fa-square" />
         </a>
         {/* jsx-a11y/anchor-is-valid */}
-        {/* eslint-disable-next-line */}
         <a
           onClick={() => props.onDrawShape(AOI_SHAPE.polygon)}
           title={t`Draw polygonal area of interest for image downloads and timelapse`}
@@ -86,7 +83,6 @@ export function AOIPanelButton(props) {
         )}
         <span style={{ display: 'inline-flex' }}>
           {/* jsx-a11y/anchor-is-valid */}
-          {/* eslint-disable-next-line */}
           <a onClick={() => props.centerOnFeature('aoiLayer')} title={t`Center map on feature`}>
             <i className="fa fa-crosshairs" />
           </a>
@@ -124,7 +120,6 @@ export function AOIPanelButton(props) {
       {hasAOI && !disabled && renderAoiInfo()}
       {showOptionsMenu && renderOptionButtons()}
       {/* jsx-a11y/anchor-is-valid */}
-      {/* eslint-disable-next-line */}
       <a
         className={`drawGeometry ${disabled ? 'disabled' : ''} ${active ? 'active' : ''} ${
           showOptionsMenu ? 'open-options' : ''

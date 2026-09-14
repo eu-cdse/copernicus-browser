@@ -106,7 +106,6 @@ const SpectralExplorerButton = ({
 
   return (
     // jsx-a11y/anchor-is-valid
-    // eslint-disable-next-line
     <a
       onClick={(e) => {
         e.stopPropagation();

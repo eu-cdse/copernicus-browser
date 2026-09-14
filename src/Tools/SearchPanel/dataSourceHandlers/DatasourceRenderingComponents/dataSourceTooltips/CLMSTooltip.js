@@ -441,13 +441,13 @@ High Resolution Layer Croplands product is part of the European Union’s Copern
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsDltcEurope20m3yearlyV1Markdown = () =>
-  t`The High Resolution Layer Dominant Leaf Type Change (DLTC) 2018-2021 raster product provides information on the change between the reference years 2018 and 2021 and consists of 7 thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover / potential change among dominant leaf types).
+  t`The High Resolution Layer Dominant Leaf Type Change (DLTC) raster product provides information on the change in dominant leaf type and consists of 7 thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover / potential change among dominant leaf types). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
 
 This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
 The production of the high resolution forest layers was coordinated by the European Environment Agency (EEA) in the frame of the EU Copernicus programme.
 
-This dataset includes data from the French Overseas Territories (DOMs).`;
+This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
 
 const getCopernicusClmsVlccCropTypesEurope10mYearlyV1Markdown = () =>
   t`The High Resolution Layer Crop Types (CTY) raster product provides high resolution crop type classification for 17 classes of both arable and permanent crops across the EEA38 extent. Using both Sentinel-1 and Sentinel-2, the model is finetuned to first map the crop field boundaries, and then determine the main crop for each field.
@@ -466,7 +466,7 @@ This dataset is provided annually starting in 2017 with 10 meter rasters (fully 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsVlccTcpc20m3yearlyV1Markdown = () =>
-  t`The Copernicus High Resolution Layer Tree Cover Presence Change (TCPC) 2018-2021 raster product provides information on the change between the reference years 2018 and 2021 and consists of 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover). The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged. This layer for previous reference year comparisons is called Tree Cover Change Mask (TCCM).
+  t`The Copernicus High Resolution Layer Tree Cover Presence Change (TCPC) raster product provides information on the change in tree cover presence and consists of 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover). The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged. This layer for previous reference year comparisons is called Tree Cover Change Mask (TCCM). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
 
 This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
@@ -475,7 +475,7 @@ The production of the high resolution forest layers was coordinated by the Europ
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover).`;
 
 const getCopernicusClmsVlccGrasslandChangeEurope20m3yearlyV1Markdown = () =>
-  t`The High Resolution Layer Grassland Change (GRAC) 2018-2021 raster product at 20m resolution provides information on changes in grassland vegetation cover between the reference years 2018 and 2021. The thematic classes indicate all non-grassland areas, grassland gain and grassland loss, unchanged grassland in both years and unverified grassland gain and loss areas.
+  t`The High Resolution Layer Grassland Change (GRAC) raster product at 20m resolution provides information on changes in grassland vegetation cover. The thematic classes indicate all non-grassland areas, grassland gain and grassland loss, unchanged grassland in both years and unverified grassland gain and loss areas. This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
 
 This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 

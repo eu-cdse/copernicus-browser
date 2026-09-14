@@ -24,7 +24,6 @@ function EOBPOIPanelButton(props) {
   const renderMarkerIcon = () => (
     <span>
       {/* jsx-a11y/anchor-is-valid */}
-      {/* eslint-disable-next-line */}
       <a
         className={`drawGeometry ${props.disabled ? 'disabled' : ''} ${props.active ? 'active' : ''} ${
           props.active ? 'open-options' : ''
@@ -50,7 +49,6 @@ function EOBPOIPanelButton(props) {
   const renderMarkerInfo = () => (
     <span style={{ display: 'inline-flex' }}>
       {/* jsx-a11y/anchor-is-valid */}
-      {/* eslint-disable-next-line */}
       <a onClick={() => props.centerOnFeature('poiLayer')} title={t`Center map on feature`}>
         <i className="fa fa-crosshairs" />
       </a>
@@ -74,7 +72,6 @@ function EOBPOIPanelButton(props) {
       )}
       {!props.activeExternalLayer &&
         getDataSourceHandler(props.datasetId)?.datasource === DATASOURCES.CLMS_VECTOR && (
-          /* eslint-disable-next-line */
           <a
             title={t`Show feature info`}
             onClick={(e) => {
@@ -90,7 +87,6 @@ function EOBPOIPanelButton(props) {
           </a>
         )}
       {props.activeExternalLayer?.queryable && props.activeExternalLayer?.server?.infoFormat && (
-        /* eslint-disable-next-line */
         <a
           title={t`Show feature info`}
           onClick={(e) => {

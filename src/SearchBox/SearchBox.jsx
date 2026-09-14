@@ -69,7 +69,7 @@ function SearchBox(props) {
     setIsSearchVisible((prev) => !prev);
   }, []);
 
-  const { googleAPI, giscoAPI, is3D, className } = props;
+  const { googleAPI, loadGoogleApi, isGoogleApiLoading, giscoAPI, is3D, className } = props;
   return (
     <div
       ref={ref}
@@ -79,6 +79,8 @@ function SearchBox(props) {
     >
       <LocationSearchBox
         googleAPI={googleAPI}
+        loadGoogleApi={loadGoogleApi}
+        isGoogleApiLoading={isGoogleApiLoading}
         giscoAPI={giscoAPI}
         placeholder={t`Go to Place`}
         minChar={4}

@@ -62,6 +62,11 @@ export default [
     },
   },
 
+  // JSX — brings .jsx into the known-extension set so the files-less blocks above apply to it
+  {
+    files: ['**/*.jsx'],
+  },
+
   // TypeScript — replaces the overrides block
   {
     files: ['**/*.ts', '**/*.tsx'],

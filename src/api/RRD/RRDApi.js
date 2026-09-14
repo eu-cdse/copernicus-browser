@@ -33,18 +33,27 @@ const HttpServiceInstances = () => {
 };
 
 const RETRYABLE_STATUS_CODES = [429];
+// A 504 usually means the request itself (e.g. too many providers/too large an area) is too
+// heavy for the provider to process in time. Retrying the same request won't help, so it's
+// excluded from the otherwise-retryable 5xx range. Also used by useRRDHttpRequest.js to decide
+// when to show the "narrow your search" message, so the two stay in sync.
+export const RRD_REQUEST_TOO_HEAVY_STATUS = 504;
+const NON_RETRYABLE_5XX_STATUS_CODES = [RRD_REQUEST_TOO_HEAVY_STATUS];
+
+// Returns true when the request must NOT be retried.
+export const retryRestrictionFunc = (e) => {
+  const statusCode = getErrorStatus(e);
+  if (!Number.isFinite(statusCode)) {
+    return true;
+  }
+  if (NON_RETRYABLE_5XX_STATUS_CODES.includes(statusCode)) {
+    return true;
+  }
+  return !(RETRYABLE_STATUS_CODES.includes(statusCode) || (statusCode >= 500 && statusCode <= 599));
+};
 
 const RRDApi = () => {
   const httpServiceInstances = HttpServiceInstances();
-
-  // Returns true when the request must NOT be retried.
-  const retryRestrictionFunc = (e) => {
-    const statusCode = getErrorStatus(e);
-    if (!Number.isFinite(statusCode)) {
-      return true;
-    }
-    return !(RETRYABLE_STATUS_CODES.includes(statusCode) || (statusCode >= 500 && statusCode <= 599));
-  };
 
   const setAuthToken = (authToken) => {
     return {

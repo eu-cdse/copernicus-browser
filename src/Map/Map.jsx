@@ -366,10 +366,12 @@ class Map extends React.Component {
     store.dispatch(themesSlice.actions.setSelectedModeIdAndDefaultTheme(modeId));
   };
 
-  // Return a referentially stable params object ({ TIME, STYLES }) for the external WMS layer. A
+  // Return a referentially stable params object ({ TIME, styles }) for the external WMS layer. A
   // fresh object literal each render makes react-leaflet's WMSTileLayer call setParams() and reload
   // all tiles, so the map "refreshed" on every unrelated re-render (e.g. while scrolling the layer
   // list, which dispatches scroll-position to the store). Only rebuild when a value actually changes.
+  // `styles` (lowercase) matches the key L.TileLayer.WMS's own defaultWmsParams uses — some WMS
+  // servers reject a request that carries both `styles=` and `STYLES=` as duplicate parameters.
   getStableExternalWmsParams(time, style) {
     if (!time && !style) {
       return undefined;
@@ -379,7 +381,7 @@ class Map extends React.Component {
       this._externalWmsStyleValue = style;
       this._externalWmsParams = {
         ...(time ? { TIME: time } : {}),
-        ...(style ? { STYLES: style } : {}),
+        ...(style ? { styles: style } : {}),
       };
     }
     return this._externalWmsParams;
@@ -404,8 +406,7 @@ class Map extends React.Component {
       evalscriptUrl,
       dataFusion,
       dataSourcesInitialized,
-      // eslint-disable-next-line no-unused-vars -- not read directly; forces a re-render whenever a
-      // data source handler's `datasets` array (mutated in place) resolves a new dataset
+      // eslint-disable-next-line no-unused-vars -- not read directly; forces a re-render whenever a data source handler's `datasets` array (mutated in place) resolves a new dataset
       dataSourcesReadyVersion,
       selectedThemeId,
       selectedTabIndex,
@@ -433,6 +434,8 @@ class Map extends React.Component {
       auth,
       displayTimelapseAreaPreview,
       googleAPI,
+      loadGoogleApi,
+      isGoogleApiLoading,
       shouldAnimateControls,
       toolsOpen,
       showComparePanel,
@@ -1020,6 +1023,8 @@ class Map extends React.Component {
         <LeafletControls key={selectedLanguage} />
         <SearchBox
           googleAPI={googleAPI}
+          loadGoogleApi={loadGoogleApi}
+          isGoogleApiLoading={isGoogleApiLoading}
           giscoAPI={true}
           is3D={false}
           minZoom={zoomConfig.min}

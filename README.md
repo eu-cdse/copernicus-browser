@@ -49,6 +49,70 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualisation ([li
 to auto-fix formatting errors. To bypass the hook for a single commit use `git commit --no-verify`; to disable husky
 for a shell session use `HUSKY=0`.
 
+### Dependency security
+
+`npm install` will never be fully clean of `npm audit` findings: some transitive dependencies have no
+upstream fix yet, and some fixes would require a breaking version bump that is deliberately deferred to
+a separate follow-up issue. `package.json` uses the `overrides` field to force safe versions of
+transitive dependencies where no direct upgrade path exists. Each entry should be removed once its
+condition is met — check `npm audit` after removing an entry to confirm the underlying advisory is
+still resolved before dropping it:
+
+| Override                      | Reason                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Removal condition                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `lodash: 4.18.1`              | Clears a `lodash` high-severity advisory (code injection, prototype pollution) pulled in by `jshint` (via `@sentinel-hub/evalscript-code-editor`). `jshint` declares `~4.17.21`, so this forces a version outside its declared range. Only affects the top-level `lodash` package; it does not touch the separately-published `lodash.clonedeep`, `lodash.merge`, `lodash.round`, `lodash.values` packages this app imports directly, which stay pinned to their own versions. | Drop once `@sentinel-hub/evalscript-code-editor` ships a jshint-free or updated-jshint release.              |
+| `minimatch@<3.1.5: 3.1.5`     | Clears `minimatch` high-severity ReDoS advisories via the same `jshint` chain. `jshint` declares `~3.0.2`; `3.1.x` is API-compatible with `3.0.x`.                                                                                                                                                                                                                                                                                                                             | Same as above.                                                                                               |
+| `babel-plugin-macros: ^3.1.0` | Clears the `ERESOLVE` peer-dependency warning on every install (`dedent` wants `^3.1.0`, `babel-plugin-ttag` pins `^2.8.0`).                                                                                                                                                                                                                                                                                                                                                   | Drop once `ttag-cli` is upgraded to a version whose `babel-plugin-ttag` depends on `babel-plugin-macros ^3`. |
+| `exceljs.uuid: ^11.1.1`       | Clears a moderate `uuid` advisory pulled in by `exceljs` (dev-only, see accepted risks below for why it isn't actually reachable).                                                                                                                                                                                                                                                                                                                                             | Drop once `exceljs` ships with `uuid v11+` natively.                                                         |
+
+An override for the moderate `ajv` ReDoS advisory (via `babel-plugin-ttag`, which pins `ajv` to an
+exact `6.12.3`) was deliberately **not** added: forcing it required a full `node_modules` +
+`package-lock.json` wipe to dedupe reliably, and that wipe also re-resolved unrelated, loosely-pinned
+devDependencies (e.g. bumped `@types/react` past a version this codebase type-checks cleanly against).
+That side effect is worse than the advisory itself, since `ajv` here only runs inside `babel-plugin-ttag`,
+a dev-only tool used solely by `npm run translate`. It is tracked as an accepted risk below instead.
+
+If an override is ever suspected of masking a real resolution problem, delete `node_modules` and
+`package-lock.json` and run `npm install` twice in a row (a single pass can leave a nested copy
+un-deduped), then re-run `npm audit`.
+
+`src/junk/EOBAdvancedHolder/evalscriptJshint.test.ts` runs the forced `lodash` override through
+`jshint`'s actual `JSHINT()` entry point (the same function and options
+`@sentinel-hub/evalscript-code-editor`'s `CodeEditor` uses to lint evalscripts), so a lodash version
+outside the range `jshint` declares is exercised on every `npm test` run instead of relying on a manual
+UI check. This is treated as sufficient automated coverage of that override; a manual check of the
+CodeEditor's syntax highlighting and lint markers in the running app is not required before merging
+changes that only touch these overrides. The `minimatch` override has no automated coverage, since
+`jshint` only requires `minimatch` from its CLI's `--exclude` glob handling (`src/cli.js`), a code path
+`JSHINT()` never reaches and this app never invokes.
+
+The following `npm audit` findings are intentionally left unfixed, with the evidence for why they are
+not exploitable in this app:
+
+- **`ajv` via `babel-plugin-ttag` (GHSA-2g4f-4pwh-qvx6)** - a ReDoS when using the `$data` option.
+  `babel-plugin-ttag` only uses `ajv` to validate its own static config schema at build time, as part of
+  `npm run translate` tooling; it never processes attacker-controlled input. See the note above for why
+  this isn't overridden.
+- **`fast-xml-parser` (GHSA-gh4j-gqv2-49f6)** - the advisory is an `XMLBuilder` CDATA/comment injection.
+  `XMLBuilder` is not imported anywhere in this app, nor inside `@sentinel-hub/sentinelhub-js`'s bundle
+  (which only uses `XMLParser`). The app only ever parses XML, never builds it.
+- **`uuid` via `exceljs` (GHSA-w5hq-g745-h8pq)** - the advisory is a missing buffer bounds check in
+  `v3`/`v5`/`v6` when a `buf` argument is supplied. `exceljs` calls only `uuid v4`. `exceljs` is also a
+  devDependency used solely by the manual admin script `scripts/private-collection-access-share.ts`, never
+  bundled and never run in CI.
+- **`elliptic` (GHSA-848j-6mx2-7j84)** - the advisory range is `<=6.6.1`, and `6.6.1` is the latest
+  published version, so no fixed release exists yet. It is pulled in by `vite-plugin-node-polyfills`, a
+  build-time browser polyfill (`nodePolyfills()` called with default options in `vite.config.mts`), so
+  it is not attacker-reachable at runtime.
+
+Remaining moderate/low findings from `react-router` require a major version bump (v6 to v7) and are
+tracked as a separate follow-up issue rather than fixed here.
+
+CI previously ran `npm audit --audit-level=high` as part of `install_packages_and_run_lint`, but a
+newly published advisory (unrelated to the changes in a given MR) could fail that required job and
+block merging, so the check was removed (see #1265). It will come back as a separate, non-blocking
+job (#1266).
+
 ### Building the application
 
 - Run `npm run build`

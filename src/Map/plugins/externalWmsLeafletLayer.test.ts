@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { optionalTileSize, optionalZoomLimits } from './externalWmsLeafletLayer';
+import { optionalTileSize, optionalZoomLimits, ExternalWmsLayer } from './externalWmsLeafletLayer';
 
 describe('optionalTileSize', () => {
   test('omits the tileSize key entirely when given null or undefined', () => {
@@ -57,5 +57,29 @@ describe('optionalZoomLimits', () => {
       ...optionalZoomLimits(20),
     });
     expect(raisedLayer.options.maxZoom).toBe(20);
+  });
+});
+
+describe('ExternalWmsLayer styles param', () => {
+  // Regression test for #1268: some WMS servers reject a GetMap request that carries both
+  // `styles=` (Leaflet's own defaultWmsParams) and `STYLES=` (a differently-cased key added
+  // separately by app code) as duplicate parameters. Only a single, lowercase `styles` key
+  // must ever end up in wmsParams, matching Leaflet's own casing.
+  test('constructing with a styles option sets only the lowercase key', () => {
+    const layer = new ExternalWmsLayer('http://x', { layers: '0', styles: 'default' } as never);
+    const wmsParams = (layer as unknown as { wmsParams: Record<string, unknown> }).wmsParams;
+    expect(wmsParams.styles).toBe('default');
+    expect('STYLES' in wmsParams).toBe(false);
+  });
+
+  test('setParams({ styles }) updates the lowercase key without introducing an uppercase one', () => {
+    const layer = new ExternalWmsLayer('http://x', { layers: '0' } as never);
+    // setParams exists on L.TileLayer.WMS at runtime but isn't part of @types/leaflet.
+    (layer as unknown as { setParams: (params: Record<string, unknown>) => void }).setParams({
+      styles: 'other',
+    });
+    const wmsParams = (layer as unknown as { wmsParams: Record<string, unknown> }).wmsParams;
+    expect(wmsParams.styles).toBe('other');
+    expect('STYLES' in wmsParams).toBe(false);
   });
 });

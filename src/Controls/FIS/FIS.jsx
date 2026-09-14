@@ -309,7 +309,7 @@ class FIS extends Component {
       // prettier-ignore
       const currentLineData = {
         title: channelId,
-        coordinates: validStats.map((stat) => ({  // eslint-disable-line no-loop-func
+        coordinates: validStats.map((stat) => ({
           date: stat.date,
           seriesIndex,
           ...stat.basicStats,

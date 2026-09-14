@@ -24,7 +24,6 @@ function VisualizationLayerContainer({
       <div className="layer-header">
         <div className="layer-title">{t`Layers`}:</div>
         {customSelected && CUSTOM_VISUALIZATION_URL_ROUTES.includes(locationHash) && (
-          /* eslint-disable-next-line */
           <a onClick={onBackToLayerList} className="eob-btn primary">
             <i className="fa fa-arrow-left" />
             {t`Back`}

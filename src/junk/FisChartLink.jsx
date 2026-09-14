@@ -82,7 +82,6 @@ const FisChartLink = (props) => {
 
   const statsEnabled = () => (
     // jsx-a11y/anchor-is-valid
-    // eslint-disable-next-line
     <a
       onClick={(e) => {
         e.stopPropagation();
@@ -101,7 +100,6 @@ const FisChartLink = (props) => {
   const statsError = (errorMessage, { isLoginError } = {}) => {
     return (
       // jsx-a11y/anchor-is-valid
-      // eslint-disable-next-line
       <a
         onClick={(e) => {
           e.preventDefault();

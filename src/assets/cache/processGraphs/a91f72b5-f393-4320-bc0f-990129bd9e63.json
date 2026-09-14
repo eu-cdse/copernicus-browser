@@ -7,8 +7,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B04", "B03", "B02"],
-        "upsampling": "BICUBIC",
-        "downsampling": "BICUBIC"
+        "upsampling": "BILINEAR",
+        "downsampling": "NEAREST"
       }
     },
     "trueColor": {
@@ -47,7 +47,7 @@
         "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
         "bands": ["B04", "B08"],
         "upsampling": "NEAREST",
-        "downsampling": "NEAREST"
+        "downsampling": "BILINEAR"
       }
     },
     "save": {
@@ -106,8 +106,8 @@
         "id": "sentinel-2-l2a",
         "spatial_extent": {},
         "temporal_extent": null,
-        "upsampling": "BICUBIC",
-        "downsampling": "BICUBIC"
+        "upsampling": "BILINEAR",
+        "downsampling": "NEAREST"
       }
     },
     "applydimension2": {
@@ -338,8 +338,8 @@
         "spatial_extent": {},
         "temporal_extent": ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
         "bands": ["B08", "B04", "B03"],
-        "upsampling": "BICUBIC",
-        "downsampling": "BICUBIC"
+        "upsampling": "BILINEAR",
+        "downsampling": "NEAREST"
       }
     },
     "highlight": {
@@ -372,8 +372,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B12", "B11", "B04"],
-        "upsampling": "BICUBIC",
-        "downsampling": "BICUBIC"
+        "upsampling": "BILINEAR",
+        "downsampling": "NEAREST"
       }
     },
     "highlight": {
@@ -407,7 +407,7 @@
         "temporal_extent": null,
         "bands": ["B8A", "B11"],
         "upsampling": "NEAREST",
-        "downsampling": "NEAREST"
+        "downsampling": "BILINEAR"
       }
     },
     "save": {
@@ -459,8 +459,8 @@
         "spatial_extent": {},
         "temporal_extent": null,
         "bands": ["B12", "B8A", "B04"],
-        "upsampling": "BICUBIC",
-        "downsampling": "BICUBIC"
+        "upsampling": "BILINEAR",
+        "downsampling": "NEAREST"
       }
     },
     "highlight": {
@@ -492,7 +492,9 @@
         "id": "sentinel-2-l2a",
         "spatial_extent": {},
         "temporal_extent": null,
-        "bands": ["B03", "B08"]
+        "bands": ["B03", "B08"],
+        "upsampling": "NEAREST",
+        "downsampling": "BILINEAR"
       }
     },
     "save": {
@@ -542,7 +544,7 @@
         "temporal_extent": null,
         "bands": ["B04", "B03", "B02", "B11"],
         "upsampling": "NEAREST",
-        "downsampling": "NEAREST"
+        "downsampling": "BILINEAR"
       }
     },
     "applydimension1": {

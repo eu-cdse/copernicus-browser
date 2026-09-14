@@ -26,7 +26,6 @@ const LOIPanelWrapper = memo(({ className, children, title }) => {
 const MenuItem = ({ title, className, onClick, iconClassName }) => {
   return (
     // jsx-a11y/anchor-is-valid
-    // eslint-disable-next-line
     <a
       title={title}
       onClick={(e) => {
@@ -127,7 +126,6 @@ const LOI = ({ className, map, loiBounds, loiGeometry }) => {
           ))}
       </div>
       {/* jsx-a11y/anchor-is-valid */}
-      {/* eslint-disable-next-line */}
       <a
         className={`loiIcon ${menuExpanded ? 'open-options' : ''}`}
         onClick={() => {

@@ -64,7 +64,7 @@ function addClippingAndOpacity(layer: AnyLeafletLayer) {
   bindDebouncedTileUpdate(layer);
 }
 
-class ExternalWmsLayer extends L.TileLayer.WMS {
+export class ExternalWmsLayer extends L.TileLayer.WMS {
   constructor(url: string, options: L.WMSOptions) {
     super(url, options);
     addClippingAndOpacity(this);
@@ -135,9 +135,11 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
     if (time) {
       (options as Record<string, unknown>).TIME = time;
     }
-    // Same for STYLES: the selected SLD style name, when the layer advertises more than one.
+    // Same for styles: the selected SLD style name, when the layer advertises more than one.
+    // Lowercase to match L.TileLayer.WMS's own defaultWmsParams key — some WMS servers reject a
+    // request that carries both `styles=` and `STYLES=` as duplicate parameters.
     if (style) {
-      (options as Record<string, unknown>).STYLES = style;
+      (options as Record<string, unknown>).styles = style;
     }
     const instance = new ExternalWmsLayer(url, options);
     (instance as AnyLeafletLayer).setClipping(clipping ?? null);
@@ -160,7 +162,9 @@ export const ExternalWmsLayerComponent = createTileLayerComponent<ExternalWmsLay
     }
     if (prevProps.style !== props.style) {
       // Empty string falls back to the server's default style, matching the TIME clear above.
-      (instance as AnyLeafletLayer).setParams({ STYLES: props.style ?? '' });
+      // Lowercase `styles` to match L.TileLayer.WMS's own defaultWmsParams key — avoids sending
+      // both `styles=` and `STYLES=` as duplicate parameters, which some WMS servers reject outright.
+      (instance as AnyLeafletLayer).setParams({ styles: props.style ?? '' });
     }
     // Guard against instance reuse: if a reused layer is handed a different source, repoint it.
     if (prevProps.url !== props.url) {

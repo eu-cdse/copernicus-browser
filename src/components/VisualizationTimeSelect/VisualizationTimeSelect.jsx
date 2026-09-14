@@ -71,7 +71,6 @@ export function VisualizationTimeSelect({
   datePanelExpanded,
   showLayerPanel,
   setShowLayerPanel,
-  showHighlightPanel,
   showComparePanel,
   dateMode,
   compareShare,

@@ -116,7 +116,6 @@ export const ResultItemFooter = ({
       setProgress: setProgress,
       ...(stacDownloadUrl ? { nodeUri: stacDownloadUrl } : {}),
     });
-    // eslint-disable-next-line
   }, [downloadInProgress, cancelToken, downloadProduct, tile, userToken]);
 
   useEffect(() => {

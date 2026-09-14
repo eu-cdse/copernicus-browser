@@ -34,11 +34,13 @@ root.render(
                     <PreselectedCollectionProvider>
                       <VisualizationUrlProvider>
                         <GoogleAPIProvider>
-                          {({ googleAPI }) => (
+                          {({ googleAPI, loadGoogleApi, isGoogleApiLoading }) => (
                             <App
                               themeIdFromUrlParams={themeId}
                               sharedPinsListIdFromUrlParams={sharedPinsListId}
                               googleAPI={googleAPI}
+                              loadGoogleApi={loadGoogleApi}
+                              isGoogleApiLoading={isGoogleApiLoading}
                               compareShareInit={compareShare}
                             />
                           )}

@@ -4649,7 +4649,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () =>
-      t`Provides information on the change between the reference years 2018 and 2021, classified into 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover).`,
+      t`Provides information on the change in tree cover presence, classified into 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover).`,
   },
   {
     match: [
@@ -4668,7 +4668,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () =>
-      t`Provides at pan-European level in the spatial resolution of 20 m information on changes in grassland vegetation cover between the 2018 and 2021 reference years.`,
+      t`Provides at pan-European level in the spatial resolution of 20 m information on changes in grassland vegetation cover.`,
   },
   {
     match: [

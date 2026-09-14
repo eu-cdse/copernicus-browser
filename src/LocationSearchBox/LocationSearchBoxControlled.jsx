@@ -11,6 +11,7 @@ import {
   fetchLocationsGoogle,
   isCoordinate,
 } from './LocationSearchBoxControlled.utils';
+import { isGoogleApiConfigured } from '../GoogleAPIProvider/GoogleAPIProvider';
 
 import poweredByGoogleImg from './google_on_white.png';
 
@@ -59,6 +60,8 @@ const LocationSearchBoxControlled = (props) => {
   const {
     value,
     googleAPI,
+    loadGoogleApi,
+    isGoogleApiLoading,
     giscoAPI,
     minChar,
     isSearchVisible,
@@ -84,7 +87,7 @@ const LocationSearchBoxControlled = (props) => {
   }, [menuRef]);
 
   const updateApiProvider = () => {
-    const newApiProvider = giscoAPI ? API_PROVIDER.GISCO : googleAPI ? API_PROVIDER.GOOGLE : null;
+    const newApiProvider = giscoAPI ? API_PROVIDER.GISCO : isGoogleApiConfigured ? API_PROVIDER.GOOGLE : null;
 
     setApiProvider(newApiProvider);
   };
@@ -126,6 +129,16 @@ const LocationSearchBoxControlled = (props) => {
     } else if (apiProvider === API_PROVIDER.GISCO) {
       locationResults = await fetchLocationsGisco(val, numberResultsShown);
     } else if (apiProvider === API_PROVIDER.GOOGLE) {
+      if (!googleAutocompleteService) {
+        // Google SDK is still loading (or failed to load); the
+        // [value, apiProvider, googleAutocompleteService] effect below re-runs this once it's
+        // ready. On failure it never becomes ready, so reset isLoading directly here rather than
+        // relying on that effect to fire again.
+        if (isMounted.current) {
+          setIsLoading(false);
+        }
+        return;
+      }
       locationResults = await fetchLocationsGoogle(val, googleAutocompleteService);
     }
 
@@ -180,7 +193,15 @@ const LocationSearchBoxControlled = (props) => {
       return (
         <div className="api-switch" key={item.placeId}>
           {getProviderOptions().map((po) => (
-            <label key={po.provider} onClick={() => setApiProvider(po.provider)}>
+            <label
+              key={po.provider}
+              onClick={() => {
+                setApiProvider(po.provider);
+                if (po.provider === API_PROVIDER.GOOGLE && !googleAPI) {
+                  loadGoogleApi();
+                }
+              }}
+            >
               <input
                 id={po.provider}
                 name={API_SWITCH}
@@ -205,15 +226,12 @@ const LocationSearchBoxControlled = (props) => {
 
   useEffect(() => {
     updateApiProvider();
-
-    if (googleAPI) {
-      setGoogleServices();
-    }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    updateApiProvider();
-
+    // Does not call updateApiProvider() here: giscoAPI is always truthy, so doing so on every
+    // googleAPI change would reset a user's explicit "Google search" pick back to Gisco once
+    // the lazily-loaded googleAPI arrives.
     if (googleAPI) {
       setGoogleServices();
     }
@@ -225,9 +243,9 @@ const LocationSearchBoxControlled = (props) => {
     };
 
     refetchAsync();
-  }, [value, apiProvider]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [value, apiProvider, googleAutocompleteService]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const areProvidersSwitchable = giscoAPI && googleAPI;
+  const areProvidersSwitchable = giscoAPI && isGoogleApiConfigured;
   const shouldShowProviderSwitch = areProvidersSwitchable && locationResults?.length > 0;
   const searchableOptions = [
     ...locationResults,
@@ -246,7 +264,7 @@ const LocationSearchBoxControlled = (props) => {
           searchText={null}
           placeholder={placeholder}
           filterBy={() => true}
-          isLoading={isLoading}
+          isLoading={isLoading || (apiProvider === API_PROVIDER.GOOGLE && isGoogleApiLoading)}
           options={searchableOptions}
           minLength={minChar}
           renderMenuItemChildren={formatItem}

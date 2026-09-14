@@ -285,6 +285,7 @@ const RapidResponseDesk = ({
       request: rrdApi.search,
       authToken: user.access_token,
       queryBody: searchRequestBody,
+      isSearchAction: true,
       responseHandler: (response) => {
         if (response) {
           const { validResults, invalidResults } = validateAndPrepareRRDResults(response);

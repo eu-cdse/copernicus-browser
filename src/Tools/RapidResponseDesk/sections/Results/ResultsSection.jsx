@@ -36,7 +36,6 @@ const ResultsSection = ({
   selectedTiles,
   isTaskingEnabled,
   currentPage,
-  quicklookImages,
   quicklookOverlays,
 }) => {
   const [emptyResult, setEmptyResult] = useState(false);
@@ -227,7 +226,6 @@ const mapStoreToProps = (store) => ({
   results: store.resultsSection.results,
   selectedTiles: store.searchResults.selectedTiles,
   isTaskingEnabled: store.areaAndTimeSection.isTaskingEnabled,
-  quicklookImages: store.resultsSection.quicklookImages,
   quicklookOverlays: store.mainMap.quicklookOverlays,
 });
 

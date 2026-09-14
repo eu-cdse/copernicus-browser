@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { t } from 'ttag';
 import { getErrorStatus, handleError } from '../utils';
+import { RRD_REQUEST_TOO_HEAVY_STATUS } from '../api/RRD/RRDApi';
 
 const AOI_CONSTRAINT_ERROR_MESSAGES = {
   ERR_MAX_AOI_AREA: (v) => t`AOI area exceeds the maximum allowed area of ${v} km²`,
@@ -11,25 +12,47 @@ const AOI_CONSTRAINT_ERROR_MESSAGES = {
 const PROVIDER_TIMED_OUT_MESSAGE = () =>
   t`The request to the imagery provider timed out. Please try again in a few minutes.`;
 
+const PROVIDER_UNAVAILABLE_MESSAGE = () =>
+  t`The imagery provider is temporarily unavailable. Please try again in a few minutes.`;
+
+const NARROW_SEARCH_MESSAGE = () =>
+  t`Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again.`;
+
+const NETWORK_ERROR_MESSAGE = () =>
+  t`Unable to reach the imagery provider. Please check your internet connection and try again.`;
+
 const RRD_STATUS_ERROR_MESSAGES = {
   429: () =>
     t`The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.`,
+  502: PROVIDER_UNAVAILABLE_MESSAGE,
+  503: PROVIDER_UNAVAILABLE_MESSAGE,
 };
 
-const getStatusErrorMessage = (error) => {
+// A 504 usually means the search itself (many providers/large area) is too heavy for the
+// provider to process in time (see RRD_REQUEST_TOO_HEAVY_STATUS in RRDApi.js). That framing
+// only makes sense for the search request, so it's kept out of RRD_STATUS_ERROR_MESSAGES and
+// only applied when `isSearchAction` says so; a 504 on a cart action (addToCart/removeFromCart)
+// falls back to the generic/body-based handling.
+const getStatusErrorMessage = (error, { isSearchAction = false } = {}) => {
   const status = getErrorStatus(error);
   if (Number.isFinite(status) && RRD_STATUS_ERROR_MESSAGES[status]) {
     return RRD_STATUS_ERROR_MESSAGES[status]();
   }
+  if (isSearchAction && status === RRD_REQUEST_TOO_HEAVY_STATUS) {
+    return NARROW_SEARCH_MESSAGE();
+  }
   if (error?.code === 'ECONNABORTED' || error?.code === 'ETIMEDOUT') {
     return PROVIDER_TIMED_OUT_MESSAGE();
+  }
+  if (error?.code === 'ERR_NETWORK') {
+    return NETWORK_ERROR_MESSAGE();
   }
   return null;
 };
 
-export const handleRRDError = async (error) => {
+export const handleRRDError = async (error, context = {}) => {
   try {
-    const statusErrorMessage = getStatusErrorMessage(error);
+    const statusErrorMessage = getStatusErrorMessage(error, context);
     if (statusErrorMessage) {
       await handleError({ message: statusErrorMessage });
       return;
@@ -121,8 +144,12 @@ export const handleRRDError = async (error) => {
       return;
     }
 
+    const status = getErrorStatus(error);
+    const errorCode = Number.isFinite(status) ? status : error?.code;
+    const unknownErrorMessage = t`An unknown error occurred`;
+
     await handleError({
-      message: t`An unknown error occurred`,
+      message: errorCode ? `${unknownErrorMessage} (${errorCode})` : unknownErrorMessage,
     });
   } catch (e) {
     console.error('Error handling error:', e);
@@ -166,7 +193,7 @@ export const useRRDHttpRequest = (onErrorCallback) => {
         }
       } catch (e) {
         console.error('useRRDHttpRequest caught:', e.response?.data?.error || e);
-        await handleRRDError(e);
+        await handleRRDError(e, { isSearchAction: httpRequest?.isSearchAction });
         onErrorCallback?.();
       } finally {
         setHttpRequest(null);
