@@ -49,7 +49,6 @@ function PreselectedCollectionProvider({
               datasetId: preselectedDatasetId,
             }),
           );
-          store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(true));
         }
       }
       return;
@@ -65,6 +64,11 @@ function PreselectedCollectionProvider({
     if (!dsh) {
       console.error('Invalid datasetId', datasetId);
       store.dispatch(notificationSlice.actions.displayError(t`Selected dataset does not exist!`));
+      const preselectedDatasetId = getPreselectedDatasetId(dataSourcesInitialized);
+      if (preselectedDatasetId) {
+        store.dispatch(visualizationSlice.actions.setNewDatasetId({ datasetId: preselectedDatasetId }));
+        store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(true));
+      }
     }
   }, [selectedThemeId, dataSourcesInitialized, dataSourcesReadyVersion, datasetId]);
   return children;

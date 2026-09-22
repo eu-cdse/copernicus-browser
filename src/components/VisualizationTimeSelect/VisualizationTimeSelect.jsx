@@ -10,6 +10,7 @@ import './VisualizationTimeSelect.scss';
 import Loader from '../../Loader/Loader';
 import CollapsiblePanel from '../CollapsiblePanel/CollapsiblePanel';
 import store, { collapsiblePanelSlice, visualizationSlice } from '../../store';
+import { isAnotherVisualizePanelOpen } from '../../store/slices/panelSlice';
 import FindProductsForCurrentView from './FindProductsButton';
 import ShowLatestDateButton from './ShowLatestDateButton';
 import { handleError, resetMessagePanel } from '../../utils';
@@ -72,6 +73,7 @@ export function VisualizationTimeSelect({
   showLayerPanel,
   setShowLayerPanel,
   showComparePanel,
+  showPinPanel,
   dateMode,
   compareShare,
   clmsSelection,
@@ -134,7 +136,12 @@ export function VisualizationTimeSelect({
   }
 
   function openLayerPanel() {
-    if (!showLayerPanel && setShowLayerPanel && !compareShare && !showComparePanel) {
+    if (
+      !showLayerPanel &&
+      setShowLayerPanel &&
+      !compareShare &&
+      !isAnotherVisualizePanelOpen({ pins: showPinPanel, compare: showComparePanel })
+    ) {
       setShowLayerPanel(true);
     }
   }

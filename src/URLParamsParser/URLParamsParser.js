@@ -20,6 +20,7 @@ import store, {
   compareLayersSlice,
   tabsSlice,
   clmsSlice,
+  panelSlice,
 } from '../store';
 import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
@@ -27,6 +28,8 @@ import {
   COMPARE_OPTIONS,
   DATE_MODES,
   DEFAULT_LAT_LNG,
+  PANEL,
+  parsePanelParam,
   PROCESSING_OPTIONS,
   SHOW_TUTORIAL_LC,
   TABS,
@@ -173,6 +176,7 @@ class URLParamsParser extends React.Component {
       clmsSelectedCollection,
       clmsSelectedConsolidationPeriodIndex,
       useEvoland,
+      panel,
     } = params;
     let { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
 
@@ -181,6 +185,19 @@ class URLParamsParser extends React.Component {
       parsedLat = DEFAULT_LAT_LNG.lat;
     }
     store.dispatch(mainMapSlice.actions.setPosition({ zoom: parsedZoom, lat: parsedLat, lng: parsedLng }));
+
+    // Seeds the Highlights/Pins panel from the `panel` URL param before App ever mounts (this
+    // method runs before this.setState({params}) below, and App only mounts once state.params is
+    // set — see render()). Layers is panelSlice's own default initial state, so it needs no
+    // dispatch here. WMS is intentionally not seeded here — see App.jsx's componentDidMount, which
+    // opens it only once external-layer hydration resolves (the server list must exist first).
+    const panelValue = parsePanelParam(panel);
+    if (panelValue === PANEL.HIGHLIGHTS) {
+      store.dispatch(panelSlice.actions.openPanel(PANEL.HIGHLIGHTS));
+    } else if (panelValue === PANEL.PINS) {
+      store.dispatch(panelSlice.actions.openPanel(PANEL.PINS));
+    }
+
     const decryptedVisualisationUrl =
       visualizationUrl && !visualizationUrl.startsWith('https')
         ? decrypt(visualizationUrl)
@@ -336,10 +353,16 @@ class URLParamsParser extends React.Component {
       return null;
     }
 
+    // Whitelist: any other value (including undefined) falls back to the default Layers panel in
+    // panelSlice's initialState. Compare is intentionally not one of these values — it's
+    // represented separately by compareShare (see parsePanelParam in const.ts and issue #1264).
+    const panel = parsePanelParam(params.panel);
+
     return this.props.children({
       themeId: params.themeId,
       sharedPinsListId: params.sharedPinsListId,
       compareShare: params.compareShare,
+      panel,
     });
   }
 }

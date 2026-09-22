@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { panelSlice } from './panelSlice';
+import { PANEL } from '../../const';
 
 interface CollapsiblePanelState {
   datePanelExpanded: boolean;
@@ -63,5 +65,16 @@ export const collapsiblePanelSlice = createSlice({
       }
     },
     reset: (_state) => initialState,
+  },
+  // Data collections (CollectionSelection) renders across all five Visualize sub-panels, so its
+  // expanded state has to be driven from one place shared by every caller of panelSlice.openPanel,
+  // rather than duplicated at each button handler. Per the finalized rule (issue #1246): Layers and
+  // WMS carry the collection-selection content themselves, so opening either always force-expands;
+  // Highlights/Pins/Compare don't, so opening any of them always force-collapses — regardless of
+  // the previously open panel, including hops between Highlights/Pins/Compare themselves.
+  extraReducers: (builder) => {
+    builder.addCase(panelSlice.actions.openPanel, (state, action) => {
+      state.collectionPanelExpanded = action.payload === PANEL.LAYERS || action.payload === PANEL.WMS;
+    });
   },
 });

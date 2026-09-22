@@ -1,6 +1,8 @@
 import React from 'react';
 import { t } from 'ttag';
 
+import store, { panelSlice } from '../../../store';
+import { PANEL } from '../../../const';
 import BadgeWrapper from '../../../components/BadgeWrapper/BadgeWrapper';
 import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 
@@ -14,16 +16,12 @@ import './CollectionSearch.scss';
 
 export const CollectionSearchTools = ({
   showLayerPanel,
-  setShowLayerPanel,
   showHighlightPanel,
-  setShowHighlightPanel,
   highlightsAvailable,
   comparedLayersCount,
   showComparePanel,
-  setComparePanel,
   pinsCount,
   showPinPanel,
-  setPinPanel,
   onOpenExternalLayers,
   showExternalLayersPanel,
   onCloseExternalLayers,
@@ -31,39 +29,27 @@ export const CollectionSearchTools = ({
   // The Layers panel is the default view, so this always activates it (no toggle-off): clicking
   // the Layers button when it is already open keeps it open rather than closing it.
   const isLayerPanelActive = () => {
-    setShowLayerPanel(true);
-    setShowHighlightPanel(false);
-    setComparePanel(false);
-    setPinPanel(false);
+    store.dispatch(panelSlice.actions.openPanel(PANEL.LAYERS));
     onCloseExternalLayers?.();
   };
 
   const isHighlightPanelActive = () => {
     if (!showHighlightPanel && highlightsAvailable) {
-      setShowHighlightPanel(true);
-      setShowLayerPanel(false);
-      setComparePanel(false);
-      setPinPanel(false);
+      store.dispatch(panelSlice.actions.openPanel(PANEL.HIGHLIGHTS));
       onCloseExternalLayers?.();
     }
   };
 
   const isComparePanelActive = () => {
     if (!showComparePanel) {
-      setComparePanel(true);
-      setShowLayerPanel(false);
-      setShowHighlightPanel(false);
-      setPinPanel(false);
+      store.dispatch(panelSlice.actions.openPanel(PANEL.COMPARE));
       onCloseExternalLayers?.();
     }
   };
 
   const isPinPanelActive = () => {
     if (!showPinPanel) {
-      setPinPanel(true);
-      setShowLayerPanel(false);
-      setShowHighlightPanel(false);
-      setComparePanel(false);
+      store.dispatch(panelSlice.actions.openPanel(PANEL.PINS));
       onCloseExternalLayers?.();
     }
   };
@@ -139,14 +125,10 @@ export const CollectionSearch = ({
   title,
   infoTooltip,
   showLayerPanel,
-  setShowLayerPanel,
   showHighlightPanel,
-  setShowHighlightPanel,
   highlightsAvailable,
   showComparePanel,
-  setComparePanel,
   showPinPanel,
-  setPinPanel,
   comparedLayersCount,
   pinsCount,
   onOpenExternalLayers,
@@ -162,16 +144,12 @@ export const CollectionSearch = ({
         </div>
         <CollectionSearchTools
           showLayerPanel={showLayerPanel}
-          setShowLayerPanel={setShowLayerPanel}
           showHighlightPanel={showHighlightPanel}
-          setShowHighlightPanel={setShowHighlightPanel}
           highlightsAvailable={highlightsAvailable}
           comparedLayersCount={comparedLayersCount}
           showComparePanel={showComparePanel}
-          setComparePanel={setComparePanel}
           pinsCount={pinsCount}
           showPinPanel={showPinPanel}
-          setPinPanel={setPinPanel}
           onOpenExternalLayers={onOpenExternalLayers}
           showExternalLayersPanel={showExternalLayersPanel}
           onCloseExternalLayers={onCloseExternalLayers}

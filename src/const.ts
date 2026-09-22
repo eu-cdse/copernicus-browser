@@ -131,6 +131,36 @@ export const TABS = {
   RAPID_RESPONSE_DESK: 3,
 } as const;
 
+// --- Panels ---
+// Sub-views within the Visualize tab (VisualizationPanel.jsx), independent of TABS above.
+// COMPARE is included here so call sites can reference PANEL.COMPARE instead of a raw 'compare'
+// string, but it's deliberately excluded from parsePanelParam's whitelist below: it can't be
+// restored from a flat string like PANEL's other values, it needs the richer `compareShare` URL
+// param (layers, mode, opacity) — see URLParamsParser.js and issue #1264.
+// LAYERS is written explicitly (not left as an implicit/absent default) so a refresh can tell
+// "the user was deliberately on Layers" apart from "no panel info at all" — see
+// ThemeSelect.jsx's mount-time highlightsAvailable effect, which only auto-picks a panel in the
+// latter case.
+export const PANEL = {
+  LAYERS: 'layers',
+  HIGHLIGHTS: 'highlights',
+  PINS: 'pins',
+  WMS: 'wms',
+  COMPARE: 'compare',
+} as const;
+
+// Whitelist for the `panel` URL param: any other value (including undefined) is not a known
+// panel, so callers fall back to their own default (panelSlice's initialState opens Layers).
+// COMPARE is deliberately excluded — see the comment on PANEL above.
+export const parsePanelParam = (
+  value: unknown,
+): Exclude<(typeof PANEL)[keyof typeof PANEL], typeof PANEL.COMPARE> | undefined => {
+  const panelValues: string[] = [PANEL.LAYERS, PANEL.HIGHLIGHTS, PANEL.PINS, PANEL.WMS];
+  return typeof value === 'string' && panelValues.includes(value)
+    ? (value as Exclude<(typeof PANEL)[keyof typeof PANEL], typeof PANEL.COMPARE>)
+    : undefined;
+};
+
 export const DISABLED_ORTHORECTIFICATION = 'DISABLED';
 
 // --- DEM / 3D ---
@@ -213,6 +243,12 @@ export const DATASOURCES = {
   EVOLAND: 'EVOLAND',
   EXTERNAL_WMS: 'EXTERNAL_WMS',
 } as const;
+
+// Placeholder value for the non-selectable hint appended to the Data collections dropdown when a
+// curated configuration is active (issue #1221). It occupies the same `value` slot as the datasource
+// and dataset ids above, so it is deliberately shaped so it can never collide with a real one —
+// same reasoning as the NOT_LOGGED_IN / EXPIRED_ACCOUNT instance id placeholders.
+export const ALL_COLLECTIONS_HINT_VALUE = 'all_collections_hint_dummy_option_value';
 
 // --- Visualization effects ---
 

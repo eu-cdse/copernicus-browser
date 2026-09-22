@@ -123,7 +123,7 @@ const mapStoreToProps = (store) => ({
   displayTimelapseAreaPreview: store.timelapse.displayTimelapseAreaPreview,
   isPlacingVertex: store.aoi.isPlacingVertex,
   activeExternalLayer: selectActiveExternalLayer(store),
-  wmsLayerPanelOpen: store.externalLayers.panelOpen,
+  wmsLayerPanelOpen: store.panel.wms,
 });
 
 export default connect(mapStoreToProps, null)(TimelapseButton);

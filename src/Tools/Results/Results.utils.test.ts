@@ -7,6 +7,7 @@ import {
   getPlatformShortName,
   extractODataIdFromAssets,
   getDownloadUrlFromAssets,
+  getPreviewUrlFromAssets,
 } from './Results.utils';
 import type { NormalizedSTACResult } from './Results.utils';
 
@@ -145,6 +146,62 @@ describe('getDownloadUrlFromAssets', () => {
   });
 });
 
+describe('getPreviewUrlFromAssets', () => {
+  test('prefers the thumbnail asset href when present', () => {
+    const assets = {
+      product: { href: 'https://example.com/Products(uuid)/$value', type: 'application/zip' },
+      thumbnail: { href: 'https://example.com/thumbnail.png', type: 'image/png' },
+    };
+    expect(getPreviewUrlFromAssets(assets)).toBe('https://example.com/thumbnail.png');
+  });
+
+  test('falls back to an asset declaring the thumbnail role when there is no thumbnail key', () => {
+    const assets = {
+      product: { href: 'https://example.com/Products(uuid)/$value', type: 'application/zip' },
+      quicklook: { href: 'https://example.com/quicklook.png', roles: ['thumbnail', 'overview'] },
+    };
+    expect(getPreviewUrlFromAssets(assets)).toBe('https://example.com/quicklook.png');
+  });
+
+  test('falls back to an asset declaring only the overview role', () => {
+    const assets = {
+      preview: { href: 'https://example.com/overview.png', roles: ['overview'] },
+    };
+    expect(getPreviewUrlFromAssets(assets)).toBe('https://example.com/overview.png');
+  });
+
+  test('prefers a thumbnail-role asset over an overview-role asset', () => {
+    const assets = {
+      overview: { href: 'https://example.com/overview.png', roles: ['overview'] },
+      quicklook: { href: 'https://example.com/quicklook.png', roles: ['thumbnail'] },
+    };
+    expect(getPreviewUrlFromAssets(assets)).toBe('https://example.com/quicklook.png');
+  });
+
+  test('returns null when assets is undefined', () => {
+    expect(getPreviewUrlFromAssets(undefined)).toBeNull();
+  });
+
+  test('returns null when assets is null', () => {
+    expect(getPreviewUrlFromAssets(null)).toBeNull();
+  });
+
+  test('returns null when assets is an empty object', () => {
+    expect(getPreviewUrlFromAssets({})).toBeNull();
+  });
+
+  test('returns null when the thumbnail asset has no href', () => {
+    expect(getPreviewUrlFromAssets({ thumbnail: { type: 'image/png' } })).toBeNull();
+  });
+
+  test('returns null when no asset carries a preview role', () => {
+    const assets = {
+      product: { href: 'https://example.com/Products(uuid)/$value', roles: ['data'] },
+    };
+    expect(getPreviewUrlFromAssets(assets)).toBeNull();
+  });
+});
+
 describe('normalizeSTACResult / normalizeResult - STAC feature mapping', () => {
   const baseSentinel2Feature = {
     type: 'Feature',
@@ -214,6 +271,20 @@ describe('normalizeSTACResult / normalizeResult - STAC feature mapping', () => {
     expect(result.size).toBe('719.38 MB');
     expect(result.S3Path).toBe('s3://eodata/Sentinel-2/MSI/L2A/2024/01/15/S2A_MSIL2A_20240115T100311.SAFE');
     expect(result.geometry).toEqual(baseSentinel2Feature.geometry);
+  });
+
+  test('exposes the thumbnail asset href as previewUrl', () => {
+    const result = normalizeSTACResult(baseSentinel2Feature) as NormalizedSTACResult;
+    expect(result.previewUrl).toBe('https://catalogue.dataspace.copernicus.eu/quicklooks/S2A_MSIL2A.jpg');
+  });
+
+  test('sets previewUrl to null when the feature has no thumbnail asset', () => {
+    const feature = {
+      ...baseSentinel2Feature,
+      assets: { product: baseSentinel2Feature.assets.product },
+    };
+    const result = normalizeSTACResult(feature) as NormalizedSTACResult;
+    expect(result.previewUrl).toBeNull();
   });
 
   test('produces an attributes array covering the mapped STAC properties', () => {
@@ -308,6 +379,45 @@ describe('normalizeSTACResult / normalizeResult - STAC feature mapping', () => {
     const feature = { id: 'no-properties-feature' };
     const result = normalizeResult(feature);
     expect(result).toBe(feature);
+  });
+});
+
+describe('normalizeSTACResult - Landsat Mosaic thumbnail', () => {
+  // Shape mirrors a real item from the opengeohub-landsat-bimonthly-mosaic-v1.0.1 collection,
+  // whose thumbnails are served as WMS GetMap requests from thumbnails.dataspace.copernicus.eu.
+  const landsatMosaicThumbnailHref =
+    'https://thumbnails.dataspace.copernicus.eu/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap' +
+    '&LAYERS=s3://eodata/Global-Mosaics/Landsat/OLM_SWA_ARD2/v1/2024/07/01/Landsat_mosaic_2024_07-08_49N002E_V1.0.1/' +
+    '&CRS=EPSG:4326&BBOX=2,49,3,50&WIDTH=500&HEIGHT=500&FORMAT=image/png&TRANSPARENT=false';
+
+  const landsatMosaicFeature = {
+    id: 'Landsat_mosaic_2024_07-08_49N002E_V1.0.1',
+    collection: 'opengeohub-landsat-bimonthly-mosaic-v1.0.1',
+    geometry: { type: 'Polygon', coordinates: [] },
+    properties: {
+      datetime: '2024-07-01T00:00:00.000Z',
+      title: 'Landsat_mosaic_2024_07-08_49N002E_V1.0.1',
+    },
+    assets: {
+      product: { href: 'https://example.com/landsat-mosaic/product', type: 'application/zip' },
+      thumbnail: {
+        href: landsatMosaicThumbnailHref,
+        type: 'image/png',
+        title: 'Quicklook',
+        roles: ['thumbnail', 'overview'],
+      },
+    },
+    links: [],
+  };
+
+  test('exposes the WMS quicklook href as previewUrl', () => {
+    const result = normalizeSTACResult(landsatMosaicFeature) as NormalizedSTACResult;
+    expect(result.previewUrl).toBe(landsatMosaicThumbnailHref);
+  });
+
+  test('exposes previewUrl through normalizeResult as well', () => {
+    const result = normalizeResult(landsatMosaicFeature) as NormalizedSTACResult;
+    expect(result.previewUrl).toBe(landsatMosaicThumbnailHref);
   });
 });
 

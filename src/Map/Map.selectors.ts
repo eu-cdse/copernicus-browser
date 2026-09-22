@@ -58,6 +58,6 @@ export const mapStoreToProps = (store: RootState) => {
     quicklookOverlays: store.mainMap.quicklookOverlays,
     filteredQuicklookOverlays: store.mainMap.filteredQuicklookOverlays,
     activeExternalLayer: selectActiveExternalLayer(store),
-    wmsPanelOpen: store.externalLayers.panelOpen,
+    wmsPanelOpen: store.panel.wms,
   };
 };

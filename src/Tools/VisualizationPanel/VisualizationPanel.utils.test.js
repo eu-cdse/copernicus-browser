@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { isTimespanModeSelected } from './VisualizationPanel.utils';
+import { isTimespanModeSelected, sortLayers } from './VisualizationPanel.utils';
 
 describe('isTimespanModeSelected', () => {
   test.each([
@@ -17,5 +17,15 @@ describe('isTimespanModeSelected', () => {
     [new Date(Date.UTC(2023, 7, 25, 10, 0, 0, 0)), new Date(Date.UTC(2023, 7, 25, 12, 0, 0, 0)), true],
   ])('isTimespanModeSelected %p %p %p', (fromTime, toTime, expected) => {
     expect(isTimespanModeSelected(fromTime, toTime)).toBe(expected);
+  });
+});
+
+describe('sortLayers', () => {
+  const layer = (layerId) => ({ layerId, title: layerId });
+
+  test('puts true color layers first, rest alphabetically by layerId', () => {
+    const layers = [layer('Z_SSF'), layer('TRUE_COLOR'), layer('SWI005'), layer('SWI001')];
+
+    expect(sortLayers(layers).map((l) => l.layerId)).toEqual(['TRUE_COLOR', 'SWI001', 'SWI005', 'Z_SSF']);
   });
 });

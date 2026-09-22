@@ -10,6 +10,8 @@ import { AttributeNames } from './assets/attributes';
 
 export const BATCH_SIZE = 50;
 
+const ODATA_BASE_URL = 'https://odp.dataspace.copernicus.eu/odata/v1/';
+
 const getAttributes = (attributes, name) => attributes.find((attribute) => attribute.Name === name);
 
 export function createAddProductsToWorkspacePayload(products) {
@@ -30,7 +32,7 @@ export function createAddProductsToWorkspacePayload(products) {
 
 export async function addProductsToWorkspace(products) {
   const token = getAccessToken();
-  const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace/OData.CSC.Create`;
+  const url = `${ODATA_BASE_URL}Workspace/OData.CSC.Create`;
   const headers = {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -132,7 +134,7 @@ export async function getSavedWorkspaceProducts() {
     'Content-Type': 'application/json',
   };
 
-  const baseUrl = `https://odp.dataspace.copernicus.eu/odata/v1/Workspace?$count=true`;
+  const baseUrl = `${ODATA_BASE_URL}Workspace?$count=true`;
   const pageSize = 100;
   let url = `${baseUrl}&$top=${pageSize}`;
   const all = [];
@@ -166,9 +168,11 @@ export async function getSavedWorkspaceProducts() {
   }
 }
 
+export const WORKFLOWS_COMPATIBLE_WITH_PRODUCTS_URL = `${ODATA_BASE_URL}Workflows/CompatibleWithProducts`;
+
 export async function getAvailableProcesorsForProducts(productIds) {
   const token = getAccessToken();
-  const url = `https://odp.dataspace.copernicus.eu/odata/v1/Workflows/CompatibleWithProducts`;
+  const url = WORKFLOWS_COMPATIBLE_WITH_PRODUCTS_URL;
   const headers = {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',

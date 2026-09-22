@@ -77,6 +77,7 @@ export interface NormalizedSTACResult extends StacFeature {
   contentLength: number;
   S3Path: string | null;
   online: boolean;
+  previewUrl: string | null;
   attributes: NormalizedAttribute[];
 }
 
@@ -274,6 +275,9 @@ export const normalizeSTACResult = (stacResult: StacFeature): NormalizedSTACResu
   // Extract OData UUID from assets so OData API calls use the correct identifier
   const oDataProductId = extractODataIdFromAssets(assets);
 
+  // Extract the quicklook image URL so the results list and product info can show a preview
+  const previewUrl = getPreviewUrlFromAssets(assets);
+
   return {
     ...stacResult,
     // OData-like properties
@@ -291,6 +295,7 @@ export const normalizeSTACResult = (stacResult: StacFeature): NormalizedSTACResu
     contentLength: totalSize,
     S3Path: s3Path,
     online: true, // STAC results are typically online
+    previewUrl: previewUrl,
     geometry: geometry,
     attributes: attributes,
     // Keep original STAC properties for backward compatibility
@@ -480,6 +485,40 @@ export const getDownloadUrlFromAssets = (
   for (const [, asset] of Object.entries(assets)) {
     if (asset.href) {
       return asset.href;
+    }
+  }
+
+  return null;
+};
+
+// STAC asset roles that identify a browsable preview image, in order of preference.
+const PREVIEW_ASSET_ROLES = ['thumbnail', 'overview'];
+
+const assetHasRole = (asset: StacAsset, role: string): boolean =>
+  Array.isArray(asset.roles) && asset.roles.includes(role);
+
+/**
+ * Extracts the preview (quicklook) image URL from STAC assets.
+ * Prefers the 'thumbnail' asset key, then falls back to the first asset
+ * declaring a 'thumbnail'/'overview' role.
+ */
+export const getPreviewUrlFromAssets = (
+  assets: Record<string, StacAsset> | null | undefined,
+): string | null => {
+  if (!assets || typeof assets !== 'object') {
+    return null;
+  }
+
+  // Prefer the 'thumbnail' asset key (used by all CDSE STAC collections)
+  if (assets.thumbnail?.href) {
+    return assets.thumbnail.href;
+  }
+
+  for (const role of PREVIEW_ASSET_ROLES) {
+    for (const [, asset] of Object.entries(assets)) {
+      if (asset.href && assetHasRole(asset, role)) {
+        return asset.href;
+      }
     }
   }
 

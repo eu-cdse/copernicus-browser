@@ -15,6 +15,7 @@ interface WmsDateSelectionProps {
   showLayerPanel?: boolean;
   setShowLayerPanel?: (show: boolean) => void;
   showComparePanel?: boolean;
+  showPinPanel?: boolean;
   compareShare?: boolean;
 }
 
@@ -25,6 +26,7 @@ function WmsDateSelection({
   showLayerPanel,
   setShowLayerPanel,
   showComparePanel,
+  showPinPanel,
   compareShare,
 }: WmsDateSelectionProps) {
   const dispatch = useDispatch();
@@ -95,6 +97,7 @@ function WmsDateSelection({
       showLayerPanel={showLayerPanel}
       setShowLayerPanel={setShowLayerPanel}
       showComparePanel={showComparePanel}
+      showPinPanel={showPinPanel}
       dateMode={DATE_MODES.SINGLE.value}
       compareShare={compareShare}
       clmsSelection={{ selected: false }}

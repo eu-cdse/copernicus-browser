@@ -11,6 +11,7 @@ import ToolsFooter from './ToolsFooter/ToolsFooter';
 import AdvancedSearch from './VisualizationPanel/CollectionSelection/AdvancedSearch/AdvancedSearch';
 import store, { notificationSlice, visualizationSlice, tabsSlice, mainMapSlice } from '../store';
 import { selectActiveExternalLayer } from '../store/slices/externalLayersSlice';
+import { isAnotherVisualizePanelOpen } from '../store/slices/panelSlice';
 import {
   savePinsToServer,
   saveLocalPins,
@@ -52,8 +53,29 @@ export class Tools extends Component {
     this.setState({ showEffects: showEffects });
   };
 
+  // Whether it's safe to auto-switch an RRD-group user to the Rapid Response Desk tab right now.
+  // Skip when the Pins or Compare panel is already showing (isAnotherVisualizePanelOpen — shared
+  // with ThemeSelect.jsx and VisualizationTimeSelect.jsx's own auto-switch guards, see panelSlice.ts),
+  // or the URL already says the user was on a Visualize sub-panel (panel=layers/highlights/pins/wms
+  // — see PANEL in const.ts) or on Compare (compareShare), or a shared-pins import that hasn't
+  // resolved yet will switch to Pins shortly (hasPendingSharedPinsImport — computed synchronously in
+  // App.jsx's render from props alone, so it's already correct at mount, unlike showPinPanel for a
+  // *fresh* import, which only flips true once the async import in App.componentDidMount resolves,
+  // well after mount has already run). Otherwise an RRD-group user gets bounced straight to the
+  // Order tab instead of staying on whatever Visualize sub-panel they refreshed from — same race as
+  // ThemeSelect.jsx's Layers-panel override and externalLayersSlice's WMS-panel restore. Shared by
+  // componentDidMount and both componentDidUpdate checks below so the predicate is defined once.
+  shouldSwitchToRapidResponseDeskTab = () =>
+    this.props.user &&
+    isInGroup(RRD_GROUP) &&
+    !this.props.layerId &&
+    !isAnotherVisualizePanelOpen({ pins: this.props.showPinPanel, compare: this.props.showComparePanel }) &&
+    !this.props.panelFromUrlParams &&
+    !this.props.compareShare &&
+    !this.props.hasPendingSharedPinsImport;
+
   componentDidMount() {
-    const showRapidResponseDeskTab = this.props.user && isInGroup(RRD_GROUP) && !this.props.layerId;
+    const showRapidResponseDeskTab = this.shouldSwitchToRapidResponseDeskTab();
     if (showRapidResponseDeskTab) {
       store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
     }
@@ -91,9 +113,22 @@ export class Tools extends Component {
 
   async componentDidUpdate(prevProps) {
     if (prevProps.user !== this.props.user && !prevProps.user.access_token && isInGroup(RRD_GROUP)) {
-      if (!this.props.layerId) {
+      if (this.shouldSwitchToRapidResponseDeskTab()) {
         store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
       }
+    }
+
+    // A shared-pins import pending at mount (see componentDidMount) correctly suppressed the
+    // RRD-tab auto-switch there, but nothing re-ran that check once the import actually settled.
+    // If it settled without opening the Pins panel (cancelled, empty list, or a backend error), an
+    // RRD-group user would otherwise be stuck off the Rapid Response Desk tab for no reason — redo
+    // the same check now that the outcome is known.
+    if (
+      prevProps.hasPendingSharedPinsImport &&
+      !this.props.hasPendingSharedPinsImport &&
+      this.shouldSwitchToRapidResponseDeskTab()
+    ) {
+      store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
     }
 
     if (
@@ -298,6 +333,7 @@ export class Tools extends Component {
       setShowComparePanel,
       setLastAddedPin,
       compareShare,
+      panelFromUrlParams,
     } = this.props;
 
     return (
@@ -330,6 +366,7 @@ export class Tools extends Component {
                 setLastAddedPin={setLastAddedPin}
                 saveLocalPinsOnLogin={this.saveLocalPinsOnLogin}
                 compareShare={compareShare}
+                panelFromUrlParams={panelFromUrlParams}
               />
             </Tab>
             <Tab id="search-tab" title={t`Search`} renderKey={TABS.SEARCH_TAB}>

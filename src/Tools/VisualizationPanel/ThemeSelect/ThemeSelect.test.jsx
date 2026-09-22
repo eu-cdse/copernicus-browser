@@ -26,48 +26,204 @@ jest.mock('../../../components/CustomSelectInput/CustomDropdownIndicator', () =>
   CustomDropdownIndicator: () => null,
 }));
 
-const THEME_ID = 'theme1';
+const DEFAULT_THEME_ID = 'theme1';
 
-function makeStore() {
+// Shared by every test in this file. Also assigns to mockCurrentTestStore so the mocked
+// `../../../store` default export above always resolves to the store currently under test —
+// harmless for tests that render through <Provider> only and never touch that module directly.
+function makeStore({ themes = [], userName = 'test-user' } = {}) {
   mockCurrentTestStore = configureStore({
     reducer: {
-      auth: (state = { user: { userdata: { name: 'Tester' } } }) => state,
-      themes: (
-        state = {
-          selectedThemeId: THEME_ID,
-          themesLists: {
-            [MODE_THEMES_LIST]: [{ id: THEME_ID, name: 'Theme A', content: [] }],
-            [USER_INSTANCES_THEMES_LIST]: [],
-            [URL_THEMES_LIST]: [],
-            RRD: [],
-          },
+      themes: (state = {}) => state,
+      auth: (state = {}) => state,
+      language: (state = {}) => state,
+      visualization: (state = {}) => state,
+      collapsiblePanel: (state = {}) => state,
+      externalLayers: (state = {}) => state,
+      panel: (state = {}) => state,
+    },
+    preloadedState: {
+      themes: {
+        selectedThemeId: DEFAULT_THEME_ID,
+        themesLists: {
+          [MODE_THEMES_LIST]: themes,
+          [USER_INSTANCES_THEMES_LIST]: [],
+          [URL_THEMES_LIST]: [],
+          RRD: [],
         },
-      ) => state,
-      language: (state = { selectedLanguage: 'en' }) => state,
-      visualization: (state = { toTime: null }) => state,
-      collapsiblePanel: (state = { themePanelExpanded: false }) => state,
+      },
+      auth: { user: { userdata: { name: userName } } },
+      language: { selectedLanguage: 'en' },
+      visualization: { toTime: null },
+      collapsiblePanel: { themePanelExpanded: false },
+      externalLayers: {},
+      panel: { wms: false },
     },
   });
   return mockCurrentTestStore;
 }
 
-function renderComponent() {
-  const store = makeStore();
-  return render(
-    <Provider store={store}>
+function renderThemeSelect(props, storeOptions) {
+  const setShowLayerPanel = jest.fn();
+  const setShowHighlightPanel = jest.fn();
+  const utils = render(
+    <Provider store={makeStore(storeOptions)}>
       <ThemeSelect
-        compareShare={false}
-        setShowLayerPanel={jest.fn()}
-        setShowHighlightPanel={jest.fn()}
+        setShowLayerPanel={setShowLayerPanel}
+        setShowHighlightPanel={setShowHighlightPanel}
         highlightsAvailable={false}
+        compareShare={false}
+        showPinPanel={false}
+        showComparePanel={false}
+        {...props}
       />
     </Provider>,
   );
+  return { ...utils, setShowLayerPanel, setShowHighlightPanel };
 }
+
+// Covers #1184 F3: the useEffect guard added to avoid bouncing back to Layers/Highlights while the
+// Pins or Compare panel is showing (e.g. right after a shared-pins import switches to the Pins panel).
+describe('ThemeSelect — highlightsAvailable effect panel-race guard (#1184 F3)', () => {
+  it('does not switch to the Layers/Highlights panel while the Pins panel is showing', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      showPinPanel: true,
+      highlightsAvailable: false,
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('does not switch to the Layers/Highlights panel while the Compare panel is showing', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      showComparePanel: true,
+      highlightsAvailable: true,
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('switches to the Layers panel when neither the Pins nor the Compare panel is showing', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: false,
+    });
+
+    expect(setShowLayerPanel).toHaveBeenCalledWith(true);
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('switches to the Highlights panel when highlights are available and no other panel is pending', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: true,
+    });
+
+    expect(setShowHighlightPanel).toHaveBeenCalledWith(true);
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+});
+
+// Covers the reviewer-reported panel-consistency bug: refreshing while on the Layers panel (the
+// implicit/explicit default) with a non-default theme selected was landing on Highlights instead,
+// because this same effect ran once on mount regardless of what URLParamsParser's setStore had
+// already restored from the `panel` URL param via panelSlice.actions.openPanel. When the URL carried
+// an explicit panel value, the first run must be a no-op so the just-restored panel survives.
+describe('ThemeSelect — does not clobber a panel restored from an explicit `panel` URL param', () => {
+  it('does not switch away from Layers on mount when panel=layers was explicit and the theme has highlights', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: true,
+      panelFromUrlParams: 'layers',
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('does not switch away from Highlights on mount when panel=highlights was explicit and highlightsAvailable has not resolved yet', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: false,
+      panelFromUrlParams: 'highlights',
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('still applies the theme default on mount when no panel was explicit in the URL', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: true,
+      panelFromUrlParams: undefined,
+    });
+
+    expect(setShowHighlightPanel).toHaveBeenCalledWith(true);
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+});
+
+// Covers the reported follow-up bug: leaving a non-Highlights panel open, visiting the Order tab,
+// then returning to Visualize was force-switching back to Highlights, because a later re-render
+// recomputing the same highlightsAvailable transition (e.g. ThemesProvider's
+// fetchUserInstances/getRRDInstances resolving late) reran the auto-open logic with no memory that
+// it had already applied it once.
+describe('ThemeSelect — does not re-open Highlights after the user has navigated away (#1184 follow-up)', () => {
+  it('does not force Highlights again once highlightsAvailable has already triggered it once', () => {
+    const setShowLayerPanel = jest.fn();
+    const setShowHighlightPanel = jest.fn();
+    const store = makeStore();
+    const baseProps = {
+      setShowLayerPanel,
+      setShowHighlightPanel,
+      compareShare: false,
+      showPinPanel: false,
+      showComparePanel: false,
+    };
+
+    const { rerender } = render(
+      <Provider store={store}>
+        <ThemeSelect {...baseProps} highlightsAvailable={false} />
+      </Provider>,
+    );
+    expect(setShowLayerPanel).toHaveBeenCalledWith(true);
+
+    rerender(
+      <Provider store={store}>
+        <ThemeSelect {...baseProps} highlightsAvailable={true} />
+      </Provider>,
+    );
+    expect(setShowHighlightPanel).toHaveBeenCalledWith(true);
+
+    setShowHighlightPanel.mockClear();
+    setShowLayerPanel.mockClear();
+
+    // The user manually switches back to Layers (parent-owned state, not modeled here), then a
+    // later spurious re-render flips highlightsAvailable false then true again.
+    rerender(
+      <Provider store={store}>
+        <ThemeSelect {...baseProps} highlightsAvailable={false} />
+      </Provider>,
+    );
+    setShowHighlightPanel.mockClear();
+    setShowLayerPanel.mockClear();
+
+    rerender(
+      <Provider store={store}>
+        <ThemeSelect {...baseProps} highlightsAvailable={true} />
+      </Provider>,
+    );
+
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+});
+
+const TOOLTIP_TEST_STORE_OPTIONS = {
+  themes: [{ id: DEFAULT_THEME_ID, name: 'Theme A', content: [] }],
+  userName: 'Tester',
+};
 
 describe('ThemeSelect configuration info button', () => {
   test('renders the info icon next to the configuration dropdown', () => {
-    const { container } = renderComponent();
+    const { container } = renderThemeSelect({}, TOOLTIP_TEST_STORE_OPTIONS);
 
     const dropdownRow = container.querySelector('.theme-select-highlights-wrapper');
     expect(dropdownRow).toBeInTheDocument();
@@ -81,13 +237,13 @@ describe('ThemeSelect configuration info button', () => {
   });
 
   test('tooltip content is not rendered before the icon is clicked', () => {
-    renderComponent();
+    renderThemeSelect({}, TOOLTIP_TEST_STORE_OPTIONS);
 
     expect(screen.queryByText(/determines which collections/)).not.toBeInTheDocument();
   });
 
   test('clicking the icon reveals all three explanation points', async () => {
-    const { container } = renderComponent();
+    const { container } = renderThemeSelect({}, TOOLTIP_TEST_STORE_OPTIONS);
 
     fireEvent.click(container.querySelector('.collection-tooltip-icon'));
 
@@ -101,7 +257,12 @@ describe('ThemeSelect configuration info button', () => {
 
   test('clicking outside closes the tooltip', async () => {
     const { container } = render(
-      <Provider store={makeStore()}>
+      <Provider
+        store={makeStore({
+          themes: [{ id: DEFAULT_THEME_ID, name: 'Theme A', content: [] }],
+          userName: 'Tester',
+        })}
+      >
         <div>
           <ThemeSelect
             compareShare={false}

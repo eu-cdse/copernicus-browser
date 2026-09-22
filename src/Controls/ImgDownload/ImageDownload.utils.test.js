@@ -10,6 +10,7 @@ import {
   getRawBandsScalingFactor,
   isSimpleImageFormat,
   overrideEvalscriptIfNeeded,
+  resolveComparedLayerTitle,
 } from './ImageDownload.utils';
 import { BBox, CRS_EPSG3857, ApiType, LayersFactory } from '@sentinel-hub/sentinelhub-js';
 import { latLngBounds } from 'leaflet';
@@ -42,10 +43,21 @@ jest.mock('../../utils/parseEvalscript', () => ({
 const actualDataSourceHandlers = jest.requireActual(
   '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers',
 );
+// getDatasetLabel's real implementation resolves the handler for the dataset id and calls its
+// getDatasetLabel method, which (via DataSourceHandler.js) imports `datasetLabels` back from this
+// same module — a circular import that resolves to undefined while this factory is still being
+// evaluated. Read the label straight off the actual module's plain `datasetLabels` map instead, so
+// real dataset labels (e.g. S2_L2A_CDAS -> 'Sentinel-2 L2A') still resolve without hitting the cycle.
 jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
   ...jest.requireActual('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers'),
   getDataSourceHandler: jest.fn(
     jest.requireActual('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers').getDataSourceHandler,
+  ),
+  getDatasetLabel: jest.fn(
+    (datasetId) =>
+      jest.requireActual('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers').datasetLabels[
+        datasetId
+      ],
   ),
 }));
 
@@ -877,5 +889,81 @@ describe('getLayerFromParams — data fusion takes precedence over layerId (regr
     );
     expect(constructDataFusionLayer).not.toHaveBeenCalled();
     expect(layer).toBe(madeLayer);
+  });
+});
+
+describe('resolveComparedLayerTitle — rebuilds legacy layerId-as-title compare captions (regression #1202)', () => {
+  const layerId = '2_TONEMAPPED_NATURAL_COLOR';
+  const resolvedLayerTitle = 'Highlight Optimized Natural Color';
+
+  test('legacy shape (title ends with ": " + layerId) is rewritten using the resolved layer title', () => {
+    const cLayer = {
+      title: `Sentinel-2 L2A: ${layerId}`,
+      layerId,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, resolvedLayerTitle)).toBe(
+      'Sentinel-2 L2A: Highlight Optimized Natural Color',
+    );
+  });
+
+  test('pin-sourced title is returned verbatim (does not end with ": " + layerId)', () => {
+    const cLayer = {
+      title: 'Sentinel-2 L2A: Highlight Optimized Natural Color (Default)',
+      layerId,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, resolvedLayerTitle)).toBe(
+      'Sentinel-2 L2A: Highlight Optimized Natural Color (Default)',
+    );
+  });
+
+  test('custom title is returned verbatim regardless of resolvedLayerTitle', () => {
+    const cLayer = {
+      title: 'Sentinel-2 L2A: Custom',
+      layerId: 'someLayerId',
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, resolvedLayerTitle)).toBe('Sentinel-2 L2A: Custom');
+  });
+
+  test('missing resolvedLayerTitle keeps the stored title unchanged', () => {
+    const cLayer = {
+      title: `Sentinel-2 L2A: ${layerId}`,
+      layerId,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, undefined)).toBe(`Sentinel-2 L2A: ${layerId}`);
+  });
+
+  test('missing layerId keeps the stored title unchanged', () => {
+    const cLayer = {
+      title: `Sentinel-2 L2A: ${layerId}`,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, resolvedLayerTitle)).toBe(`Sentinel-2 L2A: ${layerId}`);
+  });
+
+  test('missing stored title falls back to the resolved layer title', () => {
+    const cLayer = {
+      layerId,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, resolvedLayerTitle)).toBe(resolvedLayerTitle);
+  });
+
+  test('missing stored title and missing resolvedLayerTitle falls back to an empty string', () => {
+    const cLayer = {
+      layerId,
+      datasetId: S2_L2A_CDAS,
+    };
+
+    expect(resolveComparedLayerTitle(cLayer, undefined)).toBe('');
   });
 });

@@ -7,6 +7,7 @@ import {
   DEFAULT_THEME_ID,
   RRD_INSTANCES_THEMES_LIST,
 } from '../../const';
+import { isDefaultConfigurationReachable } from '../../utils/themes.utils';
 
 // TODO: replace with a typed Theme interface once one is defined
 // The raw theme shape is currently untyped across the codebase; a dedicated interface is out of scope for this MR.
@@ -72,7 +73,8 @@ export const themesSlice = createSlice({
       const modeThemes = mode.themes;
       state.themesLists[MODE_THEMES_LIST] = modeThemes;
 
-      if (state.themesLists[URL_THEMES_LIST].length > 0) {
+      // Same themesUrl-replaces-the-mode-list rule as setSelectedThemeId below.
+      if (!isDefaultConfigurationReachable(state.themesLists[URL_THEMES_LIST])) {
         const firstThemeIdInList = state.themesLists[URL_THEMES_LIST][0].id;
         state.selectedThemeId = firstThemeIdInList;
         state.selectedThemesListId = URL_THEMES_LIST;
@@ -128,7 +130,10 @@ export const themesSlice = createSlice({
             (t) => t.id === selectedThemeId,
           );
 
-          if (state.themesLists[URL_THEMES_LIST].length) {
+          // A themesUrl replaces the mode themes list rather than adding to it, so while one is in
+          // play the id can only resolve against it — shared with ThemeSelect, ThemesProvider and
+          // CollectionSelection.
+          if (!isDefaultConfigurationReachable(state.themesLists[URL_THEMES_LIST])) {
             if (isThemeInUrlThemesList) {
               state.selectedThemesListId = URL_THEMES_LIST;
               state.selectedThemeId = selectedThemeId;

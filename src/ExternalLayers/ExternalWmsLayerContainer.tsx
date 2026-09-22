@@ -4,6 +4,9 @@ import { t } from 'ttag';
 import { selectExternalLayers } from '../store/slices/externalLayersSlice';
 import { useAppSelector } from '../hooks';
 import { createLayerActions } from '../Tools/VisualizationPanel/VisualizationLayer/createLayerActions';
+import Loader from '../Loader/Loader';
+import { EOBButton } from '../junk/EOBCommon/EOBButton/EOBButton';
+import { useExternalServerLayers } from './useExternalServerLayers';
 import ExternalWmsLayerItem from './ExternalWmsLayerItem';
 import ExternalWmsLayerSearch from './ExternalWmsLayerSearch';
 import ExternalWmsLayerPagination from './ExternalWmsLayerPagination';
@@ -30,6 +33,12 @@ const ExternalWmsLayerContainer = ({ savePin, toggleLayerActions, layerActionsOp
     () => servers.find((s: { id: string; url: string; type: string }) => s.id === activeServerId),
     [servers, activeServerId],
   );
+
+  const {
+    loading: layersLoading,
+    error: layersError,
+    retry: retryLoadLayers,
+  } = useExternalServerLayers(server);
 
   useEffect(() => {
     setPage(0);
@@ -66,6 +75,10 @@ const ExternalWmsLayerContainer = ({ savePin, toggleLayerActions, layerActionsOp
 
   const layers = server.layers ?? [];
   const filtered = filter ? layers.filter((l) => matchesFilter(l, filter)) : layers;
+  // While the lazy fetch is in flight there are no layers to show yet — suppress the "No layers
+  // match" empty state, which would otherwise flash on every load.
+  const showLoader = layersLoading && layers.length === 0;
+  const showError = !showLoader && !!layersError && layers.length === 0;
 
   // At least 1 so an empty filter result shows "1 / 1" instead of a confusing "1 / 0".
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -89,19 +102,31 @@ const ExternalWmsLayerContainer = ({ savePin, toggleLayerActions, layerActionsOp
       )}
 
       <div className="external-wms-layer-list" role="listbox">
-        {paginated.map((layer) => (
-          <ExternalWmsLayerItem
-            key={`${server.id}:${layer.id}`}
-            server={server}
-            layer={layer}
-            isActive={layer.id === activeLayerId}
-            layerActions={layerActions}
-            layerActionsOpen={layerActionsOpen}
-            toggleLayerActions={toggleLayerActions}
-          />
-        ))}
+        {showLoader && <Loader />}
 
-        {filtered.length === 0 && <div className="external-wms-layer-empty">{t`No layers match`}</div>}
+        {!showLoader &&
+          paginated.map((layer) => (
+            <ExternalWmsLayerItem
+              key={`${server.id}:${layer.id}`}
+              server={server}
+              layer={layer}
+              isActive={layer.id === activeLayerId}
+              layerActions={layerActions}
+              layerActionsOpen={layerActionsOpen}
+              toggleLayerActions={toggleLayerActions}
+            />
+          ))}
+
+        {showError && (
+          <div className="external-wms-layer-error">
+            <div>{layersError}</div>
+            <EOBButton text={t`Retry`} icon="refresh" onClick={retryLoadLayers} />
+          </div>
+        )}
+
+        {!showLoader && !showError && filtered.length === 0 && (
+          <div className="external-wms-layer-empty">{t`No layers match`}</div>
+        )}
       </div>
 
       <ExternalWmsLayerPagination

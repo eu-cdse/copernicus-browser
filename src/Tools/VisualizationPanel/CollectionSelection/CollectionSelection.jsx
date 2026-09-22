@@ -18,10 +18,19 @@ import store, {
   collapsiblePanelSlice,
   visualizationSlice,
   externalLayersSlice,
+  panelSlice,
 } from '../../../store';
 import { selectExternalLayers } from '../../../store/slices/externalLayersSlice';
-import { DATASOURCES, FATHOM_TRACK_EVENT_LIST } from '../../../const';
+import {
+  ALL_COLLECTIONS_HINT_VALUE,
+  DATASOURCES,
+  FATHOM_TRACK_EVENT_LIST,
+  URL_THEMES_LIST,
+  PANEL,
+} from '../../../const';
+
 import { handleFathomTrackEvent } from '../../../utils/fathom';
+import { isDefaultConfigurationReachable, isDefaultConfigurationSelected } from '../../../utils/themes.utils';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
@@ -121,6 +130,7 @@ const renderCollections = (
   isExpanded,
   user,
   dataSourcesLoading,
+  showAllCollectionsHint,
 ) => {
   if (isExpanded) {
     const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user?.access_token);
@@ -158,7 +168,7 @@ const renderCollections = (
         ).map((node) => ({ label: node.label, value: node.id, type: 'category' }))
       : [];
 
-    const options = [
+    const baseOptions = [
       ...visibleCollectionGroups
         .map((g) =>
           [{ label: g.title, value: g.datasource, type: 'datasource' }].concat(
@@ -182,7 +192,27 @@ const renderCollections = (
       return true;
     });
 
+    const allCollectionsHintOption = {
+      label: t`Switch back to the default configuration to see all collections`,
+      value: ALL_COLLECTIONS_HINT_VALUE,
+      type: 'info',
+      // react-select's default isOptionDisabled reads `isDisabled`: it strips the click handler,
+      // excludes the option from keyboard navigation and marks the row aria-disabled.
+      isDisabled: true,
+    };
+
+    // Curated configurations only expose a subset of the collections (issue #1221). Append a
+    // non-selectable hint as the last entry so users understand where the rest went. It is
+    // appended after the CCM filter above so that filter can never strip it.
+    const options = showAllCollectionsHint ? [...baseOptions, allCollectionsHintOption] : baseOptions;
+
     const filterOption = (option, string) => {
+      // Keep the hint visible while searching: a search that matches nothing in a curated
+      // configuration is exactly when the user needs to be told to switch back.
+      if (option.data.type === 'info') {
+        return true;
+      }
+
       if (string.length < 3 && (option.data.type === 'dataset' || option.data.type === 'category')) {
         return false;
       }
@@ -214,6 +244,11 @@ const renderCollections = (
     };
 
     const setValue = ({ value, type, parentDataset }) => {
+      // react-select never fires onChange for a disabled option, so this is defensive only —
+      // but the native <select> stand-in used in CollectionSelection.test.jsx can reach it.
+      if (type === 'info') {
+        return;
+      }
       if (type === 'datasource') {
         const group = collectionGroups.find((d) => d.datasource === value);
         let preselected = group?.preselectedDataset;
@@ -291,6 +326,8 @@ const renderCollections = (
 
 const CollectionSelection = ({
   selectedThemeId,
+  selectedThemesListId,
+  urlThemesList,
   dataSourcesInitialized,
   dataSourcesReadyVersion,
   dataSourcesLoading,
@@ -298,13 +335,9 @@ const CollectionSelection = ({
   visualizationDate,
   bounds,
   showLayerPanel,
-  setShowLayerPanel,
   showHighlightPanel,
-  setShowHighlightPanel,
   highlightsAvailable,
   showComparePanel,
-  setComparePanel,
-  setPinPanel,
   showPinPanel,
   comparedLayersCount,
   pinsCount,
@@ -323,43 +356,98 @@ const CollectionSelection = ({
     activeServerId,
     activeLayerName,
     servers: externalServers,
-    panelOpen: showExternalLayersPanel,
     lastActiveServerId,
     lastActiveLayerName,
     lastActiveLayerTime,
     lastActiveLayerStyle,
   } = useSelector(selectExternalLayers);
+  const showExternalLayersPanel = useSelector((store) => store.panel.wms);
 
   // When the WMS/WMTS panel is open with collections loaded but nothing active (e.g. after
   // switching to a Sentinel Hub layer and back, or after deleting the active server), restore the
-  // last layer the user had — falling back to the first layer of the first collection — so the map
-  // isn't blank.
+  // last layer the user had — falling back to the first collection in the list — so the map isn't
+  // blank. Layers are a lazily-fetched runtime cache (see useExternalServerLayers), so the chosen
+  // server's layers may not be loaded yet: this effect first makes it the active server (which mounts
+  // ExternalWmsLayerContainer and triggers the fetch), then completes the exact layer/time/style
+  // restore once `externalServers` updates with the fetched layers.
   useEffect(() => {
-    if (!showExternalLayersPanel || activeServerId) {
+    if (!showExternalLayersPanel) {
       return;
     }
-    const remembered = externalServers?.find(
-      (s) => s.id === lastActiveServerId && s.layers?.some((l) => l.name === lastActiveLayerName),
-    );
-    const fallback = externalServers?.find((s) => s.layers?.length);
-    const server = remembered ?? fallback;
-    const layerName = remembered ? lastActiveLayerName : fallback?.layers?.[0]?.name;
-    if (server && layerName) {
-      store.dispatch(externalLayersSlice.actions.setActiveExternalLayer({ serverId: server.id, layerName }));
-      // Restore the date the user had picked on this layer (setActiveExternalLayer reset it because
-      // the layer was inactive), so navigating back to the panel keeps the chosen date.
-      if (remembered && lastActiveLayerTime) {
-        store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(lastActiveLayerTime));
+    const remembered = externalServers?.find((s) => s.id === lastActiveServerId);
+    const fallback = externalServers?.[0];
+    // Prefer whatever server is already active (e.g. just clicked in ExtraCollectionsPanel) so its
+    // layer gets picked once they load, even if it isn't the remembered/first one — otherwise this
+    // effect would keep resolving `server` to the previously remembered server and never complete
+    // the restore for the newly activated one.
+    const active = externalServers?.find((s) => s.id === activeServerId);
+    const server = active ?? remembered ?? fallback;
+    if (!server) {
+      return;
+    }
+    // Some other server is already active — either the user picked it manually, or a previous run
+    // of this effect already started restoring it. Never override an unrelated active selection.
+    if (activeServerId && activeServerId !== server.id) {
+      return;
+    }
+    // `undefined` while the server's layers haven't loaded yet — there's nothing to select until then.
+    // Once loaded, fall back to the first layer if the remembered one is gone (renamed/removed on
+    // the remote service since it was last active) instead of leaving nothing selected. `remembered`
+    // is only consulted when it's the same server being resolved here — it can be a different server
+    // (e.g. the user switched to a server other than the last-remembered one), in which case its
+    // layers say nothing about this server's remembered layer.
+    const layersLoaded = !!server.layers?.length;
+    const rememberedMatchesServer = remembered?.id === server.id;
+    const layerName = layersLoaded
+      ? ((rememberedMatchesServer
+          ? server.layers.find((l) => l.name === lastActiveLayerName)?.name
+          : undefined) ?? server.layers[0].name)
+      : undefined;
+    // Only restore the remembered time/style when the exact remembered layer was found — they were
+    // saved for that layer, so applying them to a fallback layer would be wrong.
+    const isRestoredLayer = rememberedMatchesServer && layerName === lastActiveLayerName;
+
+    // Already the active server: only something left to do if its layers have since loaded and we
+    // haven't picked the target layer yet. Re-checking on every `externalServers` change (rather than
+    // returning as soon as any server is active) is what lets this effect complete the restore once
+    // the lazy fetch resolves, without re-dispatching once activeLayerName already matches.
+    if (activeServerId === server.id) {
+      if (layerName && activeLayerName !== layerName) {
+        store.dispatch(
+          externalLayersSlice.actions.setActiveExternalLayer({ serverId: server.id, layerName }),
+        );
+        if (isRestoredLayer && lastActiveLayerTime) {
+          store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(lastActiveLayerTime));
+        }
+        if (isRestoredLayer && lastActiveLayerStyle) {
+          store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(lastActiveLayerStyle));
+        }
       }
-      // Same for the SLD style, which setActiveExternalLayer also reset — without this the layer
-      // comes back rendered in the server's default style instead of the one the user picked.
-      if (remembered && lastActiveLayerStyle) {
-        store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(lastActiveLayerStyle));
-      }
+      return;
+    }
+
+    if (!layerName) {
+      // Layers not loaded yet — just activate the server so its layers get fetched; this effect
+      // re-runs and completes the restore above once they land.
+      store.dispatch(externalLayersSlice.actions.setActiveExternalServer(server.id));
+      return;
+    }
+
+    store.dispatch(externalLayersSlice.actions.setActiveExternalLayer({ serverId: server.id, layerName }));
+    // Restore the date the user had picked on this layer (setActiveExternalLayer reset it because
+    // the layer was inactive), so navigating back to the panel keeps the chosen date.
+    if (isRestoredLayer && lastActiveLayerTime) {
+      store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(lastActiveLayerTime));
+    }
+    // Same for the SLD style, which setActiveExternalLayer also reset — without this the layer
+    // comes back rendered in the server's default style instead of the one the user picked.
+    if (isRestoredLayer && lastActiveLayerStyle) {
+      store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(lastActiveLayerStyle));
     }
   }, [
     showExternalLayersPanel,
     activeServerId,
+    activeLayerName,
     externalServers,
     lastActiveServerId,
     lastActiveLayerName,
@@ -374,14 +462,8 @@ const CollectionSelection = ({
       return;
     }
     handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_LAYERS_PANEL_BUTTON);
-    store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(true));
-    if (!collectionPanelExpanded) {
-      store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(true));
-    }
-    setShowLayerPanel(false);
-    setComparePanel(false);
-    setPinPanel(false);
-    setShowHighlightPanel(false);
+    // collapsiblePanelSlice's extraReducers force-expands the collection view on openPanel(WMS).
+    store.dispatch(panelSlice.actions.openPanel(PANEL.WMS));
   };
 
   const onSelect = async (selectedCollection, orbitDirection = null) => {
@@ -392,12 +474,11 @@ const CollectionSelection = ({
       return;
     }
 
-    store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(false));
+    if (!showLayerPanel) {
+      store.dispatch(panelSlice.actions.openPanel(PANEL.LAYERS));
+    }
     store.dispatch(externalLayersSlice.actions.clearActiveExternalLayer());
     setSelected(selectedCollection);
-    if (!showLayerPanel && setShowLayerPanel) {
-      setShowLayerPanel(true);
-    }
     if (!selectedConfig.dataset) {
       const collectionGroupsFromDsh = createCollectionGroupsFromDataSourceHandlers(filter, bounds);
       const collectionGroup = collectionGroupsFromDsh.find(
@@ -493,11 +574,24 @@ const CollectionSelection = ({
   ]);
 
   useEffect(() => {
-    if (!previousVisualizationDate && visualizationDate) {
+    // Layers/WMS always force-expand the data collections view (issue #1246, see
+    // collapsiblePanelSlice's panelSlice.openPanel listener) - skip this data-driven collapse while
+    // either is the active panel, otherwise a date that resolves for the first time right after
+    // navigating there would immediately re-collapse what force-expand just opened.
+    if (!previousVisualizationDate && visualizationDate && !showLayerPanel && !showExternalLayersPanel) {
       store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(false));
     }
     // eslint-disable-next-line
   }, [visualizationDate]);
+
+  // Curated configurations expose only a subset of the collections (issue #1221). Offer the hint
+  // only when the Default configuration is actually reachable from the Configuration dropdown —
+  // both predicates are shared with the components that own those rules (AdvancedSearch switches
+  // back to Default on result select; ThemeSelect decides which list the dropdown renders).
+  const showAllCollectionsHint =
+    !!selectedThemeId &&
+    !isDefaultConfigurationSelected(selectedThemesListId, selectedThemeId) &&
+    isDefaultConfigurationReachable(urlThemesList);
 
   const renderCollectionSelectionContent = (isExpanded) => {
     if (!isExpanded) {
@@ -516,13 +610,14 @@ const CollectionSelection = ({
       isExpanded,
       user,
       dataSourcesLoading,
+      showAllCollectionsHint,
     );
   };
 
   const extraCollectionsInfo = t`External WMS and WMTS layers from third-party map servers.`;
 
   const closeExternalLayers = () => {
-    store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(false));
+    store.dispatch(panelSlice.actions.closePanel(PANEL.WMS));
     store.dispatch(externalLayersSlice.actions.clearActiveExternalLayer());
   };
 
@@ -605,16 +700,12 @@ const CollectionSelection = ({
           {titleLabel}
           <CollectionSearchTools
             showLayerPanel={showLayerPanel}
-            setShowLayerPanel={setShowLayerPanel}
             showHighlightPanel={showHighlightPanel}
-            setShowHighlightPanel={setShowHighlightPanel}
             highlightsAvailable={highlightsAvailable}
             comparedLayersCount={comparedLayersCount}
             showComparePanel={showComparePanel}
-            setComparePanel={setComparePanel}
             pinsCount={pinsCount}
             showPinPanel={showPinPanel}
-            setPinPanel={setPinPanel}
             onOpenExternalLayers={handleOpenExternalLayers}
             showExternalLayersPanel={showExternalLayersPanel}
             onCloseExternalLayers={closeExternalLayers}
@@ -657,13 +748,9 @@ const CollectionSelection = ({
             filter={filter}
             onChange={setFilter}
             showLayerPanel={showLayerPanel}
-            setShowLayerPanel={setShowLayerPanel}
             showHighlightPanel={showHighlightPanel}
-            setShowHighlightPanel={setShowHighlightPanel}
             highlightsAvailable={highlightsAvailable}
             showComparePanel={showComparePanel}
-            setComparePanel={setComparePanel}
-            setPinPanel={setPinPanel}
             showPinPanel={showPinPanel}
             comparedLayersCount={comparedLayersCount}
             pinsCount={pinsCount}
@@ -685,6 +772,8 @@ const CollectionSelection = ({
 
 const mapStoreToProps = (store) => ({
   selectedThemeId: store.themes.selectedThemeId,
+  selectedThemesListId: store.themes.selectedThemesListId,
+  urlThemesList: store.themes.themesLists[URL_THEMES_LIST],
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   dataSourcesReadyVersion: store.themes.dataSourcesReadyVersion,
   dataSourcesLoading: store.themes.dataSourcesLoading,

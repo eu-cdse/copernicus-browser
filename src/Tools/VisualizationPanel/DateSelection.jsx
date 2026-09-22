@@ -30,6 +30,7 @@ function DateSelection({
   showLayerPanel,
   setShowLayerPanel,
   showComparePanel,
+  showPinPanel,
   dateMode,
   compareShare,
   clmsSelection,
@@ -232,6 +233,7 @@ function DateSelection({
       showLayerPanel={showLayerPanel}
       setShowLayerPanel={setShowLayerPanel}
       showComparePanel={showComparePanel}
+      showPinPanel={showPinPanel}
       dateMode={dateMode}
       compareShare={compareShare}
       clmsSelection={clmsSelection}

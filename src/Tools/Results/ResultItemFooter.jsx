@@ -21,7 +21,7 @@ export const ResultItemLabels = {
   loginToAddToWorkspace: () => t`You need to be logged in to add products to your workspace.`,
   downloadProductLabel: () => t`Download product`,
   orderProcessing: () => t`Go to Workspace to order processing`,
-  noWorkspaceSelected: () => t`No workflows selected`,
+  noWorkflowSelected: () => t`No workflows selected`,
   noAvailableProcessors: () => t`No available processors for this product.`,
 };
 

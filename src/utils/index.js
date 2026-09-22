@@ -6,7 +6,7 @@ import request from 'axios';
 import { b64EncodeUnicode } from './base64MDN';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { BAND_UNIT } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
-import { PROCESSING_OPTIONS, TABS, STICKER_URL_PARAM_VALUE } from '../const';
+import { PROCESSING_OPTIONS, TABS, STICKER_URL_PARAM_VALUE, PANEL } from '../const';
 import { ModalId } from '../const';
 import store, { authSlice, notificationSlice, themesSlice, visualizationSlice } from '../store';
 import { encrypt } from './encrypt';
@@ -16,6 +16,34 @@ export function getUrlParams() {
     window.location.search.length > 0 ? window.location.search : window.location.hash.substring(1);
   const searchParams = new URLSearchParams(urlParamString);
   return Object.fromEntries(searchParams.entries());
+}
+
+// Returns a new search string with paramNames removed, preserving every other param.
+export function removeSearchParams(search, paramNames) {
+  const searchParams = new URLSearchParams(search);
+  paramNames.forEach((p) => searchParams.delete(p));
+  return searchParams.toString();
+}
+
+// Removes paramNames from the current URL's search string via history.replaceState, preserving
+// every other param and the pathname. Mirrors getUrlParams's hash fallback above: if params are
+// carried in the hash instead (legacy EOB2 URLs with no search string), strips them from there
+// instead, preserving the (empty) search string.
+// `precomputedSearch` lets a caller that already stripped paramNames from window.location.search
+// (e.g. via removeSearchParams) skip re-parsing it here. It's ignored when the URL uses hash
+// params instead (legacy EOB2 links with no search string), since it wasn't computed against the hash.
+export function stripSearchParamsFromUrl(paramNames, precomputedSearch) {
+  const usesHashParams = window.location.search.length === 0 && window.location.hash.length > 0;
+  const newParams = usesHashParams
+    ? removeSearchParams(window.location.hash.substring(1), paramNames)
+    : (precomputedSearch ?? removeSearchParams(window.location.search, paramNames));
+  window.history.replaceState(
+    null,
+    '',
+    usesHashParams
+      ? `${window.location.pathname}${window.location.search}${newParams ? `#${newParams}` : ''}`
+      : `${window.location.pathname}${newParams ? `?${newParams}` : ''}${window.location.hash}`,
+  );
 }
 
 /*
@@ -53,8 +81,19 @@ export function getUrlParams() {
   - backscatterCoeff: backscatterCoeff (Sentinel 1 only)
   - dataFusion: dataFusion settings
   - handlePositions: positions of pins in index feature.
-  - gradient: gradient used to calculate color in index feature. 
- 
+  - gradient: gradient used to calculate color in index feature.
+  - panel: which Visualize sub-panel is open — "layers", "highlights", "pins", or "wms". Written
+    explicitly even for Layers (the default) so a refresh can tell a deliberate Layers visit apart
+    from no panel info at all — see ThemeSelect.jsx. Compare is represented separately, by
+    compareShare.
+
+  NOTE: sharedPinsListId is deliberately NOT read from props/written here. Its absence from the
+  field list above already drops it from the rebuilt query string on the very next render after a
+  shared-pins import starts — this implicit omission is load-bearing for the #1184 fix (it's what
+  keeps the id from ever reaching a login redirect and re-triggering the import). See
+  e2e/fixtures/sharedPins.ts's runSharedPinsImportAssertions comment for the full explanation
+  before adding sharedPinsListId handling here "for completeness".
+
 */
 
 export function updatePath(props, shouldPushToHistoryStack = true) {
@@ -104,6 +143,9 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     compareSharedPinsId,
     comparedClipping,
     comparedOpacity,
+    showHighlightPanel,
+    showPinPanel,
+    wmsPanelOpen,
     clmsSelectedPath,
     clmsSelectedCollection,
     clmsSelectedConsolidationPeriodIndex,
@@ -225,28 +267,43 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     if (dateMode !== undefined) {
       params.dateMode = dateMode;
     }
+
+    // compareShare/panel describe which Visualize sub-panel is open, so they're only meaningful
+    // while the Visualize tab is actually active. Writing them regardless of selectedTabIndex left
+    // them (and PANEL.LAYERS as a default) in the URL after switching to Search or Order, which
+    // Tools.jsx's shouldSwitchToRapidResponseDeskTab then misread as "the URL says Visualize", so it
+    // never restored the RRD tab on refresh (see issue #1184 follow-up).
+    if (compareShare) {
+      params.compareShare = compareShare;
+
+      if (comparedOpacity) {
+        params.comparedOpacity = JSON.stringify(comparedOpacity);
+      }
+      if (comparedClipping) {
+        params.comparedClipping = JSON.stringify(comparedClipping);
+      }
+      if (compareMode?.value) {
+        params.compareMode = compareMode.value;
+      }
+      if (compareSharedPinsId) {
+        params.compareSharedPinsId = compareSharedPinsId;
+      }
+    } else if (showPinPanel) {
+      // Compare is fully represented by compareShare above, so `panel` only needs to distinguish
+      // Layers/Highlights/Pins/Wms from it. Layers is written explicitly too (not left absent) so a
+      // refresh can tell a deliberate Layers visit apart from no panel info at all — see ThemeSelect.jsx.
+      params.panel = PANEL.PINS;
+    } else if (showHighlightPanel) {
+      params.panel = PANEL.HIGHLIGHTS;
+    } else if (wmsPanelOpen) {
+      params.panel = PANEL.WMS;
+    } else {
+      params.panel = PANEL.LAYERS;
+    }
   }
 
   if (modalId === ModalId.TIMELAPSE) {
     params.timelapse = JSON.stringify(timelapse);
-  }
-
-  // If compareShare is enabled add all compare parameters
-  if (compareShare) {
-    params.compareShare = compareShare;
-
-    if (comparedOpacity) {
-      params.comparedOpacity = JSON.stringify(comparedOpacity);
-    }
-    if (comparedClipping) {
-      params.comparedClipping = JSON.stringify(comparedClipping);
-    }
-    if (compareMode?.value) {
-      params.compareMode = compareMode.value;
-    }
-    if (compareSharedPinsId) {
-      params.compareSharedPinsId = compareSharedPinsId;
-    }
   }
 
   if (clmsSelectedPath) {

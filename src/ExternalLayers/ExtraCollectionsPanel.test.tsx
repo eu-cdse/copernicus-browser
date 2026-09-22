@@ -14,6 +14,7 @@ import { handleFathomTrackEvent } from '../utils/fathom';
 // The per-page dropdown / other unrelated widgets aren't under test; only saveExternalServersToServer
 // (the one call whose rejection status this test exercises) needs to be mocked.
 jest.mock('./externalServicesBackend', () => ({
+  ...jest.requireActual('./externalServicesBackend'),
   saveExternalServersToServer: jest.fn(),
 }));
 
@@ -23,12 +24,20 @@ jest.mock('../utils/fathom', () => ({
 
 // Keep the real URL/validation helpers (validateWmsUrl, getServiceEndpoint, isMeaningful) so the
 // component's own guard clauses behave normally; only stub the network-calling capabilities fetchers.
+// `fetchCapabilities` is a thin same-module dispatch over the two below (see externalLayers.utils.ts)
+// — it must be re-mocked here too, delegating to the mocks, since a same-module call bypasses jest's
+// mock of its sibling exports.
 jest.mock('./externalLayers.utils', () => {
   const actual = jest.requireActual('./externalLayers.utils');
+  const fetchWmsCapabilities = jest.fn();
+  const fetchWmtsCapabilities = jest.fn();
   return {
     ...actual,
-    fetchWmsCapabilities: jest.fn(),
-    fetchWmtsCapabilities: jest.fn(),
+    fetchWmsCapabilities,
+    fetchWmtsCapabilities,
+    fetchCapabilities: jest.fn((type: 'WMS' | 'WMTS', url: string) =>
+      type === 'WMTS' ? fetchWmtsCapabilities(url) : fetchWmsCapabilities(url),
+    ),
   };
 });
 

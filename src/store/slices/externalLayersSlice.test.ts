@@ -10,6 +10,7 @@ import {
   markExternalLayersHydrated,
   resetExternalLayersHydratedForTests,
 } from '../../ExternalLayers/externalLayersPersistence';
+import { makeExternalServer } from '../../ExternalLayers/testFixtures/externalServer';
 
 jest.mock('../../ExternalLayers/externalServicesBackend', () => {
   const actual = jest.requireActual('../../ExternalLayers/externalServicesBackend');
@@ -29,16 +30,10 @@ const {
   setActiveExternalLayerStyle,
   clearActiveExternalLayer,
   updateServerLayers,
-  setWmsPanelOpen,
 } = externalLayersSlice.actions;
 
-const server = (id: string, layerNames: string[] = []) => ({
-  id,
-  name: `Server ${id}`,
-  url: `https://wms.example/${id}`,
-  type: 'WMS' as const,
-  layers: layerNames.map((n) => ({ id: `${id}-${n}`, name: n, title: n })),
-});
+const server = (id: string, layerNames: string[] = []) =>
+  makeExternalServer(id, { layers: layerNames.map((n) => ({ id: `${id}-${n}`, name: n, title: n })) });
 
 describe('externalLayersSlice reducers (external services)', () => {
   it('addExternalServer adds the server and makes it + its first layer active', () => {
@@ -253,7 +248,6 @@ describe('externalLayersSlice.hydrateExternalLayers', () => {
       lastActiveLayerTime: '2024-03-15',
       lastActiveLayerStyle: 'alt_style',
       // these must NOT be restored
-      panelOpen: true,
       activeServerId: 's1',
       activeLayerName: 'l',
       activeLayerId: 'lid',
@@ -270,7 +264,6 @@ describe('externalLayersSlice.hydrateExternalLayers', () => {
     expect(next.lastActiveLayerTime).toBe('2024-03-15');
     expect(next.lastActiveLayerStyle).toBe('alt_style');
     // transient / live fields stay at their initial defaults
-    expect(next.panelOpen).toBe(false);
     expect(next.activeServerId).toBeNull();
     expect(next.activeLayerTime).toBeNull();
     expect(next.activeLayerStyle).toBeNull();
@@ -329,6 +322,8 @@ describe('externalLayersPersistenceMiddleware — backend save gating', () => {
     store.dispatch(addExternalServer(server('s1', ['cities'])));
     await flush();
     expect(saveExternalServersToServer).toHaveBeenCalledTimes(1);
+    // Layers are a runtime-only cache (see #1236) — saveExternalServersToServer strips them before
+    // saving, so the middleware just passes the in-memory servers (with layers) straight through.
     expect(saveExternalServersToServer).toHaveBeenCalledWith(
       store.getState().externalLayers.servers,
       'token-123',
@@ -346,7 +341,7 @@ describe('externalLayersPersistenceMiddleware — backend save gating', () => {
     expect(saveExternalServersToServer).toHaveBeenCalledTimes(1);
   });
 
-  it('saves to the backend when updateServerLayers is dispatched while logged in', async () => {
+  it('does not save to the backend when updateServerLayers is dispatched (layers are runtime-only, see #1236)', async () => {
     const store = buildStore(loggedInAuth);
     store.dispatch(addExternalServer(server('s1', ['cities'])));
     await flush();
@@ -354,7 +349,7 @@ describe('externalLayersPersistenceMiddleware — backend save gating', () => {
 
     store.dispatch(updateServerLayers({ serverId: 's1', layers: [] }));
     await flush();
-    expect(saveExternalServersToServer).toHaveBeenCalledTimes(1);
+    expect(saveExternalServersToServer).not.toHaveBeenCalled();
   });
 
   it('does not save to the backend for a non-mutating action like setActiveExternalLayerTime', async () => {
@@ -364,13 +359,6 @@ describe('externalLayersPersistenceMiddleware — backend save gating', () => {
     (saveExternalServersToServer as jest.Mock).mockClear();
 
     store.dispatch(setActiveExternalLayerTime('2024-03-15'));
-    await flush();
-    expect(saveExternalServersToServer).not.toHaveBeenCalled();
-  });
-
-  it('does not save to the backend for setWmsPanelOpen', async () => {
-    const store = buildStore(loggedInAuth);
-    store.dispatch(setWmsPanelOpen(true));
     await flush();
     expect(saveExternalServersToServer).not.toHaveBeenCalled();
   });
@@ -469,14 +457,14 @@ describe('selectActiveExternalLayer — style/legend resolution', () => {
 
   it('resolves legendUrl to null when neither the selected style nor the layer declare one', () => {
     const state = buildState({ activeLayerStyle: 'alt_style' });
-    state.externalLayers.servers[0].layers[0].legendUrl = undefined;
+    state.externalLayers.servers[0].layers![0].legendUrl = undefined;
     const active = selectActiveExternalLayer(state);
     expect(active?.legendUrl).toBeNull();
   });
 
   it('returns null styles and style for a layer that declares no styles at all', () => {
     const state = buildState();
-    state.externalLayers.servers[0].layers[0].styles = undefined;
+    state.externalLayers.servers[0].layers![0].styles = undefined;
     const active = selectActiveExternalLayer(state);
     expect(active?.styles).toBeNull();
     expect(active?.style).toBeNull();

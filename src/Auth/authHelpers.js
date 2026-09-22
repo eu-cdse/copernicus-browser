@@ -4,6 +4,7 @@ import axios from 'axios';
 import Keycloak from 'keycloak-js';
 import { t } from 'ttag';
 import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../utils/localStorage.utils';
+import { removeSearchParams, stripSearchParamsFromUrl } from '../utils';
 import {
   LOCAL_STORAGE_ANON_AUTH_KEY,
   LOCAL_STORAGE_RECAPTCHA_CONSENT_KEY,
@@ -39,8 +40,7 @@ const snapshotAndStripLongParams = (search, hash) => {
     return { hasLongParams: false, cleanSearch: search };
   }
   sessionStorage.setItem(REDIRECT_PARAMS_KEY, JSON.stringify({ search, hash }));
-  LONG_URL_PARAMS.forEach((p) => searchParams.delete(p));
-  return { hasLongParams: true, cleanSearch: searchParams.toString() };
+  return { hasLongParams: true, cleanSearch: removeSearchParams(search, LONG_URL_PARAMS) };
 };
 
 export const initKeycloak = async () => {
@@ -49,12 +49,10 @@ export const initKeycloak = async () => {
 
   const { hasLongParams, cleanSearch } = snapshotAndStripLongParams(originalSearch, originalHash);
   if (hasLongParams) {
-    // Use a relative URL — history.replaceState does not require an absolute origin.
-    window.history.replaceState(
-      null,
-      '',
-      window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + originalHash,
-    );
+    // Use a relative URL — history.replaceState does not require an absolute origin. Pass the
+    // already-computed cleanSearch so stripSearchParamsFromUrl doesn't re-parse window.location.search
+    // (it still recomputes independently for the legacy hash-params case, which cleanSearch doesn't cover).
+    stripSearchParamsFromUrl(LONG_URL_PARAMS, cleanSearch);
   }
 
   try {

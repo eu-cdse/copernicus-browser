@@ -123,4 +123,31 @@ describe('SearchableSelect', () => {
 
     expect(screen.getByText('Choose an option')).toBeInTheDocument();
   });
+
+  // The curated-collections hint in CollectionSelection (issue #1221) is a plain option carrying
+  // `isDisabled: true`, relying on react-select's default isOptionDisabled. These guard against a
+  // future `components`/`isOptionDisabled` override here silently making such an option clickable.
+  test('renders an option with isDisabled as aria-disabled', () => {
+    const optionsWithDisabled = [...options, { value: 'd', label: 'Delta', isDisabled: true }];
+    const { container } = render(
+      <SearchableSelect options={optionsWithDisabled} value={null} onChange={jest.fn()} />,
+    );
+
+    openMenu(container);
+
+    expect(screen.getByRole('option', { name: 'Delta' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  test('clicking an option with isDisabled does not call onChange', () => {
+    const onChange = jest.fn();
+    const optionsWithDisabled = [...options, { value: 'd', label: 'Delta', isDisabled: true }];
+    const { container } = render(
+      <SearchableSelect options={optionsWithDisabled} value={null} onChange={onChange} />,
+    );
+
+    openMenu(container);
+    fireEvent.click(screen.getByRole('option', { name: 'Delta' }));
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });

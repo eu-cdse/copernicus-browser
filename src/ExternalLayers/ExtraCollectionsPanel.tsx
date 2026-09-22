@@ -10,8 +10,10 @@ import { selectExternalLayers, ExternalServer } from '../store/slices/externalLa
 import { saveExternalServersToServer } from './externalServicesBackend';
 import { useAppSelector } from '../hooks';
 import {
+  classifyCapabilitiesError,
+  fetchCapabilities,
   fetchWmsCapabilities,
-  fetchWmtsCapabilities,
+  getNoCapabilitiesResultError,
   getServiceEndpoint,
   isMeaningful,
   validateWmsUrl,
@@ -80,31 +82,20 @@ const ExtraCollectionsPanel = () => {
       // Initial guess from the URL; if it returns nothing we transparently try the other protocol.
       let resolvedType: 'WMS' | 'WMTS' = /wmts/i.test(url) ? 'WMTS' : 'WMS';
       try {
-        result = resolvedType === 'WMS' ? await fetchWmsCapabilities(url) : await fetchWmtsCapabilities(url);
+        result = await fetchCapabilities(resolvedType, url);
         if (!result) {
           resolvedType = resolvedType === 'WMS' ? 'WMTS' : 'WMS';
-          result =
-            resolvedType === 'WMS' ? await fetchWmsCapabilities(url) : await fetchWmtsCapabilities(url);
+          result = await fetchCapabilities(resolvedType, url);
         }
       } catch (e) {
-        const err = e as Error & { status?: number };
-        if (err?.name === 'AbortError' || err?.name === 'TimeoutError') {
-          setError(t`The server took too long to respond. Please try again.`);
-          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'timeout');
-        } else if (err?.name === 'HttpError') {
-          setError(t`The server returned an error (HTTP ${err.status}). Check the URL and try again.`);
-          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'http-error');
-        } else {
-          setError(
-            t`Could not reach the server. It may be offline or may not allow cross-origin (CORS) access.`,
-          );
-          handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'network');
-        }
+        const { kind, message } = classifyCapabilitiesError(e);
+        setError(message);
+        handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, kind);
         return;
       }
 
       if (!result) {
-        setError(t`Could not load capabilities. Check the URL and try again.`);
+        setError(getNoCapabilitiesResultError().message);
         handleFathomTrackEvent(FATHOM_TRACK_EVENT_LIST.EXTERNAL_SERVICE_ADD_FAILED, 'no-capabilities');
         return;
       }
@@ -130,6 +121,7 @@ const ExtraCollectionsPanel = () => {
         serviceAbstract: result.serviceAbstract,
         accessConstraints: result.accessConstraints,
         fees: result.fees,
+        addedAt: new Date().toISOString(),
         layers: result.layers,
       };
 

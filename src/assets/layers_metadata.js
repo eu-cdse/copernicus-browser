@@ -2180,7 +2180,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'SSF' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY, layerId: 'Z_SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
   },
@@ -2225,7 +2225,7 @@ export const PREDEFINED_LAYERS_METADATA = [
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SSF' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'Z_SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF). `,
   },
@@ -3194,7 +3194,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       t`The LIE variable is a classification of lake ice state, with the following classes: Fully snow covered ice (1), Partially snow covered or  snow free ice (2), Open water (3). Some specific flag values are also used for LIE: 0 for missing data, 4 for sea pixels, 5 for cloudy pixels, 6 for land area. LIE 250m uses thresholds on Top-of-Atmosphere (TOA) reflectances for full snow cover, partially snow covered ice/clear ice, and open water.`,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4, layerId: 'SSF' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_12_5KM_DAILY_V4, layerId: 'Z_SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF), which is based on interpolated meteorological data.`,
   },
@@ -3239,7 +3239,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       t`SWI computed with a characteristic time length of 100 days. The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the H SAF H28 SSM product as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien. `,
   },
   {
-    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY_V2, layerId: 'SSF' }],
+    match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY_V2, layerId: 'Z_SSF' }],
     description: () =>
       t`Surface soil moisture (SSM) retrieval from scatterometer data has certain limitations: it cannot be retrieved when the surface is frozen or covered by snow, dense vegetation, or water. Whereas dense vegetation and water are almost static factors, the freeze/thaw cycle is dynamic. The frozen state of the surface is recorded within the surface state flag (SSF), which is based on interpolated meteorological data.`,
   },

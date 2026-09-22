@@ -29,7 +29,7 @@ root.render(
           <DndProvider options={HTML5toTouch}>
             <AuthProvider>
               <URLParamsParser>
-                {({ themeId, sharedPinsListId, compareShare }) => (
+                {({ themeId, sharedPinsListId, compareShare, panel }) => (
                   <ThemesProvider themeIdFromUrlParams={themeId}>
                     <PreselectedCollectionProvider>
                       <VisualizationUrlProvider>
@@ -42,6 +42,7 @@ root.render(
                               loadGoogleApi={loadGoogleApi}
                               isGoogleApiLoading={isGoogleApiLoading}
                               compareShareInit={compareShare}
+                              panelFromUrlParams={panel}
                             />
                           )}
                         </GoogleAPIProvider>

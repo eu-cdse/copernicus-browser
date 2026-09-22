@@ -5,19 +5,14 @@ import {
   dedupeExternalServers,
 } from './externalServicesBackend';
 import { ExternalServer } from '../store/slices/externalLayersSlice';
+import { makeExternalServer } from './testFixtures/externalServer';
 
 jest.mock('axios');
 
 const EXPECTED_URL = `${import.meta.env.VITE_CDSE_BACKEND}userexternalservers`;
 
-const server = (overrides: Partial<ExternalServer> = {}): ExternalServer => ({
-  id: 's1',
-  name: 'Server',
-  url: 'https://wms.example/wms',
-  type: 'WMS',
-  layers: [],
-  ...overrides,
-});
+const server = (overrides: Partial<ExternalServer> = {}): ExternalServer =>
+  makeExternalServer('s1', { layers: [], ...overrides });
 
 describe('getExternalServersFromServer', () => {
   beforeEach(() => {
@@ -67,7 +62,7 @@ describe('saveExternalServersToServer', () => {
     (axios.put as jest.Mock).mockReset();
   });
 
-  it('calls axios.put with the userexternalservers URL, Authorization header, and full items replace body', async () => {
+  it('calls axios.put with the userexternalservers URL, Authorization header, and full items replace body, stripped of layers', async () => {
     (axios.put as jest.Mock).mockResolvedValue({});
     const servers = [server(), server({ id: 's2', type: 'WMTS' })];
 
@@ -75,7 +70,7 @@ describe('saveExternalServersToServer', () => {
 
     expect(axios.put).toHaveBeenCalledWith(
       EXPECTED_URL,
-      { items: servers },
+      { items: servers.map(({ layers: _layers, ...rest }) => rest) },
       {
         responseType: 'json',
         headers: { Authorization: 'Bearer token-abc' },

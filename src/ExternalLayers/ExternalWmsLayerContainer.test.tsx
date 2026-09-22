@@ -4,9 +4,24 @@ import { Provider } from 'react-redux';
 
 import store, { externalLayersSlice } from '../store';
 import ExternalWmsLayerContainer from './ExternalWmsLayerContainer';
+import { useExternalServerLayers } from './useExternalServerLayers';
 
 // The per-page dropdown (react-select) doesn't render meaningfully in jsdom and isn't under test.
 jest.mock('react-select', () => () => null);
+
+// The lazy GetCapabilities fetch itself is covered by useExternalServerLayers.test.ts; here we only
+// need to control its {loading, error, retry} output to assert the container's rendering branches.
+jest.mock('./useExternalServerLayers', () => ({
+  useExternalServerLayers: jest.fn(),
+}));
+
+const mockUseExternalServerLayers = useExternalServerLayers as jest.Mock;
+
+// Steady-state default (already-loaded layers, nothing in flight) so every test that isn't
+// specifically about the loading/error states keeps behaving as if the fetch already resolved.
+beforeEach(() => {
+  mockUseExternalServerLayers.mockReturnValue({ loading: false, error: null, retry: jest.fn() });
+});
 
 // The chevron icons aren't valid components under jest's svg transform (see
 // ExtraCollectionsPanel.test.tsx for the same workaround). Stub them to a passthrough <i> that
@@ -48,6 +63,14 @@ const SERVER = {
       attribution: 'Plain Text Provider',
     },
   ],
+};
+
+// A server whose layers haven't been fetched yet (see useExternalServerLayers) — no `layers` at all.
+const SERVER_NO_LAYERS = {
+  id: 'test-server-no-layers',
+  name: 'Test Server No Layers',
+  url: 'https://example.com/wmts',
+  type: 'WMS' as const,
 };
 
 const renderContainer = () =>
@@ -166,5 +189,70 @@ describe('ExternalWmsLayerContainer legend details toggle', () => {
     renderContainer();
 
     expect(screen.getByTitle('Show details')).toHaveClass('disabled');
+  });
+});
+
+describe('ExternalWmsLayerContainer lazy layer loading (useExternalServerLayers)', () => {
+  beforeEach(() => {
+    act(() => {
+      store.dispatch(externalLayersSlice.actions.addExternalServer(SERVER_NO_LAYERS));
+    });
+  });
+
+  afterEach(() => {
+    act(() => {
+      store.dispatch(externalLayersSlice.actions.removeExternalServer(SERVER_NO_LAYERS.id));
+    });
+  });
+
+  it('shows the loader and not the empty state while the server has no layers yet and the hook is loading', () => {
+    mockUseExternalServerLayers.mockReturnValue({ loading: true, error: null, retry: jest.fn() });
+
+    const { container } = renderContainer();
+
+    expect(container.querySelector('.loader')).toBeInTheDocument();
+    expect(screen.queryByText('No layers match')).not.toBeInTheDocument();
+  });
+
+  it('renders the layer list (no loader) once loading finishes and the store has layers for the server', () => {
+    mockUseExternalServerLayers.mockReturnValue({ loading: true, error: null, retry: jest.fn() });
+
+    const { container, rerender } = renderContainer();
+    expect(container.querySelector('.loader')).toBeInTheDocument();
+
+    mockUseExternalServerLayers.mockReturnValue({ loading: false, error: null, retry: jest.fn() });
+    act(() => {
+      store.dispatch(
+        externalLayersSlice.actions.updateServerLayers({
+          serverId: SERVER_NO_LAYERS.id,
+          layers: SERVER.layers,
+        }),
+      );
+    });
+    rerender(
+      <Provider store={store}>
+        <ExternalWmsLayerContainer />
+      </Provider>,
+    );
+
+    expect(container.querySelector('.loader')).not.toBeInTheDocument();
+    expect(screen.getByText('Layer One')).toBeInTheDocument();
+  });
+
+  it('shows the error state with a Retry button that calls the hook retry() when clicked', () => {
+    const retry = jest.fn();
+    const errorMessage =
+      'Could not reach the server. It may be offline or may not allow cross-origin (CORS) access.';
+    mockUseExternalServerLayers.mockReturnValue({ loading: false, error: errorMessage, retry });
+
+    renderContainer();
+
+    const errorBlock = document.querySelector('.external-wms-layer-error') as HTMLElement;
+    expect(errorBlock).toBeInTheDocument();
+    expect(within(errorBlock).getByText(errorMessage)).toBeInTheDocument();
+
+    fireEvent.click(within(errorBlock).getByText('Retry'));
+
+    expect(retry).toHaveBeenCalledTimes(1);
   });
 });

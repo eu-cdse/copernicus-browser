@@ -74,11 +74,17 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
   const downloadDisabled = downloadInProgress || downloadProductErrorMessage;
 
   useEffect(() => {
+    if (!userToken) {
+      setAvailableProcessors([]);
+      setSelectedWorkflow(null);
+      return;
+    }
+
     (async () => {
       const workflows = await getAvailableProcesorsForProducts([product.oDataProductId ?? product.id]);
       setAvailableProcessors(workflows);
     })();
-  }, [product]);
+  }, [product, userToken]);
 
   const onDisabledClickOrderProcessing = () => {
     if (!userToken) {
@@ -89,7 +95,7 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
     let errorMessage = !availableProcessors.length
       ? ResultItemLabels.noAvailableProcessors()
       : !selectedWorkflow
-        ? ResultItemLabels.noWorkspaceSelected()
+        ? ResultItemLabels.noWorkflowSelected()
         : t`Unknown error`;
 
     store.dispatch(notificationSlice.actions.displayError(`${t`Order Processing`}\n${errorMessage}`));
@@ -212,9 +218,11 @@ const ProductInfo = ({ product, onDownload, downloadInProgress, onClose, userTok
                     </>
                   )) || (
                     <div className="error-message">
-                      {!availableProcessors.length
-                        ? ResultItemLabels.noAvailableProcessors()
-                        : ResultItemLabels.noWorkspaceSelected()}
+                      {!userToken
+                        ? getLoggedInErrorMsg()
+                        : !availableProcessors.length
+                          ? ResultItemLabels.noAvailableProcessors()
+                          : ResultItemLabels.noWorkflowSelected()}
                     </div>
                   )}
                 </div>

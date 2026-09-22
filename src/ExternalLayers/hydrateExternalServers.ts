@@ -8,6 +8,7 @@ import {
   getExternalServersFromServer,
   saveExternalServersToServer,
   dedupeExternalServers,
+  orderExternalServers,
 } from './externalServicesBackend';
 
 // Resolves the ExternalLayersState to rehydrate the store with on app mount, including the
@@ -33,7 +34,7 @@ export async function resolveHydratedExternalLayers(
     const anonServers = loadPersistedServers();
     let servers = backendServers;
     if (anonServers.length) {
-      servers = dedupeExternalServers([...backendServers, ...anonServers]);
+      servers = orderExternalServers(dedupeExternalServers([...backendServers, ...anonServers]));
       await saveExternalServersToServer(servers, accessToken as string);
       clearPersistedExternalLayers();
     }

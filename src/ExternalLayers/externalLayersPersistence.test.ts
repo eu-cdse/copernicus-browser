@@ -23,7 +23,6 @@ const sampleState = (): ExternalLayersState => ({
   lastActiveLayerTime: '2024-03-15',
   lastActiveLayerStyle: 'ndvi',
   // transient / live fields that must NOT be persisted
-  panelOpen: true,
   activeServerId: 's1',
   activeLayerName: 'layerA',
   activeLayerId: 'l1',
@@ -48,7 +47,7 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
     });
 
     test('returns undefined when the stored payload has no servers array', () => {
-      sessionStorage.setItem(KEY, JSON.stringify({ panelOpen: true }));
+      sessionStorage.setItem(KEY, JSON.stringify({ foo: true }));
       expect(loadPersistedExternalLayers()).toBeUndefined();
     });
 
@@ -60,14 +59,12 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
           lastActiveServerId: 's1',
           lastActiveLayerName: 'layerA',
           lastActiveLayerId: 'l1',
-          panelOpen: true,
         }),
       );
       const loaded = loadPersistedExternalLayers();
       expect(loaded?.servers).toHaveLength(1);
       expect(loaded?.lastActiveServerId).toBe('s1');
       // transient / live fields come from initialState, not from storage
-      expect(loaded?.panelOpen).toBe(false);
       expect(loaded?.activeServerId).toBeNull();
       expect(loaded?.activeLayerTime).toBeNull();
       expect(loaded?.activeLayerStyle).toBeNull();
@@ -93,6 +90,43 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       );
       expect(loadPersistedExternalLayers()?.lastActiveLayerStyle).toBeNull();
     });
+
+    // Regression (#1236): a bucket written by an older app version (before layers were stripped on
+    // write) may still have a populated `layers` array on its servers. Hydration must strip it too —
+    // otherwise useExternalServerLayers would treat the stale array as already-fetched and never
+    // refresh it for the rest of the session.
+    test('strips a legacy stored bucket whose servers still carry a `layers` array', () => {
+      sessionStorage.setItem(
+        KEY,
+        JSON.stringify({
+          servers: [
+            {
+              id: 's1',
+              name: 'Legacy Test',
+              url: 'https://wms.example/wms',
+              type: 'WMS',
+              addedAt: '2023-01-01T00:00:00.000Z',
+              layers: [{ id: 'l1', name: 'layerA', title: 'Layer A' }],
+            },
+          ],
+          lastActiveServerId: 's1',
+          lastActiveLayerName: 'layerA',
+          lastActiveLayerId: 'l1',
+        }),
+      );
+      const loaded = loadPersistedExternalLayers();
+      expect(loaded?.servers).toHaveLength(1);
+      expect(loaded?.lastActiveServerId).toBe('s1');
+      // The legacy `layers` array is stripped on read, same as on write, so the server is treated
+      // as not-yet-fetched and useExternalServerLayers refreshes it.
+      expect(loaded?.servers[0]).toEqual({
+        id: 's1',
+        name: 'Legacy Test',
+        url: 'https://wms.example/wms',
+        type: 'WMS',
+        addedAt: '2023-01-01T00:00:00.000Z',
+      });
+    });
   });
 
   describe('persistExternalLayers', () => {
@@ -108,7 +142,6 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       expect(stored.servers).toHaveLength(1);
       expect(stored.lastActiveServerId).toBe('s1');
       // transient / live fields are not written
-      expect(stored).not.toHaveProperty('panelOpen');
       expect(stored).not.toHaveProperty('activeServerId');
       expect(stored).not.toHaveProperty('activeLayerTime');
       // the date is NOT kept in the bucket — it lives in its own key
@@ -174,6 +207,58 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
       spy.mockRestore();
       warn.mockRestore();
     });
+
+    // Regression (#1236): `layers` is a runtime-only cache fetched from GetCapabilities on demand
+    // and must never be written to storage, but every other durable server field must survive as-is.
+    test('strips the runtime `layers` cache from each server, preserving all other fields', () => {
+      markExternalLayersHydrated();
+      const stateWithLayers: ExternalLayersState = {
+        ...sampleState(),
+        servers: [
+          {
+            id: 's1',
+            name: 'Test WMS',
+            url: 'https://wms.example/wms',
+            type: 'WMS',
+            addedAt: '2024-01-01T00:00:00.000Z',
+            layers: [
+              { id: 'l1', name: 'layerA', title: 'Layer A' },
+              { id: 'l2', name: 'layerB', title: 'Layer B' },
+            ],
+          },
+          {
+            id: 's2',
+            name: 'Test WMTS',
+            url: 'https://wmts.example/wmts',
+            type: 'WMTS',
+            addedAt: '2024-02-02T00:00:00.000Z',
+            layers: [{ id: 'l3', name: 'layerC', title: 'Layer C' }],
+          },
+        ],
+      };
+      persistExternalLayers(stateWithLayers);
+      const stored = JSON.parse(sessionStorage.getItem(KEY) || '{}');
+      expect(stored.servers).toHaveLength(2);
+      // Assert via `in` (not just an empty array) so a bug that writes `layers: []` instead of
+      // omitting the key entirely would still fail this test.
+      stored.servers.forEach((server: Record<string, unknown>) => {
+        expect('layers' in server).toBe(false);
+      });
+      expect(stored.servers[0]).toEqual({
+        id: 's1',
+        name: 'Test WMS',
+        url: 'https://wms.example/wms',
+        type: 'WMS',
+        addedAt: '2024-01-01T00:00:00.000Z',
+      });
+      expect(stored.servers[1]).toEqual({
+        id: 's2',
+        name: 'Test WMTS',
+        url: 'https://wmts.example/wmts',
+        type: 'WMTS',
+        addedAt: '2024-02-02T00:00:00.000Z',
+      });
+    });
   });
 
   describe('loadPersistedServers', () => {
@@ -187,7 +272,7 @@ describe('externalLayersPersistence (sessionStorage, single anonymous bucket)', 
     });
 
     test('returns [] when the stored payload has no servers array', () => {
-      sessionStorage.setItem(KEY, JSON.stringify({ panelOpen: true }));
+      sessionStorage.setItem(KEY, JSON.stringify({ foo: true }));
       expect(loadPersistedServers()).toEqual([]);
     });
 

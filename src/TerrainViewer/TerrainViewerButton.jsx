@@ -98,7 +98,7 @@ const mapStoreToProps = (store) => ({
   selectedTabIndex: store.tabs.selectedTabIndex,
   terrainViewerId: store.terrainViewer.id,
   activeExternalLayer: selectActiveExternalLayer(store),
-  wmsLayerPanelOpen: store.externalLayers.panelOpen,
+  wmsLayerPanelOpen: store.panel.wms,
 });
 
 export default connect(mapStoreToProps, null)(TerrainViewerButton);

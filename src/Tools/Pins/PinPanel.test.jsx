@@ -41,10 +41,21 @@ jest.mock('./Pin.utils', () => {
   };
 });
 
-jest.mock('../../ExternalLayers/externalLayers.utils', () => ({
-  fetchWmtsCapabilities: jest.fn(),
-  fetchWmsCapabilities: jest.fn(),
-}));
+// `fetchCapabilities` is a thin same-module dispatch over the two below (see externalLayers.utils.ts)
+// — it must be mocked here too, delegating to the mocks, since a same-module call bypasses jest's
+// mock of its sibling exports.
+jest.mock('../../ExternalLayers/externalLayers.utils', () => {
+  const fetchWmtsCapabilities = jest.fn();
+  const fetchWmsCapabilities = jest.fn();
+  return {
+    ...jest.requireActual('../../ExternalLayers/externalLayers.utils'),
+    fetchWmtsCapabilities,
+    fetchWmsCapabilities,
+    fetchCapabilities: jest.fn((type, url) =>
+      type === 'WMTS' ? fetchWmtsCapabilities(url) : fetchWmsCapabilities(url),
+    ),
+  };
+});
 
 const renderPinPanel = (ownProps = {}) =>
   render(

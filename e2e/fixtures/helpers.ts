@@ -105,3 +105,86 @@ export const waitForStacSearchResponse = (page: Page) =>
   page.waitForResponse((resp) => resp.url().includes(STAC_SEARCH_URL) && resp.status() === 200, {
     timeout: LIVE_REQUEST_TIMEOUT,
   });
+
+/**
+ * Reads the real-SSO test account credentials from the environment, throwing a clear error if
+ * they are missing instead of letting the login form time out on empty fields.
+ */
+export function requireSsoCredentials(): { username: string; password: string } {
+  const username = process.env.E2E_SSO_USERNAME;
+  const password = process.env.E2E_SSO_PASSWORD;
+  if (!username || !password) {
+    throw new Error('E2E_SSO_USERNAME and E2E_SSO_PASSWORD must be set to run this test.');
+  }
+  return { username, password };
+}
+
+/**
+ * Fills in and submits the real Keycloak login form, then dismisses the first-login consent
+ * dialog when Keycloak shows one. Callers must trigger the redirect themselves (e.g. by clicking
+ * their own "Log in" button) and wait for the `identity.dataspace.copernicus.eu` navigation before
+ * calling this.
+ */
+export async function performKeycloakLogin(
+  page: Page,
+  { username, password }: { username: string; password: string },
+) {
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).fill(username);
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).fill(password);
+  await page.getByRole('button', { name: 'LOGIN' }).click();
+
+  // First-login consent dialog is not shown on every run; dismiss it only when present so an
+  // absent dialog does not stall the caller for the full action timeout.
+  const consentButton = page.getByRole('button', { name: "Don't show again" });
+  await consentButton.waitFor({ state: 'visible', timeout: 3_000 }).catch(() => {});
+  if (await consentButton.isVisible()) {
+    await consentButton.click();
+  }
+}
+
+/**
+ * Installs a stateful mock of a backend that GETs the durable list and PUTs the full array back on
+ * every mutation — the shape shared by userexternalservers and userpins. `formatGetBody` lets each
+ * caller match its own response envelope (e.g. `{ items }` vs a bare array); it defaults to a bare
+ * array. PUT bodies are always read as `{ items }`, matching both backends' PUT contract.
+ *
+ * Returns a promise for a handle exposing `items` (the durable list), `putCount`, and
+ * `lastPutBody`, so tests can assert on exactly what was persisted.
+ */
+export function mockJsonBackend<T>(
+  page: Page,
+  urlPattern: string,
+  initial: T[] = [],
+  formatGetBody: (items: T[]) => unknown = (items) => items,
+) {
+  const state = { items: initial, putCount: 0, lastPutBody: null as { items?: T[] } | null };
+  return page
+    .route(urlPattern, async (route) => {
+      const method = route.request().method();
+      if (method === 'GET') {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify(formatGetBody(state.items)),
+        });
+        return;
+      }
+      if (method === 'PUT') {
+        state.putCount += 1;
+        state.lastPutBody = route.request().postDataJSON();
+        state.items = state.lastPutBody?.items ?? [];
+        await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+        return;
+      }
+      await route.fallback();
+    })
+    .then(() => state);
+}
+
+// Installs a stateful mock of the userpins backend. GET returns the durable list, PUT replaces it.
+// Shared by shared-pins-import.spec.ts.
+export function mockUserPinsBackend(page: Page, initial: unknown[] = []) {
+  return mockJsonBackend(page, '**/userpins**', initial);
+}

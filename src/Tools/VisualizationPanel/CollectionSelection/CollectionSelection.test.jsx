@@ -1,18 +1,27 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import CollectionSelection from './CollectionSelection';
 import { visualizationSlice } from '../../../store/slices/visualizationSlice';
 import { clmsSlice } from '../../../store/slices/clmsSlice';
+import { externalLayersSlice } from '../../../store/slices/externalLayersSlice';
+import { panelSlice } from '../../../store/slices/panelSlice';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
-import { DATASOURCES } from '../../../const';
+import {
+  ALL_COLLECTIONS_HINT_VALUE,
+  DATASOURCES,
+  DEFAULT_THEME_ID,
+  MODE_THEMES_LIST,
+  URL_THEMES_LIST,
+  USER_INSTANCES_THEMES_LIST,
+} from '../../../const';
 
 // A JWT whose realm_access.roles includes a CCM role (public-ccm), decodable client-side by
 // jwtDecode without signature verification — same pattern as e2e's fake anon JWT.
@@ -132,7 +141,7 @@ jest.mock('../../../components/SearchableSelect/SearchableSelect', () => ({
         // Text content is the raw value, not `o.label` — the label duplicates text already
         // rendered by the (unmocked) collection buttons below, and getByText('Copernicus 30')
         // must resolve to a single element.
-        <option key={`${o.type}-${o.value}`} value={o.value}>
+        <option key={`${o.type}-${o.value}`} value={o.value} disabled={!!o.isDisabled}>
           {o.value}
         </option>
       ))}
@@ -163,6 +172,12 @@ function makeStore({
   user,
   collectionPanelExpanded,
   useRealClmsReducer,
+  useRealExternalLayersReducer,
+  externalLayers,
+  selectedThemeId = 'theme1',
+  selectedThemesListId = MODE_THEMES_LIST,
+  urlThemesList = [],
+  panel,
 }) {
   mockCurrentTestStore = configureStore({
     reducer: {
@@ -172,11 +187,14 @@ function makeStore({
       collapsiblePanel: (state = {}) => state,
       auth: (state = {}) => state,
       clms: useRealClmsReducer ? clmsSlice.reducer : (state = {}) => state,
-      externalLayers: (state = {}) => state,
+      externalLayers: useRealExternalLayersReducer ? externalLayersSlice.reducer : (state = {}) => state,
+      panel: panelSlice.reducer,
     },
     preloadedState: {
       themes: {
-        selectedThemeId: 'theme1',
+        selectedThemeId,
+        selectedThemesListId,
+        themesLists: { [URL_THEMES_LIST]: urlThemesList },
         dataSourcesInitialized,
         dataSourcesReadyVersion,
         dataSourcesLoading,
@@ -186,18 +204,21 @@ function makeStore({
       collapsiblePanel: { collectionPanelExpanded: collectionPanelExpanded ?? false },
       auth: { user: user ?? {} },
       clms: useRealClmsReducer ? clmsSlice.getInitialState() : {},
-      externalLayers: {
-        servers: [],
-        activeServerId: null,
-        activeLayerName: null,
-        activeLayerId: null,
-        activeLayerTime: null,
-        panelOpen: false,
-        lastActiveServerId: null,
-        lastActiveLayerName: null,
-        lastActiveLayerId: null,
-        lastActiveLayerTime: null,
-      },
+      externalLayers: useRealExternalLayersReducer
+        ? { ...externalLayersSlice.getInitialState(), ...externalLayers }
+        : {
+            servers: [],
+            activeServerId: null,
+            activeLayerName: null,
+            activeLayerId: null,
+            activeLayerTime: null,
+            lastActiveServerId: null,
+            lastActiveLayerName: null,
+            lastActiveLayerId: null,
+            lastActiveLayerTime: null,
+            ...externalLayers,
+          },
+      panel: { ...panelSlice.getInitialState(), ...panel },
     },
   });
   return mockCurrentTestStore;
@@ -371,6 +392,209 @@ describe('CollectionSelection', () => {
       expect(store.getState().clms.selectedCollection).toBeNull();
       // No concrete leaf dataset is loaded as a result of selecting a category.
       expect(store.getState().visualization.datasetId).toBeUndefined();
+    });
+  });
+
+  describe('external WMS/WMTS multi-server restore effect (#1236)', () => {
+    function renderExternalLayersPanel(externalLayers) {
+      return renderComponent({
+        dataSourcesInitialized: true,
+        dataSourcesReadyVersion: 0,
+        dataSourcesLoading: false,
+        datasetId: 'S2L2A',
+        useRealExternalLayersReducer: true,
+        externalLayers,
+        panel: { layers: false, wms: true },
+      });
+    }
+
+    it('switching to a second server while a different server is still remembered does not crash and selects the new server`s own layer', () => {
+      // Server A is the previously-remembered one and hasn't had its layers fetched this session
+      // yet; server B is the one the user just clicked in ExtraCollectionsPanel and already has its
+      // layers loaded. Before the fix, `remembered.layers.find(...)` threw because `remembered` (A)
+      // has no `layers` even though `server` (B, the active one) does.
+      const { store } = renderExternalLayersPanel({
+        servers: [
+          { id: 'A', name: 'Server A', url: 'https://a.example/wms', type: 'WMS' },
+          {
+            id: 'B',
+            name: 'Server B',
+            url: 'https://b.example/wms',
+            type: 'WMS',
+            layers: [{ id: 'b-layer1', name: 'b-layer1', title: 'B Layer One' }],
+          },
+        ],
+        activeServerId: 'B',
+        lastActiveServerId: 'A',
+        lastActiveLayerName: 'a-layer1',
+      });
+
+      const state = store.getState().externalLayers;
+      expect(state.activeServerId).toBe('B');
+      // Falls back to B's own first layer instead of inheriting A's remembered layer name.
+      expect(state.activeLayerName).toBe('b-layer1');
+    });
+
+    it('completes the restore once the remembered server`s layers load after activation', () => {
+      const { store, rerender } = renderExternalLayersPanel({
+        servers: [{ id: 'A', name: 'Server A', url: 'https://a.example/wms', type: 'WMS' }],
+        activeServerId: null,
+        lastActiveServerId: 'A',
+        lastActiveLayerName: 'layer1',
+        lastActiveLayerTime: '2024-01-01T00:00:00.000Z',
+        lastActiveLayerStyle: 'blue',
+      });
+
+      // First pass: A's layers aren't loaded yet, so the effect only activates the server.
+      expect(store.getState().externalLayers.activeServerId).toBe('A');
+      expect(store.getState().externalLayers.activeLayerName).toBeNull();
+
+      // The lazy fetch resolves and the layers land in the store.
+      act(() => {
+        store.dispatch(
+          externalLayersSlice.actions.updateServerLayers({
+            serverId: 'A',
+            layers: [{ id: 'layer1', name: 'layer1', title: 'Layer One' }],
+          }),
+        );
+      });
+      rerender(
+        <Provider store={store}>
+          <CollectionSelection />
+        </Provider>,
+      );
+
+      const state = store.getState().externalLayers;
+      expect(state.activeLayerName).toBe('layer1');
+      expect(state.activeLayerTime).toBe('2024-01-01T00:00:00.000Z');
+      expect(state.activeLayerStyle).toBe('blue');
+    });
+
+    it('falls back to the server`s first layer when the remembered layer was removed/renamed, without applying the old time/style', () => {
+      const { store } = renderExternalLayersPanel({
+        servers: [
+          {
+            id: 'A',
+            name: 'Server A',
+            url: 'https://a.example/wms',
+            type: 'WMS',
+            layers: [{ id: 'newLayer', name: 'newLayer', title: 'New Layer' }],
+          },
+        ],
+        activeServerId: null,
+        lastActiveServerId: 'A',
+        lastActiveLayerName: 'oldLayer',
+        lastActiveLayerTime: '2024-01-01T00:00:00.000Z',
+        lastActiveLayerStyle: 'blue',
+      });
+
+      const state = store.getState().externalLayers;
+      expect(state.activeServerId).toBe('A');
+      expect(state.activeLayerName).toBe('newLayer');
+      // Not the restored layer, so the remembered time/style must not carry over to it.
+      expect(state.activeLayerTime).toBeNull();
+      expect(state.activeLayerStyle).toBeNull();
+    });
+  });
+
+  describe('curated collections hint (issue #1221)', () => {
+    const renderExpanded = (themesState) =>
+      renderComponent({
+        dataSourcesInitialized: true,
+        dataSourcesReadyVersion: 1,
+        dataSourcesLoading: false,
+        datasetId: 'S2L2A',
+        collectionPanelExpanded: true,
+        ...themesState,
+      });
+
+    const hintOption = (container) =>
+      container.querySelector(`option[value="${ALL_COLLECTIONS_HINT_VALUE}"]`);
+
+    it('appends a disabled hint option for a non-default configuration', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: 'theme1',
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      expect(hintOption(container)).toBeInTheDocument();
+      expect(hintOption(container)).toBeDisabled();
+    });
+
+    it('renders the hint as the last option', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: 'theme1',
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      const values = [...container.querySelectorAll('option')].map((o) => o.value);
+      expect(values[values.length - 1]).toBe(ALL_COLLECTIONS_HINT_VALUE);
+    });
+
+    it('omits the hint on the default configuration', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: DEFAULT_THEME_ID,
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      expect(hintOption(container)).not.toBeInTheDocument();
+    });
+
+    it('shows the hint for a user instance whose id happens to equal the default theme id', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: DEFAULT_THEME_ID,
+        selectedThemesListId: USER_INSTANCES_THEMES_LIST,
+      });
+
+      expect(hintOption(container)).toBeInTheDocument();
+    });
+
+    it('omits the hint when a themesUrl replaced the mode themes list', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: 'theme1',
+        selectedThemesListId: URL_THEMES_LIST,
+        urlThemesList: [{ id: 'theme1', name: 'Url theme' }],
+      });
+
+      expect(hintOption(container)).not.toBeInTheDocument();
+    });
+
+    it('omits the hint when no configuration is selected', () => {
+      const { container } = renderExpanded({
+        selectedThemeId: null,
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      expect(hintOption(container)).not.toBeInTheDocument();
+    });
+
+    it('omits the hint while the collection panel is collapsed', () => {
+      const { container } = renderComponent({
+        dataSourcesInitialized: true,
+        dataSourcesReadyVersion: 1,
+        dataSourcesLoading: false,
+        datasetId: 'S2L2A',
+        collectionPanelExpanded: false,
+        selectedThemeId: 'theme1',
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      expect(hintOption(container)).not.toBeInTheDocument();
+    });
+
+    it('does not change the selection when the hint is chosen', () => {
+      const { container, store } = renderExpanded({
+        selectedThemeId: 'theme1',
+        selectedThemesListId: MODE_THEMES_LIST,
+      });
+
+      const datasetIdBefore = store.getState().visualization.datasetId;
+      fireEvent.change(screen.getByLabelText('collection-select'), {
+        target: { value: ALL_COLLECTIONS_HINT_VALUE },
+      });
+
+      expect(store.getState().visualization.datasetId).toBe(datasetIdBefore);
+      expect(hintOption(container)).toBeInTheDocument();
     });
   });
 });

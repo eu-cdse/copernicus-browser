@@ -226,6 +226,18 @@
   font-style: italic;
 }
 
+// Shown in place of the layer list when the lazy GetCapabilities fetch (see
+// useExternalServerLayers) fails — mirrors .external-wms-layer-empty's spacing, plus a retry action.
+.external-wms-layer-error {
+  padding: 10px 0;
+  font-size: 12px;
+  color: vars.$textColor;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
 // Collapsible legend + full abstract shown when a layer row is unfolded. Scoped to the WMS panel
 // (not the shared .layer-details) so VisualizationPanel-specific layout doesn't leak in. The legend
 // image itself is rendered by the shared Legend component, whose base styles come from Legend.scss.

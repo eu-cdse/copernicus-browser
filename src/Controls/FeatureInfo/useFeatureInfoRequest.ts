@@ -4,6 +4,8 @@ import { ExternalFeatureInfoResult } from './FeatureInfo.utils';
 
 // Shared loading/error/result state for a GetFeatureInfo request. The `request` thunk is run
 // whenever `deps` change; a stale-guard prevents a late response from overwriting a newer one.
+// Shares this cancelled-effect stale-guard shape with useExternalServerLayers
+// (src/ExternalLayers/useExternalServerLayers.ts); kept separate since the two evolve independently.
 /**
  * @param request A thunk that performs the GetFeatureInfo request. It is re-invoked **only when
  *   `deps` change**, not on every render — so it is safe to pass an inline arrow function.

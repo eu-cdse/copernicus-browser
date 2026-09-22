@@ -58,6 +58,45 @@ function cleanTitle(title: string): string {
 // oddly rendered verbatim ("Access constraints: none"); treat such values as absent.
 export const isMeaningful = (value?: string): boolean => !!value && value.trim().toLowerCase() !== 'none';
 
+// Shared by ExtraCollectionsPanel (adding a server) and useExternalServerLayers (lazily loading an
+// already-added one) so both surface the same message for the same failure, reusing these exact
+// ttag strings rather than introducing new translation keys. `kind` lets callers that track
+// analytics (e.g. ExtraCollectionsPanel's Fathom events) tag the failure without re-deriving it.
+// See #1236.
+export type CapabilitiesErrorKind = 'timeout' | 'http-error' | 'network' | 'no-capabilities';
+
+export interface ClassifiedCapabilitiesError {
+  kind: CapabilitiesErrorKind;
+  message: string;
+}
+
+export const classifyCapabilitiesError = (e: unknown): ClassifiedCapabilitiesError => {
+  const err = e as Error & { status?: number };
+  if (err?.name === 'AbortError' || err?.name === 'TimeoutError') {
+    return { kind: 'timeout', message: t`The server took too long to respond. Please try again.` };
+  }
+  if (err?.name === 'HttpError') {
+    return {
+      kind: 'http-error',
+      message: t`The server returned an error (HTTP ${err.status}). Check the URL and try again.`,
+    };
+  }
+  return {
+    kind: 'network',
+    message: t`Could not reach the server. It may be offline or may not allow cross-origin (CORS) access.`,
+  };
+};
+
+// Not a thrown error — the fetch resolved but found no usable capabilities (malformed/empty XML, no
+// layers). Shares the same message/translation key as the thrown-error kinds above so callers that
+// fetch and get a null result (rather than a rejection) can still report through the one classifier.
+// A getter (not a plain object) so the message re-evaluates against the current locale on every call,
+// matching classifyCapabilitiesError instead of freezing the translation at module-load time.
+export const getNoCapabilitiesResultError = (): ClassifiedCapabilitiesError => ({
+  kind: 'no-capabilities',
+  message: t`Could not load capabilities. Check the URL and try again.`,
+});
+
 function formatTimeDimension(value: string): string | undefined {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -824,6 +863,12 @@ export async function fetchWmtsCapabilities(url: string): Promise<CapabilitiesRe
     console.warn(`[ExternalLayers] WMTS GetCapabilities parse error for ${url}:`, e);
     return null;
   }
+}
+
+// Shared by every call site that needs to fetch capabilities for a server of unknown-until-now
+// protocol (ExtraCollectionsPanel's protocol probing/fallback, useExternalServerLayers' refresh).
+export function fetchCapabilities(type: 'WMS' | 'WMTS', url: string): Promise<CapabilitiesResult | null> {
+  return type === 'WMTS' ? fetchWmtsCapabilities(url) : fetchWmsCapabilities(url);
 }
 
 export function validateWmsUrl(url: string): boolean {

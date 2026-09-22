@@ -54,6 +54,7 @@ class VisualizationLayer extends Component {
 
     // Prepare props for createLayerActions
     const layerActionsProps = { ...this.props };
+    layerActionsProps.layerTitle = title;
     if (selectedProcessing === PROCESSING_OPTIONS.OPENEO) {
       layerActionsProps.evalscript = null;
       layerActionsProps.evalscriptUrl = null;

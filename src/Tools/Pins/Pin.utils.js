@@ -37,11 +37,13 @@ export const shouldUsePinsBackend = (isLoggedIn) => !!isLoggedIn;
 // close, so there is no cross-user leakage and no need to namespace the key per user.
 const PINS_LC_NAME = 'eob-pins';
 
-// Low-level read of the raw stored pin array (no normalization, no dispatch).
+// Low-level read of the raw stored pin array (no normalization, no dispatch). Falls back to [] on
+// missing/corrupt/non-array data or an unavailable sessionStorage (e.g. iOS Safari private mode).
 function readLocalPins() {
   try {
     const raw = sessionStorage.getItem(PINS_LC_NAME);
-    return raw ? JSON.parse(raw) : [];
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -256,7 +258,7 @@ export async function importSharedPins(sharedPinsListId) {
   if (
     !window.confirm(t`You are about to add ${N_PINS} pin(s) to your pin collection. Do you want to proceed?`)
   ) {
-    return [];
+    return null;
   }
 
   store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
@@ -265,20 +267,23 @@ export async function importSharedPins(sharedPinsListId) {
 
   //construct new list of pins and save it — all shared pins are always imported (no dedup
   //against existing pins), matching the "add to pins" button which also never dedups.
-  let result;
-  if (sharedPins.items.length > 0) {
-    const mergedPins = [...existingPins, ...sharedPins.items];
-
-    // Same shouldUsePinsBackend() gate as Tools.jsx's savePinToServerOrLocal, PinTools.jsx's
-    // onImportPins and Highlights.jsx's savePin, duplicated here intentionally without the
-    // try/catch fallback-or-notify safety (out of scope for #1076).
-    if (shouldUsePinsBackend(isUserLoggedIn)) {
-      result = await savePinsToServer(mergedPins, true);
-    } else {
-      result = saveLocalPins(mergedPins, true);
-    }
+  if (sharedPins.items.length === 0) {
+    return null;
   }
-  return result;
+
+  const mergedPins = [...existingPins, ...sharedPins.items];
+
+  // Same shouldUsePinsBackend() gate as Tools.jsx's savePinToServerOrLocal, PinTools.jsx's
+  // onImportPins and Highlights.jsx's savePin, duplicated here intentionally without the
+  // try/catch fallback-or-notify safety (out of scope for #1076).
+  // saveLocalPins returns a plain uniqueId string (its other callers rely on that), so it is
+  // wrapped here to match savePinsToServer's { uniqueId, pins } shape — the shape importSharedPins
+  // itself promises its callers (see App.jsx's this.setLastAddedPin(pins.uniqueId)).
+  const savedPin = shouldUsePinsBackend(isUserLoggedIn)
+    ? await savePinsToServer(mergedPins, true)
+    : { uniqueId: saveLocalPins(mergedPins, true) };
+
+  return savedPin;
 }
 
 // Creates a sentinelhub-js Layer instance from the pin. Known limitation:

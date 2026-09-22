@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import store, { authSlice } from '../../store';
+import { isUserAuthenticated } from '../../Auth/authHelpers';
 import {
   isOnEqualDate,
   constructTimespanString,
@@ -26,6 +28,11 @@ jest.mock('@sentinel-hub/sentinelhub-js', () => ({
 jest.mock('../SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
   ...jest.requireActual('../SearchPanel/dataSourceHandlers/dataSourceHandlers'),
   getDataSourceHandler: jest.fn(),
+}));
+
+jest.mock('../../Auth/authHelpers', () => ({
+  ...jest.requireActual('../../Auth/authHelpers'),
+  isUserAuthenticated: jest.fn(),
 }));
 
 jest.mock('axios');
@@ -337,6 +344,11 @@ describe('importSharedPins (all shared pins are imported, no dedup)', () => {
     sessionStorage.clear();
     axios.get.mockReset();
     window.confirm = jest.fn(() => true);
+    window.history.pushState(null, '', '/');
+  });
+
+  afterEach(() => {
+    window.history.pushState(null, '', '/');
   });
 
   it('imports all shared pins, including an exact duplicate and a distinct external-WMS pin at the same location', async () => {
@@ -374,10 +386,68 @@ describe('importSharedPins (all shared pins are imported, no dedup)', () => {
     };
     axios.get.mockResolvedValue({ data: { items: [sharedDuplicate, sharedNew] } });
 
-    await importSharedPins('shared-list-id');
+    const result = await importSharedPins('shared-list-id');
 
+    expect(result).toBeTruthy();
     const stored = getLocalPins();
     expect(stored.map((p) => p._id).sort()).toEqual(['local-1', 'shared-1', 'shared-2']);
+  });
+
+  it("returns { uniqueId } for the anonymous (local) path, matching savePinsToServer's shape (#1184 F1)", async () => {
+    axios.get.mockResolvedValue({ data: { items: [{ _id: 'shared-1', title: 'Shared pin' }] } });
+
+    const result = await importSharedPins('shared-list-id');
+
+    expect(result).toEqual({ uniqueId: 'shared-1' });
+  });
+
+  it('returns null and imports nothing when the user cancels the confirm dialog', async () => {
+    window.confirm = jest.fn(() => false);
+    axios.get.mockResolvedValue({ data: { items: [{ _id: 'shared-1', title: 'Shared pin' }] } });
+
+    const result = await importSharedPins('shared-list-id');
+
+    expect(result).toBeNull();
+    expect(getLocalPins()).toHaveLength(0);
+  });
+
+  it('returns null when the shared pins list has zero items', async () => {
+    axios.get.mockResolvedValue({ data: { items: [] } });
+
+    const result = await importSharedPins('shared-list-id');
+
+    expect(result).toBeNull();
+  });
+});
+
+describe('importSharedPins — error propagation', () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+    axios.get.mockReset();
+    axios.put.mockReset();
+    window.confirm = jest.fn(() => true);
+    window.history.pushState(null, '', '/');
+    isUserAuthenticated.mockReturnValue(true);
+    store.dispatch(
+      authSlice.actions.setUser({ access_token: 'test-token', userdata: {}, token_expiration: 1 }),
+    );
+  });
+
+  afterEach(() => {
+    window.history.pushState(null, '', '/');
+    isUserAuthenticated.mockReset();
+    store.dispatch(authSlice.actions.resetUser());
+  });
+
+  it('propagates a backend save failure', async () => {
+    axios.get.mockImplementation((url) =>
+      url.includes('sharedpins')
+        ? Promise.resolve({ data: { items: [{ _id: 'shared-1', title: 'Shared pin' }] } })
+        : Promise.resolve({ data: [] }),
+    );
+    axios.put.mockRejectedValue(new Error('backend down'));
+
+    await expect(importSharedPins('shared-list-id')).rejects.toThrow('backend down');
   });
 });
 

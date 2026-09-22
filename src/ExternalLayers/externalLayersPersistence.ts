@@ -3,6 +3,7 @@ import {
   ExternalLayersState,
   ExternalServer,
 } from '../store/slices/externalLayersSlice';
+import { stripServerLayers } from './externalServicesBackend';
 
 // External WMS/WMTS servers the user adds live only in Redux, which is wiped on the full-page
 // Keycloak redirect during login/logout. For anonymous users we persist them to sessionStorage (no
@@ -11,7 +12,9 @@ import {
 // sessionStorage is per-tab and cleared on close, so there is no cross-user leakage and no need to
 // namespace the key per user. Only the durable parts are stored; the live "active layer" render
 // fields are intentionally left out so we don't hijack a URL-driven visualization on load (the user
-// re-renders a layer by clicking it, the same way pins work).
+// re-renders a layer by clicking it, the same way pins work). Each server's `layers` are stripped
+// on both write and read (see stripServerLayers) — they are a runtime-only cache fetched from
+// GetCapabilities on demand, not durable data. See #1236.
 const STORAGE_KEY = 'browser_external_services';
 
 // The last WMS date the user picked, kept under its own key so it isn't tied to the server bucket.
@@ -24,9 +27,8 @@ const STYLE_STORAGE_KEY = 'browser_external_wms_style';
 
 // The subset of the slice we persist per user. Only durable data is kept: the added servers and
 // which one was last active (so reopening the panel can restore "where you left off"). The live
-// active-render fields and the transient panelOpen flag are intentionally excluded. The selected
-// date and style are handled separately (see DATE_STORAGE_KEY / STYLE_STORAGE_KEY) so they are not
-// tied to the user.
+// active-render fields are intentionally excluded. The selected date and style are handled
+// separately (see DATE_STORAGE_KEY / STYLE_STORAGE_KEY) so they are not tied to the user.
 type PersistedExternalLayers = Pick<
   ExternalLayersState,
   'servers' | 'lastActiveServerId' | 'lastActiveLayerName' | 'lastActiveLayerId'
@@ -64,7 +66,11 @@ export function loadPersistedExternalLayers(): ExternalLayersState | undefined {
     }
     return {
       ...externalLayersSlice.getInitialState(),
-      servers: saved.servers,
+      // Strip `layers` on read too, mirroring stripServerLayers on write: a bucket written by a
+      // pre-#1236 build can still carry a populated `layers` array, which would otherwise be
+      // hydrated as stale data and never refresh (useExternalServerLayers skips the fetch once
+      // `server.layers` is populated). See #1236.
+      servers: stripServerLayers(saved.servers),
       lastActiveServerId: saved.lastActiveServerId ?? null,
       lastActiveLayerName: saved.lastActiveLayerName ?? null,
       lastActiveLayerId: saved.lastActiveLayerId ?? null,
@@ -107,7 +113,7 @@ export function persistExternalLayers(state: ExternalLayersState): void {
       sessionStorage.removeItem(STORAGE_KEY);
     } else {
       const payload: PersistedExternalLayers = {
-        servers: state.servers,
+        servers: stripServerLayers(state.servers),
         lastActiveServerId: state.lastActiveServerId,
         lastActiveLayerName: state.lastActiveLayerName,
         lastActiveLayerId: state.lastActiveLayerId,

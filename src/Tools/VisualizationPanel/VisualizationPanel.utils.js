@@ -9,14 +9,14 @@ const TRUE_COLOR_REGEX = /TRUE(\s|-|_)COLOR/i;
 const isTrueColorLayer = (layer) =>
   TRUE_COLOR_REGEX.test(layer.layerId) || TRUE_COLOR_REGEX.test(layer.title);
 
+const byLayerId = (a, b) => a.layerId.localeCompare(b.layerId);
+
 //True color layers should come first, the rest are sorted by layerId
 export const sortLayers = (layers) => {
-  const sortedLayers = [
-    ...layers.filter((l) => isTrueColorLayer(l)).sort((a, b) => (a.layerId > b.layerId ? 1 : -1)),
-    ...layers.filter((l) => !isTrueColorLayer(l)).sort((a, b) => (a.layerId > b.layerId ? 1 : -1)),
+  return [
+    ...layers.filter((l) => isTrueColorLayer(l)).sort(byLayerId),
+    ...layers.filter((l) => !isTrueColorLayer(l)).sort(byLayerId),
   ];
-
-  return sortedLayers;
 };
 
 // Get dataset-specific default effects

@@ -16,6 +16,7 @@ import L from 'leaflet';
 import JSZip from 'jszip';
 import {
   getDataSourceHandler,
+  getDatasetLabel,
   datasetLabels,
   checkIfCustom,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -471,7 +472,7 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
           }
         }
 
-        imageTitles.push(cLayer.title);
+        imageTitles.push(resolveComparedLayerTitle(cLayer, image.layerTitle));
       }
 
       imgObjectUrl = window.URL.createObjectURL(image.blob);
@@ -955,7 +956,7 @@ export async function fetchImageFromParams(params, raiseWarning) {
       isRawBand,
       bandName,
     );
-    return { blob: imageWithOverlays, nicename: nicename };
+    return { blob: imageWithOverlays, nicename: nicename, layerTitle: layer.title };
   }
 
   if (blobArray.length > 1 && params.mergeImages === false) {
@@ -1065,6 +1066,23 @@ export function getNicename(fromTime, toTime, datasetId, layerTitle, customSelec
     .clone()
     .utc()
     .format(format)}_${datasetLabel ? sanitizeFilenameSegment(datasetLabel) + '_' : ''}${layerName}`;
+}
+
+// Compare layers created before #1202 stored the raw layerId as their display name
+// ("Sentinel-2 L2A: 2_TONEMAPPED_NATURAL_COLOR"). Those titles are persisted in shared compare
+// links, so rebuild the caption from the resolved layer title when we detect that shape.
+// Any other stored title (pins, highlights, custom evalscripts) is kept verbatim.
+export function resolveComparedLayerTitle(cLayer, resolvedLayerTitle) {
+  if (!cLayer.title) {
+    return resolvedLayerTitle ?? '';
+  }
+  if (!resolvedLayerTitle || !cLayer.layerId) {
+    return cLayer.title;
+  }
+  if (cLayer.title.endsWith(`: ${cLayer.layerId}`)) {
+    return `${getDatasetLabel(cLayer.datasetId)}: ${resolvedLayerTitle}`;
+  }
+  return cLayer.title;
 }
 
 export async function getLayerFromParams(params, cancelToken, authToken) {

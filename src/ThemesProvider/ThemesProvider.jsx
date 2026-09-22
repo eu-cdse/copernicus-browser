@@ -21,6 +21,7 @@ import {
   RRD_INSTANCES_THEMES_LIST,
 } from '../const';
 import { isInGroup, openLogin, logoutUser } from '../Auth/authHelpers';
+import { isDefaultConfigurationReachable } from '../utils/themes.utils';
 
 import './ThemesProvider.scss';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
@@ -448,7 +449,9 @@ class ThemesProvider extends React.Component {
         }),
       );
     } else {
-      if (urlThemesList.length > 0) {
+      // A themesUrl replaces the mode themes list rather than adding to it, so there is no Default
+      // to fall back on — shared with ThemeSelect, CollectionSelection and themesSlice.
+      if (!isDefaultConfigurationReachable(urlThemesList)) {
         store.dispatch(
           themesSlice.actions.setSelectedThemeId({
             selectedThemeId: urlThemesList[0].id,

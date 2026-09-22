@@ -20,7 +20,13 @@ export interface ExternalServer {
   serviceAbstract?: string;
   accessConstraints?: string;
   fees?: string;
-  layers: ExternalLayer[];
+  // ISO 8601 timestamp set when the service is added; used to keep the server list in a stable,
+  // deterministic order (legacy servers without it keep their existing relative order). See #1236.
+  addedAt?: string;
+  // Runtime-only cache fetched from GetCapabilities on demand (see useExternalServerLayers) — never
+  // persisted (see stripServerLayers in externalServicesBackend.ts). Absent until the first fetch
+  // resolves; legacy persisted records may still carry a populated array until their next write.
+  layers?: ExternalLayer[];
 }
 
 export interface ExternalLayersState {
@@ -30,7 +36,6 @@ export interface ExternalLayersState {
   activeLayerId: string | null; // unique id of the active layer row (disambiguates repeated names)
   activeLayerTime: string | null; // user-selected time for the active layer's time dimension
   activeLayerStyle: string | null; // user-selected WMS style (SLD) for the active layer
-  panelOpen: boolean; // whether the WMS/WMTS panel is open in the sidebar
   // Last layer the user had active. Survives clearing the active layer (e.g. when switching to a
   // Sentinel Hub collection) so the panel can restore "where you left off" on navigation back.
   lastActiveServerId: string | null;
@@ -55,7 +60,6 @@ const initialState: ExternalLayersState = {
   activeLayerId: null,
   activeLayerTime: null,
   activeLayerStyle: null,
-  panelOpen: false,
   lastActiveServerId: null,
   lastActiveLayerName: null,
   lastActiveLayerId: null,
@@ -141,6 +145,11 @@ export const externalLayersSlice = createSlice({
       state.lastActiveLayerName = action.payload.layerName;
       state.lastActiveLayerId = layerId;
     },
+    /**
+     * Preserves lastActiveServerId/lastActiveLayerName/lastActiveLayerId/lastActiveLayerTime/
+     * lastActiveLayerStyle when the target server has no cached layers yet (lazy fetch in flight),
+     * instead of overwriting them with the not-yet-loaded server's empty selection.
+     */
     setActiveExternalServer: (state, action: PayloadAction<string>) => {
       state.activeServerId = action.payload;
       const server = state.servers.find((s) => s.id === action.payload);
@@ -148,11 +157,16 @@ export const externalLayersSlice = createSlice({
       state.activeLayerId = server?.layers?.[0]?.id ?? null;
       state.activeLayerTime = null;
       state.activeLayerStyle = null;
-      state.lastActiveServerId = action.payload;
-      state.lastActiveLayerName = state.activeLayerName;
-      state.lastActiveLayerId = state.activeLayerId;
-      state.lastActiveLayerTime = null;
-      state.lastActiveLayerStyle = null;
+      // A server whose layers haven't loaded yet (lazy fetch in flight) has nothing to remember —
+      // leave lastActive* pointing at whatever was previously active so a reload doesn't lose that
+      // memory before the fetch resolves and a real layer gets picked via setActiveExternalLayer.
+      if (server?.layers?.length) {
+        state.lastActiveServerId = action.payload;
+        state.lastActiveLayerName = state.activeLayerName;
+        state.lastActiveLayerId = state.activeLayerId;
+        state.lastActiveLayerTime = null;
+        state.lastActiveLayerStyle = null;
+      }
     },
     clearActiveExternalLayer: (state) => {
       // Only clears the *active* (rendered) layer; lastActive* (incl. the chosen time and style) is
@@ -191,9 +205,6 @@ export const externalLayersSlice = createSlice({
         }
       }
     },
-    setWmsPanelOpen: (state, action: PayloadAction<boolean>) => {
-      state.panelOpen = action.payload;
-    },
     setActiveExternalLayerTime: (state, action: PayloadAction<string | null>) => {
       state.activeLayerTime = action.payload;
       // Remember the chosen time so it survives clearing the active layer (panel switch) and is
@@ -206,9 +217,13 @@ export const externalLayersSlice = createSlice({
       state.lastActiveLayerStyle = action.payload;
     },
     // Restore the durable parts of the slice from persisted (per-user) storage on app load. The live
-    // active-render fields and the transient panelOpen flag are intentionally not restored, so we
-    // don't hijack a URL-driven visualization or reopen the panel into a collapsed parent; the user
-    // re-opens the panel and re-renders a layer by clicking it.
+    // active-render fields are intentionally not restored *here* — blindly reopening the panel on
+    // every session would hijack a URL-driven visualization or reopen it into a collapsed parent.
+    // Instead, App.jsx explicitly reopens it (panelSlice's openPanel) only when the live-synced
+    // `panel=wms` URL param confirms the WMS panel was actually open when the user left/refreshed —
+    // see PANEL.WMS in const.ts and URLParamsParser.js. Once reopened with `servers` already
+    // populated below, CollectionSelection's own effect picks the last active layer back up from
+    // lastActiveServerId/lastActiveLayerName.
     hydrateExternalLayers: (state, action: PayloadAction<ExternalLayersState>) => {
       const persisted = action.payload;
       state.servers = persisted.servers ?? [];
@@ -317,11 +332,15 @@ export const selectActiveExternalLayer = createSelector(
 // rehydrate done on app mount (see markExternalLayersHydrated / App.jsx).
 // Actions that mutate the durable `servers` array. Only these trigger a backend save — most
 // externalLayers/* actions (selecting a layer, changing the time, opening the panel) are transient
-// UI state that would otherwise hammer the backend on every interaction.
+// UI state that would otherwise hammer the backend on every interaction. `updateServerLayers` is
+// deliberately excluded: layers are a runtime-only cache (see stripServerLayers), so a lazy/background
+// capabilities fetch must never trigger a full-array PUT of every service's metadata. This means a
+// serviceAbstract/accessConstraints/fees refresh picked up by that same fetch also isn't persisted —
+// accepted, since the UI re-fetches and re-applies fresh metadata locally each time the server becomes
+// active, so the backend copy only drifts for services that are never revisited. See #1236.
 const SERVERS_MUTATING_ACTION_TYPES = new Set<string>([
   externalLayersSlice.actions.addExternalServer.type,
   externalLayersSlice.actions.removeExternalServer.type,
-  externalLayersSlice.actions.updateServerLayers.type,
 ]);
 
 export const externalLayersPersistenceMiddleware = createListenerMiddleware();

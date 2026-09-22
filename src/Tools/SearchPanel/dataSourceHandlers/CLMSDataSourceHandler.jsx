@@ -610,6 +610,10 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
 } from './CLMSLowResolutionCollectionIds';
 
+// lowResolutionMetersPerPixelThreshold values (except LCM/TCD 10m yearly, left as before) were
+// derived by probing each collection's actual Sentinel Hub-enforced resolution ceiling (issue
+// #1260) and applying a 10% safety margin below it, to avoid the app requesting a resolution the
+// backend rejects with a 400 before ever falling back to the low-resolution collection.
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_LCM_10M_YEARLY_V1]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_LCM_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
@@ -622,217 +626,220 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021_COLLECTION_ID.ACTUAL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021_COLLECTION_ID.LOW_RES,
-    lowResolutionMetersPerPixelThreshold: 650,
+    lowResolutionMetersPerPixelThreshold: 450,
   },
   [COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS.ACTUAL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_CLCPLUS_LULUCF_INSTANCE_EUROPE_100M_YEARLY_V1_COLLECTION_IDS.LOW_RES,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    // Probed ceiling is 32000 (a large outlier vs. every other collection here), but kept in
+    // line with the other 1600-group collections (1600 - 10% margin) rather than raised to
+    // match it — do not "fix" this back up to the probed value.
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCD]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_CPMCD_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CTY]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_CTY_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLT]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DLT_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_10M_3YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRA]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_GRA_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_COLLECTION_IDS.GRAC]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_GRAC_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCD]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_TCD_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_COLLECTION_IDS.TCPC]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_TCPC_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_COLLECTION_IDS.TCPCCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_VLCC_TCPC_20M_3YEARLY_V1_TCPCCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRAME]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_GRAME_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRAMECL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_EVENTS_EUROPE_10M_YEARLY_V1_GRAMECL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_HERBACEOUS_COVER_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_PLOUGHING_INDICATOR_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPMCH]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCH_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPMCHCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCHCL_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_COLLECTION_IDS.CPBSA]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_CPBSA_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_COLLECTION_IDS.CPBSACL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPBSA_10M_YEARLY_V1_CPBSACL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_COLLECTION_IDS.CPBSB]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_CPBSB_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_COLLECTION_IDS.CPBSBCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPBSB_10M_YEARLY_V1_CPBSBCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_COLLECTION_IDS.CPFLD]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_CPFLD_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_COLLECTION_IDS.CPFLDCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPFLD_10M_YEARLY_V1_CPFLDCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLP]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_FLP_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_COLLECTION_IDS.FLPCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPFLP_10M_YEARLY_V1_FLPCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPMCE]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPMCECL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCECL_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPSCD]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_CPSCD_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CPSCDCL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_SECONDARY_CROP_DURATION_EUROPE_10M_YEARLY_V1_CPSCDCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_FOREST_ADDITIONAL_SUPPORT_LAYER_EUROPE_10M_3YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_BROADLEAVED_COVER_DENSITY_EUROPE_100M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 900,
   },
   [COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_CONIFEROUS_COVER_DENSITY_EUROPE_100M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 900,
   },
   [COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_COLLECTION_IDS.CPMCDCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_CPMCD_10M_YEARLY_V1_CPMCDCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.CTYCL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1_CTYCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_DLT_10M_YEARLY_V1_COLLECTION_IDS.DLTCL]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_DLT_10M_YEARLY_V1_DLTCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_FOREST_TYPE_EUROPE_100M_3YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 900,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_100M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 900,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.GRACL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_EUROPE_10M_YEARLY_V1_GRACL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_COLLECTION_IDS.GRACCL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_GRASSLAND_CHANGE_EUROPE_20M_3YEARLY_V1_GRACCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_COLLECTION_ID]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_100M_YEARLY_V1_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 900,
   },
   [COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_COLLECTION_IDS.TCDCL]: {
     lowResolutionCollectionId:
       COPERNICUS_CLMS_VLCC_TREE_COVER_DENSITY_EUROPE_10M_YEARLY_V1_TCDCL_LOW_RESOLUTION_COLLECTION_ID,
-    lowResolutionMetersPerPixelThreshold: 1300,
+    lowResolutionMetersPerPixelThreshold: 1440,
   },
 };
 export default class CLMSDataSourceHandler extends AbstractBYOCDataSourceHandler {

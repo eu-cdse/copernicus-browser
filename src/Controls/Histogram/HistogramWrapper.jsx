@@ -171,7 +171,7 @@ const mapStoreToProps = (store) => ({
   visualizationUrl: store.visualization.visualizationUrl,
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   activeExternalLayer: selectActiveExternalLayer(store),
-  wmsLayerPanelOpen: store.externalLayers.panelOpen,
+  wmsLayerPanelOpen: store.panel.wms,
   isVisualizingLayer: store.tabs.isVisualizingLayer,
 });
 

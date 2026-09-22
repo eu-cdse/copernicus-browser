@@ -1,4 +1,5 @@
 import { createAddProductsToWorkspacePayload } from './workspace';
+import { normalizeResult } from '../../Tools/Results/Results.utils';
 
 describe('include thumbnail link in workspace metadata', () => {
   const product = {
@@ -138,6 +139,51 @@ describe('include thumbnail link in workspace metadata', () => {
     const payload = createAddProductsToWorkspacePayload([product]);
     expect(payload).toBeDefined();
     expect(Array.isArray(payload)).toBe(true);
+    expect(payload.length).toBe(1);
+    expect(payload[0].thumbnailDownloadLink).toBe(expected);
+  });
+});
+
+describe('include thumbnail link in workspace metadata - STAC results', () => {
+  // STAC results carry their quicklook in the `thumbnail` asset instead of an OData
+  // `Assets[0].DownloadLink`, so normalizeResult is what turns it into `previewUrl`.
+  const thumbnailHref =
+    'https://thumbnails.dataspace.copernicus.eu/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap' +
+    '&LAYERS=s3://eodata/Global-Mosaics/Landsat/OLM_SWA_ARD2/v1/2024/07/01/Landsat_mosaic_2024_07-08_49N002E_V1.0.1/' +
+    '&CRS=EPSG:4326&BBOX=2,49,3,50&WIDTH=500&HEIGHT=500&FORMAT=image/png&TRANSPARENT=false';
+
+  const stacFeature = {
+    id: 'Landsat_mosaic_2024_07-08_49N002E_V1.0.1',
+    collection: 'opengeohub-landsat-bimonthly-mosaic-v1.0.1',
+    geometry: { type: 'Polygon', coordinates: [] },
+    properties: {
+      datetime: '2024-07-01T00:00:00.000Z',
+      title: 'Landsat_mosaic_2024_07-08_49N002E_V1.0.1',
+      platform: 'landsat',
+      'product:type': 'L2SP',
+    },
+    assets: {
+      product: { href: 'https://example.com/landsat-mosaic/product', type: 'application/zip' },
+      thumbnail: {
+        href: thumbnailHref,
+        type: 'image/png',
+        title: 'Quicklook',
+        roles: ['thumbnail', 'overview'],
+      },
+    },
+    links: [],
+  };
+
+  const withoutThumbnail = {
+    ...stacFeature,
+    assets: { product: stacFeature.assets.product },
+  };
+
+  test.each([
+    ['thumbnail asset present', stacFeature, thumbnailHref],
+    ['no thumbnail asset', withoutThumbnail, undefined],
+  ])('add thumbnailDownloadLink (%s)', (_name, feature, expected) => {
+    const payload = createAddProductsToWorkspacePayload([normalizeResult(feature)]);
     expect(payload.length).toBe(1);
     expect(payload[0].thumbnailDownloadLink).toBe(expected);
   });

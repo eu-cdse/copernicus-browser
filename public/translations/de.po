@@ -12008,3 +12008,14 @@ msgid ""
 "Unable to reach the imagery provider. Please check your internet connection "
 "and try again."
 msgstr ""
+
+msgid "Switch back to the default configuration to see all collections"
+msgstr ""
+
+msgid "We could not load the shared pins. Please try opening the link again."
+msgstr ""
+
+msgid ""
+"Accessing shared pins is temporarily unavailable due to updates. Please try "
+"again later."
+msgstr ""

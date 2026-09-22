@@ -22,12 +22,12 @@ import {
   USER_INSTANCES_THEMES_LIST,
   URL_THEMES_LIST,
   TABS,
-  DEFAULT_MODE,
-  DATE_MODES,
   DEFAULT_THEME_ID,
+  DATE_MODES,
   ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
 } from '../../../../const';
 import { getBoundsAndLatLng } from '../../../../utils/coords';
+import { isDefaultConfigurationSelected } from '../../../../utils/themes.utils';
 import { persistSearchConfig } from '../../../../utils/searchConfigPersistence';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
@@ -470,15 +470,10 @@ class AdvancedSearch extends Component {
       .utc()
       .endOf('day');
 
-    if (
-      !(
-        this.props.selectedThemesListId === MODE_THEMES_LIST &&
-        this.props.selectedThemeId === DEFAULT_THEME_ID
-      )
-    ) {
+    if (!isDefaultConfigurationSelected(this.props.selectedThemesListId, this.props.selectedThemeId)) {
       store.dispatch(
         themesSlice.actions.setSelectedThemeId({
-          selectedThemeId: DEFAULT_MODE.themes[0].id,
+          selectedThemeId: DEFAULT_THEME_ID,
           selectedThemesListId: MODE_THEMES_LIST,
         }),
       );

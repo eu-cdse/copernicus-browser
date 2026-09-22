@@ -24,6 +24,7 @@ import store, {
   themesSlice,
   visualizationSlice,
   externalLayersSlice,
+  panelSlice,
 } from '../../store';
 
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
@@ -57,6 +58,7 @@ import {
   USER_INSTANCES_THEMES_LIST,
   FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG,
   PROCESSING_OPTIONS,
+  PANEL,
 } from '../../const';
 import { ModalId } from '../../const';
 
@@ -65,7 +67,7 @@ import { isOpenEoSupported } from '../../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../../Controls/ImgDownload/consts';
 
 import { UNSAVED_PINS, SAVED_PINS, OPERATION_SHARE } from './const';
-import { fetchWmsCapabilities, fetchWmtsCapabilities } from '../../ExternalLayers/externalLayers.utils';
+import { fetchServerCapabilities } from '../../ExternalLayers/useExternalServerLayers';
 
 const ORDERING_MODE = {
   TITLE: 'title',
@@ -491,6 +493,7 @@ class PinPanel extends Component {
             version,
             format,
             infoFormat,
+            addedAt: new Date().toISOString(),
             layers: layerName
               ? [
                   {
@@ -517,33 +520,22 @@ class PinPanel extends Component {
       );
       store.dispatch(externalLayersSlice.actions.setActiveExternalLayerTime(time ?? null));
       store.dispatch(externalLayersSlice.actions.setActiveExternalLayerStyle(style ?? null));
-      store.dispatch(externalLayersSlice.actions.setWmsPanelOpen(true));
+      store.dispatch(panelSlice.actions.openPanel(PANEL.WMS));
       const { lat, lng, zoom } = rawPin;
       const { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
       store.dispatch(mainMapSlice.actions.setPosition({ lat: parsedLat, lng: parsedLng, zoom: parsedZoom }));
       store.dispatch(visualizationSlice.actions.reset());
       store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
-      this.props.setShowPinPanel(false);
 
-      // If the server was freshly added, fetch full capabilities in background so the layer list
-      // shows all available layers. Skipped for existing servers (already have their layers loaded).
-      if (!existingServer) {
-        const fetchFn = type === 'WMTS' ? fetchWmtsCapabilities : fetchWmsCapabilities;
-        fetchFn(url)
-          .then((result) => {
-            if (result?.layers) {
-              store.dispatch(
-                externalLayersSlice.actions.updateServerLayers({
-                  serverId,
-                  layers: result.layers,
-                  serviceAbstract: result.serviceAbstract,
-                  accessConstraints: result.accessConstraints,
-                  fees: result.fees,
-                }),
-              );
-            }
-          })
-          .catch((err) => console.warn('[ExternalLayers] Background capabilities refresh failed', err));
+      // Fetch full capabilities in background so the layer list shows all available layers. Skipped
+      // only when the server already has its layers cached — a freshly added server, or an existing
+      // one whose layers haven't been lazy-loaded yet, both need this.
+      if (!existingServer || !existingServer.layers?.length) {
+        fetchServerCapabilities({ id: serverId, url, type }, store.dispatch).then((outcome) => {
+          if (outcome.error) {
+            console.warn('[ExternalLayers] Background capabilities refresh failed', outcome.error);
+          }
+        });
       }
 
       return;

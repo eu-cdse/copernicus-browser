@@ -124,7 +124,7 @@ const mapStoreToProps = (store) => ({
   modalId: store.modal.id,
   dataSourcesInitialized: store.themes.dataSourcesInitialized,
   activeExternalLayer: selectActiveExternalLayer(store),
-  wmsLayerPanelOpen: store.externalLayers.panelOpen,
+  wmsLayerPanelOpen: store.panel.wms,
 });
 
 export default connect(mapStoreToProps, null)(ImageDownloadBtn);

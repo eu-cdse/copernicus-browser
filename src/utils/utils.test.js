@@ -220,6 +220,65 @@ describe('updatePath URL serialization', () => {
     expect(params).toHaveProperty('evalscript');
     expect(params).not.toHaveProperty('evalscriptUrl');
   });
+
+  test('showPinPanel: serializes panel=pins', () => {
+    const params = getSerializedParams({ showPinPanel: true });
+
+    expect(params.panel).toBe('pins');
+  });
+
+  test('showHighlightPanel: serializes panel=highlights', () => {
+    const params = getSerializedParams({ showHighlightPanel: true });
+
+    expect(params.panel).toBe('highlights');
+  });
+
+  test('neither showPinPanel nor showHighlightPanel nor wmsPanelOpen: serializes panel=layers', () => {
+    const params = getSerializedParams({
+      showPinPanel: false,
+      showHighlightPanel: false,
+      wmsPanelOpen: false,
+    });
+
+    expect(params.panel).toBe('layers');
+  });
+
+  test('wmsPanelOpen: serializes panel=wms', () => {
+    const params = getSerializedParams({ wmsPanelOpen: true });
+
+    expect(params.panel).toBe('wms');
+  });
+
+  test('compareShare takes precedence: does not serialize panel even if showPinPanel/showHighlightPanel are stale-true', () => {
+    const params = getSerializedParams({ compareShare: true, showPinPanel: true, showHighlightPanel: true });
+
+    expect(params).not.toHaveProperty('panel');
+    expect(params.compareShare).toBe('true');
+  });
+
+  test('Search tab: does not serialize panel/compareShare even if a Visualize sub-panel is stale-true', () => {
+    const params = getSerializedParams({
+      selectedTabIndex: TABS.SEARCH_TAB,
+      wmsPanelOpen: true,
+      showPinPanel: true,
+      compareShare: true,
+    });
+
+    expect(params).not.toHaveProperty('panel');
+    expect(params).not.toHaveProperty('compareShare');
+  });
+
+  test('Order/RRD tab: does not serialize panel/compareShare even if a Visualize sub-panel is stale-true', () => {
+    const params = getSerializedParams({
+      selectedTabIndex: TABS.RAPID_RESPONSE_DESK,
+      wmsPanelOpen: true,
+      showPinPanel: true,
+      compareShare: true,
+    });
+
+    expect(params).not.toHaveProperty('panel');
+    expect(params).not.toHaveProperty('compareShare');
+  });
 });
 
 describe('toggleInArray', () => {

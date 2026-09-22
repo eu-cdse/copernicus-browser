@@ -23,6 +23,7 @@ import {
   getDemCollectionsFromDatasetValues,
   ccmProductLabels,
 } from './stac.utils';
+import { singleFlight } from '../utils/singleFlight';
 
 const STAC_BASEURL = global.window.API_ENDPOINT_CONFIG.STAC_BASEURL;
 
@@ -424,7 +425,10 @@ const getStacCollectionsFromFilter = (filterString) => {
 };
 
 let allCollectionsCache = undefined; // undefined = not yet fetched, Map = success
-let allCollectionsInFlight = null;
+const allCollectionsInFlight = new Map();
+// getAllStacCollections has no natural per-call key (it always fetches the same "all collections"
+// list), so it reuses singleFlight with a fixed key purely for the in-flight dedup it provides.
+const ALL_COLLECTIONS_KEY = 'all';
 
 const fetchWithAuthFallback = async (fetchFn, authToken) => {
   let response;
@@ -447,20 +451,16 @@ const getAllStacCollections = async (authToken) => {
     return allCollectionsCache;
   }
 
-  if (allCollectionsInFlight) {
-    return allCollectionsInFlight;
-  }
+  return singleFlight(allCollectionsInFlight, ALL_COLLECTIONS_KEY, async () => {
+    const url = `${STAC_BASEURL}/v1/collections?limit=200`;
+    const fetchAll = async (includeAuth) => {
+      const headers = {};
+      if (includeAuth && authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
+      }
+      return fetch(url, { headers });
+    };
 
-  const url = `${STAC_BASEURL}/v1/collections?limit=200`;
-  const fetchAll = async (includeAuth) => {
-    const headers = {};
-    if (includeAuth && authToken) {
-      headers.Authorization = `Bearer ${authToken}`;
-    }
-    return fetch(url, { headers });
-  };
-
-  const requestPromise = (async () => {
     try {
       const response = await fetchWithAuthFallback(fetchAll, authToken);
 
@@ -487,13 +487,8 @@ const getAllStacCollections = async (authToken) => {
     } catch (error) {
       console.warn('Failed to fetch STAC collections list', error);
       return null;
-    } finally {
-      allCollectionsInFlight = null;
     }
-  })();
-
-  allCollectionsInFlight = requestPromise;
-  return requestPromise;
+  });
 };
 
 const formatStacDate = (isoString, fallback = 'unknown') => {
@@ -513,20 +508,16 @@ const getStacCollectionInfo = async (collectionId, authToken) => {
     return stacCollectionInfoCache.get(collectionId);
   }
 
-  if (stacCollectionInfoInFlight.has(collectionId)) {
-    return stacCollectionInfoInFlight.get(collectionId);
-  }
+  return singleFlight(stacCollectionInfoInFlight, collectionId, async () => {
+    const url = `${STAC_BASEURL}/v1/collections/${collectionId}`;
+    const fetchCollection = async (includeAuth) => {
+      const headers = {};
+      if (includeAuth && authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
+      }
+      return fetch(url, { headers });
+    };
 
-  const url = `${STAC_BASEURL}/v1/collections/${collectionId}`;
-  const fetchCollection = async (includeAuth) => {
-    const headers = {};
-    if (includeAuth && authToken) {
-      headers.Authorization = `Bearer ${authToken}`;
-    }
-    return fetch(url, { headers });
-  };
-
-  const requestPromise = (async () => {
     try {
       const response = await fetchWithAuthFallback(fetchCollection, authToken);
 
@@ -555,13 +546,8 @@ const getStacCollectionInfo = async (collectionId, authToken) => {
     } catch (error) {
       console.warn(`Failed to fetch STAC collection info for ${collectionId}`, error);
       return null;
-    } finally {
-      stacCollectionInfoInFlight.delete(collectionId);
     }
-  })();
-
-  stacCollectionInfoInFlight.set(collectionId, requestPromise);
-  return requestPromise;
+  });
 };
 
 // Matches a processing/timeliness mode tag at the end of a STAC collection title, e.g. "(OFFL)" or "(NRT)"

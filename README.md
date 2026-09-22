@@ -9,7 +9,7 @@ Some features:
 - Search full products and download raw data (individual files or entire products)
 - Add products to the workspace for further processing
 - Pin your results and make opacity or split image comparisons
-- Add third-party WMS/WMTS map services and visualise their layers alongside Copernicus data
+- Add third-party WMS/WMTS map services and visualise their layers alongside Copernicus data (only the service URL and metadata are stored; its layer list is fetched from the service on demand each session)
 - Explore imagery in 3D
 - Create and share 2D/3D timelapses
 - Analyse the visualised data (measure, statistics, histogram)
@@ -200,6 +200,17 @@ Environment variables needed for anonymous usage:
   - without it, maintainers won't be able to update configurations cache and preview images
 
 </details>
+
+### URL parameters
+
+The app reads a few parameters from the URL query string on load. Two of them are documented here; the rest of the (large) URL scheme is not covered:
+
+| Param              | Values               | Purpose                                                                                                                                                                          |
+| ------------------ | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `panel`            | `pins`, `highlights`, `wms` | Which Visualise sub-panel opens on load. Omitted means the default Layers panel. Written automatically as the user switches panels, so it survives a reload or a login redirect. `pins`/`highlights` land with the data collections view collapsed; `wms` lands with it force-expanded. |
+| `sharedPinsListId` | shared-pins list id  | Imports a shared pins list on load after a confirmation, then opens the Pins panel. Stripped from the URL on the first render after import.                                      |
+
+Example: `https://browser.dataspace.copernicus.eu/?panel=pins`
 
 ## Multilanguage support
 

@@ -48,9 +48,13 @@ const addVisualizationToComponent = (
     selectedProcessing,
     processGraph,
     processGraphUrl,
+    layerTitle,
   },
 ) => {
-  const title = `${getDatasetLabel(datasetId)}: ${customSelected ? 'Custom' : selectedVisualizationId}`;
+  // The layerId is legacy for some layers (e.g. S2 "Highlight Optimized Natural Color" is
+  // 2_TONEMAPPED_NATURAL_COLOR) and must stay as-is for URL/link compatibility, so the display
+  // title comes from the resolved layer name instead (#1202).
+  const title = `${getDatasetLabel(datasetId)}: ${customSelected ? 'Custom' : (layerTitle ?? selectedVisualizationId)}`;
 
   const visualizationProps = {
     title,

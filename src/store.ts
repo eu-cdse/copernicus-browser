@@ -10,6 +10,7 @@ import { modalSlice } from './store/slices/modalSlice';
 import { loginPromptSlice } from './store/slices/loginPromptSlice';
 import { authSlice } from './store/slices/authSlice';
 import { externalLayersSlice, externalLayersPersistenceMiddleware } from './store/slices/externalLayersSlice';
+import { panelSlice } from './store/slices/panelSlice';
 import { poiSlice } from './store/slices/poiSlice';
 import { loiSlice } from './store/slices/loiSlice';
 import { compareLayersSlice } from './store/slices/compareLayersSlice';
@@ -71,6 +72,8 @@ export { authSlice };
 
 export { externalLayersSlice };
 
+export { panelSlice };
+
 export { timelapseSlice };
 
 export { elevationProfileSlice };
@@ -124,6 +127,7 @@ const reducers = combineReducers({
   tools: toolsSlice.reducer,
   clms: clmsSlice.reducer,
   externalLayers: externalLayersSlice.reducer,
+  panel: panelSlice.reducer,
   workspace: workspaceSlice.reducer,
 });
 

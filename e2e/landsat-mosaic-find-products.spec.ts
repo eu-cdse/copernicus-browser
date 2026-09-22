@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
+import { HEAVY_TEST_TIMEOUT, LIVE_REQUEST_TIMEOUT } from './fixtures/timeouts';
 import { waitForStacSearch, waitForStacSearchResponse } from './fixtures/helpers';
 
 // visualizationUrl is AES-encrypted (VITE_CDAS_ENCRYPT_SECRET) and points to the
@@ -45,4 +45,17 @@ test('Landsat Mosaic find products uses STAC and returns results', async ({ page
 
   expect(body.features).toBeDefined();
   expect(body.features.length).toBeGreaterThan(0);
+
+  // Thumbnails are referenced from the items' assets and served by
+  // thumbnails.dataspace.copernicus.eu as public WMS GetMap requests.
+  expect(body.features[0].assets?.thumbnail?.href).toBeTruthy();
+
+  // The href is used directly as an <img src>, so a thumbnail must render in the results
+  // list instead of the "No preview available" placeholder. Images are lazy-loaded, so
+  // assert on the first result item only. The preview's alt text is the product name,
+  // which the app derives from the STAC item's properties.title (falling back to its id).
+  const firstProductName = body.features[0].properties?.title ?? body.features[0].id;
+  const firstPreview = page.getByRole('img', { name: firstProductName });
+  await expect(firstPreview).toBeVisible({ timeout: LIVE_REQUEST_TIMEOUT });
+  await expect(firstPreview).toHaveAttribute('src', /thumbnails\.dataspace\.copernicus\.eu/);
 });

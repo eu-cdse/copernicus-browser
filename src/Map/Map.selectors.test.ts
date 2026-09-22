@@ -78,7 +78,13 @@ const defaultStore = {
     activeServerId: null as unknown,
     activeLayerName: null as unknown,
     activeLayerTime: null as unknown,
-    panelOpen: false,
+  },
+  panel: {
+    layers: true,
+    highlights: false,
+    pins: false,
+    wms: false as boolean,
+    compare: false,
   },
 } as const;
 
@@ -222,5 +228,14 @@ describe('mapStoreToProps', () => {
 
     // timelapse
     expect(props.displayTimelapseAreaPreview).toBe(false);
+
+    // panel
+    expect(props.wmsPanelOpen).toBe(false);
+  });
+
+  it('maps wmsPanelOpen from the panel slice', () => {
+    const store = makeStore({ panel: { ...defaultStore.panel, wms: true } });
+    const props = mapStoreToProps(store);
+    expect(props.wmsPanelOpen).toBe(true);
   });
 });

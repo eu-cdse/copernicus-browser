@@ -129,6 +129,7 @@ function VisualizationPanel({
   activeExternalServerId,
   wmsLayersPanelOpen,
   activeExternalLayer,
+  panelFromUrlParams,
 }) {
   const selectedTheme = selectedThemesListId
     ? themesLists[selectedThemesListId].find((t) => t.id === selectedThemeId)
@@ -195,6 +196,11 @@ function VisualizationPanel({
     authToken
   );
 
+  // `!showPinPanel` here (and above in shouldShowLayerList) is defense-in-depth against a
+  // hand-crafted `?panel=wms&sharedPinsListId=...` URL rendering both panels. App.jsx's panelSlice
+  // guard (see its componentDidMount) already keeps Pins and WMS from both being "open" at once in
+  // the store, but this render-time check costs nothing and protects against any future path that
+  // dispatches them independently again.
   const shouldShowExternalLayerList = !!(
     activeExternalServerId &&
     wmsLayersPanelOpen &&
@@ -236,9 +242,12 @@ function VisualizationPanel({
   useEffect(() => {
     const shouldCollapse = windowHeight >= MIN_SCREEN_HEIGHT_FOR_DATE_AND_COLLECTION_PANEL;
 
+    // Data Collections' own expanded state is owned solely by collapsiblePanelSlice's
+    // panelSlice.openPanel listener now (opening Layers always force-expands it, per issue #1246) -
+    // dispatching setCollectionPanelExpanded here as well would refight that on every window-height
+    // change while Layers is open.
     if (shouldShowLayerList && selectedTimeRef.current) {
       store.dispatch(collapsiblePanelSlice.actions.setDatePanelExpanded(shouldCollapse));
-      store.dispatch(collapsiblePanelSlice.actions.setCollectionPanelExpanded(shouldCollapse));
     }
   }, [windowHeight, shouldShowLayerList, datasetId]);
 
@@ -274,6 +283,7 @@ function VisualizationPanel({
                 setShowLayerPanel={setShowLayerPanel}
                 showHighlightPanel={showHighlightPanel}
                 showComparePanel={showComparePanel}
+                showPinPanel={showPinPanel}
               />
             </div>
           ) : (
@@ -285,6 +295,7 @@ function VisualizationPanel({
                   setShowLayerPanel={setShowLayerPanel}
                   showHighlightPanel={showHighlightPanel}
                   showComparePanel={showComparePanel}
+                  showPinPanel={showPinPanel}
                 />
               </div>
             )
@@ -300,6 +311,10 @@ function VisualizationPanel({
             setShowLayerPanel={setShowLayerPanel}
             highlightsAvailable={highlightsAvailable}
             setShowHighlightPanel={setShowHighlightPanel}
+            showPinPanel={showPinPanel}
+            showComparePanel={showComparePanel}
+            wmsPanelOpen={wmsLayersPanelOpen}
+            panelFromUrlParams={panelFromUrlParams}
           />
         </div>
 
@@ -412,7 +427,7 @@ const mapStoreToProps = (store) => ({
   selectedTabIndex: store.tabs.selectedTabIndex,
   activeExternalLayer: selectActiveExternalLayer(store),
   activeExternalServerId: store.externalLayers.activeServerId,
-  wmsLayersPanelOpen: store.externalLayers.panelOpen,
+  wmsLayersPanelOpen: store.panel.wms,
 });
 
 export default connect(mapStoreToProps, null)(VisualizationPanel);
