@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { t } from 'ttag';
 
 import {
   getUrlParams,
@@ -21,6 +22,7 @@ import store, {
   tabsSlice,
   clmsSlice,
   panelSlice,
+  notificationSlice,
 } from '../store';
 import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
@@ -322,27 +324,48 @@ class URLParamsParser extends React.Component {
       );
     }
 
-    if (compareShare) {
+    // compareSharedPinsId is written to the URL asynchronously (ComparePanel.jsx POSTs the compared
+    // layers to get an id). Without the id there is nothing to restore, and getSharedPins(undefined)
+    // would reject — see issue #1270.
+    //
+    // The layers are restored whenever compareSharedPinsId is present, regardless of whether Compare
+    // is the currently active panel (compareShare): updatePath keeps compareSharedPinsId in the URL
+    // even while another Visualize sub-panel (e.g. Wms) is active, so a backgrounded compare session
+    // survives a refresh instead of only ever being restorable while Compare itself is on screen.
+    // Only switch to the Compare view when compareShare says it was the active panel at share time —
+    // otherwise the restored layers just sit in Redux, ready for when the user opens Compare.
+    if (compareSharedPinsId) {
       (async () => {
-        const pins = await getSharedPins(compareSharedPinsId);
-        const normalizedLayers = pins.items.map(normalizePin);
-        let compareModeOption = Object.keys(COMPARE_OPTIONS).find(
-          (key) => COMPARE_OPTIONS[key].value === compareMode,
-        );
+        try {
+          const pins = await getSharedPins(compareSharedPinsId);
+          const normalizedLayers = pins.items.map(normalizePin);
+          let compareModeOption = Object.keys(COMPARE_OPTIONS).find(
+            (key) => COMPARE_OPTIONS[key].value === compareMode,
+          );
 
-        store.dispatch(
-          compareLayersSlice.actions.restoreComparedLayers({
-            compareShare: params.compareShare,
-            compareSharedPinsId: params.compareSharedPinsId,
-            layers: normalizedLayers,
-            compareMode: compareModeOption
-              ? COMPARE_OPTIONS[compareModeOption]
-              : COMPARE_OPTIONS.COMPARE_SPLIT,
-            comparedOpacity: JSON.parse(comparedOpacity),
-            comparedClipping: JSON.parse(comparedClipping),
-          }),
-        );
-        store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
+          store.dispatch(
+            compareLayersSlice.actions.restoreComparedLayers({
+              compareShare: compareShare ?? null,
+              compareSharedPinsId: params.compareSharedPinsId,
+              layers: normalizedLayers,
+              compareMode: compareModeOption
+                ? COMPARE_OPTIONS[compareModeOption]
+                : COMPARE_OPTIONS.COMPARE_SPLIT,
+              comparedOpacity: JSON.parse(comparedOpacity),
+              comparedClipping: JSON.parse(comparedClipping),
+            }),
+          );
+          if (compareShare) {
+            store.dispatch(tabsSlice.actions.setTabIndex(TABS.VISUALIZE_TAB));
+          }
+        } catch (e) {
+          console.error(e);
+          store.dispatch(
+            notificationSlice.actions.displayError(
+              t`We could not restore the compared layers. Please try opening the link again.`,
+            ),
+          );
+        }
       })();
     }
   };

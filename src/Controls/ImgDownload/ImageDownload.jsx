@@ -24,7 +24,7 @@ import { selectActiveExternalLayer } from '../../store/slices/externalLayersSlic
 import { getTerrainViewerImage } from '../../TerrainViewer/TerrainViewer.utils';
 import { BAND_UNIT } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
+import { hasLegendDefinition } from '../../Tools/VisualizationPanel/legendUtils';
 import {
   getOrbitDirectionFromList,
   isTimespanModeSelected,
@@ -887,24 +887,11 @@ function ImageDownload(props) {
     if (props.activeExternalLayer?.legendUrl) {
       return true;
     }
-    if (layerId) {
-      const layer = allLayers.find((l) => l.layerId === layerId);
-      if (layer) {
-        if (layer.legend || layer.legendUrl) {
-          return true;
-        }
-        const predefinedLayerMetadata = findMatchingLayerMetadata(
-          datasetId,
-          layerId,
-          selectedThemeId,
-          toTime,
-        );
-        if (predefinedLayerMetadata && predefinedLayerMetadata.legend) {
-          return true;
-        }
-      }
+    if (!layerId) {
+      return false;
     }
-    return false;
+    const layer = allLayers.find((l) => l.layerId === layerId);
+    return hasLegendDefinition(layer, datasetId, selectedThemeId, toTime);
   }
 
   function displayLogInToAccessMessage() {

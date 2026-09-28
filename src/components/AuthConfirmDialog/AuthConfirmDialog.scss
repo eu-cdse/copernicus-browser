@@ -17,15 +17,29 @@
   &__text {
     font-size: 16px;
     line-height: 1.5;
+
+    p {
+      margin: 0;
+
+      & + p {
+        margin-top: 12px;
+      }
+    }
   }
 
   &__buttons {
     display: flex;
     justify-content: center;
     gap: 16px;
+
+    @media only screen and (max-width: vars.$breakpoint-500) {
+      flex-direction: column;
+    }
   }
 
   &__btn {
+    // Anchors the loader rendered inside the button (see `.loader` below).
+    position: relative;
     cursor: pointer;
     font-family: vars.$fontFamily;
     font-size: 16px;
@@ -35,11 +49,15 @@
     border: none;
     flex: 1 0 45%;
 
+    @media only screen and (max-width: vars.$breakpoint-500) {
+      flex-basis: auto;
+    }
+
     &--ok {
       color: vars.$whiteColor;
       background: vars.$primaryColor;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: vars.$hoverPrimaryColor;
       }
     }
@@ -49,9 +67,43 @@
       background: transparent;
       border: 1px solid vars.$primaryColor;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: rgba(vars.$primaryColor, 0.05);
       }
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: vars.$disabled;
+    }
+
+    // Same override the shared Button component applies (Button.scss): the loader defaults to a
+    // 100px-tall block, which would stretch the button.
+    .loader {
+      height: auto;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      span {
+        top: unset;
+      }
+    }
+  }
+
+  &__footer {
+    font-size: 12px;
+    padding: 0 20px;
+    text-align: center;
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: vars.$primaryColor;
     }
   }
 }

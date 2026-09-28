@@ -76,6 +76,9 @@ export function VisualizationTimeSelect({
   showPinPanel,
   dateMode,
   compareShare,
+  compareShareInit,
+  wmsPanelOpen,
+  panelFromUrlParams,
   clmsSelection,
   disabledModes = /** @type {string[]} */ ([]),
   findProductsDisabled = false,
@@ -90,6 +93,15 @@ export function VisualizationTimeSelect({
   const isSingle = dateMode === DATE_MODES.SINGLE.value;
   const isMosaic = dateMode === DATE_MODES.MOSAIC.value;
   const isTimeRange = dateMode === DATE_MODES['TIME RANGE'].value;
+
+  // Guards only openLayerPanel's very first call, the same way ThemeSelect.jsx's
+  // skipFirstHighlightsAvailableRunRef guards its highlights-availability effect for the identical
+  // race: the mount-time date effect below (keyed on dateMode) calls updateDate -> openLayerPanel
+  // synchronously on mount, before either Compare's or WMS's panel restore (both async — see the
+  // comment on openLayerPanel) can register. panelFromUrlParams is URL-parsed and already correct
+  // from the very first render. Once this first call is skipped, later calls behave normally and
+  // can legitimately open Layers (e.g. after the user manually navigates away from WMS/Compare).
+  const skipFirstOpenLayerPanelRef = useRef(panelFromUrlParams !== undefined);
 
   const openCalendarFrom = () => setDisplayCalendarFrom(true);
 
@@ -135,12 +147,27 @@ export function VisualizationTimeSelect({
     updateSelectedTime(fromTime, toTime);
   }
 
+  // compareShare (Redux) is still false at mount for a compare-share URL, since URLParamsParser's
+  // restore dispatch is async — compareShareInit is the URL-parsed flag that is already correct at
+  // this point, same as ThemeSelect.jsx's and Tools.jsx's identical guards (issue #1270).
+  // wmsPanelOpen closes a second, confirmed-live bug: this function runs from a mount-time date
+  // effect (updateSelectedDates -> updateDate, keyed on dateMode) regardless of which panel is
+  // active, and isAnotherVisualizePanelOpen previously wasn't told about WMS at all — so refreshing
+  // on the WMS panel (panel=wms) got force-switched to Layers. wmsPanelOpen (Redux) alone doesn't
+  // close the race for the very first call though — App.jsx only dispatches openPanel(WMS) once
+  // external-server hydration resolves (async), but this effect fires synchronously on mount,
+  // before that — see skipFirstOpenLayerPanelRef above, which covers that gap.
   function openLayerPanel() {
+    if (skipFirstOpenLayerPanelRef.current) {
+      skipFirstOpenLayerPanelRef.current = false;
+      return;
+    }
     if (
       !showLayerPanel &&
       setShowLayerPanel &&
       !compareShare &&
-      !isAnotherVisualizePanelOpen({ pins: showPinPanel, compare: showComparePanel })
+      !compareShareInit &&
+      !isAnotherVisualizePanelOpen({ pins: showPinPanel, compare: showComparePanel, wms: wmsPanelOpen })
     ) {
       setShowLayerPanel(true);
     }

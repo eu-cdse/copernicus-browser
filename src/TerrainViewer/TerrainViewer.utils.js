@@ -15,11 +15,8 @@ import proj4 from 'proj4';
 
 import { addImageOverlays, getLayerFromParams, getTitle } from '../Controls/ImgDownload/ImageDownload.utils';
 import { TERRAIN_VIEWER_IDS, setTerrainViewerId, IS_3D_MODULE_ENABLED } from './TerrainViewer.const';
-import {
-  checkIfCustom,
-  getDataSourceHandler,
-} from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { findMatchingLayerMetadata } from '../Tools/VisualizationPanel/legendUtils';
+import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { resolveLegendForLayer } from '../Tools/VisualizationPanel/legendUtils';
 import store, { mainMapSlice, terrainViewerSlice } from '../store';
 import { wgs84ToMercator } from '../junk/EOBCommon/utils/coords';
 import { getBoundsZoomLevel } from '../utils/coords';
@@ -139,10 +136,20 @@ function getMapTileUrlInternal({
       ? ApiType.WMTS
       : ApiType.WMS;
 
+  // Without an explicit params.processGraph, fall back to the cached graph only when the layer
+  // isn't itself carrying a custom evalscript — otherwise a cached graph for an unrelated
+  // (predefined) layer with the same id could silently replace the custom script.
+  // `layer.isCustomVisualization` (set by `getLayerFromParams`) is used here rather than
+  // `layer.evalscript`: Sentinel Hub's own predefined layers carry an evalscript too once hydrated.
   const shouldUseOpenEO =
     params.selectedProcessing === PROCESSING_OPTIONS.OPENEO &&
     (params.processGraph ||
-      isOpenEoSupported(layer.instanceId, layer.layerId, MIMETYPE_TO_OPENEO_FORMAT[params.format]));
+      isOpenEoSupported(
+        layer.instanceId,
+        layer.layerId,
+        MIMETYPE_TO_OPENEO_FORMAT[params.format],
+        !!layer.isCustomVisualization,
+      ));
 
   const tryLayerGetMap = () =>
     layer
@@ -261,6 +268,8 @@ export async function getTerrainViewerImage({
   datasetId,
   layerId,
   customSelected,
+  evalscript,
+  evalscriptUrl,
   selectedThemeId,
   terrainViewerId,
   width,
@@ -286,23 +295,23 @@ export async function getTerrainViewerImage({
   let legendUrl;
 
   if (showLegend) {
+    let layer;
     try {
       const visualizationUrl = dsh.getUrlsForDataset(datasetId).at(0);
-      const layer = await getLayerFromParams({ layerId, datasetId, visualizationUrl }, null);
-      if (layer) {
-        legendUrl = layer.legendUrl;
-        legendDefinition = layer.legend;
-      }
+      layer = await getLayerFromParams(
+        { layerId, datasetId, visualizationUrl, customSelected, evalscript, evalscriptUrl },
+        null,
+      );
     } catch (error) {
       console.warn(`Could not fetch layer for legend in 3D view: ${error}, fetching from layers metadata.`);
     }
 
-    if (legendDefinition === undefined) {
-      const predefinedLayerMetadata = findMatchingLayerMetadata(datasetId, layerId, selectedThemeId, toTime);
-      if (predefinedLayerMetadata && predefinedLayerMetadata.legend) {
-        legendDefinition = predefinedLayerMetadata.legend;
-      }
-    }
+    ({ legendDefinition, legendUrl } = resolveLegendForLayer(
+      layer || { layerId },
+      datasetId,
+      selectedThemeId,
+      toTime,
+    ));
   }
 
   let imageWithOverlays = await addImageOverlays(
@@ -464,6 +473,7 @@ export async function getTimelapseImagesFromTerrainViewer({
   window.set3DSettings(timelapseTerrainViewerId, settings);
 
   const supportUnderzoomBy = getAppropriateSupportedUnderzoom(z);
+  const { showLegend, selectedThemeId } = getMapParams;
 
   const outputImages = [];
 
@@ -485,6 +495,10 @@ export async function getTimelapseImagesFromTerrainViewer({
 
     const dsh = getDataSourceHandler(image.datasetId);
 
+    const { legendDefinition, legendUrl } = showLegend
+      ? resolveLegendForLayer(image.layer, image.datasetId, selectedThemeId, image.toTime)
+      : {};
+
     const objectURL = await addLabelsAndLogos(
       dateTimeDisplayFormat(image.fromTime),
       imageUrl,
@@ -492,7 +506,9 @@ export async function getTimelapseImagesFromTerrainViewer({
       outputHeight,
       null,
       dsh?.isCopernicus(),
-      dsh?.isSentinelHub() || checkIfCustom(image.datasetId),
+      showLegend,
+      legendDefinition,
+      legendUrl,
     );
 
     outputImages.push(objectURL);

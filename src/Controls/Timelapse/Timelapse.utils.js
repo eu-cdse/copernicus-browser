@@ -9,6 +9,8 @@ import {
   getDimensionsInMeters,
   getMapDimensions,
   fetchImageFromParams,
+  drawLegendImage,
+  loadLegendImageSafely,
 } from '../ImgDownload/ImageDownload.utils';
 import {
   getDataSourceHandler,
@@ -23,7 +25,7 @@ import { CRS_EPSG3857, drawBlobOnCanvas } from '@sentinel-hub/sentinelhub-js';
 import store, { timelapseSlice } from '../../store';
 import { getDefaultBaseLayer } from '../../Map/Layers';
 
-export const DEFAULT_IMAGE_DIMENSION = 512;
+export const DEFAULT_IMAGE_DIMENSION = 1024;
 
 // Cache the Copernicus logo to avoid reloading it repeatedly
 let cachedCopernicusLogo = null;
@@ -189,8 +191,20 @@ function sortByBestCoverage(a, b) {
 }
 
 export async function fetchTimelapseImage(params) {
-  const { layer, toTime, selectedPeriod, datasetId, width, height, showBorders, imageFormat, bounds } =
-    params;
+  const {
+    layer,
+    toTime,
+    selectedPeriod,
+    datasetId,
+    width,
+    height,
+    showBorders,
+    imageFormat,
+    bounds,
+    showLegend,
+    legendDefinition,
+    legendUrl,
+  } = params;
 
   const apiType = await getAppropriateApiType(layer, imageFormat);
   const defaultBaseLayer = getDefaultBaseLayer();
@@ -228,6 +242,9 @@ export async function fetchTimelapseImage(params) {
       L.latLng(bounds.getSouth(), bounds.getEast()),
     ),
     dsh?.isCopernicus(),
+    showLegend,
+    legendDefinition,
+    legendUrl,
   );
   URL.revokeObjectURL(objectURL);
 
@@ -249,6 +266,9 @@ export async function addLabelsAndLogos(
   height,
   imageWidthMeters,
   showCopernicusLogos = true,
+  showLegend = false,
+  legendDefinition,
+  legendUrl,
 ) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -263,6 +283,13 @@ export async function addLabelsAndLogos(
       // Logo failed to load, continue without it
       cpImg = null;
     }
+  }
+
+  // Legend image must be loaded before entering the mainImg.onload callback below, since that
+  // callback draws synchronously onto the canvas.
+  let legendImg = null;
+  if (showLegend) {
+    legendImg = await loadLegendImageSafely(legendDefinition, legendUrl, '[Timelapse]');
   }
 
   return new Promise((resolve, reject) => {
@@ -335,7 +362,15 @@ export async function addLabelsAndLogos(
           ctx.drawImage(cpImg, cpImgXpos, cpImgYpos, cpImgWidth, cpImgHeight);
         }
 
-        const dataUrl = canvas.toDataURL('image/jpg', 0.9);
+        // legend, bottom-left - the one quadrant left free by the date (top-right),
+        // scale bar (top-left) and Copernicus logo (bottom-right)
+        if (legendImg) {
+          drawLegendImage(ctx, legendImg, true, false);
+        }
+
+        // Frames are named img*.png and decoded as PNG by both gifshot and the ffmpeg MP4 pipeline
+        // (generateTimelapseWithFFMPEG), so this must stay lossless PNG, not JPEG.
+        const dataUrl = canvas.toDataURL('image/png');
         URL.revokeObjectURL(mainImg.src);
         resolve(dataUrl);
       } catch (e) {

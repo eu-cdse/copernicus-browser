@@ -57,6 +57,7 @@ function ThemeSelect({
   setShowHighlightPanel,
   highlightsAvailable,
   compareShare,
+  compareShareInit,
   showPinPanel,
   showComparePanel,
   wmsPanelOpen,
@@ -112,9 +113,14 @@ function ThemeSelect({
     }
     // Skip if the Pins, Compare, or WMS panel is already showing (e.g. a shared-pins link import
     // just switched to the Pins panel) — otherwise this would immediately switch back to
-    // Layers/Highlights.
+    // Layers/Highlights. compareShare (Redux) is not yet true at mount for a compare URL, since
+    // URLParamsParser's restore dispatch is async — compareShareInit is the URL-parsed flag that is
+    // already correct at mount, the same role panelFromUrlParams plays for the other panels. Note
+    // PANEL has no `compare` value, so panelFromUrlParams is always undefined for a compare URL and
+    // the skipFirstHighlightsAvailableRunRef skip above never triggers for it (issue #1270).
     if (
       !compareShare &&
+      !compareShareInit &&
       !isAnotherVisualizePanelOpen({ pins: showPinPanel, compare: showComparePanel, wms: wmsPanelOpen })
     ) {
       if (highlightsAvailable) {

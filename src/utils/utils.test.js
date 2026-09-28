@@ -250,10 +250,73 @@ describe('updatePath URL serialization', () => {
   });
 
   test('compareShare takes precedence: does not serialize panel even if showPinPanel/showHighlightPanel are stale-true', () => {
-    const params = getSerializedParams({ compareShare: true, showPinPanel: true, showHighlightPanel: true });
+    const params = getSerializedParams({
+      compareShare: true,
+      compareSharedPinsId: 'abc',
+      showPinPanel: true,
+      showHighlightPanel: true,
+    });
 
     expect(params).not.toHaveProperty('panel');
     expect(params.compareShare).toBe('true');
+  });
+
+  test('compareShare without compareSharedPinsId: does not serialize compareShare and falls back to panel=layers', () => {
+    const params = getSerializedParams({
+      compareShare: true,
+      showPinPanel: false,
+      showHighlightPanel: false,
+      wmsPanelOpen: false,
+    });
+
+    expect(params).not.toHaveProperty('compareShare');
+    expect(params.panel).toBe('layers');
+  });
+
+  test('compareShare with compareSharedPinsId: serializes both and omits panel', () => {
+    const params = getSerializedParams({ compareShare: true, compareSharedPinsId: 'abc' });
+
+    expect(params.compareShare).toBe('true');
+    expect(params.compareSharedPinsId).toBe('abc');
+    expect(params).not.toHaveProperty('panel');
+  });
+
+  // Regression test for issue #1270: leaving the Compare panel for another Visualize sub-panel
+  // (e.g. Wms) flips the Redux compareShare flag to false (ComparePanel.jsx's unmount effect), but
+  // the compared layers and their shared-pins id are still live in Redux. compareSharedPinsId must
+  // stay in the URL regardless of which panel is active, or the compare session is unrecoverable
+  // on the next refresh even though nothing was actually cleared.
+  test('wmsPanelOpen with compareSharedPinsId: keeps the compare session in the URL alongside panel=wms', () => {
+    const params = getSerializedParams({
+      compareShare: false,
+      compareSharedPinsId: 'abc',
+      compareMode: { value: 'split' },
+      comparedOpacity: { 0: 1 },
+      comparedClipping: { 0: false },
+      wmsPanelOpen: true,
+    });
+
+    expect(params.panel).toBe('wms');
+    expect(params.compareSharedPinsId).toBe('abc');
+    expect(params.compareMode).toBe('split');
+    expect(params).toHaveProperty('comparedOpacity');
+    expect(params).toHaveProperty('comparedClipping');
+    expect(params).not.toHaveProperty('compareShare');
+  });
+
+  test('no compareSharedPinsId: does not serialize compare fields even if compareMode/opacity/clipping are stale-set', () => {
+    const params = getSerializedParams({
+      compareMode: { value: 'split' },
+      comparedOpacity: { 0: 1 },
+      comparedClipping: { 0: false },
+      wmsPanelOpen: true,
+    });
+
+    expect(params.panel).toBe('wms');
+    expect(params).not.toHaveProperty('compareSharedPinsId');
+    expect(params).not.toHaveProperty('compareMode');
+    expect(params).not.toHaveProperty('comparedOpacity');
+    expect(params).not.toHaveProperty('comparedClipping');
   });
 
   test('Search tab: does not serialize panel/compareShare even if a Visualize sub-panel is stale-true', () => {
@@ -276,6 +339,35 @@ describe('updatePath URL serialization', () => {
       compareShare: true,
     });
 
+    expect(params).not.toHaveProperty('panel');
+    expect(params).not.toHaveProperty('compareShare');
+  });
+
+  // Regression tests for issue #1270: switching to the Search or Order tab entirely (not just
+  // another Visualize sub-panel) also unmounts ComparePanel.jsx, which flips compareShare to false —
+  // and the whole panel/compareShare block above is itself gated on selectedTabIndex === Visualize.
+  // compareSharedPinsId must therefore be written outside that gate, or a compare session is lost
+  // the moment the user leaves the Visualize tab, even though the compared layers are still live.
+  test('Search tab with compareSharedPinsId: keeps the compare session in the URL without panel/compareShare', () => {
+    const params = getSerializedParams({
+      selectedTabIndex: TABS.SEARCH_TAB,
+      compareShare: false,
+      compareSharedPinsId: 'abc',
+    });
+
+    expect(params.compareSharedPinsId).toBe('abc');
+    expect(params).not.toHaveProperty('panel');
+    expect(params).not.toHaveProperty('compareShare');
+  });
+
+  test('Order/RRD tab with compareSharedPinsId: keeps the compare session in the URL without panel/compareShare', () => {
+    const params = getSerializedParams({
+      selectedTabIndex: TABS.RAPID_RESPONSE_DESK,
+      compareShare: false,
+      compareSharedPinsId: 'abc',
+    });
+
+    expect(params.compareSharedPinsId).toBe('abc');
     expect(params).not.toHaveProperty('panel');
     expect(params).not.toHaveProperty('compareShare');
   });

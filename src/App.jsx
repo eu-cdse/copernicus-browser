@@ -13,6 +13,7 @@ import store, {
   toolsSlice,
   tabsSlice,
   panelSlice,
+  compareLayersSlice,
 } from './store';
 import { externalLayersSlice } from './store/slices/externalLayersSlice';
 import { markExternalLayersHydrated } from './ExternalLayers/externalLayersPersistence';
@@ -23,7 +24,7 @@ import LoginPrompt from './Auth/LoginPrompt/LoginPrompt';
 import Tools from './Tools/Tools';
 import { Modals, propsSufficientToRender } from './Modals/Utils';
 import { updatePath } from './utils/';
-import { importSharedPins } from './Tools/Pins/Pin.utils';
+import { importSharedPins, saveSharedPinsToServer } from './Tools/Pins/Pin.utils';
 import TerrainViewerScriptProvider from './TerrainViewer/TerrainViewerScriptProvider';
 import TerrainViewer from './TerrainViewer/TerrainViewer';
 import Tutorial from './Tutorial/Tutorial';
@@ -46,7 +47,7 @@ import { PANEL } from './const';
 // initial state. Compare and WMS are opened here in componentDidMount below, since both depend on
 // data that isn't available synchronously at store-creation time.
 
-class App extends Component {
+export class App extends Component {
   state = {
     lastAddedPin: null,
     hasSwitchedFrom3D: false,
@@ -56,6 +57,12 @@ class App extends Component {
     // hasPendingSharedPinsImport below and Tools.jsx's componentDidMount/componentDidUpdate).
     sharedPinsImportPending: !!this.props.sharedPinsListIdFromUrlParams,
   };
+
+  // Guards the comparedLayers->backend sync below against out-of-order POST resolution: if a
+  // second comparedLayers change fires before the first POST resolves, only the response matching
+  // the most recently dispatched request is applied, so a slow/early response can't clobber
+  // compareSharedPinsId with a stale snapshot.
+  compareSyncSeq = 0;
 
   // Rehydrates the user's persisted external WMS/WMTS servers (per user) on app mount. App renders
   // only after AuthProvider has resolved auth, so the store holds the correct user here. Not
@@ -185,6 +192,33 @@ class App extends Component {
     if (next !== prev) {
       store.dispatch(tabsSlice.actions.setIsVisualizingLayer(next));
     }
+
+    // Keep compareSharedPinsId in sync with comparedLayers regardless of which panel/tab is
+    // active. This used to live in ComparePanel.jsx's own mount effect, but addToCompare is
+    // dispatched from several other panels too (Pins, Layers, Highlights — see
+    // createLayerActions.js, Pin.jsx, Highlight.jsx), so a layer added while Compare wasn't
+    // mounted never got POSTed to the backend: compareSharedPinsId either stayed null (nothing to
+    // restore) or kept pointing at a now-stale snapshot missing the newly-added layers. App is
+    // always mounted, so doing it here keeps the backend record honest no matter where the change
+    // came from (issue #1270).
+    if (this.props.comparedLayers !== prevProps.comparedLayers) {
+      const seq = ++this.compareSyncSeq;
+      if (this.props.comparedLayers.length > 0) {
+        try {
+          // externalWms is forwarded verbatim in the outbound POST body (toServerPin's ...rest),
+          // and the sharedpins backend persists and returns it on GET, so external WMS/WMTS
+          // layers are restored when opening a shared compare link.
+          const sharedPinsId = await saveSharedPinsToServer(this.props.comparedLayers);
+          if (seq === this.compareSyncSeq) {
+            store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(sharedPinsId));
+          }
+        } catch (e) {
+          console.warn(e);
+        }
+      } else {
+        store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(null));
+      }
+    }
   }
 
   setShowLayerPanel = (showLayerPanel) => {
@@ -271,6 +305,10 @@ class App extends Component {
           showComparePanel={this.props.showComparePanel}
           setShowComparePanel={this.setShowComparePanel}
           compareShare={this.props.compareShare}
+          // compareShare above is the Redux flag (store.compare.compareShare, still false at mount
+          // because App.componentDidMount runs after its children's); compareShareInit is the
+          // URL-parsed flag, correct from the very first render — see issue #1270.
+          compareShareInit={this.props.compareShareInit}
           panelFromUrlParams={this.props.panelFromUrlParams}
           hasPendingSharedPinsImport={hasPendingSharedPinsImport}
         />
@@ -392,6 +430,7 @@ const mapStoreToProps = (store) => ({
   compareShare: store.compare.compareShare,
   compareMode: store.compare.compareMode,
   compareSharedPinsId: store.compare.compareSharedPinsId,
+  comparedLayers: store.compare.comparedLayers,
   comparedOpacity: store.compare.comparedOpacity,
   comparedClipping: store.compare.comparedClipping,
   useEvoland: store.themes.useEvoland,

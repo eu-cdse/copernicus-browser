@@ -29,16 +29,12 @@ import {
 import {
   drawMapOverlaysOnCanvas,
   getScaleBarInfo,
-  createSVGLegend,
+  drawLegendImage,
+  loadLegendImageSafely,
   drawCaptions,
 } from '../ImgDownload/ImageDownload.utils';
-import {
-  SENTINEL_COPYRIGHT_TEXT,
-  drawLegendImage,
-  loadImage,
-} from '../../junk/EOB3ImageDownloadPanel/utils/downloadZip';
-import { b64EncodeUnicode } from '../../utils/base64MDN';
-import { findMatchingLayerMetadata } from '../../Tools/VisualizationPanel/legendUtils';
+import { SENTINEL_COPYRIGHT_TEXT } from '../../junk/EOB3ImageDownloadPanel/utils/downloadZip';
+import { resolveLegendForLayer } from '../../Tools/VisualizationPanel/legendUtils';
 import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 import { isDataFusionEnabled } from '../../utils';
 import { constructEffectsFromPinOrHighlight, constructGetMapParamsEffects } from '../../utils/effectsUtils';
@@ -168,13 +164,8 @@ class PinsStoryBuilder extends React.Component {
     }
 
     if (showLegend) {
-      const legendImageUrl = legendDefinition
-        ? 'data:image/svg+xml;base64,' + b64EncodeUnicode(createSVGLegend(legendDefinition))
-        : legendUrl
-          ? legendUrl
-          : null;
-      if (legendImageUrl !== null) {
-        const legendImage = await loadImage(legendImageUrl);
+      const legendImage = await loadLegendImageSafely(legendDefinition, legendUrl, '[PinsStoryBuilder]');
+      if (legendImage) {
         drawLegendImage(ctx, legendImage, true, showCaptions);
       }
     }
@@ -266,18 +257,14 @@ class PinsStoryBuilder extends React.Component {
         }
 
         // if there is a predefined layer legend, find it:
-        const predefinedLayerMetadata = findMatchingLayerMetadata(
+        const { legendDefinition, legendUrl } = resolveLegendForLayer(
+          layer,
           pin.datasetId,
-          pin.layerId,
           pin.themeId,
           pinToTime,
         );
-        const legendDefinition =
-          predefinedLayerMetadata && predefinedLayerMetadata.legend
-            ? predefinedLayerMetadata.legend
-            : layer.legend;
         // apply overlays:
-        const overlayCanvas = await this.createOverlayCanvas(title, layer.legendUrl, legendDefinition);
+        const overlayCanvas = await this.createOverlayCanvas(title, legendUrl, legendDefinition);
         if (overlayCanvas !== null) {
           const baseCanvas = await blobToCanvas(blob, imageWidth, imageHeight);
           const ctx = baseCanvas.getContext('2d');

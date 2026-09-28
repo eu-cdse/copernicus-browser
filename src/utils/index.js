@@ -200,6 +200,29 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
     params.layerId = layerId;
   }
 
+  // compareSharedPinsId is produced by an async backend POST (ComparePanel.jsx) and is only ever
+  // set once there are compared layers (it's cleared to null otherwise, see ComparePanel.jsx), so
+  // its presence alone means there is a restorable compare session. Keep it (and the layers'
+  // mode/opacity/clipping) in the URL regardless of which top-level tab or Visualize sub-panel is
+  // currently active — ComparePanel.jsx flips the `compareShare` Redux flag to false on unmount as
+  // soon as the user looks at another panel or tab (e.g. Wms, Search, the RRD Order tab), so gating
+  // this on that flag (or on selectedTabIndex, like the rest of this section) would drop the compare
+  // session from the URL the moment the user navigates away, losing it on the next refresh even
+  // though the compared layers themselves are still live in Redux (issue #1270).
+  if (compareSharedPinsId) {
+    params.compareSharedPinsId = compareSharedPinsId;
+
+    if (comparedOpacity) {
+      params.comparedOpacity = JSON.stringify(comparedOpacity);
+    }
+    if (comparedClipping) {
+      params.comparedClipping = JSON.stringify(comparedClipping);
+    }
+    if (compareMode?.value) {
+      params.compareMode = compareMode.value;
+    }
+  }
+
   if (selectedTabIndex === TABS.VISUALIZE_TAB) {
     // Visualize tab is selected
 
@@ -268,26 +291,17 @@ export function updatePath(props, shouldPushToHistoryStack = true) {
       params.dateMode = dateMode;
     }
 
-    // compareShare/panel describe which Visualize sub-panel is open, so they're only meaningful
-    // while the Visualize tab is actually active. Writing them regardless of selectedTabIndex left
-    // them (and PANEL.LAYERS as a default) in the URL after switching to Search or Order, which
-    // Tools.jsx's shouldSwitchToRapidResponseDeskTab then misread as "the URL says Visualize", so it
-    // never restored the RRD tab on refresh (see issue #1184 follow-up).
-    if (compareShare) {
+    // compareShare/panel describe which Visualize sub-panel is currently active, so they're only
+    // meaningful while the Visualize tab is actually active. Writing them regardless of
+    // selectedTabIndex left them (and PANEL.LAYERS as a default) in the URL after switching to
+    // Search or Order, which Tools.jsx's shouldSwitchToRapidResponseDeskTab then misread as "the URL
+    // says Visualize", so it never restored the RRD tab on refresh (see issue #1184 follow-up).
+    //
+    // Compare is only the active panel once compareSharedPinsId also exists, so a refresh before
+    // that id resolves (or with zero compared layers) falls through to panel=layers instead of
+    // advertising an unrestorable Compare view (issue #1270).
+    if (compareShare && compareSharedPinsId) {
       params.compareShare = compareShare;
-
-      if (comparedOpacity) {
-        params.comparedOpacity = JSON.stringify(comparedOpacity);
-      }
-      if (comparedClipping) {
-        params.comparedClipping = JSON.stringify(comparedClipping);
-      }
-      if (compareMode?.value) {
-        params.compareMode = compareMode.value;
-      }
-      if (compareSharedPinsId) {
-        params.compareSharedPinsId = compareSharedPinsId;
-      }
     } else if (showPinPanel) {
       // Compare is fully represented by compareShare above, so `panel` only needs to distinguish
       // Layers/Highlights/Pins/Wms from it. Layers is written explicitly too (not left absent) so a

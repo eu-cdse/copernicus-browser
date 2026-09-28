@@ -161,6 +161,43 @@ describe('ThemeSelect — does not clobber a panel restored from an explicit `pa
   });
 });
 
+// Regression tests for issue #1270: refreshing on a compare URL was landing on Layers (or
+// Highlights) instead of Compare, because compareShare (Redux) is still false at mount — the async
+// URLParamsParser restore hasn't resolved yet — and PANEL has no `compare` value, so
+// panelFromUrlParams is always undefined for a compare URL too. compareShareInit is the URL-parsed
+// flag that is already correct at mount.
+describe('ThemeSelect — does not switch away from Compare on mount (#1270)', () => {
+  it('does not auto-open Highlights when compareShareInit is set and the theme has highlights', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: true,
+      compareShareInit: true,
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('does not auto-open Layers when compareShareInit is set and the theme has no highlights', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: false,
+      compareShareInit: true,
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(setShowHighlightPanel).not.toHaveBeenCalled();
+  });
+
+  it('still auto-opens Highlights on mount when compareShareInit is not set', () => {
+    const { setShowLayerPanel, setShowHighlightPanel } = renderThemeSelect({
+      highlightsAvailable: true,
+      compareShareInit: false,
+    });
+
+    expect(setShowHighlightPanel).toHaveBeenCalledWith(true);
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+});
+
 // Covers the reported follow-up bug: leaving a non-Highlights panel open, visiting the Order tab,
 // then returning to Visualize was force-switching back to Highlights, because a later re-render
 // recomputing the same highlightsAvailable transition (e.g. ThemesProvider's

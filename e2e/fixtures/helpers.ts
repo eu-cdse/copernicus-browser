@@ -20,7 +20,7 @@ export function getSaveResultFormat(processGraph: ProcessGraph): string | undefi
  * Bypass the EnsureAuth consent modal and the onboarding tour for anonymous flows.
  *
  * Three things normally block a fresh anonymous session: (1)
- * `AuthProvider.initialAnonAuth` runs reCAPTCHA, (2) `EnsureAuth.jsx` renders
+ * `AuthProvider.initialAnonAuth` runs reCAPTCHA, (2) `EnsureAuth.tsx` renders
  * the consent modal, (3) `Tutorial.jsx` mounts the Joyride overlay that
  * intercepts every click. We bypass all three by seeding the relevant
  * `localStorage` keys via `page.addInitScript` BEFORE navigation, so the app
@@ -39,7 +39,7 @@ export function getSaveResultFormat(processGraph: ProcessGraph): string | undefi
  */
 export async function dismissAnonymousSession(page: Page) {
   await page.addInitScript(() => {
-    // Mark the recaptcha consent so EnsureAuth.jsx's modal does not render.
+    // Mark the recaptcha consent so EnsureAuth.tsx's modal does not render.
     localStorage.setItem('cdsebrowser_recaptcha_consent', 'true');
 
     // Suppress the Joyride onboarding tour — otherwise its full-page overlay

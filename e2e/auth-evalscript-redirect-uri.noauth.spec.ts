@@ -29,12 +29,12 @@ test('evalscript and visualizationUrl are stripped from Keycloak redirect_uri on
   // dismissAnonymousSession is intentionally omitted — the Keycloak auth request fires during
   // initKeycloak(), before AuthProvider unblocks the UI, so there is no consent modal to dismiss
   // yet. Calling it here would introduce a race against the Keycloak redirect itself.
-  await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByText('Use anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 });
 
 test('evalscript and visualizationUrl are stripped from Keycloak redirect_uri on login', async ({ page }) => {
   await page.goto(CODE_EDITOR_URLS.customScript);
-  await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByText('Use anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 
   const loginAuthRequest = waitForKeycloakAuthRequest(page);
   await page.locator('.ensure-auth').getByText('Log in', { exact: true }).click();
@@ -58,14 +58,14 @@ test('processGraph is stripped from Keycloak redirect_uri on page load', async (
   expect(redirectUri).not.toBeNull();
   expect(redirectUri).not.toContain('processGraph');
 
-  await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByText('Use anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 });
 
 test('processGraph is stripped from Keycloak redirect_uri on login', async ({ page }) => {
   const url = `${CODE_EDITOR_URLS.s2L2aTrueColor}&processGraph=${PROCESS_GRAPH_B64}`;
 
   await page.goto(url);
-  await expect(page.getByText('Anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByText('Use anonymously', { exact: true })).toBeVisible({ timeout: 15000 });
 
   const loginAuthRequest = waitForKeycloakAuthRequest(page);
   await page.locator('.ensure-auth').getByText('Log in', { exact: true }).click();

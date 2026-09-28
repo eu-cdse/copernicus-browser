@@ -25,8 +25,8 @@ import {
 import { getDataSourceHandler } from '../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructBBoxFromBounds } from '../../Controls/ImgDownload/ImageDownload.utils';
 import { getLeafletBoundsFromGeoJSON } from '../../utils/geojson.utils';
-import { persistSearchConfig } from '../../utils/searchConfigPersistence';
-import { ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY, DATASOURCES, reqConfigMemoryCache } from '../../const';
+import { mergeSearchConfig } from '../../utils/searchConfigPersistence';
+import { DATASOURCES, reqConfigMemoryCache } from '../../const';
 import ProductPreview from './ProductPreview/ProductPreview';
 import { handleError } from './BrowseProduct/BrowseProduct.utils';
 import { AttributeNames } from '../../api/OData/assets/attributes';
@@ -392,13 +392,7 @@ const ResultItem = ({
           text={t`Visualise`}
           className="small ellipsis"
           onClick={() => {
-            const searchConfigFromSession = JSON.parse(
-              sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-            );
-            persistSearchConfig({
-              ...searchConfigFromSession,
-              shouldShowAdvancedSearchTab: false,
-            });
+            mergeSearchConfig({ shouldShowAdvancedSearchTab: false });
             visualize({ onResultSelected, tile: normalizedTile, currentZoom: zoom });
           }}
           title={

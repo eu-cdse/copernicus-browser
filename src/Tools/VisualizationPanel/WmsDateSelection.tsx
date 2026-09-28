@@ -17,6 +17,9 @@ interface WmsDateSelectionProps {
   showComparePanel?: boolean;
   showPinPanel?: boolean;
   compareShare?: boolean;
+  compareShareInit?: boolean;
+  wmsPanelOpen?: boolean;
+  panelFromUrlParams?: string;
 }
 
 // Date selection for an active external WMS layer with a time dimension. Reuses the app's
@@ -28,6 +31,9 @@ function WmsDateSelection({
   showComparePanel,
   showPinPanel,
   compareShare,
+  compareShareInit,
+  wmsPanelOpen,
+  panelFromUrlParams,
 }: WmsDateSelectionProps) {
   const dispatch = useDispatch();
   const activeExternalLayer = useAppSelector(selectActiveExternalLayer);
@@ -100,6 +106,9 @@ function WmsDateSelection({
       showPinPanel={showPinPanel}
       dateMode={DATE_MODES.SINGLE.value}
       compareShare={compareShare}
+      compareShareInit={compareShareInit}
+      wmsPanelOpen={wmsPanelOpen}
+      panelFromUrlParams={panelFromUrlParams}
       clmsSelection={{ selected: false }}
       disabledModes={[DATE_MODES.MOSAIC.value, DATE_MODES['TIME RANGE'].value]}
       findProductsDisabled={true}

@@ -48,6 +48,13 @@ function TerrainViewer(props) {
   const [sunEnabled, setSunEnabled] = useState(false);
   const [disabled, setDisabled] = useState(!props.is3D);
   const cancelTokenRef = useRef(new CancelToken());
+  // Monotonically increasing id shared by the changeLayer effect and the 3D-init effect below.
+  // Both effects can fire on the same render (entering 3D for the first time) and each does an
+  // async layer lookup before calling setLayer — without this guard, whichever one's promise
+  // happens to settle last (real network timing, not a controlled order) wins, which can leave
+  // `layer` stuck at null. Capturing the id before each async call and checking it again right
+  // before setLayer ensures only the most-recently-started invocation's result is ever applied.
+  const layerRequestIdRef = useRef(0);
   const [timeoutId, setTimeoutId] = useState(null);
   const [loader, setLoader] = useState();
   const terrainViewerContainer = useRef();
@@ -489,68 +496,80 @@ function TerrainViewer(props) {
   ]);
 
   useEffect(() => {
+    layerRequestIdRef.current += 1;
+    const requestId = layerRequestIdRef.current;
+
     async function changeLayer() {
-      if (
-        is3D &&
-        props.dataSourcesInitialized &&
-        props.datasetId &&
-        (props.layerId || props.evalscript || props.evalscriptUrl || props.processGraph)
-      ) {
-        if (props.visibleOnMap) {
-          const newLayer = await getLayerFromParams(props).catch((e) => {
-            console.warn(e.message);
-          });
-          if (newLayer) {
-            if (!isDataFusionEnabled(props.dataFusion)) {
-              await newLayer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
-            }
-            const dsh = getDataSourceHandler(newLayer.collectionId);
-            if (dsh?.supportsLowResolutionAlternativeCollection(newLayer.collectionId)) {
-              newLayer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(newLayer.collectionId);
-              newLayer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
-                newLayer.collectionId,
-              );
-            }
-            // Cancel in-flight requests before setting new layer
-            cancelTokenRef.current.cancel();
-            cancelTokenRef.current = new CancelToken();
-
-            setLayer(newLayer);
-          }
-        } else {
-          setLayer(null);
-
-          if (terrainViewerId) {
-            try {
-              window.clearTextureCache && window.clearTextureCache(terrainViewerId);
-              window.clearTextures && window.clearTextures(terrainViewerId);
-
-              window.get3DMapTileUrl = (viewerId, minX, minY, maxX, maxY, width, height, callback) => {
-                const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
-                const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
-                callback(mapTilerUrl);
-              };
-
-              window.refresh3DTiles && window.refresh3DTiles(terrainViewerId, true);
-
-              const currentPos = { x, y, z, rotH, rotV };
-              window.set3DPosition(terrainViewerId, x, y, z * 1.001, rotH, rotV);
-
-              setTimeout(() => {
-                window.set3DPosition(
-                  terrainViewerId,
-                  currentPos.x,
-                  currentPos.y,
-                  currentPos.z,
-                  currentPos.rotH,
-                  currentPos.rotV,
+      try {
+        if (
+          is3D &&
+          props.dataSourcesInitialized &&
+          props.datasetId &&
+          (props.layerId || props.evalscript || props.evalscriptUrl || props.processGraph)
+        ) {
+          if (props.visibleOnMap) {
+            const newLayer = await getLayerFromParams(props).catch((e) => {
+              console.warn(e.message);
+            });
+            if (newLayer) {
+              if (!isDataFusionEnabled(props.dataFusion)) {
+                await newLayer.updateLayerFromServiceIfNeeded(reqConfigMemoryCache);
+              }
+              const dsh = getDataSourceHandler(newLayer.collectionId);
+              if (dsh?.supportsLowResolutionAlternativeCollection(newLayer.collectionId)) {
+                newLayer.lowResolutionCollectionId = dsh.getLowResolutionCollectionId(newLayer.collectionId);
+                newLayer.lowResolutionMetersPerPixelThreshold = dsh.getLowResolutionMetersPerPixelThreshold(
+                  newLayer.collectionId,
                 );
-              }, 50);
-            } catch (error) {
-              console.error('Error clearing textures:', error);
+              }
+              // A newer changeLayer/init invocation has started since this one began — let it own
+              // the outcome instead of clobbering it with this stale result.
+              if (requestId !== layerRequestIdRef.current) {
+                return;
+              }
+              // Cancel in-flight requests before setting new layer
+              cancelTokenRef.current.cancel();
+              cancelTokenRef.current = new CancelToken();
+
+              setLayer(newLayer);
+            }
+          } else {
+            setLayer(null);
+
+            if (terrainViewerId) {
+              try {
+                window.clearTextureCache && window.clearTextureCache(terrainViewerId);
+                window.clearTextures && window.clearTextures(terrainViewerId);
+
+                window.get3DMapTileUrl = (viewerId, minX, minY, maxX, maxY, width, height, callback) => {
+                  const { tileX, tileY, zoomLevel } = getTileCoord(minX, minY, maxX, maxY);
+                  const mapTilerUrl = getBackgroundTileUrl({ tileX, tileY, zoomLevel });
+                  callback(mapTilerUrl);
+                };
+
+                window.refresh3DTiles && window.refresh3DTiles(terrainViewerId, true);
+
+                const currentPos = { x, y, z, rotH, rotV };
+                window.set3DPosition(terrainViewerId, x, y, z * 1.001, rotH, rotV);
+
+                setTimeout(() => {
+                  window.set3DPosition(
+                    terrainViewerId,
+                    currentPos.x,
+                    currentPos.y,
+                    currentPos.z,
+                    currentPos.rotH,
+                    currentPos.rotV,
+                  );
+                }, 50);
+              } catch (error) {
+                console.error('Error clearing textures:', error);
+              }
             }
           }
         }
+      } catch (e) {
+        console.warn('Error changing 3D viewer layer:', e.message);
       }
     }
     changeLayer();
@@ -610,12 +629,20 @@ function TerrainViewer(props) {
   useEffect(() => {
     if (props.is3D && !terrainViewerId && terrainViewerContainer.current) {
       const currentContainer = terrainViewerContainer.current;
+      layerRequestIdRef.current += 1;
+      const requestId = layerRequestIdRef.current;
 
       (async () => {
         try {
           await getLayerFromParams(props).catch((e) => {
             console.warn('Error initializing 3D viewer layer:', e.message);
           });
+
+          // A changeLayer invocation with fresher props has started since this init run began —
+          // let it own `layer` instead of resetting it to null underneath it.
+          if (requestId !== layerRequestIdRef.current) {
+            return;
+          }
 
           setLayer(null);
 
@@ -666,6 +693,9 @@ function TerrainViewer(props) {
     rotV,
     sunTime,
     settings,
+    // Keep `props` itself as a dependency: when this effect's early-return staleness guard (above)
+    // bails out because a newer changeLayer invocation has since started, this effect must still
+    // re-run on the next render carrying fresh props for that guard to have anything to defer to.
     props,
   ]);
 

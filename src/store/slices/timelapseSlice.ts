@@ -23,6 +23,7 @@ export interface TimelapseState {
   format: 'GIF' | 'MPEG4';
   fadeDuration: number;
   delayLastFrame: boolean;
+  showLegend: boolean;
   newLayersCount: number;
 }
 
@@ -45,6 +46,7 @@ interface SetTimelapsePayload {
   format?: 'GIF' | 'MPEG4';
   fadeDuration?: number;
   delayLastFrame?: boolean;
+  showLegend?: boolean;
   newLayersCount?: number;
 }
 
@@ -72,6 +74,7 @@ const initialState: TimelapseState = {
   format: 'GIF',
   fadeDuration: 0.5,
   delayLastFrame: false,
+  showLegend: true,
   newLayersCount: 0,
 };
 
@@ -160,6 +163,9 @@ export const timelapseSlice = createSlice({
     },
     setDelayLastFrame: (state, action: PayloadAction<boolean>) => {
       state.delayLastFrame = action.payload;
+    },
+    setShowLegend: (state, action: PayloadAction<boolean>) => {
+      state.showLegend = action.payload;
     },
     setNewLayersCount: (state, action: PayloadAction<number>) => {
       state.newLayersCount = action.payload;

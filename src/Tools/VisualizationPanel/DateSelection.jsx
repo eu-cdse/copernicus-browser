@@ -33,6 +33,9 @@ function DateSelection({
   showPinPanel,
   dateMode,
   compareShare,
+  compareShareInit,
+  wmsPanelOpen,
+  panelFromUrlParams,
   clmsSelection,
 }) {
   const [maxCloudCoverTemp, setMaxCloudCoverTemp] = useState(maxCloudCover);
@@ -236,6 +239,9 @@ function DateSelection({
       showPinPanel={showPinPanel}
       dateMode={dateMode}
       compareShare={compareShare}
+      compareShareInit={compareShareInit}
+      wmsPanelOpen={wmsPanelOpen}
+      panelFromUrlParams={panelFromUrlParams}
       clmsSelection={clmsSelection}
     />
   );

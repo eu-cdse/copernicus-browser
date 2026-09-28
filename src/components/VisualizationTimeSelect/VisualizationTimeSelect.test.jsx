@@ -72,6 +72,7 @@ function renderComponent(overrides = {}) {
     showPinPanel: false,
     dateMode: DATE_MODES.SINGLE.value,
     compareShare: false,
+    wmsPanelOpen: false,
     clmsSelection: { selected: false },
     ...overrides,
   };
@@ -119,5 +120,53 @@ describe('VisualizationTimeSelect — openLayerPanel panel-race guard (#1184 F4)
     fireEvent.click(screen.getByTestId('mock-date-picker'));
 
     expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+
+  // Regression test for issue #1270: compareShare (Redux) is still false at mount for a
+  // compare-share URL, since URLParamsParser's restore dispatch is async — compareShareInit is the
+  // URL-parsed flag that is already correct at this point, same as ThemeSelect.jsx's guard.
+  it('does not call setShowLayerPanel when compareShareInit is true and compareShare is not yet true', () => {
+    const { setShowLayerPanel } = renderComponent({ compareShare: false, compareShareInit: true });
+
+    fireEvent.click(screen.getByTestId('mock-date-picker'));
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+
+  // Regression tests for a live, confirmed bug: refreshing while on the WMS panel jumped to Layers.
+  // updateSelectedDates (keyed on dateMode) calls updateDate -> openLayerPanel synchronously on
+  // mount whenever dateMode is SINGLE (the common case) and selectedDay (derived from the toTime
+  // prop) is set — the common case for a restored URL — so the bug was reproducible on mount alone,
+  // before wmsPanelOpen (Redux, set async by App.jsx once external-server hydration resolves) could
+  // ever be true yet.
+  it('does not call setShowLayerPanel on mount when panelFromUrlParams is wms', () => {
+    const { setShowLayerPanel } = renderComponent({
+      panelFromUrlParams: 'wms',
+      wmsPanelOpen: false,
+      toTime: moment.utc(),
+    });
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+
+  it('does not call setShowLayerPanel when wmsPanelOpen is already true (post-restore)', () => {
+    const { setShowLayerPanel } = renderComponent({ wmsPanelOpen: true });
+
+    fireEvent.click(screen.getByTestId('mock-date-picker'));
+
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+  });
+
+  it('still calls setShowLayerPanel(true) on a later click after the mount-time WMS skip is consumed', () => {
+    const { setShowLayerPanel } = renderComponent({
+      panelFromUrlParams: 'wms',
+      wmsPanelOpen: false,
+      toTime: moment.utc(),
+    });
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByTestId('mock-date-picker'));
+
+    expect(setShowLayerPanel).toHaveBeenCalledWith(true);
   });
 });

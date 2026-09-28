@@ -16,10 +16,6 @@ jest.mock(
     ({ displaySocialShareOptions }: { displaySocialShareOptions: boolean }) =>
       displaySocialShareOptions ? <div data-testid="social-share-open" /> : null,
 );
-// Sharing normally persists pins to the backend on mount; stub it so no network call fires.
-jest.mock('../Pins/Pin.utils', () => ({
-  saveSharedPinsToServer: jest.fn().mockResolvedValue('shared-id'),
-}));
 
 const REGULAR_LAYER = { title: 'Regular layer' };
 const EXTERNAL_WMS_LAYER = {

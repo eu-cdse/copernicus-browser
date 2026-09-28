@@ -43,6 +43,39 @@ export function getLegendDefinitionFromMetadata(metadata) {
 }
 
 /*
+Resolves the legend to show for a layer, preferring the predefined layers_metadata.js
+definition (curated, discrete colour-map format) over whatever the SentinelHub layer
+instance itself reports.
+*/
+export function resolveLegendForLayer(layer, datasourceId, themeId, time) {
+  // A layer flagged `isCustomVisualization` (set by `getLayerFromParams`/`layerFromPin` from the
+  // caller's own raw params) is a custom visualization: its `layerId` (when present at all) is
+  // either absent or borrowed from a lookup fallback, not a genuine predefined layer id, so matching
+  // it against PREDEFINED_LAYERS_METADATA would risk showing an unrelated layer's curated legend.
+  // `layer.evalscript`/`layer.evalscriptUrl` can't be used for this check: Sentinel Hub's own
+  // predefined layers carry an internal evalscript too once `updateLayerFromServiceIfNeeded` runs
+  // (SH implements predefined visualizations server-side via evalscripts), so that would skip the
+  // curated lookup for virtually every predefined layer.
+  const isCustomVisualization = !!layer?.isCustomVisualization;
+  const predefinedLayerMetadata = isCustomVisualization
+    ? undefined
+    : findMatchingLayerMetadata(datasourceId, layer?.layerId, themeId, time);
+  const legendDefinition =
+    predefinedLayerMetadata && predefinedLayerMetadata.legend
+      ? predefinedLayerMetadata.legend
+      : layer?.legend;
+  return { legendDefinition, legendUrl: layer?.legendUrl };
+}
+
+export function hasLegendDefinition(layer, datasourceId, themeId, time) {
+  if (!layer) {
+    return false;
+  }
+  const { legendDefinition, legendUrl } = resolveLegendForLayer(layer, datasourceId, themeId, time);
+  return !!(legendDefinition || legendUrl);
+}
+
+/*
 returns min and max position for continuous legend
 */
 

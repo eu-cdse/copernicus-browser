@@ -344,6 +344,12 @@ export async function layerFromPin(pin, reqConfig) {
       layer.evalscriptUrl = evalscriptUrl;
     }
   }
+  if (layer) {
+    // Mirrors `getLayerFromParams`'s params-derived flag (ImageDownload.utils.js) so consumers like
+    // `resolveLegendForLayer` can tell a genuinely custom pin from a predefined layer without relying
+    // on `layer.evalscript`, which Sentinel Hub also populates for its own predefined layers.
+    layer.isCustomVisualization = !!(evalscript || evalscriptUrl);
+  }
   return layer;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { t } from 'ttag';
 
 import { EOBButton } from '../../junk/EOBCommon/EOBButton/EOBButton';
@@ -17,11 +17,24 @@ export default function TimelapseSettings({
   toggleDownloadPanel,
   delayLastFrame,
   updateDelayLastFrame,
+  showLegend,
+  updateShowLegend,
+  hasLegendData,
 }) {
   const [localSize, setLocalSize] = useState(size);
   const [localFormat, setLocalFormat] = useState(format);
   const [localFadeDuration, setLocalFadeDuration] = useState(fadeDuration);
   const [checkedDelayLastFrame, setCheckedDelayLastFrame] = useState(delayLastFrame);
+  const [checkedShowLegend, setCheckedShowLegend] = useState(showLegend && hasLegendData);
+
+  // `hasLegendData` resolves asynchronously in Timelapse.jsx (it depends on `this.layer`, which
+  // is only known once the layer fetch completes), so it can still be stale on mount.
+  useEffect(() => {
+    if (hasLegendData) {
+      setCheckedShowLegend(showLegend);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasLegendData]);
 
   function onUpdateWidth(width) {
     setLocalSize({ ...localSize, width, height: Math.round(width / size.ratio) });
@@ -35,12 +48,17 @@ export default function TimelapseSettings({
     setCheckedDelayLastFrame(!checkedDelayLastFrame);
   }
 
+  function handleShowLegendChange() {
+    setCheckedShowLegend(!checkedShowLegend);
+  }
+
   function onSaveButtonClick() {
     updateSize(localSize);
     updateFormat(localFormat);
     updateFadeDuration(localFadeDuration);
     toggleDownloadPanel(false);
     updateDelayLastFrame(checkedDelayLastFrame);
+    updateShowLegend(checkedShowLegend);
   }
 
   return (
@@ -115,6 +133,19 @@ export default function TimelapseSettings({
             type="checkbox"
             checked={checkedDelayLastFrame}
             onChange={handleDelayLastFrameChange}
+          />
+        </div>
+        <div
+          className={'settings-row'}
+          title={hasLegendData ? undefined : t`Layer does not have any legend data.`}
+        >
+          <label className="label">{t`Show legend`}:</label>
+          <input
+            className={'show-legend-checkbox'}
+            type="checkbox"
+            checked={checkedShowLegend}
+            disabled={!hasLegendData}
+            onChange={handleShowLegendChange}
           />
         </div>
         <div className="settings-row">

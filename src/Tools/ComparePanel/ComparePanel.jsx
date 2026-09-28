@@ -8,8 +8,6 @@ import ComparedLayer from './ComparedLayer';
 import SocialShare from '../../components/SocialShare/SocialShare';
 import { NotificationPanel } from '../../junk/NotificationPanel/NotificationPanel';
 
-import { saveSharedPinsToServer } from '../Pins/Pin.utils';
-
 import { CustomDropdownIndicator } from '../../components/CustomSelectInput/CustomDropdownIndicator';
 import { customSelectStyle } from '../../components/CustomSelectInput/CustomSelectStyle';
 
@@ -61,25 +59,9 @@ const ComparePanel = (props) => {
   const getCompareOptions = () =>
     Object.values(COMPARE_OPTIONS).map((v) => ({ value: v.value, label: v.label() }));
 
-  useEffect(() => {
-    const getAndSetCompareSharedPinsId = async () => {
-      try {
-        // externalWms is forwarded verbatim in the outbound POST body (toServerPin's ...rest), and
-        // the sharedpins backend persists and returns it on GET, so external WMS/WMTS layers are
-        // restored when opening a shared compare link.
-        const sharedPinsId = await saveSharedPinsToServer(comparedLayers);
-        store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(sharedPinsId));
-      } catch (e) {
-        console.warn(e);
-      }
-    };
-
-    if (comparedLayers.length > 0) {
-      getAndSetCompareSharedPinsId();
-    } else {
-      store.dispatch(compareLayersSlice.actions.setCompareSharedPinsId(null));
-    }
-  }, [comparedLayers]);
+  // compareSharedPinsId is kept in sync with comparedLayers in App.jsx, not here — addToCompare is
+  // dispatched from several other panels too (Pins, Layers, Highlights), so syncing only while this
+  // component is mounted missed layers added elsewhere (issue #1270).
 
   const toggleSocialSharePanel = () => {
     setDisplaySocialShareOptions((prevState) => !prevState);

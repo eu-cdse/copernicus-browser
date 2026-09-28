@@ -2,6 +2,7 @@ import moment from 'moment';
 import {
   addImageOverlays,
   constructRawBandEvalscript,
+  drawLegendImage,
   fetchImage,
   getImageDimensionFromBoundsWithCap,
   getLayerFromParams,
@@ -9,6 +10,7 @@ import {
   getPixelCoordinates,
   getRawBandsScalingFactor,
   isSimpleImageFormat,
+  LEGEND_SVG_SCALE,
   overrideEvalscriptIfNeeded,
   resolveComparedLayerTitle,
 } from './ImageDownload.utils';
@@ -965,5 +967,52 @@ describe('resolveComparedLayerTitle — rebuilds legacy layerId-as-title compare
     };
 
     expect(resolveComparedLayerTitle(cLayer, undefined)).toBe('');
+  });
+});
+
+describe('drawLegendImage — caps legend height for layers with many discrete legend classes (regression #1269, CLCplus LULUCF Instance)', () => {
+  function createCanvasCtx(width, height) {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    return canvas.getContext('2d');
+  }
+
+  function createLegendImage(logicalWidth, logicalHeight) {
+    const img = document.createElement('img');
+    // drawLegendImage receives the already-rasterized <img>, whose natural width/height are
+    // LEGEND_SVG_SCALE times the SVG's logical size (see createSVGLegendDiscrete/Continous).
+    img.width = logicalWidth * LEGEND_SVG_SCALE;
+    img.height = logicalHeight * LEGEND_SVG_SCALE;
+    return img;
+  }
+
+  function getDrawnDimensions(drawImageSpy) {
+    const call = drawImageSpy.mock.calls[0];
+    return { destWidth: call[7], destHeight: call[8] };
+  }
+
+  it('scales a very tall legend down so it never exceeds 50% of the frame height, preserving aspect ratio', () => {
+    const ctx = createCanvasCtx(800, 600);
+    const drawImageSpy = jest.spyOn(ctx, 'drawImage');
+    const legendImage = createLegendImage(200, 1400);
+
+    drawLegendImage(ctx, legendImage, true, false);
+
+    const { destWidth, destHeight } = getDrawnDimensions(drawImageSpy);
+    expect(destHeight).toBeLessThanOrEqual(600 * 0.5);
+    expect(destWidth / destHeight).toBeCloseTo(legendImage.width / legendImage.height, 2);
+  });
+
+  it('leaves a short legend at the existing width-based ratio floor (unaffected by the height cap)', () => {
+    const ctx = createCanvasCtx(800, 600);
+    const drawImageSpy = jest.spyOn(ctx, 'drawImage');
+    const legendImage = createLegendImage(200, 150);
+
+    drawLegendImage(ctx, legendImage, true, false);
+
+    const { destWidth, destHeight } = getDrawnDimensions(drawImageSpy);
+    expect(destWidth).toBe(Math.round((legendImage.width / LEGEND_SVG_SCALE) * 0.6));
+    expect(destHeight).toBe(Math.round((legendImage.height / LEGEND_SVG_SCALE) * 0.6));
   });
 });

@@ -3,7 +3,7 @@ import store, { externalLayersSlice, pinsSlice, notificationSlice, tabsSlice } f
 import * as PinUtils from './Pins/Pin.utils';
 import { notifyAddedToPins } from '../utils/floatingPanelNotification';
 import { isInGroup } from '../Auth/authHelpers';
-import { TABS } from '../const';
+import { TABS, ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY } from '../const';
 
 jest.mock('../utils/floatingPanelNotification', () => ({
   notifyFloatingPanel: jest.fn(),
@@ -166,6 +166,117 @@ describe('Tools.componentDidMount — RRD tab auto-switch vs. any explicit Visua
     tools.componentDidMount();
 
     expect(store.getState().tabs.selectedTabIndex).toBe(TABS.SEARCH_TAB);
+  });
+
+  // Regression test for issue #1270: at mount, compareShare (Redux) is still false because
+  // URLParamsParser's restore is async and App.componentDidMount (which flips it) runs after its
+  // children's — compareShareInit is the URL-parsed flag that is already correct at this point.
+  it('does not switch to the Rapid Response Desk tab when compareShareInit is set and compareShare is not yet true', () => {
+    const tools = new Tools(
+      baseProps({ layerId: undefined, showPinPanel: false, compareShare: false, compareShareInit: true }),
+    );
+
+    tools.componentDidMount();
+
+    expect(store.getState().tabs.selectedTabIndex).toBe(TABS.SEARCH_TAB);
+  });
+
+  it('still switches to the Rapid Response Desk tab when no Visualize-panel flag is set', () => {
+    const tools = new Tools(
+      baseProps({
+        layerId: undefined,
+        showPinPanel: false,
+        showComparePanel: false,
+        compareShare: false,
+        compareShareInit: false,
+        panelFromUrlParams: undefined,
+        hasPendingSharedPinsImport: false,
+      }),
+    );
+
+    tools.componentDidMount();
+
+    expect(store.getState().tabs.selectedTabIndex).toBe(TABS.RAPID_RESPONSE_DESK);
+  });
+});
+
+// Regression tests for issue #1270: refreshing while on the Order tab was landing on Visualize
+// instead, because shouldSwitchToRapidResponseDeskTab()'s `!layerId` condition almost never holds
+// for a returning user (layerId persists once any layer has ever been selected). An explicit
+// sessionStorage record of the Order tab (set by setActiveTabIndex, mirroring the pre-existing
+// Search tab restore) now takes precedence over that heuristic.
+describe('Tools.componentDidMount — Order tab restore from an explicit session record (#1270)', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
+    isInGroup.mockReturnValue(true);
+    sessionStorage.removeItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY);
+  });
+
+  afterEach(() => {
+    sessionStorage.removeItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY);
+  });
+
+  it('restores the Order tab from an explicit session record even when layerId is set', () => {
+    sessionStorage.setItem(
+      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+      JSON.stringify({ shouldShowRapidResponseDeskTab: true }),
+    );
+    const tools = new Tools(baseProps({ layerId: 'some-layer', showPinPanel: false }));
+
+    tools.componentDidMount();
+
+    expect(store.getState().tabs.selectedTabIndex).toBe(TABS.RAPID_RESPONSE_DESK);
+  });
+
+  it('does not restore the Order tab when there is no explicit session record and the heuristic conditions are not met', () => {
+    const tools = new Tools(baseProps({ layerId: 'some-layer', showPinPanel: false }));
+
+    tools.componentDidMount();
+
+    expect(store.getState().tabs.selectedTabIndex).toBe(TABS.SEARCH_TAB);
+  });
+
+  // Regression test for a review finding on #1270: an explicit Order-tab record must not bypass
+  // hasPendingSharedPinsImport (or the other hasExplicitNonOrderVisualizeContext guards) — a fresh
+  // shared-pins import on this page load has to win over a stale "was on Order" record from earlier
+  // in the session, so it can resolve into the Pins panel instead of being preempted.
+  it('does not restore the Order tab from an explicit session record when a shared-pins import is pending', () => {
+    sessionStorage.setItem(
+      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+      JSON.stringify({ shouldShowRapidResponseDeskTab: true }),
+    );
+    const tools = new Tools(
+      baseProps({ layerId: 'some-layer', showPinPanel: false, hasPendingSharedPinsImport: true }),
+    );
+
+    tools.componentDidMount();
+
+    expect(store.getState().tabs.selectedTabIndex).toBe(TABS.SEARCH_TAB);
+  });
+
+  it('setActiveTabIndex persists the Order tab record when switching to it', () => {
+    const tools = new Tools(baseProps({ layerId: undefined, showPinPanel: false }));
+
+    tools.setActiveTabIndex(TABS.RAPID_RESPONSE_DESK);
+
+    expect(JSON.parse(sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY))).toEqual(
+      expect.objectContaining({ shouldShowRapidResponseDeskTab: true, shouldShowAdvancedSearchTab: false }),
+    );
+  });
+
+  it('setActiveTabIndex clears the Order tab record when switching to another tab', () => {
+    sessionStorage.setItem(
+      ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
+      JSON.stringify({ shouldShowRapidResponseDeskTab: true }),
+    );
+    const tools = new Tools(baseProps({ layerId: undefined, showPinPanel: false }));
+
+    tools.setActiveTabIndex(TABS.VISUALIZE_TAB);
+
+    expect(JSON.parse(sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY))).toEqual(
+      expect.objectContaining({ shouldShowRapidResponseDeskTab: false }),
+    );
   });
 });
 

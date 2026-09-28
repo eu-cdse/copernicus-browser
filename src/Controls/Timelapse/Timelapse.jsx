@@ -16,6 +16,7 @@ import { TimelapsePreview } from './TimelapsePreview';
 import { constructBBoxFromBounds, getLayerFromParams } from '../ImgDownload/ImageDownload.utils';
 import { constructGetMapParamsEffects, getVisualizationEffectsFromStore } from '../../utils/effectsUtils';
 import { TERRAIN_VIEWER_IDS, setTerrainViewerId } from '../../TerrainViewer/TerrainViewer.const';
+import { resolveLegendForLayer, hasLegendDefinition } from '../../Tools/VisualizationPanel/legendUtils';
 
 import {
   getFlyoversToFetch,
@@ -149,6 +150,9 @@ class Timelapse extends Component {
       this.searchDatesAndFetchImages();
     }
     if (prevProps.showBorders !== this.props.showBorders) {
+      this.searchDatesAndFetchImages();
+    }
+    if (prevProps.showLegend !== this.props.showLegend) {
       this.searchDatesAndFetchImages();
     }
     if (
@@ -549,9 +553,18 @@ class Timelapse extends Component {
         timelapseTerrainViewerId: terrainViewerId,
       });
     } else {
+      const { showLegend } = this.props;
       await Promise.all(
-        flyoversToFetch.map((flyover) =>
-          fetchTimelapseImage({
+        flyoversToFetch.map((flyover) => {
+          const { legendDefinition, legendUrl } = showLegend
+            ? resolveLegendForLayer(
+                flyover.visualization.layer,
+                flyover.visualization.datasetId,
+                this.props.selectedThemeId,
+                flyover.toTime,
+              )
+            : {};
+          return fetchTimelapseImage({
             ...this.props,
             layer: flyover.visualization.layer,
             datasetId: flyover.visualization.datasetId,
@@ -573,6 +586,9 @@ class Timelapse extends Component {
             selectedProcessing: flyover.visualization.layer.selectedProcessing,
             processGraph: flyover.visualization.layer.processGraph,
             orbitDirection: flyover.visualization.layer.orbitDirection,
+            showLegend,
+            legendDefinition,
+            legendUrl,
           })
             .then((image) => {
               return this.onImageLoad({ img: image.url, flyover: flyover });
@@ -582,8 +598,8 @@ class Timelapse extends Component {
                 console.warn('Unable to fetch timelapse image', err);
                 this.showErrorMessage(t`Unable to fetch timelapse image`);
               }
-            }),
-        ),
+            });
+        }),
       );
     }
     this.setState({
@@ -916,6 +932,8 @@ class Timelapse extends Component {
       selectedProcessing,
       processGraph,
       orbitDirection,
+      showLegend,
+      selectedThemeId,
     } = this.props;
     let resolvedCounter = 0;
 
@@ -924,6 +942,10 @@ class Timelapse extends Component {
         if (!this.shouldRefetchImages()) {
           return image.url;
         }
+
+        const { legendDefinition, legendUrl } = showLegend
+          ? resolveLegendForLayer(image.layer, image.datasetId, selectedThemeId, image.toTime)
+          : {};
 
         // refetch images with custom size
         let response = await fetchTimelapseImage({
@@ -947,6 +969,9 @@ class Timelapse extends Component {
           selectedProcessing: selectedProcessing,
           processGraph: processGraph,
           orbitDirection: orbitDirection,
+          showLegend,
+          legendDefinition,
+          legendUrl,
         }).catch((err) => {
           console.warn('Unable to refetch timelapse image', err);
           throw err;
@@ -1069,6 +1094,10 @@ class Timelapse extends Component {
     store.dispatch(timelapseSlice.actions.setDelayLastFrame(delayLastFrame));
   };
 
+  updateShowLegend = (showLegend) => {
+    store.dispatch(timelapseSlice.actions.setShowLegend(showLegend));
+  };
+
   render() {
     const {
       images,
@@ -1108,6 +1137,8 @@ class Timelapse extends Component {
       format,
       fadeDuration,
       delayLastFrame,
+      showLegend,
+      selectedThemeId,
       is3D,
     } = this.props;
 
@@ -1129,6 +1160,8 @@ class Timelapse extends Component {
     });
 
     const screenCoverage = timelapseSharePreviewMode ? (isMobile ? 80 : 90) : 100;
+
+    const hasLegendData = hasLegendDefinition(this.layer, datasetId, selectedThemeId, toTime);
 
     return (
       <Modal
@@ -1248,6 +1281,9 @@ class Timelapse extends Component {
               showErrorMessage={this.showErrorMessage}
               delayLastFrame={delayLastFrame}
               updateDelayLastFrame={this.updateDelayLastFrame}
+              showLegend={showLegend}
+              updateShowLegend={this.updateShowLegend}
+              hasLegendData={hasLegendData}
               is3D={is3D}
               setGenerationCancelled={this.setGenerationCancelled}
             />
@@ -1303,6 +1339,7 @@ const mapStoreToProps = (store) => ({
   is3D: store.mainMap.is3D,
   fadeDuration: store.timelapse.fadeDuration,
   delayLastFrame: store.timelapse.delayLastFrame,
+  showLegend: store.timelapse.showLegend,
   newLayersCount: store.timelapse.newLayersCount,
 });
 

@@ -17,6 +17,24 @@ export function persistSearchConfig(config: Record<string, unknown>): void {
   }
 }
 
+// Centralizes the parse (and its corrupted-entry handling) so every reader gets the same safe
+// behaviour instead of each call site re-implementing (and sometimes forgetting) it.
+export function readSearchConfig(): Record<string, unknown> | null {
+  try {
+    const raw = sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Reads the current entry and spreads it under `partial` before writing, so a caller that only
+// cares about a couple of fields can never accidentally clobber the rest of the persisted config —
+// the bug this MR fixed at one call site (issue #1270 review) was exactly this spread being skipped.
+export function mergeSearchConfig(partial: Record<string, unknown>): void {
+  persistSearchConfig({ ...readSearchConfig(), ...partial });
+}
+
 export function resetSearchConfigPersistenceForTests(): void {
   persistDisabled = false;
 }

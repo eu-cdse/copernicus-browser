@@ -158,6 +158,8 @@ export class TimelapsePreview extends Component {
       format,
       fadeDuration,
       delayLastFrame,
+      showLegend,
+      hasLegendData,
       is3D,
     } = this.props;
 
@@ -347,6 +349,9 @@ export class TimelapsePreview extends Component {
                   searchDatesAndFetchImages={this.props.searchDatesAndFetchImages}
                   delayLastFrame={delayLastFrame}
                   updateDelayLastFrame={this.props.updateDelayLastFrame}
+                  showLegend={showLegend}
+                  updateShowLegend={this.props.updateShowLegend}
+                  hasLegendData={hasLegendData}
                 />
               ) : null}
             </>

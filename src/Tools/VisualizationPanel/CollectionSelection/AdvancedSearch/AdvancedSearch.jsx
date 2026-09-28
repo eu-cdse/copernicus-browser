@@ -24,11 +24,10 @@ import {
   TABS,
   DEFAULT_THEME_ID,
   DATE_MODES,
-  ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
 } from '../../../../const';
 import { getBoundsAndLatLng } from '../../../../utils/coords';
 import { isDefaultConfigurationSelected } from '../../../../utils/themes.utils';
-import { persistSearchConfig } from '../../../../utils/searchConfigPersistence';
+import { readSearchConfig, mergeSearchConfig } from '../../../../utils/searchConfigPersistence';
 import Results from '../../../Results/Results';
 import './AdvancedSearch.scss';
 import { buildSearchGeometry } from '../../../../utils/geojson.utils';
@@ -93,7 +92,7 @@ const addProductTypesToInstrument = (instrumentObj, productTypeIds) => {
   });
 };
 
-class AdvancedSearch extends Component {
+export class AdvancedSearch extends Component {
   state = {
     fromMoment: moment.utc().subtract(1, 'month').startOf('day'),
     toMoment: moment.utc().endOf('day'),
@@ -131,9 +130,7 @@ class AdvancedSearch extends Component {
   persistedShouldShowAdvancedSearchTab = false;
 
   componentDidMount() {
-    const searchConfigFromSession = JSON.parse(
-      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-    );
+    const searchConfigFromSession = readSearchConfig();
     if (searchConfigFromSession) {
       this.persistedShouldShowAdvancedSearchTab =
         searchConfigFromSession.shouldShowAdvancedSearchTab ?? false;
@@ -197,9 +194,7 @@ class AdvancedSearch extends Component {
     // and mixed collections (e.g. Landsat Mosaic) are partitioned and searched via the
     // correct API - see MR review F2.
     if (!prevProps.userToken && this.props.userToken) {
-      const searchConfigFromSession = JSON.parse(
-        sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-      );
+      const searchConfigFromSession = readSearchConfig();
       if (searchConfigFromSession?.cachedResults && searchConfigFromSession?.resultsAvailable) {
         this.doSearch();
       }
@@ -333,7 +328,12 @@ class AdvancedSearch extends Component {
       : true;
     this.hydratingFromCache = false;
 
-    persistSearchConfig({
+    // Merge with the existing session entry before overriding — this fires reactively (e.g. on fresh
+    // login with a cached search result) while AdvancedSearch can be mounted-but-hidden behind
+    // another tab (Tabs keeps tab bodies mounted, see junk/Tabs/Tabs.jsx), so an unconditional
+    // overwrite here would silently drop fields other tabs rely on, such as Tools.jsx's
+    // shouldShowRapidResponseDeskTab session record (issue #1270) — same pattern as backToSearch above.
+    mergeSearchConfig({
       searchFormData: newSearchFormData,
       resultsAvailable: true,
       resultsPanelSelected: true,
@@ -1026,13 +1026,9 @@ class AdvancedSearch extends Component {
 
   backToSearch = () => {
     this.resetSearch();
-    const searchConfigFromSession = JSON.parse(
-      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-    );
 
-    if (searchConfigFromSession) {
-      persistSearchConfig({
-        ...searchConfigFromSession,
+    if (readSearchConfig()) {
+      mergeSearchConfig({
         resultsAvailable: false,
         resultsPanelSelected: false,
       });

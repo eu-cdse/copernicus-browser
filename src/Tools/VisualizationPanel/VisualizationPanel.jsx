@@ -123,6 +123,7 @@ function VisualizationPanel({
   dataSourcesInitialized,
   dataSourcesLoading,
   compareShare,
+  compareShareInit,
   selectedTabIndex,
   customSelected,
   selectedProcessing,
@@ -279,11 +280,14 @@ function VisualizationPanel({
             <div className="date-selection">
               <WmsDateSelection
                 compareShare={compareShare}
+                compareShareInit={compareShareInit}
                 showLayerPanel={showLayerPanel}
                 setShowLayerPanel={setShowLayerPanel}
                 showHighlightPanel={showHighlightPanel}
                 showComparePanel={showComparePanel}
                 showPinPanel={showPinPanel}
+                wmsPanelOpen={wmsLayersPanelOpen}
+                panelFromUrlParams={panelFromUrlParams}
               />
             </div>
           ) : (
@@ -291,11 +295,14 @@ function VisualizationPanel({
               <div className={`date-selection ${wmsLayersPanelOpen ? 'wms-disabled-overlay' : ''}`}>
                 <DateSelection
                   compareShare={compareShare}
+                  compareShareInit={compareShareInit}
                   showLayerPanel={showLayerPanel}
                   setShowLayerPanel={setShowLayerPanel}
                   showHighlightPanel={showHighlightPanel}
                   showComparePanel={showComparePanel}
                   showPinPanel={showPinPanel}
+                  wmsPanelOpen={wmsLayersPanelOpen}
+                  panelFromUrlParams={panelFromUrlParams}
                 />
               </div>
             )
@@ -308,6 +315,7 @@ function VisualizationPanel({
         <div className={wmsLayersPanelOpen ? 'wms-disabled-overlay' : ''}>
           <ThemeSelect
             compareShare={compareShare}
+            compareShareInit={compareShareInit}
             setShowLayerPanel={setShowLayerPanel}
             highlightsAvailable={highlightsAvailable}
             setShowHighlightPanel={setShowHighlightPanel}

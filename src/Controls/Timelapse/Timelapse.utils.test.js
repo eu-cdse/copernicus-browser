@@ -1,6 +1,7 @@
 import { LatLngBounds } from 'leaflet';
 import moment from 'moment';
 import {
+  addLabelsAndLogos,
   getFlyoversToFetch,
   getMinMaxDates,
   getTimelapseBounds,
@@ -9,9 +10,16 @@ import {
   isImageCoverageEnough,
 } from './Timelapse.utils';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { drawLegendImage, loadLegendImageSafely } from '../ImgDownload/ImageDownload.utils';
 
 jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
   getDataSourceHandler: jest.fn(),
+}));
+
+jest.mock('../ImgDownload/ImageDownload.utils', () => ({
+  ...jest.requireActual('../ImgDownload/ImageDownload.utils'),
+  drawLegendImage: jest.fn(),
+  loadLegendImageSafely: jest.fn(),
 }));
 
 describe('getTimelapseBounds', () => {
@@ -233,5 +241,90 @@ describe('isImageClearEnough', () => {
 
     image.averageCloudCoverPercent = 49.5; // round to 50
     expect(isImageClearEnough(image.averageCloudCoverPercent, true, 50)).toBe(true);
+  });
+});
+
+describe('addLabelsAndLogos - legend', () => {
+  let OriginalImage;
+
+  beforeEach(() => {
+    // jest-canvas-mock provides canvas.getContext/toDataURL; URL.createObjectURL is
+    // mocked globally in setupTests.js but revokeObjectURL (called from the mainImg
+    // onload handler) is not, so it needs to be defined here.
+    global.URL.revokeObjectURL = jest.fn();
+
+    // Intercept `new Image()` so that setting `src` immediately (but asynchronously,
+    // like a real image load would be) fires `onload`, without a real network request.
+    // Returning a real `<img>` element (rather than a plain object) keeps it a valid
+    // CanvasImageSource for `ctx.drawImage(mainImg, ...)`.
+    OriginalImage = global.Image;
+    global.Image = function MockImageConstructor() {
+      const el = document.createElement('img');
+      Object.defineProperty(el, 'src', {
+        set(_value) {
+          setTimeout(() => {
+            if (el.onload) {
+              el.onload();
+            }
+          }, 0);
+        },
+        get() {
+          return '';
+        },
+        configurable: true,
+      });
+      return el;
+    };
+  });
+
+  afterEach(() => {
+    global.Image = OriginalImage;
+    loadLegendImageSafely.mockReset();
+    drawLegendImage.mockReset();
+  });
+
+  // showCopernicusLogos is passed as `false` throughout so these tests only exercise
+  // the legend-loading/drawing behaviour, independent of the (module-level cached)
+  // Copernicus logo loading.
+  const callAddLabelsAndLogos = ({ showLegend = false, legendDefinition, legendUrl } = {}) =>
+    addLabelsAndLogos(
+      '2024-01-01',
+      'blob:mock-object-url',
+      100,
+      100,
+      1000,
+      false,
+      showLegend,
+      legendDefinition,
+      legendUrl,
+    );
+
+  it('loads the legend via loadLegendImageSafely and draws it when showLegend is true', async () => {
+    const legendDefinition = { items: [{ color: '#fff', label: 'a' }] };
+    const legendUrl = 'https://example.com/legend.png';
+    const fakeLegendImg = { width: 10, height: 10 };
+    loadLegendImageSafely.mockResolvedValue(fakeLegendImg);
+
+    await callAddLabelsAndLogos({ showLegend: true, legendDefinition, legendUrl });
+
+    expect(loadLegendImageSafely).toHaveBeenCalledWith(legendDefinition, legendUrl, '[Timelapse]');
+    expect(drawLegendImage).toHaveBeenCalledWith(expect.anything(), fakeLegendImg, true, false);
+  });
+
+  it('does not load or draw a legend when showLegend is false', async () => {
+    await callAddLabelsAndLogos({ showLegend: false });
+
+    expect(loadLegendImageSafely).not.toHaveBeenCalled();
+    expect(drawLegendImage).not.toHaveBeenCalled();
+  });
+
+  it('does not draw a legend, but still resolves with the rendered image, when loadLegendImageSafely resolves to null', async () => {
+    const legendUrl = 'https://example.com/legend.png';
+    loadLegendImageSafely.mockResolvedValue(null);
+
+    const dataUrl = await callAddLabelsAndLogos({ showLegend: true, legendUrl });
+
+    expect(drawLegendImage).not.toHaveBeenCalled();
+    expect(dataUrl).toEqual(expect.stringContaining('data:image'));
   });
 });

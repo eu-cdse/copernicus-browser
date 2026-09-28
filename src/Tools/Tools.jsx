@@ -21,16 +21,12 @@ import {
 } from './Pins/Pin.utils';
 import { getOrbitDirectionFromList } from './VisualizationPanel/VisualizationPanel.utils';
 import { checkIfCustom } from './SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import {
-  ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY,
-  FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG,
-  FATHOM_TRACK_EVENT_LIST,
-} from '../const';
+import { FUNCTIONALITY_TEMPORARILY_UNAVAILABLE_MSG, FATHOM_TRACK_EVENT_LIST } from '../const';
 
 import './Tools.scss';
 import { TABS } from '../const';
 import { getVisualizationEffectsFromStore } from '../utils/effectsUtils';
-import { persistSearchConfig } from '../utils/searchConfigPersistence';
+import { readSearchConfig, mergeSearchConfig } from '../utils/searchConfigPersistence';
 import RapidResponseDesk from './RapidResponseDesk/RapidResponseDesk';
 import { isInGroup } from '../Auth/authHelpers';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
@@ -53,29 +49,55 @@ export class Tools extends Component {
     this.setState({ showEffects: showEffects });
   };
 
-  // Whether it's safe to auto-switch an RRD-group user to the Rapid Response Desk tab right now.
-  // Skip when the Pins or Compare panel is already showing (isAnotherVisualizePanelOpen — shared
+  // True when this exact page load already explicitly says the user is looking at something other
+  // than Order — the Pins or Compare panel is already showing (isAnotherVisualizePanelOpen — shared
   // with ThemeSelect.jsx and VisualizationTimeSelect.jsx's own auto-switch guards, see panelSlice.ts),
-  // or the URL already says the user was on a Visualize sub-panel (panel=layers/highlights/pins/wms
-  // — see PANEL in const.ts) or on Compare (compareShare), or a shared-pins import that hasn't
-  // resolved yet will switch to Pins shortly (hasPendingSharedPinsImport — computed synchronously in
-  // App.jsx's render from props alone, so it's already correct at mount, unlike showPinPanel for a
-  // *fresh* import, which only flips true once the async import in App.componentDidMount resolves,
-  // well after mount has already run). Otherwise an RRD-group user gets bounced straight to the
-  // Order tab instead of staying on whatever Visualize sub-panel they refreshed from — same race as
-  // ThemeSelect.jsx's Layers-panel override and externalLayersSlice's WMS-panel restore. Shared by
-  // componentDidMount and both componentDidUpdate checks below so the predicate is defined once.
+  // the URL already says the user was on a Visualize sub-panel (panel=layers/highlights/pins/wms —
+  // see PANEL in const.ts) or on Compare (compareShare), or a shared-pins import that hasn't resolved
+  // yet will switch to Pins shortly (hasPendingSharedPinsImport — computed synchronously in App.jsx's
+  // render from props alone, so it's already correct at mount, unlike showPinPanel for a *fresh*
+  // import, which only flips true once the async import in App.componentDidMount resolves, well
+  // after mount has already run). compareShare (Redux) is still false at this point in the mount
+  // sequence — App.componentDidMount hasn't run yet, since React mounts children before parents — so
+  // compareShareInit (parsed synchronously from the URL, see App.jsx) is also required here to catch
+  // a refresh on Compare (issue #1270). This must take precedence both over
+  // shouldSwitchToRapidResponseDeskTab()'s heuristic below and over an explicit "the user was on
+  // Order last time this session" record (componentDidMount) — a stale Order-tab record must not
+  // swallow a freshly-opened shared-pins/compare link (issue #1270 review).
+  hasExplicitNonOrderVisualizeContext = () =>
+    isAnotherVisualizePanelOpen({ pins: this.props.showPinPanel, compare: this.props.showComparePanel }) ||
+    !!this.props.panelFromUrlParams ||
+    !!this.props.compareShare ||
+    !!this.props.compareShareInit ||
+    !!this.props.hasPendingSharedPinsImport;
+
+  // Whether it's safe to auto-switch an RRD-group user to the Rapid Response Desk tab right now.
+  // Otherwise an RRD-group user gets bounced straight to the Order tab instead of staying on
+  // whatever Visualize sub-panel they refreshed from — same race as ThemeSelect.jsx's Layers-panel
+  // override and externalLayersSlice's WMS-panel restore. Shared by componentDidMount and both
+  // componentDidUpdate checks below so the predicate is defined once.
   shouldSwitchToRapidResponseDeskTab = () =>
     this.props.user &&
     isInGroup(RRD_GROUP) &&
     !this.props.layerId &&
-    !isAnotherVisualizePanelOpen({ pins: this.props.showPinPanel, compare: this.props.showComparePanel }) &&
-    !this.props.panelFromUrlParams &&
-    !this.props.compareShare &&
-    !this.props.hasPendingSharedPinsImport;
+    !this.hasExplicitNonOrderVisualizeContext();
 
   componentDidMount() {
-    const showRapidResponseDeskTab = this.shouldSwitchToRapidResponseDeskTab();
+    const searchConfigFromSession = readSearchConfig();
+
+    // An explicit record that the user switched to the Order tab themselves this session (see
+    // setActiveTabIndex) takes precedence over shouldSwitchToRapidResponseDeskTab()'s `!layerId`
+    // heuristic below — the same way the Search tab restore further down does. Without this, that
+    // heuristic almost never holds for a returning user (layerId persists once any layer has ever
+    // been selected), so an RRD-group user who was genuinely on Order before refreshing fell through
+    // to whatever tab URLParamsParser defaults to (Visualize) instead of staying put, and lost
+    // anything Order-tab-specific in the process (issue #1270). It must still yield to
+    // hasExplicitNonOrderVisualizeContext() — a fresh shared-pins import or compare/panel link on
+    // this exact page load must win over a stale "was on Order" record from earlier in the session.
+    const explicitOrderTabThisSession =
+      !!searchConfigFromSession?.shouldShowRapidResponseDeskTab &&
+      !this.hasExplicitNonOrderVisualizeContext();
+    const showRapidResponseDeskTab = explicitOrderTabThisSession || this.shouldSwitchToRapidResponseDeskTab();
     if (showRapidResponseDeskTab) {
       store.dispatch(tabsSlice.actions.setTabIndex(TABS.RAPID_RESPONSE_DESK));
     }
@@ -96,18 +118,8 @@ export class Tools extends Component {
     //
     // The RRD tab override above takes precedence: when it fires, skip the Search restore
     // so an RRD user isn't bounced off their tab on refresh.
-    if (!showRapidResponseDeskTab) {
-      let searchConfigFromSession = null;
-      try {
-        searchConfigFromSession = JSON.parse(
-          sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-        );
-      } catch {
-        // Corrupted sessionStorage entry — treat as absent.
-      }
-      if (searchConfigFromSession?.shouldShowAdvancedSearchTab) {
-        store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
-      }
+    if (!showRapidResponseDeskTab && searchConfigFromSession?.shouldShowAdvancedSearchTab) {
+      store.dispatch(tabsSlice.actions.setTabIndex(TABS.SEARCH_TAB));
     }
   }
 
@@ -174,12 +186,9 @@ export class Tools extends Component {
       store.dispatch(mainMapSlice.actions.setIs3D(false));
     }
 
-    const searchConfigFromSession = JSON.parse(
-      sessionStorage.getItem(ADVANCED_SEARCH_CONFIG_SESSION_STORAGE_KEY),
-    );
-    persistSearchConfig({
-      ...searchConfigFromSession,
+    mergeSearchConfig({
       shouldShowAdvancedSearchTab: index === TABS.SEARCH_TAB,
+      shouldShowRapidResponseDeskTab: index === TABS.RAPID_RESPONSE_DESK,
     });
   };
 
@@ -333,6 +342,7 @@ export class Tools extends Component {
       setShowComparePanel,
       setLastAddedPin,
       compareShare,
+      compareShareInit,
       panelFromUrlParams,
     } = this.props;
 
@@ -366,6 +376,7 @@ export class Tools extends Component {
                 setLastAddedPin={setLastAddedPin}
                 saveLocalPinsOnLogin={this.saveLocalPinsOnLogin}
                 compareShare={compareShare}
+                compareShareInit={compareShareInit}
                 panelFromUrlParams={panelFromUrlParams}
               />
             </Tab>
