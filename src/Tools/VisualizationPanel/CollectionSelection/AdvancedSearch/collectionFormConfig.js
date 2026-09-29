@@ -374,6 +374,54 @@ export const collections = [
         ],
       },
       {
+        id: 'DORIS',
+        label: 'DORIS',
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'DO_0_DOP___',
+            name: 'DO_0_DOP___',
+            label: 'DO_0_DOP___',
+            productTypeIds: ['DO_0_DOP___', 'DO_0_DOP____PRIVATE'],
+          },
+          {
+            id: 'DO_0_NAV___',
+            name: 'DO_0_NAV___',
+            label: 'DO_0_NAV___',
+            productTypeIds: ['DO_0_NAV___', 'DO_0_NAV____PRIVATE'],
+          },
+        ],
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+      },
+      {
+        id: 'GNSS',
+        label: 'GNSS',
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'GN_0_GNS',
+            name: 'GN_0_GNS',
+            label: 'GN_0_GNS',
+            productTypeIds: ['GN_0_GNS', 'GN_0_GNS____PRIVATE'],
+          },
+        ],
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+      },
+      {
+        id: 'NAVATT',
+        label: 'NAVATT',
+        supportsCloudCover: false,
+        productTypes: [
+          {
+            id: 'TM_0_NAT',
+            name: 'TM_0_NAT',
+            label: 'TM_0_NAT',
+            productTypeIds: ['TM_0_NAT', 'TM_0_NAT____PRIVATE'],
+          },
+        ],
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+      },
+      {
         id: 'Demo Products',
         label: 'Demo Products',
         supportsInstrumentName: false,
