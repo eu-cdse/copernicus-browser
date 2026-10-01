@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import {
   getServiceEndpoint,
   validateWmsUrl,
@@ -9,6 +11,7 @@ import {
   fetchWmsCapabilities,
   fetchWmtsCapabilities,
 } from './externalLayers.utils';
+import { getNextBestDate } from '../components/DatePicker/Datepicker.utils';
 
 // ---------------------------------------------------------------------------
 // getServiceEndpoint
@@ -361,6 +364,59 @@ describe('getWmsAvailableDatesInMonth', () => {
 });
 
 // ---------------------------------------------------------------------------
+// getWmsAvailableDatesInMonth fed into DatePicker's getNextBestDate (regression for the prev-arrow
+// getting stuck one day short of the real extent floor — see #1280 comment thread and
+// WmsDateSelection.tsx's minDate/maxDate day-flooring)
+// ---------------------------------------------------------------------------
+
+describe('getWmsAvailableDatesInMonth as the prev-arrow date source', () => {
+  // A real DWD GeoServer WMS forecast layer's <Extent name="time">: a PT3H extent whose timeStart
+  // carries a non-midnight time-of-day, exactly as parseTimeExtent hands it to WmsDateSelection.
+  const timeRanges = [{ start: '2026-09-28T21:00:00.000Z', end: '2026-10-07T12:00:00.000Z', period: 'PT3H' }];
+
+  const fetchDatesInRange = async (fromDate: moment.Moment, toDate: moment.Moment) =>
+    getWmsAvailableDatesInMonth(timeRanges, fromDate, toDate).map((date) => ({
+      date: moment.utc(date),
+      cloudCoverPercent: null,
+    }));
+
+  it('reaches the extent floor day once minDate is floored to the start of that day', async () => {
+    const minDate = moment.utc('2026-09-28T21:00:00.000Z').startOf('day'); // WmsDateSelection's fix
+    const selectedDay = moment.utc('2026-09-29').startOf('day');
+
+    const prevDay = await getNextBestDate({
+      selectedDay,
+      direction: 'prev',
+      fetchDatesInRange,
+      minDate,
+      maxDate: moment.utc('2026-10-07T12:00:00.000Z'),
+      maxSearchIterations: 5,
+    });
+
+    expect(prevDay.format('YYYY-MM-DD')).toBe('2026-09-28');
+  });
+
+  it('regression: an un-floored minDate excludes its own day and the prev arrow gets stuck', async () => {
+    const minDate = moment.utc('2026-09-28T21:00:00.000Z'); // the pre-fix value (no startOf('day'))
+    const selectedDay = moment.utc('2026-09-29').startOf('day');
+
+    const prevDay = await getNextBestDate({
+      selectedDay,
+      direction: 'prev',
+      fetchDatesInRange,
+      minDate,
+      maxDate: moment.utc('2026-10-07T12:00:00.000Z'),
+      maxSearchIterations: 5,
+    });
+
+    // Bug: 2026-09-28 is a genuinely available day (per timeRanges above) but its midnight marker
+    // is "before" minDate's 21:00 time-of-day, so it gets filtered out and getNextBestDate falls
+    // back to the unchanged selectedDay instead of reaching it.
+    expect(prevDay.isSame(selectedDay)).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // buildWmtsPreviewTileUrl
 // ---------------------------------------------------------------------------
 
@@ -459,6 +515,74 @@ const WMS_130_XML = `<?xml version="1.0" encoding="UTF-8"?>
           <northBoundLatitude>70</northBoundLatitude>
         </EX_GeographicBoundingBox>
         <Dimension name="time" default="2024-06-01">2020-01-01/2024-06-01/P1M</Dimension>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>`;
+
+// Regression fixture for #1280: some servers (e.g. DWD's GeoServer) set default="current" — a WMS
+// keyword meaning "use the most recent time", not a literal date. Clone of WMS_130_XML with that
+// keyword in place of a real default date.
+const WMS_130_CURRENT_DEFAULT_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMS_Capabilities version="1.3.0">
+  <Service>
+    <Title>My WMS Service</Title>
+  </Service>
+  <Capability>
+    <Request>
+      <GetMap>
+        <Format>image/png</Format>
+        <Format>image/jpeg</Format>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/html</Format>
+        <Format>application/geo+json</Format>
+      </GetFeatureInfo>
+    </Request>
+    <Layer>
+      <Layer queryable="1">
+        <Name>my_layer</Name>
+        <Title>My Layer</Title>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-10</westBoundLongitude>
+          <eastBoundLongitude>30</eastBoundLongitude>
+          <southBoundLatitude>35</southBoundLatitude>
+          <northBoundLatitude>70</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <Dimension name="time" default="current">2020-01-01/2024-06-01/P1M</Dimension>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>`;
+
+// Same regression, but for servers that omit the default attribute entirely.
+const WMS_130_NO_DEFAULT_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<WMS_Capabilities version="1.3.0">
+  <Service>
+    <Title>My WMS Service</Title>
+  </Service>
+  <Capability>
+    <Request>
+      <GetMap>
+        <Format>image/png</Format>
+        <Format>image/jpeg</Format>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/html</Format>
+        <Format>application/geo+json</Format>
+      </GetFeatureInfo>
+    </Request>
+    <Layer>
+      <Layer queryable="1">
+        <Name>my_layer</Name>
+        <Title>My Layer</Title>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-10</westBoundLongitude>
+          <eastBoundLongitude>30</eastBoundLongitude>
+          <southBoundLatitude>35</southBoundLatitude>
+          <northBoundLatitude>70</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <Dimension name="time">2020-01-01/2024-06-01/P1M</Dimension>
       </Layer>
     </Layer>
   </Capability>
@@ -937,6 +1061,28 @@ describe('fetchWmsCapabilities', () => {
     expect(layer.timeStart).toBe('2020-01-01');
     expect(layer.timeEnd).toBe('2024-06-01');
     expect(layer.timeDefault).toBe('2024-06-01');
+  });
+
+  // Regression for #1280: default="current" is a WMS-spec keyword meaning "most recent time", not
+  // a literal date — treating it as one produced an Invalid moment that crashed the date picker.
+  it('falls back timeDefault to timeEnd when default="current" (not a literal date)', async () => {
+    mockFetch(WMS_130_CURRENT_DEFAULT_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.timeStart).toBe('2020-01-01');
+    expect(layer.timeEnd).toBe('2024-06-01');
+    expect(layer.timeDefault).toBe(layer.timeEnd);
+  });
+
+  it('falls back timeDefault to timeEnd when the default attribute is missing entirely', async () => {
+    mockFetch(WMS_130_NO_DEFAULT_XML);
+    const result = await fetchWmsCapabilities('https://example.com/wms');
+    expect(result).not.toBeNull();
+    const layer = result!.layers[0];
+    expect(layer.timeStart).toBe('2020-01-01');
+    expect(layer.timeEnd).toBe('2024-06-01');
+    expect(layer.timeDefault).toBe(layer.timeEnd);
   });
 
   it('returns null when the response has no layers', async () => {

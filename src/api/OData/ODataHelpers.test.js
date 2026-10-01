@@ -51,6 +51,7 @@ import {
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
+  S3OLCI_CDAS,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getSTACConfigForDatasetId } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig.utils';
 import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
@@ -83,6 +84,7 @@ import {
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_DATASET_IDENTIFIERS,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1_LAYER_IDS,
 } from '../../Tools/SearchPanel/dataSourceHandlers/CLMSVLCCSpecificConst';
+import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 
 jest.mock('../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers', () => ({
   getDataSourceHandler: jest.fn(() => ({})),
@@ -1972,6 +1974,26 @@ describe('getDatasetIdFromProductType — urban_atlas', () => {
   test('unknown datasetIdentifier: returns undefined without throwing', () => {
     const result = getDatasetIdFromProductType('urban_atlas', makeAttrs('clms_ua_unknown_dataset'));
     expect(result).toBeUndefined();
+  });
+});
+
+describe('getDatasetIdFromProductType — S3C OLCI private products', () => {
+  test('OL_1_EFR____PRIVATE maps to S3OLCI_CDAS', () => {
+    const result = getDatasetIdFromProductType('OL_1_EFR____PRIVATE', []);
+    expect(result).toBe(S3OLCI_CDAS);
+  });
+
+  test('OL_1_ERR____PRIVATE maps to S3OLCI_CDAS', () => {
+    const result = getDatasetIdFromProductType('OL_1_ERR____PRIVATE', []);
+    expect(result).toBe(S3OLCI_CDAS);
+  });
+});
+
+describe('getODataCollectionInfoFromDatasetId — S3OLCI_CDAS reverse lookup', () => {
+  test('resolves to the public OL_1_EFR___ product type, not a _PRIVATE variant', () => {
+    getDataSourceHandler.mockReturnValueOnce({ datasetSearchIds: { [S3OLCI_CDAS]: 'OLCI' } });
+    const result = getODataCollectionInfoFromDatasetId(S3OLCI_CDAS, {});
+    expect(result[0].productType).toBe('OL_1_EFR___');
   });
 });
 

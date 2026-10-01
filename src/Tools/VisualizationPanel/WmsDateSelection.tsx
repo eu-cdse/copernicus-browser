@@ -46,9 +46,27 @@ function WmsDateSelection({
   if (!timeStart && !timeEnd && !timeDefault) {
     return null;
   }
-  const minDate = moment.utc(timeStart || timeDefault);
-  const maxDate = moment.utc(timeEnd || timeDefault);
-  const toTime = moment.utc(time || timeDefault);
+  // Floored/ceiled to day boundaries: the calendar and its available-day search
+  // (Datepicker.utils.js's filterDatesOutsideTemporalExtent) compare whole-day markers (midnight
+  // UTC) against these bounds, but a WMS extent's timeStart/timeEnd is a precise timestamp that
+  // rarely falls on midnight (e.g. "2026-09-28T21:00:00.000Z"). Left un-floored, minDate's
+  // time-of-day (21:00) is *after* that same day's midnight marker, so the day the extent actually
+  // starts on gets filtered out as "before minDate" — the prev-arrow then can't reach it and, once
+  // it's the only remaining candidate, throws "No new available date" and disables itself one day
+  // too early. See #1280 comment thread.
+  const minDate = moment.utc(timeStart || timeDefault).startOf('day');
+  // Some servers advertise a time extent that reaches days or weeks into the future (e.g. a
+  // multi-day weather forecast run); a WMS server has no way to flag "beyond this, it's a forecast"
+  // in the capabilities document, so the calendar would otherwise both default to and allow picking
+  // a date that hasn't happened yet. Cap at today regardless of what the server advertises.
+  const maxDate = moment.min(moment.utc(timeEnd || timeDefault), moment.utc()).endOf('day');
+  // Belt-and-braces: guards stale persisted state (pins, sessions) saved before this value was
+  // validated upstream in parseTimeExtent, and a persisted time from before the maxDate cap above
+  // (or simply a `time` picked when the extent's max was still in the future).
+  const candidateToTime = moment.utc(time || timeDefault);
+  const toTime = !candidateToTime.isValid()
+    ? maxDate
+    : moment.min(moment.max(candidateToTime, minDate), maxDate);
 
   const updateSelectedTime = (fromTime: moment.MomentInput, newToTime: moment.MomentInput) => {
     if (!newToTime) {

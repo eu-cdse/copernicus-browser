@@ -183,7 +183,10 @@ function parseTimeExtent(
   }
   const timeStart = [...starts].sort()[0];
   const timeEnd = [...ends].sort()[ends.length - 1];
-  return { timeDefault: defaultAttr || timeEnd, timeStart, timeEnd, timeRanges: ranges };
+  // Some servers (e.g. DWD's GeoServer) set default="current" — a WMS keyword meaning "use the
+  // most recent time", not a literal date. Only trust defaultAttr when it actually parses as one.
+  const isValidDefault = !!defaultAttr && moment.utc(defaultAttr, moment.ISO_8601, true).isValid();
+  return { timeDefault: isValidDefault ? defaultAttr : timeEnd, timeStart, timeEnd, timeRanges: ranges };
 }
 
 // Shared by extractWmsStyles/extractWmsMetadataUrls: both read a href off a fast-xml-parser

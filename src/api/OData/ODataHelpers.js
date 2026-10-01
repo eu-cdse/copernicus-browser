@@ -303,6 +303,10 @@ const PRODUCT_TYPE_TO_DATASETID = {
   S2MSI1C: S2_L1C_CDAS,
   S2MSI2A: S2_L2A_CDAS,
   OL_1_EFR___: S3OLCI_CDAS,
+  // keep after OL_1_EFR___ — getProductTypeFromDatasetId's reverse lookup returns the first key
+  // matching a dataset value, and OL_1_EFR___ must stay the one returned for S3OLCI_CDAS
+  OL_1_EFR____PRIVATE: S3OLCI_CDAS,
+  OL_1_ERR____PRIVATE: S3OLCI_CDAS,
   SL_1_RBT___: S3SLSTR_CDAS,
   SL_2_LST___: S3SLSTRL2_CDAS,
   OL_2_LFR___: S3OLCIL2_LAND,
