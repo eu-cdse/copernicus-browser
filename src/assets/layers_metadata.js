@@ -4582,7 +4582,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       { datasourceId: COPERNICUS_CLMS_DLTC_EUROPE_20M_3YEARLY_V1, layerId: 'Dominant Leaf Type Change' },
     ],
     description: () =>
-      t`Provides at pan-European level in the spatial resolution of 20 m information on the changes in six thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover).`,
+      t`Provides at pan-European level in the spatial resolution of 20 m information on the changes in five thematic classes (new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover).`,
   },
   {
     match: [
@@ -4649,7 +4649,7 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () =>
-      t`Provides information on the change in tree cover presence, classified into 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover).`,
+      t`Provides at pan-European level in the spatial resolution of 20 m information on tree cover extend changes in three thematic classes (new tree cover / loss of tree cover / unchanged areas with tree cover).`,
   },
   {
     match: [

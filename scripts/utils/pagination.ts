@@ -25,7 +25,12 @@ export const drainOffsetPages = async <T>(
     if (items.length === 0) {
       return all;
     }
-    all.push(...items);
+    // Not `all.push(...items)` -- spreading a very large `items` array into `push`'s argument
+    // list can exceed the JS engine's call-stack/argument limit (seen with ~100k+ items),
+    // throwing "Maximum call stack size exceeded". A plain loop has no such ceiling.
+    for (const item of items) {
+      all.push(item);
+    }
     offset += items.length;
   }
   // Hit without a caller-visible way to tell "still more data" from "actually done" -- throwing

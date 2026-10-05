@@ -92,3 +92,34 @@ describe('ImageDownload basic form image format', () => {
     await waitFor(() => expect(select.value).toBe(IMAGE_FORMATS.WEBP));
   });
 });
+
+describe('ImageDownload sticker tab', () => {
+  afterEach(() => {
+    cleanup();
+    store.dispatch(mainMapSlice.actions.reset());
+    store.dispatch(externalLayersSlice.actions.removeExternalServer(SERVER_ID));
+    window.history.pushState(null, '', '/');
+  });
+
+  test('defaults to the Sticker tab when ?sticker=active is in the URL', () => {
+    window.history.pushState(null, '', '?sticker=active');
+    renderImageDownload();
+
+    const stickerTabButton = screen.getByText('Sticker');
+    expect(stickerTabButton.className).toMatch(/selected/);
+  });
+
+  test('does not show the Sticker tab without the sticker URL param', () => {
+    renderImageDownload();
+
+    expect(screen.queryByText('Sticker')).not.toBeInTheDocument();
+  });
+
+  test('shows the Sticker tab for external layers (regression for the relaxed activeExternalLayer guard)', () => {
+    window.history.pushState(null, '', '?sticker=active');
+    activateExternalLayer();
+    renderImageDownload();
+
+    expect(screen.getByText('Sticker')).toBeInTheDocument();
+  });
+});

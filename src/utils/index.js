@@ -47,52 +47,20 @@ export function stripSearchParamsFromUrl(paramNames, precomputedSearch) {
 }
 
 /*
-  List of all supported URL parameters: (with exception of legacy EOB2 parameters)
-  - themesUrl: URL of the JSON file which contains the themes definitions. If not
-    specified, one of the included JSON files is used (default_themes.js).
-  - themeId: value of the id field in the theme definition
-  - datasetId: id of the dataset that was chosen when searching. It is specified so
-    that we know which layers to list in Visualization panel.
-  - visualizationUrl: WMS URL from the selected theme (the information about the
-    layerId is available through GetCapabilities request there)
-  - layerId: id of the selected layer. If not set, "custom layer" is selected and
-    either evalscript, evalscriptUrl, or processGraph parameters must be set.
-  - zoom: zoom level
-  - lat: latitude
-  - lng: longitude
-  - fromTime: date and time of the start of timespan, or null if toTime is a date
-    or if layer doesn't support time dimension.
-  - toTime: date and time of the end of timespan, or date if a single date is selected,
-    or null if layer doesn't support time dimension.
-  - evalscript: evalscript of the layer (if layerId and evalscriptUrl are not specified)
-  - evalscriptUrl: evalscriptUrl of the layer (if layerId is not specified)
-  - processGraph: OpenEO process graph of the layer (if layerId and processGraphUrl are not specified)
-  - processGraphUrl: URL to fetch OpenEO process graph from (if layerId is not specified)
-  - gain: gain effect
-  - gamma: gamma effect
-  - redRangeEffect: red range effect (slider)
-  - greenRangeEffect: green range effect (slider)
-  - blueRangeEffect: blue range effect (slider)
-  - minQa: minQa (min quality) for Sentinel-5P
-  - upsampling: upsampling (SH datasets only)
-  - downsampling: downsampling (SH datasets only)
-  - speckleFilter: speckle filter (Sentinel 1)
-  - orthorectification: orthorectification (Sentinel 1 only)
-  - backscatterCoeff: backscatterCoeff (Sentinel 1 only)
-  - dataFusion: dataFusion settings
-  - handlePositions: positions of pins in index feature.
-  - gradient: gradient used to calculate color in index feature.
+  For the full list of supported URL parameters, see public/deep-linking.md.
+
+  Notes on specific params:
   - panel: which Visualize sub-panel is open — "layers", "highlights", "pins", or "wms". Written
     explicitly even for Layers (the default) so a refresh can tell a deliberate Layers visit apart
     from no panel info at all — see ThemeSelect.jsx. Compare is represented separately, by
     compareShare.
 
-  NOTE: sharedPinsListId is deliberately NOT read from props/written here. Its absence from the
-  field list above already drops it from the rebuilt query string on the very next render after a
-  shared-pins import starts — this implicit omission is load-bearing for the #1184 fix (it's what
-  keeps the id from ever reaching a login redirect and re-triggering the import). See
-  e2e/fixtures/sharedPins.ts's runSharedPinsImportAssertions comment for the full explanation
-  before adding sharedPinsListId handling here "for completeness".
+  NOTE: sharedPinsListId is deliberately NOT read from props/written here. Its absence from
+  updatePath's destructured props below already drops it from the rebuilt query string on the very
+  next render after a shared-pins import starts — this implicit omission is load-bearing for the
+  #1184 fix (it's what keeps the id from ever reaching a login redirect and re-triggering the
+  import). See e2e/fixtures/sharedPins.ts's runSharedPinsImportAssertions comment for the full
+  explanation before adding sharedPinsListId handling here "for completeness".
 
 */
 

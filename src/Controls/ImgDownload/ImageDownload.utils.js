@@ -14,6 +14,7 @@ import { t } from 'ttag';
 import { point as turfPoint } from '@turf/helpers';
 import L from 'leaflet';
 import JSZip from 'jszip';
+import moment from 'moment';
 import {
   getDataSourceHandler,
   getDatasetLabel,
@@ -26,6 +27,7 @@ import { overlayTileLayers } from '../../Map/Layers';
 import { createGradients, resolveLegendForLayer } from '../../Tools/VisualizationPanel/legendUtils';
 import { b64EncodeUnicode } from '../../utils/base64MDN';
 import { isTimespanModeSelected } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
+import { constructGetMapParamsEffects } from '../../utils/effectsUtils';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO } from './consts';
 import {
   fetchExternalLayerBlob,
@@ -350,6 +352,19 @@ export async function fetchImage(layer, options) {
   }
 }
 
+// Shared compare-layer normalisation: moment-ifies fromTime/toTime and attaches per-layer effects,
+// so a compare composite (download or preview) sees the same shape fetchImageFromParams expects for
+// each layer. Used by the compare download, the sticker compare download and the compare preview.
+export function normalizeComparedLayersForDownload(comparedLayers) {
+  return comparedLayers.map((cLayer) => {
+    const newCLayer = Object.assign({}, cLayer);
+    newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
+    newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
+    newCLayer.effects = constructGetMapParamsEffects(cLayer);
+    return newCLayer;
+  });
+}
+
 /**
  * This function is used only for downloading images in the compare mode (patching them together)
  */
@@ -555,6 +570,21 @@ export async function fetchAndPatchImagesFromParams(params, setWarnings, setErro
       .slice()
       .reverse()
       .join('_'),
+  };
+}
+
+// Builds the descriptor fetchExternalLayerBlob expects from an activeExternalLayer store object.
+// Shared by the Basic, Sticker and preview external-layer paths, so they can't drift from what
+// fetchExternalLayerBlob actually needs.
+export function getExternalLayerFetchDescriptor(activeExternalLayer) {
+  return {
+    url: activeExternalLayer.server.url,
+    layerName: activeExternalLayer.layerName,
+    type: activeExternalLayer.server.type,
+    tileUrl: activeExternalLayer.tileUrl,
+    tileSize: activeExternalLayer.tileSize ?? undefined,
+    time: activeExternalLayer.time,
+    style: activeExternalLayer.style,
   };
 }
 
@@ -1890,9 +1920,8 @@ const STICKER_WIDTH_CM = 10.2;
 const STICKER_HEIGHT_CM = 7.6;
 export const STICKER_WIDTH_PX = Math.round((STICKER_WIDTH_CM / 2.54) * STICKER_DPI);
 export const STICKER_HEIGHT_PX = Math.round((STICKER_HEIGHT_CM / 2.54) * STICKER_DPI);
-const STICKER_TEXT = 'My favourite place!';
 
-export async function addStickerOverlays(blob, mimeType, logoVariant, showText = true) {
+export async function addStickerOverlays(blob, mimeType, logoVariant) {
   const canvas = document.createElement('canvas');
   canvas.width = STICKER_WIDTH_PX;
   canvas.height = STICKER_HEIGHT_PX;
@@ -1909,24 +1938,6 @@ export async function addStickerOverlays(blob, mimeType, logoVariant, showText =
   const logoHeight = Math.round(STICKER_HEIGHT_PX * 0.22);
   const logoWidth = Math.round(logoHeight * (logo.width / logo.height));
   ctx.drawImage(logo, padding, padding, logoWidth, logoHeight);
-
-  if (showText) {
-    const isDark = logoVariant === 'dark';
-    const fontSize = Math.round(STICKER_HEIGHT_PX * 0.1);
-    const textY = Math.round(STICKER_HEIGHT_PX * 0.85);
-    ctx.font = `${fontSize}px "Arial Black", sans-serif`;
-    ctx.fillStyle = isDark ? '#0a4393' : 'white';
-    ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-    ctx.shadowBlur = Math.round(fontSize * 0.05);
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.textAlign = 'right';
-    ctx.fillText(STICKER_TEXT, STICKER_WIDTH_PX - padding * 2, textY);
-    ctx.textAlign = 'start';
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-  }
 
   return await canvasToBlob(canvas, mimeType);
 }

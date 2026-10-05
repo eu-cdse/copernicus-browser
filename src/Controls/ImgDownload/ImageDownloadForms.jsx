@@ -234,7 +234,6 @@ export function ImageDownloadForms(props) {
             selectedTab === TABS.BASIC ? basicFormState.imageFormat : analyticalFormState.imageFormat
           }
           overlayVariant={stickerFormState?.overlayVariant}
-          showStickerText={stickerFormState?.showText}
         />
       )}
     </div>

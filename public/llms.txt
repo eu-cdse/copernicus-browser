@@ -1,0 +1,36 @@
+# Copernicus Browser
+
+> The Copernicus Browser makes it possible to browse and download full resolution images from all Copernicus missions.
+
+Select your area of interest, time range and collection(s), and inspect the resulting data. Try out different visualisations, download high resolution images, create timelapses directly in the Browser, or download the raw data for local processing.
+
+## Documentation
+
+- [Copernicus Browser user manual](https://documentation.dataspace.copernicus.eu/Applications/Browser.html): Detailed overview of the Browser's functionality.
+- [Deep linking reference](https://browser.dataspace.copernicus.eu/deep-linking.md): How to construct Browser URLs that open a specific location, dataset, layer and date.
+- [Gallery link collection](https://browser.dataspace.copernicus.eu/gallery-links.md): Curated Copernicus Browser deep links for real-world imagery events from the CDSE gallery, with location, dataset and date.
+- [Data overview](https://documentation.dataspace.copernicus.eu/Data.html): Overview of available Sentinel, CLMS and mosaic data sources.
+- [FAQ: configuring layers for statistical information](https://documentation.dataspace.copernicus.eu/FAQ.html#how-can-i-configure-my-layers-for-statistical-information-in-copernicus-browser): How to configure layers for statistics in the Browser.
+
+## APIs
+
+- [OData product download](https://documentation.dataspace.copernicus.eu/APIs/OData.html#product-download): Authorization and usage for downloading products via OData.
+- [Evalscript tutorials](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript.html#tutorials-and-other-related-materials): Tutorials and related material for writing custom evalscripts.
+- [Evalscript sampleType reference](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Evalscript/Functions.html#sampletype): Reference for the sampleType output format.
+- [Custom scripts repository](https://github.com/sentinel-hub/custom-scripts): Community collection of ready-to-use evalscripts for Sentinel Hub data.
+- [openEO process glossary](https://documentation.dataspace.copernicus.eu/APIs/openEO/Glossary.html#processes): Glossary of openEO processes used in process graphs.
+- [Data mask user guide](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/UserGuides/Datamask.html): Guide to the dataMask band for raw layers.
+
+## Optional
+
+- [Sentinel-1 GRD: speckle filtering](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S1GRD.html#speckle-filtering): Speckle filtering option for Sentinel-1 GRD data.
+- [Sentinel-1 GRD: processing options](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S1GRD.html#processing-options): Orthorectification and backscatter coefficient options for Sentinel-1 GRD.
+- [Sentinel-5P L2: processing options](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/S5PL2.html#processing-options): Processing options for Sentinel-5P Level 2 data.
+- [Landsat 8-9 Level-1 data](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/Landsat8-9.html): Reference for Landsat 8-9 Level-1 data.
+- [Sentinel-2 WorldCover Annual Cloudless Mosaic](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel2.html#sentinel-2-level-2a-worldcover-annual-cloudless-mosaic-rgbnir): Sentinel-2 Level-2A WorldCover annual cloudless mosaic.
+- [Sentinel-3 OLCI Level-2](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-olci-level-2): Sentinel-3 OLCI Level-2 Total Suspended Matter layer.
+- [Copernicus Contributing Missions: optical data](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#optical-data): Optical data from Copernicus Contributing Missions.
+- [Copernicus Contributing Missions: SAR data](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#sar-data): SAR data from Copernicus Contributing Missions.
+- [Copernicus Contributing Missions: Copernicus DEM](https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html#copernicus-dem): Copernicus DEM data from Copernicus Contributing Missions.
+- [Sentinel-3 altimetry Land Ice user handbook (PDF)](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_AMPLI_User_Handbook_v1.1.pdf): User handbook for the Sentinel-3 altimetry Land Ice product.
+- [Sentinel-3 altimetry Lakes and Reservoirs user handbook (PDF)](https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/docs/S3_LPP_HY_v1.2.pdf): User handbook for the Sentinel-3 altimetry Lakes and Reservoirs product.

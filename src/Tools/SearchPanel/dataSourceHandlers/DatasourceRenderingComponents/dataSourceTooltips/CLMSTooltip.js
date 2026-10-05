@@ -441,7 +441,7 @@ High Resolution Layer Croplands product is part of the European Union’s Copern
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsDltcEurope20m3yearlyV1Markdown = () =>
-  t`The High Resolution Layer Dominant Leaf Type Change (DLTC) raster product provides information on the change in dominant leaf type and consists of 7 thematic classes (unchanged areas with no tree cover / new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover / potential change among dominant leaf types). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
+  t`The High Resolution Layer Dominant Leaf Type Change (DLTC) raster provides information on the change between two reference years, and consists of 5 thematic classes (new broadleaved cover / new coniferous cover / loss of broadleaved cover / loss of coniferous cover / unchanged areas with tree cover). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
 
 This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 
@@ -466,7 +466,7 @@ This dataset is provided annually starting in 2017 with 10 meter rasters (fully 
 This dataset includes data from the French Overseas Territories (DOMs). More information [here](https://land.copernicus.eu/en/products/high-resolution-layer-croplands).`;
 
 const getCopernicusClmsVlccTcpc20m3yearlyV1Markdown = () =>
-  t`The Copernicus High Resolution Layer Tree Cover Presence Change (TCPC) raster product provides information on the change in tree cover presence and consists of 4 thematic classes (unchanged areas with no tree cover / new tree cover / loss of tree cover / unchanged areas with tree cover). The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged. This layer for previous reference year comparisons is called Tree Cover Change Mask (TCCM). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
+  t`The Copernicus High Resolution Layer Tree Cover Presence Change (TCPC) raster product provides information on the change between two reference years, and consists of 3 thematic classes (new tree cover / loss of tree cover / unchanged areas with tree cover). The class 255 = outside area is predefined by the 100m boundary layer and remains unchanged. This layer for previous reference year comparisons is called Tree Cover Change Mask (TCCM). This dataset covers two comparison periods, 2018-2021 and 2021-2024, with each product dated by the end year of its comparison period.
 
 This dataset is provided in 20 meter rasters (fully conformant with the EEA reference grid) in 100 x 100 km tiles covering the EEA38 countries.
 

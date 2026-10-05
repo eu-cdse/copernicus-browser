@@ -108,10 +108,10 @@ not exploitable in this app:
 Remaining moderate/low findings from `react-router` require a major version bump (v6 to v7) and are
 tracked as a separate follow-up issue rather than fixed here.
 
-CI previously ran `npm audit --audit-level=high` as part of `install_packages_and_run_lint`, but a
-newly published advisory (unrelated to the changes in a given MR) could fail that required job and
-block merging, so the check was removed (see #1265). It will come back as a separate, non-blocking
-job (#1266).
+CI runs `npm audit --audit-level=high` in a separate `npm_audit` job (`allow_failure: true`) in the
+`test` stage, rather than inside the required `install_packages_and_run_lint` job, so a newly
+published advisory (unrelated to the changes in a given MR) surfaces as a visible pipeline warning
+without blocking merges (see #1265, #1266).
 
 ### Building the application
 
@@ -203,12 +203,7 @@ Environment variables needed for anonymous usage:
 
 ### URL parameters
 
-The app reads a few parameters from the URL query string on load. Two of them are documented here; the rest of the (large) URL scheme is not covered:
-
-| Param              | Values               | Purpose                                                                                                                                                                          |
-| ------------------ | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `panel`            | `pins`, `highlights`, `wms` | Which Visualise sub-panel opens on load. Omitted means the default Layers panel. Written automatically as the user switches panels, so it survives a reload or a login redirect. `pins`/`highlights` land with the data collections view collapsed; `wms` lands with it force-expanded. |
-| `sharedPinsListId` | shared-pins list id  | Imports a shared pins list on load after a confirmation, then opens the Pins panel. Stripped from the URL on the first render after import.                                      |
+The Browser can be opened directly to a specific location, dataset, visualisation and date via URL query parameters. See [deep-linking.md](public/deep-linking.md) for the full parameter reference and more examples, or [gallery-links.md](public/gallery-links.md) for a curated collection of ready-made example links.
 
 Example: `https://browser.dataspace.copernicus.eu/?panel=pins`
 

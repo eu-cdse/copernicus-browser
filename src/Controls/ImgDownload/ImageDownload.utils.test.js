@@ -1,6 +1,7 @@
 import moment from 'moment';
 import {
   addImageOverlays,
+  addStickerOverlays,
   constructRawBandEvalscript,
   drawLegendImage,
   fetchImage,
@@ -1014,5 +1015,73 @@ describe('drawLegendImage — caps legend height for layers with many discrete l
     const { destWidth, destHeight } = getDrawnDimensions(drawImageSpy);
     expect(destWidth).toBe(Math.round((legendImage.width / LEGEND_SVG_SCALE) * 0.6));
     expect(destHeight).toBe(Math.round((legendImage.height / LEGEND_SVG_SCALE) * 0.6));
+  });
+});
+
+describe('addStickerOverlays — text removal (regression #1281)', () => {
+  let origCreateElement;
+  let OriginalImage;
+  let originalRevokeObjectURL;
+
+  beforeEach(() => {
+    // URL.createObjectURL is mocked in setupTests.js; define revokeObjectURL too
+    // so that drawBlobOnCanvas's finally-block doesn't throw.
+    originalRevokeObjectURL = global.URL.revokeObjectURL;
+    global.URL.revokeObjectURL = jest.fn();
+
+    // Intercept ALL img element creation (both via new Image() and document.createElement('img'))
+    // so that setting src immediately fires onload — without a real network request. Covers both
+    // drawBlobOnCanvas (sentinelhub-js) and loadImage (ImageDownload.utils.js).
+    origCreateElement = document.createElement.bind(document);
+    document.createElement = function (tag, ...args) {
+      const el = origCreateElement(tag, ...args);
+      if (tag === 'img') {
+        Object.defineProperty(el, 'src', {
+          set(_value) {
+            setTimeout(() => {
+              if (el.onload) {
+                el.onload();
+              }
+            }, 0);
+          },
+          get() {
+            return '';
+          },
+          configurable: true,
+        });
+      }
+      return el;
+    };
+
+    OriginalImage = global.Image;
+    global.Image = function MockImageConstructor() {
+      return document.createElement('img');
+    };
+  });
+
+  afterEach(() => {
+    document.createElement = origCreateElement;
+    global.Image = OriginalImage;
+    global.URL.revokeObjectURL = originalRevokeObjectURL;
+    jest.restoreAllMocks();
+  });
+
+  test('never draws text onto the sticker canvas, for either logo variant', async () => {
+    const fillTextSpy = jest.spyOn(CanvasRenderingContext2D.prototype, 'fillText');
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+
+    await addStickerOverlays(blob, 'image/png', 'light');
+    await addStickerOverlays(blob, 'image/png', 'dark');
+
+    expect(fillTextSpy).not.toHaveBeenCalled();
+  });
+
+  test('still draws the logo onto the sticker canvas', async () => {
+    const drawImageSpy = jest.spyOn(CanvasRenderingContext2D.prototype, 'drawImage');
+    const blob = new Blob(['fake-image'], { type: 'image/png' });
+
+    await addStickerOverlays(blob, 'image/png', 'light');
+
+    expect(drawImageSpy).toHaveBeenCalled();
   });
 });

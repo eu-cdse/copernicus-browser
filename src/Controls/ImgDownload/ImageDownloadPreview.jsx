@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { t } from 'ttag';
 import { selectActiveExternalLayer } from '../../store/slices/externalLayersSlice';
 import { SvgAoiClip, fetchExternalLayerBlob, getExternalWmsCropDimensions } from './WmsDownload.utils';
-import moment from 'moment';
 import { IMAGE_FORMATS, IMAGE_FORMATS_INFO } from './consts';
 import {
   addStickerOverlays,
@@ -14,6 +13,10 @@ import {
   getMapDimensions,
   capDimensionsToResolutionLimit,
   finalizeExternalDownloadImage,
+  getExternalLayerFetchDescriptor,
+  normalizeComparedLayersForDownload,
+  STICKER_WIDTH_PX,
+  STICKER_HEIGHT_PX,
 } from './ImageDownload.utils';
 import { getOrbitDirectionFromList } from '../../Tools/VisualizationPanel/VisualizationPanel.utils';
 import { getGetMapAuthToken } from '../../App';
@@ -27,29 +30,40 @@ import { PROCESSING_OPTIONS } from '../../const';
 import ImageDownloadErrorPanel from './ImageDownloadErrorPanel';
 
 async function fetchPreviewImage(props) {
+  // Sticker output is always composited onto a fixed-size canvas (see addStickerOverlays), so the
+  // preview must be fetched at that same fixed size instead of the viewport/AOI-scaled dimensions
+  // used by every other tab — otherwise the preview is cropped or padded relative to the real
+  // download. downloadSticker also never polygon-clips to the AOI geometry (it only ever crops to
+  // the AOI's rectangular bounding box, like every sticker path below), so the preview must not
+  // request geometry clipping either, or it shows a shape the download will never produce.
+  const isStickerTab = props.selectedTab === TABS.STICKER;
+
   if (props.activeExternalLayer) {
-    const baseDims = getMapDimensions(props.pixelBounds);
-    // When cropping (with or without draw), fetch the AOI bounds so the preview is cropped.
-    // When only drawing, fetch the full viewport so the polygon appears in context.
-    const bounds = props.cropToAoi && props.aoiBounds ? props.aoiBounds : props.mapBounds;
+    // Sticker: match downloadSticker's bounds choice exactly (prefer the AOI's bounding box
+    // whenever one exists, with no dependency on the "crop to AOI" checkbox the Sticker form
+    // doesn't have). Other tabs: crop to the AOI bounds only when cropToAoi is checked.
+    const bounds = isStickerTab
+      ? (props.aoiBounds ?? props.mapBounds)
+      : props.cropToAoi && props.aoiBounds
+        ? props.aoiBounds
+        : props.mapBounds;
     if (!bounds) {
       return null;
     }
-    // Scale to the AOI's on-screen size so the WMS renders at the same scale as the map.
-    const { width, height } =
-      props.cropToAoi && props.aoiBounds && props.mapBounds
-        ? getExternalWmsCropDimensions(baseDims.width, baseDims.height, props.mapBounds, props.aoiBounds)
-        : baseDims;
+    let width, height;
+    if (isStickerTab) {
+      width = STICKER_WIDTH_PX;
+      height = STICKER_HEIGHT_PX;
+    } else {
+      const baseDims = getMapDimensions(props.pixelBounds);
+      // Scale to the AOI's on-screen size so the WMS renders at the same scale as the map.
+      ({ width, height } =
+        props.cropToAoi && props.aoiBounds && props.mapBounds
+          ? getExternalWmsCropDimensions(baseDims.width, baseDims.height, props.mapBounds, props.aoiBounds)
+          : baseDims);
+    }
     const blob = await fetchExternalLayerBlob(
-      {
-        url: props.activeExternalLayer.server.url,
-        layerName: props.activeExternalLayer.layerName,
-        type: props.activeExternalLayer.server.type,
-        tileUrl: props.activeExternalLayer.tileUrl,
-        tileSize: props.activeExternalLayer.tileSize ?? undefined,
-        time: props.activeExternalLayer.time,
-        style: props.activeExternalLayer.style,
-      },
+      getExternalLayerFetchDescriptor(props.activeExternalLayer),
       bounds,
       width,
       height,
@@ -64,9 +78,9 @@ async function fetchPreviewImage(props) {
       height,
       mimeType: 'image/png',
       baseTileUrl: undefined,
-      aoiGeometry: props.aoiGeometry,
-      cropToAoi: props.cropToAoi,
-      drawGeoToImg: props.drawGeoToImg,
+      aoiGeometry: isStickerTab ? undefined : props.aoiGeometry,
+      cropToAoi: isStickerTab ? false : props.cropToAoi,
+      drawGeoToImg: isStickerTab ? false : props.drawGeoToImg,
       lat: props.lat,
       lng: props.lng,
       zoom: props.zoom,
@@ -75,21 +89,28 @@ async function fetchPreviewImage(props) {
     });
   }
 
-  const cancelToken = new CancelToken();
   const effectsParams = constructGetMapParamsEffects(props);
   const getMapAuthToken = getGetMapAuthToken(props.auth);
 
   let height, width;
 
-  const bounds = props.cropToAoi ? props.aoiBounds : props.mapBounds;
-  // Use pixel dimensions from the visible viewport instead of bounds-based dimensions
-  ({ width, height } = getMapDimensions(props.pixelBounds));
-
-  // Cap dimensions to ensure they meet the API's minimum meters-per-pixel requirement
-  ({ width, height } = capDimensionsToResolutionLimit(width, height, bounds, props.datasetId));
+  const bounds = isStickerTab
+    ? (props.aoiBounds ?? props.mapBounds)
+    : props.cropToAoi
+      ? props.aoiBounds
+      : props.mapBounds;
+  if (isStickerTab) {
+    width = STICKER_WIDTH_PX;
+    height = STICKER_HEIGHT_PX;
+  } else {
+    // Use pixel dimensions from the visible viewport instead of bounds-based dimensions
+    ({ width, height } = getMapDimensions(props.pixelBounds));
+    // Cap dimensions to ensure they meet the API's minimum meters-per-pixel requirement
+    ({ width, height } = capDimensionsToResolutionLimit(width, height, bounds, props.datasetId));
+  }
   const params = {
     ...props,
-    cancelToken,
+    cancelToken: props.cancelToken,
     effects: effectsParams,
     getMapAuthToken,
     imageFormat: IMAGE_FORMATS.PNG,
@@ -97,8 +118,13 @@ async function fetchPreviewImage(props) {
     showLegend: false,
     showLogo: false,
     addMapOverlays: false,
-    geometry: props.cropToAoi ? props.aoiGeometry : undefined,
-    bounds: props.cropToAoi ? props.aoiBounds : props.mapBounds,
+    geometry: isStickerTab ? undefined : props.cropToAoi ? props.aoiGeometry : undefined,
+    // Sticker never polygon-clips (see the function comment above). Without this override, a
+    // hybrid compare (Sentinel Hub + external WMS layers) would still read `cropToAoi` off the
+    // `...props` spread above and clip to the AOI geometry in fetchAndPatchImagesFromParams,
+    // producing a composite the sticker download — which has no `cropToAoi` concept — never does.
+    cropToAoi: isStickerTab ? false : props.cropToAoi,
+    bounds,
     width,
     height,
   };
@@ -113,13 +139,7 @@ async function fetchPreviewImage(props) {
     const response = await fetchAndPatchImagesFromParams({
       ...params,
       comparedClipping: adjustedClipping,
-      comparedLayers: props.comparedLayers.map((cLayer) => {
-        let newCLayer = Object.assign({}, cLayer);
-        newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
-        newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
-        newCLayer.effects = constructGetMapParamsEffects(cLayer);
-        return newCLayer;
-      }),
+      comparedLayers: normalizeComparedLayersForDownload(props.comparedLayers),
     }).catch((e) => {
       console.warn(e);
     });
@@ -154,10 +174,11 @@ const ImageDownloadPreview = (props) => {
     processGraph,
     evalscript,
     overlayVariant,
-    showStickerText,
   } = props;
 
   useEffect(() => {
+    let cancelled = false;
+    const cancelToken = new CancelToken();
     setFetchingPreviewImage(true);
     setPreviewError(null);
     setPreviewUrl(null);
@@ -178,6 +199,7 @@ const ImageDownloadPreview = (props) => {
 
     const options = {
       ...props,
+      cancelToken,
       layerId: isCustomLayer ? layerId : selectedLayer,
       // Only pass custom evalscript/processGraph if it's a custom layer
       // For regular layers, nullify so the layer's own script is used
@@ -189,14 +211,19 @@ const ImageDownloadPreview = (props) => {
     const runPreviewFetch = async () => {
       try {
         let blob = await fetchPreviewImage(options);
+        if (cancelled) {
+          return;
+        }
         if (blob instanceof Blob) {
           if (selectedTab === TABS.STICKER) {
             blob = await addStickerOverlays(
               blob,
               IMAGE_FORMATS_INFO[IMAGE_FORMATS.PNG].mimeType,
               overlayVariant,
-              showStickerText,
             );
+            if (cancelled) {
+              return;
+            }
           }
           setPreviewUrl(URL.createObjectURL(blob));
         } else {
@@ -204,23 +231,35 @@ const ImageDownloadPreview = (props) => {
           setPreviewError(error);
         }
       } catch (e) {
-        setPreviewError(e);
+        if (!cancelled) {
+          setPreviewError(e);
+        }
       } finally {
-        setFetchingPreviewImage(false);
+        if (!cancelled) {
+          setFetchingPreviewImage(false);
+        }
       }
     };
 
     runPreviewFetch();
     // The SH preview path reads many values off `props` (selectedTab, layerId, evalscript,
-    // processGraph, selectedProcessing, overlayVariant, showStickerText, auth, analyticalFormLayers)
-    // via the `options` spread, so `props` must stay in the deps or the preview freezes after open.
-    // The external-WMS path's cropToAoi/drawGeoToImg are covered by the same `props` identity change.
+    // processGraph, selectedProcessing, overlayVariant, auth, analyticalFormLayers) via the
+    // `options` spread, so `props` must stay in the deps or the preview freezes after open. The
+    // external-WMS path's cropToAoi/drawGeoToImg are covered by the same `props` identity change.
+    //
+    // `cancelled` guards every state update above so a slower, stale run from a previous render
+    // can never overwrite a result from a newer one (e.g. a toggled-off overlay "sticking" visually).
+    // `cancelToken.cancel()` additionally aborts the in-flight SH request itself (the external-WMS
+    // path has no such mechanism), so a stale run doesn't keep consuming network/API quota either.
+    return () => {
+      cancelled = true;
+      cancelToken.cancel();
+    };
   }, [
     analyticalFormLayers,
     auth,
     layerId,
     overlayVariant,
-    showStickerText,
     props,
     selectedTab,
     selectedProcessing,
@@ -242,7 +281,11 @@ const ImageDownloadPreview = (props) => {
       ) : previewError ? (
         <ImageDownloadErrorPanel error={previewError} />
       ) : previewUrl ? (
-        props.activeExternalLayer && props.cropToAoi && props.aoiGeometry && props.aoiBounds ? (
+        props.activeExternalLayer &&
+        selectedTab !== TABS.STICKER &&
+        props.cropToAoi &&
+        props.aoiGeometry &&
+        props.aoiBounds ? (
           <div style={{ position: 'relative', display: 'inline-block' }}>
             <SvgAoiClip
               geometry={props.aoiGeometry}

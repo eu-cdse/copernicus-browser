@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { CancelToken, CRS_EPSG3857, CRS_EPSG4326 } from '@sentinel-hub/sentinelhub-js';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
-import moment from 'moment';
 import { t } from 'ttag';
 
 import { getGetMapAuthToken } from '../../App';
@@ -60,6 +59,8 @@ import {
   STICKER_WIDTH_PX,
   STICKER_HEIGHT_PX,
   finalizeExternalDownloadImage,
+  getExternalLayerFetchDescriptor,
+  normalizeComparedLayersForDownload,
 } from './ImageDownload.utils';
 import ImageDownloadErrorPanel from './ImageDownloadErrorPanel';
 import { ImageDownloadForms, TABS } from './ImageDownloadForms';
@@ -86,8 +87,26 @@ function checkZoomLevel(datasetId, zoom, layerId) {
   return false;
 }
 
+// Shared external-layer download failure handling for Basic and Sticker: WMTS servers often don't
+// support image export at all, so that case gets its own message instead of the generic one.
+function notifyExternalLayerDownloadError(activeExternalLayer, err) {
+  console.error('External layer download failed', err);
+  const isWmts = activeExternalLayer?.server?.type === 'WMTS';
+  store.dispatch(
+    notificationSlice.actions.displayError(
+      isWmts
+        ? t`Could not download this layer. The WMTS server may not support image download.`
+        : t`Failed to download image.`,
+    ),
+  );
+}
+
 function ImageDownload(props) {
-  const [selectedTab, setSelectedTab] = useState(props.is3D ? TABS.TERRAIN_VIEWER : TABS.BASIC);
+  // With ?sticker=active, Image Download opens directly on the Sticker tab.
+  const isStickerMode = getUrlParams().sticker === STICKER_URL_PARAM_VALUE;
+  const [selectedTab, setSelectedTab] = useState(
+    isStickerMode ? TABS.STICKER : props.is3D ? TABS.TERRAIN_VIEWER : TABS.BASIC,
+  );
   const [loadingImages, setLoadingImages] = useState(false);
   const [allBands, setAllBands] = useState([]);
   const [allLayers, setAllLayers] = useState([]);
@@ -140,7 +159,6 @@ function ImageDownload(props) {
   const [stickerFormState, setStickerFormState] = useState({
     overlayVariant: 'light',
     imageFormat: IMAGE_FORMATS.PNG,
-    showText: true,
   });
 
   function updateSelectedLayers(layers) {
@@ -292,15 +310,7 @@ function ImageDownload(props) {
       // Always request PNG to avoid black nodata pixels (WMS transparent areas turn black in JPEG)
       try {
         const blob = await fetchExternalLayerBlob(
-          {
-            url: props.activeExternalLayer.server.url,
-            layerName: props.activeExternalLayer.layerName,
-            type: props.activeExternalLayer.server.type,
-            tileUrl: props.activeExternalLayer.tileUrl,
-            tileSize: props.activeExternalLayer.tileSize ?? undefined,
-            time: props.activeExternalLayer.time,
-            style: props.activeExternalLayer.style,
-          },
+          getExternalLayerFetchDescriptor(props.activeExternalLayer),
           bounds,
           width,
           height,
@@ -335,15 +345,7 @@ function ImageDownload(props) {
         const name = props.activeExternalLayer.layerTitle || props.activeExternalLayer.layerName;
         FileSaver.saveAs(finalized, `${name}.${ext}`);
       } catch (err) {
-        console.error('External layer download failed', err);
-        const isWmts = props.activeExternalLayer?.server?.type === 'WMTS';
-        store.dispatch(
-          notificationSlice.actions.displayError(
-            isWmts
-              ? t`Could not download this layer. The WMTS server may not support image download.`
-              : t`Failed to download image.`,
-          ),
-        );
+        notifyExternalLayerDownloadError(props.activeExternalLayer, err);
       } finally {
         setLoadingImages(false);
       }
@@ -405,13 +407,7 @@ function ImageDownload(props) {
         ...baseParams,
         bounds,
         comparedClipping: adjustedClipping,
-        comparedLayers: props.comparedLayers.map((cLayer) => {
-          let newCLayer = Object.assign({}, cLayer);
-          newCLayer.fromTime = cLayer.fromTime ? moment(cLayer.fromTime) : undefined;
-          newCLayer.toTime = cLayer.toTime ? moment(cLayer.toTime) : undefined;
-          newCLayer.effects = constructGetMapParamsEffects(cLayer);
-          return newCLayer;
-        }),
+        comparedLayers: normalizeComparedLayersForDownload(props.comparedLayers),
         selectedCrs: correctProjection,
         baseLayerUrl: showOSMBackgroundLayer ? getDefaultBaseLayer()?.url : null,
         baseLayerMaxNativeZoom: getDefaultBaseLayer()?.maxNativeZoom,
@@ -816,11 +812,122 @@ function ImageDownload(props) {
     setError(null);
     setWarnings(null);
     setLoadingImages(true);
+
+    const { mimeType, ext: imageExt } = IMAGE_FORMATS_INFO[formData.imageFormat];
+
+    // 3D: render the terrain viewer directly at the sticker's fixed dimensions, same mechanism as
+    // 3D Basic (no preview for 3D stickers — ImageDownloadPreview already returns null for is3D).
+    if (props.is3D) {
+      try {
+        const image = await getTerrainViewerImage({
+          ...props,
+          width: STICKER_WIDTH_PX,
+          height: STICKER_HEIGHT_PX,
+          showCaptions: false,
+          showLegend: false,
+          userDescription: '',
+          imageFormat: IMAGE_FORMATS_INFO[formData.imageFormat],
+        });
+        const finalBlob = await addStickerOverlays(image, mimeType, formData.overlayVariant);
+        const nicename = getNicename(
+          props.fromTime,
+          props.toTime,
+          props.datasetId,
+          props.layerId,
+          props.customSelected,
+          false,
+        );
+        FileSaver.saveAs(finalBlob, `${nicename}.${imageExt}`);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoadingImages(false);
+      }
+      return;
+    }
+
     cancelTokenRef.current = new CancelToken();
-
     const bounds = props.aoiBounds ? props.aoiBounds : props.mapBounds;
-    const { mimeType } = IMAGE_FORMATS_INFO[formData.imageFormat];
 
+    // External layer (WMS/WMTS): fetch + composite like Basic's external path, but at the sticker's
+    // fixed dimensions instead of the viewport/AOI-scaled ones.
+    if (props.activeExternalLayer) {
+      try {
+        const blob = await fetchExternalLayerBlob(
+          getExternalLayerFetchDescriptor(props.activeExternalLayer),
+          bounds,
+          STICKER_WIDTH_PX,
+          STICKER_HEIGHT_PX,
+          true,
+          'image/png',
+        );
+        const finalized = await finalizeExternalDownloadImage(blob, {
+          bounds,
+          width: STICKER_WIDTH_PX,
+          height: STICKER_HEIGHT_PX,
+          mimeType: 'image/png',
+        });
+        const finalBlob = await addStickerOverlays(finalized, mimeType, formData.overlayVariant);
+        const name = props.activeExternalLayer.layerTitle || props.activeExternalLayer.layerName;
+        FileSaver.saveAs(finalBlob, `${name}.${imageExt}`);
+      } catch (err) {
+        notifyExternalLayerDownloadError(props.activeExternalLayer, err);
+      } finally {
+        setLoadingImages(false);
+      }
+      return;
+    }
+
+    // Compare: composite the compared layers like Basic's compare download, at sticker dimensions,
+    // instead of silently falling back to a single layer.
+    if (props.showComparePanel) {
+      const adjustedClipping = props.aoiBounds
+        ? adjustClippingForAoi(props.comparedClipping, props.aoiBounds, props.mapBounds)
+        : props.comparedClipping;
+
+      const result = await fetchAndPatchImagesFromParams(
+        {
+          ...props,
+          cancelToken: cancelTokenRef.current,
+          imageFormat: formData.imageFormat,
+          width: STICKER_WIDTH_PX,
+          height: STICKER_HEIGHT_PX,
+          bounds,
+          showLogo: false,
+          showCaptions: false,
+          showLegend: false,
+          addMapOverlays: false,
+          selectedCrs: CRS_EPSG4326.authId,
+          getMapAuthToken,
+          comparedClipping: adjustedClipping,
+          comparedLayers: normalizeComparedLayersForDownload(props.comparedLayers),
+          aoiWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.aoiBounds).width : null,
+          mapWidthInMeters: props.aoiBounds ? getDimensionsInMeters(props.mapBounds).width : null,
+        },
+        setWarnings,
+        setError,
+        setLoadingImages,
+      );
+
+      // fetchAndPatchImagesFromParams surfaces failures via setError/setLoadingImages and returns
+      // undefined; bail out before using the result, same as the compare Basic download does.
+      if (!result) {
+        setLoadingImages(false);
+        return;
+      }
+
+      try {
+        const finalBlob = await addStickerOverlays(result.finalImage, mimeType, formData.overlayVariant);
+        FileSaver.saveAs(finalBlob, `Comparison_${result.finalFileName}.${imageExt}`);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoadingImages(false);
+      }
+      return;
+    }
+
+    // Default: a single Sentinel Hub layer.
     let image;
     try {
       image = await fetchImageFromParams(
@@ -849,13 +956,7 @@ function ImageDownload(props) {
     }
 
     try {
-      const finalBlob = await addStickerOverlays(
-        image.blob,
-        mimeType,
-        formData.overlayVariant,
-        formData.showText,
-      );
-      const { ext: imageExt } = IMAGE_FORMATS_INFO[formData.imageFormat];
+      const finalBlob = await addStickerOverlays(image.blob, mimeType, formData.overlayVariant);
       FileSaver.saveAs(finalBlob, `${image.nicename}.${imageExt}`);
     } catch (err) {
       setError(err);
@@ -1004,7 +1105,6 @@ function ImageDownload(props) {
   const hasLegendData = checkIfCurrentLayerHasLegend();
   const isUserLoggedIn = props.user && props.user.userdata;
   const isOnCompareTab = props.showComparePanel;
-  const isStickerMode = getUrlParams().sticker === STICKER_URL_PARAM_VALUE;
   const dsh = getDataSourceHandler(props.datasetId);
   const supportsAnalyticalImgExport = dsh && dsh.supportsAnalyticalImgExport();
 
@@ -1015,7 +1115,10 @@ function ImageDownload(props) {
         height: 'auto',
         maxHeight: '80vh',
         bottom: 'auto',
-        width: '690px',
+        // Widened from 690px: with the Sticker tab now also offered for external layers, compare
+        // and 3D (#1281), the mode-selection row can have one more button than before, which at
+        // 690px pushed Download onto a second row even on screens wide enough to fit it on one.
+        width: '760px',
         maxWidth: '90vw',
         top: '5vh',
         padding: 0,
@@ -1070,7 +1173,7 @@ function ImageDownload(props) {
                         : displayLogInToAccessMessage
                   }
                 />
-                {isStickerMode && !props.activeExternalLayer && (
+                {isStickerMode && (
                   <EOBButton
                     text={t`Sticker`}
                     className={selectedTab === TABS.STICKER ? 'selected' : ''}
@@ -1080,11 +1183,20 @@ function ImageDownload(props) {
               </>
             )}
             {props.is3D && (
-              <EOBButton
-                text={t`Basic`}
-                className={selectedTab === TABS.TERRAIN_VIEWER ? 'selected' : ''}
-                onClick={() => setSelectedTab(TABS.TERRAIN_VIEWER)}
-              />
+              <>
+                <EOBButton
+                  text={t`Basic`}
+                  className={selectedTab === TABS.TERRAIN_VIEWER ? 'selected' : ''}
+                  onClick={() => setSelectedTab(TABS.TERRAIN_VIEWER)}
+                />
+                {isStickerMode && (
+                  <EOBButton
+                    text={t`Sticker`}
+                    className={selectedTab === TABS.STICKER ? 'selected' : ''}
+                    onClick={() => setSelectedTab(TABS.STICKER)}
+                  />
+                )}
+              </>
             )}
           </div>
           <div className="image-download-header-buttons">
