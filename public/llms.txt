@@ -7,8 +7,8 @@ Select your area of interest, time range and collection(s), and inspect the resu
 ## Documentation
 
 - [Copernicus Browser user manual](https://documentation.dataspace.copernicus.eu/Applications/Browser.html): Detailed overview of the Browser's functionality.
-- [Deep linking reference](https://browser.dataspace.copernicus.eu/deep-linking.md): How to construct Browser URLs that open a specific location, dataset, layer and date.
-- [Gallery link collection](https://browser.dataspace.copernicus.eu/gallery-links.md): Curated Copernicus Browser deep links for real-world imagery events from the CDSE gallery, with location, dataset and date.
+- [Deep linking reference](https://browser.dataspace.copernicus.eu/deep-linking.txt): How to construct Browser URLs that open a specific location, dataset, layer and date.
+- [Gallery link collection](https://browser.dataspace.copernicus.eu/gallery-links.txt): Curated Copernicus Browser deep links for real-world imagery events from the CDSE gallery, with location, dataset and date.
 - [Data overview](https://documentation.dataspace.copernicus.eu/Data.html): Overview of available Sentinel, CLMS and mosaic data sources.
 - [FAQ: configuring layers for statistical information](https://documentation.dataspace.copernicus.eu/FAQ.html#how-can-i-configure-my-layers-for-statistical-information-in-copernicus-browser): How to configure layers for statistics in the Browser.
 

@@ -203,7 +203,7 @@ Environment variables needed for anonymous usage:
 
 ### URL parameters
 
-The Browser can be opened directly to a specific location, dataset, visualisation and date via URL query parameters. See [deep-linking.md](public/deep-linking.md) for the full parameter reference and more examples, or [gallery-links.md](public/gallery-links.md) for a curated collection of ready-made example links.
+The Browser can be opened directly to a specific location, dataset, visualisation and date via URL query parameters. See [deep-linking.txt](public/deep-linking.txt) for the full parameter reference and more examples, or [gallery-links.txt](public/gallery-links.txt) for a curated collection of ready-made example links.
 
 Example: `https://browser.dataspace.copernicus.eu/?panel=pins`
 

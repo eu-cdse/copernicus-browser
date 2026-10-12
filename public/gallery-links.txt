@@ -1,8 +1,8 @@
 # Copernicus Browser — Gallery Link Collection
 
-A curated collection of real Copernicus Browser deep links, one per entry in the [CDSE public gallery](https://dataspace.copernicus.eu/gallery), each resolved from its shortened share link to the full `https://browser.dataspace.copernicus.eu/?...` URL. This page exists so an AI assistant or a script has ready-made, working examples of what a Browser deep link looks like for a real location, dataset and date — see [deep-linking.md](https://browser.dataspace.copernicus.eu/deep-linking.md) for how to build one from scratch.
+A curated collection of real Copernicus Browser deep links, one per entry in the [CDSE public gallery](https://dataspace.copernicus.eu/gallery), each resolved from its shortened share link to the full `https://browser.dataspace.copernicus.eu/?...` URL. This page exists so an AI assistant or a script has ready-made, working examples of what a Browser deep link looks like for a real location, dataset and date — see [deep-linking.txt](https://browser.dataspace.copernicus.eu/deep-linking.txt) for how to build one from scratch.
 
-Every URL below omits `visualizationUrl` — see [deep-linking.md's "Visualisation URL — omit this"](https://browser.dataspace.copernicus.eu/deep-linking.md#visualisation-url--omit-this) section for why: it is encrypted with a deploy-time secret in share links, and the app fills it back in automatically from `datasetId` when it is absent. The date shown for each entry is the imagery date carried in its URL (`fromTime`/`toTime`), not the gallery's publish date — the two usually match but occasionally don't.
+Every URL below omits `visualizationUrl` — see [deep-linking.txt's "Visualisation URL — omit this"](https://browser.dataspace.copernicus.eu/deep-linking.txt#visualisation-url--omit-this) section for why: it is encrypted with a deploy-time secret in share links, and the app fills it back in automatically from `datasetId` when it is absent. The date shown for each entry is the imagery date carried in its URL (`fromTime`/`toTime`), not the gallery's publish date — the two usually match but occasionally don't.
 
 Entries are listed in the order the gallery presents them. 123 of the gallery's entries are included; the rest were left out because their share link no longer resolves (an expired `sentinelshare.page.link` short link, or a link to a non-Browser viewer) or because the gallery entry has no Browser link at all (e.g. a conference announcement or a desktop-background post with no interactive view).
 
@@ -202,7 +202,7 @@ Browser URL:
 
 ### 17. Reviving a river
 
-**2025-07-01** · Germany · Biodiversity, Human Activities, Land Monitoring · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2025-07-01** · Germany · Biodiversity, Human Activities, Land Monitoring · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 The Emscher River restoration project. In the era of the climate, water, and biodiversity crisis, good news often seems difficult to find.
 
@@ -210,7 +210,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2025-7-1-reviving-river
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=13&lat=51.57536&lng=7.33938&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2025-07-01T00%3A00%3A00.000Z&toTime=2025-07-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=13&lat=51.57536&lng=7.33938&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2025-07-01T00%3A00%3A00.000Z&toTime=2025-07-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 18. January 2026 desktop background
 
@@ -298,7 +298,7 @@ Browser URL:
 
 ### 25. Observing greenhouses in Almería with Sentinel-2
 
-**2025-04-01** · Spain · Agriculture, Climate, Human Activities · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2025-04-01** · Spain · Agriculture, Climate, Human Activities · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Greenhouse production and protecting human rights on World Food Day. Have you eaten fresh greens today?
 
@@ -306,7 +306,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2025-4-1-observing-greenho
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=11&lat=36.78681&lng=-2.6334&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKLy9TaW1wbGUgUGFuY2hyb21hdGljIHZpc3VhbGl6YXRpb24gb2YgU2VudGluZWwtMiBkYXRhLCB1c2luZyB0aGUgbWVhbiBvZiB0aGUgYmFuZCBpbnRlbnNpdGllcyBmb3IgUmVkLCBHcmVlbiwgQmx1ZSBhbmQgTmVhciBJbmZyYXJlZAovL0J5IEFuZHLDoXMgWmxpbnN6a3ksIFNpbmVyZ2lzZSAtIHdpdGggaGVscCBmcm9tIEdpdEh1YiBDb3BpbG90Ci8vaHR0cHM6Ly9ic2t5LmFwcC9wcm9maWxlL2F6bGluc3preS5ic2t5LnNvY2lhbAoKZnVuY3Rpb24gc2V0dXAoKSB7CiAgICByZXR1cm4gewogICAgICBpbnB1dDogWyJCMDIiLCAiQjAzIiwgIkIwNCIsICJCMDgiLCAiZGF0YU1hc2siXSwKICAgICAgb3V0cHV0OiB7IGJhbmRzOiA0IH0KICAgIH07CiAgfQogIAogIGNvbnN0IGdhaW4gPSAwLjAwMDI1OwogIAogIGZ1bmN0aW9uIGV2YWx1YXRlUGl4ZWwoc2FtcGxlKSB7CiAgICAvLyBDYWxjdWxhdGUgdGhlIG1lYW4gb2YgdGhlIGJhbmRzCiAgICBsZXQgcGFuID0gKHNhbXBsZS5CMDIgKyBzYW1wbGUuQjAzICsgc2FtcGxlLkIwNCArIHNhbXBsZS5CMDgpIC8gNDsKICAKICAgIHJldHVybiBbZ2FpbiAqIHBhbiwgZ2FpbiAqIHBhbiwgZ2FpbiAqIHBhbiwgc2FtcGxlLmRhdGFNYXNrXTsKICB9&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
+    https://browser.dataspace.copernicus.eu/?zoom=11&lat=36.78681&lng=-2.6334&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKLy9TaW1wbGUgUGFuY2hyb21hdGljIHZpc3VhbGl6YXRpb24gb2YgU2VudGluZWwtMiBkYXRhLCB1c2luZyB0aGUgbWVhbiBvZiB0aGUgYmFuZCBpbnRlbnNpdGllcyBmb3IgUmVkLCBHcmVlbiwgQmx1ZSBhbmQgTmVhciBJbmZyYXJlZAovL0J5IEFuZHLDoXMgWmxpbnN6a3ksIFNpbmVyZ2lzZSAtIHdpdGggaGVscCBmcm9tIEdpdEh1YiBDb3BpbG90Ci8vaHR0cHM6Ly9ic2t5LmFwcC9wcm9maWxlL2F6bGluc3preS5ic2t5LnNvY2lhbAoKZnVuY3Rpb24gc2V0dXAoKSB7CiAgICByZXR1cm4gewogICAgICBpbnB1dDogWyJCMDIiLCAiQjAzIiwgIkIwNCIsICJCMDgiLCAiZGF0YU1hc2siXSwKICAgICAgb3V0cHV0OiB7IGJhbmRzOiA0IH0KICAgIH07CiAgfQogIAogIGNvbnN0IGdhaW4gPSAwLjAwMDI1OwogIAogIGZ1bmN0aW9uIGV2YWx1YXRlUGl4ZWwoc2FtcGxlKSB7CiAgICAvLyBDYWxjdWxhdGUgdGhlIG1lYW4gb2YgdGhlIGJhbmRzCiAgICBsZXQgcGFuID0gKHNhbXBsZS5CMDIgKyBzYW1wbGUuQjAzICsgc2FtcGxlLkIwNCArIHNhbXBsZS5CMDgpIC8gNDsKICAKICAgIHJldHVybiBbZ2FpbiAqIHBhbiwgZ2FpbiAqIHBhbiwgZ2FpbiAqIHBhbiwgc2FtcGxlLmRhdGFNYXNrXTsKICB9&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
 
 ### 26. October 2025 desktop background
 
@@ -334,7 +334,7 @@ Browser URL:
 
 ### 28. Following The Ocean (Race) with Sentinel-1
 
-**2025-04-01** · Denmark, United Kingdom, Portugal, Spain, France, Italy, Montenegro · Coastal, Human Activities, Marine · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2025-04-01** · Denmark, United Kingdom, Portugal, Spain, France, Italy, Montenegro · Coastal, Human Activities, Marine · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Following a race, learning about the ocean. Horses, bicycles, trucks, electric scooters: if it’s capable of going forward, humans will try to race it.
 
@@ -342,7 +342,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2025-4-1-following-ocean-r
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=5&lat=48.67645&lng=22.14844&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=5&lat=48.67645&lng=22.14844&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 29. Rice harvest in Yuanyang Hani Rice Terraces
 
@@ -358,7 +358,7 @@ Browser URL:
 
 ### 30. September 2025 desktop background
 
-**2020-01-01** · Paraguay · Copernicus Land Monitoring Service, Forestry · dataset `828f6b-YOUR-INSTANCEID-HERE`
+**2020-01-01** · Paraguay · Copernicus Land Monitoring Service, Forestry · dataset `828f6b20-8ffd-48f8-a1da-fefd271456db`
 
 The CLMS Land Cover and Forest Monitoring suite: a new milestone in global land monitoring. On June 26, the Copernicus Land Monitoring Service (CLMS) unveiled the first products in its new Land Cover and Forest Monitoring (LCFM) suite.
 
@@ -366,7 +366,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2020-1-1-september-2025-de
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=9&lat=-20.71857&lng=-59.70382&themeId=DEFAULT-THEME&datasetId=828f6b-YOUR-INSTANCEID-HERE&fromTime=2020-01-01T00%3A00%3A00.000Z&toTime=2020-01-01T23%3A59%3A59.999Z&layerId=LCM10&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE&clmsSelectedPath=828f6b20-8ffd-48f8-a1da-fefd271456db&clmsSelectedCollection=828f6b20-8ffd-48f8-a1da-fefd271456db
+    https://browser.dataspace.copernicus.eu/?zoom=9&lat=-20.71857&lng=-59.70382&themeId=DEFAULT-THEME&datasetId=828f6b20-8ffd-48f8-a1da-fefd271456db&fromTime=2020-01-01T00%3A00%3A00.000Z&toTime=2020-01-01T23%3A59%3A59.999Z&layerId=LCM10&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE&clmsSelectedPath=828f6b20-8ffd-48f8-a1da-fefd271456db&clmsSelectedCollection=828f6b20-8ffd-48f8-a1da-fefd271456db
 
 ### 31. A Sentinel-2 view of Lake Naivasha in Kenya
 
@@ -394,7 +394,7 @@ Browser URL:
 
 ### 33. Tracking Mangrove Conservation with Sentinel Satellite Data
 
-**2025-04-01** · Brazil · Coastal, Marine · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2025-04-01** · Brazil · Coastal, Marine · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 Critical Coastal Ecosystems. Mangrove forests thrive along gently sloping tropical shorelines.
 
@@ -402,7 +402,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2025-4-1-tracking-mangrove
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=10&lat=-1.06699&lng=-46.13022&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKCmNvbnN0IG1heCA9IDAuODc7CmNvbnN0IG1pbiA9IC0wLjA1OwoKCi8vIGFkZGluZyBpbnB1dCBkYXRhIGJhbmRzLCBkZWZpbmluZyBvdXRwdXRzCmZ1bmN0aW9uIHNldHVwKCkgewogIHJldHVybiB7CiAgICBpbnB1dDogWyJWViIsICJkYXRhTWFzayJdLAogICAgb3V0cHV0OiBbCiAgICAgIHsgaWQ6ICJkZWZhdWx0IiwgYmFuZHM6IDQgfSwKICAgICAgeyBpZDogImVvYnJvd3NlclN0YXRzIiwgYmFuZHM6IDEgfSwKICAgICAgeyBpZDogImRhdGFNYXNrIiwgYmFuZHM6IDEgfSwKICAgICAgeyBpZDogImluZGV4IiwgYmFuZHM6IDEsIHNhbXBsZVR5cGU6ICJGTE9BVDMyIiB9LAogICAgXSwKICB9Owp9CgoKCmNvbnN0IG1hcCA9IFsKICBbMC45LCAweGY3ZWFmZF0sIAogIFswLjczLCAweGViZWJlYl0sIAogIFswLjcsIDB4YTc2YjE4XSwgCiAgWzAuNjUsIDB4ZGNhNjIwXSwgCiAgWzAuNiwgMHhBMkFFMzJdLCAKICBbMC40LCAweDE4YTcyMl0sIAogIFswLjMsIDB4MDE4NjQzXSwgCiAgWzAuMiwgMHgxNTk2NV0sIAogIFswLjEsIDB4MDE0NzFjXSwgCiAgWzAuMDc1LCAweDBkNTg1NF0sIAogIFswLjA1LCAweDcxMDJjXSwgCiAgWzAuMDQsIDB4MGQwMjdlXSwgCiAgWzAuMDEsIDB4MDgwMTRjXSwgCiAgWzAuMDA1LCAweDRhNGE0YV0sIApdOwoKY29uc3QgdmlzdWFsaXplciA9IG5ldyBDb2xvclJhbXBWaXN1YWxpemVyKG1hcCwgbWluLCBtYXgpOwoKZnVuY3Rpb24gZXZhbHVhdGVQaXhlbChzYW1wbGVzKSB7CiAgY29uc3QgdmFsdWUgPSBNYXRoLm1heCgwLCBNYXRoLmxvZyhzYW1wbGVzLlZWKSAqIDAuMjE3MTQ3MjQwOTUgKyAxKTsKICBjb25zdCBpbWdWYWxzID0gdmlzdWFsaXplci5wcm9jZXNzKHZhbHVlKQogIHJldHVybiB7CiAgICBkZWZhdWx0OiBbLi4uaW1nVmFscywgc2FtcGxlcy5kYXRhTWFza10sCiAgICBlb2Jyb3dzZXJTdGF0czogW3ZhbHVlXSwKICAgIGRhdGFNYXNrOiBbc2FtcGxlcy5kYXRhTWFza10sCiAgICBpbmRleDogW3ZhbHVlXSwKICB9Owp9Cg%3D%3D&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
+    https://browser.dataspace.copernicus.eu/?zoom=10&lat=-1.06699&lng=-46.13022&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKCmNvbnN0IG1heCA9IDAuODc7CmNvbnN0IG1pbiA9IC0wLjA1OwoKCi8vIGFkZGluZyBpbnB1dCBkYXRhIGJhbmRzLCBkZWZpbmluZyBvdXRwdXRzCmZ1bmN0aW9uIHNldHVwKCkgewogIHJldHVybiB7CiAgICBpbnB1dDogWyJWViIsICJkYXRhTWFzayJdLAogICAgb3V0cHV0OiBbCiAgICAgIHsgaWQ6ICJkZWZhdWx0IiwgYmFuZHM6IDQgfSwKICAgICAgeyBpZDogImVvYnJvd3NlclN0YXRzIiwgYmFuZHM6IDEgfSwKICAgICAgeyBpZDogImRhdGFNYXNrIiwgYmFuZHM6IDEgfSwKICAgICAgeyBpZDogImluZGV4IiwgYmFuZHM6IDEsIHNhbXBsZVR5cGU6ICJGTE9BVDMyIiB9LAogICAgXSwKICB9Owp9CgoKCmNvbnN0IG1hcCA9IFsKICBbMC45LCAweGY3ZWFmZF0sIAogIFswLjczLCAweGViZWJlYl0sIAogIFswLjcsIDB4YTc2YjE4XSwgCiAgWzAuNjUsIDB4ZGNhNjIwXSwgCiAgWzAuNiwgMHhBMkFFMzJdLCAKICBbMC40LCAweDE4YTcyMl0sIAogIFswLjMsIDB4MDE4NjQzXSwgCiAgWzAuMiwgMHgxNTk2NV0sIAogIFswLjEsIDB4MDE0NzFjXSwgCiAgWzAuMDc1LCAweDBkNTg1NF0sIAogIFswLjA1LCAweDcxMDJjXSwgCiAgWzAuMDQsIDB4MGQwMjdlXSwgCiAgWzAuMDEsIDB4MDgwMTRjXSwgCiAgWzAuMDA1LCAweDRhNGE0YV0sIApdOwoKY29uc3QgdmlzdWFsaXplciA9IG5ldyBDb2xvclJhbXBWaXN1YWxpemVyKG1hcCwgbWluLCBtYXgpOwoKZnVuY3Rpb24gZXZhbHVhdGVQaXhlbChzYW1wbGVzKSB7CiAgY29uc3QgdmFsdWUgPSBNYXRoLm1heCgwLCBNYXRoLmxvZyhzYW1wbGVzLlZWKSAqIDAuMjE3MTQ3MjQwOTUgKyAxKTsKICBjb25zdCBpbWdWYWxzID0gdmlzdWFsaXplci5wcm9jZXNzKHZhbHVlKQogIHJldHVybiB7CiAgICBkZWZhdWx0OiBbLi4uaW1nVmFscywgc2FtcGxlcy5kYXRhTWFza10sCiAgICBlb2Jyb3dzZXJTdGF0czogW3ZhbHVlXSwKICAgIGRhdGFNYXNrOiBbc2FtcGxlcy5kYXRhTWFza10sCiAgICBpbmRleDogW3ZhbHVlXSwKICB9Owp9Cg%3D%3D&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2025-04-01T00%3A00%3A00.000Z&toTime=2025-04-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
 
 ### 34. Home of ESA’s Sentinel Engineers and Mission Specialists
 
@@ -418,7 +418,7 @@ Browser URL:
 
 ### 35. July 2025 desktop background
 
-**2024-07-01** · Romania · Human Activities, Mountains · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-07-01** · Romania · Human Activities, Mountains · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Chilling in the mountains. Summer takes many of us to new adventures, and the mountains are a favourite destination.
 
@@ -426,7 +426,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-7-1-july-2025-desktop
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.53521&lng=24.70963&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-07-01T00%3A00%3A00.000Z&toTime=2024-07-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&gain=1.2&gamma=1.2&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.53521&lng=24.70963&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-07-01T00%3A00%3A00.000Z&toTime=2024-07-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&gain=1.2&gamma=1.2&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 36. CDSE Expands with first Copernicus LCFM products
 
@@ -514,7 +514,7 @@ Browser URL:
 
 ### 43. A view on Europe to celebrate peace and unity
 
-**2024-10-01** · Land Cover, Land Monitoring, Vegetation · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-10-01** · Land Cover, Land Monitoring, Vegetation · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Celebrating resilience, unity and growth. Every year, we celebrate peace and unity in Europe on 9 May, the anniversary of the Schuman Declaration which laid the foundation for a new form of collaboration between European countries.
 
@@ -522,7 +522,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-10-1-view-europe-cele
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=5&lat=45.6294&lng=8.56934&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMgKGF1dG8tY29udmVydGVkIGZyb20gMSkKLyoKQmFzZWQgb24gU291cmNlOiBASGFyZWxEYW4gLSBodHRwczovL2dpdGh1Yi5jb20vaGFyZWxkdW5uL0dJU19SZXBvL2Jsb2IvbWFzdGVyL011bHRpLVRlbXBvcmFsJTIwTkRWSSUyMGZvciUyMFNlbnRpbmVsJTIwSHViJTIwQ3VzdG9tJTIwU2NyaXB0cwpBZGFwdGVkIHRvIHZpc3VhbGl6ZSBORFZJIGZvciBTZW50aW5lbC0yIHF1YXJ0ZXJseSBjbG91ZGxlc3MgbW9zYWljcyBieSBBbmRyw6FzIFpsaW5zemt5IHVzaW5nIEdpdEh1YiBDb3BpbG90LgpFYWNoIHF1YXJ0ZXIncyBORFZJIGlzIGFzc2lnbmVkIHRvIGFuIFJHQiBjaGFubmVsOgotIFJlZDogTkRWSSBmb3IgdGhlIG9sZGVzdCBxdWFydGVyCi0gR3JlZW46IE5EVkkgZm9yIHRoZSBtaWRkbGUgcXVhcnRlcgotIEJsdWU6IE5EVkkgZm9yIHRoZSBtb3N0IHJlY2VudCBxdWFydGVyClNjcmlwdCByZXF1aXJlcyBtdWx0aS10ZW1wb3JhbCBwcm9jZXNzaW5nIHNvIHBhcmFtZXRlciBURU1QT1JBTD10cnVlIHNob3VsZCBiZSBhZGRlZCB0byB0aGUgcmVxdWVzdC4KKi8KCi8vIEhvdyB0byB1c2UgdGhpcyBzY3JpcHQ6Ci8vIE9wZW4gQ29wZXJuaWN1cyBCcm93c2VyLCB6b29tIHRvIHlvdXIgYXJlYSBvZiBpbnRlcmVzdAovLyBTZWxlY3QgU2VudGluZWwtMiBRdWFydGVybHkgTW9zYWljcwovLyBPbiB0aGUgZGF0ZSBwYW5lbCwgc2VsZWN0IFRpbWUgUmFuZ2UgbW9kZSAoY2FsZW5kYXIgaWNvbiB3aXRoIGZyb20tdG8gYXJyb3dzIG9uIHRoZSByaWdodCBzaWRlIG9mIHRoZSBkYXRlIHBhbmVsKQovLyBTZXQgdGhlIHRpbWUgcmFuZ2UgLSBpdCBzaG91bGQgYmUgNyBtb250aHMuIFRoaXMgaXMgYmVjYXVzZSB0aGUgZGF0ZSBvZiBhIFF1YXJ0ZXJseSBNb3NhaWMgcmVmZXJzIHRvIHRoZSBmaXJzdCBkYXRlIGluIHRoZSAzIG1vbnRoIGludGVydmFsIHRoYXQgaXMgdXNlZCBmb3IgZ2VuZXJhdGluZyBkYXRhIChodHRwczovL2ZvcnVtLmRhdGFzcGFjZS5jb3Blcm5pY3VzLmV1L3Qvc2NlbmVzLWdldG1vbnRoLWZvci1xdWFydGVybHktbW9zYWljcy8zMDQ1LzI%2FdT1hbmRyYXMuemxpbnN6a3lfZWR1Y2F0aW9uKS4gU28gZWcuIGlmIHlvdXIgc3RhcnQgZGF0ZSBpcyAyMDIyLTAxLTAxIGFuZCB5b3VyIGVuZCBkYXRlIGlzIDIwMjItMDctMDEsIHlvdXIgYXJlIGFjdHVhbGx5IGxvb2tpbmcgYXQgaW1hZ2VzIGZyb20gMjAyMi0wMS0wMSB0byAyMDIyLTA5LTMwCi8vICBJZiBpdCBpcyBsb25nZXIsIHRoZSBhbGdvcml0aG0gd2lsbCB1c2Ugb25seSB0aGUgbGFzdCA5IG1vbnRocwoKZnVuY3Rpb24gc2V0dXAoKSB7CiAgICByZXR1cm4gewogICAgICAgIGlucHV0OiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGJhbmRzOiBbIkIwNCIsICJCMDgiXSwKICAgICAgICAgICAgfSwKICAgICAgICBdLAogICAgICAgIG91dHB1dDogeyBiYW5kczogMyB9LAogICAgICAgIG1vc2FpY2tpbmc6ICJPUkJJVCIsCiAgICB9Owp9CgpmdW5jdGlvbiBjYWxjTkRWSShzYW1wbGUpIHsKICAgIHZhciBkZW5vbSA9IHNhbXBsZS5CMDQgKyBzYW1wbGUuQjA4OwogICAgcmV0dXJuIGRlbm9tICE9IDAgPyAoc2FtcGxlLkIwOCAtIHNhbXBsZS5CMDQpIC8gZGVub20gOiAwLjA7Cn0KCmZ1bmN0aW9uIGV2YWx1YXRlUGl4ZWwoc2FtcGxlcywgc2NlbmVzKSB7CiAgICB2YXIgbmR2aTEgPSAwOyAvLyBORFZJIGZvciB0aGUgb2xkZXN0IHF1YXJ0ZXIKICAgIHZhciBuZHZpMiA9IDA7IC8vIE5EVkkgZm9yIHRoZSBtaWRkbGUgcXVhcnRlcgogICAgdmFyIG5kdmkzID0gMDsgLy8gTkRWSSBmb3IgdGhlIG1vc3QgcmVjZW50IHF1YXJ0ZXIKCiAgICAvLyBHZXQgdGhlIHF1YXJ0ZXIgb2YgdGhlIG1vc3QgcmVjZW50IHNjZW5lCiAgICB2YXIgZW5kUXVhcnRlciA9IE1hdGguZmxvb3Ioc2NlbmVzWzBdLmRhdGUuZ2V0TW9udGgoKSAvIDMpOwoKICAgIGZvciAodmFyIGkgPSAwOyBpIDwgc2FtcGxlcy5sZW5ndGg7IGkrKykgewogICAgICAgIHZhciBuZHZpID0gY2FsY05EVkkoc2FtcGxlc1tpXSk7CiAgICAgICAgdmFyIHNjZW5lUXVhcnRlciA9IE1hdGguZmxvb3Ioc2NlbmVzW2ldLmRhdGUuZ2V0TW9udGgoKSAvIDMpOwoKICAgICAgICBpZiAoc2NlbmVRdWFydGVyID09IGVuZFF1YXJ0ZXIpIHsKICAgICAgICAgICAgbmR2aTMgPSBuZHZpOyAvLyBNb3N0IHJlY2VudCBxdWFydGVyCiAgICAgICAgfSBlbHNlIGlmIChzY2VuZVF1YXJ0ZXIgPT0gZW5kUXVhcnRlciAtIDEgfHwgKGVuZFF1YXJ0ZXIgPT0gMCAmJiBzY2VuZVF1YXJ0ZXIgPT0gMykpIHsKICAgICAgICAgICAgbmR2aTIgPSBuZHZpOyAvLyBNaWRkbGUgcXVhcnRlcgogICAgICAgIH0gZWxzZSBpZiAoc2NlbmVRdWFydGVyID09IGVuZFF1YXJ0ZXIgLSAyIHx8IChlbmRRdWFydGVyID09IDAgJiYgc2NlbmVRdWFydGVyID09IDIpIHx8IChlbmRRdWFydGVyID09IDEgJiYgc2NlbmVRdWFydGVyID09IDMpKSB7CiAgICAgICAgICAgIG5kdmkxID0gbmR2aTsgLy8gT2xkZXN0IHF1YXJ0ZXIKICAgICAgICB9CiAgICB9CgogICAgLy8gU3RyZXRjaCBORFZJIHZhbHVlcyBmb3IgdmlzdWFsaXphdGlvbgogICAgbmR2aTEgPSBzdHJldGNoKG5kdmkxLCAwLjEsIDAuNyk7CiAgICBuZHZpMiA9IHN0cmV0Y2gobmR2aTIsIDAuMSwgMC43KTsKICAgIG5kdmkzID0gc3RyZXRjaChuZHZpMywgMC4xLCAwLjcpOwoKICAgIHJldHVybiBbbmR2aTEsIG5kdmkyLCBuZHZpM107Cn0KCmZ1bmN0aW9uIHN0cmV0Y2godmFsLCBtaW4sIG1heCkgewogICAgcmV0dXJuICh2YWwgLSBtaW4pIC8gKG1heCAtIG1pbik7Cn0KCmZ1bmN0aW9uIHByZVByb2Nlc3NTY2VuZXMoY29sbGVjdGlvbnMpIHsKICAgIC8vIEZpbHRlciBzY2VuZXMgdG8gaW5jbHVkZSBvbmx5IHRoZSBsYXN0IHRocmVlIHF1YXJ0ZXJzCiAgICBjb2xsZWN0aW9ucy5zY2VuZXMub3JiaXRzID0gY29sbGVjdGlvbnMuc2NlbmVzLm9yYml0cy5maWx0ZXIoZnVuY3Rpb24gKG9yYml0KSB7CiAgICAgICAgdmFyIG9yYml0RGF0ZUZyb20gPSBuZXcgRGF0ZShvcmJpdC5kYXRlRnJvbSk7CiAgICAgICAgcmV0dXJuICgKICAgICAgICAgICAgb3JiaXREYXRlRnJvbS5nZXRUaW1lKCkgPj0KICAgICAgICAgICAgY29sbGVjdGlvbnMudG8uZ2V0VGltZSgpIC0gMyAqIDMgKiAzMCAqIDI0ICogMzYwMCAqIDEwMDAgLy8gTGFzdCA5IG1vbnRocwogICAgICAgICk7CiAgICB9KTsKICAgIHJldHVybiBjb2xsZWN0aW9uczsKfQ%3D%3D&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-04-01T00%3A00%3A00.000Z&toTime=2024-10-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=TIME+RANGE#custom-script
+    https://browser.dataspace.copernicus.eu/?zoom=5&lat=45.6294&lng=8.56934&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMgKGF1dG8tY29udmVydGVkIGZyb20gMSkKLyoKQmFzZWQgb24gU291cmNlOiBASGFyZWxEYW4gLSBodHRwczovL2dpdGh1Yi5jb20vaGFyZWxkdW5uL0dJU19SZXBvL2Jsb2IvbWFzdGVyL011bHRpLVRlbXBvcmFsJTIwTkRWSSUyMGZvciUyMFNlbnRpbmVsJTIwSHViJTIwQ3VzdG9tJTIwU2NyaXB0cwpBZGFwdGVkIHRvIHZpc3VhbGl6ZSBORFZJIGZvciBTZW50aW5lbC0yIHF1YXJ0ZXJseSBjbG91ZGxlc3MgbW9zYWljcyBieSBBbmRyw6FzIFpsaW5zemt5IHVzaW5nIEdpdEh1YiBDb3BpbG90LgpFYWNoIHF1YXJ0ZXIncyBORFZJIGlzIGFzc2lnbmVkIHRvIGFuIFJHQiBjaGFubmVsOgotIFJlZDogTkRWSSBmb3IgdGhlIG9sZGVzdCBxdWFydGVyCi0gR3JlZW46IE5EVkkgZm9yIHRoZSBtaWRkbGUgcXVhcnRlcgotIEJsdWU6IE5EVkkgZm9yIHRoZSBtb3N0IHJlY2VudCBxdWFydGVyClNjcmlwdCByZXF1aXJlcyBtdWx0aS10ZW1wb3JhbCBwcm9jZXNzaW5nIHNvIHBhcmFtZXRlciBURU1QT1JBTD10cnVlIHNob3VsZCBiZSBhZGRlZCB0byB0aGUgcmVxdWVzdC4KKi8KCi8vIEhvdyB0byB1c2UgdGhpcyBzY3JpcHQ6Ci8vIE9wZW4gQ29wZXJuaWN1cyBCcm93c2VyLCB6b29tIHRvIHlvdXIgYXJlYSBvZiBpbnRlcmVzdAovLyBTZWxlY3QgU2VudGluZWwtMiBRdWFydGVybHkgTW9zYWljcwovLyBPbiB0aGUgZGF0ZSBwYW5lbCwgc2VsZWN0IFRpbWUgUmFuZ2UgbW9kZSAoY2FsZW5kYXIgaWNvbiB3aXRoIGZyb20tdG8gYXJyb3dzIG9uIHRoZSByaWdodCBzaWRlIG9mIHRoZSBkYXRlIHBhbmVsKQovLyBTZXQgdGhlIHRpbWUgcmFuZ2UgLSBpdCBzaG91bGQgYmUgNyBtb250aHMuIFRoaXMgaXMgYmVjYXVzZSB0aGUgZGF0ZSBvZiBhIFF1YXJ0ZXJseSBNb3NhaWMgcmVmZXJzIHRvIHRoZSBmaXJzdCBkYXRlIGluIHRoZSAzIG1vbnRoIGludGVydmFsIHRoYXQgaXMgdXNlZCBmb3IgZ2VuZXJhdGluZyBkYXRhIChodHRwczovL2ZvcnVtLmRhdGFzcGFjZS5jb3Blcm5pY3VzLmV1L3Qvc2NlbmVzLWdldG1vbnRoLWZvci1xdWFydGVybHktbW9zYWljcy8zMDQ1LzI%2FdT1hbmRyYXMuemxpbnN6a3lfZWR1Y2F0aW9uKS4gU28gZWcuIGlmIHlvdXIgc3RhcnQgZGF0ZSBpcyAyMDIyLTAxLTAxIGFuZCB5b3VyIGVuZCBkYXRlIGlzIDIwMjItMDctMDEsIHlvdXIgYXJlIGFjdHVhbGx5IGxvb2tpbmcgYXQgaW1hZ2VzIGZyb20gMjAyMi0wMS0wMSB0byAyMDIyLTA5LTMwCi8vICBJZiBpdCBpcyBsb25nZXIsIHRoZSBhbGdvcml0aG0gd2lsbCB1c2Ugb25seSB0aGUgbGFzdCA5IG1vbnRocwoKZnVuY3Rpb24gc2V0dXAoKSB7CiAgICByZXR1cm4gewogICAgICAgIGlucHV0OiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGJhbmRzOiBbIkIwNCIsICJCMDgiXSwKICAgICAgICAgICAgfSwKICAgICAgICBdLAogICAgICAgIG91dHB1dDogeyBiYW5kczogMyB9LAogICAgICAgIG1vc2FpY2tpbmc6ICJPUkJJVCIsCiAgICB9Owp9CgpmdW5jdGlvbiBjYWxjTkRWSShzYW1wbGUpIHsKICAgIHZhciBkZW5vbSA9IHNhbXBsZS5CMDQgKyBzYW1wbGUuQjA4OwogICAgcmV0dXJuIGRlbm9tICE9IDAgPyAoc2FtcGxlLkIwOCAtIHNhbXBsZS5CMDQpIC8gZGVub20gOiAwLjA7Cn0KCmZ1bmN0aW9uIGV2YWx1YXRlUGl4ZWwoc2FtcGxlcywgc2NlbmVzKSB7CiAgICB2YXIgbmR2aTEgPSAwOyAvLyBORFZJIGZvciB0aGUgb2xkZXN0IHF1YXJ0ZXIKICAgIHZhciBuZHZpMiA9IDA7IC8vIE5EVkkgZm9yIHRoZSBtaWRkbGUgcXVhcnRlcgogICAgdmFyIG5kdmkzID0gMDsgLy8gTkRWSSBmb3IgdGhlIG1vc3QgcmVjZW50IHF1YXJ0ZXIKCiAgICAvLyBHZXQgdGhlIHF1YXJ0ZXIgb2YgdGhlIG1vc3QgcmVjZW50IHNjZW5lCiAgICB2YXIgZW5kUXVhcnRlciA9IE1hdGguZmxvb3Ioc2NlbmVzWzBdLmRhdGUuZ2V0TW9udGgoKSAvIDMpOwoKICAgIGZvciAodmFyIGkgPSAwOyBpIDwgc2FtcGxlcy5sZW5ndGg7IGkrKykgewogICAgICAgIHZhciBuZHZpID0gY2FsY05EVkkoc2FtcGxlc1tpXSk7CiAgICAgICAgdmFyIHNjZW5lUXVhcnRlciA9IE1hdGguZmxvb3Ioc2NlbmVzW2ldLmRhdGUuZ2V0TW9udGgoKSAvIDMpOwoKICAgICAgICBpZiAoc2NlbmVRdWFydGVyID09IGVuZFF1YXJ0ZXIpIHsKICAgICAgICAgICAgbmR2aTMgPSBuZHZpOyAvLyBNb3N0IHJlY2VudCBxdWFydGVyCiAgICAgICAgfSBlbHNlIGlmIChzY2VuZVF1YXJ0ZXIgPT0gZW5kUXVhcnRlciAtIDEgfHwgKGVuZFF1YXJ0ZXIgPT0gMCAmJiBzY2VuZVF1YXJ0ZXIgPT0gMykpIHsKICAgICAgICAgICAgbmR2aTIgPSBuZHZpOyAvLyBNaWRkbGUgcXVhcnRlcgogICAgICAgIH0gZWxzZSBpZiAoc2NlbmVRdWFydGVyID09IGVuZFF1YXJ0ZXIgLSAyIHx8IChlbmRRdWFydGVyID09IDAgJiYgc2NlbmVRdWFydGVyID09IDIpIHx8IChlbmRRdWFydGVyID09IDEgJiYgc2NlbmVRdWFydGVyID09IDMpKSB7CiAgICAgICAgICAgIG5kdmkxID0gbmR2aTsgLy8gT2xkZXN0IHF1YXJ0ZXIKICAgICAgICB9CiAgICB9CgogICAgLy8gU3RyZXRjaCBORFZJIHZhbHVlcyBmb3IgdmlzdWFsaXphdGlvbgogICAgbmR2aTEgPSBzdHJldGNoKG5kdmkxLCAwLjEsIDAuNyk7CiAgICBuZHZpMiA9IHN0cmV0Y2gobmR2aTIsIDAuMSwgMC43KTsKICAgIG5kdmkzID0gc3RyZXRjaChuZHZpMywgMC4xLCAwLjcpOwoKICAgIHJldHVybiBbbmR2aTEsIG5kdmkyLCBuZHZpM107Cn0KCmZ1bmN0aW9uIHN0cmV0Y2godmFsLCBtaW4sIG1heCkgewogICAgcmV0dXJuICh2YWwgLSBtaW4pIC8gKG1heCAtIG1pbik7Cn0KCmZ1bmN0aW9uIHByZVByb2Nlc3NTY2VuZXMoY29sbGVjdGlvbnMpIHsKICAgIC8vIEZpbHRlciBzY2VuZXMgdG8gaW5jbHVkZSBvbmx5IHRoZSBsYXN0IHRocmVlIHF1YXJ0ZXJzCiAgICBjb2xsZWN0aW9ucy5zY2VuZXMub3JiaXRzID0gY29sbGVjdGlvbnMuc2NlbmVzLm9yYml0cy5maWx0ZXIoZnVuY3Rpb24gKG9yYml0KSB7CiAgICAgICAgdmFyIG9yYml0RGF0ZUZyb20gPSBuZXcgRGF0ZShvcmJpdC5kYXRlRnJvbSk7CiAgICAgICAgcmV0dXJuICgKICAgICAgICAgICAgb3JiaXREYXRlRnJvbS5nZXRUaW1lKCkgPj0KICAgICAgICAgICAgY29sbGVjdGlvbnMudG8uZ2V0VGltZSgpIC0gMyAqIDMgKiAzMCAqIDI0ICogMzYwMCAqIDEwMDAgLy8gTGFzdCA5IG1vbnRocwogICAgICAgICk7CiAgICB9KTsKICAgIHJldHVybiBjb2xsZWN0aW9uczsKfQ%3D%3D&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-04-01T00%3A00%3A00.000Z&toTime=2024-10-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=TIME+RANGE#custom-script
 
 ### 44. May 2025 desktop background
 
@@ -538,7 +538,7 @@ Browser URL:
 
 ### 45. A Sentinel-1 view on Peru's mixed landscapes
 
-**2024-12-01** · Peru · Climate, Forestry, Mountains, Vegetation · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2024-12-01** · Peru · Climate, Forestry, Mountains, Vegetation · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 Mapping vegetation under all conditions. Carbon emissions are often quantified as equivalent to ‘x amount of trees’ since trees and other plants extract carbon from the atmosphere through photosynthesis and store it in their branches, leaves and roots.
 
@@ -546,7 +546,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-12-1-sentinel-1-view-
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=9&lat=-5.53261&lng=-79.28833&themeId=DEFAULT-THEME&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2024-12-01T00%3A00%3A00.000Z&toTime=2024-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=9&lat=-5.53261&lng=-79.28833&themeId=DEFAULT-THEME&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2024-12-01T00%3A00%3A00.000Z&toTime=2024-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 46. Monitoring sediment transport with Sentinel-2
 
@@ -574,7 +574,7 @@ Browser URL:
 
 ### 48. April 2025 desktop background
 
-**2024-12-01** · Pakistan, Bangladesh, China, India, Nepal · Agriculture, Land Cover, Mountains · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2024-12-01** · Pakistan, Bangladesh, China, India, Nepal · Agriculture, Land Cover, Mountains · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 Panorama of a Subcontinent. This image is a Sentinel-1 monthly mosaic from December 2024 of Northern India and Nepal, with parts of eastern Pakistan, western Bangladesh, and southern Tibet.
 
@@ -582,7 +582,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-12-1-april-2025-deskt
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=7&lat=25.47799&lng=81.52954&themeId=DEFAULT-THEME&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2024-12-01T00%3A00%3A00.000Z&toTime=2024-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=7&lat=25.47799&lng=81.52954&themeId=DEFAULT-THEME&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2024-12-01T00%3A00%3A00.000Z&toTime=2024-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 49. Sentinel-2A view over Kufra after mission extension
 
@@ -646,7 +646,7 @@ Browser URL:
 
 ### 54. A view on Fuerteventura on Valentine
 
-**2024-07-01** · Canary Islands · Biodiversity, Coastal, Mountains · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-07-01** · Canary Islands · Biodiversity, Coastal, Mountains · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Find your special place this Valentine’s Day. We all have places that hold a special meaning.
 
@@ -654,7 +654,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-7-1-view-fuerteventur
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=10&lat=28.35696&lng=-13.94577&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-07-01T00%3A00%3A00.000Z&toTime=2024-07-01T23%3A59%3A59.999Z&layerId=FALSE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=10&lat=28.35696&lng=-13.94577&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-07-01T00%3A00%3A00.000Z&toTime=2024-07-01T23%3A59%3A59.999Z&layerId=FALSE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 55. Agan River Wetlands wins 'Seize the beauty of our Planet'
 
@@ -730,7 +730,7 @@ Browser URL:
 
 ### 61. Kiruna satellite ground station
 
-**2023-12-01** · Sweden · Human Activities, Land Monitoring · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2023-12-01** · Sweden · Human Activities, Land Monitoring · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 In the dark polar night, more than 100 km north of the Arctic Circle, the staff of the Kiruna Ground Station is hard at work even during the holiday season.
 
@@ -738,7 +738,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2023-12-1-kiruna-satellite
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=11&lat=67.85523&lng=20.63164&themeId=DEFAULT-THEME&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2023-12-01T00%3A00%3A00.000Z&toTime=2023-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=10&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=11&lat=67.85523&lng=20.63164&themeId=DEFAULT-THEME&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2023-12-01T00%3A00%3A00.000Z&toTime=2023-12-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=10&dateMode=SINGLE
 
 ### 62. Morning glory in Queensland
 
@@ -754,7 +754,7 @@ Browser URL:
 
 ### 63. A view on Mount Everest on International Mountain Day
 
-**2024-01-01** · Nepal · Land Cover, Snow and Ice · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-01-01** · Nepal · Land Cover, Snow and Ice · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 The price of popularity. Climbing Mount Everest is often seen as the ultimate challenge — a true test of endurance and determination.
 
@@ -762,7 +762,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-1-1-view-mount-everes
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=8&lat=28.95769&lng=86.07788&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-01-01T00%3A00%3A00.000Z&toTime=2024-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=8&lat=28.95769&lng=86.07788&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-01-01T00%3A00%3A00.000Z&toTime=2024-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 64. Desertification in Namibia
 
@@ -778,7 +778,7 @@ Browser URL:
 
 ### 65. Get ready for ESA's Living Planet Symposium 2025 in Vienna
 
-**2024-08-01** · Italy, Germany, Czechia, Austria, Norway · Human Activities, Land Monitoring · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2024-08-01** · Italy, Germany, Czechia, Austria, Norway · Human Activities, Land Monitoring · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 From Earth observation to climate action. Every three years, Europe’s best and brightest Earth observation and environmental experts gather for the European Space Agency’s Living Planet Symposium – one of the world’s premier events for Earth observation.
 
@@ -786,7 +786,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-8-1-get-ready-esas-li
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=5&lat=52.3756&lng=5.33961&themeId=DEFAULT-THEME&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2024-08-01T00%3A00%3A00.000Z&toTime=2024-08-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=5&lat=52.3756&lng=5.33961&themeId=DEFAULT-THEME&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2024-08-01T00%3A00%3A00.000Z&toTime=2024-08-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 66. Glacier retreat in Switzerland
 
@@ -814,7 +814,7 @@ Browser URL:
 
 ### 68. Presenting CDSE to industries in Stockholm
 
-**2024-04-01** · Sweden · Coastal, Land Cover, Marine, Urban · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-04-01** · Sweden · Coastal, Land Cover, Marine, Urban · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Stockholm, the Venice of the North. Legend has it that the exceptional beauty of the Stockholm landscape was the last gift of a dying mermaid, and that the attractive landscape inspired the regent Birger Jarl to establish a city on the islet (Holm) of...
 
@@ -822,7 +822,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-4-1-presenting-cdse-i
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=10&lat=59.37834&lng=18.15903&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-04-01T00%3A00%3A00.000Z&toTime=2024-04-01T23%3A59%3A59.999Z&layerId=FALSE-COLOR-CLOUDLESS&gain=1.7&redRange=%5B0.11%2C1%5D&blueRange=%5B0%2C0.48%5D&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=10&lat=59.37834&lng=18.15903&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-04-01T00%3A00%3A00.000Z&toTime=2024-04-01T23%3A59%3A59.999Z&layerId=FALSE-COLOR-CLOUDLESS&gain=1.7&redRange=%5B0.11%2C1%5D&blueRange=%5B0%2C0.48%5D&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 69. Monitoring penguins from space
 
@@ -862,7 +862,7 @@ Browser URL:
 
 ### 72. World Food Day takes us to the island of Borneo
 
-**2023-05-01** · Malaysia, Indonesia · Agriculture, Human Activities · dataset `3c6623-YOUR-INSTANCEID-HERE`
+**2023-05-01** · Malaysia, Indonesia · Agriculture, Human Activities · dataset `3c662330-108b-4378-8899-525fd5a225cb`
 
 Today is World Food Day!
 
@@ -870,7 +870,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2024-8-1-world-food-day-ta
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=12&lat=-2.90824&lng=112.63046&themeId=DEFAULT-THEME&datasetId=3c6623-YOUR-INSTANCEID-HERE&fromTime=2023-05-01T00%3A00%3A00.000Z&toTime=2023-05-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&redRange=%5B0.24%2C1%5D&greenRange=%5B0.22%2C1%5D&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=12&lat=-2.90824&lng=112.63046&themeId=DEFAULT-THEME&datasetId=3c662330-108b-4378-8899-525fd5a225cb&fromTime=2023-05-01T00%3A00%3A00.000Z&toTime=2023-05-01T23%3A59%3A59.999Z&layerId=0-RGB-RATIO&redRange=%5B0.24%2C1%5D&greenRange=%5B0.22%2C1%5D&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 73. Join the ‘Seize the beauty of our Planet’ contest
 
@@ -994,7 +994,7 @@ Browser URL:
 
 ### 83. Start of the Olympic Games in Paris
 
-**2023-04-01** · France · Human Activities, Land Cover · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2023-04-01** · France · Human Activities, Land Cover · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 The XXXIII Olympiad with more than 10,500 athletes. Today we celebrate the Opening Ceremony of the Olympic Games 2024, officially branded as Paris 2024.
 
@@ -1002,7 +1002,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2023-4-1-start-olympic-gam
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=6&lat=47.80578&lng=7.88818&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2023-04-01T00%3A00%3A00.000Z&toTime=2023-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=6&lat=47.80578&lng=7.88818&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2023-04-01T00%3A00%3A00.000Z&toTime=2023-04-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 84. The Colville Foreland Basin in Alaska
 
@@ -1066,7 +1066,7 @@ Browser URL:
 
 ### 89. Germany ready to host UEFA EURO 2024
 
-**2024-01-01** · Germany · Human Activities, Land Cover · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2024-01-01** · Germany · Human Activities, Land Cover · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Sentinel-2 views on world-class stadiums. Germany is hosting the UEFA European Championship 2024, marking its first major tournament since the 2006 FIFA World Cup.
 
@@ -1074,7 +1074,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2023-7-1-germany-ready-hos
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=16&lat=52.51572&lng=13.24116&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2024-01-01T00%3A00%3A00.000Z&toTime=2024-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=16&lat=52.51572&lng=13.24116&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2024-01-01T00%3A00%3A00.000Z&toTime=2024-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 90. G7 summit in Italy
 
@@ -1138,7 +1138,7 @@ Browser URL:
 
 ### 95. Celebrating Europe
 
-**2023-07-01** · Land Cover · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2023-07-01** · Land Cover · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 A cloudless Sentinel-2 quarterly mosaic of Europe. Every year, on the 9 th of May we celebrate Europe Day, the anniversary of the Schuman declaration, one of the first steps towards creating the European Union.
 
@@ -1146,7 +1146,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2023-4-1-celebrating-europ
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=5&lat=57.53942&lng=20.45654&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKLy9uZHdpCmNvbnN0IGNvbG9yUmFtcDEgPSBbCiAgCVswLCAweEZGRkZGRl0sIC8vQmxhY2sKICAJWzAuNywgMHgwMDgwMDBdIC8vR3JlZW4KICBdOwpjb25zdCBjb2xvclJhbXAyID0gWwogIAlbMCwgMHhGRkZGRkZdLCAvL0JsYWNrCiAgCVsxLCAweDAwMDBDQ10gIC8vTWVkaXVtIEJsdWUKICBdOwoKbGV0IHZpejEgPSBuZXcgQ29sb3JSYW1wVmlzdWFsaXplcihjb2xvclJhbXAxKTsKbGV0IHZpejIgPSBuZXcgQ29sb3JSYW1wVmlzdWFsaXplcihjb2xvclJhbXAyKTsKCmZ1bmN0aW9uIHNldHVwKCkgewogIHJldHVybiB7CiAgICBpbnB1dDogWyJCMDMiLCAiQjA0IiwgIkIwOCIsImRhdGFNYXNrIl0sCiAgICBvdXRwdXQ6IFsKCQl7IGlkOiJkZWZhdWx0IiwgYmFuZHM6IDQgfSwKICAgICAgICB7IGlkOiAiaW5kZXgiLCBiYW5kczogMSwgc2FtcGxlVHlwZTogIkZMT0FUMzIiIH0sCiAgICAgICAgeyBpZDogImVvYnJvd3NlclN0YXRzIiwgYmFuZHM6IDEsIHNhbXBsZVR5cGU6ICdGTE9BVDMyJyB9LAogICAgICAgIHsgaWQ6ICJkYXRhTWFzayIsIGJhbmRzOiAxIH0KCV0KICB9Owp9CgpmdW5jdGlvbiBldmFsdWF0ZVBpeGVsKHNhbXBsZXMpIHsKICBsZXQgZmFjdG9yID0gMS8yMDAwOwogIGxldCBHcmVlbiA9IGZhY3RvciAqIHNhbXBsZXMuQjAzOwogIGxldCBSZWQgPSBmYWN0b3IgKiBzYW1wbGVzLkIwNDsKICBsZXQgTklSID0gZmFjdG9yICogc2FtcGxlcy5CMDg7CiAgbGV0IHZhbCA9IGluZGV4KEdyZWVuLCBOSVIpOwogIGxldCBrbmR2aSA9IE1hdGgudGFuaChNYXRoLnBvdygoKE5JUiAtIFJlZCkgLyAoTklSICsgUmVkKSksIDIpKTsKICBsZXQgaW1nVmFscyA9IG51bGw7CiAgLy8gVGhlIGxpYnJhcnkgZm9yIHRpZmZzIHdvcmtzIHdlbGwgb25seSBpZiB0aGVyZSBpcyBvbmx5IG9uZSBjaGFubmVsIHJldHVybmVkLgogIC8vIFNvIHdlIGVuY29kZSB0aGUgIm5vIGRhdGEiIGFzIE5hTiBoZXJlIGFuZCBpZ25vcmUgTmFOcyBvbiBmcm9udGVuZC4KICBjb25zdCBpbmRleFZhbCA9IHNhbXBsZXMuZGF0YU1hc2sgPT09IDEgPyB2YWwgOiBOYU47CiAgCiAgaWYgKHZhbCA8IC0wKSB7CiAgICBpbWdWYWxzID0gWy4uLnZpejEucHJvY2VzcyhrbmR2aSksIHNhbXBsZXMuZGF0YU1hc2tdOwogIH0gZWxzZSB7CiAgICBpbWdWYWxzID0gWy4uLnZpejIucHJvY2VzcyhNYXRoLnNxcnQoTWF0aC5zcXJ0KHZhbCkpKSwgc2FtcGxlcy5kYXRhTWFza107CiAgfQogIHJldHVybiB7CiAgICBkZWZhdWx0OiBpbWdWYWxzLAogICAgaW5kZXg6IFtpbmRleFZhbF0sCiAgICBlb2Jyb3dzZXJTdGF0czpbdmFsXSwKICAgIGRhdGFNYXNrOiBbc2FtcGxlcy5kYXRhTWFza10KICB9Owp9CgoK&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2023-07-01T00%3A00%3A00.000Z&toTime=2023-07-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
+    https://browser.dataspace.copernicus.eu/?zoom=5&lat=57.53942&lng=20.45654&themeId=DEFAULT-THEME&evalscript=Ly9WRVJTSU9OPTMKLy9uZHdpCmNvbnN0IGNvbG9yUmFtcDEgPSBbCiAgCVswLCAweEZGRkZGRl0sIC8vQmxhY2sKICAJWzAuNywgMHgwMDgwMDBdIC8vR3JlZW4KICBdOwpjb25zdCBjb2xvclJhbXAyID0gWwogIAlbMCwgMHhGRkZGRkZdLCAvL0JsYWNrCiAgCVsxLCAweDAwMDBDQ10gIC8vTWVkaXVtIEJsdWUKICBdOwoKbGV0IHZpejEgPSBuZXcgQ29sb3JSYW1wVmlzdWFsaXplcihjb2xvclJhbXAxKTsKbGV0IHZpejIgPSBuZXcgQ29sb3JSYW1wVmlzdWFsaXplcihjb2xvclJhbXAyKTsKCmZ1bmN0aW9uIHNldHVwKCkgewogIHJldHVybiB7CiAgICBpbnB1dDogWyJCMDMiLCAiQjA0IiwgIkIwOCIsImRhdGFNYXNrIl0sCiAgICBvdXRwdXQ6IFsKCQl7IGlkOiJkZWZhdWx0IiwgYmFuZHM6IDQgfSwKICAgICAgICB7IGlkOiAiaW5kZXgiLCBiYW5kczogMSwgc2FtcGxlVHlwZTogIkZMT0FUMzIiIH0sCiAgICAgICAgeyBpZDogImVvYnJvd3NlclN0YXRzIiwgYmFuZHM6IDEsIHNhbXBsZVR5cGU6ICdGTE9BVDMyJyB9LAogICAgICAgIHsgaWQ6ICJkYXRhTWFzayIsIGJhbmRzOiAxIH0KCV0KICB9Owp9CgpmdW5jdGlvbiBldmFsdWF0ZVBpeGVsKHNhbXBsZXMpIHsKICBsZXQgZmFjdG9yID0gMS8yMDAwOwogIGxldCBHcmVlbiA9IGZhY3RvciAqIHNhbXBsZXMuQjAzOwogIGxldCBSZWQgPSBmYWN0b3IgKiBzYW1wbGVzLkIwNDsKICBsZXQgTklSID0gZmFjdG9yICogc2FtcGxlcy5CMDg7CiAgbGV0IHZhbCA9IGluZGV4KEdyZWVuLCBOSVIpOwogIGxldCBrbmR2aSA9IE1hdGgudGFuaChNYXRoLnBvdygoKE5JUiAtIFJlZCkgLyAoTklSICsgUmVkKSksIDIpKTsKICBsZXQgaW1nVmFscyA9IG51bGw7CiAgLy8gVGhlIGxpYnJhcnkgZm9yIHRpZmZzIHdvcmtzIHdlbGwgb25seSBpZiB0aGVyZSBpcyBvbmx5IG9uZSBjaGFubmVsIHJldHVybmVkLgogIC8vIFNvIHdlIGVuY29kZSB0aGUgIm5vIGRhdGEiIGFzIE5hTiBoZXJlIGFuZCBpZ25vcmUgTmFOcyBvbiBmcm9udGVuZC4KICBjb25zdCBpbmRleFZhbCA9IHNhbXBsZXMuZGF0YU1hc2sgPT09IDEgPyB2YWwgOiBOYU47CiAgCiAgaWYgKHZhbCA8IC0wKSB7CiAgICBpbWdWYWxzID0gWy4uLnZpejEucHJvY2VzcyhrbmR2aSksIHNhbXBsZXMuZGF0YU1hc2tdOwogIH0gZWxzZSB7CiAgICBpbWdWYWxzID0gWy4uLnZpejIucHJvY2VzcyhNYXRoLnNxcnQoTWF0aC5zcXJ0KHZhbCkpKSwgc2FtcGxlcy5kYXRhTWFza107CiAgfQogIHJldHVybiB7CiAgICBkZWZhdWx0OiBpbWdWYWxzLAogICAgaW5kZXg6IFtpbmRleFZhbF0sCiAgICBlb2Jyb3dzZXJTdGF0czpbdmFsXSwKICAgIGRhdGFNYXNrOiBbc2FtcGxlcy5kYXRhTWFza10KICB9Owp9CgoK&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2023-07-01T00%3A00%3A00.000Z&toTime=2023-07-01T23%3A59%3A59.999Z&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE#custom-script
 
 ### 96. Flowering fields in Poland
 
@@ -1222,7 +1222,7 @@ Browser URL:
 
 ### 102. Ranomafana National Park in Madagascar
 
-**2023-10-01** · Madagascar · Forestry, Land Cover, Vegetation · dataset `5460de-YOUR-INSTANCEID-HERE`
+**2023-10-01** · Madagascar · Forestry, Land Cover, Vegetation · dataset `5460de54-082e-473a-b6ea-d5cbe3c17cca`
 
 Home to more than 30 species. On the International Day of Forests we take you to one of the most unique forest ecosystems on this planet: Ranomafana National Park in Madagascar.
 
@@ -1230,7 +1230,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2023-10-1-ranomafana-natio
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=12&lat=-21.31848&lng=47.43582&themeId=DEFAULT-THEME&datasetId=5460de-YOUR-INSTANCEID-HERE&fromTime=2023-10-01T00%3A00%3A00.000Z&toTime=2023-10-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+    https://browser.dataspace.copernicus.eu/?zoom=12&lat=-21.31848&lng=47.43582&themeId=DEFAULT-THEME&datasetId=5460de54-082e-473a-b6ea-d5cbe3c17cca&fromTime=2023-10-01T00%3A00%3A00.000Z&toTime=2023-10-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
 
 ### 103. A view on the technological heart of ESA
 
@@ -1426,7 +1426,7 @@ Browser URL:
 
 ### 119. GIS Day takes us to Ottawa
 
-**2021-01-01** · Canada · Urban · dataset `65d4af-YOUR-INSTANCEID-HERE`
+**2021-01-01** · Canada · Urban · dataset `65d4af89-5ce5-468e-bbbe-8a2fd9efaccc`
 
 The Canada Geographic Information System paved the way. Ottawa, Canada is the seat of the Canadian Government and the place to share on the annual GIS Day.
 
@@ -1434,7 +1434,7 @@ Gallery page: https://dataspace.copernicus.eu/gallery/2021-1-1-gis-day-takes-us-
 
 Browser URL:
 
-    https://browser.dataspace.copernicus.eu/?zoom=12&lat=45.4046&lng=-75.71159&themeId=DEFAULT-THEME&datasetId=65d4af-YOUR-INSTANCEID-HERE&fromTime=2021-01-01T00%3A00%3A00.000Z&toTime=2021-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30
+    https://browser.dataspace.copernicus.eu/?zoom=12&lat=45.4046&lng=-75.71159&themeId=DEFAULT-THEME&datasetId=65d4af89-5ce5-468e-bbbe-8a2fd9efaccc&fromTime=2021-01-01T00%3A00%3A00.000Z&toTime=2021-01-01T23%3A59%3A59.999Z&layerId=TRUE-COLOR-CLOUDLESS&demSource3D=%22MAPZEN%22&cloudCoverage=30
 
 ### 120. Vineyards in Chile
 

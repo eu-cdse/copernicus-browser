@@ -11,6 +11,7 @@ import {
   checkIfIndexOutputPresent,
   getMissingIndexOutputError,
   getNoIndexLayerOutputError,
+  isFusionRequest,
 } from './Histogram.utils';
 import {
   getDatasetLabel,
@@ -100,7 +101,8 @@ class HistogramModal extends Component {
     const layerName = await getLayerName(visualizationUrl, layerId, this.cancelToken);
     const layerNameOrId = layerName ? layerName : layerId;
     const customString = t`Custom`;
-    const title = `${datasetName} - ${customSelected ? customString : layerNameOrId}`;
+    const fusionSuffix = isFusionRequest(this.props) ? ` (${t`Data fusion`})` : '';
+    const title = `${datasetName} - ${customSelected ? customString : layerNameOrId}${fusionSuffix}`;
     this.setState({ title: title });
   };
 
@@ -184,6 +186,7 @@ const mapStoreToProps = (store) => ({
   datasetId: store.visualization.datasetId,
   visualizationUrl: store.visualization.visualizationUrl,
   evalscript: store.visualization.evalscript,
+  dataFusion: store.visualization.dataFusion,
   selectedTabIndex: store.tabs.selectedTabIndex,
 });
 

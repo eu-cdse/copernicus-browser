@@ -47,7 +47,7 @@ export function stripSearchParamsFromUrl(paramNames, precomputedSearch) {
 }
 
 /*
-  For the full list of supported URL parameters, see public/deep-linking.md.
+  For the full list of supported URL parameters, see public/deep-linking.txt.
 
   Notes on specific params:
   - panel: which Visualize sub-panel is open — "layers", "highlights", "pins", or "wms". Written

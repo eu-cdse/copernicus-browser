@@ -12022,3 +12022,6 @@ msgid ""
 "[here](https://land.copernicus.eu/en/products/high-resolution-layer-forests-"
 "and-tree-cover)."
 msgstr ""
+
+msgid "Data fusion"
+msgstr ""

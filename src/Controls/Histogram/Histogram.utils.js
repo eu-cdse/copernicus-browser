@@ -7,10 +7,11 @@ import {
   constructBBoxFromBounds,
 } from '../../Controls/ImgDownload/ImageDownload.utils.js';
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
-import { constructErrorMessage } from '../../utils';
+import { constructErrorMessage, isDataFusionEnabled } from '../../utils';
 import { checkIfIndexOutputInEvalscript } from '../../utils/parseEvalscript';
 import { reqConfigMemoryCache, MAX_SH_IMAGE_SIZE } from '../../const';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
+import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 
 export const getMissingIndexOutputError = () =>
   t`The setup function in the evalscript does not contain the correct output. The output needs to include:` +
@@ -19,6 +20,10 @@ export const getMissingIndexOutputError = () =>
 
 export const getNoIndexLayerOutputError = () =>
   t`You are visualising a layer that doesn't represent an index. The histogram feature currently only works for index layers (e.g. NDVI).\n\n Please select an index layer to use this feature.`;
+
+export function isFusionRequest({ dataFusion, customSelected, layerId }) {
+  return isDataFusionEnabled(dataFusion) && (customSelected || !layerId);
+}
 
 export async function getLayerName(visualizationUrl, layerId, cancelToken) {
   try {
@@ -99,10 +104,19 @@ async function getTiffImages(layer, props, cancelToken) {
   return resolvedBlobs;
 }
 
-export async function getDataForLayer(props, cancelToken) {
-  try {
-    const { visualizationUrl, layerId, evalscript } = props;
+// Builds the layer the histogram request is made against. A custom visualization keeps `layerId`
+// populated (the layer it was derived from), so the data fusion check has to come first - otherwise
+// the fusion evalscript would be injected into a single-dataset layer and the Process API request
+// would carry none of the datasource aliases the evalscript declares (#1284). Mirrors
+// ImageDownload.utils.js's getLayerFromParams.
+async function buildLayer(props, cancelToken) {
+  const { visualizationUrl, layerId, datasetId, dataFusion, evalscript, fromTime, toTime } = props;
 
+  if (isFusionRequest(props)) {
+    return await constructDataFusionLayer(dataFusion, evalscript, null, fromTime, toTime);
+  }
+
+  if (layerId) {
     let layer = await LayersFactory.makeLayer(visualizationUrl, layerId, null, {
       cancelToken: cancelToken,
       ...reqConfigMemoryCache,
@@ -114,11 +128,36 @@ export async function getDataForLayer(props, cancelToken) {
     if (evalscript) {
       layer.evalscript = evalscript;
     }
+    return layer;
+  }
 
-    const isIndexOutputPresent = checkIfIndexOutputPresent(props);
+  const dsh = getDataSourceHandler(datasetId);
+  const shJsDataset = dsh ? dsh.getSentinelHubDataset(datasetId) : null;
+  let layers = await LayersFactory.makeLayers(
+    visualizationUrl,
+    (_, dataset) => (!shJsDataset ? true : dataset.id === shJsDataset.id),
+    null,
+    { ...reqConfigMemoryCache, cancelToken: cancelToken },
+  );
+  // add minQa, upsampling, downsampling, but no effects (they are only for visualization)
+  if (layers.length === 0) {
+    throw new Error(getNoIndexLayerOutputError());
+  }
+  let layer = layers[0];
+  layer.evalscript = evalscript;
+  return layer;
+}
+
+export async function getDataForLayer(props, cancelToken) {
+  try {
+    const { customSelected } = props;
+
+    const isIndexOutputPresent = await checkIfIndexOutputPresent(props, cancelToken);
     if (!isIndexOutputPresent) {
-      throw new Error(getNoIndexLayerOutputError());
+      throw new Error(customSelected ? getMissingIndexOutputError() : getNoIndexLayerOutputError());
     }
+
+    const layer = await buildLayer(props, cancelToken);
 
     const blobs = await getTiffImages(layer, props, cancelToken);
     const { histogram } = await getHistogramFromTiffs(blobs);
@@ -132,27 +171,12 @@ export async function getDataForLayer(props, cancelToken) {
 
 export async function getDataForIndex(props, cancelToken) {
   try {
-    const { visualizationUrl, datasetId, evalscript } = props;
-
-    const isIndexOutputPresent = checkIfIndexOutputPresent(props);
+    const isIndexOutputPresent = await checkIfIndexOutputPresent(props, cancelToken);
     if (!isIndexOutputPresent) {
       throw new Error(getMissingIndexOutputError());
     }
 
-    const dsh = getDataSourceHandler(datasetId);
-    const shJsDataset = dsh ? dsh.getSentinelHubDataset(datasetId) : null;
-    let layers = await LayersFactory.makeLayers(
-      visualizationUrl,
-      (_, dataset) => (!shJsDataset ? true : dataset.id === shJsDataset.id),
-      null,
-      { ...reqConfigMemoryCache, cancelToken: cancelToken },
-    );
-    let layer;
-    if (layers.length > 0) {
-      layer = layers[0];
-      layer.evalscript = evalscript;
-    }
-    // add minQa, upsampling, downsampling, but no effects (they are only for visualization)
+    const layer = await buildLayer(props, cancelToken);
 
     const blobs = await getTiffImages(layer, props, cancelToken);
     const { histogram } = await getHistogramFromTiffs(blobs);
