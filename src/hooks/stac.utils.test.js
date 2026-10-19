@@ -216,7 +216,7 @@ describe('stac.utils', () => {
   describe('getClmsAvailabilityLabels', () => {
     const SNOW_COVER_EXTENT_LEAVES = [
       'Europe, Daily, 500m, (2017–present), V1',
-      'Northern Hemisphere, Daily, 1km, (2018–present), V1',
+      'Northern Hemisphere, Daily, 1km, (2018–2026), V1',
       'Global, Daily, 1km, (2025–present), V1',
     ];
     const SNOW_WATER_EQUIVALENT_LEAVES = [

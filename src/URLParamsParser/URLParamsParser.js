@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { t } from 'ttag';
 
 import {
@@ -28,7 +27,6 @@ import { b64DecodeUnicode, b64EncodeUnicode } from '../utils/base64MDN';
 
 import {
   COMPARE_OPTIONS,
-  DATE_MODES,
   DEFAULT_LAT_LNG,
   PANEL,
   parsePanelParam,
@@ -43,6 +41,7 @@ import { decrypt } from '../utils/encrypt';
 import { saveToLocalStorage } from '../utils/localStorage.utils';
 import { isOpenEoSupported } from '../api/openEO/openEOHelpers';
 import { IMAGE_FORMATS } from '../Controls/ImgDownload/consts';
+import { resolveUrlTimes } from '../components/VisualizationTimeSelect/VisualizationTimeSelect.utils';
 
 class URLParamsParser extends React.Component {
   state = {
@@ -179,6 +178,7 @@ class URLParamsParser extends React.Component {
       clmsSelectedConsolidationPeriodIndex,
       useEvoland,
       panel,
+      date,
     } = params;
     let { lat: parsedLat, lng: parsedLng, zoom: parsedZoom } = parsePosition(lat, lng, zoom);
 
@@ -208,20 +208,29 @@ class URLParamsParser extends React.Component {
     const evalscriptUrl = evalscriptUrlParam ?? evalscriptUrlLegacy;
     const processGraphUrl = processGraphUrlParam ?? processGraphUrlLegacy;
     const customSelected = evalscript || evalscriptUrl || processGraph || processGraphUrl ? true : undefined;
-    const parsedFromTime = fromTime ? moment.utc(fromTime) : null;
-    const parsedToTime = toTime ? moment.utc(toTime) : null;
-    const clampedFromTime =
-      dateMode === DATE_MODES['TIME RANGE'].value &&
-      parsedFromTime &&
-      parsedToTime &&
-      parsedToTime.diff(parsedFromTime, 'days', true) > MAX_TIME_RANGE_DAYS
-        ? parsedToTime.clone().subtract(MAX_TIME_RANGE_DAYS, 'days').startOf('day')
-        : parsedFromTime;
+    // The date is only known once the map bounds are, so for date=latest (or a dataset without a
+    // date) this just records that a lookup is due. See resolveUrlTimes.
+    const {
+      fromTime: resolvedFromTime,
+      toTime: resolvedToTime,
+      pendingLatestDate,
+    } = resolveUrlTimes({
+      date,
+      fromTime,
+      toTime,
+      dateMode,
+      datasetId,
+      compareShare,
+      compareSharedPinsId,
+      timelapse,
+      panel,
+      maxRangeDays: MAX_TIME_RANGE_DAYS,
+    });
 
     const newVisualizationParams = {
       datasetId: datasetId,
-      fromTime: clampedFromTime,
-      toTime: parsedToTime,
+      fromTime: resolvedFromTime,
+      toTime: resolvedToTime,
       visualizationUrl: decryptedVisualisationUrl,
       layerId,
       evalscript: evalscript ? b64DecodeUnicode(evalscript) : undefined,
@@ -248,6 +257,7 @@ class URLParamsParser extends React.Component {
       cloudCoverage: cloudCoverage && !isNaN(cloudCoverage) ? JSON.parse(cloudCoverage) : undefined,
       dateMode: dateMode,
       useEvoland: useEvoland,
+      pendingLatestDate: pendingLatestDate,
       visibleOnMap: (layerId || customSelected) && datasetId && decryptedVisualisationUrl,
       selectedProcessing:
         processGraph || processGraphUrl

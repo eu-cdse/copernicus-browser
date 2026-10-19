@@ -44,6 +44,7 @@ import {
   getC12TreeTypesDescription,
 } from './DatasourceRenderingComponents/dataSourceTooltips/EvolandTooltip';
 import AbstractBYOCDataSourceHandler from './AbstractBYOCDataSourceHandler';
+import { EVOLAND_KNOWN_COLLECTIONS } from './knownCollections';
 
 export default class EvolandDataSourceHandler extends AbstractBYOCDataSourceHandler {
   datasource = DATASOURCES.EVOLAND;
@@ -64,20 +65,7 @@ export default class EvolandDataSourceHandler extends AbstractBYOCDataSourceHand
     [EVOLAND_C12_TREE_TYPES]: `C12 Tree Types`,
   });
 
-  KNOWN_COLLECTIONS = {
-    [EVOLAND_C01_CONTINUOUS_FOREST_MONITORING]: ['4c71e058-522a-4a6a-ba54-9fc865803579'], // collection id from byoc admin account (currenlty from evoland account)
-    [EVOLAND_C02_FOREST_DISTURBANCE]: ['a982a4e2-0d66-4f3d-8a1d-def27d3c9a9e'],
-    [EVOLAND_C03_FOREST_BIOMASS]: ['6f77ffbf-d8fe-471c-a582-307a0c2a56c4'],
-    [EVOLAND_C04_COVER_CROP_TYPE]: ['d45077f9-c7bf-43e9-9fcf-6a62c1a330ba'],
-    [EVOLAND_C05_GRASSLAND_CROPLAND_GPP]: ['aa56e54b-45e6-4b9e-9de7-f1ec3b81729e'],
-    [EVOLAND_C06_SMALL_LANDSCAPE_FEATURES]: ['6f4bb075-5156-4de5-909a-1d130e9b1275'],
-    [EVOLAND_C07_IMPROVED_WATER_BODIES_MAPPING]: ['8abdd7ff-79ed-4453-92de-d091c0bdd239'],
-    [EVOLAND_C08_CONTINUOUS_IMPERVIOUSNESS_MONITORING]: ['8f8f94e1-4325-4dae-b7d3-2f523af7bc15'],
-    [EVOLAND_C09_AUTOMATED_LAND_USE_MAPPING]: ['26ca0c15-2a9e-4575-b762-00feb721db14'],
-    [EVOLAND_C10_LAND_SURFACE_CHARACTERISTICS]: ['116634f7-4624-41e6-ae3c-e17f34be51f9'],
-    [EVOLAND_C11_ON_DEMAND_LAND_COVER_MAPPING]: ['ec62cce8-e2ce-4e0b-bfc9-d12a654c40ba'],
-    [EVOLAND_C12_TREE_TYPES]: ['970aa180-143a-40b2-800b-ba4ce5628915'],
-  };
+  KNOWN_COLLECTIONS = EVOLAND_KNOWN_COLLECTIONS;
 
   KNOWN_COLLECTIONS_LOCATIONS = {
     [EVOLAND_C01_CONTINUOUS_FOREST_MONITORING]: LocationIdSHv3.cdse,

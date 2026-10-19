@@ -12,6 +12,7 @@ import { getOrbitDirectionFromList } from './VisualizationPanel.utils';
 import { generateAppropriateSearchBBox } from '../../utils/coords';
 
 import store, { visualizationSlice } from '../../store';
+import { getAppropriateAuthToken } from '../../App';
 
 import { reqConfigMemoryCache } from '../../const';
 
@@ -37,6 +38,9 @@ function DateSelection({
   wmsPanelOpen,
   panelFromUrlParams,
   clmsSelection,
+  pendingLatestDate,
+  authenticated,
+  dataSourcesInitialized,
 }) {
   const [maxCloudCoverTemp, setMaxCloudCoverTemp] = useState(maxCloudCover);
   let minDateRange = moment.utc('1972-07-01');
@@ -243,11 +247,16 @@ function DateSelection({
       wmsPanelOpen={wmsPanelOpen}
       panelFromUrlParams={panelFromUrlParams}
       clmsSelection={clmsSelection}
+      datasetId={datasetId}
+      pendingLatestDate={pendingLatestDate}
+      mapBoundsKnown={Boolean(mapBounds)}
+      authenticated={authenticated}
+      dataSourcesInitialized={dataSourcesInitialized}
     />
   );
 }
 
-const mapStoreToProps = (store) => ({
+export const mapStoreToProps = (store) => ({
   zoom: store.mainMap.zoom,
   mapBounds: store.mainMap.bounds,
   pixelBounds: store.mainMap.pixelBounds,
@@ -262,6 +271,9 @@ const mapStoreToProps = (store) => ({
   datePanelExpanded: store.collapsiblePanel.datePanelExpanded,
   maxCloudCover: store.visualization.cloudCoverage,
   clmsSelection: store.clms,
+  pendingLatestDate: store.visualization.pendingLatestDate,
+  authenticated: Boolean(getAppropriateAuthToken(store.auth, store.themes.selectedThemeId)),
+  dataSourcesInitialized: store.themes.dataSourcesInitialized,
 });
 
 export default connect(mapStoreToProps, null)(DateSelection);

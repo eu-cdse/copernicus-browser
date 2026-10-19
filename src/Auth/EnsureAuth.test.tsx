@@ -86,7 +86,7 @@ describe('EnsureAuth', () => {
     // `.ensure-auth` is what two e2e specs locate the dialog by — it must survive the refactor.
     expect(container.querySelector('.rodal.ensure-auth')).toBeInTheDocument();
 
-    expect(getByText('Welcome To Copernicus Browser!')).toBeInTheDocument();
+    expect(getByText('Welcome to Copernicus Browser!')).toBeInTheDocument();
     expect(
       getByText(
         'Log in to unlock advanced features such as timelapse, analytical download, and your own configurations.',

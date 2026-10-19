@@ -27,6 +27,7 @@ import {
   getLandsatMosaicMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/LandsatTooltip';
 import { IMAGE_FORMATS } from '../../../Controls/ImgDownload/consts';
+import { COMPLEMENTARY_DATA_KNOWN_COLLECTIONS } from './knownCollections';
 // import { getComplentaryDataMarkdown } from './DatasourceRenderingComponents/dataSourceTooltips/LandsatTooltip';
 
 const LANDSAT_COPYRIGHT_TEXT = (number) =>
@@ -48,9 +49,7 @@ export default class ComplementaryDataDataSourceHandler extends DataSourceHandle
     [CDAS_L8_L9_LOTL1]: { min: 7, max: 18 },
   };
 
-  KNOWN_COLLECTIONS = {
-    [CDAS_LANDSAT_MOSAIC]: ['13bdbc77-5719-4c22-a371-22661b433264'],
-  };
+  KNOWN_COLLECTIONS = COMPLEMENTARY_DATA_KNOWN_COLLECTIONS;
 
   KNOWN_COLLECTIONS_LOCATIONS = {
     [CDAS_LANDSAT_MOSAIC]: LocationIdSHv3.cdse,

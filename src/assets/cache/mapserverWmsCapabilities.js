@@ -1,7 +1,7 @@
 // Generated file – do not edit manually.
-// Regenerate with `npm run update-urban-atlas-capabilities-cache`.
-export const URBAN_ATLAS_WMS_CAPABILITIES_XML = `<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
-<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"   xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://mapserver.gis.umn.edu/mapserver https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+// Regenerate with `npm run update-mapserver-capabilities-cache`.
+export const MAPSERVER_WMS_CAPABILITIES_XML = `<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"   xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0  https://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://mapserver.gis.umn.edu/mapserver https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
 <Service>
   <Name>WMS</Name>
   <Title>Urban Atlas Web Map Service</Title>
@@ -165,7 +165,7 @@ export const URBAN_ATLAS_WMS_CAPABILITIES_XML = `<?xml version='1.0' encoding="U
     <Style>
        <Name>default</Name>
        <Title>default</Title>
-       <LegendURL width="541" height="1463">
+       <LegendURL width="541" height="1777">
           <Format>image/png</Format>
           <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Urban_Atlas_WMS&amp;format=image/png&amp;STYLE=default"/>
        </LegendURL>
@@ -390,35 +390,115 @@ export const URBAN_ATLAS_WMS_CAPABILITIES_XML = `<?xml version='1.0' encoding="U
         <MaxScaleDenominator>150000</MaxScaleDenominator>
       </Layer>
     </Layer>
-    <Layer queryable="0" opaque="0" cascaded="0">
-        <Name>tlm</Name>
-        <Title>S2C TCI 2026-05-04 T36QVM (tlm)</Title>
-        <Abstract>Sentinel-2C L2A TCI 10m 2026-05-04 - speed test</Abstract>
+    <Layer queryable="1">
+      <Name>CLMS_PA-LCU_S2021_V05ha</Name>
+      <Title>CLMS_PA-LCU_S2021_V05ha</Title>
+      <Abstract>CLMS_PA-LCU_S2021_V05ha</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="288" height="162">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=CLMS_PA-LCU_S2021_V05ha&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>PA_LCU_2021_RASTER</Name>
+        <Title>Protected Areas Land Cover/Land Use 2021 (Raster overview)</Title>
+        <Abstract>CLMS Protected Areas Land Cover/Land Use 2021 (V05ha) - 75 m RGBA COG overview</Abstract>
         <EX_GeographicBoundingBox>
-            <westBoundLongitude>32.013309</westBoundLongitude>
-            <eastBoundLongitude>33.096268</eastBoundLongitude>
-            <southBoundLatitude>23.418603</southBoundLatitude>
-            <northBoundLatitude>24.413428</northBoundLatitude>
+            <westBoundLongitude>-53.382055</westBoundLongitude>
+            <eastBoundLongitude>58.066547</eastBoundLongitude>
+            <southBoundLatitude>24.801498</southBoundLatitude>
+            <northBoundLatitude>70.832163</northBoundLatitude>
         </EX_GeographicBoundingBox>
+        <Identifier authority="EEA">clms_pa_land-cover-land-use_europe_V05ha_3yearly_v1</Identifier>
         <MetadataURL type="TC211">
           <Format>text/xml</Format>
-          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=tlm"/>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=PA_LCU_2021_RASTER"/>
         </MetadataURL>
+        <MinScaleDenominator>100000</MinScaleDenominator>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>PA_LCU_2021_VECTOR</Name>
+        <Title>Protected Areas Land Cover/Land Use 2021 (Vector)</Title>
+        <Abstract>CLMS Protected Areas Land Cover/Land Use 2021 (V05ha) - FlatGeobuf delivery-unit tiles</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-53.381892</westBoundLongitude>
+            <eastBoundLongitude>58.065521</eastBoundLongitude>
+            <southBoundLatitude>24.802103</southBoundLatitude>
+            <northBoundLatitude>70.832160</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <Identifier authority="EEA">clms_pa_land-cover-land-use_europe_V05ha_3yearly_v1</Identifier>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=PA_LCU_2021_VECTOR"/>
+        </MetadataURL>
+        <Style>
+          <Name>clms-pa-lcu-2021-level1</Name>
+          <Title>clms-pa-lcu-2021-level1</Title>
+          <LegendURL width="288" height="162">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=PA_LCU_2021_VECTOR&amp;format=image/png&amp;STYLE=clms-pa-lcu-2021-level1"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+      </Layer>
     </Layer>
-    <Layer queryable="0" opaque="0" cascaded="0">
-        <Name>old</Name>
-        <Title>S2B TCI 2021-05-05 T36QVM (old)</Title>
-        <Abstract>Sentinel-2B L2A TCI 10m 2021-05-05 - speed test</Abstract>
+    <Layer queryable="1">
+      <Name>PROTECTED_AREAS_N2K_2012</Name>
+      <Title>PROTECTED_AREAS_N2K_2012</Title>
+      <Abstract>PROTECTED_AREAS_N2K_2012</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="288" height="162">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=PROTECTED_AREAS_N2K_2012&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>PA_N2K_2012_RASTER</Name>
+        <Title>Protected Areas N2K 2012 (Raster overview)</Title>
+        <Abstract>Protected Areas N2K 2012 - 75 m RGBA COG overview</Abstract>
         <EX_GeographicBoundingBox>
-            <westBoundLongitude>32.013309</westBoundLongitude>
-            <eastBoundLongitude>33.096268</eastBoundLongitude>
-            <southBoundLatitude>23.418603</southBoundLatitude>
-            <northBoundLatitude>24.413428</northBoundLatitude>
+            <westBoundLongitude>-39.770743</westBoundLongitude>
+            <eastBoundLongitude>52.271582</eastBoundLongitude>
+            <southBoundLatitude>27.572554</southBoundLatitude>
+            <northBoundLatitude>67.354618</northBoundLatitude>
         </EX_GeographicBoundingBox>
+        <Identifier authority="EEA">clms_protected-areas_n2k_2012</Identifier>
         <MetadataURL type="TC211">
           <Format>text/xml</Format>
-          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=old"/>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=PA_N2K_2012_RASTER"/>
         </MetadataURL>
+        <MinScaleDenominator>100000</MinScaleDenominator>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>protected_areas_fgb</Name>
+        <Title>protected_areas_fgb</Title>
+        <Abstract>Protected Areas N2K 2012 - FlatGeobuf vector layer</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-39.770743</westBoundLongitude>
+            <eastBoundLongitude>52.271582</eastBoundLongitude>
+            <southBoundLatitude>27.572554</southBoundLatitude>
+            <northBoundLatitude>67.354618</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <Identifier authority="EEA">clms_protected-areas_n2k_2012</Identifier>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;request=GetMetadata&amp;layer=protected_areas_fgb"/>
+        </MetadataURL>
+        <Style>
+          <Name>clms-n2k-lclu-2012-level1</Name>
+          <Title>clms-n2k-lclu-2012-level1</Title>
+          <LegendURL width="288" height="162">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mapserver.dataspace.copernicus.eu/ogc?language=eng&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=protected_areas_fgb&amp;format=image/png&amp;STYLE=clms-n2k-lclu-2012-level1"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+      </Layer>
     </Layer>
   </Layer>
 </Capability>

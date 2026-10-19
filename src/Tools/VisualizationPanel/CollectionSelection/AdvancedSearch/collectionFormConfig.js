@@ -328,8 +328,38 @@ export const collections = [
         id: 'OLCI',
         label: 'OLCI',
         productTypes: [
+          {
+            id: 'OL_0_CR0___',
+            name: 'OL_0_CR0___',
+            label: 'Level-0 CR0',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'OL_0_CR1___',
+            name: 'OL_0_CR1___',
+            label: 'Level-0 CR1',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'OL_0_EFR___',
+            name: 'OL_0_EFR___',
+            label: 'Level-0 EFR',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'OL_1_EFR___', name: 'OL_1_EFR___', label: 'Level-1 EFR' },
           { id: 'OL_1_ERR___', name: 'OL_1_ERR___', label: 'Level-1 ERR' },
+          {
+            id: 'OL_1_RAC___',
+            name: 'OL_1_RAC___',
+            label: 'Level-1 RAC',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'OL_1_SPC___',
+            name: 'OL_1_SPC___',
+            label: 'Level-1 SPC',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'OL_2_LFR___', name: 'OL_2_LFR___', label: 'Level-2 LFR' },
           { id: 'OL_2_LRR___', name: 'OL_2_LRR___', label: 'Level-2 LRR' },
           { id: 'OL_2_WFR___', name: 'OL_2_WFR___', label: 'Level-2 WFR' },
@@ -340,13 +370,37 @@ export const collections = [
         id: 'SRAL',
         label: 'SRAL',
         productTypes: [
+          {
+            id: 'SR_0_CAL___',
+            name: 'SR_0_CAL___',
+            label: 'Level-0 CAL',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'SR_0_SRA___',
+            name: 'SR_0_SRA___',
+            label: 'Level-0 SRA',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'SR_1_CAL___',
+            name: 'SR_1_CAL___',
+            label: 'Level-1 CAL',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
+          {
+            id: 'SR_1_LAN_RD',
+            name: 'SR_1_LAN_RD',
+            label: 'Level-1 LAN_RD',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'SR_1_SRA___', name: 'SR_1_SRA___', label: 'Level-1 SRA' },
           { id: 'SR_1_SRA_A_', name: 'SR_1_SRA_A_', label: 'Level-1 SRA_A' },
           { id: 'SR_2_LAN___', name: 'SR_2_LAN___', label: 'Level-2 LAN' },
-          { id: 'SR_2_WAT___', name: 'SR_2_WAT___', label: 'Level-2 WAT' },
           { id: 'SR_2_LAN_HY', name: 'SR_2_LAN_HY', label: 'Level-2 LAN_HY' },
-          { id: 'SR_2_LAN_SI', name: 'SR_2_LAN_SI', label: 'Level-2 LAN_SI' },
           { id: 'SR_2_LAN_LI', name: 'SR_2_LAN_LI', label: 'Level-2 LAN_LI' },
+          { id: 'SR_2_LAN_SI', name: 'SR_2_LAN_SI', label: 'Level-2 LAN_SI' },
+          { id: 'SR_2_WAT___', name: 'SR_2_WAT___', label: 'Level-2 WAT' },
         ],
       },
       {
@@ -354,6 +408,12 @@ export const collections = [
         label: 'SLSTR',
         supportsCloudCover: false,
         productTypes: [
+          {
+            id: 'SL_0_SLT___',
+            name: 'SL_0_SLT___',
+            label: 'Level-0 SLT',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'SL_1_RBT___', name: 'SL_1_RBT___', label: 'Level-1 RBT' },
           { id: 'SL_2_AOD___', name: 'SL_2_AOD___', label: 'Level-2 AOD' },
           { id: 'SL_2_FRP___', name: 'SL_2_FRP___', label: 'Level-2 FRP' },
@@ -366,9 +426,21 @@ export const collections = [
         label: 'SYNERGY',
         supportsCloudCover: false,
         productTypes: [
+          {
+            id: 'SY_1_MISR__',
+            name: 'SY_1_MISR__',
+            label: 'Level-1 MISR',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'SY_2_AOD___', name: 'SY_2_AOD___', label: 'Level-2 SY_AOD' },
           { id: 'SY_2_SYN___', name: 'SY_2_SYN___', label: 'Level-2 SY_SYN' },
           { id: 'SY_2_V10___', name: 'SY_2_V10___', label: 'Level-2 SY_V10' },
+          {
+            id: 'SY_2_VGK___',
+            name: 'SY_2_VGK___',
+            label: 'Level-2 VGK',
+            hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+          },
           { id: 'SY_2_VG1___', name: 'SY_2_VG1___', label: 'Level-2 SY_VG1' },
           { id: 'SY_2_VGP___', name: 'SY_2_VGP___', label: 'Level-2 SY_VGP' },
         ],
@@ -381,13 +453,13 @@ export const collections = [
           {
             id: 'DO_0_DOP___',
             name: 'DO_0_DOP___',
-            label: 'DO_0_DOP___',
+            label: 'Level-0 DOP',
             productTypeIds: ['DO_0_DOP___', 'DO_0_DOP____PRIVATE'],
           },
           {
             id: 'DO_0_NAV___',
             name: 'DO_0_NAV___',
-            label: 'DO_0_NAV___',
+            label: 'Level-0 NAV',
             productTypeIds: ['DO_0_NAV___', 'DO_0_NAV____PRIVATE'],
           },
         ],
@@ -401,7 +473,7 @@ export const collections = [
           {
             id: 'GN_0_GNS',
             name: 'GN_0_GNS',
-            label: 'GN_0_GNS',
+            label: 'Level-0 GNS',
             productTypeIds: ['GN_0_GNS', 'GN_0_GNS____PRIVATE'],
           },
         ],
@@ -415,9 +487,20 @@ export const collections = [
           {
             id: 'TM_0_NAT',
             name: 'TM_0_NAT',
-            label: 'TM_0_NAT',
+            label: 'Level-0 NAT',
             productTypeIds: ['TM_0_NAT', 'TM_0_NAT____PRIVATE'],
           },
+        ],
+        hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
+      },
+      {
+        id: 'MWR',
+        label: 'MWR',
+        supportsCloudCover: false,
+        productTypes: [
+          { id: 'MW_0_MWR___', name: 'MW_0_MWR___', label: 'Level-0 MWR' },
+          { id: 'MW_1_CAL___', name: 'MW_1_CAL___', label: 'Level-1 CAL' },
+          { id: 'MW_1_MWR___', name: 'MW_1_MWR___', label: 'Level-1 MWR' },
         ],
         hasAccess: ({ userToken }) => hasRole(userToken, EXPERT_ROLES.S3C_COMMISSIONING),
       },
@@ -432,23 +515,23 @@ export const collections = [
             label: 'SRAL',
             productTypes: [
               {
-                id: 'SR_2_TDP_LI',
-                name: 'SR_2_TDP_LI',
-                label: 'SR_2_TDP_LI',
-                customFilterExpression: FilterElement.Attribute(
-                  ODataAttributes.productType,
-                  ODataFilterOperator.eq,
-                  'SR_2_TDP_LI',
-                ),
-              },
-              {
                 id: 'SR_2_TDP_HY',
                 name: 'SR_2_TDP_HY',
-                label: 'SR_2_TDP_HY',
+                label: 'Level-2 TDP_HY',
                 customFilterExpression: FilterElement.Attribute(
                   ODataAttributes.productType,
                   ODataFilterOperator.eq,
                   'SR_2_TDP_HY',
+                ),
+              },
+              {
+                id: 'SR_2_TDP_LI',
+                name: 'SR_2_TDP_LI',
+                label: 'Level-2 TDP_LI',
+                customFilterExpression: FilterElement.Attribute(
+                  ODataAttributes.productType,
+                  ODataFilterOperator.eq,
+                  'SR_2_TDP_LI',
                 ),
               },
             ],
@@ -1704,7 +1787,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'sce_northernhemisphere_1km_daily_v1',
-                label: 'Northern Hemisphere, Daily, 1km, (2018–present), V1',
+                label: 'Northern Hemisphere, Daily, 1km, (2018–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1830,7 +1913,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'swi_europe_1km_daily_v1',
-                label: 'Europe, Daily, 1km, (2015–present), V1',
+                label: 'Europe, Daily, 1km, (2015–2025), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1850,7 +1933,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'swi_global_12.5km_daily_v3',
-                label: 'Global, Daily, 12.5km, (2007–present), V3',
+                label: 'Global, Daily, 12.5km, (2007–2025), V3',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1870,7 +1953,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'swi_global_12.5km_10daily_v3',
-                label: 'Global, 10-daily, 12.5km, (2007–present), V3',
+                label: 'Global, 10-daily, 12.5km, (2007–2025), V3',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1901,7 +1984,7 @@ export const recursiveCollectionCLMS = [
 
               {
                 id: 'swi-timeseries_global_12.5km_daily_v3',
-                label: 'Time Series, Global, Daily, 12.5km, (2007–present), V3',
+                label: 'Time Series, Global, Daily, 12.5km, (2007–2024), V3',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -1974,7 +2057,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lst_global_5km_hourly_v2',
-                label: 'Global, Hourly, 5km, (2021–present), V2',
+                label: 'Global, Hourly, 5km, (2021–2026), V2',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2004,7 +2087,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lst-tci_global_5km_10daily_v2',
-                label: 'Synthesis and Thermal Condition Index, Global, 5km, 10-daily, (2021–present), V2',
+                label: 'Synthesis and Thermal Condition Index, Global, 5km, 10-daily, (2021–2026), V2',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2034,7 +2117,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lst-daily-cycle_global_5km_10daily_v2',
-                label: 'Daily Cycle, Global, 10-daily, 5km, (2021–present), V2',
+                label: 'Daily Cycle, Global, 10-daily, 5km, (2021–2026), V2',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2120,7 +2203,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'ba_global_300m_daily_v3',
-                label: 'Global, Daily, 300m, (2023–present), V3',
+                label: 'Global, Daily, 300m, (2023–2025), V3',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2130,7 +2213,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'ba_global_300m_monthly_v3',
-                label: 'Global, Monthly, 300m, (2019–present), V3',
+                label: 'Global, Monthly, 300m, (2019–2025), V3',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2173,7 +2256,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'dmp_global_300m_10daily_v1',
-                label: 'Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V1',
+                label: 'Dry Matter Productivity, Global, 10-daily, 300m, (2014–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2203,7 +2286,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'gdmp_global_300m_10daily_v1',
-                label: 'Gross Dry Matter Productivity, Global, 10-daily, 300m, (2014–present), V1',
+                label: 'Gross Dry Matter Productivity, Global, 10-daily, 300m, (2014–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2246,7 +2329,7 @@ export const recursiveCollectionCLMS = [
             items: [
               {
                 id: 'npp_global_300m_10daily_v1',
-                label: 'Net Primary Production, Global, 10-daily, 300m, (2023–present), V1',
+                label: 'Net Primary Production, Global, 10-daily, 300m, (2023–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2266,7 +2349,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'gpp_global_300m_10daily_v1',
-                label: 'Gross Primary Production, Global, 10-daily, 300m, (2023–present), V1',
+                label: 'Gross Primary Production, Global, 10-daily, 300m, (2023–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2397,7 +2480,7 @@ export const recursiveCollectionCLMS = [
               {
                 id: 'fapar_global_300m_10daily_v1',
                 label:
-                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–present), V1',
+                  'Fraction of Absorbed Photosynthetically Active Radiation, Global, 10-daily, 300m, (2014–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2439,7 +2522,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'fcover_global_300m_10daily_v1',
-                label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 300m, (2014–present), V1',
+                label: 'Fraction of Green Vegetation Cover, Global, 10-daily, 300m, (2014–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2469,7 +2552,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lai_global_300m_10daily_v1',
-                label: 'Leaf Area Index, Global, 10-daily, 300m, (2014–present), V1',
+                label: 'Leaf Area Index, Global, 10-daily, 300m, (2014–2026), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2595,7 +2678,7 @@ export const recursiveCollectionCLMS = [
               },
               {
                 id: 'lie_northernhemisphere_500m_daily_v1',
-                label: 'Northern Hemisphere, Daily, 500m, (2021–present), V1',
+                label: 'Northern Hemisphere, Daily, 500m, (2021–2025), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
@@ -2859,6 +2942,43 @@ export const recursiveCollectionCLMS = [
     supportsCloudCover: false,
     items: [
       {
+        id: 'PROTECTED_AREAS',
+        label: 'Protected Areas',
+        type: 'instrument',
+        supportsCloudCover: false,
+        customFilterExpression: `(${FilterElement.Attribute(
+          ODataAttributes.productType,
+          ODataFilterOperator.eq,
+          'protected_areas',
+        )})`,
+        items: [
+          {
+            id: 'LAND_COVER_LAND_USE',
+            label: 'Land Cover and Land Use',
+            type: 'group',
+            items: [
+              {
+                id: 'clms_pa_land-cover-land-use_europe_V05ha_3yearly_v1',
+                label: 'Land Cover and Land Use, 3-yearly, 2021',
+                type: 'productType',
+                multiCustomFilterExpression: [
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.datasetIdentifier,
+                    ODataFilterOperator.eq,
+                    'clms_pa_land-cover-land-use_europe_V05ha_3yearly_v1',
+                  )})`,
+                  `(${FilterElement.Attribute(
+                    ODataAttributes.nominalDate,
+                    ODataFilterOperator.eq,
+                    '2021-01-01T00:00:00.000000Z',
+                  )})`,
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
         id: 'URBAN_ATLAS',
         label: 'Urban Atlas',
         type: 'instrument',
@@ -2969,6 +3089,12 @@ export const recursiveCollectionCLMS = [
         id: AttributeNames.countryCode,
         render: SearchableMultiSelectInput,
         getOptions: () => Object.values(AttributeCountryCodeValues),
+      },
+      {
+        id: AttributeNames.duId,
+        render: DefaultInput,
+        type: 'text',
+        placeholder: FormatedAttributeNames.duId(),
       },
     ],
   },

@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { mockUserPinsBackend } from './fixtures/helpers';
 import { LIVE_REQUEST_TIMEOUT, HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
 
 /** Navigate to the given theme and wait for the app to be interactive. */
@@ -136,6 +137,9 @@ test.describe('highlights', () => {
   // This verifies that saving a highlight as a pin works and the pin appears in the pins list.
   // OpenEO routing for the Corn Belt preview is already covered by the previous test.
   test('saving Corn Belt highlight as pin shows it in the pins list', async ({ page }) => {
+    // Stub the userpins backend so "Add to Pins" doesn't leave a pin behind on the real
+    // FE-Team Test Account. Must be registered before navigation.
+    await mockUserPinsBackend(page, []);
     await gotoTheme(page, 'AGRICULTURE');
     await page.getByTitle('Highlights Panel').click();
 

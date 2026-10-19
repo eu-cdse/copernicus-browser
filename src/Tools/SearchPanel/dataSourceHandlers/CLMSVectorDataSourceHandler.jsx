@@ -12,6 +12,8 @@ import {
   COPERNICUS_CLMS_UA_LCUC_2018_2021_RASTER,
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
   COPERNICUS_CLMS_UA_STL_2021_RASTER,
+  COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
+  COPERNICUS_CLMS_PA_LCU_2021_RASTER,
 } from './dataSourceConstants';
 import { DATASOURCES } from '../../../const';
 import { GFI_IMAGE_SIZE } from '../../../Controls/FeatureInfo/FeatureInfo.utils';
@@ -23,6 +25,7 @@ import {
   getClmsUaLcu2021VectorMarkdown,
   getClmsUaLcuc20182021VectorMarkdown,
   getClmsUaStl2021VectorMarkdown,
+  getClmsPaLcu2021VectorMarkdown,
 } from './DatasourceRenderingComponents/dataSourceTooltips/CLMSTooltip';
 
 // The WMS server switches from vector to raster at scale 1:150,000 (~39.7 m/px).
@@ -43,6 +46,14 @@ const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: {
     lowResolutionCollectionId: COPERNICUS_CLMS_UA_STL_2021_RASTER,
     lowResolutionMetersPerPixelThreshold: 39,
+  },
+  // Verified against the live WMS GetCapabilities: PA_LCU_2021_VECTOR has
+  // MaxScaleDenominator=100000 and PA_LCU_2021_RASTER (75 m RGBA COG overview) has
+  // MinScaleDenominator=100000 — the same 1:100,000 switch point Urban Atlas uses at 1:150,000
+  // (-> 39 m/px), scaled down to ~26 m/px here.
+  [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: {
+    lowResolutionCollectionId: COPERNICUS_CLMS_PA_LCU_2021_RASTER,
+    lowResolutionMetersPerPixelThreshold: 26,
   },
 };
 
@@ -66,6 +77,7 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: t`UA LCU 3-yearly 2021`,
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: t`UA LCUC 3-yearly 2018-2021`,
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: t`UA STL 3-yearly 2021`,
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: t`PA LCU 3-yearly 2021`,
   });
 
   urls = {
@@ -73,6 +85,7 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: [],
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: [],
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: [],
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: [],
   };
 
   getCapabilitiesDatasetIds = {
@@ -80,6 +93,7 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: 'CLMS_UA_LCU_S2021_V025ha',
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: 'CLMS_UA_LCUC_C2018-2021_V010ha',
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: 'CLMS_UA_STL_S2021_V005ha',
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: 'CLMS_PA-LCU_S2021_V05ha',
   };
 
   leafletZoomConfig = {
@@ -87,6 +101,7 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     [COPERNICUS_CLMS_UA_LCU_2021_VECTOR]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: { min: 2, max: 25 },
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: { min: 2, max: 25 },
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: { min: 2, max: 25 },
   };
 
   MIN_MAX_DATES = {
@@ -106,6 +121,10 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
       minDate: moment.utc('2021-01-01'),
       maxDate: moment.utc('2021-01-01'),
     },
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: {
+      minDate: moment.utc('2021-01-01'),
+      maxDate: moment.utc('2021-01-01'),
+    },
   };
 
   TEMPORAL_RESOLUTION = {
@@ -119,6 +138,7 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
     },
     [COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR]: { amount: 3, unit: 'year' },
     [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: { amount: 3, unit: 'year' },
+    [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: { amount: 3, unit: 'year' },
   };
 
   getKnownUrl = () =>
@@ -216,6 +236,8 @@ export class CLMSVectorDataSourceHandler extends DataSourceHandler {
         return getClmsUaLcuc20182021VectorMarkdown();
       case COPERNICUS_CLMS_UA_STL_2021_VECTOR:
         return getClmsUaStl2021VectorMarkdown();
+      case COPERNICUS_CLMS_PA_LCU_2021_VECTOR:
+        return getClmsPaLcu2021VectorMarkdown();
       default:
         return null;
     }

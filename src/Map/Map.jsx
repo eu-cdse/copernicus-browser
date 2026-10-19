@@ -50,7 +50,6 @@ import {
   S2_QUARTERLY_MOSAIC_LAYER_ID,
   MAX_MAP_LOADING_TIME,
   VISUALIZATION_TILE_FORMAT,
-  FALLBACK_TILE_FORMAT,
   SERVER_ERROR_THRESHOLD,
 } from './const';
 import SearchBox from '../SearchBox/SearchBox';
@@ -72,6 +71,7 @@ import {
   getMapMaxZoom,
   getPinTimes,
   getCompareLayerZIndex,
+  getTileFormat,
 } from './Map.utils';
 import { mapStoreToProps } from './Map.selectors';
 import { progressWithDelayedAction } from './progressWithDelayedAction';
@@ -85,11 +85,6 @@ import { saveToLocalStorage } from '../utils/localStorage.utils';
 import DatasetLocationPreview from './components/DatasetLocationPreview';
 import MapPanes from './components/MapPanes';
 import MapOverlays from './components/MapOverlays';
-
-// Defaults to WebP when dsh is null; only falls back to PNG if the handler explicitly opts out.
-function getTileFormat(dsh) {
-  return dsh?.supportsWebPVisualization() !== false ? VISUALIZATION_TILE_FORMAT : FALLBACK_TILE_FORMAT;
-}
 
 // Equivalent to MIMETYPE_TO_OPENEO_FORMAT[MimeTypes[tileFormat]] but avoids the extra import.
 // Only two tile formats are produced by getTileFormat(), so the ternary is explicit and stable.

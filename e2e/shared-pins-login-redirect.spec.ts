@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { requireSsoCredentials, performKeycloakLogin } from './fixtures/helpers';
+import { requireSsoCredentials, performKeycloakLogin, mockUserPinsBackend } from './fixtures/helpers';
 import { createSharedPinsPayload, stubSharedPinsBackend } from './fixtures/sharedPins';
 import { HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
 
@@ -42,6 +42,10 @@ test('accepting a shared-pins import then clicking Login lands on the Pins panel
   const { username, password } = requireSsoCredentials();
 
   await stubSharedPinsBackend(page, LOGIN_REDIRECT_PAYLOAD);
+  // After login, the anonymous-pin migration (PinPanel.migrateAnonymousPins -> savePinsToServer)
+  // would otherwise PUT the imported pin to the real userpins backend on the shared test account.
+  // Page routes survive the Keycloak redirect round trip.
+  await mockUserPinsBackend(page, []);
 
   await page.goto(`/?sharedPinsListId=${LOGIN_REDIRECT_LIST_ID}`);
 

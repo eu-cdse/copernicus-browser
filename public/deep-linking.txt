@@ -18,16 +18,39 @@ None of the parameters are required, and any combination may be used. Parameters
 
 | Parameter | Format | Default | Notes |
 |---|---|---|---|
+| `date` | `latest` | none | Opens the most recent image available for the dataset at the current map position. See "Latest image" below. |
 | `fromTime` | ISO-8601 date-time | none | Parsed as UTC. |
 | `toTime` | ISO-8601 date-time | none | Parsed as UTC. |
 | `dateMode` | `SINGLE`, `MOSAIC`, `TIME RANGE` (note the literal space) | `SINGLE` | With `dateMode=TIME RANGE`, a range longer than 180 days is silently clamped: `fromTime` is replaced with the start of the day 180 days before `toTime`. |
+
+### Latest image
+
+To open the newest image for a dataset, add `date=latest`. You do not need to know the date. Leaving the date out has the same effect when `datasetId` is set: the Browser looks up the newest image itself, the same way the "Show latest date" button does.
+
+- It is looked up for the map position and zoom in the link, so give `lat`, `lng` and `zoom`. At a very low zoom the Browser cannot search for images, and then no date is set (except in `dateMode=MOSAIC`, which falls back to today).
+- The lookup does not show an error on load. If it finds nothing, or fails, the Browser opens with no date selected and no imagery shown, and the user can still press "Show latest date".
+- The lookup also runs for `dateMode=MOSAIC` and `dateMode=TIME RANGE`; in every mode it selects the single newest day.
+- `date=latest` is read once and is not kept in the address bar. After the lookup the address bar shows the real date (`fromTime` and `toTime`).
+- `date=latest` is not case-sensitive (`date=LATEST` works).
+- If a link has both `date=latest` and `toTime`, `date=latest` wins and the dates are ignored. This only applies when the link has a `datasetId`; without one, nothing is looked up and the dates are kept.
+- A dataset without a time dimension (the Copernicus DEM) needs no date at all.
+- A link with `dateMode=TIME RANGE` and no dates, and no `date=latest`, is left alone; the user picks the range.
+- Do not guess a date for a request such as "the most recent image": use `date=latest`. For a quarterly or annual mosaic ("Q3 2025"), give that period's first day as `fromTime`/`toTime` with `dateMode=SINGLE`, as in the gallery examples, or an explicit `dateMode=TIME RANGE` of at most 180 days.
 
 ## Dataset and layer
 
 | Parameter | Format | Notes |
 |---|---|---|
-| `datasetId` | string, e.g. `S2_L2A_CDAS` | Selects the dataset/collection. |
-| `layerId` | string, e.g. `1_TRUE_COLOR` | Selects a preset layer/visualisation for the dataset. |
+| `datasetId` | string, e.g. `S2_L2A_CDAS` | Selects the dataset/collection. Take it from [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt) — it is case-sensitive and there is no way to guess it. |
+| `layerId` | string, e.g. `1_TRUE_COLOR` | Selects a preset layer/visualisation for the dataset. Also listed per dataset in [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt). |
+
+What happens when an id is wrong:
+
+- An unknown `datasetId` makes the Browser show the error "Selected dataset does not exist!" and silently switch to Sentinel-2 L2A (or L1C if L2A is not available). The link still opens, but on the wrong dataset, the `layerId` is dropped, and no date is looked up.
+- An unknown `layerId` for a valid dataset falls back to the dataset's first layer, with no error.
+- A `datasetId` in the wrong case (for example `s2_l2a_cdas`) is unknown, so it behaves like the first case.
+- Layer ids can differ between themes (for example `1_TRUE_COLOR` and `1_TRUE-COLOR`). The ids in datasets.txt are for the default theme; leave `themeId` out, or use `DEFAULT-THEME`.
+- Some datasets exist only as a collection UUID (for example the Sentinel-2 quarterly mosaics) rather than a readable name, and some ids look plausible but do not exist (for example `S1_AWS_IW_VVVH`). datasets.txt lists both.
 
 ## Visualisation URL — omit this
 
@@ -141,3 +164,7 @@ Only one of these is needed. When both an inline value and its `*Url` counterpar
    `https://browser.dataspace.copernicus.eu/?zoom=7&lat=15.40602&lng=-9.66797&themeId=MONITORING&panel=layers&datasetId=COPERNICUS_CLMS_LST_5KM_HOURLY_V2&layerId=LST&fromTime=2024-04-03T12%3A00%3A00.000Z&toTime=2024-04-03T13%3A59%3A59.999Z&dateMode=TIME%20RANGE&mosaickingOrder=leastRecent&cloudCoverage=30&clmsSelectedPath=COPERNICUS_CLMS_LST_5KM_HOURLY_V2&clmsSelectedCollection=COPERNICUS_CLMS_LST_5KM_HOURLY_V2`
 
    (`panel=layers` is needed here because the `MONITORING` theme has highlights configured, which would otherwise open the Highlights panel instead of Layers — see the `panel` row above.)
+
+7. **The newest image** (no date needed, see "Latest image" above)
+
+   `https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.35625&lng=8.45879&datasetId=S2_L2A_CDAS&layerId=1_TRUE_COLOR&date=latest`

@@ -10,6 +10,7 @@ import {
   getPinTimes,
   getCompareLayerZIndex,
   getMapMaxZoom,
+  getTileFormat,
 } from './Map.utils';
 import { TABS } from '../const';
 
@@ -667,5 +668,20 @@ describe('getMapMaxZoom', () => {
         comparedLayerMaxZooms: [null, undefined, 25],
       }),
     ).toBe(25);
+  });
+});
+
+describe('getTileFormat', () => {
+  test('defaults to WebP when there is no data source handler', () => {
+    expect(getTileFormat(null)).toBe('WEBP');
+    expect(getTileFormat(undefined)).toBe('WEBP');
+  });
+
+  test('uses WebP when the handler supports it', () => {
+    expect(getTileFormat({ supportsWebPVisualization: () => true })).toBe('WEBP');
+  });
+
+  test('falls back to PNG when the handler opts out of WebP', () => {
+    expect(getTileFormat({ supportsWebPVisualization: () => false })).toBe('PNG');
   });
 });

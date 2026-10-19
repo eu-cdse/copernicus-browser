@@ -412,6 +412,13 @@ const getStacCollectionsFromFilter = (filterString) => {
         break;
       }
 
+      case ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.collection:
+      case ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.label: {
+        // CLMS Protected Areas vector dataset is available in STAC
+        collections.push(STAC_COLLECTIONS.CLMS_PROTECTED_AREAS_LAND_COVER_USE);
+        break;
+      }
+
       case ODataCollections.COMPLEMENTARY_DATA.label:
         // Complementary Data has no dedicated STAC collections
         break;

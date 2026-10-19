@@ -184,7 +184,9 @@ export function mockJsonBackend<T>(
 }
 
 // Installs a stateful mock of the userpins backend. GET returns the durable list, PUT replaces it.
-// Shared by shared-pins-import.spec.ts.
+// Use it in every authenticated spec that can create pins, so nothing is persisted to the real
+// test account (see highlights, shared-pins-import, shared-pins-login-redirect and
+// terrain-viewer-custom-evalscript-pin specs).
 export function mockUserPinsBackend(page: Page, initial: unknown[] = []) {
   return mockJsonBackend(page, '**/userpins**', initial);
 }

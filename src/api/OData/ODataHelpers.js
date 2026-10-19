@@ -205,6 +205,7 @@ import {
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
   CDAS_LANDSAT_MOSAIC,
   COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+  COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_GRASSLAND_MOWING_DATES_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_CROPPING_SEASONS_TYPES_EUROPE_10M_YEARLY_V1,
@@ -307,6 +308,8 @@ const PRODUCT_TYPE_TO_DATASETID = {
   // matching a dataset value, and OL_1_EFR___ must stay the one returned for S3OLCI_CDAS
   OL_1_EFR____PRIVATE: S3OLCI_CDAS,
   OL_1_ERR____PRIVATE: S3OLCI_CDAS,
+  OL_1_RAC___: S3OLCI_CDAS,
+  OL_1_SPC___: S3OLCI_CDAS,
   SL_1_RBT___: S3SLSTR_CDAS,
   SL_2_LST___: S3SLSTRL2_CDAS,
   OL_2_LFR___: S3OLCIL2_LAND,
@@ -464,6 +467,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   'clms_ua_street-tree-layer_europe_V005ha_3yearly_v1': COPERNICUS_CLMS_UA_STL_2021_VECTOR,
   'clms_ua_building-height_europe_10m_3yearly_v1':
     COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021,
+  'clms_pa_land-cover-land-use_europe_V05ha_3yearly_v1': COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
   'clms_vlcc_secondary-crop-types_europe_10m_yearly_v1':
     COPERNICUS_CLMS_VLCC_SECONDARY_CROP_TYPES_EUROPE_10M_YEARLY_V1,
   'clms_vlcc_grassland-mowing-dates_europe_10m_yearly_v1':
@@ -690,6 +694,12 @@ export const getDatasetIdFromProductType = (productType, attributes) => {
       }
     }
     return PRODUCT_TYPE_TO_DATASETID[datasetIdentifier];
+  }
+
+  if (productType === 'protected_areas') {
+    // Only one Protected Areas year exists so far, unlike Urban Atlas above — no year split needed
+    // yet. Re-introduce it if a second PA year is onboarded with a shared datasetIdentifier.
+    return PRODUCT_TYPE_TO_DATASETID[attributesObject.datasetIdentifier];
   }
 
   // CLMS products
@@ -1397,6 +1407,17 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       {
         id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
         instrument: 'URBAN_ATLAS',
+        productType: getProductTypeFromDatasetId(datasetId),
+        selectedFilters: {},
+      },
+    ];
+  }
+
+  if ([COPERNICUS_CLMS_PA_LCU_2021_VECTOR].includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CLMS_LAND_COVER_AND_LAND_USE_IN_PRIORITY_AREAS.id,
+        instrument: 'PROTECTED_AREAS',
         productType: getProductTypeFromDatasetId(datasetId),
         selectedFilters: {},
       },

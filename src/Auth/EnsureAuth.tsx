@@ -33,7 +33,7 @@ const LoginRequired = ({ executeAnonAuth, anonAuthInProgress }: LoginRequiredPro
   return (
     <AuthConfirmDialog
       className="ensure-auth"
-      title={t`Welcome To Copernicus Browser!`}
+      title={t`Welcome to Copernicus Browser!`}
       text={
         <>
           <p>{t`Log in to unlock advanced features such as timelapse, analytical download, and your own configurations.`}</p>

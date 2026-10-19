@@ -4,10 +4,24 @@
 
 Select your area of interest, time range and collection(s), and inspect the resulting data. Try out different visualisations, download high resolution images, create timelapses directly in the Browser, or download the raw data for local processing.
 
+## How to build a Browser link
+
+To give a user a link that opens the Browser on a specific place, dataset and date:
+
+1. Find the `datasetId` (and a `layerId`) in [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt). Never invent an id: they cannot be guessed, an unknown `datasetId` silently opens Sentinel-2 L2A instead, and some plausible-looking ids (such as `S1_AWS_IW_VVVH`) do not exist. Some datasets, such as the Sentinel-2 quarterly mosaics, are identified by a UUID.
+2. Give `lat`, `lng` and `zoom` for the place. Zoom 10-13 suits most requests.
+3. Give the date. For "the latest" or "most recent" image, add `date=latest` instead of guessing a date. For a specific day, use `fromTime` and `toTime` (ISO-8601, UTC) with `dateMode=SINGLE`. Details and the other parameters are in [deep-linking.txt](https://browser.dataspace.copernicus.eu/deep-linking.txt).
+4. Leave out `visualizationUrl`.
+
+Example, the newest Sentinel-2 L2A true colour image of Lake Garda:
+
+    https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.65&lng=10.7&datasetId=S2_L2A_CDAS&layerId=1_TRUE_COLOR&date=latest
+
 ## Documentation
 
 - [Copernicus Browser user manual](https://documentation.dataspace.copernicus.eu/Applications/Browser.html): Detailed overview of the Browser's functionality.
 - [Deep linking reference](https://browser.dataspace.copernicus.eu/deep-linking.txt): How to construct Browser URLs that open a specific location, dataset, layer and date.
+- [Dataset and layer ids](https://browser.dataspace.copernicus.eu/datasets.txt): Every valid `datasetId` and `layerId` for Browser links, with an example link per dataset and a list of ids that do not exist.
 - [Gallery link collection](https://browser.dataspace.copernicus.eu/gallery-links.txt): Curated Copernicus Browser deep links for real-world imagery events from the CDSE gallery, with location, dataset and date.
 - [Data overview](https://documentation.dataspace.copernicus.eu/Data.html): Overview of available Sentinel, CLMS and mosaic data sources.
 - [FAQ: configuring layers for statistical information](https://documentation.dataspace.copernicus.eu/FAQ.html#how-can-i-configure-my-layers-for-statistical-information-in-copernicus-browser): How to configure layers for statistics in the Browser.

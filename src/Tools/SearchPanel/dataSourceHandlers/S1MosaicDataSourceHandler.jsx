@@ -12,6 +12,7 @@ import {
   getSentinel1DHMosaic,
 } from './DatasourceRenderingComponents/dataSourceTooltips/S1MosaicsTooltip';
 import { S1_DH_MONTHLY_MOSAIC_BANDS, S1_IW_MONTHLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
+import { S1_MOSAIC_KNOWN_COLLECTIONS } from './knownCollections';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [S1_MONTHLY_MOSAIC_DH]: {
@@ -34,10 +35,7 @@ export default class S1MosaicDataSourceHandler extends MosaicDataSourceHandler {
   searchGroupLabel = 'Sentinel-1 Mosaics';
   preselectedDatasets = new Set([S1_MONTHLY_MOSAIC_IW]);
 
-  KNOWN_COLLECTIONS = {
-    [S1_MONTHLY_MOSAIC_DH]: [S1_MONTHLY_MOSAIC_DH],
-    [S1_MONTHLY_MOSAIC_IW]: [S1_MONTHLY_MOSAIC_IW],
-  };
+  KNOWN_COLLECTIONS = S1_MOSAIC_KNOWN_COLLECTIONS;
 
   leafletZoomConfig = {
     [S1_MONTHLY_MOSAIC_DH]: {

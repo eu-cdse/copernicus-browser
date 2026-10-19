@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import moment from 'moment';
 
 import { VisualizationTimeSelect } from './VisualizationTimeSelect';
-import store from '../../store';
+import store, { visualizationSlice } from '../../store';
 import { DATE_MODES } from '../../const';
 
 // The header always renders these three mode-switch icons regardless of datePanelExpanded, but
@@ -83,7 +83,7 @@ function renderComponent(overrides = {}) {
     </Provider>,
   );
 
-  return { setShowLayerPanel };
+  return { setShowLayerPanel, props };
 }
 
 // Covers #1184 F4: `openLayerPanel` (called from `updateDate`, itself invoked via the DatePicker's
@@ -168,5 +168,206 @@ describe('VisualizationTimeSelect — openLayerPanel panel-race guard (#1184 F4)
     fireEvent.click(screen.getByTestId('mock-date-picker'));
 
     expect(setShowLayerPanel).toHaveBeenCalledWith(true);
+  });
+});
+
+// Issue #1290: a URL with a dataset but no date (or with date=latest) sets pendingLatestDate, and
+// the component then runs the same lookup as the "Show latest date" button, silently, once the map
+// bounds, auth and data sources are ready.
+describe('VisualizationTimeSelect — silent latest-date lookup on load (#1290)', () => {
+  const latest = moment.utc('2026-10-10T10:00:00Z');
+  const ready = {
+    datasetId: 'S2_L2A_CDAS',
+    pendingLatestDate: true,
+    mapBoundsKnown: true,
+    authenticated: true,
+    dataSourcesInitialized: true,
+  };
+
+  beforeEach(() => {
+    store.dispatch(visualizationSlice.actions.reset());
+    store.dispatch(visualizationSlice.actions.setVisualizationParams({ datasetId: 'S2_L2A_CDAS' }));
+    store.dispatch(visualizationSlice.actions.setPendingLatestDate(true));
+  });
+
+  it('sets the latest date once everything is ready', async () => {
+    const { props } = renderComponent({
+      ...ready,
+      getLatestAvailableDate: jest.fn().mockResolvedValue(latest),
+    });
+
+    await waitFor(() => expect(props.updateSelectedTime).toHaveBeenCalledTimes(1));
+    const [fromTime, toTime] = props.updateSelectedTime.mock.calls[0];
+    expect(fromTime.toISOString()).toBe('2026-10-10T00:00:00.000Z');
+    expect(toTime.toISOString()).toBe('2026-10-10T23:59:59.999Z');
+    expect(store.getState().visualization.pendingLatestDate).toBe(false);
+  });
+
+  it('sets the same single-day range as the "Show latest date" button in MOSAIC mode', async () => {
+    const { props } = renderComponent({
+      ...ready,
+      dateMode: DATE_MODES.MOSAIC.value,
+      minDate: moment.utc('2015-01-01T00:00:00Z'),
+      getLatestAvailableDate: jest.fn().mockResolvedValue(latest),
+    });
+
+    await waitFor(() => expect(props.updateSelectedTime).toHaveBeenCalled());
+    const [fromTime, toTime] =
+      props.updateSelectedTime.mock.calls[props.updateSelectedTime.mock.calls.length - 1];
+    expect(fromTime.toISOString()).toBe('2026-10-10T00:00:00.000Z');
+    expect(toTime.toISOString()).toBe('2026-10-10T23:59:59.999Z');
+  });
+
+  // Regression for the review of #1290: the existing mount effect for TIME RANGE dispatches the URL's
+  // (here empty) dates, which cleared the pending flag before the map bounds arrived, so
+  // date=latest&dateMode=TIME RANGE silently never looked anything up.
+  it('does not let the TIME RANGE mount effect cancel a pending lookup', async () => {
+    const getLatestAvailableDate = jest.fn().mockResolvedValue(latest);
+    const { props } = renderComponent({
+      ...ready,
+      dateMode: DATE_MODES['TIME RANGE'].value,
+      mapBoundsKnown: false,
+      getLatestAvailableDate,
+    });
+
+    // mounted without map bounds: nothing was dispatched, and the flag is still pending
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
+    expect(store.getState().visualization.pendingLatestDate).toBe(true);
+    expect(getLatestAvailableDate).not.toHaveBeenCalled();
+  });
+
+  it('looks the latest date up in TIME RANGE mode once everything is ready', async () => {
+    const { props } = renderComponent({
+      ...ready,
+      dateMode: DATE_MODES['TIME RANGE'].value,
+      getLatestAvailableDate: jest.fn().mockResolvedValue(latest),
+    });
+
+    await waitFor(() => expect(props.updateSelectedTime).toHaveBeenCalledTimes(1));
+    const [fromTime, toTime] = props.updateSelectedTime.mock.calls[0];
+    expect(fromTime.toISOString()).toBe('2026-10-10T00:00:00.000Z');
+    expect(toTime.toISOString()).toBe('2026-10-10T23:59:59.999Z');
+  });
+
+  it('still applies the URL time range in TIME RANGE mode when no lookup is pending', () => {
+    store.dispatch(visualizationSlice.actions.setPendingLatestDate(false));
+    const fromTime = moment.utc('2026-01-01T00:00:00Z');
+    const toTime = moment.utc('2026-02-01T23:59:59Z');
+    const { props } = renderComponent({
+      ...ready,
+      pendingLatestDate: false,
+      dateMode: DATE_MODES['TIME RANGE'].value,
+      fromTime,
+      toTime,
+    });
+
+    expect(props.updateSelectedTime).toHaveBeenCalledWith(fromTime, toTime);
+  });
+
+  it.each([
+    ['map bounds', { mapBoundsKnown: false }],
+    ['authentication', { authenticated: false }],
+    ['data sources', { dataSourcesInitialized: false }],
+  ])('waits for %s before looking anything up', async (_name, missing) => {
+    const getLatestAvailableDate = jest.fn().mockResolvedValue(latest);
+    renderComponent({ ...ready, ...missing, getLatestAvailableDate });
+
+    await new Promise((r) => setTimeout(r, 0));
+    expect(getLatestAvailableDate).not.toHaveBeenCalled();
+    expect(store.getState().visualization.pendingLatestDate).toBe(true);
+  });
+
+  it('does nothing when no lookup is pending', async () => {
+    store.dispatch(visualizationSlice.actions.setPendingLatestDate(false));
+    const getLatestAvailableDate = jest.fn().mockResolvedValue(latest);
+    renderComponent({ ...ready, pendingLatestDate: false, getLatestAvailableDate });
+
+    await new Promise((r) => setTimeout(r, 0));
+    expect(getLatestAvailableDate).not.toHaveBeenCalled();
+  });
+
+  it('gives up quietly when the button itself would be disabled (zoom too low)', async () => {
+    const getLatestAvailableDate = jest.fn().mockResolvedValue(latest);
+    const { props } = renderComponent({ ...ready, isZoomLevelOk: false, getLatestAvailableDate });
+
+    await waitFor(() => expect(store.getState().visualization.pendingLatestDate).toBe(false));
+    expect(getLatestAvailableDate).not.toHaveBeenCalled();
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
+  });
+
+  it('leaves timeless datasets to the existing isTimeless lookup (no double lookup)', async () => {
+    const getLatestAvailableDate = jest.fn().mockResolvedValue(latest);
+    renderComponent({ ...ready, isTimeless: true, getLatestAvailableDate });
+
+    await waitFor(() => expect(store.getState().visualization.pendingLatestDate).toBe(false));
+    expect(getLatestAvailableDate).toHaveBeenCalledTimes(1);
+  });
+
+  it('stays silent when the lookup fails: no error panel, no layer panel change', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    const { props, setShowLayerPanel } = renderComponent({
+      ...ready,
+      getLatestAvailableDate: jest.fn().mockRejectedValue(new Error('catalog down')),
+    });
+
+    await waitFor(() => expect(console.error).toHaveBeenCalled());
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
+    expect(store.getState().notification.panelError).toBeNull();
+    expect(store.getState().visualization.error).toBeFalsy();
+    expect(setShowLayerPanel).not.toHaveBeenCalled();
+    expect(store.getState().visualization.pendingLatestDate).toBe(false);
+    console.error.mockRestore();
+  });
+
+  it('stays silent and sets nothing when there is no image', async () => {
+    const { props } = renderComponent({
+      ...ready,
+      getLatestAvailableDate: jest.fn().mockResolvedValue(undefined),
+    });
+
+    await waitFor(() => expect(store.getState().visualization.pendingLatestDate).toBe(false));
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
+    expect(store.getState().notification.panelError).toBeNull();
+  });
+
+  it('drops the result when the user picked another dataset while waiting', async () => {
+    let resolveLookup;
+    const getLatestAvailableDate = jest.fn(
+      () =>
+        new Promise((resolve) => {
+          resolveLookup = resolve;
+        }),
+    );
+    const { props } = renderComponent({ ...ready, getLatestAvailableDate });
+
+    await waitFor(() => expect(getLatestAvailableDate).toHaveBeenCalled());
+    store.dispatch(visualizationSlice.actions.setNewDatasetId({ datasetId: 'S1_CDAS_IW_VVVH' }));
+    resolveLookup(latest);
+
+    await new Promise((r) => setTimeout(r, 0));
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
+  });
+
+  it('drops the result when a date was set while waiting', async () => {
+    let resolveLookup;
+    const getLatestAvailableDate = jest.fn(
+      () =>
+        new Promise((resolve) => {
+          resolveLookup = resolve;
+        }),
+    );
+    const { props } = renderComponent({ ...ready, getLatestAvailableDate });
+
+    await waitFor(() => expect(getLatestAvailableDate).toHaveBeenCalled());
+    store.dispatch(
+      visualizationSlice.actions.setVisualizationTime({
+        fromTime: null,
+        toTime: moment.utc('2025-01-01T23:59:59Z'),
+      }),
+    );
+    resolveLookup(latest);
+
+    await new Promise((r) => setTimeout(r, 0));
+    expect(props.updateSelectedTime).not.toHaveBeenCalled();
   });
 });

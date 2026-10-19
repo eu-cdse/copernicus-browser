@@ -22,6 +22,7 @@ import { wgs84ToMercator } from '../junk/EOBCommon/utils/coords';
 import { getBoundsZoomLevel } from '../utils/coords';
 import { DEFAULT_DEM_SOURCE, DEM_3D_MAX_ZOOM, EQUATOR_LENGTH, PROCESSING_OPTIONS } from '../const';
 import { OSM_MAX_NATIVE_ZOOM } from '../Map/const';
+import { getTileFormat } from '../Map/Map.utils';
 import { addLabelsAndLogos, dateTimeDisplayFormat } from '../Controls/Timelapse/Timelapse.utils';
 import {
   getProcessGraph,
@@ -576,7 +577,7 @@ async function getImageFromTerrainViewer({
 
     const getMapParams2 = {
       bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
-      format: MimeTypes.JPEG,
+      format: MimeTypes[getTileFormat(datasetId ? getDataSourceHandler(datasetId) : null)],
       width: scaling * width,
       height: scaling * height,
       fromTime: getMapParams.fromTime.toDate(),

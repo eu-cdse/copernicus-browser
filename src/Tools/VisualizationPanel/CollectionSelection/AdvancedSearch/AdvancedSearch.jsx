@@ -620,7 +620,9 @@ export class AdvancedSearch extends Component {
     this.setState((state) => {
       const { selectedCollections, maxCc, selectedFilters } = state.collectionForm;
       const newSelectedFilters = cloneDeep(selectedFilters);
-      if (!isNaN(value) || value.length > 0) {
+      const isEmptyValue =
+        value === '' || value === null || value === undefined || (Array.isArray(value) && value.length === 0);
+      if (!isEmptyValue) {
         newSelectedFilters[collectionId] = {
           ...newSelectedFilters?.[collectionId],
           [filterId]: value,

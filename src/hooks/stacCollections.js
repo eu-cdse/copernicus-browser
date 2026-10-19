@@ -189,6 +189,8 @@ export const STAC_COLLECTIONS = {
   CLMS_URBAN_ATLAS_LAND_COVER_USE_CHANGE:
     'clms_urban-atlas_land-cover-use-change_europe_V010ha_vector_static_v01',
   CLMS_URBAN_ATLAS_STREET_TREE: 'clms_urban-atlas_street-tree-layer_europe_V005ha_vector_static_v01',
+  CLMS_PROTECTED_AREAS_LAND_COVER_USE:
+    'clms_protected-areas_land-cover-land-use_europe_V05ha_vector_static_v01',
 
   // OpenGeoHub
   OPENGEOHUB_LANDSAT_MOSAIC: 'opengeohub-landsat-bimonthly-mosaic-v1.0.1',

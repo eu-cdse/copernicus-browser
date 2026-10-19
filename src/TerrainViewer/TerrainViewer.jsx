@@ -25,6 +25,7 @@ import {
 } from './TerrainViewer.utils';
 import { CURRENT_TERRAIN_VIEWER_ID, TERRAIN_VIEWER_IDS } from './TerrainViewer.const';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { getTileFormat } from '../Map/Map.utils';
 import { getGetMapAuthToken } from '../App';
 import { constructGetMapParamsEffects, getVisualizationEffectsFromStore } from '../utils/effectsUtils';
 import { DEM_3D_CUSTOM_TO_DATASOURCE, reqConfigGetMap, reqConfigMemoryCache } from '../const';
@@ -391,7 +392,7 @@ function TerrainViewer(props) {
 
       const getMapParams = {
         bbox: new BBox(CRS_EPSG3857, minX, minY, maxX, maxY),
-        format: MimeTypes.JPEG,
+        format: MimeTypes[getTileFormat(props.datasetId ? getDataSourceHandler(props.datasetId) : null)],
         width: width,
         height: height,
         fromTime: fromTime && fromTime.toDate(),

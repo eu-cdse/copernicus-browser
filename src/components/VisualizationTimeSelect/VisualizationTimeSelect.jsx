@@ -23,7 +23,7 @@ import { defaultEffects, DATE_MODES } from '../../const';
 import Single from './icons/single.svg?react';
 import Mosaic from './icons/mosaic.svg?react';
 import TimeRange from './icons/time-range.svg?react';
-import { getFromTime } from './VisualizationTimeSelect.utils';
+import { getFromTime, canFindLatestDate } from './VisualizationTimeSelect.utils';
 import HelpTooltip from '../../Tools/SearchPanel/dataSourceHandlers/DatasourceRenderingComponents/HelpTooltip';
 
 const AdditionalTimeSelectOptions = () => {
@@ -80,6 +80,13 @@ export function VisualizationTimeSelect({
   wmsPanelOpen,
   panelFromUrlParams,
   clmsSelection,
+  // The latest-date props below are only passed by DateSelection; other callers (e.g. WMS) leave
+  // them out, which keeps the silent lookup off.
+  datasetId = undefined,
+  pendingLatestDate = false,
+  mapBoundsKnown = false,
+  authenticated = false,
+  dataSourcesInitialized = false,
   disabledModes = /** @type {string[]} */ ([]),
   findProductsDisabled = false,
 }) {
@@ -124,6 +131,11 @@ export function VisualizationTimeSelect({
 
   useEffect(() => {
     const updateSelectedDates = () => {
+      // A silent latest-date lookup is due (URL had a dataset but no date, or date=latest): it will
+      // set the date once the map bounds are known, so don't set a default one in the meantime.
+      if (pendingLatestDate) {
+        return;
+      }
       if (isSingle || (!isTimeRange && !fromTime)) {
         isSingle ? updateDate(selectedDay) : updateDate(selectedDay ? selectedDay : moment().utc());
       }
@@ -136,12 +148,76 @@ export function VisualizationTimeSelect({
   }, [dateMode]);
 
   useEffect(() => {
-    // Update timerange from url
-    if (isTimeRange) {
+    // Update timerange from url. Not while a latest-date lookup is pending: the URL has no dates in
+    // that case, and dispatching empty ones here would clear the pending flag before the lookup ran.
+    if (isTimeRange && !pendingLatestDate) {
       updateTimespan(fromTime, toTime);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Resolves the URL's request for the latest date (see shouldLookUpLatestDate). It waits until
+  // everything the manual "Show latest date" button needs is available, then does the same lookup,
+  // but silently: no error panel and no layer panel changes, because nobody clicked anything.
+  useEffect(() => {
+    if (!pendingLatestDate || !mapBoundsKnown || !authenticated || !dataSourcesInitialized) {
+      return;
+    }
+
+    // Timeless datasets (DEM) are handled by the isTimeless effect above.
+    if (isTimeless) {
+      store.dispatch(visualizationSlice.actions.setPendingLatestDate(false));
+      return;
+    }
+
+    if (!canFindLatestDate({ isZoomLevelOk, isTimeless, clmsSelection })) {
+      // Everything is loaded and the button itself would be disabled: give up quietly.
+      store.dispatch(visualizationSlice.actions.setPendingLatestDate(false));
+      setDefaultMosaicDate();
+      return;
+    }
+
+    runSilentLatestDateLookup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    pendingLatestDate,
+    mapBoundsKnown,
+    authenticated,
+    dataSourcesInitialized,
+    isZoomLevelOk,
+    isTimeless,
+    clmsSelection,
+  ]);
+
+  // What the mount-time date effect does for a mosaic without dates; used when the lookup gave
+  // nothing, so a failed lookup leaves the same state as before this feature existed.
+  function setDefaultMosaicDate(requestedDatasetId = datasetId) {
+    const current = store.getState().visualization;
+    if (!isMosaic || current.toTime || current.datasetId !== requestedDatasetId) {
+      return;
+    }
+    const now = moment().utc();
+    updateSelectedTime(getFromTime(now, minDate), now.clone().endOf('day'));
+  }
+
+  async function runSilentLatestDateLookup() {
+    const requestedDatasetId = datasetId;
+    // Cleared first so this can't run twice while the request is in flight.
+    store.dispatch(visualizationSlice.actions.setPendingLatestDate(false));
+    try {
+      const latestDate = await getLatestAvailableDate();
+      const current = store.getState().visualization;
+      // The user may have picked a date or another dataset while we were waiting.
+      if (latestDate && current.datasetId === requestedDatasetId && !current.toTime) {
+        // Same single-day range the "Show latest date" button sets (updateDate), in every date mode.
+        updateSelectedTime(getFromTime(latestDate, minDate), latestDate.clone().endOf('day'));
+        return;
+      }
+    } catch (e) {
+      console.error('Unable to show latest date on page load:', e);
+    }
+    setDefaultMosaicDate(requestedDatasetId);
+  }
 
   function updateTimespan(fromTime, toTime) {
     updateSelectedTime(fromTime, toTime);
@@ -301,11 +377,7 @@ export function VisualizationTimeSelect({
         )}
         {!datePanelExpanded && (
           <ShowLatestDateButton
-            enabled={
-              isZoomLevelOk &&
-              !isTimeless &&
-              ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
-            }
+            enabled={canFindLatestDate({ isZoomLevelOk, isTimeless, clmsSelection })}
             datePanelExpanded={datePanelExpanded}
             onClick={getAndSetLatestDateWithData}
           />
@@ -361,11 +433,7 @@ export function VisualizationTimeSelect({
             )}
           </div>
           <ShowLatestDateButton
-            enabled={
-              isZoomLevelOk &&
-              !isTimeless &&
-              ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
-            }
+            enabled={canFindLatestDate({ isZoomLevelOk, isTimeless, clmsSelection })}
             datePanelExpanded={datePanelExpanded}
             onClick={getAndSetLatestDateWithData}
           />
@@ -485,11 +553,7 @@ export function VisualizationTimeSelect({
               )}
             </div>
             <ShowLatestDateButton
-              enabled={
-                isZoomLevelOk &&
-                !isTimeless &&
-                ((clmsSelection.selected && clmsSelection.selectedCollection) || !clmsSelection.selected)
-              }
+              enabled={canFindLatestDate({ isZoomLevelOk, isTimeless, clmsSelection })}
               datePanelExpanded={datePanelExpanded}
               onClick={getAndSetLatestDateWithData}
             />

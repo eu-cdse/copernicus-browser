@@ -18,6 +18,7 @@ import {
 import moment from 'moment';
 import { S2_ANNUAL_MOSAIC_BANDS, S2_QUARTERLY_MOSAIC_BANDS } from './datasourceAssets/MosaicsBands';
 import { MOSAIC_AVAILABILITY } from './mosaicAvailability';
+import { MOSAIC_KNOWN_COLLECTIONS } from './knownCollections';
 
 const LOW_RESOLUTION_ALTERNATIVE_COLLECTIONS = {
   [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: {
@@ -44,10 +45,7 @@ export default class MosaicDataSourceHandler extends AbstractBYOCDataSourceHandl
   limitMonthsSearch = 12;
   searchGroupLabel = 'Sentinel-2 Mosaics';
 
-  KNOWN_COLLECTIONS = {
-    [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC],
-    [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC]: [COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC],
-  };
+  KNOWN_COLLECTIONS = MOSAIC_KNOWN_COLLECTIONS;
 
   leafletZoomConfig = {
     [COPERNICUS_WORLDCOVER_ANNUAL_CLOUDLESS_MOSAIC]: {

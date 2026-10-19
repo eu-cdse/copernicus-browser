@@ -57,6 +57,7 @@ export const AttributeNames = {
   projection: 'projection',
   gsd: 'gsd',
   countryCode: 'countryCode',
+  duId: 'duId',
 };
 
 /**
@@ -188,6 +189,7 @@ export const FormatedAttributeNames = {
   acquisitionType: () => t`Acquisition type`,
   cellID: () => t`Cell id`,
   countryCode: () => t`Country code`,
+  duId: () => t`DU id`,
   fuaCode: () => t`FUA code`,
   fuaName: () => t`FUA name`,
   minimalMappingUnit: () => t`Minimal mapping unit`,
@@ -286,6 +288,7 @@ export const ODataAttributes = {
   projectionName: new ODataStringAttribute(AttributeNames.projectionName),
   missionShortName: new ODataStringAttribute(AttributeNames.missionShortName),
   countryCode: new ODataStringAttribute(AttributeNames.countryCode),
+  duId: new ODataStringAttribute(AttributeNames.duId),
 };
 
 export const AttributeOriginValues = {

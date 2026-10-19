@@ -7,10 +7,24 @@ import { Position } from 'geojson';
 
 import { calculateShapeIndex } from '../utils/geojson.utils';
 import { TABS } from '../const';
-import { DEFAULT_EXTERNAL_LAYER_MAX_ZOOM, OSM_MAX_NATIVE_ZOOM } from './const';
+import {
+  DEFAULT_EXTERNAL_LAYER_MAX_ZOOM,
+  FALLBACK_TILE_FORMAT,
+  OSM_MAX_NATIVE_ZOOM,
+  VISUALIZATION_TILE_FORMAT,
+} from './const';
 import { reprojectGeometry } from '../utils/reproject';
 
 const COMPACTNESS_THRESHOLD = 0.005;
+
+// Defaults to WebP when dsh is null; only falls back to PNG if the handler explicitly opts out.
+// WebP (unlike JPEG) keeps transparency, so pixels with no data stay transparent. Used by the 2D map
+// and the 3D terrain viewer so both request the same tile format.
+export const getTileFormat = (
+  dsh?: { supportsWebPVisualization: () => boolean } | null,
+): typeof VISUALIZATION_TILE_FORMAT => {
+  return dsh?.supportsWebPVisualization() !== false ? VISUALIZATION_TILE_FORMAT : FALLBACK_TILE_FORMAT;
+};
 
 //calculate buffer radius as geometric sequence with a common ratio of 0.5 and first term of maxBufferRadius
 export const getBufferRadius = (

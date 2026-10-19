@@ -6,12 +6,18 @@ import {
 } from './collectionFormConfig.utils';
 import { recursiveCollections, complementaryDataGroup } from './collectionFormConfig';
 import { ODataCollections } from '../../../../api/OData/ODataTypes';
+import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
+import { hasRole } from '../../../../Auth/authHelpers';
 import { STAC_COLLECTIONS } from '../../../../hooks/stacCollections';
 import {
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
 } from '../../../SearchPanel/dataSourceHandlers/dataSourceConstants';
+
+jest.mock('../../../../Auth/authHelpers', () => ({
+  hasRole: jest.fn(),
+}));
 
 describe('checkFormElementAccess', () => {
   test.each([
@@ -620,5 +626,78 @@ describe('recursiveCollections nesting - Global Mosaics STAC config', () => {
       .items.find((item) => item.id === 'S1Mosaics')
       .items.map((item) => item.id);
     expect(s1ProductTypeIds).toEqual(['S1SAR_L3_IW_MCM', 'S1SAR_L3_DH_MCM']);
+  });
+});
+
+describe('S3 commissioning product types (#1294) — s3c-commissioning gating', () => {
+  const s3Collection = () => recursiveCollections.find((c) => c.id === ODataCollections.S3.id);
+  const findInstrument = (id) => s3Collection().items.find((item) => item.id === id);
+  const findProductType = (instrumentId, productTypeId) =>
+    findInstrument(instrumentId).items.find((item) => item.id === productTypeId);
+
+  afterEach(() => {
+    hasRole.mockReset();
+  });
+
+  test.each([
+    ['OLCI', 'OL_0_EFR___'],
+    ['OLCI', 'OL_0_CR0___'],
+    ['OLCI', 'OL_0_CR1___'],
+    ['OLCI', 'OL_1_RAC___'],
+    ['OLCI', 'OL_1_SPC___'],
+    ['SRAL', 'SR_0_SRA___'],
+    ['SRAL', 'SR_0_CAL___'],
+    ['SRAL', 'SR_1_CAL___'],
+    ['SRAL', 'SR_1_LAN_RD'],
+    ['SLSTR', 'SL_0_SLT___'],
+    ['SYNERGY', 'SY_1_MISR__'],
+    ['SYNERGY', 'SY_2_VGK___'],
+  ])('%s product type %s is gated on EXPERT_ROLES.S3C_COMMISSIONING', (instrumentId, productTypeId) => {
+    const productType = findProductType(instrumentId, productTypeId);
+    expect(productType).toBeDefined();
+
+    hasRole.mockReturnValue(false);
+    expect(checkFormElementAccess(productType, { userToken: 'token' })).toBe(false);
+
+    hasRole.mockReturnValue(true);
+    expect(checkFormElementAccess(productType, { userToken: 'token' })).toBe(true);
+    expect(hasRole).toHaveBeenCalledWith('token', EXPERT_ROLES.S3C_COMMISSIONING);
+  });
+
+  test.each([
+    ['OLCI', 'OL_1_EFR___'],
+    ['SRAL', 'SR_1_SRA___'],
+    ['SLSTR', 'SL_1_RBT___'],
+    ['SYNERGY', 'SY_2_SYN___'],
+  ])('sibling pre-existing product type %s/%s stays ungated', (instrumentId, productTypeId) => {
+    const productType = findProductType(instrumentId, productTypeId);
+    expect(productType).toBeDefined();
+
+    hasRole.mockReturnValue(false);
+    expect(checkFormElementAccess(productType, { userToken: 'token' })).toBe(true);
+  });
+
+  test('new MWR instrument and its product types are gated at the instrument level', () => {
+    const mwr = findInstrument('MWR');
+    expect(mwr).toBeDefined();
+    expect(mwr.items.map((item) => item.id)).toEqual(['MW_0_MWR___', 'MW_1_CAL___', 'MW_1_MWR___']);
+
+    hasRole.mockReturnValue(false);
+    expect(checkFormElementAccess(mwr, { userToken: 'token' })).toBe(false);
+    expect(getCollectionFormConfig([mwr], { userToken: 'token' })).toEqual([]);
+
+    hasRole.mockReturnValue(true);
+    expect(checkFormElementAccess(mwr, { userToken: 'token' })).toBe(true);
+    expect(getCollectionFormConfig([mwr], { userToken: 'token' })).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'MWR' })]),
+    );
+    expect(hasRole).toHaveBeenCalledWith('token', EXPERT_ROLES.S3C_COMMISSIONING);
+  });
+
+  test('MWR product types carry no hasAccess of their own — gating lives on the instrument', () => {
+    const mwr = findInstrument('MWR');
+    mwr.items.forEach((productType) => {
+      expect(productType.hasAccess).toBeUndefined();
+    });
   });
 });

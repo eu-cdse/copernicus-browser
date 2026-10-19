@@ -133,6 +133,7 @@ import {
   COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
   COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT0,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_GPP_GLOBAL_300M_10DAILY_V2_RT2,
@@ -991,6 +992,22 @@ export const CLMS_OPTIONS = [
     label: 'Land Cover and Land Use in Priority Areas',
     id: 'Land Cover and Land Use in Priority Areas',
     options: [
+      {
+        label: 'Protected Areas',
+        id: 'Protected Areas',
+        options: [
+          {
+            id: 'PA_LCU',
+            label: 'Land Cover and Land Use',
+            options: [
+              {
+                label: 'clms_pa_lcu_2021_vector',
+                id: COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
+              },
+            ],
+          },
+        ],
+      },
       {
         label: 'Urban Atlas',
         id: 'Urban Atlas',

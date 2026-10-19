@@ -52,6 +52,13 @@ import {
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
   S3OLCI_CDAS,
+  S3SLSTR_CDAS,
+  S3SLSTRL2_CDAS,
+  S3OLCIL2_LAND,
+  S3OLCIL2_WATER,
+  S3SYNERGY_L2_V10,
+  S3SYNERGY_L2_SYN,
+  S3SYNERGY_L2_VG1,
 } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getSTACConfigForDatasetId } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig.utils';
 import { recursiveCollections } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/collectionFormConfig';
@@ -1987,6 +1994,38 @@ describe('getDatasetIdFromProductType — S3C OLCI private products', () => {
     const result = getDatasetIdFromProductType('OL_1_ERR____PRIVATE', []);
     expect(result).toBe(S3OLCI_CDAS);
   });
+});
+
+describe('getDatasetIdFromProductType — OLCI calibration product types (#1294)', () => {
+  test.each([
+    ['OL_1_RAC___', S3OLCI_CDAS],
+    ['OL_1_SPC___', S3OLCI_CDAS],
+  ])('%s maps to S3OLCI_CDAS', (productType, expectedDatasetId) => {
+    const result = getDatasetIdFromProductType(productType, []);
+    expect(result).toBe(expectedDatasetId);
+  });
+});
+
+describe('getDatasetIdFromProductType — S3 Visualize dataset mapping has no platform branching', () => {
+  const makePlatformAttrs = (platform) => [{ Name: 'platformSerialIdentifier', Value: platform }];
+
+  test.each([
+    ['SL_1_RBT___', S3SLSTR_CDAS],
+    ['SL_2_LST___', S3SLSTRL2_CDAS],
+    ['OL_2_LFR___', S3OLCIL2_LAND],
+    ['OL_2_WFR___', S3OLCIL2_WATER],
+    ['SY_2_V10___', S3SYNERGY_L2_V10],
+    ['SY_2_SYN___', S3SYNERGY_L2_SYN],
+    ['SY_2_VG1___', S3SYNERGY_L2_VG1],
+  ])(
+    '%s maps to the same dataset id regardless of S3A/S3B/S3C platform',
+    (productType, expectedDatasetId) => {
+      ['A', 'B', 'C'].forEach((platform) => {
+        const result = getDatasetIdFromProductType(productType, makePlatformAttrs(platform));
+        expect(result).toBe(expectedDatasetId);
+      });
+    },
+  );
 });
 
 describe('getODataCollectionInfoFromDatasetId — S3OLCI_CDAS reverse lookup', () => {

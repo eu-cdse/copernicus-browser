@@ -87,8 +87,8 @@ In the **Visualise tab** you can:
 You can change the **Date** (type in or select it from the calendar) and set the cloud coverage. You can choose between 
 single date, mosaic and time range: ![Single](icon) ![Mosaic](icon) ![Time Range](icon).
 
-The **Configurations** dropdown offers you different preconfigured themes and your own custom configured instances if 
-you are logged-in. To create an instance, go to your [personal dashboard](https://shapps.dataspace.copernicus.eu/dashboard/).
+The **Configurations** dropdown offers you different preconfigured themes and your own custom configured instances if
+you are logged in. To create an instance, go to your [personal dashboard](https://shapps.dataspace.copernicus.eu/dashboard/).
 
 You can select a desired data source in the **Data Collections**. You can read explanations of the satellites by clicking 
 on the information icon next to the name of the data collection. Here you can also switch between different panels: 
@@ -108,13 +108,13 @@ Some of the common options:
 - **NDSI** - Normalized Difference Snow Index
 
 Most visualisations are given a description and a legend, which you can view by clicking on the expand sign ![expand](icon).
-Each of the layers offers an option to add a layer to Compare or Pins by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span>.
-Based on your action the Compare and Pins panels will include added layers ![compare-with-badge](icon) ![pins-with-badge](icon)
-which you can further organize and analyse under each tab.
+Each of the layers offers an option to add it to Compare or Pins by clicking <span class="icon"><i class="fas fa-plus"></i> Add to</span>.
+Based on your action, the Compare and Pins panels will include added layers ![compare-with-badge](icon) ![pins-with-badge](icon)
+which you can further organise and analyse under each tab.
 
-Click on **Custom visualisation** option to select custom band combinations, index combinations or write your own classification script for the
+Click on the **Custom visualisation** option to select custom band combinations, index combinations or write your own classification script for the
 visualisation of data. You can also use custom scripts, which are stored elsewhere, either on Google Drive, GitHub or in our
-[Custom script repository](https://custom-scripts.sentinel-hub.com/). Paste the URL of the script into a text box in advanced script editing panel
+[Custom script repository](https://custom-scripts.sentinel-hub.com/). Paste the URL of the script into the text box in the advanced script editing panel
 and click Refresh. The custom script of preconfigured layers can be edited by choosing the code icon ![code-icon](icon).
 
 You can select <span class="icon"><i class="fa fa-sliders"></i></span> **Show effects and advanced options** like the sampling method, advanced RGB effects or apply 
@@ -145,7 +145,7 @@ You have several ways to interact with each pin:
 - Change **order** - by clicking on the move icon <span class="icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></span> 
 in the top left corner of the pin and dragging the pin up or down the list.
 - **Rename** - by clicking on the pencil icon ![rename](icon) next to the pin's name.
-- Add to the **Compare** panel - by clicking on the compare icon ![compare](icon)
+- Add to the **Compare** panel - by clicking on the compare icon ![compare](icon).
 - Enter a **description** - by clicking on the expand icon ![expand](icon).
 - **Remove** - by clicking the remove icon <span class="icon"><i class="fas fa-trash"></i></span>.
 - **Zoom** to the pin's location - by clicking on the Lat/Lon.
@@ -176,11 +176,11 @@ Under **Search** you can set:
 - **Search criteria** by a product name.
 - Choose from which **data sources** you want to receive the data by selecting checkboxes. Where applicable, you can also set **filters**
 such as satellite platform, orbit direction, relative orbit, number, acquisition mode, product availability, timeliness, etc.
-- Select the **time range** by either typing the date or select the date from the calendar. If you want to omit some of the months, enable
+- Select the **time range** by either typing the date or selecting it from the calendar. If you want to omit some of the months, enable
 the **Filter by months** option and uncheck the non-relevant months.
 
-Once you hit Search you get a list of results. Each result is presented with a preview image, and relevant data specific to the data source.
-For **product info** and **zooming to product** click on the <span class="icon"><i class="fa fa-info-circle"></i></span> and <span class="icon"><i class="fa fa-crosshairs"></i></span> icon.
+Once you hit Search you get a list of results. Each result is presented with a preview image and relevant data specific to the data source.
+For **product info** and **zooming to product**, click on the <span class="icon"><i class="fa fa-info-circle"></i></span> and <span class="icon"><i class="fa fa-crosshairs"></i></span> icons.
 If you are logged in, you can click on ![workspace-add](icon) to **add a product to your Copernicus Data Space Ecosystem Workspace**
 to easily collect and process your satellite data. You can also **download the product** by clicking on the download icon <span class="icon"><i class="fa fa-download"></i></span>.
 
@@ -188,7 +188,7 @@ Clicking on the Visualise button will open the **Visualise** tab for the selecte
 `;
 
 const searchPlacesMd = () => t`
-Search for a location either by scrolling the map with a mouse or enter the location in the **Go to Place** field.
+Search for a location either by scrolling the map with a mouse or by entering the location in the **Go to Place** field.
 `;
 
 const overlaysMd = () => t`
@@ -204,14 +204,14 @@ This tool allows you to draw a polygon on the map and display the polygon's size
 
 All layers that return a single value (such as NDVI, Moisture Index, NDWI, ...) support viewing the index
 for the selected area over time. Clicking the chart icon <span class="icon"><i class="fa fa-bar-chart"></i></span> will
-display the statistical information charts (you need to be logged-in to use this option). You can remove the polygon 
+display the statistical information charts (you need to be logged in to use this option). You can remove the polygon 
 by clicking the remove icon <span class="icon"><i class="fa fa-close"></i></span>.
 
 You can also upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file with a polygon geometry using the
 upload icon <span class="icon"><i class="fa fa-upload"></i></span>.
 
 The two sheets icon <span class="icon"><i class="far fa-copy"></i></span> lets you copy the polygon coordinates as a 
-GEOJSON and the crosshair <span class="icon"><i class="fa fa-crosshairs"></i></span> centers the map to the drawn polygon.
+GEOJSON and the crosshair <span class="icon"><i class="fa fa-crosshairs"></i></span> centers the map on the drawn polygon.
 `;
 
 const drawLineMd = () => t`
@@ -222,7 +222,7 @@ It also includes the **Elevation Profile**, a tool that allows you to create the
 You can also upload a KML/KMZ, GPX, WKT (in EPSG:4326) or GEOJSON/JSON file using the upload icon <span class="icon"><i class="fa fa-upload"></i></span>.
 
 The two sheets icon <span class="icon"><i class="far fa-copy"></i></span> lets you copy the line coordinates as a 
-GEOJSON and the crosshair <span class="icon"><i class="fa fa-crosshairs"></i></span> centers the map to the drawn line.
+GEOJSON and the crosshair <span class="icon"><i class="fa fa-crosshairs"></i></span> centers the map on the drawn line.
 `;
 
 const poiMd = () => t`
@@ -230,13 +230,12 @@ With this tool, you can mark a point on the map.
 
 You can also view statistical data for some layers by clicking on the chart icon <span class="icon"><i class="fa fa-bar-chart"></i></span>. 
 You can remove the mark by clicking the remove icon <span class="icon"><i class="fa fa-close"></i></span>.
-</p>
 `;
 
 const measurementMd = () => t`
 With this tool, you can measure distances and areas on the map.
 
-Every mouse click creates a new point on the path. To stop adding points, press <code>Esc</code> key or double click on the map.  
+Every mouse click creates a new point on the path. To stop adding points, press the <code>Esc</code> key or double-click on the map.  
 You can remove the measurement by clicking the remove icon <span class="icon"><i class="fa fa-close"></i></span>.
 `;
 
@@ -245,7 +244,7 @@ With this tool, you can download an image of visualised data for the displayed l
 captions and you can add your own description. By enabling Analytical mode, you can choose between various image formats, 
 image resolutions and coordinate systems. You can also select multiple layers and download them as a <code>.zip</code> file.
 
-Click the download button <span class="icon"><i className="fa fa-download"></i> Download</span> and your image(s) will 
+Click the download button <span class="icon"><i class="fa fa-download"></i> Download</span> and your image(s) will 
 begin to download. The process can take a few seconds, depending on the selected resolution and the number of selected layers.
 
 Before downloading, you can define an area of interest (AOI) by clicking on the Area selection tool icon ![selection](icon).
@@ -255,16 +254,16 @@ Your data will be clipped to match this area.
 const timelapseMd = () => t`
 With this tool (available to logged-in users), you can create a timelapse animation of the visualised layer and displayed location.
 
-First, choose a time range. You can refine your search results further via the **Filter by months** checkbox and/or selecting one 
+First, choose a time range. You can refine your search results further via the **Filter by months** checkbox and/or by selecting one
 image per defined period (orbit, day, week, month, year).
 
-Then press <span class="icon"><i className="fa fa-search"></i> Search</span> and select your images. You can select all 
+Then press <span class="icon"><i class="fa fa-search"></i> Search</span> and select your images. You can select all 
 by checking the checkbox or filter the images by cloud coverage by moving the slider. Or you can pick images one by one by scrolling 
 through the list and selecting them. Via the **Borders** checkbox, you can enable/disable the borders on your image.
 
-You can preview the timelapse by pressing the play button <span class="icon"><i className="fas fa-play-circle"></i></span>, set the speed (frames per second)
-and transition mode, all available on the bottom of the screen. See additional settings by clicking the 
-settings icon <span class="icon"><i className="fas fa-cogs"></i></span>.
+You can preview the timelapse by pressing the play button <span class="icon"><i class="fas fa-play-circle"></i></span>, set the speed (frames per second)
+and transition mode, all available at the bottom of the screen. See additional settings by clicking the
+settings icon <span class="icon"><i class="fas fa-cogs"></i></span>.
 
 When you are satisfied with the result, click the download button and the timelapse will be downloaded as a <code>.gif</code> or <code>.mp4</code> file.
 `;
@@ -272,13 +271,13 @@ When you are satisfied with the result, click the download button and the timela
 const visualize3dMd = () => t`
 This tool allows you to navigate and fly through terrain effortlessly.
 
-You can make use of the 3D Feature by utilising the following tools:
+You can make use of the 3D feature by utilising the following tools:
   - Use **Vertical Terrain Scaling** to make flatter areas appear more dynamic
-  - Stimulate the Sun movements and its projected shadows at any time of the day
+  - Simulate the Sun's movements and its projected shadows at any time of the day
   - Manipulate the **Shadow Parameters**
     - Shadow visibility
     - Shadow rendering distance
-    - Shadow map size visibility
+    - Shadow map size
   - Control the ambient, diffuse and specular factors as well as specular power
   - Use the **Anaglyph Stereo Mode** to create two distinct red and blue images to produce a single 3D stereo image
 `;
@@ -737,7 +736,7 @@ export const TUTORIAL_STEPS = () => [
 
 export const TUTORIAL_STEPS_MOBILE = () => [
   {
-    title: t`Welcome To Copernicus Browser!`,
+    title: t`Welcome to Copernicus Browser!`,
     content: (
       <div className="content-div-style">
         <ReactMarkdown

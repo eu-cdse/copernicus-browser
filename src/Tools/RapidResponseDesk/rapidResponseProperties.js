@@ -13,6 +13,15 @@ export const ProviderImageTypes = Object.freeze({
   atmos: 'atmos',
 });
 
+// Default incidence angle range (degrees) per image type. Image types without an entry (atmos)
+// don't expose the incidence angle filter, so they have no default. Keep the keys in sync with the
+// `sensorType` of the IncidenceAngle entry in ADVANCED_PROPERTY_FILTERS: an image type added there
+// without a default here would silently keep the previous value on a type switch.
+export const DEFAULT_INCIDENCE_ANGLE_BY_IMAGE_TYPE = Object.freeze({
+  [ProviderImageTypes.optical]: Object.freeze([0, 50]),
+  [ProviderImageTypes.radar]: Object.freeze([0, 90]),
+});
+
 export const SensorModesProperties = [
   {
     label: t`Any`,

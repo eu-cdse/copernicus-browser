@@ -4,7 +4,7 @@ import { addAxiosRequestInterceptor } from '@sentinel-hub/sentinelhub-js';
 import { cacheConfig, initMetadaCache } from './MetadataCache';
 import { cachedInstancesInterceptor } from './cachedInstancesInterceptor';
 import { cachedCapabilitiesInterceptor } from './cachedCapabilitiesInterceptor';
-import { cachedUrbanAtlasCapabilitiesInterceptor } from './cachedUrbanAtlasCapabilitiesInterceptor';
+import { cachedMapserverCapabilitiesInterceptor } from './cachedMapserverCapabilitiesInterceptor';
 
 const MetadataCacheProvider = ({ children }) => {
   const [completed, setCompleted] = useState(false);
@@ -16,7 +16,7 @@ const MetadataCacheProvider = ({ children }) => {
       //add axios interceptors to handle configuration and capabilities requests
       addAxiosRequestInterceptor(cachedInstancesInterceptor);
       addAxiosRequestInterceptor(cachedCapabilitiesInterceptor);
-      addAxiosRequestInterceptor(cachedUrbanAtlasCapabilitiesInterceptor);
+      addAxiosRequestInterceptor(cachedMapserverCapabilitiesInterceptor);
       setCompleted(true);
     }
 

@@ -131,6 +131,7 @@ import {
   COPERNICUS_CLMS_UA_LCUC_2018_2021_VECTOR,
   COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_UA_STL_2021_VECTOR,
+  COPERNICUS_CLMS_PA_LCU_2021_VECTOR,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT0,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT1,
   COPERNICUS_CLMS_DMP_GLOBAL_300M_10DAILY_V2_RT2,
@@ -1092,6 +1093,12 @@ export const credits = {
     },
   ],
   [COPERNICUS_CLMS_UA_STL_2021_VECTOR]: [
+    {
+      ...copernicus,
+      link: 'https://land.copernicus.eu/en',
+    },
+  ],
+  [COPERNICUS_CLMS_PA_LCU_2021_VECTOR]: [
     {
       ...copernicus,
       link: 'https://land.copernicus.eu/en',

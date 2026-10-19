@@ -37,6 +37,10 @@ export interface VisualizationState {
   processGraph?: string;
   processGraphUrl?: string | null;
   isProcessGraphModified: boolean;
+  // One-shot flag set from the URL (see URLParamsParser): a silent "show latest date" lookup is
+  // still due. Map bounds are not known at URL-parse time, so VisualizationTimeSelect resolves it
+  // once they are, and always clears it afterwards.
+  pendingLatestDate: boolean;
 }
 
 interface SetVisualizationTimePayload {
@@ -98,6 +102,7 @@ const initialState: VisualizationState = {
   processGraph: '',
   processGraphUrl: undefined,
   isProcessGraphModified: false,
+  pendingLatestDate: false,
 };
 
 export const visualizationSlice = createSlice({
@@ -107,10 +112,17 @@ export const visualizationSlice = createSlice({
     setVisualizationTime: (state, action: PayloadAction<SetVisualizationTimePayload>) => {
       state.fromTime = action.payload.fromTime;
       state.toTime = action.payload.toTime;
+      // Any explicit date choice (manual or from the latest-date lookup itself) settles it.
+      state.pendingLatestDate = false;
+    },
+    setPendingLatestDate: (state, action: PayloadAction<boolean>) => {
+      state.pendingLatestDate = action.payload;
     },
     setNewDatasetId: (state, action: PayloadAction<SetNewDatasetIdPayload>) => {
       const { datasetId, resetDates = true, orbitDirection } = action.payload;
       state.datasetId = datasetId;
+      // A different dataset means the URL's "latest" request no longer applies.
+      state.pendingLatestDate = false;
       if (resetDates) {
         state.fromTime = null;
         state.toTime = null;
@@ -379,8 +391,12 @@ export const visualizationSlice = createSlice({
       if (action.payload.isProcessGraphModified !== undefined) {
         state.isProcessGraphModified = action.payload.isProcessGraphModified;
       }
+      if (action.payload.pendingLatestDate !== undefined) {
+        state.pendingLatestDate = action.payload.pendingLatestDate;
+      }
     },
     reset: (state) => {
+      state.pendingLatestDate = false;
       state.fromTime = undefined;
       state.toTime = undefined;
       state.datasetId = undefined;

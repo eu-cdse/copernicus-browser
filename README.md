@@ -40,6 +40,7 @@ Sentinel-2 Quarterly Mosaic for June - August in a True Color visualisation ([li
 - Run `npm run prettier-check` to verify formatting without modifying files (this is what the pre-commit hook runs)
 - Run `npm run build` to build the application sources
 - Run `npm run translate` to add strings to the translation files
+- Run `npm run generate-datasets` to regenerate `public/datasets.txt` (the dataset and layer ids for AI assistants); CI fails if it is out of date
 - Run `npm run debug-translations` to replace all translation strings with "XXXXXX"
 - Run `npm run update-metadata-cache` to create getCapabilities and configuration cache
 - Run `npm run update-rrd-configurations` to create getCapabilities and configuration cache for the RRD collections
@@ -203,9 +204,13 @@ Environment variables needed for anonymous usage:
 
 ### URL parameters
 
-The Browser can be opened directly to a specific location, dataset, visualisation and date via URL query parameters. See [deep-linking.txt](public/deep-linking.txt) for the full parameter reference and more examples, or [gallery-links.txt](public/gallery-links.txt) for a curated collection of ready-made example links.
+The Browser can be opened directly to a specific location, dataset, visualisation and date via URL query parameters. See [deep-linking.txt](public/deep-linking.txt) for the full parameter reference and more examples, [datasets.txt](public/datasets.txt) for the valid `datasetId` and `layerId` values, or [gallery-links.txt](public/gallery-links.txt) for a curated collection of ready-made example links.
 
 Example: `https://browser.dataspace.copernicus.eu/?panel=pins`
+
+To open the newest available image for a dataset, add `date=latest` (or leave the date out when a `datasetId` is given): `https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.35625&lng=8.45879&datasetId=S2_L2A_CDAS&layerId=1_TRUE_COLOR&date=latest`
+
+`public/datasets.txt` is generated from the app's configuration by `npm run generate-datasets`. Do not edit it by hand.
 
 ## Multilanguage support
 

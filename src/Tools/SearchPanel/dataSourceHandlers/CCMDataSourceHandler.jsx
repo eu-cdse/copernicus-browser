@@ -24,6 +24,7 @@ import {
   CCM_VHR_IMAGE_2024_BANDS,
   CCM_VHR_IMAGE_2024_MOSAIC_BANDS,
 } from './datasourceAssets/CCMBands';
+import { CCM_KNOWN_COLLECTIONS } from './knownCollections';
 
 export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler {
   getDatasetSearchLabels = () => ({
@@ -63,12 +64,7 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
     },
   };
 
-  KNOWN_COLLECTIONS = {
-    [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: ['4ab2c8f6-ef9e-4989-9c2e-3fae9c88da1e'], // collection id from byoc admin account
-    [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: ['0c96598b-edb2-4a5b-afb0-4d35389ba098'],
-    [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: ['b016cf66-b68e-472d-8421-1fe9d384762f'],
-    [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: ['e68d016e-60c3-4675-a278-3e46110ac03f'],
-  };
+  KNOWN_COLLECTIONS = CCM_KNOWN_COLLECTIONS;
 
   KNOWN_COLLECTIONS_LOCATIONS = {
     [CDSE_CCM_VHR_IMAGE_2018_COLLECTION]: LocationIdSHv3.cdse,
