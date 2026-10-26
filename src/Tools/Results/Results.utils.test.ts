@@ -7,6 +7,7 @@ import {
   getPlatformShortName,
   extractODataIdFromAssets,
   getDownloadUrlFromAssets,
+  getDownloadFileNameFromAssets,
   getPreviewUrlFromAssets,
 } from './Results.utils';
 import type { NormalizedSTACResult } from './Results.utils';
@@ -122,6 +123,18 @@ describe('getDownloadUrlFromAssets', () => {
     expect(getDownloadUrlFromAssets(assets)).toBe('https://example.com/archive.zip');
   });
 
+  test.each([
+    ['application/x-tar', 'application/x-tar'],
+    ['application/gzip', 'application/gzip'],
+    ['a type with parameters', 'application/zip; charset=binary'],
+  ])('treats %s as downloadable when there is no product asset', (_label, type) => {
+    const assets = {
+      thumbnail: { href: 'https://example.com/thumbnail.png', type: 'image/png' },
+      archive: { href: 'https://example.com/archive', type },
+    };
+    expect(getDownloadUrlFromAssets(assets)).toBe('https://example.com/archive');
+  });
+
   test('falls back to the first asset with an href when nothing matches a downloadable MIME type', () => {
     const assets = {
       thumbnail: { href: 'https://example.com/thumbnail.png', type: 'image/png' },
@@ -143,6 +156,51 @@ describe('getDownloadUrlFromAssets', () => {
 
   test('returns null when no asset has an href', () => {
     expect(getDownloadUrlFromAssets({ thumbnail: { type: 'image/png' } })).toBeNull();
+  });
+});
+
+describe('getDownloadFileNameFromAssets', () => {
+  const odataHref = 'https://download.dataspace.copernicus.eu/odata/v1/Products(uuid)/$value';
+
+  test.each([
+    ['a gzip archive', 'S6ACOMB24143.sp3.gz'],
+    ['a tar archive', 'S6A_AX____POE__AX_20260928T215923_20260930T015923_SALP_OPE_NT_003.SEN6.tar'],
+    ['an upper-case extension', 'S6A_OPER_AUX_GNSSRD_POD__20261025T123052.TGZ'],
+    ['a zip archive', 'Sentinel-2_mosaic_2026_Q3_60XWF_1_0.zip'],
+  ])("returns the product asset's file:local_path for %s, unchanged", (_label, localPath) => {
+    const assets = { product: { href: odataHref, 'file:local_path': localPath } };
+    expect(getDownloadFileNameFromAssets(assets)).toBe(localPath);
+  });
+
+  test('finds a capitalised `Product` asset', () => {
+    const assets = { Product: { href: odataHref, 'file:local_path': 'mosaic.zip' } };
+    expect(getDownloadFileNameFromAssets(assets)).toBe('mosaic.zip');
+  });
+
+  test('keeps only the base name when the path includes directories', () => {
+    const assets = { product: { href: odataHref, 'file:local_path': 'some/dir/S6ACOMB24143.sp3.gz' } };
+    expect(getDownloadFileNameFromAssets(assets)).toBe('S6ACOMB24143.sp3.gz');
+  });
+
+  test('names the file after the same asset the download URL comes from', () => {
+    // No product asset: the download falls back to the first downloadable-type asset, so the
+    // file name has to come from that asset too, not from the thumbnail listed before it.
+    const assets = {
+      thumbnail: { href: 'https://example.com/thumb.png', type: 'image/png', 'file:local_path': 'thumb.png' },
+      archive: { href: odataHref, type: 'application/gzip', 'file:local_path': 'archive.gz' },
+    };
+    expect(getDownloadUrlFromAssets(assets)).toBe(odataHref);
+    expect(getDownloadFileNameFromAssets(assets)).toBe('archive.gz');
+  });
+
+  test.each([
+    ['the download asset has no file:local_path', { product: { href: odataHref } }],
+    ['file:local_path is not a string', { product: { href: odataHref, 'file:local_path': 42 } }],
+    ['file:local_path ends in a slash', { product: { href: odataHref, 'file:local_path': 'dir/' } }],
+    ['assets is empty', {}],
+    ['assets is undefined', undefined],
+  ])('returns null when %s', (_label, assets) => {
+    expect(getDownloadFileNameFromAssets(assets)).toBeNull();
   });
 });
 
@@ -530,18 +588,76 @@ describe('normalizeSTACResult - size calculation across multiple assets', () => 
     expect(result.oDataProductId).toBeNull();
   });
 
-  test('file format falls back to the extension of an asset href when no MIME type mapping matches', () => {
+  test.each([
+    ['application/x-tar is mapped', 'application/x-tar', 'TAR archive', 'TAR'],
+    ['application/gzip is mapped', 'application/gzip', 'Gzipped TAR archive', 'GZIP'],
+    [
+      'a MIME type with parameters matches on its bare media type',
+      'image/tiff; application=geotiff; profile=cloud-optimized',
+      'Cloud-optimized GeoTIFF',
+      'TIFF',
+    ],
+    ['MIME type matching is case-insensitive', 'Application/X-TAR', 'TAR archive', 'TAR'],
+    ['a mapped MIME type wins over the title', 'application/zip', 'Zipped product', 'ZIP'],
+    [
+      'an unmapped MIME type falls back to the title',
+      'application/octet-stream',
+      'Binary archive',
+      'Binary archive',
+    ],
+  ])('file format: %s', (_label, type, title, expected) => {
     const feature = {
-      id: 'ext-fallback-feature',
+      id: 'product-type-title-feature',
       properties: { datetime: '2024-01-01T00:00:00Z' },
       assets: {
-        metadata: { href: 'https://example.com/metadata.xml' },
+        product: {
+          href: 'https://download.dataspace.copernicus.eu/odata/v1/Products(uuid)/$value',
+          type,
+          title,
+        },
       },
       links: [],
     };
     const result = normalizeSTACResult(feature) as NormalizedSTACResult;
     const fileFormatAttr = result.attributes.find((a) => a.Name === 'fileFormat')!;
-    expect(fileFormatAttr.Value).toBe('XML');
+    expect(fileFormatAttr.Value).toBe(expected);
+  });
+
+  test('no fileFormat attribute is added for an unmapped MIME type without a title', () => {
+    // Before #1321 the extension-less OData `$value` href was split on '.' instead, producing the
+    // chip "EU/ODATA/V1/PRODUCTS(UUID)/$VALUE".
+    const feature = {
+      id: 'unmapped-type-no-title-feature',
+      properties: { datetime: '2024-01-01T00:00:00Z' },
+      assets: {
+        product: {
+          href: 'https://download.dataspace.copernicus.eu/odata/v1/Products(uuid)/$value',
+          type: 'application/octet-stream',
+        },
+      },
+      links: [],
+    };
+    const result = normalizeSTACResult(feature) as NormalizedSTACResult;
+    const fileFormatAttr = result.attributes.find((a) => a.Name === 'fileFormat');
+    expect(fileFormatAttr).toBeUndefined();
+  });
+
+  test("a non-product asset's title is never used as the file format", () => {
+    const feature = {
+      id: 'band-title-feature',
+      properties: { datetime: '2024-01-01T00:00:00Z' },
+      assets: {
+        B02: {
+          href: 'https://example.com/B02.tif',
+          title: 'Blue (band 2)',
+          type: 'application/octet-stream',
+        },
+      },
+      links: [],
+    };
+    const result = normalizeSTACResult(feature) as NormalizedSTACResult;
+    const fileFormatAttr = result.attributes.find((a) => a.Name === 'fileFormat');
+    expect(fileFormatAttr).toBeUndefined();
   });
 
   test('file format prefers the product asset even when other assets are listed first', () => {

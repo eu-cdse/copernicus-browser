@@ -12,7 +12,11 @@ import {
   ODataProductFileExtension,
   ODataProductTypeExtension,
 } from '../../api/OData/ODataTypes';
-import { getPlatformShortName, getDownloadUrlFromAssets } from './Results.utils';
+import {
+  getPlatformShortName,
+  getDownloadUrlFromAssets,
+  getDownloadFileNameFromAssets,
+} from './Results.utils';
 
 export const ResultItemLabels = {
   productInfo: () => t`Product info`,
@@ -55,6 +59,13 @@ const openProductDetailsModal = ({ tile, downloadInProgress, onDownload }) => {
 };
 
 const getFileNameWithExtensionForProductType = (tile) => {
+  // STAC results name their archive themselves (file:local_path), extension included, so the
+  // product-type table below - written for OData, which defaults to .zip - is not consulted.
+  const stacFileName = getDownloadFileNameFromAssets(tile.assets);
+  if (stacFileName) {
+    return stacFileName;
+  }
+
   const { name, productType } = tile;
   const extension = ODataProductTypeExtension[productType];
   // Explanation for this hack: https://hello.planet.com/code/sentinel-hub/sentinel-frontend/cdse/copernicus-browser/-/issues/256

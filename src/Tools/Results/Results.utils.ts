@@ -4,6 +4,7 @@ import { formatByteSizeAuto } from '../../utils/formatByteSize';
 export interface StacAsset {
   href?: string;
   type?: string;
+  title?: string;
   'file:size'?: number;
   [key: string]: unknown;
 }
@@ -339,6 +340,11 @@ export const getPlatformShortName = (tile: { platformShortName?: string }): stri
   return tile.platformShortName || 'UNKNOWN';
 };
 
+// Bare, lower-cased media type of a STAC asset `type`. STAC commonly adds parameters - e.g. COG
+// bands are typed "image/tiff; application=geotiff; profile=cloud-optimized" - which would
+// otherwise defeat an exact lookup in MIME_TO_FORMAT or DOWNLOADABLE_MIME_TYPES.
+const getMediaType = (type: string): string => type.split(';')[0].trim().toLowerCase();
+
 const MIME_TO_FORMAT: Record<string, string> = {
   'application/zip': 'ZIP',
   'image/tiff': 'TIFF',
@@ -346,6 +352,8 @@ const MIME_TO_FORMAT: Record<string, string> = {
   'image/png': 'PNG',
   'application/x-netcdf': 'NetCDF',
   'application/x-hdf': 'HDF',
+  'application/x-tar': 'TAR',
+  'application/gzip': 'GZIP',
 };
 
 /**
@@ -372,7 +380,8 @@ const findAssetByKey = (
 };
 
 /**
- * Extracts file format from STAC assets
+ * Extracts file format from STAC assets: the MIME type mapping first, then the product asset's
+ * title. Returns null - so no file-format chip is shown - when neither gives one.
  */
 const extractFormatFromAssets = (assets: Record<string, StacAsset> | undefined): string | null => {
   if (!assets || typeof assets !== 'object') {
@@ -388,17 +397,18 @@ const extractFormatFromAssets = (assets: Record<string, StacAsset> | undefined):
 
   for (const [, asset] of orderedAssets) {
     if (asset.type) {
-      if (MIME_TO_FORMAT[asset.type]) {
-        return MIME_TO_FORMAT[asset.type];
+      const mediaType = getMediaType(asset.type);
+      if (MIME_TO_FORMAT[mediaType]) {
+        return MIME_TO_FORMAT[mediaType];
       }
     }
 
-    // Fallback to file extension
-    if (asset.href) {
-      const extension = asset.href.split('.').pop()?.toUpperCase();
-      if (extension) {
-        return extension;
-      }
+    // A MIME type we don't map is described by the product asset's title instead. Other assets'
+    // titles are band names, so only the product asset's counts. The href is never parsed: CDSE
+    // product hrefs are OData `$value` URLs with no file extension, so splitting on '.' turned the
+    // URL itself into the chip.
+    if (asset === productAsset && asset.title) {
+      return asset.title;
     }
   }
 
@@ -459,39 +469,56 @@ const DOWNLOADABLE_MIME_TYPES = [
   'application/octet-stream',
   'application/x-netcdf',
   'application/x-hdf',
+  'application/x-tar',
+  'application/gzip',
 ];
+
+/**
+ * Picks the STAC asset a product download is served from: the 'product' asset (common STAC
+ * convention), else the first asset with a downloadable MIME type, else the first with an href.
+ */
+const findDownloadAsset = (assets: Record<string, StacAsset> | null | undefined): StacAsset | null => {
+  if (!assets || typeof assets !== 'object') {
+    return null;
+  }
+
+  const productAsset = findAssetByKey(assets, 'product');
+  if (productAsset?.href) {
+    return productAsset;
+  }
+
+  const assetList = Object.values(assets);
+  return (
+    assetList.find(
+      (asset) => asset.href && asset.type && DOWNLOADABLE_MIME_TYPES.includes(getMediaType(asset.type)),
+    ) ??
+    assetList.find((asset) => asset.href) ??
+    null
+  );
+};
 
 /**
  * Extracts the product download URL from STAC assets
  */
 export const getDownloadUrlFromAssets = (
   assets: Record<string, StacAsset> | null | undefined,
+): string | null => findDownloadAsset(assets)?.href ?? null;
+
+/**
+ * The file name a STAC product downloads as: the download asset's `file:local_path` (STAC `file`
+ * extension), i.e. the archive's real name with its real extension - e.g. "S6ACOMB24143.sp3.gz",
+ * "…SEN6.tar". The OData `$value` download URL carries no file name, so without this the browser
+ * would fall back to whatever name the app makes up. Only the base name is used, should the
+ * path ever include directories. Null when the asset does not declare one.
+ */
+export const getDownloadFileNameFromAssets = (
+  assets: Record<string, StacAsset> | null | undefined,
 ): string | null => {
-  if (!assets || typeof assets !== 'object') {
+  const localPath = findDownloadAsset(assets)?.['file:local_path'];
+  if (typeof localPath !== 'string') {
     return null;
   }
-
-  // Prefer the 'product' asset key (common STAC convention)
-  const productAsset = findAssetByKey(assets, 'product');
-  if (productAsset?.href) {
-    return productAsset.href;
-  }
-
-  // Look for an asset with a downloadable MIME type
-  for (const [, asset] of Object.entries(assets)) {
-    if (asset.href && asset.type && DOWNLOADABLE_MIME_TYPES.includes(asset.type)) {
-      return asset.href;
-    }
-  }
-
-  // Fall back to the first asset with an href
-  for (const [, asset] of Object.entries(assets)) {
-    if (asset.href) {
-      return asset.href;
-    }
-  }
-
-  return null;
+  return localPath.split('/').pop() || null;
 };
 
 // STAC asset roles that identify a browsable preview image, in order of preference.
