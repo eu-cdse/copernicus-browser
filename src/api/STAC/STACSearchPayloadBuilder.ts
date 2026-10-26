@@ -3,7 +3,12 @@ import type { Moment } from 'moment';
 import type { LatLngBounds } from 'leaflet';
 import moment from 'moment';
 import { buildSearchGeometry } from '../../utils/geojson.utils';
-import { findConfigNodeIdsByType, isSTACCollectionNode } from '../../utils/collectionConfigTree';
+import {
+  findConfigNodeIdsByType,
+  getSTACCollectionNames,
+  isGeometrylessNode,
+  isSTACCollectionNode,
+} from '../../utils/collectionConfigTree';
 
 export interface CQL2Filter {
   op: string;
@@ -205,15 +210,29 @@ const collectSTACCollectionNodes = (
 };
 
 /**
- * Extracts collectionName values from config for the given selected collections.
+ * Extracts the STAC collection names from config for the given selected collections. A node can
+ * span several STAC collections (see getSTACCollectionNames), so only those behind the product
+ * types ticked under it are searched - all of them when none are ticked - and the result is
+ * flattened and de-duplicated.
  */
 const extractCollectionNames = (
   selectedCollections: SelectedCollections,
   collectionFormConfig: CollectionFormConfigItem[] | undefined,
-): string[] =>
-  collectSTACCollectionNodes(selectedCollections, collectionFormConfig).map(
-    ({ config }) => config.collectionName!,
-  );
+): string[] => [
+  ...new Set(
+    collectSTACCollectionNodes(selectedCollections, collectionFormConfig).flatMap(
+      ({ config, selectedNode }) => {
+        const selected = getSTACCollectionNames(
+          config,
+          extractInstrumentsAndProductTypes(selectedNode).productTypes,
+        );
+        // A ticked product type that names no collection of its own would otherwise leave this node
+        // contributing nothing, and an absent `collections` searches every collection on the server.
+        return selected.length > 0 ? selected : getSTACCollectionNames(config);
+      },
+    ),
+  ),
+];
 
 interface STACCollectionProductTypes {
   /** Product types the user actually ticked under this STAC collection. */
@@ -474,13 +493,23 @@ export const createSTACSearchPayload = ({
 
   // Convert geometry to STAC filter format
   if (Object.keys(collectionForm.selectedCollections).length || aoiBounds || poiBounds) {
-    const { geometry } = buildSearchGeometry({
-      mapBounds: mapBounds as LatLngBounds | undefined,
-      aoiBounds: aoiBounds as LatLngBounds | undefined,
-      poiBounds: poiBounds as LatLngBounds | undefined,
-    });
-    const geometryFilters = createGeometryFilters(geometry);
-    filterArgs.push(...geometryFilters);
+    // Products without a footprint (e.g. Sentinel-6 aux files) are indexed with `geometry: null`,
+    // which the backend never matches against s_intersects - nor against an
+    // `or(s_intersects, isNull(geometry))` - so the only way to find them is to send no spatial
+    // filter at all. That is only possible when every selected STAC node is geometry-less: a mixed
+    // selection keeps the geometry filter, and its geometry-less collections return no results.
+    const stacNodes = collectSTACCollectionNodes(collectionForm.selectedCollections, collectionFormConfig);
+    const allSelectedNodesGeometryless =
+      stacNodes.length > 0 && stacNodes.every(({ config }) => isGeometrylessNode(config));
+    if (!allSelectedNodesGeometryless) {
+      const { geometry } = buildSearchGeometry({
+        mapBounds: mapBounds as LatLngBounds | undefined,
+        aoiBounds: aoiBounds as LatLngBounds | undefined,
+        poiBounds: poiBounds as LatLngBounds | undefined,
+      });
+      const geometryFilters = createGeometryFilters(geometry);
+      filterArgs.push(...geometryFilters);
+    }
   }
 
   // Extract instruments and product types from selected collections

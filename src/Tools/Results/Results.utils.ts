@@ -50,7 +50,7 @@ export interface StacFeature {
   stac_version?: string;
   id: string;
   collection?: string;
-  geometry?: StacGeometry;
+  geometry?: StacGeometry | null;
   properties?: StacProperties;
   assets?: Record<string, StacAsset>;
   links?: StacLink[];
@@ -296,7 +296,10 @@ export const normalizeSTACResult = (stacResult: StacFeature): NormalizedSTACResu
     S3Path: s3Path,
     online: true, // STAC results are typically online
     previewUrl: previewUrl,
-    geometry: geometry,
+    // STAC items without a footprint (e.g. Sentinel-6 aux files) carry `geometry: null`; OData
+    // results without one come through as undefined, which is what PreviewLayer and the other
+    // `geometry` consumers guard against, so normalise to that.
+    geometry: geometry ?? undefined,
     attributes: attributes,
     // Keep original STAC properties for backward compatibility
     properties: properties,

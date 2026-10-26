@@ -987,3 +987,157 @@ describe('createSTACSearchPayload - Global Mosaics', () => {
     });
   });
 });
+
+describe('createSTACSearchPayload - Sentinel-6 aux', () => {
+  const S6_AUX_COLLECTIONS = [
+    'sentinel-6-aux-comb',
+    'sentinel-6-aux-gnssrd',
+    'sentinel-6-aux-proqua',
+    'sentinel-6-aux-moed',
+    'sentinel-6-aux-poe',
+    'sentinel-6-aux-roe',
+  ];
+  const S6_AUX_PRODUCT_TYPES = [
+    'AUX_COMB__',
+    'AUX_GNSSRD',
+    'AUX_PROQUA',
+    'AX____MOED_AX',
+    'AX____POE__AX',
+    'AX____ROE__AX',
+  ];
+
+  // Mirrors the real recursiveCollections shape: one STAC-enabled instrument whose six product
+  // types each name their own STAC collection, none of them with a footprint.
+  const s6Config = [
+    {
+      id: 'SENTINEL-6',
+      type: 'collection',
+      items: [
+        {
+          id: 'S6AuxiliaryFiles',
+          type: 'instrument',
+          supportsInstrumentName: false,
+          supportsStacSearch: true,
+          items: S6_AUX_PRODUCT_TYPES.map((id, i) => ({
+            id,
+            type: 'productType',
+            supportsGeometry: false,
+            collectionName: S6_AUX_COLLECTIONS[i],
+          })),
+        },
+      ],
+    },
+  ];
+
+  const globalMosaicsConfig = [
+    {
+      id: 'GLOBAL-MOSAICS',
+      type: 'collection',
+      items: [
+        {
+          id: 'S2Mosaics',
+          type: 'instrument',
+          supportsStacSearch: true,
+          collectionName: 'sentinel-2-global-mosaics',
+          supportsInstrumentName: false,
+          items: [{ id: 'S2MSI_L3__MCQ', type: 'productType' }],
+        },
+      ],
+    },
+  ];
+
+  const aoiBounds = {
+    _southWest: { lat: 1, lng: 1 },
+    _northEast: { lat: 2, lng: 2 },
+  };
+
+  test('searches only the collection behind the ticked product type, without geometry', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'SENTINEL-6': {
+            type: 'collection',
+            S6AuxiliaryFiles: { type: 'instrument', AX____POE__AX: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: s6Config,
+      aoiBounds,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-6-aux-poe']);
+    // Aux items are indexed with geometry: null, which never matches s_intersects - even an AOI
+    // must not add a spatial filter here.
+    expect(payload.filter).toEqual({
+      op: '=',
+      args: [{ property: 'product:type' }, 'AX____POE__AX'],
+    });
+  });
+
+  test('searches only the collections behind several ticked product types', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'SENTINEL-6': {
+            type: 'collection',
+            S6AuxiliaryFiles: {
+              type: 'instrument',
+              AUX_COMB__: { type: 'productType' },
+              AX____ROE__AX: { type: 'productType' },
+            },
+          },
+        },
+      },
+      collectionFormConfig: s6Config,
+      aoiBounds,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-6-aux-comb', 'sentinel-6-aux-roe']);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, ['AUX_COMB__', 'AX____ROE__AX']],
+    });
+  });
+
+  test('ticking the instrument alone searches every aux collection and product type', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'SENTINEL-6': { type: 'collection', S6AuxiliaryFiles: { type: 'instrument' } },
+        },
+      },
+      collectionFormConfig: s6Config,
+      aoiBounds,
+    });
+
+    expect(payload.collections).toEqual(S6_AUX_COLLECTIONS);
+    expect(payload.filter).toEqual({
+      op: 'in',
+      args: [{ property: 'product:type' }, S6_AUX_PRODUCT_TYPES],
+    });
+  });
+
+  test('a mixed selection with a geometry-bearing collection keeps the geometry filter', () => {
+    // Accepted limitation: one STAC request cannot serve both kinds, so the geometry filter wins
+    // and the aux collections return nothing in this combination.
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          'SENTINEL-6': {
+            type: 'collection',
+            S6AuxiliaryFiles: { type: 'instrument', AX____POE__AX: { type: 'productType' } },
+          },
+          'GLOBAL-MOSAICS': {
+            type: 'collection',
+            S2Mosaics: { type: 'instrument', S2MSI_L3__MCQ: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: [...s6Config, ...globalMosaicsConfig],
+      aoiBounds,
+    });
+
+    expect(payload.collections).toEqual(['sentinel-6-aux-poe', 'sentinel-2-global-mosaics']);
+    expect(JSON.stringify(payload.filter)).toContain('s_intersects');
+  });
+});

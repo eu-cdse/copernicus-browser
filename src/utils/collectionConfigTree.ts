@@ -16,6 +16,7 @@ export interface CollectionConfigNode {
   id: string;
   type?: string;
   items?: CollectionConfigNode[];
+  collectionName?: string;
   [key: string]: unknown;
 }
 
@@ -93,19 +94,56 @@ export const findConfigNodeIdsByTypeInScope = (
 ): string[] => findConfigNodesByTypeInScope(items, type).map((item) => item.id);
 
 /**
- * True when this node *owns* a STAC collection, i.e. searching it means issuing a STAC query
- * against `collectionName`.
+ * The STAC collections a node searches: its own `collectionName` when it has one, otherwise the
+ * `collectionName`s of the product types beneath it, de-duplicated. The latter covers a node whose
+ * product types each live in their own STAC collection (e.g. Sentinel-6 aux files, one collection
+ * per product type). Empty when neither names anything.
  *
- * Both fields are required, and neither alone is sufficient. `collectionName` is also carried by
- * every OData-only collection (it holds the OData collection there), and `supportsStacSearch` marks
- * the owning node in a subtree whose product types inherit STAC support from it - see
- * getSTACConfigForDatasetId, which resolves collectionName up the same chain. A node with the flag
- * but no name would route to the STAC branch and then contribute no collection to the payload,
- * which is silent rather than loud, so it is excluded here instead.
+ * Pass `productTypeIds` (the product types actually ticked) to narrow the latter to the collections
+ * behind those product types only, so ticking one aux product type queries one collection rather
+ * than all six. An empty or absent list means nothing was ticked under the node, which stands for
+ * all of them. A node's own `collectionName` is unaffected: its product types share it.
+ */
+export const getSTACCollectionNames = (
+  node: CollectionConfigNode | null | undefined,
+  productTypeIds?: string[],
+): string[] => {
+  if (node?.collectionName) {
+    return [node.collectionName];
+  }
+  const productTypeCollections = findConfigNodesByType(node?.items, 'productType')
+    .filter((productType) => !productTypeIds?.length || productTypeIds.includes(productType.id))
+    .map((productType) => productType.collectionName)
+    .filter((name): name is string => Boolean(name));
+  return [...new Set(productTypeCollections)];
+};
+
+/**
+ * True when this node *owns* a STAC collection, i.e. searching it means issuing a STAC query
+ * against getSTACCollectionNames(node).
+ *
+ * Both the flag and a collection name are required, and neither alone is sufficient.
+ * `collectionName` is also carried by every OData-only collection (it holds the OData collection
+ * there), and `supportsStacSearch` marks the owning node in a subtree whose product types inherit
+ * STAC support from it - see getSTACConfigForDatasetId, which resolves the collection names up the same
+ * chain. A node with the flag but no name would route to the STAC branch and then contribute no
+ * collection to the payload, which is silent rather than loud, so it is excluded here instead.
  *
  * This lives in the leaf module because the two places that must agree - the search partitioner in
  * AdvancedSearch.jsx and the payload builder in STACSearchPayloadBuilder.ts - cannot share anything
  * heavier: collectionFormConfig.utils.js reaches src/utils, and src/utils reaches the store.
  */
 export const isSTACCollectionNode = (item: CollectionConfigNode | null | undefined): boolean =>
-  Boolean(item?.supportsStacSearch && item?.collectionName);
+  Boolean(item?.supportsStacSearch && getSTACCollectionNames(item).length);
+
+/**
+ * True when every product type under this node is marked `supportsGeometry: false`, i.e. its
+ * products carry no footprint and must be searched without a spatial filter. A node with no
+ * product types at all is not geometry-less - there is nothing to say it lacks a footprint.
+ */
+export const isGeometrylessNode = (node: CollectionConfigNode | null | undefined): boolean => {
+  const productTypes = findConfigNodesByType(node?.items, 'productType');
+  return (
+    productTypes.length > 0 && productTypes.every((productType) => productType.supportsGeometry === false)
+  );
+};

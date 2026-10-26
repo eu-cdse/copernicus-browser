@@ -101,18 +101,35 @@ not exploitable in this app:
   `v3`/`v5`/`v6` when a `buf` argument is supplied. `exceljs` calls only `uuid v4`. `exceljs` is also a
   devDependency used solely by the manual admin script `scripts/private-collection-access-share.ts`, never
   bundled and never run in CI.
-- **`elliptic` (GHSA-848j-6mx2-7j84)** - the advisory range is `<=6.6.1`, and `6.6.1` is the latest
-  published version, so no fixed release exists yet. It is pulled in by `vite-plugin-node-polyfills`, a
-  build-time browser polyfill (`nodePolyfills()` called with default options in `vite.config.mts`), so
-  it is not attacker-reachable at runtime.
+- **`elliptic` (GHSA-848j-6mx2-7j84)** - the advisory range is `*` and `6.6.1` is the latest
+  published version, so no fixed release exists yet. It is pulled in by `vite-plugin-node-polyfills`
+  (`nodePolyfills()` called with default options in `vite.config.mts`) through `crypto-browserify`, and it
+  is bundled into the app. No code in `src/` or `scripts/` calls the ECDSA/ECDH or `pbkdf2` APIs
+  (`createSign`, `createVerify`, `createECDH`, `pbkdf2`), so the vulnerable code path is not reached.
+- **`braces` via `micromatch` (GHSA-vfj7-8cjw-p6xm)** - a stack-exhaustion DoS on deeply nested glob
+  patterns. The advisory range is `*`, so no fixed release exists and an `overrides` entry cannot clear
+  it. It is only reachable through lint tooling: `stylelint` -> `micromatch` -> `braces`, and `stylelint` ->
+  `globby`/`fast-glob` -> `micromatch` -> `braces` (all devDependencies). `stylelint` only globs this
+  repository's own source files, never attacker-controlled patterns, and nothing from these chains is
+  bundled into the app. This is why CI audits with `--omit=dev`.
+- **`decode-uri-component` via `query-string` (GHSA-vcc3-ghjq-m6fr)** - a ReDoS on malformed
+  percent-encoded input. `query-string` is listed in `package.json` but nothing in `src/` imports it; it is
+  used by `@sentinel-hub/sentinelhub-js` (`stringify`, `parseUrl`, `stringifyUrl`). The fix is
+  `query-string` v9, a breaking major bump, so it is left unfixed here, like the `react-router` findings
+  below. The app has no server side, so the worst case is a stalled browser tab for the visitor who loads
+  a malformed URL.
 
 Remaining moderate/low findings from `react-router` require a major version bump (v6 to v7) and are
 tracked as a separate follow-up issue rather than fixed here.
 
-CI runs `npm audit --audit-level=high` in a separate `npm_audit` job (`allow_failure: true`) in the
-`test` stage, rather than inside the required `install_packages_and_run_lint` job, so a newly
+CI runs `npm audit --omit=dev --audit-level=high` in a separate `npm_audit` job (`allow_failure: true`)
+in the `test` stage, rather than inside the required `install_packages_and_run_lint` job, so a newly
 published advisory (unrelated to the changes in a given MR) surfaces as a visible pipeline warning
-without blocking merges (see #1265, #1266).
+without blocking merges (see #1265, #1266). Only production dependencies are audited, so findings in
+dev-only lint tooling (such as `braces` above) are not reported. Run `npm audit` without `--omit=dev`
+locally to see them. One blind spot: `vite-plugin-node-polyfills` is a devDependency, but the polyfills it
+injects (`crypto-browserify`, including `elliptic` and `pbkdf2`) are bundled into the app, so a future
+advisory in that chain would not fail this job. Check `npm audit` without `--omit=dev` when touching it.
 
 ### Building the application
 

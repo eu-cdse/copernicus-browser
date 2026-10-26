@@ -30,7 +30,7 @@ describe('getSTACConfigForDatasetId', () => {
   describe('two-level match (collection -> item)', () => {
     test('resolves Landsat Mosaic, nested one level inside the Complementary Data group', () => {
       expect(getSTACConfigForDatasetId(CDAS_LANDSAT_MOSAIC, recursiveCollections)).toStrictEqual({
-        collectionName: STAC_COLLECTIONS.OPENGEOHUB_LANDSAT_MOSAIC,
+        collectionNames: [STAC_COLLECTIONS.OPENGEOHUB_LANDSAT_MOSAIC],
         collectionId: ODataCollections.COMPLEMENTARY_DATA.id,
       });
     });
@@ -67,7 +67,7 @@ describe('getSTACConfigForDatasetId', () => {
       ],
     ])('resolves %s', (_label, datasetId, collectionName, instrumentId, productTypeId) => {
       expect(getSTACConfigForDatasetId(datasetId, recursiveCollections)).toStrictEqual({
-        collectionName,
+        collectionNames: [collectionName],
         collectionId: ODataCollections.GLOBAL_MOSAICS.id,
         instrumentId,
         productTypeId,
@@ -78,7 +78,7 @@ describe('getSTACConfigForDatasetId', () => {
       const iw = getSTACConfigForDatasetId(S1_MONTHLY_MOSAIC_IW, recursiveCollections);
       const dh = getSTACConfigForDatasetId(S1_MONTHLY_MOSAIC_DH, recursiveCollections);
 
-      expect(iw.collectionName).toBe(dh.collectionName);
+      expect(iw.collectionNames).toEqual(dh.collectionNames);
       expect(iw.productTypeId).not.toBe(dh.productTypeId);
     });
   });
@@ -103,7 +103,7 @@ describe('getSTACConfigForDatasetId', () => {
       expect(
         getSTACConfigForDatasetId('ds-p1', collectionsFixture({ supportsStacSearch: true })),
       ).toStrictEqual({
-        collectionName: 'i1-collection',
+        collectionNames: ['i1-collection'],
         collectionId: 'C1',
         instrumentId: 'I1',
         productTypeId: 'P1',
@@ -124,7 +124,45 @@ describe('getSTACConfigForDatasetId', () => {
         },
       ];
 
-      expect(getSTACConfigForDatasetId('ds-p1', collections).collectionName).toBe('c1-collection');
+      expect(getSTACConfigForDatasetId('ds-p1', collections).collectionNames).toEqual(['c1-collection']);
+    });
+
+    test('a product type naming its own collection resolves to it, ahead of its instrument', () => {
+      const collections = [
+        {
+          id: 'C1',
+          items: [
+            {
+              id: 'I1',
+              supportsStacSearch: true,
+              items: [
+                { id: 'P1', datasetId: 'ds-p1', collectionName: 'p1-collection' },
+                { id: 'P2', collectionName: 'p2-collection' },
+              ],
+            },
+          ],
+        },
+      ];
+
+      expect(getSTACConfigForDatasetId('ds-p1', collections).collectionNames).toEqual(['p1-collection']);
+    });
+
+    test('a STAC-flagged match whose chain names no collection returns null, so OData is used', () => {
+      // An empty `collections` list would make the STAC API search every collection.
+      const collections = [
+        {
+          id: 'C1',
+          items: [
+            {
+              id: 'I1',
+              supportsStacSearch: true,
+              items: [{ id: 'P1', datasetId: 'ds-p1' }],
+            },
+          ],
+        },
+      ];
+
+      expect(getSTACConfigForDatasetId('ds-p1', collections)).toBeNull();
     });
 
     test('an instrument with no items array does not throw', () => {

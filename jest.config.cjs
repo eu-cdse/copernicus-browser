@@ -9,6 +9,8 @@ module.exports = {
     '<rootDir>/scripts/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
   moduleNameMapper: {
+    '^maplibre-gl$': '<rootDir>/config/jest/maplibreMock.cjs',
+    '^maplibre-gl/dist/.*\\.mjs\\?url$': '<rootDir>/config/jest/fileTransform.cjs',
     '\\.(css|scss)$': '<rootDir>/config/jest/cssTransform.cjs',
     '\\.(svg(\\?react)?|png)$': '<rootDir>/config/jest/fileTransform.cjs',
   },

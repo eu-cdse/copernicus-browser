@@ -53,7 +53,7 @@
     "lodash.merge": "^4.6.2",
     "lodash.round": "^4.0.4",
     "lodash.values": "^4.3.0",
-    "maplibre-gl": "^1.15.2",
+    "maplibre-gl": "^6.15.0",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.4.1",

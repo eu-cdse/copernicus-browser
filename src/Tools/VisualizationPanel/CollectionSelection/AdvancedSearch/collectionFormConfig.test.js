@@ -629,6 +629,49 @@ describe('recursiveCollections nesting - Global Mosaics STAC config', () => {
   });
 });
 
+describe('recursiveCollections nesting - Sentinel-6 aux STAC config', () => {
+  // Each aux product type lives in its own STAC collection, so the collection name sits on the
+  // product type and the STAC-enabled instrument searches the union of them.
+  const s6 = () => recursiveCollections.find((c) => c.id === ODataCollections.S6.id);
+  const auxInstrument = () => s6().items.find((item) => item.id === 'S6AuxiliaryFiles');
+
+  test('the top-level Sentinel-6 node carries no collectionName', () => {
+    expect(s6().collectionName).toBeUndefined();
+  });
+
+  test('the aux instrument is STAC-enabled and names no collection of its own', () => {
+    expect(auxInstrument().supportsStacSearch).toBe(true);
+    expect(auxInstrument().collectionName).toBeUndefined();
+  });
+
+  test.each([
+    ['AUX_COMB__', STAC_COLLECTIONS.SENTINEL_6_AUX_COMB],
+    ['AUX_GNSSRD', STAC_COLLECTIONS.SENTINEL_6_AUX_GNSSRD],
+    ['AUX_PROQUA', STAC_COLLECTIONS.SENTINEL_6_AUX_PROQUA],
+    ['AX____MOED_AX', STAC_COLLECTIONS.SENTINEL_6_AUX_MOED],
+    ['AX____POE__AX', STAC_COLLECTIONS.SENTINEL_6_AUX_POE],
+    ['AX____ROE__AX', STAC_COLLECTIONS.SENTINEL_6_AUX_ROE],
+  ])('product type %s maps to %s and has no geometry', (productTypeId, expectedCollectionName) => {
+    const productType = auxInstrument().items.find((item) => item.id === productTypeId);
+    expect(productType).toBeDefined();
+    expect(productType.collectionName).toBe(expectedCollectionName);
+    // The STAC payload builder drops the spatial filter only when every product type is marked
+    // this way, since aux items are indexed with geometry: null.
+    expect(productType.supportsGeometry).toBe(false);
+  });
+
+  test('the aux instrument has exactly the six aux product types', () => {
+    expect(auxInstrument().items.map((item) => item.id)).toEqual([
+      'AUX_COMB__',
+      'AUX_GNSSRD',
+      'AUX_PROQUA',
+      'AX____MOED_AX',
+      'AX____POE__AX',
+      'AX____ROE__AX',
+    ]);
+  });
+});
+
 describe('S3 commissioning product types (#1294) — s3c-commissioning gating', () => {
   const s3Collection = () => recursiveCollections.find((c) => c.id === ODataCollections.S3.id);
   const findInstrument = (id) => s3Collection().items.find((item) => item.id === id);

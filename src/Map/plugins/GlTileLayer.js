@@ -1,15 +1,13 @@
 import L from 'leaflet';
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { createLayerComponent } from '@react-leaflet/core';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-// https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-rtl-text/
-maplibregl.setRTLTextPlugin(
-  'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js', // maplibre uses mapbox's rtl text plugin
-  null,
-  true, // By setting the lazy parameter to true, the plugin is only loaded when the map first encounters Hebrew or Arabic text.
-);
+// maplibre-gl 6 finds its worker via a computed `new URL(name, import.meta.url)`, which Vite doesn't detect, so the
+// worker file is left out of the production build. Importing it with `?url` makes Vite emit it.
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 const GlTileLayer = createLayerComponent(
   (props, context) => ({ instance: new MaplibreGL(props), context }),
@@ -54,9 +52,6 @@ const MaplibreGL = L.Layer.extend({
   initialize: function (options) {
     L.setOptions(this, options);
 
-    if (options.accessToken) {
-      maplibregl.accessToken = options.accessToken;
-    }
     // setup throttling the update event when panning
     this._throttledUpdate = L.Util.throttle(this._update, this.options.updateInterval, this);
   },
@@ -69,6 +64,11 @@ const MaplibreGL = L.Layer.extend({
     this.getPane().appendChild(this._container);
 
     this._initGL();
+
+    // maplibre-gl 6 needs WebGL2; without a GL map this layer stays empty instead of breaking the whole map
+    if (!this._glMap) {
+      return;
+    }
 
     this._offset = this._map.containerPointToLayerPoint([0, 0]);
     this._update();
@@ -88,8 +88,10 @@ const MaplibreGL = L.Layer.extend({
     if (pane) {
       pane.removeChild(this._container);
     }
-    this._glMap.remove();
-    this._glMap = null;
+    if (this._glMap) {
+      this._glMap.remove();
+      this._glMap = null;
+    }
   },
 
   getEvents: function () {
@@ -108,7 +110,7 @@ const MaplibreGL = L.Layer.extend({
   },
 
   getCanvas: function () {
-    return this._glMap.getCanvas();
+    return this._glMap?.getCanvas();
   },
 
   getSize: function () {
@@ -144,24 +146,36 @@ const MaplibreGL = L.Layer.extend({
   _initGL: function () {
     var center = this._map.getCenter();
 
-    var options = L.extend({}, this.options, {
+    // maplibre-gl 6 no longer accepts `preserveDrawingBuffer` as a top-level option
+    var { preserveDrawingBuffer, ...layerOptions } = this.options;
+
+    var options = L.extend({}, layerOptions, {
       container: this._container,
       center: [center.lng, center.lat],
       zoom: this._map.getZoom() - 1,
       attributionControl: false,
+      // the layer sizes the GL map itself in _update, so don't let maplibre also observe the container
+      trackResize: false,
+      canvasContextAttributes: { preserveDrawingBuffer: !!preserveDrawingBuffer },
+      // allow GL base map to pan beyond min/max latitudes
+      transformConstrain: (lngLat, zoom) => ({ center: lngLat, zoom }),
     });
 
-    this._glMap = new maplibregl.Map(options);
-
-    // allow GL base map to pan beyond min/max latitudes
-    this._glMap.transform.latRange = null;
-
-    if (this._glMap._canvas.canvas) {
-      // older versions of mapbox-gl surfaced the canvas differently
-      this._glMap._actualCanvas = this._glMap._canvas.canvas;
-    } else {
-      this._glMap._actualCanvas = this._glMap._canvas;
+    try {
+      this._glMap = new maplibregl.Map(options);
+    } catch (error) {
+      // maplibre-gl 6 throws when it can't get a WebGL2 context
+      console.error('Unable to create the vector map layer', error);
+      this._glMap = null;
+      return;
     }
+
+    this._glMap._actualCanvas = this._glMap.getCanvas();
+
+    // maplibre-gl 6 no longer exposes `map.transform`, so remember the size the GL map was last resized to.
+    // Start at 0x0 so the first _update after (re)adding the layer always restyles the container and resizes the
+    // GL map; the container is reused on re-add and may still have the size from before a window resize.
+    this._glSize = L.point(0, 0);
 
     // treat child <canvas> element like L.ImageOverlay
     var canvas = this._glMap._actualCanvas;
@@ -176,6 +190,10 @@ const MaplibreGL = L.Layer.extend({
   },
 
   _update: function () {
+    if (!this._glMap) {
+      return;
+    }
+
     // update the offset so we can correct for it later when we zoom
     this._offset = this._map.containerPointToLayerPoint([0, 0]);
 
@@ -191,35 +209,25 @@ const MaplibreGL = L.Layer.extend({
 
     L.DomUtil.setPosition(container, topLeft);
 
-    var center = this._map.getCenter();
+    // jumpTo applies the new camera synchronously, unlike an animated setView
+    this._pinchZoom();
 
-    // gl.setView([center.lat, center.lng], this._map.getZoom() - 1, 0);
-    // calling setView directly causes sync issues because it uses requestAnimFrame
-
-    var tr = gl.transform;
-    tr.center = maplibregl.LngLat.convert([center.lng, center.lat]);
-    tr.zoom = this._map.getZoom() - 1;
-
-    if (gl.transform.width !== size.x || gl.transform.height !== size.y) {
+    if (this._glSize.x !== size.x || this._glSize.y !== size.y) {
+      this._glSize = size;
       container.style.width = size.x + 'px';
       container.style.height = size.y + 'px';
-      if (gl._resize !== null && gl._resize !== undefined) {
-        gl._resize();
-      } else {
-        gl.resize();
-      }
+      gl.resize();
     } else {
-      // older versions of mapbox-gl surfaced update publicly
-      if (gl._update !== null && gl._update !== undefined) {
-        gl._update();
-      } else {
-        gl.update();
-      }
+      gl.triggerRepaint();
     }
   },
 
   // update the map constantly during a pinch zoom
   _pinchZoom: function () {
+    if (!this._glMap) {
+      return;
+    }
+
     this._glMap.jumpTo({
       zoom: this._map.getZoom() - 1,
       center: this._map.getCenter(),
@@ -229,6 +237,10 @@ const MaplibreGL = L.Layer.extend({
   // borrowed from L.ImageOverlay
   // https://github.com/Leaflet/Leaflet/blob/master/src/layer/ImageOverlay.js#L139-L144
   _animateZoom: function (e) {
+    if (!this._glMap) {
+      return;
+    }
+
     var scale = this._map.getZoomScale(e.zoom);
     var padding = this._map.getSize().multiplyBy(this.options.padding * scale);
     var viewHalf = this.getSize()._divideBy(2);
@@ -249,6 +261,10 @@ const MaplibreGL = L.Layer.extend({
   },
 
   _zoomEnd: function () {
+    if (!this._glMap) {
+      return;
+    }
+
     var scale = this._map.getZoomScale(this._map.getZoom()),
       offset = this._map._latLngToNewLayerPoint(
         this._map.getBounds().getNorthWest(),
@@ -265,6 +281,11 @@ const MaplibreGL = L.Layer.extend({
 
   _transitionEnd: function () {
     L.Util.requestAnimFrame(function () {
+      // the layer may have been removed (or never got a GL map) before this frame
+      if (!this._glMap) {
+        return;
+      }
+
       var zoom = this._map.getZoom();
       var center = this._map.getCenter();
       var offset = this._map.latLngToContainerPoint(this._map.getBounds().getNorthWest());

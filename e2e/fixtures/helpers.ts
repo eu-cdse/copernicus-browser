@@ -86,6 +86,19 @@ export async function seedSearchConfig(page: Page, config: Record<string, unknow
 }
 
 /**
+ * Open the app on the Search tab and tick a chain of Advanced Search checkboxes, outermost first
+ * (e.g. collection -> instrument -> product type). Labels are matched exactly, since inactive
+ * sidebar panels stay in the DOM and partial matches would hit them.
+ */
+export async function selectSearchCheckboxPath(page: Page, labels: string[]) {
+  await page.goto('/');
+  await page.getByRole('tab', { name: 'Search' }).click();
+  for (const label of labels) {
+    await page.getByRole('checkbox', { name: label, exact: true }).check();
+  }
+}
+
+/**
  * Wait for the POST the app issues to the STAC search endpoint.
  *
  * Like every request interceptor, this MUST be registered before the action that

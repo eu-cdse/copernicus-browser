@@ -3412,3 +3412,20 @@ export const COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_S2_EUROPE_UTM_20M_DAILY_V1_B
     getDescription: () => ``,
   },
 ];
+export const COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1_BANDS = [
+  {
+    name: 'WL',
+    sampleType: 'UINT8',
+    getDescription: () => ``,
+  },
+  {
+    name: 'WPI',
+    sampleType: 'UINT8',
+    getDescription: () => ``,
+  },
+  {
+    name: 'WCL',
+    sampleType: 'UINT8',
+    getDescription: () => ``,
+  },
+];

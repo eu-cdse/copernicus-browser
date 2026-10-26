@@ -814,19 +814,52 @@ export const collections = [
         id: 'S6AuxiliaryFiles',
         label: 'Auxiliary Data File',
         supportsInstrumentName: false,
+        supportsStacSearch: true,
+        // Each aux product type lives in its own STAC collection, so the instrument searches all of
+        // them and the product:type filter narrows the search back down to what was ticked.
         productTypes: [
           {
             id: 'AUX_COMB__',
             name: 'AUX_COMB__',
             label: 'AUX_COMB',
             supportsGeometry: false,
-            customFilterQueryByProductType: true,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_COMB,
           },
-          { id: 'AUX_GNSSRD', name: 'AUX_GNSSRD', label: 'AUX_GNSSRD', supportsGeometry: false },
-          { id: 'AUX_PROQUA', name: 'AUX_PROQUA', label: 'AUX_PROQUA', supportsGeometry: false },
-          { id: 'AX____MOED_AX', name: 'AX____MOED_AX', label: 'AX____MOED_AX', supportsGeometry: false },
-          { id: 'AX____POE__AX', name: 'AX____POE__AX', label: 'AX____POE__AX', supportsGeometry: false },
-          { id: 'AX____ROE__AX', name: 'AX____ROE__AX', label: 'AX____ROE__AX', supportsGeometry: false },
+          {
+            id: 'AUX_GNSSRD',
+            name: 'AUX_GNSSRD',
+            label: 'AUX_GNSSRD',
+            supportsGeometry: false,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_GNSSRD,
+          },
+          {
+            id: 'AUX_PROQUA',
+            name: 'AUX_PROQUA',
+            label: 'AUX_PROQUA',
+            supportsGeometry: false,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_PROQUA,
+          },
+          {
+            id: 'AX____MOED_AX',
+            name: 'AX____MOED_AX',
+            label: 'AX____MOED_AX',
+            supportsGeometry: false,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_MOED,
+          },
+          {
+            id: 'AX____POE__AX',
+            name: 'AX____POE__AX',
+            label: 'AX____POE__AX',
+            supportsGeometry: false,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_POE,
+          },
+          {
+            id: 'AX____ROE__AX',
+            name: 'AX____ROE__AX',
+            label: 'AX____ROE__AX',
+            supportsGeometry: false,
+            collectionName: STAC_COLLECTIONS.SENTINEL_6_AUX_ROE,
+          },
         ],
       },
     ],
@@ -2848,6 +2881,16 @@ export const recursiveCollectionCLMS = [
               'water_extent',
             )})`,
             items: [
+              {
+                id: 'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1',
+                label: 'High Resolution Water Layer, Europe, 3-yearly, 10m/100m, (2016–present), V1',
+                type: 'productType',
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1',
+                )})`,
+              },
               {
                 id: 'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1',
                 label: 'Water Cover Duration, Europe, Yearly, 10m/100m, (2016–present), V1',

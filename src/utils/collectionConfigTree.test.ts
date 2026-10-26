@@ -5,6 +5,8 @@ import {
   findConfigNodes,
   findConfigNodesByType,
   findConfigNodesByTypeInScope,
+  getSTACCollectionNames,
+  isGeometrylessNode,
   isSTACCollectionNode,
 } from './collectionConfigTree';
 
@@ -166,10 +168,145 @@ describe('isSTACCollectionNode', () => {
     // The flag without a name is the case worth excluding: it would route to the STAC branch and
     // then contribute no collection to the payload.
     [{ id: 'S1Mosaics', supportsStacSearch: true }, false],
+    // A node whose product types each name a STAC collection owns them just the same.
+    [
+      {
+        id: 'S6AuxiliaryFiles',
+        supportsStacSearch: true,
+        items: [{ id: 'AX____POE__AX', type: 'productType', collectionName: 'sentinel-6-aux-poe' }],
+      },
+      true,
+    ],
+    // ...but product types naming nothing is the flag-without-a-name case again.
+    [{ id: 'S6AuxiliaryFiles', supportsStacSearch: true, items: [{ id: 'P', type: 'productType' }] }, false],
     [{ id: 'S1SAR_L3_IW_MCM' }, false],
     [null, false],
     [undefined, false],
   ])('isSTACCollectionNode %p -> %p', (node, expected) => {
     expect(isSTACCollectionNode(node as CollectionConfigNode | null | undefined)).toBe(expected);
+  });
+});
+
+describe('getSTACCollectionNames', () => {
+  test.each([
+    [{ id: 'S1Mosaics', collectionName: 'sentinel-1-global-mosaics' }, ['sentinel-1-global-mosaics']],
+    // A node naming no collection searches those of its product types, in config order.
+    [
+      {
+        id: 'S6AuxiliaryFiles',
+        items: [
+          { id: 'AX____POE__AX', type: 'productType', collectionName: 'sentinel-6-aux-poe' },
+          { id: 'AX____ROE__AX', type: 'productType', collectionName: 'sentinel-6-aux-roe' },
+        ],
+      },
+      ['sentinel-6-aux-poe', 'sentinel-6-aux-roe'],
+    ],
+    // Product types sharing a collection contribute it once.
+    [
+      {
+        id: 'X',
+        items: [
+          { id: 'P1', type: 'productType', collectionName: 'shared' },
+          { id: 'P2', type: 'productType', collectionName: 'shared' },
+        ],
+      },
+      ['shared'],
+    ],
+    // Product types without a collectionName are skipped, and groups are looked through.
+    [
+      {
+        id: 'X',
+        items: [
+          { id: 'P1', type: 'productType' },
+          { id: 'G', type: 'group', items: [{ id: 'P2', type: 'productType', collectionName: 'b' }] },
+        ],
+      },
+      ['b'],
+    ],
+    // The node's own collectionName is authoritative: its product types are not consulted.
+    [
+      {
+        id: 'S1Mosaics',
+        collectionName: 'sentinel-1-global-mosaics',
+        items: [{ id: 'P', type: 'productType', collectionName: 'other' }],
+      },
+      ['sentinel-1-global-mosaics'],
+    ],
+    [{ id: 'S1SAR_L3_IW_MCM' }, []],
+    [null, []],
+    [undefined, []],
+  ])('getSTACCollectionNames %p -> %p', (node, expected) => {
+    expect(getSTACCollectionNames(node as CollectionConfigNode | null | undefined)).toEqual(expected);
+  });
+});
+
+describe('getSTACCollectionNames - narrowed to ticked product types', () => {
+  const aux: CollectionConfigNode = {
+    id: 'S6AuxiliaryFiles',
+    items: [
+      { id: 'AUX_COMB__', type: 'productType', collectionName: 'sentinel-6-aux-comb' },
+      { id: 'AX____POE__AX', type: 'productType', collectionName: 'sentinel-6-aux-poe' },
+      { id: 'AX____ROE__AX', type: 'productType', collectionName: 'sentinel-6-aux-roe' },
+    ],
+  };
+
+  test('returns only the collections behind the ticked product types', () => {
+    expect(getSTACCollectionNames(aux, ['AUX_COMB__'])).toEqual(['sentinel-6-aux-comb']);
+    expect(getSTACCollectionNames(aux, ['AX____ROE__AX', 'AUX_COMB__'])).toEqual([
+      'sentinel-6-aux-comb',
+      'sentinel-6-aux-roe',
+    ]);
+  });
+
+  test.each([[[]], [undefined]])('nothing ticked (%p) stands for every product type', (productTypeIds) => {
+    expect(getSTACCollectionNames(aux, productTypeIds)).toEqual([
+      'sentinel-6-aux-comb',
+      'sentinel-6-aux-poe',
+      'sentinel-6-aux-roe',
+    ]);
+  });
+
+  test("a node's own collectionName ignores the ticked product types", () => {
+    const mosaics: CollectionConfigNode = {
+      id: 'S1Mosaics',
+      collectionName: 'sentinel-1-global-mosaics',
+      items: [{ id: 'S1SAR_L3_IW_MCM', type: 'productType' }],
+    };
+    expect(getSTACCollectionNames(mosaics, ['S1SAR_L3_IW_MCM'])).toEqual(['sentinel-1-global-mosaics']);
+  });
+});
+
+describe('isGeometrylessNode', () => {
+  const instrument = (productTypes: Record<string, unknown>[]): CollectionConfigNode => ({
+    id: 'I',
+    type: 'instrument',
+    items: productTypes.map((productType, i) => ({ id: `P${i}`, type: 'productType', ...productType })),
+  });
+
+  test('is true when every product type has supportsGeometry: false', () => {
+    expect(isGeometrylessNode(instrument([{ supportsGeometry: false }, { supportsGeometry: false }]))).toBe(
+      true,
+    );
+  });
+
+  test('is false when only some product types lack geometry', () => {
+    expect(isGeometrylessNode(instrument([{ supportsGeometry: false }, {}]))).toBe(false);
+  });
+
+  test('is false when the flag is absent, since geometry is the default', () => {
+    expect(isGeometrylessNode(instrument([{}]))).toBe(false);
+  });
+
+  test('looks through groups for product types', () => {
+    const node: CollectionConfigNode = {
+      id: 'I',
+      type: 'instrument',
+      items: [{ id: 'G', type: 'group', items: [{ id: 'P', type: 'productType', supportsGeometry: false }] }],
+    };
+    expect(isGeometrylessNode(node)).toBe(true);
+  });
+
+  test.each([[instrument([])], [null], [undefined]])('is false with no product types (%p)', (node) => {
+    expect(isGeometrylessNode(node)).toBe(false);
   });
 });

@@ -225,6 +225,7 @@ import {
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
   COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S2_EUROPE_UTM_20M_DAILY_V1,
@@ -5385,6 +5386,36 @@ temperatures of atmospheric window channels within the infrared range. LST descr
       },
     ],
     description: () => t`Water presence frequency in a hydrological year (in days).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+        layerId: '0_WL',
+      },
+    ],
+    description: () =>
+      t`Classified layer, differentiating the classes of permanent water (1), temporary water (2), and dry areas (0). The dataset can also have the following values: cloud or cloud shadow (205), sea water (253), or no data (255).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+        layerId: '1_WPI',
+      },
+    ],
+    description: () =>
+      t`Occurrence of water areas throughout the entire observation period (between 0 and 100).`,
+  },
+  {
+    match: [
+      {
+        datasourceId: COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+        layerId: '2_WCL',
+      },
+    ],
+    description: () =>
+      t`Quality layer providing an assessment of the water layer (WL) quality (between 0 and 100).`,
   },
   {
     match: [

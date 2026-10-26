@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import { isFunction } from '../../../../utils';
 import { DEFAULT_CLOUD_COVER_PERCENT } from '../../../../const';
+import { getSTACCollectionNames } from '../../../../utils/collectionConfigTree';
 
 export const CollectionFormInitialState = {
   selectedCollections: {},
@@ -225,24 +226,38 @@ export const getCollectionFormInitialState = (collectionFormConfig, formState, o
  * which is what Global Mosaics relies on: one datasetId per product type, two STAC
  * collections, one `supportsStacSearch` flag per instrument.
  *
+ * The STAC collections are resolved from the nearest node that names any (see
+ * getSTACCollectionNames), so the
+ * Find-products search and the Advanced Search payload agree on what a node searches. A match
+ * that resolves to no collection at all returns null, so the caller falls back to OData rather
+ * than sending an empty `collections` list, which the STAC API reads as "every collection" -
+ * the same rule isSTACCollectionNode applies on the Advanced Search path.
+ *
  * @param {string} datasetId - The visualization datasetId from Redux state
  * @param {Array} collections - The raw recursiveCollections array from collectionFormConfig.js
- * @returns {{ collectionName: string, collectionId: string, instrumentId?: string, productTypeId?: string } | null}
+ * @returns {{ collectionNames: string[], collectionId: string, instrumentId?: string, productTypeId?: string } | null}
  */
 export const getSTACConfigForDatasetId = (datasetId, collections) => {
   if (!datasetId || !Array.isArray(collections)) {
     return null;
   }
 
+  // First node in the chain (most specific first) that names any STAC collection. A match whose
+  // chain names none is not STAC-searchable, so it reports null instead of an empty list.
+  const withCollections = (config, ...nodes) => {
+    const collectionNames = nodes.map(getSTACCollectionNames).find((names) => names.length > 0);
+    return collectionNames ? { collectionNames, ...config } : null;
+  };
+
   for (const entry of collections) {
     if (entry.datasetId === datasetId && entry.supportsStacSearch) {
-      return { collectionName: entry.collectionName, collectionId: entry.id };
+      return withCollections({ collectionId: entry.id }, entry);
     }
 
     if (Array.isArray(entry.items)) {
       for (const item of entry.items) {
         if (item.datasetId === datasetId && item.supportsStacSearch) {
-          return { collectionName: item.collectionName ?? entry.collectionName, collectionId: entry.id };
+          return withCollections({ collectionId: entry.id }, item, entry);
         }
 
         if (!Array.isArray(item.items)) {
@@ -256,12 +271,12 @@ export const getSTACConfigForDatasetId = (datasetId, collections) => {
           if (!(productType.supportsStacSearch || item.supportsStacSearch || entry.supportsStacSearch)) {
             continue;
           }
-          return {
-            collectionName: productType.collectionName ?? item.collectionName ?? entry.collectionName,
-            collectionId: entry.id,
-            instrumentId: item.id,
-            productTypeId: productType.id,
-          };
+          return withCollections(
+            { collectionId: entry.id, instrumentId: item.id, productTypeId: productType.id },
+            productType,
+            item,
+            entry,
+          );
         }
       }
     }

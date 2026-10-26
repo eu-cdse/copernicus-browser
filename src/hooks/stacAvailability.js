@@ -332,7 +332,10 @@ const getStacCollectionsFromFilter = (filterString) => {
       }
 
       case ODataCollections.S6.label: {
-        // SENTINEL-6
+        // SENTINEL-6. Only reached from an OData filter, and the one S6 instrument in Advanced
+        // Search (aux files) now searches STAC directly, so this availability hint is not hit from
+        // there. Kept for OData filters naming the collection; the aux collections are not listed
+        // because a STAC search reports their availability itself (getAvailabilityInfoForStacIds).
         const timelinessSuffixes = resolveTimelinessSuffixes(filterContains);
         addWithSuffixes(STAC_BASE_IDS.S6_P4_1B, timelinessSuffixes);
         addWithSuffixes(STAC_BASE_IDS.S6_P4_2, timelinessSuffixes);

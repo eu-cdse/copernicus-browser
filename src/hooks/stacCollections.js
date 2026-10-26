@@ -169,6 +169,12 @@ export const STAC_COLLECTIONS = {
   SENTINEL_6_AMR_C_NRT: 'sentinel-6-amr-c-nrt',
   SENTINEL_6_AMR_C_NTC: 'sentinel-6-amr-c-ntc',
   SENTINEL_6_AMR_C_STC: 'sentinel-6-amr-c-stc',
+  SENTINEL_6_AUX_COMB: 'sentinel-6-aux-comb',
+  SENTINEL_6_AUX_GNSSRD: 'sentinel-6-aux-gnssrd',
+  SENTINEL_6_AUX_PROQUA: 'sentinel-6-aux-proqua',
+  SENTINEL_6_AUX_MOED: 'sentinel-6-aux-moed',
+  SENTINEL_6_AUX_POE: 'sentinel-6-aux-poe',
+  SENTINEL_6_AUX_ROE: 'sentinel-6-aux-roe',
 
   // Landsat
   LANDSAT_C2_L1_OLI: 'landsat-c2-l1-oli',

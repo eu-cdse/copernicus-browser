@@ -1365,6 +1365,12 @@ export const DEFAULT_THEMES = [
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
         }/ogc/wms/ba009b-YOUR-INSTANCEID-HERE`,
       },
+      {
+        name: 'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/74e385-YOUR-INSTANCEID-HERE`,
+      },
     ],
   },
   {

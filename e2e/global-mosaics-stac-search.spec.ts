@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test';
 import { HEAVY_TEST_TIMEOUT } from './fixtures/timeouts';
-import { waitForStacSearch, waitForStacSearchResponse } from './fixtures/helpers';
+import { selectSearchCheckboxPath, waitForStacSearch, waitForStacSearchResponse } from './fixtures/helpers';
 import { ODATA_PRODUCTS_URL } from './fixtures/urls';
 
 // Navigates via the Search tab rather than a `visualizationUrl` deep link (as
@@ -8,13 +8,8 @@ import { ODATA_PRODUCTS_URL } from './fixtures/urls';
 // so a deep link would need three separate AES ciphertexts encrypted with the app's own
 // VITE_CDAS_ENCRYPT_SECRET. The Search tab reaches the same STAC search path through the
 // Advanced Search form, using stable, human-readable labels instead.
-async function selectMosaicProductType(page: Page, instrument: string, productType: string) {
-  await page.goto('/');
-  await page.getByRole('tab', { name: 'Search' }).click();
-  await page.getByRole('checkbox', { name: 'Sentinel Mosaics', exact: true }).check();
-  await page.getByRole('checkbox', { name: instrument, exact: true }).check();
-  await page.getByRole('checkbox', { name: productType, exact: true }).check();
-}
+const selectMosaicProductType = (page: Page, instrument: string, productType: string) =>
+  selectSearchCheckboxPath(page, ['Sentinel Mosaics', instrument, productType]);
 
 // Nav + Keycloak SSO settle + a live STAC request/response chain exceed the default 30s budget.
 test.describe.configure({ timeout: HEAVY_TEST_TIMEOUT });

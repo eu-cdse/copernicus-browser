@@ -273,6 +273,13 @@ describe('normalizeSTACResult / normalizeResult - STAC feature mapping', () => {
     expect(result.geometry).toEqual(baseSentinel2Feature.geometry);
   });
 
+  test('normalises a null geometry (product without a footprint) to undefined', () => {
+    // PreviewLayer and the other geometry consumers guard against undefined (what OData results
+    // without a footprint produce), but Object.keys(null) would throw.
+    const result = normalizeSTACResult({ ...baseSentinel2Feature, geometry: null }) as NormalizedSTACResult;
+    expect(result.geometry).toBeUndefined();
+  });
+
   test('exposes the thumbnail asset href as previewUrl', () => {
     const result = normalizeSTACResult(baseSentinel2Feature) as NormalizedSTACResult;
     expect(result.previewUrl).toBe('https://catalogue.dataspace.copernicus.eu/quicklooks/S2A_MSIL2A.jpg');

@@ -197,7 +197,7 @@ const FindProductsButton = ({
   };
 
   const buildSTACPayload = (stacConfig) => {
-    const payload = { collections: [stacConfig.collectionName], limit: 50 };
+    const payload = { collections: stacConfig.collectionNames, limit: 50 };
 
     const dsh = getDataSourceHandler(datasetId);
     const { fromTime: fromMoment, toTime: toMoment } = getFromTimeToTime(datasetId);

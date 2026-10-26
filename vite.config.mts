@@ -21,6 +21,16 @@ export default defineConfig({
   plugins: [react(), svgrPlugin(), nodePolyfills()],
   build: {
     outDir: './build',
+    rollupOptions: {
+      output: {
+        // Module workers need a JavaScript MIME type, and not every web server maps `.mjs` to one. Emit
+        // maplibre-gl's worker as `.js` so the deployed host doesn't need extra MIME config.
+        assetFileNames: (assetInfo) =>
+          (assetInfo.names ?? []).some((name) => name.startsWith('maplibre-gl-worker'))
+            ? 'assets/[name]-[hash].js'
+            : 'assets/[name]-[hash][extname]',
+      },
+    },
     commonjsOptions: {
       transformMixedEsModules: true,
     },

@@ -4159,6 +4159,33 @@
         ],
         "datasets": []
     },
+    "74e385-YOUR-INSTANCEID-HERE": {
+        "title": "[NEW] CLMS | clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1",
+        "layers": [
+            {
+                "id": "0_WL",
+                "name": "WL",
+                "description": "Water classification",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/74e385-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=0_WL&style=default"
+            },
+            {
+                "id": "1_WPI",
+                "name": "WPI",
+                "description": "Water probability index",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/74e385-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=1_WPI&style=default"
+            },
+            {
+                "id": "2_WCL",
+                "name": "WCL",
+                "description": "Water confidence layer",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/74e385-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=2_WCL&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "75537a-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | Bio-geophysical Parameters | Vegetation | fcover_global_300m_10daily_v1_RT6",
         "layers": [

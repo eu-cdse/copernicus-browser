@@ -707,6 +707,14 @@ const getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown = () => t`
 
 const getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown = () => t`
   This metadata refers to the CORINE Land Cover Plus Land Use, Land-Use Change and Forestry Instance (CLCplus LULUCF Instance), an annually updated, pan-European, spatially consistent and seamless geospatial proxy for land use reporting under the LULUCF regulation. The product is delivered as a single raster layer with a spatial resolution of 100 m, derived from multiple pan-European Copernicus Land Monitoring Service (CLMS) high resolution input datasets. The LULUCF Instance is available for the reference years 2018, 2021, 2022 and 2023, with production moving to an annual update cycle starting from the 2021 product. Each raster cell represents a dominant LULUCF land-use class, assigned according to thematic and spatial rulesets implemented during the extraction process. While each pixel corresponds primarily to one of the six main LULUCF land use categories - forest land, grassland, cropland, settlements, wetlands, and other lands - the dataset further differentiates these categories into sub classes, resulting in a total of 27 classes. This classification structure supports greenhouse gas reporting and other applications within the LULUCF sector by providing a harmonised and policy relevant representation of land use across Europe. More information [here](https://land.copernicus.eu/en/products/clcplus-lulucf-instance).`;
+const getCopernicusClmsWsiHighResolutionWaterLayerEuropeLaea10m3yearlyV1Markdown = () => t`
+  The **High Resolution Water Layer (HRWL)** product provides classified maps showing permanent water, temporary water, dry areas, and sea water. It is a multi-annual product, typically covering a **7-year period**, and is updated every 3 years. It is based on the annual Water Cover Duration (WCD) production, which combines water masks from **Sentinel-1** radar and **Sentinel-2** optical imagery with Water/Ice Cover data from Sentinel-2 (WIC S2).
+  
+  The product is generated at the European scale with a spatial resolution of **10 m × 10 m**.
+  
+  **Data availability**: HRWL is available for the reference years 2021 and 2024, covering the periods **01/09/2016**–31/12/2021 and **01/09/2018**–31/12/2024, respectively. The dataset can be downloaded in multiple projections and pixel spacings.
+  
+  More information [here](https://land.copernicus.eu/en/products/water-bodies/high-resolution-water-layer).`;
 
 export {
   getCLMSCollectionMarkdown,
@@ -886,4 +894,5 @@ export {
   getCopernicusClmsVlccMainCropHarvestEurope10mYearlyV1Markdown,
   getCopernicusClmsWsiWaterCoverDurationEuropeUtm10mYearlyV1Markdown,
   getCopernicusClmsClcplusLulucfInstanceEurope100mYearlyV1Markdown,
+  getCopernicusClmsWsiHighResolutionWaterLayerEuropeLaea10m3yearlyV1Markdown,
 };
