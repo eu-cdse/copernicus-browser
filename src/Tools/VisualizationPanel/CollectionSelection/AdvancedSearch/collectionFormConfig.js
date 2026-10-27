@@ -20,7 +20,7 @@ import {
   AttributeConsolidationPeriodValues,
   AttributeCountryCodeValues,
 } from '../../../../api/OData/assets/attributes';
-import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
+import { ACCESS_ROLES, EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import {
   createAcrossTrackIncidenceAngleFilter,
   createBiogeophysicalCloudCoverFilter,
@@ -35,6 +35,7 @@ import { NumericInput } from './filters/NumericInput';
 import { AcrossTrackIncidenceAngleTag } from './filters/CustomTags';
 import {
   CDAS_LANDSAT_MOSAIC,
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
@@ -1075,6 +1076,30 @@ export const collections = [
         render: DefaultInput,
         type: 'text',
         placeholder: FormatedAttributeNames.productType(),
+      },
+    ],
+  },
+  {
+    id: ODataCollections.CCM_THERMAL.id,
+    label: ODataCollections.CCM_THERMAL.label,
+    type: 'collection',
+    supportsCloudCover: false,
+    hasAccess: ({ userToken }) => hasRole(userToken, ACCESS_ROLES.ORORATECH_CCM),
+    instruments: [
+      {
+        id: 'MR',
+        label: 'MR',
+        supportsInstrumentName: false,
+        supportsStacSearch: true,
+        collectionName: STAC_COLLECTIONS.CCM_THERMAL_LST_MR,
+        productTypes: [
+          {
+            id: 'IR1_LST_L2',
+            name: 'IR1_LST_L2',
+            label: 'Level-2 LST',
+            datasetId: CDSE_CCM_MR_THERMAL_LST_COLLECTION,
+          },
+        ],
       },
     ],
   },
@@ -2886,9 +2911,9 @@ export const recursiveCollectionCLMS = [
                 label: 'High Resolution Water Layer, Europe, 3-yearly, 10m/100m, (2016–present), V1',
                 type: 'productType',
                 customFilterExpression: `(${FilterElement.Attribute(
-                  ODataAttributes.datasetIdentifier,
+                  ODataAttributes.datasetAlias,
                   ODataFilterOperator.eq,
-                  'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1',
+                  'clms_wsi_high-resolution-water-layer',
                 )})`,
               },
               {

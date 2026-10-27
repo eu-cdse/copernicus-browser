@@ -33,6 +33,7 @@ import {
   S3OLCIL2_WATER,
   S3OLCIL2_LAND,
   S3SLSTRL2_CDAS,
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -2270,6 +2271,11 @@ export const PREDEFINED_LAYERS_METADATA = [
     match: [{ datasourceId: COPERNICUS_CLMS_SWI_1KM_DAILY, layerId: 'SWI100' }],
     description: () =>
       t`SWI computed with a characteristic time length of 100 days.  The Soil Water index (SWI) provides global daily information about moisture conditions in different soil depths. Near Real Time Data uses the EUMETSAT ASCAT-25km SSM product in orbit format as input data. The Archive of ASCAT SWI uses reprocessed SSM data from TU Wien.`,
+  },
+  {
+    match: [{ datasourceId: CDSE_CCM_MR_THERMAL_LST_COLLECTION, layerId: 'LST' }],
+    description: () =>
+      t`Land Surface Temperature (LST) is the thermodynamic temperature of Earth’s surface. LST is a key variable controlling energy, and water fluxes over the land surface and atmosphere interface. In view of increasing extreme temperature events and a growing population exposed to these events, LST is increasingly relevant to sustainably manage food and water systems and urban living conditions.`,
   },
   {
     match: [

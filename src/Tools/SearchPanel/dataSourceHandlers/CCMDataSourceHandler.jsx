@@ -1,5 +1,6 @@
 import { DATASOURCES } from '../../../const';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -12,6 +13,7 @@ import { t } from 'ttag';
 import AbstractBYOCDataSourceHandler from './AbstractBYOCDataSourceHandler';
 import {
   getCCMCollectionMarkdown,
+  getCCMMRThermalLSTMarkdown,
   getCCMVHRImage2018Markdown,
   getCCMVHRImage2021Markdown,
   getCCMVHRImage2024Markdown,
@@ -19,6 +21,7 @@ import {
 } from './DatasourceRenderingComponents/dataSourceTooltips/CCMTooltip';
 
 import {
+  CCM_MR_THERMAL_LST_BANDS,
   CCM_VHR_IMAGE_2018_BANDS,
   CCM_VHR_IMAGE_2021_BANDS,
   CCM_VHR_IMAGE_2024_BANDS,
@@ -32,6 +35,7 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
     [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: t`VHR Europe 2021`,
     [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: t`VHR Europe 2024`,
     [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: t`VHR Europe 2024 Mosaic`,
+    [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: t`MR Thermal LST`,
   });
 
   urls = {
@@ -39,6 +43,7 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
     [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: [],
     [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: [],
     [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: [],
+    [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: [],
   };
   datasets = [];
   allLayers = [];
@@ -62,6 +67,10 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
       min: 7,
       max: 25,
     },
+    [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: {
+      min: 6,
+      max: 25,
+    },
   };
 
   KNOWN_COLLECTIONS = CCM_KNOWN_COLLECTIONS;
@@ -71,6 +80,7 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
     [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: LocationIdSHv3.cdse,
     [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: LocationIdSHv3.cdse,
     [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: LocationIdSHv3.cdse,
+    [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: LocationIdSHv3.cdse,
   };
 
   MIN_MAX_DATES = {
@@ -90,6 +100,10 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
       minDate: moment.utc('2024-01-01'),
       maxDate: moment.utc('2024-01-01'),
     },
+    [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: {
+      minDate: moment.utc('2025-01-01'),
+      maxDate: moment.utc('2025-12-31'),
+    },
   };
 
   getDescription = () => getCCMCollectionMarkdown();
@@ -104,6 +118,8 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
         return CCM_VHR_IMAGE_2024_BANDS;
       case CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION:
         return CCM_VHR_IMAGE_2024_MOSAIC_BANDS;
+      case CDSE_CCM_MR_THERMAL_LST_COLLECTION:
+        return CCM_MR_THERMAL_LST_BANDS;
       default:
         return null;
     }
@@ -119,6 +135,8 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
         return getCCMVHRImage2024Markdown();
       case CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION:
         return getCCMVHRImageMosaic2024Markdown();
+      case CDSE_CCM_MR_THERMAL_LST_COLLECTION:
+        return getCCMMRThermalLSTMarkdown();
       default:
         return null;
     }
@@ -130,7 +148,11 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
     );
   }
 
-  getDefaultScalingFactor(_datasetId) {
+  getDefaultScalingFactor(datasetId) {
+    // V100 holds Kelvin × 100 (~24000-31000), so scale 310 K to 1
+    if (datasetId === CDSE_CCM_MR_THERMAL_LST_COLLECTION) {
+      return 1 / 31000;
+    }
     return 1 / 1000;
   }
 

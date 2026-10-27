@@ -19,6 +19,7 @@ import {
   S1_CDAS_IW_VVVH,
   S1_CDAS_IW_HH,
   S1_CDAS_IW_HHHV,
+  CCM_THERMAL_COLLECTIONS,
   CCM_VHR_COLLECTIONS,
   DEM_COPERNICUS_30_CDAS,
 } from '../SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -37,6 +38,7 @@ import {
 } from '../VisualizationPanel/CollectionSelection/CLMSCollectionSelection.utils';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import {
+  doesUserHaveAccessToCCMThermalVisualization,
   doesUserHaveAccessToCCMVisualization,
   doesUserHaveAccessToCopDem30Visualization,
 } from '../VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
@@ -166,6 +168,13 @@ const visualizationButtonDisabled = (tile, user) => {
 
   const hasAccessToCCMVisualization = doesUserHaveAccessToCCMVisualization(user.access_token);
   if (CCM_VHR_COLLECTIONS.includes(datasetId) && !hasAccessToCCMVisualization) {
+    return ErrorMessage.CCMAccessRoleNotEligible();
+  }
+
+  if (
+    CCM_THERMAL_COLLECTIONS.includes(datasetId) &&
+    !doesUserHaveAccessToCCMThermalVisualization(user.access_token)
+  ) {
     return ErrorMessage.CCMAccessRoleNotEligible();
   }
 

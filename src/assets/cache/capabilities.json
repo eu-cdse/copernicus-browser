@@ -3497,6 +3497,19 @@
         ],
         "datasets": []
     },
+    "63be0c-YOUR-INSTANCEID-HERE": {
+        "title": "Ororatech MR Thermal LST",
+        "layers": [
+            {
+                "id": "LST",
+                "name": "LST",
+                "description": "",
+                "dataset": "CUSTOM",
+                "legendUrl": "https://sh.dataspace.copernicus.eu/ogc/wms/63be0c-YOUR-INSTANCEID-HERE?request=GetLegendGraphic&service=WMS&layer=LST&style=default"
+            }
+        ],
+        "datasets": []
+    },
     "648c40-YOUR-INSTANCEID-HERE": {
         "title": "[NEW] CLMS | CPCST 10m Yearly (2017-present)",
         "layers": [

@@ -1141,3 +1141,57 @@ describe('createSTACSearchPayload - Sentinel-6 aux', () => {
     expect(JSON.stringify(payload.filter)).toContain('s_intersects');
   });
 });
+
+describe('createSTACSearchPayload - CCM Thermal', () => {
+  const ccmThermalConfig = [
+    {
+      id: 'CCM_THERMAL',
+      type: 'collection',
+      supportsCloudCover: false,
+      items: [
+        {
+          id: 'MR',
+          type: 'instrument',
+          supportsStacSearch: true,
+          collectionName: 'ccm-thermal-lst-mr',
+          supportsInstrumentName: false,
+          items: [{ id: 'IR1_LST_L2', type: 'productType' }],
+        },
+      ],
+    },
+  ];
+
+  const expectedFilter = { op: '=', args: [{ property: 'product:type' }, 'IR1_LST_L2'] };
+
+  test('scopes the search to the CCM Thermal STAC collection and the selected product type', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          CCM_THERMAL: {
+            type: 'collection',
+            MR: { type: 'instrument', IR1_LST_L2: { type: 'productType' } },
+          },
+        },
+      },
+      collectionFormConfig: ccmThermalConfig,
+    });
+
+    expect(payload.collections).toEqual(['ccm-thermal-lst-mr']);
+    expect(payload.filter).toEqual(expectedFilter);
+    expect(JSON.stringify(payload.filter)).not.toContain('instruments');
+  });
+
+  test('expands to the configured product type when only the MR instrument is selected', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: {
+          CCM_THERMAL: { type: 'collection', MR: { type: 'instrument' } },
+        },
+      },
+      collectionFormConfig: ccmThermalConfig,
+    });
+
+    expect(payload.collections).toEqual(['ccm-thermal-lst-mr']);
+    expect(payload.filter).toEqual(expectedFilter);
+  });
+});

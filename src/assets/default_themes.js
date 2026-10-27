@@ -266,6 +266,12 @@ export const DEFAULT_THEMES = [
         }/ogc/wms/49eaa5-YOUR-INSTANCEID-HERE`,
       },
       {
+        name: 'CCM MR Thermal LST',
+        url: `${
+          global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL
+        }/ogc/wms/63be0c-YOUR-INSTANCEID-HERE`,
+      },
+      {
         name: 'CLMS Vegetation indices NDVI',
         url: `${
           global.window ? global.window.API_ENDPOINT_CONFIG.SH_SERVICES_URL : FALLBACK_SH_SERVICES_URL

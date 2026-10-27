@@ -26,8 +26,13 @@ import { isDefaultConfigurationReachable } from '../utils/themes.utils';
 import './ThemesProvider.scss';
 import { RRD_GROUP } from '../api/RRD/assets/rrd.utils';
 import { RRD_THEMES } from '../assets/cache/rrdThemes';
-import { doesUserHaveAccessToCCMVisualization } from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
+  doesUserHaveAccessToCCMThermalVisualization,
+  doesUserHaveAccessToCCMVisualization,
+} from '../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/ccmProductTypeAccessRightsConfig';
+import {
+  CCM_THERMAL_COLLECTIONS,
+  CCM_THERMAL_THEME_NAMES,
   CCM_VHR_COLLECTIONS,
   CCM_VHR_THEME_NAMES,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -108,6 +113,15 @@ class ThemesProvider extends React.Component {
     // account) based on login state. Letting an anonymous user fall through instead would leave the
     // unloadable CCM datasetId in the store and reproduce the cryptic "Invalid URL" error (#718).
     if (isCCMDataset && !doesUserHaveAccessToCCMVisualization(this.props.user?.access_token)) {
+      await this.showCCMAccessDeniedModal();
+      return;
+    }
+
+    // Thermal CCM collections are gated by the separate `ororatech-ccm` role.
+    if (
+      CCM_THERMAL_COLLECTIONS.includes(this.props.datasetId) &&
+      !doesUserHaveAccessToCCMThermalVisualization(this.props.user?.access_token)
+    ) {
       await this.showCCMAccessDeniedModal();
       return;
     }
@@ -506,6 +520,13 @@ class ThemesProvider extends React.Component {
       selectedTheme = {
         ...selectedTheme,
         content: selectedTheme.content.filter((t) => !CCM_VHR_THEME_NAMES.includes(t.name)),
+      };
+    }
+    const hasAccessToCCMThermalVisualization = doesUserHaveAccessToCCMThermalVisualization(user.access_token);
+    if (!hasAccessToCCMThermalVisualization && selectedTheme.id === DEFAULT_THEME_ID) {
+      selectedTheme = {
+        ...selectedTheme,
+        content: selectedTheme.content.filter((t) => !CCM_THERMAL_THEME_NAMES.includes(t.name)),
       };
     }
     const failedThemeParts = await prepareDataSourceHandlers(selectedTheme);

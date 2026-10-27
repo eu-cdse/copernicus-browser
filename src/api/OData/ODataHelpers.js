@@ -42,9 +42,11 @@ import {
   S3SYNERGY_L2_V10,
   S3SYNERGY_L2_SYN,
   S3SYNERGY_L2_VG1,
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+  CCM_THERMAL_COLLECTIONS,
   CCM_VHR_COLLECTIONS,
   COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   COPERNICUS_CLMS_BURNT_AREA_DAILY,
@@ -338,6 +340,7 @@ const PRODUCT_TYPE_TO_DATASETID = {
   VHR_IMAGE_2018: CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   VHR_IMAGE_2021: CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   VHR_IMAGE_2024: CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+  IR1_LST_L2: CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   ndvi_global_1km_10daily_v3: COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL,
   dmp_global_1km_10daily_v2: COPERNICUS_CLMS_DMP_1KM_10DAILY,
   lai_global_1km_10daily_v2: COPERNICUS_CLMS_LAI_1KM_10DAILY,
@@ -504,11 +507,27 @@ const PRODUCT_TYPE_TO_DATASETID = {
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S2_EUROPE_UTM_20M_YEARLY_V1,
   'clms_wsi_snow-phenology-s1-s2_europe_utm_60m_yearly_v1':
     COPERNICUS_CLMS_WSI_SNOW_PHENOLOGY_S1_S2_EUROPE_UTM_60M_YEARLY_V1,
+  // WSI products that exist in several projection/resolution variants all visualize through one
+  // dataset (the Visualize tab reprojects and resamples). Keep the canonical key first for each
+  // dataset: getProductTypeFromDatasetId's reverse lookup returns the first key matching a value,
+  // and that key is the id of the Search tab item.
   'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1':
+    COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  'clms_wsi_water-cover-duration_europe_laea_10m_yearly_v1':
+    COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+  'clms_wsi_water-cover-duration_europe_laea_100m_yearly_v1':
     COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
   'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1':
     COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+  'clms_wsi_high-resolution-water-layer_europe_utm_10m_3yearly_v1':
+    COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+  'clms_wsi_high-resolution-water-layer_europe_laea_100m_3yearly_v1':
+    COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
   'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1':
+    COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+  'clms_wsi_ice-cover-duration_europe_laea_20m_yearly_v1':
+    COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+  'clms_wsi_ice-cover-duration_europe_laea_100m_yearly_v1':
     COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
   'clms_wsi_water-ice-cover-s1_europe_utm_60m_daily_v1':
     COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_EUROPE_UTM_60M_DAILY_V1,
@@ -2146,6 +2165,16 @@ export const getODataCollectionInfoFromDatasetId = (datasetId, { orbitDirection,
       {
         id: ODataCollections.OPTICAL.id,
         instrument: 'VHR_EUROPE',
+        productType: getProductTypeFromDatasetId(datasetId),
+      },
+    ];
+  }
+
+  if (CCM_THERMAL_COLLECTIONS.includes(datasetId)) {
+    return [
+      {
+        id: ODataCollections.CCM_THERMAL.id,
+        instrument: 'MR',
         productType: getProductTypeFromDatasetId(datasetId),
       },
     ];

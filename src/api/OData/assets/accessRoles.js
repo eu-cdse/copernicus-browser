@@ -13,4 +13,5 @@ export const ACCESS_ROLES = {
   LANDSAT_ACCESS: 'landsat-access',
   COPERNICUS_SERVICES: 'copernicus-service',
   MODIS_ACCESS: 'modis-access',
+  ORORATECH_CCM: 'ororatech-ccm',
 };

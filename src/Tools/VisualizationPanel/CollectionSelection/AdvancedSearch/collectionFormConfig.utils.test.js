@@ -4,6 +4,7 @@ import { ODataCollections } from '../../../../api/OData/ODataTypes';
 import { STAC_COLLECTIONS } from '../../../../hooks/stacCollections';
 import {
   CDAS_LANDSAT_MOSAIC,
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
@@ -39,6 +40,19 @@ describe('getSTACConfigForDatasetId', () => {
       const config = getSTACConfigForDatasetId(CDAS_LANDSAT_MOSAIC, recursiveCollections);
       expect(config.instrumentId).toBeUndefined();
       expect(config.productTypeId).toBeUndefined();
+    });
+  });
+
+  describe('CCM thermal (collection -> instrument -> productType)', () => {
+    test('resolves MR Thermal LST to the STAC collection, instrument and product type', () => {
+      expect(
+        getSTACConfigForDatasetId(CDSE_CCM_MR_THERMAL_LST_COLLECTION, recursiveCollections),
+      ).toStrictEqual({
+        collectionNames: [STAC_COLLECTIONS.CCM_THERMAL_LST_MR],
+        collectionId: ODataCollections.CCM_THERMAL.id,
+        instrumentId: 'MR',
+        productTypeId: 'IR1_LST_L2',
+      });
     });
   });
 

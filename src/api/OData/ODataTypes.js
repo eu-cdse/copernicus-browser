@@ -80,6 +80,9 @@ const ODataCollections = {
   OPTICAL: { id: 'OPTICAL', label: 'CCM Optical', collection: 'CCM' },
   DEM: { id: 'DEM', label: 'Copernicus DEM', collection: 'CCM' },
   CCM_SAR: { id: 'CCM_SAR', label: 'CCM SAR', collection: 'CCM' },
+  // STAC-only (OroraTech): deliberately no OData `collection`, so it stays out of the OData-based CCM paths
+  // (see CCM_COLLECTION_IDS in hooks/stac.utils.js). Its STAC collection is set on the MR instrument.
+  CCM_THERMAL: { id: 'CCM_THERMAL', label: 'CCM Thermal' },
   CLMS_BIOGEOPHYSICAL_PARAMETERS: {
     id: 'CLMS_BIOGEOPHYSICAL_PARAMETERS',
     label: 'CLMS Bio-geophysical Parameters',

@@ -42,6 +42,27 @@ export const doesUserHaveAccessToCCMVisualization = (accessToken) => {
   return userRoles.some((role) => ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION.includes(role));
 };
 
+// OroraTech thermal collections (MR Thermal LST) are gated solely by the `ororatech-ccm` role,
+// independently of ROLES_WITH_ACCESS_TO_CCM_VISUALIZATION. Also consumed by
+// scripts/sync-private-collection-access.ts (the CCM Thermal ACL-sync group, issue #1316) so the
+// role allowed to see the collection in the browser and the role synced to its private collection
+// ACL can never drift apart.
+export const ROLES_WITH_ACCESS_TO_CCM_THERMAL_VISUALIZATION = [ACCESS_ROLES.ORORATECH_CCM];
+
+export const doesUserHaveAccessToCCMThermalVisualization = (accessToken) => {
+  if (accessToken === null || accessToken === undefined) {
+    return false;
+  }
+
+  const userRoles = jwtDecode(accessToken).realm_access?.roles;
+
+  if (userRoles === undefined) {
+    return false;
+  }
+
+  return userRoles.some((role) => ROLES_WITH_ACCESS_TO_CCM_THERMAL_VISUALIZATION.includes(role));
+};
+
 // Also consumed by scripts/sync-private-collection-access.ts (the COP DEM 30 ACL-sync group,
 // issue #1251) so the roles allowed to see the COP DEM 30m visualization in the browser and the
 // roles synced to its private collection ACL can never drift apart. Includes public-ccm and

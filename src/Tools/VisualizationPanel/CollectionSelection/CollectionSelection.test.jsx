@@ -10,6 +10,8 @@ import { externalLayersSlice } from '../../../store/slices/externalLayersSlice';
 import { panelSlice } from '../../../store/slices/panelSlice';
 import { getDataSourceHandler } from '../../SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
+  CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
   COPERNICUS_CLMS_DMP_300M_10DAILY_RT0,
@@ -30,6 +32,15 @@ const CCM_ROLE_ACCESS_TOKEN = [
   Buffer.from(JSON.stringify({ realm_access: { roles: ['public-ccm'] } })).toString('base64url'),
   '',
 ].join('.');
+// CCM VHR role (copernicus-services-ccm) and the OroraTech thermal role (ororatech-ccm).
+const makeRolesToken = (roles) =>
+  [
+    Buffer.from(JSON.stringify({ alg: 'none', typ: 'JWT' })).toString('base64url'),
+    Buffer.from(JSON.stringify({ realm_access: { roles } })).toString('base64url'),
+    '',
+  ].join('.');
+const CCM_VHR_ROLE_ACCESS_TOKEN = makeRolesToken(['copernicus-services-ccm']);
+const ORORATECH_ROLE_ACCESS_TOKEN = makeRolesToken(['ororatech-ccm']);
 const NO_CCM_ROLE_ACCESS_TOKEN = [
   Buffer.from(JSON.stringify({ alg: 'none', typ: 'JWT' })).toString('base64url'),
   Buffer.from(JSON.stringify({ realm_access: { roles: [] } })).toString('base64url'),
@@ -80,6 +91,29 @@ const mockDemCollectionGroups = [
         dataset: 'DEM_COPERNICUS_90_CDAS',
         title: 'Copernicus 90',
         datasource: 'DEM CDAS',
+        getDescription: () => '',
+      },
+    ],
+  },
+];
+
+const mockCcmCollectionGroups = [
+  ...mockCollectionGroups,
+  {
+    datasource: DATASOURCES.CCM,
+    title: 'Copernicus Contributing Missions',
+    preselectedDataset: CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+    collections: [
+      {
+        dataset: CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
+        title: 'VHR Europe 2024',
+        datasource: DATASOURCES.CCM,
+        getDescription: () => '',
+      },
+      {
+        dataset: CDSE_CCM_MR_THERMAL_LST_COLLECTION,
+        title: 'MR Thermal LST',
+        datasource: DATASOURCES.CCM,
         getDescription: () => '',
       },
     ],
@@ -348,6 +382,50 @@ describe('CollectionSelection', () => {
       });
 
       expect(store.getState().visualization.datasetId).toBe(DEM_COPERNICUS_90_CDAS);
+    });
+  });
+
+  describe('CCM collection - VHR and MR Thermal LST gating (issue #1316)', () => {
+    beforeEach(() => {
+      mockCreateCollectionGroupsFromDataSourceHandlers = jest.fn(() => mockCcmCollectionGroups);
+      getDataSourceHandler.mockReset();
+      getDataSourceHandler.mockReturnValue(undefined);
+    });
+
+    afterEach(() => {
+      mockCreateCollectionGroupsFromDataSourceHandlers = jest.fn(() => mockCollectionGroups);
+    });
+
+    const renderExpanded = (accessToken, datasetId) =>
+      renderComponent({
+        dataSourcesInitialized: true,
+        dataSourcesReadyVersion: 0,
+        dataSourcesLoading: false,
+        datasetId,
+        collectionPanelExpanded: true,
+        user: { access_token: accessToken },
+      });
+
+    it('shows only VHR datasets to a user with a CCM VHR role but without ororatech-ccm', () => {
+      renderExpanded(CCM_VHR_ROLE_ACCESS_TOKEN, CDSE_CCM_VHR_IMAGE_2024_COLLECTION);
+
+      expect(screen.getByText('VHR Europe 2024')).toBeInTheDocument();
+      expect(screen.queryByText('MR Thermal LST')).not.toBeInTheDocument();
+    });
+
+    it('shows only MR Thermal LST to a user with only the ororatech-ccm role', () => {
+      renderExpanded(ORORATECH_ROLE_ACCESS_TOKEN, CDSE_CCM_MR_THERMAL_LST_COLLECTION);
+
+      expect(screen.getByText('MR Thermal LST')).toBeInTheDocument();
+      expect(screen.queryByText('VHR Europe 2024')).not.toBeInTheDocument();
+    });
+
+    it('hides the whole CCM group from a user with neither role', () => {
+      renderExpanded(NO_CCM_ROLE_ACCESS_TOKEN, 'S2L2A');
+
+      expect(screen.queryByText('VHR Europe 2024')).not.toBeInTheDocument();
+      expect(screen.queryByText('MR Thermal LST')).not.toBeInTheDocument();
+      expect(screen.queryByText('Copernicus Contributing Missions')).not.toBeInTheDocument();
     });
   });
 

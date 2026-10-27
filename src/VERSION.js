@@ -1,1 +1,1 @@
-export const VERSION_INFO = { tag: 'v1.61.0', branch: 'v1.61.0', commit: 'a7da1a36953514f91072ab8bf70ecc5f7f66367b' }
+export const VERSION_INFO = { tag: 'v1.62.0', branch: 'v1.62.0', commit: 'c16919b7b6a5677a8aa0c9dffc9da937da2e617f' }

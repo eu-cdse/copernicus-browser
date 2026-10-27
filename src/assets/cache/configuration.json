@@ -52104,6 +52104,81 @@
             }
         }
     ],
+    "63be0c-YOUR-INSTANCEID-HERE": [
+        {
+            "id": "LST",
+            "title": "LST",
+            "description": "",
+            "styles": [
+                {
+                    "name": "default",
+                    "description": "Default layer style",
+                    "evalScript": "//VERSION=3\nfunction setup() {\n  return {\n    input: [{\n      bands: [\"V100\", \"dataMask\"],\n      sampleType: \"UINT16\"\n    }],\n    output: [\n      {\n        id: \"default\",          // 4-band RGB visualization for display\n        bands: 4,\n        sampleType: \"UINT8\"\n      },\n      {\n        id: \"eobrowserStats\",   // 1-band raw float value for statistical API\n        bands: 1,\n        sampleType: \"FLOAT32\"\n      },\n      {\n        id: \"dataMask\",         // Mask band required for stats API calculation\n        bands: 1\n      }\n    ]\n  };\n}\n\nfunction evaluatePixel(sample) {\n  // Handle NoData values\n  if (sample.dataMask === 0 || sample.V100 === 0 || sample.V100 === 65535) {\n    return {\n      default: [0, 0, 0, 0],\n      eobrowserStats: [NaN],\n      dataMask: [0]\n    };\n  }\n\n  // 1. Convert raw UINT16 integer (24514-28399) back to physical float values (245.14-283.99)\n  let physicalValue = sample.V100 * 0.01;\n\n  // 2. Grayscale calculation for visual output\n  let rgb = colorBlend(physicalValue,\n    [240.0, 248.75, 257.5, 266.25, 275.0, 283.75, 292.5, 301.25, 310.0],\n    [\n      [100,  65, 131],  // #644183\n      [115,  99, 168],  // #7363a8\n      [115, 131, 182],  // #7383b6\n      [131, 161, 181],  // #83a1b5\n      [208, 196, 184],  // #d0c4b8\n      [199, 145, 127],  // #c7917f\n      [184, 108,  85],  // #b86c55\n      [164,  87,  63],  // #a4573f\n      [143,  67,  46]   // #8f432e\n    ]\n  );\n\n  return {\n    default: [rgb[0], rgb[1], rgb[2], sample.dataMask * 255],\n    eobrowserStats: [physicalValue],\n    dataMask: [sample.dataMask]\n  };\n}",
+                    "legend": {
+                        "type": "continuous",
+                        "gradients": [
+                            {
+                                "color": "rgb(39.2%,25.5%,51.4%)",
+                                "label": "240 K",
+                                "position": 0
+                            },
+                            {
+                                "color": "rgb(45.1%,38.8%,65.9%)",
+                                "position": 0.125
+                            },
+                            {
+                                "color": "rgb(45.1%,51.4%,71.4%)",
+                                "label": "257.5 K",
+                                "position": 0.25
+                            },
+                            {
+                                "color": "rgb(51.4%,63.1%,71.0%)",
+                                "position": 0.375
+                            },
+                            {
+                                "color": "rgb(81.6%,76.9%,72.2%)",
+                                "label": "275 K",
+                                "position": 0.5
+                            },
+                            {
+                                "color": "rgb(78.0%,56.9%,49.8%)",
+                                "position": 0.625
+                            },
+                            {
+                                "color": "rgb(72.2%,42.4%,33.3%)",
+                                "label": "292.5 K",
+                                "position": 0.75
+                            },
+                            {
+                                "color": "rgb(64.3%,34.1%,24.7%)",
+                                "position": 0.875
+                            },
+                            {
+                                "color": "rgb(56.1%,26.3%,18.0%)",
+                                "label": "310 K",
+                                "position": 1
+                            }
+                        ],
+                        "maxPosition": 1,
+                        "minPosition": 0
+                    }
+                }
+            ],
+            "orderHint": 0,
+            "instanceId": "63be0c-YOUR-INSTANCEID-HERE",
+            "lastUpdated": "2026-10-21T06:20:01.532936Z",
+            "collectionType": "CUSTOM",
+            "collectionId": "byoc-182c96-YOUR-INSTANCEID-HERE",
+            "datasetSourceId": 10,
+            "defaultStyleName": "default",
+            "datasourceDefaults": {
+                "mosaickingOrder": "mostRecent",
+                "temporal": false,
+                "collectionId": "182c96-YOUR-INSTANCEID-HERE",
+                "type": "CUSTOM"
+            }
+        }
+    ],
     "648c40-YOUR-INSTANCEID-HERE": [
         {
             "id": "Cropping Seasons Types over 3 years",

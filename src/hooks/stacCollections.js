@@ -189,6 +189,7 @@ export const STAC_COLLECTIONS = {
   // CCM
   CCM_OPTICAL: 'ccm-optical',
   CCM_SAR: 'ccm-sar',
+  CCM_THERMAL_LST_MR: 'ccm-thermal-lst-mr',
 
   // CLMS
   CLMS_URBAN_ATLAS_LAND_COVER_USE: 'clms_urban-atlas_land-cover-use_europe_V025ha_vector_static_v01',

@@ -1,6 +1,7 @@
 import { DATASOURCES } from '../../../../../const';
 import { S3OLCIL2_WATER } from '../../dataSourceConstants';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -559,6 +560,12 @@ export const credits = {
     },
   ],
   [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: [
+    {
+      ...copernicus,
+      link: 'https://www.copernicus.eu/en/contributing-missions',
+    },
+  ],
+  [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: [
     {
       ...copernicus,
       link: 'https://www.copernicus.eu/en/contributing-missions',

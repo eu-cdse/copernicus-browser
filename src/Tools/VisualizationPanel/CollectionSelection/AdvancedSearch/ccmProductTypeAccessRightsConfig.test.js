@@ -1,4 +1,5 @@
 import {
+  doesUserHaveAccessToCCMThermalVisualization,
   doesUserHaveAccessToCopDem30Visualization,
   doesUserHaveAccessToCCMVisualization,
   CCM_ROLES,
@@ -86,5 +87,28 @@ describe('doesUserHaveAccessToCCMVisualization', () => {
 
   test('does not grant access for the old, incorrect copernicus-services (plural) role', () => {
     expect(doesUserHaveAccessToCCMVisualization(makeToken(['copernicus-services']))).toBe(false);
+  });
+});
+
+describe('doesUserHaveAccessToCCMThermalVisualization', () => {
+  test('returns false for null/undefined token', () => {
+    expect(doesUserHaveAccessToCCMThermalVisualization(null)).toBe(false);
+    expect(doesUserHaveAccessToCCMThermalVisualization(undefined)).toBe(false);
+  });
+
+  test('grants access for the ororatech-ccm role', () => {
+    expect(doesUserHaveAccessToCCMThermalVisualization(makeToken([ACCESS_ROLES.ORORATECH_CCM]))).toBe(true);
+  });
+
+  test('does not grant access to users that only have CCM VHR roles', () => {
+    expect(doesUserHaveAccessToCCMThermalVisualization(makeToken([CCM_ROLES.COPERNICUS_SERVICES_CCM]))).toBe(
+      false,
+    );
+  });
+
+  test('is independent from the CCM VHR gate', () => {
+    const token = makeToken([ACCESS_ROLES.ORORATECH_CCM]);
+    expect(doesUserHaveAccessToCCMThermalVisualization(token)).toBe(true);
+    expect(doesUserHaveAccessToCCMVisualization(token)).toBe(false);
   });
 });

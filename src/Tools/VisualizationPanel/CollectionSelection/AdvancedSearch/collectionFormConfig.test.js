@@ -5,11 +5,15 @@ import {
   getCollectionFormInitialState,
 } from './collectionFormConfig.utils';
 import { recursiveCollections, complementaryDataGroup } from './collectionFormConfig';
-import { ODataCollections } from '../../../../api/OData/ODataTypes';
-import { EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
+import { ODataCollections, ODataFilterOperator } from '../../../../api/OData/ODataTypes';
+import { FilterElement } from '../../../../api/OData/FilterElement';
+import { ODataAttributes } from '../../../../api/OData/assets/attributes';
+import { findInstrumentConfigById } from '../../../../api/OData/ODataHelpers';
+import { ACCESS_ROLES, EXPERT_ROLES } from '../../../../api/OData/assets/accessRoles';
 import { hasRole } from '../../../../Auth/authHelpers';
 import { STAC_COLLECTIONS } from '../../../../hooks/stacCollections';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   S1_MONTHLY_MOSAIC_IW,
   S1_MONTHLY_MOSAIC_DH,
   COPERNICUS_WORLDCOVER_QUARTERLY_CLOUDLESS_MOSAIC,
@@ -672,6 +676,69 @@ describe('recursiveCollections nesting - Sentinel-6 aux STAC config', () => {
   });
 });
 
+describe('recursiveCollections nesting - CCM Thermal STAC config', () => {
+  const ccmThermal = () => recursiveCollections.find((c) => c.id === ODataCollections.CCM_THERMAL.id);
+  const mr = () => ccmThermal().items.find((item) => item.id === 'MR');
+
+  afterEach(() => {
+    hasRole.mockReset();
+  });
+
+  test('the top-level CCM Thermal node carries no collectionName', () => {
+    expect(ccmThermal().collectionName).toBeUndefined();
+  });
+
+  test('is a collection without cloud cover support', () => {
+    expect(ccmThermal().type).toBe('collection');
+    expect(ccmThermal().supportsCloudCover).toBe(false);
+  });
+
+  test('the MR instrument is STAC-enabled and maps to the CCM Thermal LST MR collection', () => {
+    expect(mr()).toBeDefined();
+    expect(mr().supportsStacSearch).toBe(true);
+    expect(mr().supportsInstrumentName).toBe(false);
+    expect(mr().collectionName).toBe(STAC_COLLECTIONS.CCM_THERMAL_LST_MR);
+    // pin the literal too: it has to match the id of the collection in the STAC catalogue
+    expect(mr().collectionName).toBe('ccm-thermal-lst-mr');
+  });
+
+  test('MR exposes only IR1_LST_L2, linked to the MR Thermal LST visualization dataset', () => {
+    expect(mr().items.map((item) => item.id)).toEqual(['IR1_LST_L2']);
+    expect(mr().items[0].datasetId).toBe(CDSE_CCM_MR_THERMAL_LST_COLLECTION);
+  });
+
+  test('is hidden without the ororatech-ccm role', () => {
+    hasRole.mockReturnValue(false);
+    expect(checkFormElementAccess(ccmThermal(), { userToken: 'token' })).toBe(false);
+    expect(
+      getCollectionFormConfig(recursiveCollections, { userToken: 'token' }).find(
+        (c) => c.id === ODataCollections.CCM_THERMAL.id,
+      ),
+    ).toBeUndefined();
+  });
+
+  test('is visible with the ororatech-ccm role', () => {
+    hasRole.mockReturnValue(true);
+    expect(checkFormElementAccess(ccmThermal(), { userToken: 'token' })).toBe(true);
+    expect(
+      getCollectionFormConfig(recursiveCollections, { userToken: 'token' }).find(
+        (c) => c.id === ODataCollections.CCM_THERMAL.id,
+      ),
+    ).toBeDefined();
+    expect(hasRole).toHaveBeenCalledWith('token', ACCESS_ROLES.ORORATECH_CCM);
+    expect(ACCESS_ROLES.ORORATECH_CCM).toBe('ororatech-ccm');
+  });
+
+  test('passes a missing userToken (anonymous user) to the role gate, which hides the node', () => {
+    hasRole.mockReturnValue(false);
+    expect(checkFormElementAccess(ccmThermal(), {})).toBe(false);
+    expect(hasRole).toHaveBeenCalledWith(undefined, ACCESS_ROLES.ORORATECH_CCM);
+    expect(
+      getCollectionFormConfig(recursiveCollections, {}).find((c) => c.id === ODataCollections.CCM_THERMAL.id),
+    ).toBeUndefined();
+  });
+});
+
 describe('S3 commissioning product types (#1294) — s3c-commissioning gating', () => {
   const s3Collection = () => recursiveCollections.find((c) => c.id === ODataCollections.S3.id);
   const findInstrument = (id) => s3Collection().items.find((item) => item.id === id);
@@ -742,5 +809,30 @@ describe('S3 commissioning product types (#1294) — s3c-commissioning gating', 
     mwr.items.forEach((productType) => {
       expect(productType.hasAccess).toBeUndefined();
     });
+  });
+});
+
+describe('recursiveCollections nesting - CLMS Water Extent (#1323)', () => {
+  const HRWL_ID = 'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1';
+  const WCD_ID = 'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1';
+  const waterExtent = () => findInstrumentConfigById('WATER_EXTENT');
+
+  test('lists High Resolution Water Layer before Water Cover Duration', () => {
+    const ids = waterExtent().items.map((item) => item.id);
+    expect(ids).toContain(HRWL_ID);
+    expect(ids).toContain(WCD_ID);
+    expect(ids.indexOf(HRWL_ID)).toBeLessThan(ids.indexOf(WCD_ID));
+  });
+
+  test('High Resolution Water Layer filters on the shared dataset alias, not a single datasetIdentifier', () => {
+    const hrwl = waterExtent().items.find((item) => item.id === HRWL_ID);
+    expect(hrwl.type).toBe('productType');
+    expect(hrwl.customFilterExpression).toBe(
+      `(${FilterElement.Attribute(
+        ODataAttributes.datasetAlias,
+        ODataFilterOperator.eq,
+        'clms_wsi_high-resolution-water-layer',
+      )})`,
+    );
   });
 });

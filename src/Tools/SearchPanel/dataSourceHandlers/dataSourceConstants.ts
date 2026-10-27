@@ -101,6 +101,13 @@ export const CCM_VHR_THEME_NAMES = [
   'CCM VHR Europe 2024 Mosaic',
 ];
 
+// OroraTech thermal collections are gated by the `ororatech-ccm` role, not by the CCM VHR roles,
+// so they are deliberately kept out of CCM_VHR_COLLECTIONS.
+export const CDSE_CCM_MR_THERMAL_LST_COLLECTION = 'CCM_MR_THERMAL_LST';
+export const CCM_THERMAL_COLLECTIONS = [CDSE_CCM_MR_THERMAL_LST_COLLECTION];
+// Must stay in sync with the corresponding `name` fields in src/assets/default_themes.js.
+export const CCM_THERMAL_THEME_NAMES = ['CCM MR Thermal LST'];
+
 // --- CLMS ---
 
 export const COPERNICUS_CLMS_VEGETATION_INDICES_NDVI_GLOBAL =

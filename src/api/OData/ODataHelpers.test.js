@@ -24,7 +24,9 @@ import {
   createBiogeophysicalCloudCoverFilter,
   createBiogeophysicalProjectionGridFilter,
 } from '../../Tools/VisualizationPanel/CollectionSelection/AdvancedSearch/filters/AdditionalFilters.utils';
+import { ODataCollections } from './ODataTypes';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   COPERNICUS_CLMS_VLCC_CROP_TYPES_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_UA_LCU_2018_VECTOR,
   COPERNICUS_CLMS_UA_LCU_2021_VECTOR,
@@ -44,7 +46,9 @@ import {
   COPERNICUS_CLMS_CPSCE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_EMERGENCE_EUROPE_10M_YEARLY_V1,
   COPERNICUS_CLMS_VLCC_MAIN_CROP_HARVEST_EUROPE_10M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
   COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+  COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_EUROPE_UTM_60M_DAILY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S2_EUROPE_UTM_20M_DAILY_V1,
   COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_S2_EUROPE_UTM_20M_DAILY_V1,
@@ -2578,6 +2582,64 @@ describe('getODataCollectionInfoFromDatasetId — ICD (single collection)', () =
   });
 });
 
+describe('getDatasetIdFromProductType — WSI products with several projection/resolution variants (#1323)', () => {
+  const makeAttrs = (datasetIdentifier) => [
+    { Name: 'fileFormat', Value: 'cog' },
+    { Name: 'datasetIdentifier', Value: datasetIdentifier },
+  ];
+
+  test.each([
+    [
+      'water_extent',
+      COPERNICUS_CLMS_WSI_WATER_COVER_DURATION_EUROPE_UTM_10M_YEARLY_V1,
+      [
+        'clms_wsi_water-cover-duration_europe_utm_10m_yearly_v1',
+        'clms_wsi_water-cover-duration_europe_laea_10m_yearly_v1',
+        'clms_wsi_water-cover-duration_europe_laea_100m_yearly_v1',
+      ],
+    ],
+    [
+      'water_extent',
+      COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+      [
+        'clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1',
+        'clms_wsi_high-resolution-water-layer_europe_utm_10m_3yearly_v1',
+        'clms_wsi_high-resolution-water-layer_europe_laea_100m_3yearly_v1',
+      ],
+    ],
+    [
+      'river_and_lake_ice_extent',
+      COPERNICUS_CLMS_WSI_ICE_COVER_DURATION_EUROPE_UTM_20M_YEARLY_V1,
+      [
+        'clms_wsi_ice-cover-duration_europe_utm_20m_yearly_v1',
+        'clms_wsi_ice-cover-duration_europe_laea_20m_yearly_v1',
+        'clms_wsi_ice-cover-duration_europe_laea_100m_yearly_v1',
+      ],
+    ],
+  ])(
+    '%s: every projection/resolution variant maps to the same dataset',
+    (productType, datasetId, identifiers) => {
+      identifiers.forEach((identifier) => {
+        expect(getDatasetIdFromProductType(productType, makeAttrs(identifier))).toBe(datasetId);
+      });
+    },
+  );
+});
+
+describe('getODataCollectionInfoFromDatasetId — WSI High Resolution Water Layer', () => {
+  test('returns a single WATER_EXTENT entry whose productType is the Search item id', () => {
+    const result = getODataCollectionInfoFromDatasetId(
+      COPERNICUS_CLMS_WSI_HIGH_RESOLUTION_WATER_LAYER_EUROPE_LAEA_10M_3YEARLY_V1,
+      {},
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('CLMS_BIOGEOPHYSICAL_PARAMETERS');
+    expect(result[0].instrument).toBe('WATER_EXTENT');
+    expect(result[0].productType).toBe('clms_wsi_high-resolution-water-layer_europe_laea_10m_3yearly_v1');
+    expect(result[0].selectedFilters).toEqual({});
+  });
+});
+
 describe('getODataCollectionInfoFromDatasetId — WSI Water and Ice Cover (grouped search)', () => {
   test.each([
     [COPERNICUS_CLMS_WSI_WATER_ICE_COVER_S1_EUROPE_UTM_60M_DAILY_V1],
@@ -2653,5 +2715,17 @@ describe('CLMS Bio-geophysical Parameters filter helpers', () => {
       expect(gridPos).toBeGreaterThanOrEqual(0);
       expect(andPos).toBeGreaterThanOrEqual(0);
     });
+  });
+});
+
+describe('CCM thermal product type <-> dataset mapping', () => {
+  it('maps IR1_LST_L2 to the MR Thermal LST dataset', () => {
+    expect(getDatasetIdFromProductType('IR1_LST_L2', [])).toBe(CDSE_CCM_MR_THERMAL_LST_COLLECTION);
+  });
+
+  it('maps the MR Thermal LST dataset to the CCM Thermal MR IR1_LST_L2 search config', () => {
+    expect(getODataCollectionInfoFromDatasetId(CDSE_CCM_MR_THERMAL_LST_COLLECTION, {})).toEqual([
+      { id: ODataCollections.CCM_THERMAL.id, instrument: 'MR', productType: 'IR1_LST_L2' },
+    ]);
   });
 });

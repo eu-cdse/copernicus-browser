@@ -4,6 +4,7 @@
 import './dataSourceHandlers';
 import CCMDataSourceHandler from './CCMDataSourceHandler';
 import {
+  CDSE_CCM_MR_THERMAL_LST_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2018_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2021_COLLECTION,
   CDSE_CCM_VHR_IMAGE_2024_COLLECTION,
@@ -15,6 +16,7 @@ const COLLECTION_IDS = {
   [CDSE_CCM_VHR_IMAGE_2021_COLLECTION]: '0c9659-YOUR-INSTANCEID-HERE',
   [CDSE_CCM_VHR_IMAGE_2024_COLLECTION]: 'b016cf-YOUR-INSTANCEID-HERE',
   [CDSE_CCM_VHR_IMAGE_MOSAIC_2024_COLLECTION]: 'e68d01-YOUR-INSTANCEID-HERE',
+  [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: '182c96-YOUR-INSTANCEID-HERE',
 };
 
 const makeLayer = (datasetId) => ({
@@ -35,6 +37,7 @@ describe('AbstractBYOCDataSourceHandler willHandle', () => {
     handler.willHandle('WMS', 'url-2', 'part-2', [makeLayer(CDSE_CCM_VHR_IMAGE_2018_COLLECTION)]);
     handler.willHandle('WMS', 'url-3', 'part-3', [makeLayer(CDSE_CCM_VHR_IMAGE_2021_COLLECTION)]);
     handler.willHandle('WMS', 'url-4', 'part-4', [makeLayer(CDSE_CCM_VHR_IMAGE_2024_COLLECTION)]);
+    handler.willHandle('WMS', 'url-5', 'part-5', [makeLayer(CDSE_CCM_MR_THERMAL_LST_COLLECTION)]);
 
     expect(handler.datasets).toEqual(Object.keys(handler.KNOWN_COLLECTIONS));
   });

@@ -23,7 +23,7 @@ These ids look plausible but do not exist.
 
 ## Datasets
 
-230 datasets.
+231 datasets.
 
 ### 3c662330-108b-4378-8899-525fd5a225cb
 
@@ -91,6 +91,17 @@ Layers:
 Example:
 
     https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.35625&lng=8.45879&themeId=DEFAULT-THEME&datasetId=8bd33a42-dce4-4554-9a1f-1bb248b4183d&layerId=TCD10&date=latest
+
+### CCM_MR_THERMAL_LST
+
+Name: CCM MR Thermal LST
+
+Layers:
+- `LST`: LST
+
+Example:
+
+    https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.35625&lng=8.45879&themeId=DEFAULT-THEME&datasetId=CCM_MR_THERMAL_LST&layerId=LST&date=latest
 
 ### CCM_VHR_IMAGE_2018
 

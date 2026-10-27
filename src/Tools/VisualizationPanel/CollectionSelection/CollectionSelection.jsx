@@ -45,10 +45,12 @@ import CollectionTooltip from './CollectionTooltip/CollectionTooltip';
 import CLMSCollectionSelection from './CLMSCollectionSelection';
 import ExtraCollectionsPanel from '../../../ExternalLayers/ExtraCollectionsPanel';
 import {
+  doesUserHaveAccessToCCMThermalVisualization,
   doesUserHaveAccessToCCMVisualization,
   doesUserHaveAccessToCopDem30Visualization,
 } from './AdvancedSearch/ccmProductTypeAccessRightsConfig';
 import {
+  CCM_THERMAL_COLLECTIONS,
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
 } from '../../SearchPanel/dataSourceHandlers/dataSourceConstants';
@@ -140,13 +142,34 @@ const renderCollections = (
     // leaving the DEM group and the 90m dataset visible to everyone. Filtering collectionGroups
     // itself (rather than just the dropdown options) keeps the expanded group's collection
     // buttons (renderCollectionsList) in sync with the dropdown.
-    const visibleCollectionGroups = hasAccessToCopDem30Visualization
+    const demFilteredCollectionGroups = hasAccessToCopDem30Visualization
       ? collectionGroups
       : collectionGroups.map((g) =>
           g.datasource === DATASOURCES.DEM_CDAS
             ? { ...g, collections: g.collections.filter((c) => c.dataset !== DEM_COPERNICUS_30_CDAS) }
             : g,
         );
+
+    // CCM group: VHR datasets need a CCM role, thermal datasets (MR Thermal LST) need the
+    // `ororatech-ccm` role. The two gates are independent, so filter per dataset and drop the group
+    // entirely when nothing in it is visible to this user.
+    const hasAccessToCCMThermalVisualization = doesUserHaveAccessToCCMThermalVisualization(
+      user?.access_token,
+    );
+    const visibleCollectionGroups = demFilteredCollectionGroups
+      .map((g) =>
+        g.datasource === DATASOURCES.CCM
+          ? {
+              ...g,
+              collections: g.collections.filter((c) =>
+                CCM_THERMAL_COLLECTIONS.includes(c.dataset)
+                  ? hasAccessToCCMThermalVisualization
+                  : hasAccessToCCMVisualization,
+              ),
+            }
+          : g,
+      )
+      .filter((g) => g.datasource !== DATASOURCES.CCM || g.collections.length > 0);
 
     const selectedCollectionGroup = visibleCollectionGroups.find(
       (d) => d.datasource === selectedCollection.datasource,
@@ -182,15 +205,7 @@ const renderCollections = (
         )
         .flat(),
       ...clmsCategoryOptions,
-    ].filter((opt) => {
-      if (hasAccessToCCMVisualization) {
-        return true;
-      }
-      if (opt.value === DATASOURCES.CCM || opt.parentDataset === DATASOURCES.CCM) {
-        return false;
-      }
-      return true;
-    });
+    ];
 
     const allCollectionsHintOption = {
       label: t`Switch back to the default configuration to see all collections`,
@@ -203,7 +218,7 @@ const renderCollections = (
 
     // Curated configurations only expose a subset of the collections (issue #1221). Append a
     // non-selectable hint as the last entry so users understand where the rest went. It is
-    // appended after the CCM filter above so that filter can never strip it.
+    // appended after the per-dataset visibility filtering above so that filtering can never strip it.
     const options = showAllCollectionsHint ? [...baseOptions, allCollectionsHintOption] : baseOptions;
 
     const filterOption = (option, string) => {

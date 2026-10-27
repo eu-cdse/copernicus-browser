@@ -107,3 +107,12 @@ export const CCM_VHR_IMAGE_2024_MOSAIC_BANDS = [
     color: '',
   },
 ];
+
+export const CCM_MR_THERMAL_LST_BANDS = [
+  {
+    name: 'V100',
+    sampleType: 'UINT16',
+    getDescription: () => t`Land Surface Temperature (K × 100)`,
+    color: '',
+  },
+];
