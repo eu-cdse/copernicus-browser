@@ -96,6 +96,22 @@ describe('SearchableMultiSelectInput', () => {
     expect(input.getOptions).toHaveBeenCalledWith({ userToken: 'my-token' });
   });
 
+  test('renders the opened menu outside the input, above the tools panel', () => {
+    const input = buildInput();
+    const { container } = render(
+      <SearchableMultiSelectInput input={input} value={[]} onChange={jest.fn()} />,
+    );
+
+    openMenu(container);
+
+    const option = screen.getByRole('option', { name: 'Alpha' });
+    expect(container).not.toContainElement(option);
+
+    const menuPortal = option.closest('[class*="-menu"]').parentElement;
+    expect(menuPortal.parentElement).toBe(document.body);
+    expect(menuPortal).toHaveStyle({ zIndex: '9999' });
+  });
+
   test('renders options sourced from input.getOptions when the menu is opened', () => {
     const input = buildInput();
     const { container } = render(

@@ -11424,3 +11424,15 @@ msgid ""
 "studying the daily temperature cycle, urban heat islands, drought and "
 "surface water stress."
 msgstr ""
+
+#, javascript-format
+msgid ""
+"Too many requests to ${ provider }. Please wait a moment and try again, or "
+"narrow your search."
+msgstr ""
+
+#, javascript-format
+msgid ""
+"Showing the available results. Some sources did not respond, so more "
+"results may be available: ${ errorMessage }"
+msgstr ""

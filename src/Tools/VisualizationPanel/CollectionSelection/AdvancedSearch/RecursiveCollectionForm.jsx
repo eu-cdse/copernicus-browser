@@ -424,30 +424,25 @@ function RecursiveCollectionForm({
         onMaxCcChange={onMaxCcChange}
         userToken={userToken}
         additionalFilterToggle={
-          <AdditionalFiltersToggle
-            isSelected={additionalFiltersCollection === collection.id}
-            onOpen={() => {
-              if (additionalFiltersCollection === collection.id) {
-                //close addition filter panel
-                setAdditionalFiltersCollection(null);
-              } else {
-                //check if collection is selected and select it if it is not
-                if (!selectedCollections[collection.id]) {
-                  onItemToggle([collection.id]);
-                }
-                //open addition filter panel for selected collection
-                setAdditionalFiltersCollection(collection.id);
+          collection.additionalFilters ? (
+            <AdditionalFiltersToggle
+              isSelected={additionalFiltersCollection === collection.id}
+              onOpen={() =>
+                setAdditionalFiltersCollection(
+                  additionalFiltersCollection === collection.id ? null : collection.id,
+                )
               }
-            }}
-            selectedCollections={selectedCollections}
-            setAdditionalFiltersPositionTop={setAdditionalFiltersPositionTop}
-            isDisplayed={
-              selectedTabIndex === TABS.SEARCH_TAB &&
-              !resultsPanelSelected &&
-              additionalFiltersCollection === collection.id
-            }
-            disabled={!collection.additionalFilters}
-          />
+              selectedCollections={selectedCollections}
+              setAdditionalFiltersPositionTop={setAdditionalFiltersPositionTop}
+              isDisplayed={
+                selectedTabIndex === TABS.SEARCH_TAB &&
+                !resultsPanelSelected &&
+                additionalFiltersCollection === collection.id
+              }
+              // Filters only become available once their collection is selected.
+              disabled={!selectedCollections?.[collection.id]}
+            />
+          ) : null
         }
       />
 

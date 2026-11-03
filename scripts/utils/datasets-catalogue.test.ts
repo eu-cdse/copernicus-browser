@@ -8,6 +8,8 @@ import {
   exampleUrl,
   instanceIdFromUrl,
   renderDatasets,
+  renderGroupFile,
+  renderIndex,
   type ConfigLayer,
   type KnownCollections,
 } from './datasets-catalogue';
@@ -349,6 +351,57 @@ describe('renderDatasets', () => {
 
   it('contains no dates, so regenerating never changes the file', () => {
     expect(renderDatasets(sections, [])).not.toMatch(/\b20\d{2}-\d{2}-\d{2}\b/);
+  });
+});
+
+describe('renderGroupFile / renderIndex', () => {
+  const sections = [
+    { datasetId: 'A_SET', label: 'Aye', layers: [{ id: 'L1', title: 'One' }], clms: false },
+    {
+      datasetId: 'COPERNICUS_CLMS_X_RT0',
+      label: 'Ex',
+      layers: [{ id: 'L2', title: 'Two' }],
+      clms: true,
+      omittedStages: ['COPERNICUS_CLMS_X_RT1', 'COPERNICUS_CLMS_X_RT2'],
+    },
+  ];
+  const groups = [
+    { id: 'first', title: 'First group', description: 'The first one', sections: [sections[0]] },
+    { id: 'second', title: 'Second group', description: 'The second one', sections: [sections[1]] },
+  ];
+
+  it('names the omitted consolidation stages on the dataset that stands for them', () => {
+    const text = renderGroupFile(groups[1]);
+
+    expect(text).toContain('### COPERNICUS_CLMS_X_RT0');
+    expect(text).toContain('Also available as `COPERNICUS_CLMS_X_RT1`, `COPERNICUS_CLMS_X_RT2`');
+    expect(renderGroupFile(groups[0])).not.toMatch(/^Also available as `/m);
+  });
+
+  it('gives a group file the id rules and a link back to the index, since it may be fetched alone', () => {
+    const text = renderGroupFile(groups[0]);
+
+    expect(text).toContain('never invent one');
+    expect(text).toContain('/datasets/index.txt');
+    expect(text).toContain('1 dataset.');
+  });
+
+  it('lists every group file in the index with its description and dataset count, and the full file', () => {
+    const text = renderIndex(groups, 2);
+
+    expect(text).toContain(
+      '[First group](https://browser.dataspace.copernicus.eu/datasets/first.txt): The first one (1 dataset)',
+    );
+    expect(text).toContain('[Second group](https://browser.dataspace.copernicus.eu/datasets/second.txt)');
+    expect(text).toContain('https://browser.dataspace.copernicus.eu/datasets.txt');
+    expect(text).toContain('2 datasets in 2 files');
+    DO_NOT_USE.forEach((d) => expect(text).toContain(`\`${d.wrong}\``));
+  });
+
+  it('is deterministic and contains no dates', () => {
+    expect(renderIndex(groups, 2)).toBe(renderIndex(groups, 2));
+    expect(renderGroupFile(groups[0])).toBe(renderGroupFile(groups[0]));
+    expect(renderIndex(groups, 2) + renderGroupFile(groups[0])).not.toMatch(/\b20\d{2}-\d{2}-\d{2}\b/);
   });
 });
 

@@ -59,11 +59,20 @@ export interface CreateSTACSearchPayloadParams {
   ) => MonthFilterInterval[];
 }
 
+export interface STACSortBy {
+  field: string;
+  direction: 'asc' | 'desc';
+}
+
+// Newest first, matching the OData search ordering (sensingTime desc).
+export const DEFAULT_STAC_SORTBY: STACSortBy[] = [{ field: 'properties.datetime', direction: 'desc' }];
+
 export interface STACSearchPayload {
   collections?: string[];
   datetime?: string;
   filter?: CQL2Filter | { op: 'and'; args: CQL2Filter[] };
   limit: number;
+  sortby?: STACSortBy[];
 }
 
 /**
@@ -438,7 +447,7 @@ const createSearchCriteriaFilters = (searchCriteria: string | undefined): CQL2Fi
   if (searchCriteria && searchCriteria !== '') {
     filterArgs.push({
       op: 'like',
-      args: [{ property: 'title' }, `%${searchCriteria}%`],
+      args: [{ property: 'id' }, `%${searchCriteria}%`],
     });
   }
 
@@ -460,7 +469,7 @@ export const createSTACSearchPayload = ({
   poiBounds,
   applyFilterMonthsToDateRange,
 }: CreateSTACSearchPayloadParams): STACSearchPayload => {
-  const payload: STACSearchPayload = { limit: 50 };
+  const payload: STACSearchPayload = { limit: 50, sortby: DEFAULT_STAC_SORTBY };
   const filterArgs: CQL2Filter[] = [];
 
   // Extract platforms from selected collections

@@ -7,6 +7,7 @@ import {
   createProductTypeFilters,
   mapODataKeyToSTAC,
   createSTACSearchPayload,
+  DEFAULT_STAC_SORTBY,
 } from './STACSearchPayloadBuilder';
 import type { CQL2Filter } from './STACSearchPayloadBuilder';
 
@@ -105,7 +106,11 @@ describe('createSTACSearchPayload', () => {
       collectionForm: { selectedCollections: {} },
     });
 
-    expect(payload).toEqual({ limit: 50, datetime: '../..' });
+    expect(payload).toEqual({
+      limit: 50,
+      datetime: '../..',
+      sortby: [{ field: 'properties.datetime', direction: 'desc' }],
+    });
     expect(payload.filter).toBeUndefined();
     expect(payload.collections).toBeUndefined();
   });
@@ -413,7 +418,7 @@ describe('createSTACSearchPayload', () => {
     });
   });
 
-  test('searchCriteria: builds a `like` filter on title and suppresses the datetime interval', () => {
+  test('searchCriteria: builds a `like` filter on id and suppresses the datetime interval', () => {
     const payload = createSTACSearchPayload({
       collectionForm: { selectedCollections: {} },
       searchCriteria: 'S2A_MSIL1C',
@@ -421,7 +426,7 @@ describe('createSTACSearchPayload', () => {
       toMoment: moment.utc('2023-06-30T00:00:00.000Z'),
     });
 
-    expect(payload.filter).toEqual({ op: 'like', args: [{ property: 'title' }, '%S2A_MSIL1C%'] });
+    expect(payload.filter).toEqual({ op: 'like', args: [{ property: 'id' }, '%S2A_MSIL1C%'] });
     expect(payload.datetime).toBeUndefined();
   });
 
@@ -581,7 +586,7 @@ describe('createSTACSearchPayload', () => {
         { op: '=', args: [{ property: 'product:type' }, 'L1C'] },
         { op: '=', args: [{ property: 'instruments' }, 'MSI'] },
         { op: '=', args: [{ property: 'product:timeliness_category' }, 'NRT'] },
-        { op: 'like', args: [{ property: 'title' }, '%S2A%'] },
+        { op: 'like', args: [{ property: 'id' }, '%S2A%'] },
       ],
     });
   });
@@ -1193,5 +1198,17 @@ describe('createSTACSearchPayload - CCM Thermal', () => {
 
     expect(payload.collections).toEqual(['ccm-thermal-lst-mr']);
     expect(payload.filter).toEqual(expectedFilter);
+  });
+});
+
+describe('STAC sortby', () => {
+  test('DEFAULT_STAC_SORTBY sorts newest first on properties.datetime', () => {
+    expect(DEFAULT_STAC_SORTBY).toEqual([{ field: 'properties.datetime', direction: 'desc' }]);
+  });
+
+  test('createSTACSearchPayload always sets sortby', () => {
+    expect(createSTACSearchPayload({ collectionForm: { selectedCollections: {} } }).sortby).toEqual(
+      DEFAULT_STAC_SORTBY,
+    );
   });
 });

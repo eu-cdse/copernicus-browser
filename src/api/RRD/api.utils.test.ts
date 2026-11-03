@@ -13,6 +13,7 @@ const fixtures: [string, string, boolean, number][] = [
   ['Worldview', 'WV04', false, 9],
   ['ICEYE', 'ICEYE-X2', false, 10],
   ['ICEYE', 'ICEYE-X2', true, 10],
+  ['ICEYE', 'ICEYE-X200', false, 10],
   ['ICEYE', 'ICEYE-X55', true, 10],
   ['ICEYE', 'ICEYE', false, 10],
   ['ICEYE', 'ICEYE', true, 10],

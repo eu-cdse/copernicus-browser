@@ -35,6 +35,12 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
       -->
     <link rel="manifest" href="/manifest.json" />
+    <link
+      rel="alternate"
+      type="text/plain"
+      href="/llms.txt"
+      title="How AI agents and tools can build Copernicus Browser links"
+    />
     <script type="text/javascript" src="/fflate.js"></script>
     
 
@@ -42,7 +48,12 @@
     <title>Copernicus Browser</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <p>You need to enable JavaScript to run this app.</p>
+      <p>
+        AI agents and automated tools: see <a href="/llms.txt">/llms.txt</a> for how to build Browser links.
+      </p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/index.jsx"></script>
     <div id="code_editor_portal"></div>

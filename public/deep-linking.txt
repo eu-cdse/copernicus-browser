@@ -41,15 +41,15 @@ To open the newest image for a dataset, add `date=latest`. You do not need to kn
 
 | Parameter | Format | Notes |
 |---|---|---|
-| `datasetId` | string, e.g. `S2_L2A_CDAS` | Selects the dataset/collection. Take it from [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt) — it is case-sensitive and there is no way to guess it. |
-| `layerId` | string, e.g. `1_TRUE_COLOR` | Selects a preset layer/visualisation for the dataset. Also listed per dataset in [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt). |
+| `datasetId` | string, e.g. `S2_L2A_CDAS` | Selects the dataset/collection. Take it from the [dataset index](https://browser.dataspace.copernicus.eu/datasets/index.txt), which links to a small file per group (the same ids are also in one large file, [datasets.txt](https://browser.dataspace.copernicus.eu/datasets.txt)) — it is case-sensitive and there is no way to guess it. |
+| `layerId` | string, e.g. `1_TRUE_COLOR` | Selects a preset layer/visualisation for the dataset. Also listed per dataset in the files linked from the [dataset index](https://browser.dataspace.copernicus.eu/datasets/index.txt). |
 
 What happens when an id is wrong:
 
 - An unknown `datasetId` makes the Browser show the error "Selected dataset does not exist!" and silently switch to Sentinel-2 L2A (or L1C if L2A is not available). The link still opens, but on the wrong dataset, the `layerId` is dropped, and no date is looked up.
 - An unknown `layerId` for a valid dataset falls back to the dataset's first layer, with no error.
 - A `datasetId` in the wrong case (for example `s2_l2a_cdas`) is unknown, so it behaves like the first case.
-- Layer ids can differ between themes (for example `1_TRUE_COLOR` and `1_TRUE-COLOR`). The ids in datasets.txt are for the default theme; leave `themeId` out, or use `DEFAULT-THEME`.
+- Layer ids can differ between themes (for example `1_TRUE_COLOR` and `1_TRUE-COLOR`). The ids in the dataset files are for the default theme; leave `themeId` out, or use `DEFAULT-THEME`.
 - Some datasets exist only as a collection UUID (for example the Sentinel-2 quarterly mosaics) rather than a readable name, and some ids look plausible but do not exist (for example `S1_AWS_IW_VVVH`). datasets.txt lists both.
 
 ## Visualisation URL — omit this

@@ -19,6 +19,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 5px;
+        border: none;
+        background: none;
+        font: inherit;
         color: vars.$primaryColor;
         font-size: 0.8rem;
         font-weight: vars.$fontWeightBold;
@@ -27,20 +31,14 @@
         right: 0;
         cursor: pointer;
 
-        svg {
-          width: 15px;
-          margin-left: 10px;
-          fill: vars.$primaryColor;
+        i {
+          font-size: 0.75rem;
         }
 
         &.selected,
         &:hover {
           background-color: vars.$hoverPrimaryColor;
           color: vars.$whiteColor;
-
-          svg {
-            fill: vars.$secondaryColor;
-          }
         }
 
         &.selected {
@@ -48,7 +46,12 @@
           color: vars.$whiteColor;
         }
 
-        &.disabled {
+        &:focus-visible {
+          outline: 2px solid vars.$primaryColor;
+          outline-offset: 1px;
+        }
+
+        &:disabled {
           opacity: 0.35;
           pointer-events: none;
         }

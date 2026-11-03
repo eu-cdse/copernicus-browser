@@ -25,6 +25,7 @@ import {
   createGeometryFilters,
   createProductTypeFilters,
   combineFilters,
+  DEFAULT_STAC_SORTBY,
 } from '../../api/STAC/STACSearchPayloadBuilder';
 
 const FindProductsButton = ({
@@ -197,7 +198,7 @@ const FindProductsButton = ({
   };
 
   const buildSTACPayload = (stacConfig) => {
-    const payload = { collections: stacConfig.collectionNames, limit: 50 };
+    const payload = { collections: stacConfig.collectionNames, limit: 50, sortby: DEFAULT_STAC_SORTBY };
 
     const dsh = getDataSourceHandler(datasetId);
     const { fromTime: fromMoment, toTime: toMoment } = getFromTimeToTime(datasetId);

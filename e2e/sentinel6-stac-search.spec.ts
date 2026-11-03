@@ -20,6 +20,7 @@ test.describe('Sentinel-6 aux search is routed to STAC', () => {
 
     // Each aux product type lives in its own STAC collection; only the ticked one is queried.
     expect(payload.collections).toEqual(['sentinel-6-aux-poe']);
+    expect(payload.sortby).toEqual([{ field: 'properties.datetime', direction: 'desc' }]);
     const filter = JSON.stringify(payload.filter);
     expect(filter).toContain('AX____POE__AX');
     // Aux items are indexed with geometry: null, which never matches a spatial filter.

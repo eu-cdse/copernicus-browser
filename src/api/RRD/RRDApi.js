@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { executeRequest, DEFAULT_RETRY_OPTIONS } from '../httpRequestResolver';
 import { getErrorStatus } from '../../utils';
+import { isProviderTooManyRequestsMessage } from './searchResponse.utils';
 
 const RRDApiBaseUrlEndpoints = {
   search: import.meta.env.VITE_RRD_BASE_URL + '/sor',
@@ -42,6 +43,12 @@ const NON_RETRYABLE_5XX_STATUS_CODES = [RRD_REQUEST_TOO_HEAVY_STATUS];
 
 // Returns true when the request must NOT be retried.
 export const retryRestrictionFunc = (e) => {
+  // A provider-throttled search comes back as a 500 wrapping an upstream 429. Retrying it only
+  // makes the throttling worse and delays the message by ~39s per attempt, so it's excluded
+  // before the generic status-based checks below.
+  if (isProviderTooManyRequestsMessage(e?.response?.data?.message)) {
+    return true;
+  }
   const statusCode = getErrorStatus(e);
   if (!Number.isFinite(statusCode)) {
     return true;
@@ -50,6 +57,14 @@ export const retryRestrictionFunc = (e) => {
     return true;
   }
   return !(RETRYABLE_STATUS_CODES.includes(statusCode) || (statusCode >= 500 && statusCode <= 599));
+};
+
+// A single search attempt can take ~40s, so retrying a failed search kept the user waiting
+// minutes before seeing any message. Search fails fast instead and the user can search again;
+// the other RRD calls (cart, profile) keep DEFAULT_RETRY_OPTIONS.
+export const RRD_SEARCH_RETRY_OPTIONS = {
+  ...DEFAULT_RETRY_OPTIONS,
+  retriesLeft: 0,
 };
 
 const RRDApi = () => {
@@ -79,7 +94,7 @@ const RRDApi = () => {
       },
       requestConfig,
       {
-        ...DEFAULT_RETRY_OPTIONS,
+        ...RRD_SEARCH_RETRY_OPTIONS,
         retryRestrictionFunc: retryRestrictionFunc,
       },
     );

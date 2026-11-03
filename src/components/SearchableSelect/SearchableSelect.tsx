@@ -8,7 +8,10 @@ import { CustomOption } from '../CustomOption/CustomOption';
 type SearchableSelectProps<Option, IsMulti extends boolean = false> = Omit<
   SelectProps<Option, IsMulti, GroupBase<Option>>,
   'styles' | 'components'
->;
+> & {
+  // Stacking order of the menu when it is portaled (menuPortalTarget), e.g. above the tools panel.
+  menuPortalZIndex?: number;
+};
 
 export const SearchableSelect = <Option, IsMulti extends boolean = false>({
   options,
@@ -16,6 +19,7 @@ export const SearchableSelect = <Option, IsMulti extends boolean = false>({
   onChange,
   isMulti = false as IsMulti,
   menuPlacement = 'auto',
+  menuPortalZIndex,
   ...rest
 }: SearchableSelectProps<Option, IsMulti>) => (
   <Select
@@ -24,7 +28,14 @@ export const SearchableSelect = <Option, IsMulti extends boolean = false>({
     onChange={onChange}
     isMulti={isMulti}
     menuPlacement={menuPlacement}
-    styles={customSelectStyle}
+    styles={
+      menuPortalZIndex === undefined
+        ? customSelectStyle
+        : {
+            ...customSelectStyle,
+            menuPortal: (css) => ({ ...customSelectStyle.menuPortal(css), zIndex: menuPortalZIndex }),
+          }
+    }
     components={{ DropdownIndicator: CustomDropdownIndicator, Option: CustomOption }}
     {...rest}
   />

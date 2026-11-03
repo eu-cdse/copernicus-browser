@@ -39,7 +39,8 @@ test('Landsat Mosaic find products uses STAC and returns results', async ({ page
 
   await page.getByText('Find products for current view').click();
 
-  await stacRequest;
+  const payload = (await stacRequest).postDataJSON();
+  expect(payload.sortby).toEqual([{ field: 'properties.datetime', direction: 'desc' }]);
   const resp = await stacResponse;
   const body = await resp.json();
 

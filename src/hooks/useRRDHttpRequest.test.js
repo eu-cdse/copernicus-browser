@@ -1,5 +1,13 @@
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { handleError } from '../utils';
-import { handleRRDError } from './useRRDHttpRequest';
+import { getRRDErrorMessage, handleRRDError, useRRDHttpRequest } from './useRRDHttpRequest';
+import {
+  RRD_SEARCH_PAYLOAD_2,
+  RRD_SEARCH_PAYLOAD_3,
+  RRD_SEARCH_PAYLOAD_4,
+  RRD_SEARCH_PAYLOAD_5,
+  RRD_SEARCH_PAYLOAD_6,
+} from '../api/RRD/searchResponse.fixtures';
 
 jest.mock('../utils', () => ({
   handleError: jest.fn(),
@@ -24,7 +32,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Error: Feasibility error: AOI too large',
+      message: 'Error: Feasibility error: AOI too large (HTTP 400)',
     });
   });
 
@@ -41,7 +49,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: `Error: AOI size of 7392542 km² larger than maximum permitted ordering area size of 500 km² for taskingOrder for this user or project`,
+      message: `Error: AOI size of 7392542 km² larger than maximum permitted ordering area size of 500 km² for taskingOrder for this user or project (HTTP 400)`,
     });
   });
 
@@ -58,7 +66,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: `Error: Internal Server Error`,
+      message: `Error: Internal Server Error (HTTP 500)`,
     });
   });
 
@@ -75,7 +83,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Error: The database connection failed: The database server is unreachable',
+      message: 'Error: The database connection failed: The database server is unreachable (HTTP 500)',
     });
   });
 
@@ -94,7 +102,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Error: ERROR: Token is expired',
+      message: 'Error: ERROR: Token is expired (HTTP 511)',
     });
   });
 
@@ -112,7 +120,7 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message:
-        'Error: AOI size of 469740 km² larger than maximum permitted ordering area size of 500 km² for taskingOrder for this user or project',
+        'Error: AOI size of 469740 km² larger than maximum permitted ordering area size of 500 km² for taskingOrder for this user or project (HTTP 400)',
     });
   });
 
@@ -150,7 +158,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: `Not Found: No theoretical opportunities found with informed data\n\nError: Second Error\n\nNot Found: Third repeated Error`,
+      message: `Not Found: No theoretical opportunities found with informed data\n\nError: Second Error\n\nNot Found: Third repeated Error (HTTP 404)`,
     });
   });
 
@@ -169,7 +177,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Bad Request: Research Feasibility: Geometry type must be "Polygon" for AOIs',
+      message: 'Bad Request: Research Feasibility: Geometry type must be "Polygon" for AOIs (HTTP 400)',
     });
   });
 
@@ -190,7 +198,7 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message:
-        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI height exceeds the maximum allowed height of 40.0 km\nAOI width exceeds the maximum allowed width of 18.9 km',
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI height exceeds the maximum allowed height of 40.0 km\nAOI width exceeds the maximum allowed width of 18.9 km (HTTP 400)',
     });
   });
 
@@ -211,7 +219,7 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message:
-        'Research Feasibility: Error calling feasibility request:\n\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9)',
+        'Research Feasibility: Error calling feasibility request:\n\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9) (HTTP 400)',
     });
   });
 
@@ -232,7 +240,7 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message:
-        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9)',
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of 800.5 km²\nAOI: ERR_UNKNOWN_CONSTRAINT (99.9) (HTTP 400)',
     });
   });
 
@@ -253,7 +261,7 @@ describe('handleRRDError', () => {
 
     expect(handleError).toHaveBeenCalledWith({
       message:
-        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of INVALID_AREA_ID km²',
+        'Research Feasibility: Error calling feasibility request:\n\nAOI area exceeds the maximum allowed area of INVALID_AREA_ID km² (HTTP 400)',
     });
   });
 
@@ -272,7 +280,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Bad Request\n\nAOI area exceeds the maximum allowed area of 800.5 km²',
+      message: 'Bad Request\n\nAOI area exceeds the maximum allowed area of 800.5 km² (HTTP 400)',
     });
   });
 
@@ -299,7 +307,7 @@ describe('handleRRDError', () => {
     await handleRRDError(mockError);
 
     expect(handleError).toHaveBeenCalledWith({
-      message: 'Error: Start time must be at least 6 hours in the future, if given.',
+      message: 'Error: Start time must be at least 6 hours in the future, if given. (HTTP 400)',
     });
   });
 
@@ -316,7 +324,7 @@ describe('handleRRDError', () => {
 
       expect(handleError).toHaveBeenCalledWith({
         message:
-          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again. (HTTP 429)',
       });
     });
 
@@ -332,7 +340,7 @@ describe('handleRRDError', () => {
 
       expect(handleError).toHaveBeenCalledWith({
         message:
-          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again. (HTTP 429)',
       });
     });
 
@@ -348,7 +356,7 @@ describe('handleRRDError', () => {
 
       expect(handleError).toHaveBeenCalledWith({
         message:
-          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again.',
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again. (HTTP 429)',
       });
     });
 
@@ -363,7 +371,7 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'An unknown error occurred (401)',
+        message: 'An unknown error occurred (HTTP 401)',
       });
     });
 
@@ -379,7 +387,7 @@ describe('handleRRDError', () => {
 
       expect(handleError).toHaveBeenCalledWith({
         message:
-          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again.",
+          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again. (HTTP 504)",
       });
     });
 
@@ -394,7 +402,7 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'An unknown error occurred (504)',
+        message: 'An unknown error occurred (HTTP 504)',
       });
     });
 
@@ -411,7 +419,7 @@ describe('handleRRDError', () => {
         await handleRRDError(mockError);
 
         expect(handleError).toHaveBeenCalledWith({
-          message: 'The imagery provider is temporarily unavailable. Please try again in a few minutes.',
+          message: `The imagery provider is temporarily unavailable. Please try again in a few minutes. (HTTP ${status})`,
         });
       },
     );
@@ -427,7 +435,7 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'An unknown error occurred (500)',
+        message: 'An unknown error occurred (HTTP 500)',
       });
     });
 
@@ -441,7 +449,7 @@ describe('handleRRDError', () => {
 
       expect(handleError).toHaveBeenCalledWith({
         message:
-          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again.",
+          "Your search couldn't be processed. This can happen when a search covers many providers or a large area. Try narrowing your search and searching again. (HTTP 504)",
       });
     });
 
@@ -495,7 +503,7 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'Error: Internal Server Error',
+        message: 'Error: Internal Server Error (HTTP 500)',
       });
     });
 
@@ -510,7 +518,7 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'Error: ERROR: Token is expired',
+        message: 'Error: ERROR: Token is expired (HTTP 511)',
       });
     });
 
@@ -529,8 +537,455 @@ describe('handleRRDError', () => {
       await handleRRDError(mockError);
 
       expect(handleError).toHaveBeenCalledWith({
-        message: 'Bad Request: Research Feasibility: Geometry type must be "Polygon" for AOIs',
+        message: 'Bad Request: Research Feasibility: Geometry type must be "Polygon" for AOIs (HTTP 400)',
       });
     });
+  });
+
+  describe('unified RRD error shape ({status, title, type, features, numberReturned, error, message})', () => {
+    it('should extract the field-validation message from RRD_SEARCH_PAYLOAD_2 as a 400', async () => {
+      const mockError = { response: { status: 400, data: RRD_SEARCH_PAYLOAD_2 } };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'The field MaxCloudCover must be between 0 and 100. (HTTP 400)',
+      });
+    });
+
+    it('should extract the non_field_errors message from RRD_SEARCH_PAYLOAD_3 as a 400', async () => {
+      const mockError = { response: { status: 400, data: RRD_SEARCH_PAYLOAD_3 } };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'End time must be less than 7 days from now, if given. (HTTP 400)',
+      });
+    });
+
+    it('should show a provider-specific throttling message for RRD_SEARCH_PAYLOAD_5 as a 500', async () => {
+      const mockError = { response: { status: 500, data: RRD_SEARCH_PAYLOAD_5 } };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          'Too many requests to planetscope. Please wait a moment and try again, or narrow your search. (HTTP 429)',
+      });
+    });
+
+    it('should fall back to the generic 429 message when the throttling message has no parsable provider segment', async () => {
+      const mockError = {
+        response: {
+          status: 500,
+          data: {
+            ...RRD_SEARCH_PAYLOAD_5,
+            message: 'The remote server returned an error: (429) Too Many Requests.',
+          },
+        },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message:
+          'The imagery provider is currently receiving too many requests. Please wait a moment and try your search again. (HTTP 429)',
+      });
+    });
+
+    it('should fall back to errorData.title when the string error flag is set but the message is empty', async () => {
+      const mockError = {
+        response: { status: 400, data: { error: 'true', message: '', title: 'Bad Request' } },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'Bad Request (HTTP 400)',
+      });
+    });
+
+    it('should fall back to the generic unknown-error message when the string error flag is set but both message and title are empty', async () => {
+      const mockError = {
+        response: { status: 400, data: { error: 'true', message: '', title: '' } },
+      };
+
+      await handleRRDError(mockError);
+
+      expect(handleError).toHaveBeenCalledWith({
+        message: 'An unknown error occurred (HTTP 400)',
+      });
+    });
+
+    it('getRRDErrorMessage should resolve directly to the extracted message for RRD_SEARCH_PAYLOAD_2 as a 400', async () => {
+      const mockError = { response: { status: 400, data: RRD_SEARCH_PAYLOAD_2 } };
+
+      await expect(getRRDErrorMessage(mockError)).resolves.toBe(
+        'The field MaxCloudCover must be between 0 and 100. (HTTP 400)',
+      );
+    });
+  });
+});
+
+describe('useRRDHttpRequest', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should pass the single successful value to responseHandler and report the failing timespan error, without calling onErrorCallback', async () => {
+    const bodyA = { timespan: 'A' };
+    const bodyB = { timespan: 'B' };
+    const successValue = { features: [{ id: 'feature-A' }], error: 'false' };
+
+    const request = jest.fn().mockImplementation((queryBody) => {
+      if (queryBody === bodyA) {
+        return Promise.resolve(successValue);
+      }
+      return Promise.reject({ response: { status: 400, data: RRD_SEARCH_PAYLOAD_3 } });
+    });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [bodyA, bodyB],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledTimes(1);
+    expect(responseHandler).toHaveBeenCalledWith(successValue);
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({
+      message: 'End time must be less than 7 days from now, if given. (HTTP 400)',
+    });
+    expect(onErrorCallback).not.toHaveBeenCalled();
+  });
+
+  it('should deduplicate an identical error message coming from every rejected timespan and call onErrorCallback', async () => {
+    const bodyA = { timespan: 'A' };
+    const bodyB = { timespan: 'B' };
+
+    const request = jest.fn().mockRejectedValue({ response: { status: 400, data: RRD_SEARCH_PAYLOAD_3 } });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [bodyA, bodyB],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
+    });
+
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({
+      message: 'End time must be less than 7 days from now, if given. (HTTP 400)',
+    });
+    expect(onErrorCallback).toHaveBeenCalledTimes(1);
+    expect(responseHandler).not.toHaveBeenCalled();
+  });
+
+  it('should join distinct error messages from both rejected timespans in request order', async () => {
+    const bodyA = { timespan: 'A' };
+    const bodyB = { timespan: 'B' };
+
+    const request = jest.fn().mockImplementation((queryBody) => {
+      if (queryBody === bodyA) {
+        return Promise.reject({ response: { status: 400, data: RRD_SEARCH_PAYLOAD_2 } });
+      }
+      return Promise.reject({ response: { status: 400, data: RRD_SEARCH_PAYLOAD_3 } });
+    });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [bodyA, bodyB],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
+    });
+
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'The field MaxCloudCover must be between 0 and 100. (HTTP 400)\n\nEnd time must be less than 7 days from now, if given. (HTTP 400)',
+    });
+  });
+
+  it('should clear the results for a "no opportunities" rejection and show its message in the message panel', async () => {
+    const body = { timespan: 'A' };
+
+    const request = jest.fn().mockRejectedValue({ response: { status: 400, data: RRD_SEARCH_PAYLOAD_4 } });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledTimes(1);
+    expect(responseHandler).toHaveBeenCalledWith({ features: [] });
+    expect(handleError).toHaveBeenCalledWith({
+      message: 'No theoretical opportunities found with informed data (HTTP 400)',
+    });
+    expect(onErrorCallback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should treat a resolved 2xx response carrying error: "true" as a search error, calling handleError and onErrorCallback instead of responseHandler', async () => {
+    const body = { timespan: 'A' };
+
+    const request = jest.fn().mockResolvedValue({ error: 'true', message: 'Research CCME: X.Y=Bad value' });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
+    });
+
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({ message: 'Bad value' });
+    expect(onErrorCallback).toHaveBeenCalledTimes(1);
+    expect(responseHandler).not.toHaveBeenCalled();
+  });
+
+  it('should keep the results of a resolved 2xx error: "true" response that has features, and show a message that more results may be available', async () => {
+    const body = { timespan: 'A' };
+    const partialValue = {
+      type: 'FeatureCollection',
+      features: [{ id: 'feature-A' }],
+      numberReturned: 1,
+      message: 'ROLLING ARCHIVE ERROR : Service timeout or unreachable \n',
+      error: 'true',
+    };
+
+    const request = jest.fn().mockResolvedValue(partialValue);
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledTimes(1);
+    expect(responseHandler).toHaveBeenCalledWith(partialValue);
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Showing the available results. Some sources did not respond, so more results may be available: ROLLING ARCHIVE ERROR : Service timeout or unreachable',
+    });
+    expect(onErrorCallback).not.toHaveBeenCalled();
+  });
+
+  it('should show the same partial-results message for an error: "false" response that has features and a message', async () => {
+    const body = { timespan: 'A' };
+    const partialValue = {
+      type: 'FeatureCollection',
+      features: [{ id: 'feature-A' }],
+      numberReturned: 1,
+      message: 'ROLLING ARCHIVE ERROR : Service timeout or unreachable \n',
+      error: 'false',
+    };
+
+    const request = jest.fn().mockResolvedValue(partialValue);
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledWith(partialValue);
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({
+      message:
+        'Showing the available results. Some sources did not respond, so more results may be available: ROLLING ARCHIVE ERROR : Service timeout or unreachable',
+    });
+    expect(onErrorCallback).not.toHaveBeenCalled();
+  });
+
+  it('should not show any message for an error: "false" response that has features and an empty message', async () => {
+    const body = { timespan: 'A' };
+    const successValue = {
+      type: 'FeatureCollection',
+      features: [{ id: 'feature-A' }],
+      numberReturned: 1,
+      message: '',
+      error: 'false',
+    };
+
+    const request = jest.fn().mockResolvedValue(successValue);
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledWith(successValue);
+    expect(handleError).not.toHaveBeenCalled();
+  });
+
+  it('should pass a "TASKING COMMENTS" payload (error: "false", no results) to responseHandler and show its message in the message panel', async () => {
+    const body = { timespan: 'A' };
+
+    const request = jest.fn().mockResolvedValue(RRD_SEARCH_PAYLOAD_6);
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        isSearchAction: true,
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledTimes(1);
+    expect(responseHandler).toHaveBeenCalledWith(RRD_SEARCH_PAYLOAD_6);
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError.mock.calls[0][0].message).toContain(
+      "Provider's mission '10' requires parameter instrumentMode",
+    );
+    expect(onErrorCallback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should pass a resolved error:"true" payload through to responseHandler unchanged for a non-search (cart) action', async () => {
+    const body = { timespan: 'A' };
+
+    const request = jest.fn().mockResolvedValue({ error: 'true' });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(responseHandler).toHaveBeenCalled();
+    });
+
+    expect(responseHandler).toHaveBeenCalledTimes(1);
+    expect(responseHandler).toHaveBeenCalledWith({ error: 'true' });
+    expect(handleError).not.toHaveBeenCalled();
+    expect(onErrorCallback).not.toHaveBeenCalled();
+  });
+
+  it('should still call handleError and onErrorCallback for a generic rejection on a non-search (cart) action', async () => {
+    const body = { timespan: 'A' };
+
+    const request = jest.fn().mockRejectedValue({ response: { status: 500, data: {} } });
+    const responseHandler = jest.fn();
+    const onErrorCallback = jest.fn();
+
+    const { result } = renderHook(() => useRRDHttpRequest(onErrorCallback));
+
+    act(() => {
+      result.current[1]({
+        request,
+        queryBody: [body],
+        responseHandler,
+      });
+    });
+
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
+    });
+
+    expect(handleError).toHaveBeenCalledTimes(1);
+    expect(handleError).toHaveBeenCalledWith({ message: 'An unknown error occurred (HTTP 500)' });
+    expect(onErrorCallback).toHaveBeenCalledTimes(1);
+    expect(responseHandler).not.toHaveBeenCalled();
   });
 });

@@ -25,6 +25,7 @@ test.describe('Sentinel Mosaics search is routed to STAC', () => {
     const payload = (await stacRequest).postDataJSON();
 
     expect(payload.collections).toEqual(['sentinel-1-global-mosaics']);
+    expect(payload.sortby).toEqual([{ field: 'properties.datetime', direction: 'desc' }]);
     // IW and DH mosaics share one STAC collection, so without the product:type filter an
     // IW search would also return DH products.
     const filter = JSON.stringify(payload.filter);

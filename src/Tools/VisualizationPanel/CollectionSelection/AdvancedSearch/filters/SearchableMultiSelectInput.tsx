@@ -3,6 +3,9 @@ import CollectionTooltip from '../../CollectionTooltip/CollectionTooltip';
 import { SearchableSelect } from '../../../../../components/SearchableSelect/SearchableSelect';
 import { defaultMultiTermFilterOption } from '../../../../../components/SearchableSelect/searchableSelect.utils';
 
+// Above the tools panel (z-index 500), matching the portaled select in ProductInfo.
+const MENU_PORTAL_Z_INDEX = 9999;
+
 interface SearchableSelectOption {
   value: string;
   label: string;
@@ -47,6 +50,9 @@ export const SearchableMultiSelectInput = ({
           value={value}
           onChange={onChange}
           filterOption={defaultMultiTermFilterOption}
+          // The filters panel scrolls its content, which would clip an inline menu.
+          menuPortalTarget={document.body}
+          menuPortalZIndex={MENU_PORTAL_Z_INDEX}
         />
       </div>
     </div>
