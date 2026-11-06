@@ -68,7 +68,7 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
       max: 25,
     },
     [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: {
-      min: 6,
+      min: 7,
       max: 25,
     },
   };
@@ -101,8 +101,8 @@ export default class CCMDataSourceHandler extends AbstractBYOCDataSourceHandler 
       maxDate: moment.utc('2024-01-01'),
     },
     [CDSE_CCM_MR_THERMAL_LST_COLLECTION]: {
-      minDate: moment.utc('2025-01-01'),
-      maxDate: moment.utc('2025-12-31'),
+      minDate: moment.utc('2025-02-26'),
+      maxDate: moment.utc('2026-07-02'),
     },
   };
 
