@@ -3,11 +3,13 @@ import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 import { fromBlob } from 'geotiff';
 
 import {
+  checkIfIndexOutputPresent,
   getDataForLayer,
   getDataForIndex,
   getMissingIndexOutputError,
   getNoIndexLayerOutputError,
 } from './Histogram.utils';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
 import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
 import {
   getImageDimensionFromBoundsWithCap,
@@ -34,6 +36,12 @@ jest.mock('../../Controls/ImgDownload/ImageDownload.utils.js', () => ({
   getImageDimensionFromBoundsWithCap: jest.fn(),
   constructBBoxFromBounds: jest.fn(),
 }));
+
+// Real loader by default; individual tests override it to simulate a failed chunk load.
+jest.mock('../../utils/evalscriptParsers', () => {
+  const actual = jest.requireActual('../../utils/evalscriptParsers');
+  return { ...actual, loadEvalscriptParsers: jest.fn(actual.loadEvalscriptParsers) };
+});
 
 jest.mock('geotiff', () => ({
   fromBlob: jest.fn(),
@@ -237,5 +245,38 @@ describe('Histogram.utils — getDataForLayer / getDataForIndex', () => {
     expect(LayersFactory.makeLayers).not.toHaveBeenCalled();
     expect(LayersFactory.makeLayer).not.toHaveBeenCalled();
     expect(fromBlob).not.toHaveBeenCalled();
+  });
+});
+
+describe('Histogram.utils — checkIfIndexOutputPresent', () => {
+  const INDEX_EVALSCRIPT = `//VERSION=3
+function setup() {
+  return {
+    input: ["B04", "B08", "dataMask"],
+    output: [
+      { id: "default", bands: 4 },
+      { id: "index", bands: 1, sampleType: "FLOAT32" },
+    ],
+  };
+}
+function evaluatePixel(s) {
+  return { default: [1, 1, 1, 1], index: [0] };
+}`;
+
+  it('returns true for a custom evalscript with an index output once parsers load', async () => {
+    await expect(
+      checkIfIndexOutputPresent({ customSelected: true, evalscript: INDEX_EVALSCRIPT }),
+    ).resolves.toBe(true);
+  });
+
+  it('returns false instead of rejecting when the parsers fail to load', async () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    loadEvalscriptParsers.mockRejectedValueOnce(new Error('chunk load failed'));
+
+    await expect(
+      checkIfIndexOutputPresent({ customSelected: true, evalscript: INDEX_EVALSCRIPT }),
+    ).resolves.toBe(false);
+    expect(consoleError).toHaveBeenCalled();
+    consoleError.mockRestore();
   });
 });

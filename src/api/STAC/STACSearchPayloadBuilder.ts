@@ -7,7 +7,9 @@ import {
   findConfigNodeIdsByType,
   getSTACCollectionNames,
   isGeometrylessNode,
+  isSelectionBookkeepingKey,
   isSTACCollectionNode,
+  isSTACProductType,
 } from '../../utils/collectionConfigTree';
 
 export interface CQL2Filter {
@@ -169,6 +171,40 @@ interface STACCollectionNode {
 }
 
 /**
+ * Collects the ticked product types that own a STAC collection of their own while their instrument
+ * is searched through OData (CLMS SWI time series V3/V4 under Soil Water Index), at whatever depth
+ * they sit below the selected sub-collection. The partitioner in AdvancedSearch.jsx moves only these
+ * to the STAC side (splitSTACProductTypeSelection), so each one is a node in its own right here.
+ */
+const collectSTACProductTypeNodes = (
+  config: CollectionFormConfigItem,
+  selectedNode: SelectedCollectionNode,
+  nodes: STACCollectionNode[],
+): void => {
+  Object.keys(selectedNode)
+    .filter((key) => !isSelectionBookkeepingKey(key))
+    .forEach((subId) => {
+      const subConfig = config.items?.find((item) => item.id === subId);
+      const subSelectedNode = selectedNode[subId];
+      if (!subConfig || !subSelectedNode || typeof subSelectedNode !== 'object') {
+        return;
+      }
+      if (subConfig.type === 'productType' && isSTACProductType(config, subConfig)) {
+        nodes.push({ config: subConfig, selectedNode: subSelectedNode as SelectedCollectionNode });
+        return;
+      }
+      collectSTACProductTypeNodes(subConfig, subSelectedNode as SelectedCollectionNode, nodes);
+    });
+};
+
+/**
+ * True for a STAC node that is itself a product type (CLMS SWI time series). Its id is an OData
+ * datasetIdentifier, not the item's `product:type` (`soil_water_index`), and its own collection
+ * already scopes the search to it - so its id must stay out of the `product:type` filter.
+ */
+const isProductTypeOwned = (config: CollectionFormConfigItem): boolean => config.type === 'productType';
+
+/**
  * Resolves the selected collections against the config and returns one entry per node that owns a
  * STAC collection. selectedCollections has the shape { collectionId: { subCollectionId: {...} } }:
  * a top-level entry that owns one is a single STAC collection and short-circuits, otherwise it is a
@@ -204,14 +240,17 @@ const collectSTACCollectionNodes = (
       return;
     }
     Object.keys(selectedNode)
-      .filter((key) => key !== 'type' && key !== 'platform')
+      .filter((key) => !isSelectionBookkeepingKey(key))
       .forEach((subId) => {
         const subConfig = collectionConfig.items!.find((item) => item.id === subId);
+        const subSelectedNode = selectedNode[subId] as SelectedCollectionNode;
         if (isSTACCollectionNode(subConfig)) {
           nodes.push({
             config: subConfig!,
-            selectedNode: selectedNode[subId] as SelectedCollectionNode,
+            selectedNode: subSelectedNode,
           });
+        } else if (subConfig && subSelectedNode && typeof subSelectedNode === 'object') {
+          collectSTACProductTypeNodes(subConfig, subSelectedNode, nodes);
         }
       });
   });
@@ -255,6 +294,9 @@ interface STACCollectionProductTypes {
  * and what the config offers there. The grouping is deliberately not flattened: it is the
  * per-collection emptiness that matters, not the total count.
  *
+ * Leaves out product-type-owned nodes (isProductTypeOwned): their collection alone scopes them, so
+ * they add no `product:type` value and must not count as a collection without product types either.
+ *
  * Returns an empty array when there is no config to resolve collection boundaries with,
  * which callers read as "no reason to change anything".
  */
@@ -262,13 +304,58 @@ const extractProductTypesPerSTACCollection = (
   selectedCollections: SelectedCollections,
   collectionFormConfig: CollectionFormConfigItem[] | undefined,
 ): STACCollectionProductTypes[] =>
-  collectSTACCollectionNodes(selectedCollections, collectionFormConfig).map(({ config, selectedNode }) => ({
-    selected: extractInstrumentsAndProductTypes(selectedNode).productTypes,
-    // Scope-crossing on purpose: `configured` stands in for a collection the user left unticked,
-    // so it has to cover every product type beneath it - directly, under a group, or under one of
-    // its instruments - because ticking the collection would have matched all of them.
-    configured: findConfigNodeIdsByType(config.items, 'productType'),
-  }));
+  collectSTACCollectionNodes(selectedCollections, collectionFormConfig)
+    .filter(({ config }) => !isProductTypeOwned(config))
+    .map(({ config, selectedNode }) => ({
+      selected: extractInstrumentsAndProductTypes(selectedNode).productTypes,
+      // Scope-crossing on purpose: `configured` stands in for a collection the user left unticked,
+      // so it has to cover every product type beneath it - directly, under a group, or under one of
+      // its instruments - because ticking the collection would have matched all of them.
+      configured: findConfigNodeIdsByType(config.items, 'productType'),
+    }));
+
+/**
+ * Ids of the selected product-type-owned STAC nodes (see isProductTypeOwned), which are kept out of
+ * the `product:type` filter.
+ */
+const productTypeOwnedIds = (
+  selectedCollections: SelectedCollections,
+  collectionFormConfig: CollectionFormConfigItem[] | undefined,
+): Set<string> =>
+  new Set(
+    collectSTACCollectionNodes(selectedCollections, collectionFormConfig)
+      .filter(({ config }) => isProductTypeOwned(config))
+      .map(({ config }) => config.id),
+  );
+
+/**
+ * Ids of the selected instruments that hold any of `productTypeIds` directly in the selection tree.
+ * The partitioner keeps the path to a STAC-routed product type, so its OData instrument
+ * (SOIL_WATER_INDEX) comes along in the STAC selection - but it is not a STAC `instruments` value.
+ */
+const instrumentsAboveIds = (selectedCollections: SelectedCollections, productTypeIds: Set<string>) => {
+  const ids = new Set<string>();
+  if (productTypeIds.size === 0) {
+    return ids;
+  }
+  const visit = (node: unknown, instrumentId: string | null) => {
+    if (!node || typeof node !== 'object') {
+      return;
+    }
+    Object.entries(node as SelectedCollectionNode).forEach(([key, value]) => {
+      if (!value || typeof value !== 'object') {
+        return;
+      }
+      if (productTypeIds.has(key) && instrumentId) {
+        ids.add(instrumentId);
+        return;
+      }
+      visit(value, (value as SelectedCollectionNode).type === 'instrument' ? key : instrumentId);
+    });
+  };
+  Object.values(selectedCollections).forEach((collection) => visit(collection, null));
+  return ids;
+};
 
 /**
  * Creates platform filters for STAC search
@@ -525,12 +612,16 @@ export const createSTACSearchPayload = ({
   if (Object.keys(collectionForm.selectedCollections).length) {
     const allProductTypes: string[] = [];
     const allInstruments: string[] = [];
+    // Product-type-owned nodes (CLMS SWI time series) are scoped by their own collection. Neither
+    // their id nor the OData instrument above them (SOIL_WATER_INDEX) is a STAC property value.
+    const ownedIds = productTypeOwnedIds(collectionForm.selectedCollections, collectionFormConfig);
+    const ownerInstrumentIds = instrumentsAboveIds(collectionForm.selectedCollections, ownedIds);
     Object.entries(collectionForm.selectedCollections).forEach(([_collectionId, collectionData]) => {
       const { productTypes, instruments } = extractInstrumentsAndProductTypes(collectionData);
-      allProductTypes.push(...productTypes);
+      allProductTypes.push(...productTypes.filter((id) => !ownedIds.has(id)));
       // Collected unconditionally here; whether instrument filters actually make it into
       // the final payload is decided below by the `shouldIncludeInstruments` check.
-      allInstruments.push(...instruments);
+      allInstruments.push(...instruments.filter((id) => !ownerInstrumentIds.has(id)));
     });
 
     // `allProductTypes` is one flat list feeding an `and`-combined filter, which only reads as

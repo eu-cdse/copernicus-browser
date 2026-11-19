@@ -112,13 +112,21 @@ class FIS extends Component {
       poiOrAoi,
     } = this.props;
 
-    const { supportStatisticalApi, statisticsLayer, statsOutputName } = await getStatisticsLayer({
-      customSelected,
-      datasetId,
-      evalscript,
-      layerId,
-      visualizationUrl,
-    });
+    let statisticsLayerInfo;
+    try {
+      statisticsLayerInfo = await getStatisticsLayer({
+        customSelected,
+        datasetId,
+        evalscript,
+        layerId,
+        visualizationUrl,
+      });
+    } catch (err) {
+      // e.g. the lazy-loaded evalscript parsers failed to load - show the error with a Retry button
+      this.handleRequestError(err);
+      return;
+    }
+    const { supportStatisticalApi, statisticsLayer, statsOutputName } = statisticsLayerInfo;
 
     const geometry = poiOrAoi === 'aoi' ? aoiGeometry : poiGeometry;
     const crs = supportStatisticalApi ? CRS_EPSG3857 : CRS_EPSG4326;

@@ -11,7 +11,7 @@ const OPENEO_VISUALIZATION_FORMATS = ['png', 'jpg', 'webp'];
 test('openEO tile requests send a valid visualization format from the process graph save_result node', async ({
   page,
 }) => {
-  // Cold openEO tile load under single-worker CI; the default 30s budget is too tight.
+  // Cold openEO tile load from the live backend; the default 30s budget is too tight.
   test.setTimeout(60_000);
 
   const tileRequest = page.waitForRequest(
@@ -27,7 +27,7 @@ test('openEO tile requests send a valid visualization format from the process gr
 });
 
 test('SH Processing API tile requests send image/webp as output format', async ({ page }) => {
-  // Cold tile load under single-worker CI; the default 30s budget is too tight.
+  // Cold tile load from the live backend; the default 30s budget is too tight.
   test.setTimeout(60_000);
 
   const tileRequest = page.waitForRequest((r) => r.method() === 'POST' && r.url().includes(SH_PROCESS_URL), {
@@ -41,8 +41,8 @@ test('SH Processing API tile requests send image/webp as output format', async (
 });
 
 test('WebP download for non-openEO layer routes to SH Processing API with image/webp', async ({ page }) => {
-  // Chains two live waits (initial tiles + download request) under single-worker CI;
-  // the combined budgets can exceed 60s, so give the whole test more headroom.
+  // Chains live waits (initial tiles + preview + download request); the combined budgets can
+  // exceed 60s, so give the whole test more headroom.
   test.setTimeout(HEAVY_TEST_TIMEOUT);
 
   const initialTiles = page.waitForResponse((r) => r.url().includes(SH_PROCESS_URL) && r.status() === 200, {
@@ -58,8 +58,25 @@ test('WebP download for non-openEO layer routes to SH Processing API with image/
     .locator('select')
     .filter({ has: page.locator('option', { hasText: 'WebP (no georeference)' }) });
   await expect(formatSelect).toBeVisible();
-  await formatSelect.selectOption({ label: 'WebP (no georeference)' });
 
+  // The download dialog's live preview (ImageDownloadPreview) always renders as PNG through this
+  // same Processing API endpoint and re-fetches when the format changes. Wait for that preview
+  // request to settle before capturing the download, otherwise the PNG preview POST can be
+  // captured instead of the download. Matched on its PNG format so a late WebP map-tile response
+  // (same endpoint) can't resolve it early. Registered before the action that triggers it.
+  const previewResponse = page.waitForResponse(
+    (r) =>
+      r.request().method() === 'POST' &&
+      r.url().includes(SH_PROCESS_URL) &&
+      r.status() === 200 &&
+      r.request().postDataJSON()?.output?.responses?.[0]?.format?.type === 'image/png',
+    { timeout: LIVE_REQUEST_TIMEOUT },
+  );
+  await formatSelect.selectOption({ label: 'WebP (no georeference)' });
+  await previewResponse;
+
+  // Deliberately not filtering on the output format: a regression to PNG must fail the assertion
+  // below as a format mismatch instead of timing out here.
   const [downloadReq] = await Promise.all([
     page.waitForRequest((r) => r.method() === 'POST' && r.url().includes(SH_PROCESS_URL), {
       timeout: LIVE_REQUEST_TIMEOUT,
@@ -72,7 +89,7 @@ test('WebP download for non-openEO layer routes to SH Processing API with image/
 });
 
 test('CLMS Vector tiles request image/png, not WebP', async ({ page }) => {
-  // Cold WMS tile load under single-worker CI; the default 30s budget is too tight.
+  // Cold WMS tile load from the live backend; the default 30s budget is too tight.
   test.setTimeout(60_000);
 
   const tileRequest = page.waitForRequest(
@@ -89,8 +106,8 @@ test('CLMS Vector tiles request image/png, not WebP', async ({ page }) => {
 });
 
 test('WebP download for openEO layer routes to openEO with correct format', async ({ page }) => {
-  // Heavy multi-wait test (cold tile load + download request) under single-worker CI;
-  // the chained wait budgets can exceed 60s, so give the whole test more headroom.
+  // Heavy multi-wait test (cold tile load + preview + download request); the chained wait
+  // budgets can exceed 60s, so give the whole test more headroom.
   test.setTimeout(HEAVY_TEST_TIMEOUT);
 
   const initialTiles = page.waitForResponse(

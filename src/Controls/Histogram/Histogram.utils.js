@@ -9,6 +9,7 @@ import {
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { constructErrorMessage, isDataFusionEnabled } from '../../utils';
 import { checkIfIndexOutputInEvalscript } from '../../utils/parseEvalscript';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
 import { reqConfigMemoryCache, MAX_SH_IMAGE_SIZE } from '../../const';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import { constructDataFusionLayer } from '../../junk/EOBCommon/utils/dataFusion';
@@ -252,6 +253,14 @@ async function getHistogramFromTiffs(blobs) {
 export async function checkIfIndexOutputPresent(props, cancelToken) {
   const { customSelected, evalscript, layerId, visualizationUrl } = props;
   if ((!customSelected && !layerId) || (customSelected && !evalscript)) {
+    return false;
+  }
+
+  try {
+    await loadEvalscriptParsers();
+  } catch (err) {
+    // parsers failed to load - treat as "no index output" so the histogram is disabled instead of hanging
+    console.error('Failed to load evalscript parsers', err);
     return false;
   }
 

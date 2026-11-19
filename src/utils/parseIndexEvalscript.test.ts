@@ -1,4 +1,9 @@
 import { parseIndexEvalscript } from './parseIndexEvalscript.util';
+import { loadEvalscriptParsers } from './evalscriptParsers';
+
+beforeAll(async () => {
+  await loadEvalscriptParsers();
+});
 
 describe('parseIndexEvalscript', () => {
   test('returns null for a CLMS-style VERSION=3 evalscript without blank lines', () => {

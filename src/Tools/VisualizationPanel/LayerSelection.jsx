@@ -28,6 +28,7 @@ import { t } from 'ttag';
 import { parseEvalscriptBands } from '../../utils';
 import { parseIndexEvalscript } from '../../utils/parseIndexEvalscript.util';
 import { usePrevious } from '../../hooks/usePrevious';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
 
 import { PROCESSING_OPTIONS, reqConfigMemoryCache } from '../../const';
 import { getProcessGraphString, isOpenEoSupported } from '../../api/openEO/openEOHelpers';
@@ -433,7 +434,7 @@ const LayerSelection = ({
     onBackToLayerList();
   }, [saveCustomState, onBackToLayerList]);
 
-  const onSelectCustomVisualization = useCallback(() => {
+  const onSelectCustomVisualization = useCallback(async () => {
     if (savedCustomState) {
       setLocationHash(CUSTOM_COMPOSITE_ROUTE);
 
@@ -459,6 +460,15 @@ const LayerSelection = ({
       return;
     }
     if (evalscript) {
+      try {
+        await loadEvalscriptParsers();
+      } catch (err) {
+        // Without the parsers every evalscript would look like a plain custom script, so stay on the
+        // layer list instead of routing to the wrong tab. Clicking again retries the load.
+        console.error('Failed to load evalscript parsers', err);
+        store.dispatch(notificationSlice.actions.displayError(t`An unknown error occurred`));
+        return;
+      }
       if (parseEvalscriptBands(evalscript).length === 3) {
         setLocationHash(CUSTOM_COMPOSITE_ROUTE);
       } else if (parseIndexEvalscript(evalscript)) {

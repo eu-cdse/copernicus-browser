@@ -60,7 +60,11 @@ import { ODataCollections } from '../../../../api/OData/ODataTypes';
 import { createSTACSearchPayload } from '../../../../api/STAC/STACSearchPayloadBuilder';
 import { REACT_MARKDOWN_REHYPE_PLUGINS } from '../../../../rehypeConfig';
 import MessagePanel from '../../MessagePanel/MessagePanel';
-import { findConfigNodeIdsByTypeInScope, isSTACCollectionNode } from '../../../../utils/collectionConfigTree';
+import {
+  findConfigNodeIdsByTypeInScope,
+  isSTACCollectionNode,
+  splitSTACProductTypeSelection,
+} from '../../../../utils/collectionConfigTree';
 
 const WarningMessage = {
   geometrySimplified: () => t`Your search geometry was simplified to fit the search query limits.`,
@@ -693,6 +697,33 @@ export class AdvancedSearch extends Component {
   };
 
   /**
+   * Keeps the selected filters of the collections in `collections` only. On the STAC side it also
+   * leaves out a collection that is otherwise searched through OData and only reached STAC through
+   * product types of its own (CLMS SWI time series): its filters are OData attributes, which would
+   * match nothing on STAC.
+   */
+  getSelectedFiltersFor = (collections, formConfig, { stac = false } = {}) => {
+    const { collectionForm } = this.state;
+    const selectedFilters = {};
+    Object.keys(collectionForm.selectedFilters ?? {}).forEach((collectionId) => {
+      if (!collections[collectionId]) {
+        return;
+      }
+      const collectionObj = formConfig?.find((c) => c.id === collectionId);
+      if (stac && collectionObj && !isSTACCollectionNode(collectionObj)) {
+        const ownsStacSubCollection = Object.keys(collections[collectionId]).some((id) =>
+          isSTACCollectionNode(collectionObj.items?.find((item) => item.id === id)),
+        );
+        if (!ownsStacSubCollection) {
+          return;
+        }
+      }
+      selectedFilters[collectionId] = collectionForm.selectedFilters[collectionId];
+    });
+    return selectedFilters;
+  };
+
+  /**
    * Partitions selected collections into STAC-capable and OData-only collections.
    * This enables parallel search when multiple collections with different API support are selected.
    *
@@ -729,9 +760,20 @@ export class AdvancedSearch extends Component {
           stacSubCollections[subCollectionId] = selectedCollections[collectionId][subCollectionId];
           hasStacItems = true;
         } else if (subCollectionObj) {
-          // Only add if it's a valid sub-collection (found in formConfig)
-          odataSubCollections[subCollectionId] = selectedCollections[collectionId][subCollectionId];
-          hasOdataItems = true;
+          // Only add if it's a valid sub-collection (found in formConfig). Product types ticked on
+          // their own that are searched through STAC (CLMS SWI time series) are moved to the STAC side.
+          const split = splitSTACProductTypeSelection(
+            subCollectionObj,
+            selectedCollections[collectionId][subCollectionId],
+          );
+          if (split.stac) {
+            stacSubCollections[subCollectionId] = split.stac;
+            hasStacItems = true;
+          }
+          if (split.odata) {
+            odataSubCollections[subCollectionId] = split.odata;
+            hasOdataItems = true;
+          }
         }
       }
 
@@ -808,14 +850,7 @@ export class AdvancedSearch extends Component {
       if (Object.keys(stacCollections).length > 0) {
         const { fromMoment, toMoment, searchCriteria, filterMonths } = this.state;
         const { mapBounds, aoiBounds, poiBounds } = this.props;
-        const stacSelectedFilters = {};
-        if (collectionForm.selectedFilters) {
-          Object.keys(collectionForm.selectedFilters).forEach((collectionId) => {
-            if (stacCollections[collectionId]) {
-              stacSelectedFilters[collectionId] = collectionForm.selectedFilters[collectionId];
-            }
-          });
-        }
+        const stacSelectedFilters = this.getSelectedFiltersFor(stacCollections, formConfig, { stac: true });
         const stacCollectionForm = {
           ...collectionForm,
           selectedCollections: stacCollections,
@@ -940,14 +975,7 @@ export class AdvancedSearch extends Component {
       // Execute STAC search if there are STAC-capable collections
       if (hasStacCollections) {
         // Filter selectedFilters to only include filters for STAC collections
-        const stacSelectedFilters = {};
-        if (collectionForm.selectedFilters) {
-          Object.keys(collectionForm.selectedFilters).forEach((collectionId) => {
-            if (stacCollections[collectionId]) {
-              stacSelectedFilters[collectionId] = collectionForm.selectedFilters[collectionId];
-            }
-          });
-        }
+        const stacSelectedFilters = this.getSelectedFiltersFor(stacCollections, formConfig, { stac: true });
 
         const stacCollectionForm = {
           ...collectionForm,

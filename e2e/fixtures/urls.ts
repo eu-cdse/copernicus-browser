@@ -27,3 +27,9 @@ export const CODE_EDITOR_URLS = {
 // Host + path only (no scheme), so they match regardless of query string.
 export const STAC_SEARCH_URL = 'stac.opensearch.dataspace.copernicus.eu/v1/search';
 export const ODATA_PRODUCTS_URL = 'catalogue.dataspace.copernicus.eu/odata/v1/Products';
+
+// Full URLs (with scheme) of the live services the setup availability check calls directly.
+// They mirror SH_SERVICES_URL / OPENEO_BASEURL in public/config/config.js (browser-only, so it
+// can't be imported here) — keep them in sync if the app's backend hosts change.
+export const SH_PROCESS_API_URL = 'https://sh.dataspace.copernicus.eu/api/v1/process';
+export const OPENEO_API_URL = 'https://openeosh.dataspace.copernicus.eu/1.2/';

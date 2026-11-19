@@ -223,4 +223,6 @@ npx playwright show-report
 
 ## CI
 
-In CI, the dev server starts automatically (configured in `playwright.config.ts` under `webServer`). Tests run headless with 1 worker and 2 retries.
+In CI, the app is served as a **production build** (`npm run build` then `vite preview` on port 3000, configured in `playwright.config.ts` under `webServer`). The dev server serves ~900 unbundled modules per page load, which takes ~4 s per navigation on the CI runner and made tests that reload a few times overrun their timeouts; a build loads in well under a second. Locally, `npx playwright test` still uses the dev server (and reuses one already running on port 3000). The `e2e_tests` job runs both the authenticated (`chromium`) and the anonymous (`chromium-no-auth`, `*.noauth.spec.ts`) projects. Tests run headless with 2 workers and **no retries** — a test must pass on the first attempt, so fix or remove flaky tests instead of relying on retries. A failing test keeps its trace (`trace: 'retain-on-failure'`), and the run stops after 10 failures (`maxFailures`).
+
+Before the authenticated tests, the `setup` project checks that the live Sentinel Hub Processing API and openEO are reachable (`backend availability` in `auth.setup.ts`). If either is down (network error, timeout or 5xx), setup fails and the dependent `chromium` tests are skipped instead of each timing out. The anonymous `chromium-no-auth` tests don't depend on setup, so they still run.

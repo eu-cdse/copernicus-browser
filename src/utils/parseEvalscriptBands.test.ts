@@ -31,6 +31,11 @@ import {
   DEM_COPERNICUS_30_CDAS,
   DEM_COPERNICUS_90_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
+import { loadEvalscriptParsers } from './evalscriptParsers';
+
+beforeAll(async () => {
+  await loadEvalscriptParsers();
+});
 
 describe('parseEvalscriptBands — V3 evalscripts (//VERSION=3)', () => {
   test('standard V3 with 2.5 * sample.BAND multiplications', () => {

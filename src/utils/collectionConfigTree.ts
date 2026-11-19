@@ -137,6 +137,90 @@ export const isSTACCollectionNode = (item: CollectionConfigNode | null | undefin
   Boolean(item?.supportsStacSearch && getSTACCollectionNames(item).length);
 
 /**
+ * True for `type` and `platform`, the bookkeeping keys a selection tree node carries alongside the
+ * config ids the user actually ticked.
+ */
+export const isSelectionBookkeepingKey = (key: string): boolean => key === 'type' || key === 'platform';
+
+/**
+ * True when a product type is searched through STAC. Either `owner` (the node it sits under) or the
+ * product type itself must have `supportsStacSearch`, and one of them must name a STAC collection.
+ * The flag on the product type itself covers a product type whose instrument is otherwise searched
+ * through OData (CLMS SWI time series V3/V4 under Soil Water Index).
+ */
+export const isSTACProductType = (
+  owner: CollectionConfigNode | null | undefined,
+  productType: CollectionConfigNode,
+): boolean =>
+  // `collectionName` alone is not enough: OData-only collections carry one too.
+  Boolean(owner?.supportsStacSearch || productType.supportsStacSearch) &&
+  Boolean(owner?.collectionName || productType.collectionName);
+
+type SelectionNode = Record<string, unknown>;
+
+interface SelectionSplit {
+  /** The ticked STAC product types, with the path to them. Null when none is ticked. */
+  stac: SelectionNode | null;
+  /** The rest of the selection, searched through OData. Null when nothing is left to search. */
+  odata: SelectionNode | null;
+}
+
+/**
+ * Splits a selection subtree into the ticked product types that are searched through STAC (see
+ * isSTACProductType) and everything else, which stays on OData. Only product types ticked on their
+ * own move: an instrument, group or collection ticked without its product types keeps standing for
+ * all of them on the OData side, which still finds the STAC-routed ones too.
+ *
+ * A node whose children all moved to STAC is dropped from the OData side instead of being left
+ * empty, because an empty node means "all of its children" to the OData query builder. A node that
+ * was empty to begin with is kept as it is.
+ */
+export const splitSTACProductTypeSelection = (
+  config: CollectionConfigNode | null | undefined,
+  selectedNode: SelectionNode | null | undefined,
+): SelectionSplit => {
+  if (!config || !selectedNode) {
+    return { stac: null, odata: selectedNode ?? null };
+  }
+
+  const stac: SelectionNode = {};
+  const odata: SelectionNode = {};
+  let childCount = 0;
+  let stacChildCount = 0;
+  let odataChildCount = 0;
+
+  Object.entries(selectedNode).forEach(([key, value]) => {
+    if (isSelectionBookkeepingKey(key) || !value || typeof value !== 'object') {
+      stac[key] = value;
+      odata[key] = value;
+      return;
+    }
+    childCount++;
+    const childConfig = config.items?.find((item) => item.id === key);
+    if (childConfig?.type === 'productType' && isSTACProductType(config, childConfig)) {
+      stac[key] = value;
+      stacChildCount++;
+      return;
+    }
+    const childSplit = splitSTACProductTypeSelection(childConfig, value as SelectionNode);
+    if (childSplit.stac) {
+      stac[key] = childSplit.stac;
+      stacChildCount++;
+    }
+    if (childSplit.odata) {
+      odata[key] = childSplit.odata;
+      odataChildCount++;
+    }
+  });
+
+  return {
+    stac: stacChildCount > 0 ? stac : null,
+    // An originally empty node stays on OData as "all children"; one emptied by the split is dropped.
+    odata: childCount === 0 || odataChildCount > 0 ? odata : null,
+  };
+};
+
+/**
  * True when every product type under this node is marked `supportsGeometry: false`, i.e. its
  * products carry no footprint and must be searched without a spatial filter. A node with no
  * product types at all is not geometry-less - there is nothing to say it lacks a footprint.

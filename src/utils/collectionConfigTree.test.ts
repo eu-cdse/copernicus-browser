@@ -8,6 +8,8 @@ import {
   getSTACCollectionNames,
   isGeometrylessNode,
   isSTACCollectionNode,
+  isSTACProductType,
+  splitSTACProductTypeSelection,
 } from './collectionConfigTree';
 
 const tree = [
@@ -308,5 +310,70 @@ describe('isGeometrylessNode', () => {
 
   test.each([[instrument([])], [null], [undefined]])('is false with no product types (%p)', (node) => {
     expect(isGeometrylessNode(node)).toBe(false);
+  });
+});
+
+// CLMS SWI time series (#1324): two product types of the OData-only Soil Water Index instrument own
+// a STAC collection each.
+describe('splitSTACProductTypeSelection', () => {
+  const instrument: CollectionConfigNode = {
+    id: 'SOIL_WATER_INDEX',
+    type: 'instrument',
+    items: [
+      { id: 'swi_europe_1km_daily_v1', type: 'productType' },
+      { id: 'ts_v3', type: 'productType', supportsStacSearch: true, collectionName: 'clms_ts_v3_nc' },
+      { id: 'ts_v4', type: 'productType', supportsStacSearch: true, collectionName: 'clms_ts_v4_nc' },
+    ],
+  };
+  const group: CollectionConfigNode = { id: 'SOIL_MOISTURE', type: 'group', items: [instrument] };
+
+  test('isSTACProductType needs both the flag and a collection name', () => {
+    expect(isSTACProductType(instrument, instrument.items![1])).toBe(true);
+    expect(isSTACProductType(instrument, instrument.items![0])).toBe(false);
+    expect(isSTACProductType(instrument, { id: 'x', type: 'productType', supportsStacSearch: true })).toBe(
+      false,
+    );
+  });
+
+  test('moves only the ticked STAC product types, keeping the path to them', () => {
+    const split = splitSTACProductTypeSelection(group, {
+      type: 'group',
+      SOIL_WATER_INDEX: {
+        type: 'instrument',
+        swi_europe_1km_daily_v1: { type: 'productType' },
+        ts_v4: { type: 'productType' },
+      },
+    });
+    expect(split.stac).toEqual({
+      type: 'group',
+      SOIL_WATER_INDEX: { type: 'instrument', ts_v4: { type: 'productType' } },
+    });
+    expect(split.odata).toEqual({
+      type: 'group',
+      SOIL_WATER_INDEX: { type: 'instrument', swi_europe_1km_daily_v1: { type: 'productType' } },
+    });
+  });
+
+  test('drops a node from the OData side once all its ticked children moved to STAC', () => {
+    const split = splitSTACProductTypeSelection(group, {
+      type: 'group',
+      SOIL_WATER_INDEX: {
+        type: 'instrument',
+        ts_v3: { type: 'productType' },
+        ts_v4: { type: 'productType' },
+      },
+    });
+    expect(split.stac).not.toBeNull();
+    expect(split.odata).toBeNull();
+  });
+
+  test('keeps an instrument or group ticked without product types on OData', () => {
+    expect(splitSTACProductTypeSelection(group, { type: 'group' })).toEqual({
+      stac: null,
+      odata: { type: 'group' },
+    });
+    expect(
+      splitSTACProductTypeSelection(group, { type: 'group', SOIL_WATER_INDEX: { type: 'instrument' } }),
+    ).toEqual({ stac: null, odata: { type: 'group', SOIL_WATER_INDEX: { type: 'instrument' } } });
   });
 });

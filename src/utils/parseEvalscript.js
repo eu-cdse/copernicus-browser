@@ -1,8 +1,14 @@
-import { parseScript } from 'esprima';
-import escodegen from 'escodegen';
 import { BROWSERSTATS_OUTPUT, EOBROWSERSTATS_OUTPUT } from '../const';
+import { requireEscodegen, requireEsprima } from './evalscriptParsers';
 
 const DEFAULT_OUTPUT_ID = 'default';
+
+// esprima/escodegen are loaded on demand (see evalscriptParsers.ts). If they are not loaded yet,
+// requireEsprima/requireEscodegen throw, which every exported function below catches and treats
+// as a parsing failure.
+function parseScript(...args) {
+  return requireEsprima().parseScript(...args);
+}
 
 export function getEvalscriptSetup(evalscript) {
   const setup = {
@@ -63,7 +69,7 @@ export function setEvalscriptSampleType(evalscript, sampleType) {
       tokens: true,
       comment: true,
     });
-    escodegen.attachComments(parsed, parsed.comments, parsed.tokens);
+    requireEscodegen().attachComments(parsed, parsed.comments, parsed.tokens);
     const { output } = getSetupObjects(parsed);
 
     if (output.value.elements) {
@@ -101,7 +107,7 @@ export function setEvalscriptSampleType(evalscript, sampleType) {
         output.value.properties.push(newProperty);
       }
     }
-    return escodegen.generate(parsed, { comment: true });
+    return requireEscodegen().generate(parsed, { comment: true });
   } catch (e) {
     return evalscript;
   }
@@ -116,7 +122,7 @@ export function setEvalscriptOutputScale(evalscript, scaleFactor) {
       tokens: true,
       comment: true,
     });
-    escodegen.attachComments(parsed, parsed.comments, parsed.tokens);
+    requireEscodegen().attachComments(parsed, parsed.comments, parsed.tokens);
     const evaluatePixelFunction = parsed.body.find((d) => d.id && d.id.name === 'evaluatePixel');
     evaluatePixelFunction.id.name = '__noScaleFactor__evaluatePixel';
     const newEvaluatePixel = `
@@ -135,7 +141,7 @@ export function setEvalscriptOutputScale(evalscript, scaleFactor) {
     `;
     const newEvaluatePixelParsed = parseScript(newEvaluatePixel, { jsx: true, tolerant: true });
     parsed.body.push(newEvaluatePixelParsed);
-    const newEvalscript = escodegen.generate(parsed, { comment: true });
+    const newEvalscript = requireEscodegen().generate(parsed, { comment: true });
     return newEvalscript;
   } catch (e) {
     return evalscript;
@@ -158,7 +164,7 @@ export function setEvalscriptOutputBandNumber(evalscript, nBands) {
       tokens: true,
       comment: true,
     });
-    escodegen.attachComments(parsed, parsed.comments, parsed.tokens);
+    requireEscodegen().attachComments(parsed, parsed.comments, parsed.tokens);
     const { output } = getSetupObjects(parsed);
     if (output.value.elements) {
       // find the index of the default output object
@@ -183,7 +189,7 @@ export function setEvalscriptOutputBandNumber(evalscript, nBands) {
       originalNBands.value.raw = nBands.toString();
       originalNBands.value.value = nBands;
     }
-    return escodegen.generate(parsed, { comment: true });
+    return requireEscodegen().generate(parsed, { comment: true });
   } catch (e) {
     return evalscript;
   }

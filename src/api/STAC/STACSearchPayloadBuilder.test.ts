@@ -1212,3 +1212,79 @@ describe('STAC sortby', () => {
     );
   });
 });
+
+describe('createSTACSearchPayload - CLMS SWI time series (#1324)', () => {
+  const clmsConfig = [
+    {
+      id: 'CLMS_BIOGEOPHYSICAL_PARAMETERS',
+      type: 'collection',
+      collectionName: 'CLMS',
+      items: [
+        {
+          id: 'SOIL_MOISTURE',
+          type: 'group',
+          items: [
+            {
+              id: 'SOIL_WATER_INDEX',
+              type: 'instrument',
+              items: [
+                { id: 'swi_europe_1km_daily_v1', type: 'productType' },
+                {
+                  id: 'swi-timeseries_global_12.5km_daily_v3',
+                  type: 'productType',
+                  supportsStacSearch: true,
+                  collectionName: 'clms_swi-timeseries_global_12.5km_daily_v3_nc',
+                },
+                {
+                  id: 'swi-timeseries_global_12.5km_daily_v4',
+                  type: 'productType',
+                  supportsStacSearch: true,
+                  collectionName: 'clms_swi-timeseries_global_12.5km_daily_v4_nc',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const selection = (...productTypeIds: string[]) => ({
+    CLMS_BIOGEOPHYSICAL_PARAMETERS: {
+      type: 'collection',
+      SOIL_MOISTURE: {
+        type: 'group',
+        SOIL_WATER_INDEX: {
+          type: 'instrument',
+          ...Object.fromEntries(productTypeIds.map((id) => [id, { type: 'productType' }])),
+        },
+      },
+    },
+  });
+
+  test('searches the V4 collection without product:type or instrument filters', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: { selectedCollections: selection('swi-timeseries_global_12.5km_daily_v4') },
+      collectionFormConfig: clmsConfig,
+    });
+    expect(payload.collections).toEqual(['clms_swi-timeseries_global_12.5km_daily_v4_nc']);
+    expect(JSON.stringify(payload.filter ?? {})).not.toContain('product:type');
+    expect(JSON.stringify(payload.filter ?? {})).not.toContain('instruments');
+  });
+
+  test('searches both collections when V3 and V4 are ticked', () => {
+    const payload = createSTACSearchPayload({
+      collectionForm: {
+        selectedCollections: selection(
+          'swi-timeseries_global_12.5km_daily_v3',
+          'swi-timeseries_global_12.5km_daily_v4',
+        ),
+      },
+      collectionFormConfig: clmsConfig,
+    });
+    expect(payload.collections).toEqual([
+      'clms_swi-timeseries_global_12.5km_daily_v3_nc',
+      'clms_swi-timeseries_global_12.5km_daily_v4_nc',
+    ]);
+  });
+});

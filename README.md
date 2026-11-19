@@ -235,6 +235,8 @@ Thanks to the efforts of various people and institutions, you can use the Copern
 
 Your language is missing or incomplete and you want to help with the translation? Contact us at translation_support@sinergise.com for more information.
 
+The Browser is available in all official languages of the European Union, plus Catalan and Ukrainian. Strings without a human translation (including the full Bulgarian, Croatian, Czech, Danish, Estonian, Finnish, Greek, Irish, Maltese, Portuguese, Romanian, Slovak and Swedish versions) were translated with the help of AI and reviewed by a second AI pass, not by native speakers, so they may contain mistakes. Corrections are very welcome. See [scripts/AI_TRANSLATION.md](scripts/AI_TRANSLATION.md) for how these translations are produced.
+
 Copernicus Browser, the evolution of EO Browser, shares many translations with its predecessor. A big thank you to everyone listed below (including those who didn't want to be publicly named) for their help in translating parts of the respective app.
 
 #### Wall of fame:
@@ -254,4 +256,4 @@ Copernicus Browser, the evolution of EO Browser, shares many translations with i
 
 #### Disclaimer
 
-The translations in Copernicus Browser are a community effort and are largely provided on a voluntary basis. As the application contains several hundred translations per language, we cannot guarantee the accuracy of every single translation.
+The translations in Copernicus Browser are a community effort and are largely provided on a voluntary basis. As the application contains several hundred translations per language, we cannot guarantee the accuracy of every single translation. This applies in particular to the AI-assisted translations described above.

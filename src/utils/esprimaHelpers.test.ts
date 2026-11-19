@@ -1,4 +1,9 @@
 import { tryParseScript, AstNode } from './esprimaHelpers';
+import { loadEvalscriptParsers } from './evalscriptParsers';
+
+beforeAll(async () => {
+  await loadEvalscriptParsers();
+});
 
 describe('tryParseScript', () => {
   describe('valid scripts', () => {
@@ -94,6 +99,16 @@ describe('tryParseScript', () => {
       const ast = tryParseScript('function f() { var x = 1;', true);
       expect(ast).not.toBeNull();
       expect(ast.body[0].range).toBeDefined();
+    });
+  });
+});
+
+describe('tryParseScript when parsers are not loaded', () => {
+  it('returns null', () => {
+    jest.isolateModules(() => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const helpers = require('./esprimaHelpers');
+      expect(helpers.tryParseScript('var x = 1;')).toBeNull();
     });
   });
 });

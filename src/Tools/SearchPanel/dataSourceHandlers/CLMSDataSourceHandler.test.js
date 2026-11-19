@@ -152,11 +152,12 @@ describe('CLMSDataSourceHandler getLeafletZoomConfig', () => {
     expect(handler.getLeafletZoomConfig(datasetId, layerId)).toEqual({ min: 2, max: 25 });
   });
 
-  // UA Building Height is not a VLCC product and must stay at its previous zoom config.
-  it('keeps { min: 4, max: 25 } for UA Building Height', () => {
+  // UA Building Height follows VLCC down to zoom 2 now that its low-res collection's
+  // maxMetersPerPixel was raised to 48000 (SEARCH-1873, #1340).
+  it('returns { min: 2, max: 25 } for UA Building Height', () => {
     expect(
       handler.getLeafletZoomConfig(COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021, undefined),
-    ).toEqual({ min: 4, max: 25 });
+    ).toEqual({ min: 2, max: 25 });
   });
 
   // Regression guard: an unrelated CLMS entry that was already at min: 2 must not be touched.
@@ -166,13 +167,11 @@ describe('CLMSDataSourceHandler getLeafletZoomConfig', () => {
     ).toEqual({ min: 2, max: 25 });
   });
 
-  // Invariant covering every entry in leafletZoomConfig, not just the sampled cases above: the
-  // only key still allowed to have min: 4 is UA Building Height, which is not a VLCC product.
-  it('has no entry at min: 4 other than UA Building Height', () => {
+  // Invariant covering every entry in leafletZoomConfig, not just the sampled cases above: since
+  // UA Building Height moved to zoom 2 (#1340), no entry is left at min: 4.
+  it('has no entry at min: 4', () => {
     const entriesAtMinFour = Object.entries(handler.leafletZoomConfig).filter(([, { min }]) => min === 4);
 
-    expect(entriesAtMinFour).toEqual([
-      [COPERNICUS_CLMS_UA_BUILDING_HEIGHT_EUROPE_10M_3YEARLY_V1_2021, { min: 4, max: 25 }],
-    ]);
+    expect(entriesAtMinFour).toEqual([]);
   });
 });

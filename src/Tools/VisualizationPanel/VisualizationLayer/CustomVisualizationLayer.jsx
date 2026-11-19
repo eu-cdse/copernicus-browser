@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash.clonedeep';
+import { t } from 'ttag';
 
 import EOBAdvancedHolder from '../../../junk/EOBAdvancedHolder/EOBAdvancedHolder';
+import { EOBButton } from '../../../junk/EOBCommon/EOBButton/EOBButton';
 
 import { getDataSourceHandler } from '../../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { parseEvalscriptBands } from '../../../utils';
@@ -12,6 +14,8 @@ import { createLayerActions } from './createLayerActions';
 import { getVisualizationEffectsFromStore } from '../../../utils/effectsUtils';
 import { PROCESSING_OPTIONS } from '../../../const';
 import { getProcessGraph } from '../../../api/openEO/openEOHelpers';
+import { useEvalscriptParsers } from '../../../hooks/useEvalscriptParsers';
+import Loader from '../../../Loader/Loader';
 
 const CustomVisualizationLayer = (props) => {
   const {
@@ -38,6 +42,10 @@ const CustomVisualizationLayer = (props) => {
     effects,
   } = props;
 
+  // esprima/escodegen are lazy-loaded; the band/index parsing below and EOBAdvancedHolder (whose
+  // IndexBands initialises from the parsed evalscript on mount) must wait until they are available.
+  const { ready: parsersReady, error: parsersError, retry: retryLoadParsers } = useEvalscriptParsers();
+
   const isUrlMode = selectedProcessing === PROCESSING_OPTIONS.OPENEO ? useProcessGraphUrl : useEvalscriptUrl;
 
   const datasourceHandler = getDataSourceHandler(datasetId);
@@ -55,7 +63,7 @@ const CustomVisualizationLayer = (props) => {
   let selectedBands = [...bandsToUse, ...bandsToUse, ...bandsToUse].slice(0, 3).map((b) => b.name);
   let selectedIndexBands = { a: null, b: null };
 
-  if (evalscript) {
+  if (parsersReady && evalscript) {
     const parsedBands = parseEvalscriptBands(evalscript);
     if (parsedBands.length === 3) {
       selectedBands = parsedBands;
@@ -93,37 +101,46 @@ const CustomVisualizationLayer = (props) => {
   return (
     <div className="custom-visualization">
       <ActionBar actionsOpen={true} actions={layerActions} />
-      <EOBAdvancedHolder
-        channels={bandsToUse}
-        evalscriptUrl={evalscriptUrl}
-        evalscript={evalscript}
-        dataFusion={dataFusion}
-        initialTimespan={{ fromTime: fromTime, toTime: toTime }}
-        layers={{
-          r: selectedBands[0],
-          g: selectedBands[1],
-          b: selectedBands[2],
-        }}
-        indexLayers={selectedIndexBands}
-        activeLayer={legacyActiveLayer}
-        isUrlMode={isUrlMode}
-        style={null}
-        onUpdateScript={onUpdateScript}
-        onDataFusionChange={setDataFusion}
-        onBack={onBackToLayerList}
-        onEvalscriptRefresh={onVisualizeEditorEvalscript}
-        onRefreshOpenEO={onVisualizeEditorOpenEO}
-        onCompositeChange={onCompositeChange}
-        onIndexScriptChange={onIndexScriptChange}
-        supportsIndex={supportsIndex}
-        areBandsClasses={areBandsClasses}
-        selectedVisualizationId={selectedVisualizationId}
-        visualizationUrl={visualizationUrl}
-        selectedProcessing={selectedProcessing}
-        processGraph={processGraph}
-        processGraphUrl={processGraphUrl}
-        effects={effects}
-      />
+      {parsersError ? (
+        <div className="parsers-load-error">
+          <div>{t`An unknown error occurred`}</div>
+          <EOBButton text={t`Retry`} icon="refresh" onClick={retryLoadParsers} />
+        </div>
+      ) : !parsersReady ? (
+        <Loader />
+      ) : (
+        <EOBAdvancedHolder
+          channels={bandsToUse}
+          evalscriptUrl={evalscriptUrl}
+          evalscript={evalscript}
+          dataFusion={dataFusion}
+          initialTimespan={{ fromTime: fromTime, toTime: toTime }}
+          layers={{
+            r: selectedBands[0],
+            g: selectedBands[1],
+            b: selectedBands[2],
+          }}
+          indexLayers={selectedIndexBands}
+          activeLayer={legacyActiveLayer}
+          isUrlMode={isUrlMode}
+          style={null}
+          onUpdateScript={onUpdateScript}
+          onDataFusionChange={setDataFusion}
+          onBack={onBackToLayerList}
+          onEvalscriptRefresh={onVisualizeEditorEvalscript}
+          onRefreshOpenEO={onVisualizeEditorOpenEO}
+          onCompositeChange={onCompositeChange}
+          onIndexScriptChange={onIndexScriptChange}
+          supportsIndex={supportsIndex}
+          areBandsClasses={areBandsClasses}
+          selectedVisualizationId={selectedVisualizationId}
+          visualizationUrl={visualizationUrl}
+          selectedProcessing={selectedProcessing}
+          processGraph={processGraph}
+          processGraphUrl={processGraphUrl}
+          effects={effects}
+        />
+      )}
     </div>
   );
 };

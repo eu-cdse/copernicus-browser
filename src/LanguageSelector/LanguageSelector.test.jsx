@@ -99,7 +99,7 @@ describe('LanguageSelector', () => {
     fireEvent.click(document.querySelector('button.menu-flags__trigger'));
 
     const options = document.querySelectorAll('[role="option"]');
-    expect(options.length).toBe(14);
+    expect(options.length).toBe(27);
     expect(screen.getByText('English')).toBeInTheDocument();
     expect(screen.getByText('More info')).toBeInTheDocument();
   });

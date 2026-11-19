@@ -35,6 +35,11 @@ import {
   DEM_COPERNICUS_90_CDAS,
 } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceConstants';
 import { getDataSourceHandler } from '../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
+import { loadEvalscriptParsers } from './evalscriptParsers';
+
+beforeAll(async () => {
+  await loadEvalscriptParsers();
+});
 
 const dfString1 =
   '{"enabled":true,"primaryLayerAlias":"S2L2Ajisqiw","supplementalDatasets":{"S2_L1C_CDAS":{"enabled":true,"alias":"S2L1Cdewdewd","mosaickingOrder":"leastCC","isCustomTimespan":true,"timespan":["2020-08-05T00:00:00.000Z","2020-08-26T23:59:59.999Z"]}}}';

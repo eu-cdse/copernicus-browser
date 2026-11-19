@@ -836,3 +836,46 @@ describe('recursiveCollections nesting - CLMS Water Extent (#1323)', () => {
     );
   });
 });
+
+describe('recursiveCollections nesting - CLMS Soil Water Index (#1324)', () => {
+  const V3_ID = 'swi-timeseries_global_12.5km_daily_v3';
+  const V4_ID = 'swi-timeseries_global_12.5km_daily_v4';
+  const soilWaterIndex = () => findInstrumentConfigById('SOIL_WATER_INDEX');
+
+  test('lists the V3 time series before the V4 time series', () => {
+    const ids = soilWaterIndex().items.map((item) => item.id);
+    expect(ids).toContain(V3_ID);
+    expect(ids).toContain(V4_ID);
+    expect(ids.indexOf(V3_ID)).toBeLessThan(ids.indexOf(V4_ID));
+  });
+
+  test('V4 time series filters on its own datasetIdentifier', () => {
+    const v4 = soilWaterIndex().items.find((item) => item.id === V4_ID);
+    expect(v4.type).toBe('productType');
+    expect(v4.customFilterExpression).toBe(
+      `(${FilterElement.Attribute(
+        ODataAttributes.datasetIdentifier,
+        ODataFilterOperator.eq,
+        'swi-timeseries_global_12.5km_daily_v4',
+      )})`,
+    );
+  });
+
+  test.each([
+    [V3_ID, STAC_COLLECTIONS.CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V3],
+    [V4_ID, STAC_COLLECTIONS.CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V4],
+  ])('%s is searched through its own STAC collection', (id, collectionName) => {
+    const productType = soilWaterIndex().items.find((item) => item.id === id);
+    expect(productType.supportsStacSearch).toBe(true);
+    expect(productType.collectionName).toBe(collectionName);
+  });
+
+  test('the Soil Water Index instrument itself stays on OData', () => {
+    expect(soilWaterIndex().supportsStacSearch).toBeUndefined();
+  });
+
+  test('V4 time series carries no hasAccess of its own — gating lives on the instrument', () => {
+    const v4 = soilWaterIndex().items.find((item) => item.id === V4_ID);
+    expect(v4.hasAccess).toBeUndefined();
+  });
+});

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { LayersFactory } from '@sentinel-hub/sentinelhub-js';
 
 import { checkAllMandatoryOutputsExist } from '../utils/parseEvalscript';
+import { loadEvalscriptParsers } from '../utils/evalscriptParsers';
 import { PROCESSING_OPTIONS, reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../const';
 import {
   getLayerNotSelectedMsg,
@@ -49,7 +50,13 @@ const FisChartLink = (props) => {
         }
       }
       if (evalscript) {
-        setStatisticalApiSupported(checkAllMandatoryOutputsExist(evalscript, STATISTICS_MANDATORY_OUTPUTS));
+        try {
+          await loadEvalscriptParsers();
+          setStatisticalApiSupported(checkAllMandatoryOutputsExist(evalscript, STATISTICS_MANDATORY_OUTPUTS));
+        } catch (err) {
+          // parsers failed to load - leave the statistical API marked as unsupported
+          console.error('Failed to load evalscript parsers', err);
+        }
       }
       setLayerName(layerName);
     };

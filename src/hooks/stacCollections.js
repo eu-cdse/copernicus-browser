@@ -198,6 +198,9 @@ export const STAC_COLLECTIONS = {
   CLMS_URBAN_ATLAS_STREET_TREE: 'clms_urban-atlas_street-tree-layer_europe_V005ha_vector_static_v01',
   CLMS_PROTECTED_AREAS_LAND_COVER_USE:
     'clms_protected-areas_land-cover-land-use_europe_V05ha_vector_static_v01',
+  // Only NetCDF collections exist for the SWI time series
+  CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V3: 'clms_swi-timeseries_global_12.5km_daily_v3_nc',
+  CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V4: 'clms_swi-timeseries_global_12.5km_daily_v4_nc',
 
   // OpenGeoHub
   OPENGEOHUB_LANDSAT_MOSAIC: 'opengeohub-landsat-bimonthly-mosaic-v1.0.1',

@@ -46,6 +46,7 @@ import {
   setEvalscriptOutputScale,
   setEvalscriptOutputBandNumber,
 } from '../../utils/parseEvalscript';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
 import { WARNINGS } from './ImageDownloadWarningPanel';
 import { refetchWithDefaultToken } from '../../utils/fetching.utils';
 import {
@@ -1015,6 +1016,10 @@ export async function overrideEvalscriptIfNeeded(
     }
   }
 
+  // A failed parser load is intentionally not caught here: skipping the evalscript override would
+  // silently produce a TIFF with the wrong sample type, so the error propagates to the download
+  // flow's existing error handling instead.
+  await loadEvalscriptParsers();
   const setupInfo = getEvalscriptSetup(layer.evalscript);
   if (!setupInfo) {
     raiseWarning(WARNINGS.PARSING_UNSUCCESSFUL, layerName);

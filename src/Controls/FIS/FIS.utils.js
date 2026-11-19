@@ -3,6 +3,7 @@ import { reqConfigMemoryCache, STATISTICS_MANDATORY_OUTPUTS } from '../../const'
 import { getDataSourceHandler } from '../../Tools/SearchPanel/dataSourceHandlers/dataSourceHandlers';
 import { getRecommendedResolution, switchGeometryCoordinates } from '../../utils/coords';
 import { checkAllMandatoryOutputsExist, getStatsOutputName } from '../../utils/parseEvalscript';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
 import { reprojectGeometry } from '../../utils/reproject';
 
 export function constructCSVFromData(data, dropColumns) {
@@ -136,6 +137,10 @@ export async function getStatisticsLayer(
   { customSelected, datasetId, evalscript, layerId, visualizationUrl },
   outputs = STATISTICS_MANDATORY_OUTPUTS,
 ) {
+  // Load the parsers up front: both layerSupportsStatisticalApi and getStatsOutputName below parse
+  // the evalscript synchronously. A failed load is intentionally propagated - FIS.jsx shows its error
+  // message with a Retry button, and usePixelExplorer disables the pixel explorer.
+  await loadEvalscriptParsers();
   const { isSupported, resolvedEvalscript } = await layerSupportsStatisticalApi(
     {
       customSelected,

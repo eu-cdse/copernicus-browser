@@ -2044,10 +2044,26 @@ export const recursiveCollectionCLMS = [
                 id: 'swi-timeseries_global_12.5km_daily_v3',
                 label: 'Time Series, Global, Daily, 12.5km, (2007–2024), V3',
                 type: 'productType',
+                // Searched through STAC when ticked on its own (see splitSelection in
+                // collectionConfigTree.ts); ticking the instrument or a parent keeps it on OData.
+                supportsStacSearch: true,
+                collectionName: STAC_COLLECTIONS.CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V3,
                 customFilterExpression: `(${FilterElement.Attribute(
                   ODataAttributes.datasetIdentifier,
                   ODataFilterOperator.eq,
                   'swi-timeseries_global_12.5km_daily_v3',
+                )})`,
+              },
+              {
+                id: 'swi-timeseries_global_12.5km_daily_v4',
+                label: 'Time Series, Global, Daily, 12.5km, (2007–present), V4',
+                type: 'productType',
+                supportsStacSearch: true,
+                collectionName: STAC_COLLECTIONS.CLMS_SWI_TIMESERIES_GLOBAL_12_5KM_DAILY_V4,
+                customFilterExpression: `(${FilterElement.Attribute(
+                  ODataAttributes.datasetIdentifier,
+                  ODataFilterOperator.eq,
+                  'swi-timeseries_global_12.5km_daily_v4',
                 )})`,
               },
             ],

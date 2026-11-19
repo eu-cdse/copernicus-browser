@@ -1,10 +1,12 @@
 import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import LayerSelection from './LayerSelection';
-import { visualizationSlice } from '../../store';
+import { visualizationSlice, notificationSlice } from '../../store';
+import { loadEvalscriptParsers } from '../../utils/evalscriptParsers';
+import { CUSTOM_COMPOSITE_ROUTE } from '../../junk/EOBAdvancedHolder/EOBAdvancedHolder';
 
 let mockCurrentTestStore;
 jest.mock('../../store', () => {
@@ -31,8 +33,15 @@ jest.mock('./Visualizations', () => (props) => (
     {props.visualizations.map((layer) => (
       <span key={layer.layerId}>{layer.layerId}</span>
     ))}
+    <button onClick={props.setCustomVisualization}>Custom</button>
   </div>
 ));
+
+// Real loader by default; individual tests override it to simulate a failed chunk load.
+jest.mock('../../utils/evalscriptParsers', () => {
+  const actual = jest.requireActual('../../utils/evalscriptParsers');
+  return { ...actual, loadEvalscriptParsers: jest.fn(actual.loadEvalscriptParsers) };
+});
 
 jest.mock('./VisualizationLayer/CustomVisualizationLayer', () => () => <div>CustomVisualizationLayer</div>);
 
@@ -97,6 +106,7 @@ function makeStore(preloadedVisualizationState = {}) {
       visualization: visualizationSlice.reducer,
       themes: (state = makeThemesState()) => state,
       language: (state = { selectedLanguage: 'en' }) => state,
+      notification: notificationSlice.reducer,
     },
     preloadedState: {
       visualization: { ...initialVisualizationState, ...preloadedVisualizationState },
@@ -107,12 +117,13 @@ function makeStore(preloadedVisualizationState = {}) {
 
 function renderComponent(preloadedVisualizationState) {
   const store = makeStore(preloadedVisualizationState);
+  const setLocationHash = jest.fn();
   const utils = render(
     <Provider store={store}>
       <LayerSelection
         displayEffects={false}
         locationHash=""
-        setLocationHash={jest.fn()}
+        setLocationHash={setLocationHash}
         onBackToLayerList={jest.fn()}
         toggleLayerActions={jest.fn()}
         layerActionsOpen={false}
@@ -120,7 +131,7 @@ function renderComponent(preloadedVisualizationState) {
       />
     </Provider>,
   );
-  return { store, ...utils };
+  return { store, setLocationHash, ...utils };
 }
 
 describe('LayerSelection', () => {
@@ -144,5 +155,64 @@ describe('LayerSelection', () => {
     });
 
     expect(screen.queryByText('layerA')).not.toBeInTheDocument();
+  });
+
+  describe('selecting the custom visualization with an existing evalscript', () => {
+    const COMPOSITE_EVALSCRIPT = `//VERSION=3
+function setup() {
+  return {
+    input: ["B04", "B03", "B02", "dataMask"],
+    output: { bands: 4 }
+  };
+}
+
+function evaluatePixel(sample) {
+  return [2.5 * sample.B04, 2.5 * sample.B03, 2.5 * sample.B02, sample.dataMask];
+}`;
+
+    // layerA already selected, so the auto-select effect doesn't replace the evalscript
+    const SELECTED_LAYER_WITH_EVALSCRIPT = {
+      datasetId: 'A',
+      layerId: 'layerA',
+      visualizationUrl: 'urlA',
+      evalscript: COMPOSITE_EVALSCRIPT,
+    };
+
+    beforeEach(() => {
+      mockGetDataSourceHandler.mockImplementation((id) => (id === 'A' ? datasourceHandlerA : undefined));
+      mockIsDataSourceReadyForDataset.mockImplementation((id) => id === 'A');
+    });
+
+    it('routes to the composite tab once the parsers are loaded', async () => {
+      const { setLocationHash } = renderComponent(SELECTED_LAYER_WITH_EVALSCRIPT);
+      await waitFor(() => {
+        expect(screen.getByText('layerA')).toBeInTheDocument();
+      });
+
+      fireEvent.click(screen.getByText('Custom'));
+
+      await waitFor(() => {
+        expect(setLocationHash).toHaveBeenCalledWith(CUSTOM_COMPOSITE_ROUTE);
+      });
+    });
+
+    it('stays on the layer list and shows an error when the parsers fail to load', async () => {
+      const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+      loadEvalscriptParsers.mockRejectedValueOnce(new Error('chunk load failed'));
+      const { store, setLocationHash } = renderComponent(SELECTED_LAYER_WITH_EVALSCRIPT);
+      await waitFor(() => {
+        expect(screen.getByText('layerA')).toBeInTheDocument();
+      });
+      setLocationHash.mockClear();
+
+      fireEvent.click(screen.getByText('Custom'));
+
+      await waitFor(() => {
+        expect(store.getState().notification.type).toBe('error');
+      });
+      expect(store.getState().notification.msg).toBe('An unknown error occurred');
+      expect(setLocationHash).not.toHaveBeenCalled();
+      consoleError.mockRestore();
+    });
   });
 });

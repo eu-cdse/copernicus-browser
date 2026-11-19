@@ -80,11 +80,9 @@
       transform: translateX(-50%);
       width: 380px;
       min-width: unset;
-      max-height: none;
       color: vars.$textColor;
       background-color: vars.$whiteBackground;
       padding: 20px;
-      padding-bottom: 60px;
       border: none;
       border-radius: 0;
       text-transform: capitalize;
@@ -92,15 +90,18 @@
       z-index: 3;
       margin: 0;
 
+      // 26 languages make the grid tall: on short viewports scroll inside it instead of overflowing.
+      // (content-box: the 2 x 20px padding comes on top of max-height, hence 80px offset + 40px.)
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+
       @media only screen and (height <= 450px) {
         max-height: 200px;
-        overflow-y: auto;
       }
 
       @media only screen and (width <= 450px) {
         gap: 15px;
         padding: 15px;
-        padding-bottom: 55px;
         min-width: unset;
       }
     }
@@ -119,9 +120,9 @@
       }
 
       &--more-info {
-        position: absolute;
-        bottom: 20px;
+        // A normal grid item on its own last row, so it scrolls with the list and never overlaps it.
         grid-column: 2/3;
+        justify-self: center;
 
         .menu-flags__option-label {
           color: vars.$primaryColor;
@@ -135,10 +136,6 @@
           .menu-flags__option-label {
             color: vars.$primaryColor;
           }
-        }
-
-        @media only screen and (width <= 450px) {
-          bottom: 15px;
         }
       }
     }

@@ -1,17 +1,30 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
+import BG from 'country-flag-icons/react/3x2/BG';
+import CZ from 'country-flag-icons/react/3x2/CZ';
 import DE from 'country-flag-icons/react/3x2/DE';
+import DK from 'country-flag-icons/react/3x2/DK';
+import EE from 'country-flag-icons/react/3x2/EE';
 import ES from 'country-flag-icons/react/3x2/ES';
+import FI from 'country-flag-icons/react/3x2/FI';
 import FR from 'country-flag-icons/react/3x2/FR';
 import GB from 'country-flag-icons/react/3x2/GB';
+import GR from 'country-flag-icons/react/3x2/GR';
+import HR from 'country-flag-icons/react/3x2/HR';
 import HU from 'country-flag-icons/react/3x2/HU';
+import IE from 'country-flag-icons/react/3x2/IE';
 import IT from 'country-flag-icons/react/3x2/IT';
 import LT from 'country-flag-icons/react/3x2/LT';
 import LV from 'country-flag-icons/react/3x2/LV';
+import MT from 'country-flag-icons/react/3x2/MT';
 import NL from 'country-flag-icons/react/3x2/NL';
 import PL from 'country-flag-icons/react/3x2/PL';
+import PT from 'country-flag-icons/react/3x2/PT';
+import RO from 'country-flag-icons/react/3x2/RO';
+import SE from 'country-flag-icons/react/3x2/SE';
 import SI from 'country-flag-icons/react/3x2/SI';
+import SK from 'country-flag-icons/react/3x2/SK';
 import UA from 'country-flag-icons/react/3x2/UA';
 
 import ChevronDown from '../icons/chevron-down.svg?react';
@@ -24,7 +37,33 @@ import { CDSE_GITHUB_PAGE_LINK } from '../const';
 import './LanguageSelector.scss';
 import { SUPPORTED_LANGUAGES } from './const';
 
-const FLAG_COMPONENTS = { DE, ES, FR, GB, HU, IT, LT, LV, NL, PL, SI, UA };
+const FLAG_COMPONENTS = {
+  BG,
+  CZ,
+  DE,
+  DK,
+  EE,
+  ES,
+  FI,
+  FR,
+  GB,
+  GR,
+  HR,
+  HU,
+  IE,
+  IT,
+  LT,
+  LV,
+  MT,
+  NL,
+  PL,
+  PT,
+  RO,
+  SE,
+  SI,
+  SK,
+  UA,
+};
 
 const onSelectLanguage = async (lang) => {
   if (lang.flagCode === 'TO') {

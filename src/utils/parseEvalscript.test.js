@@ -7,6 +7,11 @@ import {
   checkAllMandatoryOutputsExist,
   getStatsOutputName,
 } from './parseEvalscript';
+import { loadEvalscriptParsers } from './evalscriptParsers';
+
+beforeAll(async () => {
+  await loadEvalscriptParsers();
+});
 
 const inputEvalscript1 = `
 //VERSION=3
@@ -313,4 +318,48 @@ test.each([
 ])('Test getStatsOutputName method', (evalscript, expectedName) => {
   const name = getStatsOutputName(evalscript);
   expect(name).toEqual(expectedName);
+});
+
+describe('exported functions when parsers are not loaded', () => {
+  let fresh;
+  let warnSpy;
+
+  beforeEach(() => {
+    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    jest.isolateModules(() => {
+      fresh = require('./parseEvalscript');
+    });
+  });
+
+  afterEach(() => {
+    warnSpy.mockRestore();
+  });
+
+  it('getEvalscriptSetup returns null', () => {
+    expect(fresh.getEvalscriptSetup(inputEvalscript1)).toBeNull();
+  });
+
+  it.each([
+    ['setEvalscriptSampleType', (f) => f.setEvalscriptSampleType(inputEvalscript1, 'UINT8')],
+    ['setEvalscriptOutputScale', (f) => f.setEvalscriptOutputScale(inputEvalscript1, 2)],
+    ['setEvalscriptOutputBandNumber', (f) => f.setEvalscriptOutputBandNumber(inputEvalscript1, 3)],
+  ])('%s returns the input evalscript unchanged', (_name, call) => {
+    expect(call(fresh)).toBe(inputEvalscript1);
+  });
+
+  it('checkIfIndexOutputInEvalscript returns false', () => {
+    expect(fresh.checkIfIndexOutputInEvalscript(inputEvalscript2)).toBe(false);
+  });
+
+  it('getOutputIds returns null', () => {
+    expect(fresh.getOutputIds(inputEvalscript2)).toBeNull();
+  });
+
+  it('checkAllMandatoryOutputsExist returns false', () => {
+    expect(fresh.checkAllMandatoryOutputsExist(inputEvalscript2, ['some-id'])).toBe(false);
+  });
+
+  it('getStatsOutputName returns null', () => {
+    expect(fresh.getStatsOutputName(inputEvalscript2)).toBeNull();
+  });
 });
